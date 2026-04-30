@@ -1,0 +1,20 @@
+# Local generated files
+__pycache__/
+*.pyc
+.DS_Store
+
+# Generated project/build artifacts
+build/
+artifacts/
+tmp/
+
+# Profiler artifacts
+*.nsys-rep
+*.ncu-rep
+*.qdrep
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+perf.data
+perf.data.old
+

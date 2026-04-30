@@ -1,0 +1,4 @@
+interface:
+  display_name: "CppStudio Repo Onboarding"
+  short_description: "Operate the canonical CppStudio skill repo safely"
+  default_prompt: "Start work in CppStudio and follow the canonical skill sync workflow."

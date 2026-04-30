@@ -1,0 +1,149 @@
+# Donor Source Map
+
+Accessed: 2026-04-30
+
+This source map lists the first-pass donor candidates for 3D, graphics, GPU, and AI work. License
+notes are routing signals, not a replacement for checking the upstream license file before reuse.
+
+## Graphics And Rendering
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [Khronos Vulkan-Samples](https://github.com/KhronosGroup/Vulkan-Samples) | Vulkan foundations | safe-donor | Apache-2.0 samples covering API, performance, extensions, tooling, and headless/offscreen usage. |
+| [NVIDIA vk_mini_samples](https://github.com/nvpro-samples/vk_mini_samples) | Vulkan foundations | safe-donor | Apache-2.0 modern Vulkan samples for ray tracing, descriptors, mesh shaders, shader printf, compute, and NVIDIA tooling. |
+| [Google Filament](https://github.com/google/filament) | Renderer backbone | dependency-candidate | Apache-2.0 real-time PBR renderer with Vulkan/OpenGL/Metal/WebGL backends and glTF tooling. |
+| [Diligent Engine](https://github.com/DiligentGraphics/DiligentEngine) | Renderer backbone | dependency-candidate | Apache-2.0 cross-API rendering framework over Vulkan, D3D, Metal, OpenGL, WebGPU. |
+| [bgfx](https://github.com/bkaradzic/bgfx) | Renderer backbone | dependency-candidate | BSD-2-Clause/CC0 signals; cross-platform graphics API abstraction and shader tools. |
+| [Magnum](https://github.com/mosra/magnum) | C++ graphics middleware | safe-donor | MIT/Expat lightweight graphics middleware and examples. |
+| [Google Dawn](https://github.com/google/dawn) | WebGPU | dependency-candidate | BSD-3-Clause native WebGPU implementation and Tint/WGSL tooling. |
+| [three.js](https://github.com/mrdoob/three.js) | Web 3D | safe-donor | MIT browser 3D library with a large example ecosystem. |
+| [Babylon.js](https://github.com/BabylonJS/Babylon.js/) | Web 3D | safe-donor | Apache-2.0 TypeScript/WebGPU/WebXR 3D engine. |
+| [pbrt-v4](https://github.com/mmp/pbrt-v4) | Physical rendering | safe-donor | Apache-2.0 reference renderer for physically based rendering. |
+| [Mitsuba 3](https://github.com/mitsuba-renderer/mitsuba3) | Physical/differentiable rendering | safe-donor | BSD-style retargetable renderer with differentiable rendering support. |
+| [NVIDIA Falcor](https://github.com/NVIDIAGameWorks/Falcor) | Realtime ray tracing | dependency-candidate | BSD-3-Clause core with separate component licenses for DLSS/RTXGI/RTXDI/NRD. |
+| [THREE.js PathTracing Renderer](https://github.com/erichlof/THREE.js-PathTracing-Renderer) | Web path tracing | safe-donor | CC0-1.0 WebGL path tracing examples. |
+
+## Geometry, Assets, And Simulation
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [assimp](https://github.com/assimp/assimp) | Asset import/export | dependency-candidate | BSD-3-Clause based importer/exporter for many 3D formats. |
+| [meshoptimizer](https://github.com/zeux/meshoptimizer) | Mesh optimization | safe-donor | MIT mesh optimization, compression, simplification, and glTF-friendly pipeline code. |
+| [Open3D](https://github.com/isl-org/Open3D) | 3D data processing | dependency-candidate | MIT C++/Python library for point clouds, reconstruction, mesh processing, rendering, and ML integration. |
+| [Embree](https://github.com/RenderKit/embree) | CPU ray tracing | dependency-candidate | Apache-2.0 high-performance ray tracing kernels. |
+| [OSPRay](https://github.com/RenderKit/ospray) | CPU rendering | dependency-candidate | Apache-2.0 scalable CPU rendering engine built around RenderKit components. |
+| [madmann91/bvh](https://github.com/madmann91/bvh) | BVH | safe-donor | MIT standalone C++20 BVH construction/traversal. |
+| [Jolt Physics](https://github.com/jrouwe/JoltPhysics) | Physics | dependency-candidate | MIT modern C++ rigid body physics/collision library. |
+| [Bullet Physics](https://github.com/bulletphysics/bullet3) | Physics | dependency-candidate | zlib physics/collision SDK with robotics and ML simulation usage. |
+| [Godot Engine](https://github.com/godotengine/godot) | Engine architecture | dependency-candidate | MIT engine/editor architecture; large enough to use primarily as design reference. |
+| [Open 3D Engine](https://github.com/o3de/o3de) | Engine architecture | dependency-candidate | Apache-2.0/MIT dual-license default, with third-party component caveats; large engine architecture, asset pipeline, component systems. |
+
+## AI Runtimes, Kernels, And Compilers
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [llama.cpp](https://github.com/ggml-org/llama.cpp) | Local LLM inference | safe-donor | MIT C/C++ LLM runtime with quantization and multiple GPU backends. |
+| [ggml](https://ggml.ai/) | Tensor runtime | safe-donor | MIT lightweight tensor and quantization runtime foundation. |
+| [ONNX Runtime](https://github.com/microsoft/onnxruntime) | Inference runtime | dependency-candidate | MIT production inference/training accelerator with execution providers. |
+| [TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM) | NVIDIA LLM serving | dependency-candidate | Apache-2.0 plus notices; NVIDIA-optimized LLM serving and C++ runtime pieces. |
+| [vLLM](https://github.com/vllm-project/vllm) | LLM serving | dependency-candidate | Apache-2.0 high-throughput serving with paged attention/continuous batching. |
+| [MLC-LLM](https://github.com/mlc-ai/mlc-llm) | Cross-platform LLM deployment | dependency-candidate | Apache-2.0 TVM-powered deployment across GPUs, mobile, and WebGPU. |
+| [CUTLASS](https://github.com/NVIDIA/cutlass) | CUDA kernels | safe-donor | BSD-3-Clause CUDA GEMM/convolution/reduction templates. |
+| [Triton](https://github.com/triton-lang/triton) | GPU kernel DSL/compiler | safe-donor | MIT language/compiler for custom deep-learning primitives. |
+| [FlashAttention](https://github.com/Dao-AILab/flash-attention) | Attention kernels | safe-donor | BSD-3-Clause efficient exact attention kernels and PyTorch extension patterns. |
+| [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn) | Neural CUDA kernels | safe-donor | BSD-3-Clause fused MLPs and hash-grid encoding patterns. |
+| [Apache TVM](https://github.com/apache/tvm) | ML compiler | dependency-candidate | Apache-2.0 compiler/runtime stack for model deployment across hardware backends. |
+| [PyTorch](https://github.com/pytorch/pytorch) | Tensor framework | dependency-candidate | BSD-style tensor/autograd/CUDA dispatch reference; normally consumed as a package dependency. |
+
+## Neural 3D
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [Nerfstudio](https://github.com/nerfstudio-project/nerfstudio) | NeRF/3DGS workflows | dependency-candidate | Apache-2.0 modular framework for neural radiance fields and Gaussian splatting workflows. |
+| [gsplat](https://github.com/nerfstudio-project/gsplat) | Gaussian splatting | safe-donor | Apache-2.0 CUDA accelerated Gaussian rasterization with Python bindings. |
+| [NVIDIA Kaolin](https://github.com/NVIDIAGameWorks/kaolin) | 3D deep learning | dependency-candidate | Mostly Apache-2.0, with restricted `kaolin/non_commercial` area. |
+| [PyTorch3D](https://github.com/facebookresearch/pytorch3d) | Differentiable 3D ops | dependency-candidate | BSD-style reusable components for 3D deep learning. |
+| [graphdeco-inria/gaussian-splatting](https://github.com/graphdeco-inria/gaussian-splatting) | Original 3DGS | study-only | Non-commercial/research-only license; use for concepts and behavior checks only. |
+| [NVlabs/instant-ngp](https://github.com/NVlabs/instant-ngp) | Neural graphics primitives | study-only | NVIDIA Source Code License with non-commercial use limitation. |
+| [Kaolin Wisp](https://github.com/NVIDIAGameWorks/kaolin-wisp) | Neural fields | study-only | NVIDIA Source Code License with non-commercial use limitation. |
+
+## Hair, Grooming, And Fur
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [AMD TressFX](https://github.com/GPUOpen-Effects/TressFX) | Hair/fur runtime | safe-donor | MIT GPU hair/fur simulation and rendering with Vulkan/DX12 sample paths. |
+| [O3DE Atom TressFX Gem](https://docs.o3de.org/docs/user-guide/gems/reference/rendering/amd/atom-tressfx/) | Engine integration | dependency-candidate | O3DE license defaults plus component notices; useful for TressFX-style engine integration. |
+| [NVIDIA HairWorks docs](https://docs.nvidia.com/gameworks/content/artisttools/hairworks/) | Hair authoring/runtime concepts | study-only | GameWorks terms; use for concepts only unless project has an explicit license path. |
+| [Blender Hair Curves](https://docs.blender.org/manual/en/latest/modeling/geometry_nodes/hair/index.html) | Groom authoring UX | study-only | Blender code is GPL; study guide/follow, clump, trim, attach, and grooming workflows. |
+
+## DCC Scene Pipelines
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [OpenUSD](https://github.com/PixarAnimationStudios/OpenUSD) | Scene composition | dependency-candidate | Modified Apache-style license plus third-party notices; scene layers, variants, payloads, schemas. |
+| [Alembic](https://github.com/alembic/alembic) | Animated geometry cache | dependency-candidate | BSD-style license; baked animated geometry, curves, and DCC caches. |
+| [MaterialX](https://github.com/AcademySoftwareFoundation/MaterialX) | Material interchange | dependency-candidate | Apache-2.0 material/look-development graph standard. |
+| [OpenTimelineIO](https://github.com/AcademySoftwareFoundation/OpenTimelineIO) | Editorial interchange | dependency-candidate | Apache-2.0 timeline interchange for review, virtual production, and multi-shot tools. |
+
+## Volumes And Voxels
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [OpenVDB](https://github.com/AcademySoftwareFoundation/openvdb) | Sparse volumes | dependency-candidate | Apache-2.0 current releases; older releases were MPL-2.0. |
+| [NanoVDB](https://developer.nvidia.com/nanovdb) | GPU VDB traversal | safe-donor | Part of OpenVDB; compact GPU-friendly VDB representation and traversal. |
+| [fVDB](https://openvdb.github.io/fvdb-core/) | GPU sparse-volume tensors | dependency-candidate | Apache-2.0 sparse-volume tensors and neural 3D/ML-oriented volume work. |
+| [VTK](https://docs.vtk.org/en/latest/about.html) | Scientific visualization | dependency-candidate | BSD-style visualization toolkit for volume rendering and image processing. |
+
+## Animation And Rigging
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [ozz-animation](https://github.com/guillaumeblanc/ozz-animation) | Skeletal runtime | safe-donor | MIT data-oriented C++ skeletal animation runtime and offline conversion. |
+| [Animation Compression Library](https://github.com/nfrechette/acl) | Animation compression | safe-donor | MIT animation clip compression/decompression and accuracy/performance tests. |
+| [OpenUSD UsdSkel](https://openusd.org/dev/api/usd_skel_page_front.html) | Animation interchange | dependency-candidate | USD skeletal animation, skinning, and blend-shape schema reference. |
+
+## Surfaces, Subdivision, And Geometry Processing
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [OpenSubdiv](https://github.com/PixarAnimationStudios/OpenSubdiv) | Subdivision surfaces | safe-donor | Apache-style Tomorrow license; Catmull-Clark and feature-adaptive subdivision. |
+| [libigl](https://github.com/libigl/libigl) | Geometry processing | dependency-candidate | Primarily MPL-2.0 with GPL/copyleft subfolders and third-party caveats. |
+| [CGAL](https://www.cgal.org/) | Robust geometry | dependency-candidate | Mixed LGPL/GPL by package with commercial option. |
+| [meshoptimizer](https://github.com/zeux/meshoptimizer) | Runtime mesh conditioning | safe-donor | MIT mesh simplification, optimization, compression, and glTF-friendly pipeline code. |
+
+## Texture, Material, And Color
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [KTX-Software](https://github.com/KhronosGroup/KTX-Software) | KTX/KTX2 tooling | dependency-candidate | Mostly Apache-2.0-compatible with many licenses and explicit special cases. |
+| [Basis Universal](https://github.com/BinomialLLC/basis_universal) | Texture compression/transcoding | safe-donor | Apache-2.0 portable GPU supercompressed texture codec. |
+| [OpenImageIO](https://github.com/AcademySoftwareFoundation/OpenImageIO) | Image IO | dependency-candidate | Apache-2.0 original code; docs CC BY 4.0; VFX image processing. |
+| [OpenColorIO](https://github.com/AcademySoftwareFoundation/OpenColorIO) | Color management | dependency-candidate | BSD-3-Clause color management for VFX and animation. |
+| [TinyEXR](https://github.com/syoyo/tinyexr) | Minimal EXR IO | safe-donor | BSD-3-Clause lightweight EXR read/write patterns. |
+
+## CAD And Precision Geometry
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [Open CASCADE Technology](https://github.com/Open-Cascade-SAS/OCCT) | CAD kernel | dependency-candidate | LGPL-2.1 with Open CASCADE exception; B-rep/NURBS, STEP/IGES, topology. |
+| [FreeCAD](https://github.com/FreeCAD/FreeCAD) | CAD UX and workflows | study-only | LGPL/GPL mix and dependency-heavy app architecture; study workflow concepts only by default. |
+
+## Advanced Simulation And GPU Simulation
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [NVIDIA Warp](https://github.com/NVIDIA/warp) | GPU/differentiable simulation | dependency-candidate | Apache-2.0 Python CUDA simulation, robotics, and spatial computing framework. |
+| [Taichi](https://github.com/taichi-dev/taichi) | Portable simulation DSL | dependency-candidate | Apache-2.0 CPU/GPU programming DSL for simulation and differentiable programming. |
+| [PositionBasedDynamics](https://github.com/InteractiveComputerGraphics/PositionBasedDynamics) | PBD simulation | safe-donor | MIT rigid/deformable/fluid position-based simulation library. |
+| [Project Chrono](https://projectchrono.org/) | Multiphysics | dependency-candidate | BSD-3-Clause multibody, vehicle, terrain, granular, FEA, and fluid-solid simulation. |
+| [SOFA](https://github.com/sofa-framework/sofa) | Deformable/medical simulation | dependency-candidate | LGPL-2.1/GPL/plugin mix; inspect module licenses. |
+| [NVIDIA PhysX](https://github.com/NVIDIA-Omniverse/PhysX) | Realtime physics | dependency-candidate | BSD-3-Clause signals; inspect SDK notices and optional components. |
+
+## XR And Spatial Interaction
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [Khronos OpenXR-SDK-Source](https://github.com/KhronosGroup/OpenXR-SDK-Source) | OpenXR foundations | safe-donor | Apache-2.0 plus generated-file notices; loader, layers, samples, and `hello_xr`. |
+| [OpenXR-Hpp](https://github.com/KhronosGroup/OpenXR-Hpp) | C++ OpenXR bindings | safe-donor | Apache-2.0 type-safe OpenXR wrapper patterns. |
+| [Monado](https://monado.dev/) | OpenXR runtime | dependency-candidate | Permissive open-source OpenXR runtime architecture for Linux, Windows, and Android. |
+| [Godot XR docs](https://docs.godotengine.org/en/stable/tutorials/xr/index.html) | Engine XR UX | dependency-candidate | Godot MIT; plugin/vendor assets and SDKs vary. |

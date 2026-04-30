@@ -1,0 +1,50 @@
+# Donor Selection Policy
+
+Use this policy to keep donor-code usage clean, reusable, and auditable.
+
+## Default Decision
+
+Prefer `safe-donor` projects for reusable skill/template code. Keep `study-only` projects in research
+notes or design discussion unless the user explicitly approves a license-specific path.
+
+## Safe-Donor Checklist
+
+Before adapting code or adding a dependency:
+
+1. Confirm the repo license from the upstream `LICENSE`, `COPYING`, or official README.
+2. Check for exceptions: `non_commercial/`, `third_party/`, assets, model weights, datasets, SDK EULAs, submodules.
+3. Identify the exact donor scope: one algorithm, one API pattern, one test pattern, one build-module pattern, or a full dependency.
+4. Preserve attribution and notices required by the donor license.
+5. Prefer small, idiomatic reimplementation from the concept when the implementation is simple.
+6. Avoid importing donor-specific architecture unless it fits the target repo's existing shape.
+
+## Tier Meanings
+
+| Tier | Allowed Use | Requirements |
+| --- | --- | --- |
+| `safe-donor` | Copy/adapt small code, tests, build ideas, examples, and dependency patterns. | Preserve notices; cite donor in docs when meaningful. |
+| `dependency-candidate` | Add as dependency or study architecture. | Confirm version, build cost, transitive licenses, and target repo dependency policy. |
+| `study-only` | Learn concepts, compare algorithms, write independent implementations. | Do not copy code into project or skills without explicit approval and license review. |
+
+## Red Flags
+
+- Non-commercial, research-only, evaluation-only, or "NVIDIA Source Code License" terms.
+- GPL/LGPL/AGPL source when the target project is meant to stay permissive or proprietary-compatible.
+- Missing license files, license text that only applies to part of the repo, or contradictory README/license claims.
+- Model checkpoints, datasets, pretrained weights, and assets bundled under different terms than code.
+- CUDA samples that depend on proprietary SDK components not redistributable with the target repo.
+
+## Attribution Pattern
+
+When adopting a donor pattern in a project doc, use a compact note:
+
+```markdown
+Donor reference: <project name> (<url>), <license>, consulted for <feature>.
+No donor code copied / Adapted <small component>; notices retained in <path>.
+```
+
+## Study-Only Handling
+
+Study-only projects are still valuable. Use them to understand papers, expected behavior,
+performance envelopes, file formats, and test cases. Convert the learning into independent,
+source-backed implementation notes instead of copying implementation text.

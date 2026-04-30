@@ -1,0 +1,261 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Unix Makefiles",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "PROJECT_BUILD_TESTS": "ON",
+        "PROJECT_ENABLE_CUDA": "ON",
+        "PROJECT_ENABLE_VULKAN": "ON",
+        "PROJECT_CUDA_ARCHITECTURES": "native",
+        "PROJECT_VULKAN_API_VERSION": "1.4",
+        "PROJECT_ENABLE_VULKAN_VALIDATION": "OFF",
+        "PROJECT_ENABLE_VULKAN_DEBUG_UTILS": "ON",
+        "PROJECT_ENABLE_HOST_SANITIZERS": "OFF",
+        "PROJECT_ENABLE_CLANG_TIDY": "OFF",
+        "PROJECT_WARNINGS_AS_ERRORS": "OFF"
+      }
+    },
+    {
+      "name": "dev",
+      "inherits": "base",
+      "displayName": "Developer build",
+      "binaryDir": "${sourceDir}/build/dev",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release",
+      "inherits": "base",
+      "displayName": "Release build",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "PROJECT_WARNINGS_AS_ERRORS": "ON"
+      }
+    },
+    {
+      "name": "profile",
+      "inherits": "base",
+      "displayName": "Profile build",
+      "binaryDir": "${sourceDir}/build/profile",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    },
+    {
+      "name": "asan-ubsan",
+      "inherits": "base",
+      "displayName": "ASan/UBSan host build",
+      "binaryDir": "${sourceDir}/build/asan-ubsan",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PROJECT_ENABLE_CUDA": "OFF",
+        "PROJECT_ENABLE_VULKAN": "OFF",
+        "PROJECT_ENABLE_HOST_SANITIZERS": "ON"
+      }
+    },
+    {
+      "name": "cuda-debug",
+      "inherits": "base",
+      "displayName": "CUDA debug build",
+      "binaryDir": "${sourceDir}/build/cuda-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PROJECT_ENABLE_CUDA": "ON",
+        "PROJECT_ENABLE_VULKAN": "OFF"
+      }
+    },
+    {
+      "name": "vulkan-debug",
+      "inherits": "base",
+      "displayName": "Vulkan debug build",
+      "binaryDir": "${sourceDir}/build/vulkan-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PROJECT_ENABLE_CUDA": "OFF",
+        "PROJECT_ENABLE_VULKAN": "ON",
+        "PROJECT_ENABLE_VULKAN_VALIDATION": "OFF"
+      }
+    },
+    {
+      "name": "vulkan-validation",
+      "inherits": "vulkan-debug",
+      "displayName": "Vulkan validation build",
+      "binaryDir": "${sourceDir}/build/vulkan-validation",
+      "cacheVariables": {
+        "PROJECT_ENABLE_VULKAN_VALIDATION": "ON"
+      }
+    },
+    {
+      "name": "ci-gpu",
+      "inherits": "base",
+      "displayName": "Self-hosted GPU CI build",
+      "binaryDir": "${sourceDir}/build/ci-gpu",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "dev",
+      "configurePreset": "dev",
+      "jobs": 0
+    },
+    {
+      "name": "release",
+      "configurePreset": "release",
+      "jobs": 0
+    },
+    {
+      "name": "profile",
+      "configurePreset": "profile",
+      "jobs": 0
+    },
+    {
+      "name": "asan-ubsan",
+      "configurePreset": "asan-ubsan",
+      "jobs": 0
+    },
+    {
+      "name": "cuda-debug",
+      "configurePreset": "cuda-debug",
+      "jobs": 0
+    },
+    {
+      "name": "vulkan-debug",
+      "configurePreset": "vulkan-debug",
+      "jobs": 0
+    },
+    {
+      "name": "vulkan-validation",
+      "configurePreset": "vulkan-validation",
+      "jobs": 0
+    },
+    {
+      "name": "ci-gpu",
+      "configurePreset": "ci-gpu",
+      "jobs": 0
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "quick",
+      "configurePreset": "dev",
+      "output": {
+        "outputOnFailure": true
+      },
+      "filter": {
+        "include": {
+          "label": "quick"
+        },
+        "exclude": {
+          "label": "gpu|gui|perf|nightly"
+        }
+      }
+    },
+    {
+      "name": "gpu",
+      "configurePreset": "dev",
+      "output": {
+        "outputOnFailure": true
+      },
+      "filter": {
+        "include": {
+          "label": "gpu"
+        },
+        "exclude": {
+          "label": "perf|nightly"
+        }
+      }
+    },
+    {
+      "name": "vulkan-shader",
+      "configurePreset": "vulkan-debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "filter": {
+        "include": {
+          "label": "shader"
+        }
+      }
+    },
+    {
+      "name": "vulkan",
+      "configurePreset": "vulkan-debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "filter": {
+        "include": {
+          "label": "vulkan"
+        },
+        "exclude": {
+          "label": "perf|nightly"
+        }
+      }
+    },
+    {
+      "name": "vulkan-compute",
+      "configurePreset": "vulkan-debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "filter": {
+        "include": {
+          "label": "compute"
+        }
+      }
+    },
+    {
+      "name": "vulkan-render",
+      "configurePreset": "vulkan-debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "filter": {
+        "include": {
+          "label": "render"
+        }
+      }
+    },
+    {
+      "name": "vulkan-validation",
+      "configurePreset": "vulkan-validation",
+      "output": {
+        "outputOnFailure": true
+      },
+      "filter": {
+        "include": {
+          "label": "vulkan"
+        },
+        "exclude": {
+          "label": "perf|nightly"
+        }
+      }
+    },
+    {
+      "name": "asan-ubsan-quick",
+      "configurePreset": "asan-ubsan",
+      "output": {
+        "outputOnFailure": true
+      },
+      "filter": {
+        "include": {
+          "label": "quick"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SKILL_NAME="${SKILL_NAME:-cpp-cuda-vulkan-studio}"
+SOURCE_DIR="${ROOT_DIR}/skills/${SKILL_NAME}"
+CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
+TARGET_DIR="${TARGET_DIR:-${CODEX_HOME_DIR}/skills/${SKILL_NAME}}"
+VALIDATOR="${VALIDATOR:-${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py}"
+
+dry_run=0
+delete_flag="--delete"
+
+usage() {
+    cat <<EOF
+Usage: $0 [--dry-run] [--no-delete]
+
+Sync ${SOURCE_DIR} to ${TARGET_DIR}.
+
+Environment:
+  SYNC_CODEX_HOME  Defaults to ${HOME}/.codex
+  TARGET_DIR       Override the exact installed skill directory
+  VALIDATOR        Override quick_validate.py path
+
+Note:
+  This repo publishes the user-level skill copy by default. Nested Codex sessions may set
+  CODEX_HOME to an isolated home, so this script intentionally ignores CODEX_HOME unless
+  TARGET_DIR or SYNC_CODEX_HOME is provided explicitly.
+EOF
+}
+
+while (($# > 0)); do
+    case "$1" in
+        --dry-run)
+            dry_run=1
+            ;;
+        --no-delete)
+            delete_flag=""
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo "Unknown argument: $1" >&2
+            usage >&2
+            exit 2
+            ;;
+    esac
+    shift
+done
+
+if [[ ! -f "${SOURCE_DIR}/SKILL.md" ]]; then
+    echo "Missing source skill: ${SOURCE_DIR}/SKILL.md" >&2
+    exit 1
+fi
+
+if [[ ! -x "${VALIDATOR}" && ! -f "${VALIDATOR}" ]]; then
+    echo "Missing skill validator: ${VALIDATOR}" >&2
+    exit 1
+fi
+
+python3 "${VALIDATOR}" "${SOURCE_DIR}"
+
+mkdir -p "$(dirname "${TARGET_DIR}")"
+
+rsync_args=(
+    -a
+    --omit-dir-times
+    ${delete_flag}
+    --exclude "__pycache__/"
+    --exclude "*.pyc"
+    --exclude ".DS_Store"
+)
+
+if (( dry_run )); then
+    rsync_args+=(--dry-run --itemize-changes)
+fi
+
+rsync "${rsync_args[@]}" "${SOURCE_DIR}/" "${TARGET_DIR}/"
+
+if (( ! dry_run )); then
+    find "${TARGET_DIR}/scripts" -type f \( -name "*.sh" -o -name "*.py" \) -exec chmod +x {} + 2>/dev/null || true
+    python3 "${VALIDATOR}" "${TARGET_DIR}"
+    echo "Synced ${SOURCE_DIR} -> ${TARGET_DIR}"
+else
+    echo "Dry run complete for ${SOURCE_DIR} -> ${TARGET_DIR}"
+fi
