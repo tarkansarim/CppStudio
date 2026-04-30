@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Validate the CppStudio trigger-regression matrix references."""
+"""Validate CppStudio trigger-matrix schema and path integrity.
+
+This check does not prove runtime skill-trigger behavior. It only keeps the manual/subagent trigger
+matrix connected to real repo paths and catches malformed case metadata.
+"""
 
 from __future__ import annotations
 
@@ -14,6 +18,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("matrix", type=Path, help="Path to trigger-matrix.json")
     parser.add_argument("--repo-root", type=Path, default=Path.cwd())
     return parser.parse_args()
+
+
+def validate_relative_path(repo_root: Path, case_name: str, field_name: str, relative: object, errors: list[str]) -> Path | None:
+    if not isinstance(relative, str) or relative.startswith("/"):
+        errors.append(f"{case_name}: {field_name} path must be repo-relative: {relative!r}")
+        return None
+    resolved = (repo_root / relative).resolve()
+    try:
+        resolved.relative_to(repo_root)
+    except ValueError:
+        errors.append(f"{case_name}: {field_name} path escapes repo root: {relative!r}")
+        return None
+    if not resolved.exists():
+        errors.append(f"{case_name}: missing {field_name} path {relative}")
+        return None
+    return resolved
 
 
 def main() -> int:
@@ -32,8 +52,17 @@ def main() -> int:
         print(f"Invalid trigger matrix JSON: {error}", file=sys.stderr)
         return 1
 
+    cases = matrix.get("cases")
+    if not isinstance(cases, list):
+        errors.append("trigger matrix cases must be a list")
+        cases = []
+
     case_names: set[str] = set()
-    for index, case in enumerate(matrix.get("cases", []), 1):
+    for index, case in enumerate(cases, 1):
+        if not isinstance(case, dict):
+            errors.append(f"case #{index}: case must be an object")
+            continue
+
         name = case.get("name")
         if not isinstance(name, str) or not name:
             errors.append(f"case #{index}: missing name")
@@ -42,20 +71,34 @@ def main() -> int:
             errors.append(f"duplicate case name: {name}")
         case_names.add(name)
 
+        for field_name in ("prompt_shape", "expected_behavior"):
+            value = case.get(field_name)
+            if not isinstance(value, str) or not value.strip():
+                errors.append(f"{name}: {field_name} must be a non-empty string")
+
         expected_paths = case.get("expected_paths", [])
-        if not expected_paths:
+        if not isinstance(expected_paths, list) or not expected_paths:
             errors.append(f"{name}: expected_paths must not be empty")
+            expected_paths = []
+        expected_resolved: set[Path] = set()
         for relative in expected_paths:
-            path = repo_root / relative
-            if not isinstance(relative, str) or relative.startswith("/"):
-                errors.append(f"{name}: expected path must be repo-relative: {relative!r}")
-            elif not path.exists():
-                errors.append(f"{name}: missing expected path {relative}")
+            resolved = validate_relative_path(repo_root, name, "expected", relative, errors)
+            if resolved is not None:
+                expected_resolved.add(resolved)
 
         must_not_trigger = case.get("must_not_trigger_paths", [])
+        if not isinstance(must_not_trigger, list):
+            errors.append(f"{name}: must_not_trigger_paths must be a list when present")
+            must_not_trigger = []
+        must_not_resolved: set[Path] = set()
         for relative in must_not_trigger:
-            if not isinstance(relative, str) or relative.startswith("/"):
-                errors.append(f"{name}: must-not-trigger path must be repo-relative: {relative!r}")
+            resolved = validate_relative_path(repo_root, name, "must-not-trigger", relative, errors)
+            if resolved is not None:
+                must_not_resolved.add(resolved)
+
+        overlap = expected_resolved & must_not_resolved
+        for path in sorted(overlap):
+            errors.append(f"{name}: path appears in both expected and must-not-trigger lists: {path.relative_to(repo_root)}")
 
     if not case_names:
         errors.append("trigger matrix has no cases")
@@ -63,7 +106,7 @@ def main() -> int:
     if errors:
         for error in errors:
             print(error, file=sys.stderr)
-        print(f"Trigger matrix validation failed: {len(errors)} error(s)", file=sys.stderr)
+        print(f"Trigger matrix path-integrity validation failed: {len(errors)} error(s)", file=sys.stderr)
         return 1
 
     print("Trigger matrix validation passed")

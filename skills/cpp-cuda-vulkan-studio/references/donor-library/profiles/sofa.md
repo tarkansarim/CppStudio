@@ -2,6 +2,7 @@
 
 Source: https://github.com/sofa-framework/sofa  
 Tier: `dependency-candidate`  
+Backend signal: mixed-backend, native-cpu
 License signal: LGPL-2.1 for the main framework with plugin/module license variation; inspect `LICENSE`,
 plugin licenses, bundled data, optional dependencies, and scene assets at the exact revision used.
 

@@ -19,8 +19,8 @@ Recommended GPU tools:
 - Nsight Graphics or RenderDoc for graphics captures
 
 Self-hosted GPU runner expectations live in [GPU_RUNNER_CI.md](GPU_RUNNER_CI.md). Keep driver,
-CUDA Toolkit, Vulkan SDK, and profiler installation in the runner/workstation environment rather than
-inside project source.
+CUDA Toolkit, Vulkan SDK, and profiler installation in the runner or developer environment rather
+than inside project source.
 
 Configure and build:
 
@@ -38,7 +38,7 @@ The default CUDA architecture is `native`. For release artifacts or shared CI, s
 `PROJECT_CUDA_ARCHITECTURES` to the explicit target SM list for the supported GPU fleet. Use the CUDA
 Toolkit release notes and NVIDIA compute capability table before adding new architecture IDs.
 
-For realtime CUDA runs on multi-GPU Linux workstations, the display/compositor GPU may be unsuitable
+For realtime CUDA runs on multi-GPU Linux systems, the display/compositor GPU may be unsuitable
 even when it is visible to the driver. Pin runtime work explicitly with `CUDA_VISIBLE_DEVICES`, or set
 `GPU_ALLOWED_INDICES` to the physical `nvidia-smi` GPU indexes that are allowed for realtime CUDA:
 
@@ -61,6 +61,9 @@ scripts/dump_vulkan_capabilities.sh
 
 to distinguish SDK/tool availability from loader, ICD, physical-device, and queue-family runtime
 availability. A build-only Vulkan lane can pass without proving a usable hardware device.
+`scripts/check_dev_tools.sh` is Vulkan-first by default; use `REQUIRE_CUDA=1` only when validating
+CUDA lanes, `REQUIRE_PROFILING=1` when validating Nsight Systems profiling, and
+`REQUIRE_CUDA_PROFILING=1` only when validating Nsight Compute/CUDA profiling.
 
 Shader sources live in `shaders/`. Generated `.spv` files are build artifacts under the CMake binary
 directory and should not be edited or committed unless a project intentionally vendors binary

@@ -9,14 +9,14 @@ C++/CUDA/Vulkan development.
 - The main artifact is the user-level Codex skill source at `skills/cpp-cuda-vulkan-studio/`.
 - If available in the session, use the project skill `cppstudio-repo-onboarding` when starting
   work in this repo.
-- The installed user-level copy at `/home/tarkan/.codex/skills/cpp-cuda-vulkan-studio` is a
+- The installed user-level copy at `${HOME}/.codex/skills/cpp-cuda-vulkan-studio` is a
   deployment target, not the source of truth.
 
 ## Source Of Truth
 
 - Edit `skills/cpp-cuda-vulkan-studio/` in this repo.
 - Publish to user-level Codex with `./scripts/sync_to_codex.sh`.
-- Do not hand-edit `/home/tarkan/.codex/skills/cpp-cuda-vulkan-studio` as the long-term source.
+- Do not hand-edit `${HOME}/.codex/skills/cpp-cuda-vulkan-studio` as the long-term source.
 - Do not move CudaGroomTool, ComfyNative, or other project-specific skills back into user-level
   Codex from this repo.
 
@@ -68,8 +68,10 @@ C++/CUDA/Vulkan development.
 - Pass `--no-delete` only for diagnostics; normal publishing should keep delete enabled.
 - `./scripts/watch_to_codex.sh` continuously validates and syncs after file changes.
 - `./scripts/rollout_to_codex.sh` validates, syncs the canonical skill, installs donor-library links
-  into companion user-level skills, validates affected installed skills, and verifies source/target
-  parity.
+  into matching installed companion user-level skills, validates affected installed skills, and
+  verifies source/target parity.
+- Set `STRICT_COMPANION_SKILLS=1` only for maintainer checks that should require every known
+  companion skill to be installed. Public installs skip missing optional companion skills.
 - Companion-skill donor link snippets live in `companion-skill-snippets/`; update those snippets,
   not inline installed skill text or hardcoded markdown inside rollout scripts.
 
@@ -77,6 +79,14 @@ C++/CUDA/Vulkan development.
 
 - Keep reusable policy generic. Do not add CudaGroomTool-only, ComfyNative-only, or machine-only
   workflow rules to `skills/cpp-cuda-vulkan-studio/`; those belong in project-level skills.
+- If this repo installs user-level `AGENTS.md` content, merge or append only the tiny marked
+  CppStudio relay block. It should only tell agents to load `cpp-cuda-vulkan-studio` for C++
+  Vulkan/CUDA work; lane policy stays inside the skill. Content inside the marked relay block is
+  managed by this repo and may be replaced on reinstall; content outside the markers is user-owned
+  and must be preserved. Relay targets must be named `AGENTS.md` and must not be symlinks.
+- Companion-skill donor rollout may replace only the marked `cppstudio-donor-library` block. Content
+  outside those markers is user-owned and must be preserved, even if it looks like an older donor
+  note.
 - Preserve intentional template placeholders such as `{{PROJECT_NAME}}` and `{{CPP_NAMESPACE}}`.
 - Do not commit generated temp projects, build directories, profiler traces, or Python
   `__pycache__` files.

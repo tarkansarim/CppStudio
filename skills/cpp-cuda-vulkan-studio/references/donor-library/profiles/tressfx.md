@@ -2,6 +2,7 @@
 
 Source: https://github.com/GPUOpen-Effects/TressFX  
 Tier: `safe-donor`  
+Backend signal: native-vulkan, native-directx
 License signal: MIT; inspect `license.txt`, bundled Cauldron code, sample assets, exporters, and
 third-party notices at the exact revision used.
 

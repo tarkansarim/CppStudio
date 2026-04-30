@@ -13,3 +13,10 @@ interaction context, also read `{{DONOR_ROOT}}/xr-spatial.md` and
 `{{DONOR_ROOT}}/profiles/openxr-sdk.md`. Use Khronos samples as the first correctness reference, then
 vendor samples for vendor-specific extensions or tools. Keep study-only and non-commercial references
 out of reusable Vulkan code.
+
+The donor library is shared across CUDA, Vulkan, CPU, DirectX, OpenCL, DCC, and other backend sources.
+Do not reject a CUDA or non-Vulkan donor when it is the best domain reference; use it for algorithms,
+data models, tests, or architecture, then translate backend-specific kernels, synchronization, memory
+ownership, shaders, and build requirements into the Vulkan lane. Do not add CUDA runtime requirements
+or CUDA/Vulkan interop to a Vulkan project unless the user explicitly chooses that mixed lane or the
+requirements force it.

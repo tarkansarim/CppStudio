@@ -1,5 +1,5 @@
 {
-  "description": "Repeatable trigger-regression matrix for the CppStudio donor and lane-routing skills. Use these cases for manual/subagent reruns; this file is also validated so referenced repo paths remain real.",
+  "description": "Manual/subagent trigger-regression matrix for the CppStudio donor and lane-routing skills. Repo validation checks path integrity only; fresh agent behavior still requires a manual or delegated rerun.",
   "cases": [
     {
       "name": "vulkan-default-greenfield",
@@ -35,6 +35,30 @@
         "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "vulkan-target-cuda-donor-reference",
+      "prompt_shape": "Vulkan-first C++ Gaussian splatting, neural 3D, grooming, or simulation work where the strongest donor implementation is CUDA-heavy.",
+      "expected_behavior": "Stay in the Vulkan lane, use CUDA-heavy donors as algorithm/data-layout/test references, and do not add CUDA runtime, CUDA tests, or CUDA/Vulkan interop unless explicitly requested.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/neural-3d.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/gsplat.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md"
+      ]
+    },
+    {
+      "name": "cuda-target-non-cuda-donor-reference",
+      "prompt_shape": "CUDA C++ simulation or geometry kernel work that wants to reuse solver, layout, or validation ideas from Vulkan, OpenCL, DirectX, CPU, or DCC donors.",
+      "expected_behavior": "Stay in the CUDA lane, use non-CUDA donors as domain references, and translate implementation details through CUDA kernel-authoring guidance without adding Vulkan or other runtime dependencies.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/simulation-gpu.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/positionbaseddynamics.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tressfx.md"
       ]
     },
     {

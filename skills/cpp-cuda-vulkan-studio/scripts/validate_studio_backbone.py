@@ -20,6 +20,7 @@ REQUIRED_FILES = [
     "cmake/Testing.cmake",
     ".clang-format",
     ".clang-tidy",
+    ".gitignore",
     ".github/workflows/gpu-cpp.yml",
     "docs/DEVELOPMENT_ENVIRONMENT.md",
     "docs/VALIDATION_PIPELINE.md",

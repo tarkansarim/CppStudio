@@ -22,6 +22,9 @@ hair rendering, and DCC groom interchange.
 ## Selection Notes
 
 - For reusable C++/Vulkan/CUDA hair implementation patterns, start with TressFX.
+- Treat TressFX, HairWorks, Blender hair, USD curves, and Alembic as domain references even when their
+  runtime/API lane differs from the target. Port simulation, strand layout, and render behavior through
+  the selected Vulkan or CUDA lane instead of changing lanes because of the donor backend.
 - For grooming UI and artist workflow ideas, study Blender hair curves but do not copy GPL code into
   permissive templates.
 - For interchange, prefer OpenUSD curves for modern scene pipelines and Alembic for established

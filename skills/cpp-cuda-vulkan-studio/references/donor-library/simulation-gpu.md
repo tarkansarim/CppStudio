@@ -23,6 +23,9 @@ granular media, multiphysics, robotics simulation, and CUDA/GPU simulation kerne
 
 - Use Warp or Taichi for GPU/differentiable simulation exploration when Python/JIT tooling is acceptable.
 - Use PositionBasedDynamics for small reusable C++ constraint/cloth/soft-body patterns.
+- Use CUDA, Vulkan, CPU, or DSL simulation donors as solver and validation references across lanes. Keep
+  the target lane fixed and translate execution, memory, and synchronization details through the active
+  CUDA or Vulkan skill.
 - Use Chrono when multiphysics fidelity matters and a heavier dependency is acceptable.
 - Use PhysX when engine-grade realtime rigid-body/collision/constraint behavior is central.
 - Use SOFA as architecture/reference material for medical or robotics simulation unless the project

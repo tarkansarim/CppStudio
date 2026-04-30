@@ -2,6 +2,7 @@
 
 Source: https://github.com/NVIDIA-Omniverse/PhysX  
 Tier: `dependency-candidate`  
+Backend signal: mixed-backend, native-cpu, native-cuda
 License signal: BSD-3-Clause signals for the repository, with subfolder license files and Omniverse,
 Blast, Flow, Python, and USD-related components to inspect at the exact revision used.
 

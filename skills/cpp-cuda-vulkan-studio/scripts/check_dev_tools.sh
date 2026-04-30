@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-require_cuda="${REQUIRE_CUDA:-1}"
+require_cuda="${REQUIRE_CUDA:-0}"
 require_vulkan="${REQUIRE_VULKAN:-1}"
 require_profiling="${REQUIRE_PROFILING:-0}"
+require_cuda_profiling="${REQUIRE_CUDA_PROFILING:-0}"
 
 missing=0
 
@@ -63,9 +64,13 @@ fi
 
 if [[ "${require_profiling}" == "1" ]]; then
     need_cmd nsys
-    need_cmd ncu
 else
     want_cmd nsys
+fi
+
+if [[ "${require_cuda_profiling}" == "1" ]]; then
+    need_cmd ncu
+else
     want_cmd ncu
 fi
 

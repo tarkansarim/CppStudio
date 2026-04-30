@@ -2,6 +2,7 @@
 
 Source: https://github.com/triton-lang/triton  
 Tier: `safe-donor`  
+Backend signal: mixed-backend, native-cuda
 License signal: MIT; inspect `LICENSE`, `third_party/`, and compiler/runtime dependencies at the exact
 revision used.
 

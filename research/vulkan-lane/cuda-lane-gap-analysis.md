@@ -16,7 +16,7 @@ This file records gaps to consider later in plan mode. It is not an edit plan.
 | `cuda-debug` preset | `vulkan-debug`, `vulkan-validation`, `vulkan-sync-validation`, `vulkan-profile`, or similar presets. |
 | `gpu;cuda` CTest labels | `gpu;vulkan;compute`, `gpu;vulkan;render`, `vulkan;shader`, `vulkan;validation`, `gui;vulkan`. |
 | Nsight Systems smoke | Nsight Graphics/RenderDoc capture smoke plus continued Nsight Systems timing lane. |
-| NVIDIA GPU selection via `nvidia-smi` | Vulkan physical-device selection/reporting; still allow NVIDIA-specific optimization on this workstation. |
+| NVIDIA GPU selection via `nvidia-smi` | Vulkan physical-device selection/reporting; keep vendor-specific optimization explicit and lane-scoped. |
 
 ## Template Gaps Seen From Research
 
@@ -61,7 +61,7 @@ Research points to multiple layers of future skill content:
 - Keep deep synchronization/debugging rules in `vulkan-compute-sync`.
 - Potentially add a narrower Vulkan shader/toolchain skill only if shader workflows become large
   enough to justify it.
-- Use `gpu-profiling-workstation` for local RenderDoc/Nsight command specifics on this machine.
+- Use environment-specific profiling guidance for RenderDoc/Nsight command details when available.
 
 ## Risk Notes For Later Planning
 
@@ -73,4 +73,3 @@ Research points to multiple layers of future skill content:
 - Do not enable every validation feature at once by default.
 - Do not add RenderDoc/Nsight capture requirements to normal quick tests.
 - Do not put project-specific renderer policy into the reusable global skill.
-

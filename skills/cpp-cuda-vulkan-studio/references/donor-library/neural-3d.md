@@ -24,6 +24,9 @@ and neural graphics pipelines.
 ## Selection Notes
 
 - For Gaussian splatting implementation, prefer `gsplat` over the original GraphDeco code because `gsplat` is Apache-2.0 and actively library-shaped.
+- For Vulkan-first Gaussian splatting or neural 3D, still use CUDA-heavy donors such as `gsplat` for
+  rasterization behavior, data layout, numerical edge cases, and tests, then port the target path through
+  Vulkan compute/render guidance instead of adding CUDA by default.
 - For general neural 3D experiments, use Nerfstudio for workflow and PyTorch3D/Kaolin/Open3D for reusable operators.
 - Treat pretrained models, datasets, camera captures, and generated assets as separate license surfaces even when code is permissive.
 

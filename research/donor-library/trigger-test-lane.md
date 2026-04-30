@@ -6,7 +6,8 @@ This lane forward-tested whether fresh agents pick the intended skills and donor
 graphics, CUDA/AI kernels, geometry/simulation, neural 3D, and a negative non-GPU task.
 
 The repeatable regression matrix for future reruns lives in `trigger-matrix.json`; repo validation
-checks that the referenced skill and donor files still exist.
+checks only that referenced skill and donor files still exist. Use
+`trigger-regression-checklist.md` for fresh manual or subagent reruns.
 
 ## Test Matrix
 
@@ -132,3 +133,29 @@ simulation routing, and a negative non-3D business simulation prompt. Tests used
   is explicit.
 - The simulation lane now has enough deep-profile guidance for agents to distinguish prototype donors
   from native C++ donors and SDK dependencies.
+
+## Domain-First Backend-Mismatch Rerun
+
+Run date: 2026-04-30
+
+This lane re-tested the donor-library change that makes donors domain references first instead of
+CUDA/Vulkan lane locks. Tests used installed paths under `/home/tarkan/.codex/skills` after rollout.
+
+| Case | Prompt Shape | Observed Result |
+| --- | --- | --- |
+| Vulkan neural 3D with CUDA-heavy donor | Vulkan-first C++ Gaussian splatting/neural 3D viewer where the strongest donor implementation is CUDA-heavy | Passed. Agent selected `cpp-cuda-vulkan-studio`, `vulkan-compute-sync`, and `modern-cpp-cmake`; used `gsplat` as a CUDA donor for algorithm/data-layout/test reference; kept CUDA runtime, CUDA tests, and CUDA/Vulkan interop out by default. |
+| Vulkan grooming with mixed-backend references | Vulkan C++ grooming/fur tool with possible DirectX, CUDA, DCC, or older vendor references | Passed. Agent selected `cpp-cuda-vulkan-studio`, `vulkan-compute-sync`, and `modern-cpp-cmake`; used TressFX, OpenUSD, and Khronos Vulkan-Samples; kept HairWorks/Blender study-only and did not add CUDA or interop. |
+| CUDA simulation with non-CUDA donors | Explicit CUDA C++ cloth/particle simulation kernel using solver/layout/test ideas from Vulkan, OpenCL, DirectX, CPU, or DCC donors | Passed. Agent selected `cpp-cuda-vulkan-studio` and `cuda-kernel-authoring`; used `simulation-gpu.md`, Warp, Taichi, PositionBasedDynamics, and PhysX; did not add Vulkan runtime or interop. |
+| Python negative control | Python argparse CLI/unit tests with no C++/GPU/rendering/3D/AI-runtime/CUDA/Vulkan scope | Passed. Agent did not trigger CppStudio or donor-library routing. |
+
+## Domain-First Findings
+
+- Backend mismatch now behaves as intended: donors remain available for algorithms, layouts, tests,
+  and architecture, while lane-specific implementation stays with the chosen CUDA or Vulkan skill.
+- Two wording issues were found and fixed after the rerun:
+  - Neural 3D verification now limits CUDA sanitizer to explicit CUDA or mixed-lane project-owned CUDA
+    kernels.
+  - Grooming archetype wording now enables CUDA only when the user chooses CUDA or the project explicitly
+    requires project-owned CUDA kernels.
+- The CUDA companion donor snippet now points simulation CUDA work to `simulation-gpu.md` and neural 3D
+  CUDA work to `neural-3d.md`, instead of implying that every CUDA donor search starts with AI kernels.

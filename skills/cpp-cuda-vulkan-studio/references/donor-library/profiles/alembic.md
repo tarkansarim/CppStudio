@@ -2,6 +2,7 @@
 
 Source: https://github.com/alembic/alembic  
 Tier: `dependency-candidate`  
+Backend signal: dcc-interchange, native-cpu
 License signal: BSD-3-Clause for original code; inspect `LICENSE.txt`, `THIRD-PARTY.txt`, optional
 HDF5/Python/DCC plugin dependencies, and sample data at the exact revision used.
 

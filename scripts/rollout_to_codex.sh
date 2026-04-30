@@ -11,6 +11,10 @@ DONOR_ROOT="${TARGET_DIR}/references/donor-library"
 SNIPPET_ROOT="${ROOT_DIR}/companion-skill-snippets"
 EXPECTED_TARGET_DIR="${CODEX_HOME_DIR}/skills/${SKILL_NAME}"
 DONOR_VALIDATOR="${ROOT_DIR}/scripts/validate_donor_library.py"
+COMPANION_INSTALLER="${ROOT_DIR}/scripts/install_companion_donor_links.py"
+USER_AGENTS_RELAY_INSTALLER="${ROOT_DIR}/scripts/install_user_agents_relay.py"
+USER_AGENTS_RELAY_SNIPPET="${SNIPPET_ROOT}/user-agents/cppstudio-relay.md"
+USER_AGENTS_RELAY_TARGET="${USER_AGENTS_RELAY_TARGET:-${CODEX_HOME_DIR}/AGENTS.md}"
 
 usage() {
     cat <<EOF
@@ -26,6 +30,16 @@ Environment:
   ALLOW_ROLLOUT_TARGET_OVERRIDE=1
                   Allow TARGET_DIR outside ${EXPECTED_TARGET_DIR}. Companion-skill donor links will
                   point at TARGET_DIR, so use this only for deliberate staging.
+  INSTALL_USER_AGENTS_RELAY=1
+                  Merge the minimal CppStudio relay into USER_AGENTS_RELAY_TARGET.
+  USER_AGENTS_RELAY_TARGET
+                  Defaults to ${CODEX_HOME_DIR}/AGENTS.md when relay install is enabled.
+  ALLOW_USER_AGENTS_RELAY_TARGET_OVERRIDE=1
+                  Allow USER_AGENTS_RELAY_TARGET to differ from ${CODEX_HOME_DIR}/AGENTS.md.
+                  The target must still be named AGENTS.md and must not be a symlink.
+  STRICT_COMPANION_SKILLS=1
+                  Require all known companion skills to exist. By default, rollout updates only
+                  matching installed companion skills and skips missing optional companions.
 EOF
 }
 
@@ -48,11 +62,20 @@ if [[ ! -d "${SOURCE_DIR}" ]]; then
     exit 1
 fi
 
-if [[ "${TARGET_DIR}" != "${EXPECTED_TARGET_DIR}" && "${ALLOW_ROLLOUT_TARGET_OVERRIDE:-0}" != "1" ]]; then
+target_resolved="$(realpath -m "${TARGET_DIR}")"
+expected_resolved="$(realpath -m "${EXPECTED_TARGET_DIR}")"
+
+if [[ "${target_resolved}" != "${expected_resolved}" && "${ALLOW_ROLLOUT_TARGET_OVERRIDE:-0}" != "1" ]]; then
     echo "Refusing rollout with TARGET_DIR outside the installed skill path:" >&2
     echo "  TARGET_DIR=${TARGET_DIR}" >&2
     echo "  expected=${EXPECTED_TARGET_DIR}" >&2
     echo "Set ALLOW_ROLLOUT_TARGET_OVERRIDE=1 only if companion links should point at that target." >&2
+    exit 1
+fi
+
+if [[ "${target_resolved}" != */skills/"${SKILL_NAME}" ]]; then
+    echo "Refusing rollout TARGET_DIR that is not an exact skill directory ending in skills/${SKILL_NAME}:" >&2
+    echo "  TARGET_DIR=${TARGET_DIR}" >&2
     exit 1
 fi
 
@@ -66,10 +89,21 @@ if [[ ! -f "${DONOR_VALIDATOR}" ]]; then
     exit 1
 fi
 
+if [[ ! -f "${COMPANION_INSTALLER}" ]]; then
+    echo "Missing companion installer: ${COMPANION_INSTALLER}" >&2
+    exit 1
+fi
+
+if [[ ! -f "${USER_AGENTS_RELAY_INSTALLER}" ]]; then
+    echo "Missing user AGENTS relay installer: ${USER_AGENTS_RELAY_INSTALLER}" >&2
+    exit 1
+fi
+
 for snippet in \
     "${SNIPPET_ROOT}/cuda-kernel-authoring/donor-library.md" \
     "${SNIPPET_ROOT}/vulkan-compute-sync/donor-library.md" \
-    "${SNIPPET_ROOT}/modern-cpp-cmake/donor-library.md"
+    "${SNIPPET_ROOT}/modern-cpp-cmake/donor-library.md" \
+    "${USER_AGENTS_RELAY_SNIPPET}"
 do
     if [[ ! -f "${snippet}" ]]; then
         echo "Missing companion snippet: ${snippet}" >&2
@@ -78,131 +112,73 @@ do
 done
 
 "${ROOT_DIR}/scripts/validate.sh"
-SYNC_CODEX_HOME="${CODEX_HOME_DIR}" TARGET_DIR="${TARGET_DIR}" VALIDATOR="${VALIDATOR}" \
-    "${ROOT_DIR}/scripts/sync_to_codex.sh"
+companion_args=(
+    --codex-home "${CODEX_HOME_DIR}"
+    --donor-root "${DONOR_ROOT}"
+    --source-skill-dir "${SOURCE_DIR}"
+    --snippet-root "${SNIPPET_ROOT}"
+)
+if [[ "${STRICT_COMPANION_SKILLS:-0}" == "1" ]]; then
+    companion_args+=(--strict)
+fi
+
+python3 "${COMPANION_INSTALLER}" \
+    --preflight \
+    "${companion_args[@]}"
+
+relay_args=(
+    --target "${USER_AGENTS_RELAY_TARGET}"
+    --snippet "${USER_AGENTS_RELAY_SNIPPET}"
+    --expected-target "${CODEX_HOME_DIR}/AGENTS.md"
+)
+if [[ "${ALLOW_USER_AGENTS_RELAY_TARGET_OVERRIDE:-0}" == "1" ]]; then
+    relay_args+=(--allow-target-override)
+fi
+
+if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
+    python3 "${USER_AGENTS_RELAY_INSTALLER}" \
+        --preflight \
+        "${relay_args[@]}"
+fi
+
+if [[ "${ALLOW_ROLLOUT_TARGET_OVERRIDE:-0}" == "1" ]]; then
+    ALLOW_SYNC_TARGET_OVERRIDE=1 SYNC_CODEX_HOME="${CODEX_HOME_DIR}" TARGET_DIR="${TARGET_DIR}" \
+        VALIDATOR="${VALIDATOR}" "${ROOT_DIR}/scripts/sync_to_codex.sh"
+else
+    SYNC_CODEX_HOME="${CODEX_HOME_DIR}" TARGET_DIR="${TARGET_DIR}" VALIDATOR="${VALIDATOR}" \
+        "${ROOT_DIR}/scripts/sync_to_codex.sh"
+fi
 
 python3 "${DONOR_VALIDATOR}" "${DONOR_ROOT}" --reference-root "${TARGET_DIR}/references"
+python3 "${COMPANION_INSTALLER}" \
+    --install \
+    "${companion_args[@]}" || {
+        echo "Companion-skill install failed after main skill sync. The main skill may already be updated at ${TARGET_DIR}." >&2
+        echo "Fix the companion install error and rerun ${ROOT_DIR}/scripts/rollout_to_codex.sh." >&2
+        exit 1
+    }
 
-python3 - "$CODEX_HOME_DIR" "$DONOR_ROOT" "$SNIPPET_ROOT" <<'PY'
-from pathlib import Path
-import re
-import sys
+if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
+    python3 "${USER_AGENTS_RELAY_INSTALLER}" \
+        --install \
+        "${relay_args[@]}"
+fi
 
-codex_home = Path(sys.argv[1])
-donor_root = Path(sys.argv[2])
-snippet_root = Path(sys.argv[3])
-skills_root = codex_home / "skills"
-
-BEGIN = "<!-- cppstudio-donor-library:begin -->"
-END = "<!-- cppstudio-donor-library:end -->"
-
-
-def replace_marked_block(text: str, block: str) -> str:
-    if (BEGIN in text) != (END in text):
-        raise SystemExit("Malformed cppstudio donor marker block: begin/end markers do not match")
-    if BEGIN in text and END in text:
-        start = text.index(BEGIN)
-        end = text.index(END) + len(END)
-        if end <= start:
-            raise SystemExit("Malformed cppstudio donor marker block: end marker precedes begin marker")
-        while end < len(text) and text[end] in "\r\n":
-            end += 1
-        return text[:start].rstrip() + "\n\n" + block + "\n\n" + text[end:].lstrip()
-    return text
-
-
-def remove_legacy_cuda(text: str) -> str:
-    legacy = f"""## Donor References
-
-When selecting external kernel, runtime, or compiler donors, read:
-
-- `{donor_root / "selection-policy.md"}`
-- `{donor_root / "ai-runtimes-kernels.md"}`
-
-Use the donor library to compare CUTLASS, Triton, FlashAttention, tiny-cuda-nn, llama.cpp/ggml,
-ONNX Runtime, TensorRT-LLM, vLLM, MLC-LLM, TVM, and PyTorch before writing or recommending custom
-GPU code. Keep non-commercial or study-only donors out of reusable implementation code.
-"""
-    return text.replace(legacy + "\n", "").replace(legacy, "")
-
-
-def remove_legacy_vulkan(text: str) -> str:
-    legacy = f"""## Donor References
-
-When selecting Vulkan, renderer, WebGPU, or 3D graphics donors, read:
-
-- `{donor_root / "selection-policy.md"}`
-- `{donor_root / "graphics-rendering.md"}`
-- `{donor_root / "geometry-simulation.md"}`
-
-Use Khronos samples as the first correctness reference, then vendor samples for vendor-specific
-extensions or tools. Keep study-only and non-commercial references out of reusable Vulkan code.
-"""
-    return text.replace(legacy + "\n", "").replace(legacy, "")
-
-
-def remove_legacy_modern_cpp(text: str) -> str:
-    legacy = (
-        f"- When choosing external 3D, graphics, GPU, or AI dependencies, read "
-        f"`{donor_root / 'README.md'}` and `selection-policy.md` first. Use permissive donors "
-        "for reusable code; keep study-only references out of templates and shared infrastructure.\n"
-    )
-    return text.replace(legacy, "")
-
-
-def install_block(skill_name: str, marker: str, block: str, cleanup) -> None:
-    skill_path = skills_root / skill_name / "SKILL.md"
-    if not skill_path.is_file():
-        raise SystemExit(f"Missing installed companion skill: {skill_path}")
-
-    original = skill_path.read_text(encoding="utf-8")
-    text = replace_marked_block(cleanup(original), block)
-    if BEGIN not in text:
-        if marker not in text:
-            raise SystemExit(f"Could not find insertion marker {marker!r} in {skill_path}")
-        text = text.replace(marker, block + "\n\n" + marker, 1)
-
-    if text != original:
-        skill_path.write_text(text, encoding="utf-8")
-        print(f"updated: {skill_path}")
-    else:
-        print(f"ok: {skill_path}")
-
-
-def render_snippet(skill_name: str) -> str:
-    snippet = snippet_root / skill_name / "donor-library.md"
-    text = snippet.read_text(encoding="utf-8")
-    text = text.replace("{{DONOR_ROOT}}", str(donor_root))
-    text = text.replace("{{REFERENCE_ROOT}}", str(donor_root.parent))
-    if "{{" in text or "}}" in text:
-        raise SystemExit(f"Unresolved placeholder in rendered snippet: {snippet}")
-    for raw_path in re.findall(r"`(/[^`]+)`", text):
-        path = Path(raw_path)
-        if not path.exists():
-            raise SystemExit(f"Rendered snippet references missing path: {path}")
-    return f"{BEGIN}\n{text.rstrip()}\n{END}"
-
-
-cuda_block = render_snippet("cuda-kernel-authoring")
-vulkan_block = render_snippet("vulkan-compute-sync")
-modern_cpp_block = render_snippet("modern-cpp-cmake")
-
-install_block("cuda-kernel-authoring", "## Design Rules", cuda_block, remove_legacy_cuda)
-install_block("vulkan-compute-sync", "## Compute Pipeline Checklist", vulkan_block, remove_legacy_vulkan)
-install_block("modern-cpp-cmake", "## Renderer Bootstrap", modern_cpp_block, remove_legacy_modern_cpp)
-PY
-
-for skill in \
-    "${TARGET_DIR}" \
-    "${CODEX_HOME_DIR}/skills/cuda-kernel-authoring" \
-    "${CODEX_HOME_DIR}/skills/vulkan-compute-sync" \
-    "${CODEX_HOME_DIR}/skills/modern-cpp-cmake"
-do
-    python3 "${VALIDATOR}" "${skill}"
+python3 "${VALIDATOR}" "${TARGET_DIR}"
+for companion in cuda-kernel-authoring vulkan-compute-sync modern-cpp-cmake; do
+    companion_dir="${CODEX_HOME_DIR}/skills/${companion}"
+    if [[ -d "${companion_dir}" ]]; then
+        python3 "${VALIDATOR}" "${companion_dir}"
+    elif [[ "${STRICT_COMPANION_SKILLS:-0}" == "1" ]]; then
+        echo "Missing required companion skill: ${companion_dir}" >&2
+        exit 1
+    else
+        echo "Skipped missing companion skill: ${companion_dir}"
+    fi
 done
 
 diff -qr "${SOURCE_DIR}" "${TARGET_DIR}" >/dev/null
 
 echo "Rolled out ${SOURCE_DIR} -> ${TARGET_DIR}"
 echo "Verified donor library at ${DONOR_ROOT}"
-echo "Verified companion skill links in ${CODEX_HOME_DIR}/skills"
+echo "Verified companion skill links for matching installed skills in ${CODEX_HOME_DIR}/skills"

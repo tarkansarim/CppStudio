@@ -3,7 +3,11 @@
 When selecting external CUDA kernel, GPU runtime, ML inference runtime, or GPU compiler donors, read:
 
 - `{{DONOR_ROOT}}/selection-policy.md`
-- `{{DONOR_ROOT}}/ai-runtimes-kernels.md`
+- `{{DONOR_ROOT}}/ai-runtimes-kernels.md` for tensor, inference, attention, GEMM, quantization, fused-op,
+  and GPU compiler work
+- `{{DONOR_ROOT}}/simulation-gpu.md` for cloth, particles, fluids, deformables, differentiable simulation,
+  robotics, or physics kernels
+- `{{DONOR_ROOT}}/neural-3d.md` for CUDA-heavy neural 3D or Gaussian splatting operators
 - `{{DONOR_ROOT}}/profiles/cutlass.md` for GEMM/convolution/reduction/tensor-core policy
 - `{{DONOR_ROOT}}/profiles/flashattention.md` for attention kernels
 - `{{DONOR_ROOT}}/profiles/triton.md` for Triton DSL/compiler tradeoffs
@@ -11,4 +15,13 @@ When selecting external CUDA kernel, GPU runtime, ML inference runtime, or GPU c
 Use the donor library to compare CUTLASS, Triton, FlashAttention, tiny-cuda-nn, llama.cpp/ggml,
 ONNX Runtime, TensorRT-LLM, vLLM, MLC-LLM, TVM, and PyTorch before writing or recommending custom
 GPU code for attention, softmax, layernorm, GEMM-like, quantized, fused, or runtime-integrated
-kernels. Keep non-commercial or study-only donors out of reusable implementation code.
+kernels. For non-AI CUDA domains, load the matching domain category first and use AI/kernel donors only
+when they actually match the operation. Keep non-commercial or study-only donors out of reusable
+implementation code.
+
+The donor library is shared across CUDA, Vulkan, CPU, DirectX, OpenCL, DCC, and other backend sources.
+Do not reject a Vulkan, OpenCL, DirectX, CPU, or DCC donor when it is the best domain reference; use it
+for algorithms, layouts, tests, and architecture, then translate backend-specific synchronization,
+shader, memory, packaging, and runtime assumptions into CUDA kernel and launch policy. Do not add
+Vulkan runtime or interop requirements to a CUDA project unless the user explicitly chooses that mixed
+lane or the requirements force it.

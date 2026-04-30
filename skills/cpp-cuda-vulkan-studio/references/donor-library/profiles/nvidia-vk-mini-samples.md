@@ -2,6 +2,7 @@
 
 Source: https://github.com/nvpro-samples/vk_mini_samples  
 Tier: `safe-donor`  
+Backend signal: native-vulkan
 License signal: Apache-2.0; inspect `LICENSE`, `resources/`, and companion `nvpro_core2` dependency
 terms at the exact revision used.
 

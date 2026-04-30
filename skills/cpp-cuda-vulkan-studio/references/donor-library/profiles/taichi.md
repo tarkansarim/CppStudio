@@ -2,6 +2,7 @@
 
 Source: https://github.com/taichi-dev/taichi  
 Tier: `dependency-candidate`  
+Backend signal: mixed-backend, native-cpu, native-cuda, native-vulkan
 License signal: Apache-2.0; inspect `LICENSE`, third-party dependency manifests, backend components,
 examples, and package metadata at the exact revision used.
 

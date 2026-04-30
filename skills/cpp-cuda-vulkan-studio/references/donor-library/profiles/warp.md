@@ -2,6 +2,7 @@
 
 Source: https://github.com/NVIDIA/warp  
 Tier: `dependency-candidate`  
+Backend signal: native-cuda, native-cpu
 License signal: Apache-2.0 for Warp, with additional third-party downloads and NVIDIA libmathdx license
 surfaces called out by upstream; inspect `LICENSE.md`, `licenses/`, build scripts, package metadata, and
 example assets at the exact revision used.

@@ -2,6 +2,7 @@
 
 Source: https://github.com/PixarAnimationStudios/OpenUSD  
 Tier: `dependency-candidate`  
+Backend signal: dcc-interchange, native-cpu
 License signal: modified Apache-style Tomorrow Open Source Technology License plus bundled third-party
 notices; inspect `LICENSE.txt`, `NOTICE.txt`, plugins, imaging backends, and bundled dependencies at the
 exact revision used.

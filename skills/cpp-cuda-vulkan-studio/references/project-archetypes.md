@@ -65,13 +65,15 @@ Use when the project renders, trains, or inspects NeRF, Gaussian splatting, diff
   and [donor-library/profiles/gsplat.md](donor-library/profiles/gsplat.md).
 - Prefer `gsplat` over non-commercial original 3DGS code for reusable implementation patterns.
 - Verification priority: camera convention tests, small scene tests, offscreen visual artifacts,
-  image-metric baselines, CUDA sanitizer on reduced kernels, then frame/profile traces.
+  image-metric baselines, Vulkan validation for Vulkan targets, CUDA sanitizer only for explicit CUDA
+  or mixed-lane project-owned CUDA kernels, then frame/profile traces.
 
 ## Hair, Grooming, Or Fur Tool
 
 Use when the project simulates, renders, imports, exports, or authors hair/fur strand data.
 
-- Enable Vulkan when realtime rendering is in scope; enable CUDA only for project-owned kernels.
+- Enable Vulkan when realtime rendering is in scope; enable CUDA only when the user chooses CUDA or the
+  project explicitly requires project-owned CUDA kernels.
 - Read [donor-library/hair-grooming-fur.md](donor-library/hair-grooming-fur.md), then the TressFX and
   OpenUSD profiles when runtime hair or USD curves are involved.
 - Keep groom assets, DCC exporters, simulation buffers, render materials, and collision fields separated.

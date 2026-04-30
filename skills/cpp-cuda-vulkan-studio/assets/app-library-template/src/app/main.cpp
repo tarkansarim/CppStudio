@@ -75,12 +75,14 @@ int main(int argc, char** argv) {
 
     std::cout << "Project: " << {{CPP_NAMESPACE}}::project_name() << '\n';
 #ifdef PROJECT_HAS_CUDA
-    std::cout << "CUDA smoke: " << ({{CPP_NAMESPACE}}::cuda_vector_add_smoke() ? "ok" : "failed") << '\n';
+    std::cout << "CUDA smoke: " << ({{CPP_NAMESPACE}}::cuda_vector_add_smoke() ? "ok" : "failed")
+              << '\n';
 #else
     std::cout << "CUDA: disabled\n";
 #endif
 #ifdef PROJECT_HAS_VULKAN
-    std::cout << "Vulkan loader: " << ({{CPP_NAMESPACE}}::vulkan_loader_probe() ? "ok" : "failed") << '\n';
+    std::cout << "Vulkan loader: " << ({{CPP_NAMESPACE}}::vulkan_loader_probe() ? "ok" : "failed")
+              << '\n';
     const auto vulkan_smoke = {{CPP_NAMESPACE}}::vulkan_full_smoke();
     std::cout << "Vulkan smoke: " << (vulkan_smoke.ok ? "ok" : vulkan_smoke.message) << '\n';
 #else

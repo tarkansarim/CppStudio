@@ -3,6 +3,7 @@
 Sources: https://github.com/KhronosGroup/KTX-Software and https://github.com/BinomialLLC/basis_universal  
 Tier: `dependency-candidate` for KTX-Software, `safe-donor` for narrow Basis Universal transcoder
 patterns  
+Backend signal: api-agnostic, native-vulkan, native-cpu
 License signal: KTX-Software files generally fall under Apache-2.0 with many compatible licenses and
 special cases; Basis Universal is Apache-2.0 with third-party codec/dependency notices. Inspect
 `LICENSE.md`, `LICENSES/`, `.reuse/dep5`, `NOTICE`, and codec subdirectories at the exact revision used.

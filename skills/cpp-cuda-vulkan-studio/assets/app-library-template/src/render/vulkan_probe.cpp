@@ -4,8 +4,8 @@
 
 #include <algorithm>
 #include <array>
-#include <cstdio>
 #include <cstdint>
+#include <cstdio>
 #include <cstring>
 #include <filesystem>
 #include <fstream>
@@ -65,18 +65,17 @@ std::vector<std::uint32_t> read_spirv(const std::filesystem::path& path) {
     return words;
 }
 
-VKAPI_ATTR vk::Bool32 VKAPI_CALL debug_callback(
-    vk::DebugUtilsMessageSeverityFlagBitsEXT severity,
-    vk::DebugUtilsMessageTypeFlagsEXT,
-    const vk::DebugUtilsMessengerCallbackDataEXT* callback_data,
-    void* user_data) {
+VKAPI_ATTR vk::Bool32 VKAPI_CALL
+debug_callback(vk::DebugUtilsMessageSeverityFlagBitsEXT severity, vk::DebugUtilsMessageTypeFlagsEXT,
+               const vk::DebugUtilsMessengerCallbackDataEXT* callback_data, void* user_data) {
     const bool is_error = (severity & vk::DebugUtilsMessageSeverityFlagBitsEXT::eError) ==
-        vk::DebugUtilsMessageSeverityFlagBitsEXT::eError;
+                          vk::DebugUtilsMessageSeverityFlagBitsEXT::eError;
     if (is_error && user_data) {
         static_cast<ValidationState*>(user_data)->error_seen = true;
     }
     if (callback_data && callback_data->pMessage) {
-        std::fprintf(stderr, "Vulkan validation %s: %s\n", is_error ? "error" : "warning", callback_data->pMessage);
+        std::fprintf(stderr, "Vulkan validation %s: %s\n", is_error ? "error" : "warning",
+                     callback_data->pMessage);
     }
     return VK_FALSE;
 }
@@ -86,8 +85,8 @@ vk::raii::Instance create_instance(vk::raii::Context& context, bool& debug_utils
     const auto instance_layers = context.enumerateInstanceLayerProperties();
 
     std::vector<const char*> enabled_extensions;
-    debug_utils_enabled =
-        PROJECT_VULKAN_ENABLE_DEBUG_UTILS && has_extension(instance_extensions, VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+    debug_utils_enabled = PROJECT_VULKAN_ENABLE_DEBUG_UTILS &&
+                          has_extension(instance_extensions, VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
     if (debug_utils_enabled) {
         enabled_extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
     }
@@ -102,18 +101,14 @@ vk::raii::Instance create_instance(vk::raii::Context& context, bool& debug_utils
     std::vector<const char*> enabled_layers;
     if (PROJECT_VULKAN_ENABLE_VALIDATION) {
         if (!has_layer(instance_layers, "VK_LAYER_KHRONOS_validation")) {
-            throw std::runtime_error("PROJECT_ENABLE_VULKAN_VALIDATION is ON but VK_LAYER_KHRONOS_validation is unavailable");
+            throw std::runtime_error("PROJECT_ENABLE_VULKAN_VALIDATION is ON but "
+                                     "VK_LAYER_KHRONOS_validation is unavailable");
         }
         enabled_layers.push_back("VK_LAYER_KHRONOS_validation");
     }
 
-    const vk::ApplicationInfo application_info(
-        "{{PROJECT_NAME}} Vulkan smoke",
-        1,
-        "{{PROJECT_NAME}}",
-        1,
-        PROJECT_VULKAN_TARGET_API_VERSION
-    );
+    const vk::ApplicationInfo application_info("{{PROJECT_NAME}} Vulkan smoke", 1, "{{PROJECT_NAME}}",
+                                               1, PROJECT_VULKAN_TARGET_API_VERSION);
 
     vk::InstanceCreateInfo create_info;
     create_info.setPApplicationInfo(&application_info)
@@ -128,22 +123,20 @@ vk::raii::Instance create_instance(vk::raii::Context& context, bool& debug_utils
     return vk::raii::Instance(context, create_info);
 }
 
-std::optional<vk::raii::DebugUtilsMessengerEXT> create_debug_messenger(
-    const vk::raii::Instance& instance,
-    bool debug_utils_enabled,
-    ValidationState& validation_state) {
+std::optional<vk::raii::DebugUtilsMessengerEXT>
+create_debug_messenger(const vk::raii::Instance& instance, bool debug_utils_enabled,
+                       ValidationState& validation_state) {
     if (!debug_utils_enabled) {
         return std::nullopt;
     }
 
     vk::DebugUtilsMessengerCreateInfoEXT create_info;
-    create_info.setMessageSeverity(
-                   vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning |
-                   vk::DebugUtilsMessageSeverityFlagBitsEXT::eError)
-        .setMessageType(
-            vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral |
-            vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation |
-            vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance)
+    create_info
+        .setMessageSeverity(vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning |
+                            vk::DebugUtilsMessageSeverityFlagBitsEXT::eError)
+        .setMessageType(vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral |
+                        vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation |
+                        vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance)
         .setPfnUserCallback(debug_callback)
         .setPUserData(&validation_state);
 
@@ -163,9 +156,9 @@ std::optional<DeviceSelection> select_device(const vk::raii::Instance& instance)
             continue;
         }
 
-        const auto feature_chain = candidate.getFeatures2<
-            vk::PhysicalDeviceFeatures2,
-            vk::PhysicalDeviceVulkan13Features>();
+        const auto feature_chain =
+            candidate
+                .getFeatures2<vk::PhysicalDeviceFeatures2, vk::PhysicalDeviceVulkan13Features>();
         const auto& vulkan13_features = feature_chain.get<vk::PhysicalDeviceVulkan13Features>();
         if (!vulkan13_features.dynamicRendering || !vulkan13_features.synchronization2) {
             continue;
@@ -174,7 +167,8 @@ std::optional<DeviceSelection> select_device(const vk::raii::Instance& instance)
         const auto format_properties = candidate.getFormatProperties(kRenderFormat);
         const auto required_format_features =
             vk::FormatFeatureFlagBits::eColorAttachment | vk::FormatFeatureFlagBits::eTransferSrc;
-        if ((format_properties.optimalTilingFeatures & required_format_features) != required_format_features) {
+        if ((format_properties.optimalTilingFeatures & required_format_features) !=
+            required_format_features) {
             continue;
         }
 
@@ -203,13 +197,12 @@ struct VulkanSmokeContext {
     vk::raii::Queue queue{nullptr};
 
     VulkanSmokeContext()
-        : context(),
-          instance(create_instance(context, debug_utils_enabled)),
+        : context(), instance(create_instance(context, debug_utils_enabled)),
           debug_messenger(create_debug_messenger(instance, debug_utils_enabled, validation_state)) {
         auto selection = select_device(instance);
         if (!selection) {
-            throw std::runtime_error(
-                "no Vulkan 1.4 physical device with graphics+compute queue, synchronization2, and dynamic rendering");
+            throw std::runtime_error("no Vulkan 1.4 physical device with graphics+compute queue, "
+                                     "synchronization2, and dynamic rendering");
         }
 
         physical_device = selection->physical_device;
@@ -218,8 +211,7 @@ struct VulkanSmokeContext {
 
         const float queue_priority = 1.0F;
         vk::DeviceQueueCreateInfo queue_info;
-        queue_info.setQueueFamilyIndex(queue_family_index)
-            .setQueuePriorities(queue_priority);
+        queue_info.setQueueFamilyIndex(queue_family_index).setQueuePriorities(queue_priority);
 
         vk::PhysicalDeviceVulkan13Features enabled_vulkan13_features;
         enabled_vulkan13_features.setSynchronization2(VK_TRUE).setDynamicRendering(VK_TRUE);
@@ -245,7 +237,8 @@ struct VulkanSmokeContext {
         queue = vk::raii::Queue(device, queue_family_index, 0);
     }
 
-    std::uint32_t find_memory_type(std::uint32_t type_bits, vk::MemoryPropertyFlags required) const {
+    std::uint32_t find_memory_type(std::uint32_t type_bits,
+                                   vk::MemoryPropertyFlags required) const {
         for (std::uint32_t index = 0; index < memory_properties.memoryTypeCount; ++index) {
             const bool type_is_allowed = (type_bits & (1U << index)) != 0;
             const auto flags = memory_properties.memoryTypes[index].propertyFlags;
@@ -293,12 +286,9 @@ struct ImageResource {
     vk::raii::ImageView view{nullptr};
 };
 
-BufferResource create_buffer(
-    const VulkanSmokeContext& context,
-    vk::DeviceSize size,
-    vk::BufferUsageFlags usage,
-    vk::MemoryPropertyFlags memory_flags,
-    std::string_view debug_name) {
+BufferResource create_buffer(const VulkanSmokeContext& context, vk::DeviceSize size,
+                             vk::BufferUsageFlags usage, vk::MemoryPropertyFlags memory_flags,
+                             std::string_view debug_name) {
     BufferResource resource;
     resource.size = size;
 
@@ -336,7 +326,8 @@ ImageResource create_render_image(const VulkanSmokeContext& context) {
     const auto requirements = resource.image.getMemoryRequirements();
     vk::MemoryAllocateInfo allocate_info;
     allocate_info.setAllocationSize(requirements.size)
-        .setMemoryTypeIndex(context.find_memory_type(requirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eDeviceLocal));
+        .setMemoryTypeIndex(context.find_memory_type(requirements.memoryTypeBits,
+                                                     vk::MemoryPropertyFlagBits::eDeviceLocal));
     resource.memory = vk::raii::DeviceMemory(context.device, allocate_info);
     resource.image.bindMemory(*resource.memory, 0);
     context.name_object(*resource.image, "offscreen smoke color image");
@@ -345,15 +336,15 @@ ImageResource create_render_image(const VulkanSmokeContext& context) {
     view_info.setImage(*resource.image)
         .setViewType(vk::ImageViewType::e2D)
         .setFormat(kRenderFormat)
-        .setSubresourceRange(vk::ImageSubresourceRange{vk::ImageAspectFlagBits::eColor, 0, 1, 0, 1});
+        .setSubresourceRange(
+            vk::ImageSubresourceRange{vk::ImageAspectFlagBits::eColor, 0, 1, 0, 1});
     resource.view = vk::raii::ImageView(context.device, view_info);
 
     return resource;
 }
 
-vk::raii::ShaderModule create_shader_module(
-    const VulkanSmokeContext& context,
-    const std::filesystem::path& path) {
+vk::raii::ShaderModule create_shader_module(const VulkanSmokeContext& context,
+                                            const std::filesystem::path& path) {
     const auto words = read_spirv(path);
     vk::ShaderModuleCreateInfo create_info;
     create_info.setCode(words);
@@ -374,7 +365,8 @@ void submit_immediate(const VulkanSmokeContext& context, Recorder&& recorder) {
     vk::raii::CommandBuffers command_buffers(context.device, allocate_info);
     const auto& command_buffer = command_buffers.front();
 
-    command_buffer.begin(vk::CommandBufferBeginInfo{vk::CommandBufferUsageFlagBits::eOneTimeSubmit});
+    command_buffer.begin(
+        vk::CommandBufferBeginInfo{vk::CommandBufferUsageFlagBits::eOneTimeSubmit});
     recorder(command_buffer);
     command_buffer.end();
 
@@ -390,9 +382,8 @@ void submit_immediate(const VulkanSmokeContext& context, Recorder&& recorder) {
     }
 }
 
-vk::PipelineShaderStageCreateInfo shader_stage(
-    vk::ShaderStageFlagBits stage,
-    const vk::raii::ShaderModule& shader_module) {
+vk::PipelineShaderStageCreateInfo shader_stage(vk::ShaderStageFlagBits stage,
+                                               const vk::raii::ShaderModule& shader_module) {
     vk::PipelineShaderStageCreateInfo stage_info;
     stage_info.setStage(stage).setModule(*shader_module).setPName("main");
     return stage_info;
@@ -402,9 +393,7 @@ void run_compute_smoke() {
     VulkanSmokeContext context;
 
     auto storage_buffer = create_buffer(
-        context,
-        sizeof(std::uint32_t),
-        vk::BufferUsageFlagBits::eStorageBuffer,
+        context, sizeof(std::uint32_t), vk::BufferUsageFlagBits::eStorageBuffer,
         vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent,
         "compute smoke storage buffer");
 
@@ -421,8 +410,7 @@ void run_compute_smoke() {
         .setDescriptorCount(1)
         .setStageFlags(vk::ShaderStageFlagBits::eCompute);
     vk::raii::DescriptorSetLayout descriptor_set_layout(
-        context.device,
-        vk::DescriptorSetLayoutCreateInfo{}.setBindings(storage_binding));
+        context.device, vk::DescriptorSetLayoutCreateInfo{}.setBindings(storage_binding));
 
     vk::DescriptorPoolSize pool_size;
     pool_size.setType(vk::DescriptorType::eStorageBuffer).setDescriptorCount(1);
@@ -445,8 +433,7 @@ void run_compute_smoke() {
     context.device.updateDescriptorSets(descriptor_write, {});
 
     vk::raii::PipelineLayout pipeline_layout(
-        context.device,
-        vk::PipelineLayoutCreateInfo{}.setSetLayouts(*descriptor_set_layout));
+        context.device, vk::PipelineLayoutCreateInfo{}.setSetLayouts(*descriptor_set_layout));
     const auto shader_path = std::filesystem::path(PROJECT_VULKAN_SHADER_DIR) / "compute.comp.spv";
     auto shader_module = create_shader_module(context, shader_path);
 
@@ -458,10 +445,12 @@ void run_compute_smoke() {
 
     submit_immediate(context, [&](const vk::raii::CommandBuffer& command_buffer) {
         if (context.debug_utils_enabled) {
-            command_buffer.beginDebugUtilsLabelEXT(vk::DebugUtilsLabelEXT{}.setPLabelName("compute smoke dispatch"));
+            command_buffer.beginDebugUtilsLabelEXT(
+                vk::DebugUtilsLabelEXT{}.setPLabelName("compute smoke dispatch"));
         }
         command_buffer.bindPipeline(vk::PipelineBindPoint::eCompute, *pipeline);
-        command_buffer.bindDescriptorSets(vk::PipelineBindPoint::eCompute, *pipeline_layout, 0, *descriptor_set, {});
+        command_buffer.bindDescriptorSets(vk::PipelineBindPoint::eCompute, *pipeline_layout, 0,
+                                          *descriptor_set, {});
         command_buffer.dispatch(1, 1, 1);
 
         vk::MemoryBarrier2 barrier;
@@ -495,14 +484,14 @@ void run_offscreen_render_smoke() {
 
     auto render_image = create_render_image(context);
     auto readback_buffer = create_buffer(
-        context,
-        kRenderWidth * kRenderHeight * 4,
-        vk::BufferUsageFlagBits::eTransferDst,
+        context, kRenderWidth * kRenderHeight * 4, vk::BufferUsageFlagBits::eTransferDst,
         vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent,
         "render smoke readback buffer");
 
-    const auto vertex_path = std::filesystem::path(PROJECT_VULKAN_SHADER_DIR) / "offscreen_triangle.vert.spv";
-    const auto fragment_path = std::filesystem::path(PROJECT_VULKAN_SHADER_DIR) / "offscreen_triangle.frag.spv";
+    const auto vertex_path =
+        std::filesystem::path(PROJECT_VULKAN_SHADER_DIR) / "offscreen_triangle.vert.spv";
+    const auto fragment_path =
+        std::filesystem::path(PROJECT_VULKAN_SHADER_DIR) / "offscreen_triangle.frag.spv";
     auto vertex_shader = create_shader_module(context, vertex_path);
     auto fragment_shader = create_shader_module(context, fragment_path);
 
@@ -516,7 +505,8 @@ void run_offscreen_render_smoke() {
     vk::PipelineVertexInputStateCreateInfo vertex_input;
     vk::PipelineInputAssemblyStateCreateInfo input_assembly;
     input_assembly.setTopology(vk::PrimitiveTopology::eTriangleList);
-    const vk::Viewport viewport(0.0F, 0.0F, static_cast<float>(kRenderWidth), static_cast<float>(kRenderHeight), 0.0F, 1.0F);
+    const vk::Viewport viewport(0.0F, 0.0F, static_cast<float>(kRenderWidth),
+                                static_cast<float>(kRenderHeight), 0.0F, 1.0F);
     const vk::Rect2D scissor({0, 0}, {kRenderWidth, kRenderHeight});
     vk::PipelineViewportStateCreateInfo viewport_state;
     viewport_state.setViewports(viewport).setScissors(scissor);
@@ -529,10 +519,8 @@ void run_offscreen_render_smoke() {
     multisample.setRasterizationSamples(vk::SampleCountFlagBits::e1);
     vk::PipelineColorBlendAttachmentState color_blend_attachment;
     color_blend_attachment.setColorWriteMask(
-        vk::ColorComponentFlagBits::eR |
-        vk::ColorComponentFlagBits::eG |
-        vk::ColorComponentFlagBits::eB |
-        vk::ColorComponentFlagBits::eA);
+        vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG |
+        vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA);
     vk::PipelineColorBlendStateCreateInfo color_blend;
     color_blend.setAttachments(color_blend_attachment);
     vk::PipelineRenderingCreateInfo rendering_info;
@@ -553,7 +541,8 @@ void run_offscreen_render_smoke() {
 
     submit_immediate(context, [&](const vk::raii::CommandBuffer& command_buffer) {
         if (context.debug_utils_enabled) {
-            command_buffer.beginDebugUtilsLabelEXT(vk::DebugUtilsLabelEXT{}.setPLabelName("offscreen render smoke"));
+            command_buffer.beginDebugUtilsLabelEXT(
+                vk::DebugUtilsLabelEXT{}.setPLabelName("offscreen render smoke"));
         }
 
         const vk::ImageSubresourceRange color_range(vk::ImageAspectFlagBits::eColor, 0, 1, 0, 1);
@@ -572,7 +561,8 @@ void run_offscreen_render_smoke() {
         to_color_dependency.setImageMemoryBarriers(to_color_attachment);
         command_buffer.pipelineBarrier2(to_color_dependency);
 
-        const vk::ClearValue clear_value(vk::ClearColorValue(std::array<float, 4>{0.0F, 0.0F, 0.0F, 1.0F}));
+        const vk::ClearValue clear_value(
+            vk::ClearColorValue(std::array<float, 4>{0.0F, 0.0F, 0.0F, 1.0F}));
         vk::RenderingAttachmentInfo color_attachment;
         color_attachment.setImageView(*render_image.view)
             .setImageLayout(vk::ImageLayout::eColorAttachmentOptimal)
@@ -605,9 +595,11 @@ void run_offscreen_render_smoke() {
 
         vk::BufferImageCopy copy_region;
         copy_region.setBufferOffset(0)
-            .setImageSubresource(vk::ImageSubresourceLayers(vk::ImageAspectFlagBits::eColor, 0, 0, 1))
+            .setImageSubresource(
+                vk::ImageSubresourceLayers(vk::ImageAspectFlagBits::eColor, 0, 0, 1))
             .setImageExtent(vk::Extent3D{kRenderWidth, kRenderHeight, 1});
-        command_buffer.copyImageToBuffer(*render_image.image, vk::ImageLayout::eTransferSrcOptimal, *readback_buffer.buffer, copy_region);
+        command_buffer.copyImageToBuffer(*render_image.image, vk::ImageLayout::eTransferSrcOptimal,
+                                         *readback_buffer.buffer, copy_region);
 
         vk::MemoryBarrier2 host_read_barrier;
         host_read_barrier.setSrcStageMask(vk::PipelineStageFlagBits2::eTransfer)

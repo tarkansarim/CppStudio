@@ -12,7 +12,7 @@ Use this skill when a C++/CUDA/Vulkan repo needs a repeatable professional devel
 - Use `modern-cpp-cmake` for CMake target structure, source ownership, presets, CTest, and dependency wiring.
 - Use `cuda-kernel-authoring` when adding or reviewing custom CUDA kernels or launch wrappers.
 - Use `vulkan-compute-sync` when the project contains Vulkan compute, render, synchronization, descriptor, or frame-lifetime work.
-- Use `gpu-profiling-workstation` when local profiling or frame debugging commands are needed on this workstation.
+- Use `gpu-profiling-workstation` only when the active session exposes it and the user needs environment-specific profiling or frame-debugging commands.
 - Use `verification-before-completion` before claiming the generated or upgraded backbone is valid.
 
 ## Workflow
@@ -27,7 +27,7 @@ Use this skill when a C++/CUDA/Vulkan repo needs a repeatable professional devel
 8. Register tests with CTest labels so quick, GPU, GUI, Vulkan, CUDA, shader, compute, render, validation, perf, and nightly lanes can be selected independently.
 9. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
 10. Before greenfield scaffolding or major backbone edits, read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library, CUDA+Vulkan interop app, AI runtime, neural 3D viewer, grooming/fur tool, DCC scene pipeline, volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool, 3D/physics/GPU simulation tool, or XR app.
-11. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects, read `references/donor-library/README.md` first and then the relevant category/profile file. Keep permissive donor code, dependency candidates, and study-only references separated.
+11. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects, read `references/donor-library/README.md` first and then the relevant category/profile file. Treat donors as domain references first: a CUDA, Vulkan, OpenCL, DirectX, CPU, or DCC donor can still guide another target backend. Keep the selected implementation lane fixed, translate backend-specific details through the active lane skill, and keep permissive donor code, dependency candidates, and study-only references separated.
 
 ## Bundled Assets
 
@@ -35,7 +35,7 @@ Use this skill when a C++/CUDA/Vulkan repo needs a repeatable professional devel
 
 ## Bundled References
 
-- `references/donor-library/`: curated donor-source library for graphics, Vulkan, rendering, geometry, 3D/physics/GPU simulation, AI runtimes, CUDA kernels, neural 3D, grooming/fur, DCC scene pipelines, volumes, animation, materials, CAD, and XR code. Start with `references/donor-library/README.md`; load only the category file needed for the active task.
+- `references/donor-library/`: curated donor-source library for graphics, Vulkan, rendering, geometry, 3D/physics/GPU simulation, AI runtimes, CUDA kernels, neural 3D, grooming/fur, DCC scene pipelines, volumes, animation, materials, CAD, and XR code. Donor backend signals describe the upstream implementation, not a restriction on target lanes. Start with `references/donor-library/README.md`; load only the category file needed for the active task.
 - `references/project-archetypes.md`: lane-selection guide for CUDA-only, Vulkan-only, CUDA+Vulkan interop, AI runtime, neural 3D, grooming, DCC, volume, animation, material, CAD, 3D/physics/GPU simulation, and XR projects.
 
 ## Bundled Scripts
@@ -65,5 +65,5 @@ ctest --preset quick --output-on-failure
 For this skill itself, verify:
 
 ```bash
-/home/tarkan/.codex/skills/.system/skill-creator/scripts/quick_validate.py /home/tarkan/.codex/skills/cpp-cuda-vulkan-studio
+${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py ${HOME}/.codex/skills/cpp-cuda-vulkan-studio
 ```

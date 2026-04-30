@@ -2,6 +2,7 @@
 
 Source: https://github.com/PixarAnimationStudios/OpenSubdiv  
 Tier: `safe-donor`  
+Backend signal: mixed-backend, native-cpu
 License signal: Tomorrow Open Source Technology License, Apache-2.0-style with trademark differences;
 inspect `LICENSE.txt`, optional GPU backends, examples, and third-party notices at the exact revision
 used.

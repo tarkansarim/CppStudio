@@ -2,6 +2,7 @@
 
 Source: https://github.com/nfrechette/acl  
 Tier: `safe-donor`  
+Backend signal: native-cpu, api-agnostic
 License signal: MIT; inspect `LICENSE`, `external/`, test data, benchmark data, and tool dependencies at
 the exact revision used.
 

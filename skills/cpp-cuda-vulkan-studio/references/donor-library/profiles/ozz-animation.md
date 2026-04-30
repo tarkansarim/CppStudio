@@ -2,6 +2,7 @@
 
 Source: https://github.com/guillaumeblanc/ozz-animation  
 Tier: `safe-donor`  
+Backend signal: native-cpu, api-agnostic
 License signal: MIT; inspect `LICENSE`, samples, converter dependencies, and bundled third-party files
 at the exact revision used.
 

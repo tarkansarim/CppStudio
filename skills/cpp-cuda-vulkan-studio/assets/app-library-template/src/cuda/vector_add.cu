@@ -31,8 +31,7 @@ bool cuda_vector_add_smoke() {
     int* device_output = nullptr;
 
     const auto bytes = static_cast<size_t>(count) * sizeof(int);
-    bool ok = cuda_ok(cudaMalloc(&device_lhs, bytes)) &&
-              cuda_ok(cudaMalloc(&device_rhs, bytes)) &&
+    bool ok = cuda_ok(cudaMalloc(&device_lhs, bytes)) && cuda_ok(cudaMalloc(&device_rhs, bytes)) &&
               cuda_ok(cudaMalloc(&device_output, bytes)) &&
               cuda_ok(cudaMemcpy(device_lhs, lhs.data(), bytes, cudaMemcpyHostToDevice)) &&
               cuda_ok(cudaMemcpy(device_rhs, rhs.data(), bytes, cudaMemcpyHostToDevice));

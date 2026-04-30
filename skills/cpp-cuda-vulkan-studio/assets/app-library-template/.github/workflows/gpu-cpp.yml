@@ -12,14 +12,14 @@ env:
 
 jobs:
   toolcheck:
-    runs-on: [self-hosted, linux, cuda, vulkan, gpu]
+    runs-on: [self-hosted, linux, vulkan, gpu]
     steps:
       - uses: actions/checkout@v4
       - name: Check developer tools
-        run: REQUIRE_CUDA=1 REQUIRE_VULKAN=1 REQUIRE_PROFILING=1 scripts/check_dev_tools.sh
+        run: REQUIRE_CUDA=0 REQUIRE_VULKAN=1 REQUIRE_PROFILING=0 scripts/check_dev_tools.sh
 
   build-dev:
-    runs-on: [self-hosted, linux, cuda, vulkan, gpu]
+    runs-on: [self-hosted, linux, vulkan, gpu]
     steps:
       - uses: actions/checkout@v4
       - name: Configure
@@ -28,7 +28,7 @@ jobs:
         run: cmake --build --preset dev
 
   quick-tests:
-    runs-on: [self-hosted, linux, cuda, vulkan, gpu]
+    runs-on: [self-hosted, linux, vulkan, gpu]
     steps:
       - uses: actions/checkout@v4
       - run: cmake --preset dev -DPROJECT_CUDA_ARCHITECTURES="$PROJECT_CUDA_ARCHITECTURES"
@@ -36,7 +36,7 @@ jobs:
       - run: ctest --preset quick --output-on-failure
 
   gpu-smoke:
-    runs-on: [self-hosted, linux, cuda, vulkan, gpu]
+    runs-on: [self-hosted, linux, vulkan, gpu]
     steps:
       - uses: actions/checkout@v4
       - run: cmake --preset dev -DPROJECT_CUDA_ARCHITECTURES="$PROJECT_CUDA_ARCHITECTURES"
@@ -79,8 +79,8 @@ jobs:
     runs-on: [self-hosted, linux, cuda, vulkan, gpu]
     steps:
       - uses: actions/checkout@v4
-      - run: cmake --preset dev -DPROJECT_CUDA_ARCHITECTURES="$PROJECT_CUDA_ARCHITECTURES"
-      - run: cmake --build --preset dev
+      - run: cmake --preset cuda-debug -DPROJECT_CUDA_ARCHITECTURES="$PROJECT_CUDA_ARCHITECTURES"
+      - run: cmake --build --preset cuda-debug
       - run: scripts/run_compute_sanitizer.sh
       - uses: actions/upload-artifact@v4
         if: always()
@@ -91,9 +91,11 @@ jobs:
 
   profile-smoke:
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
-    runs-on: [self-hosted, linux, cuda, vulkan, gpu]
+    runs-on: [self-hosted, linux, vulkan, gpu, profile]
     steps:
       - uses: actions/checkout@v4
+      - name: Check profiling tools
+        run: REQUIRE_CUDA=0 REQUIRE_VULKAN=1 REQUIRE_PROFILING=1 REQUIRE_CUDA_PROFILING=0 scripts/check_dev_tools.sh
       - run: cmake --preset profile -DPROJECT_CUDA_ARCHITECTURES="$PROJECT_CUDA_ARCHITECTURES"
       - run: cmake --build --preset profile
       - run: BUILD_DIR=build/profile scripts/run_nsys_smoke.sh

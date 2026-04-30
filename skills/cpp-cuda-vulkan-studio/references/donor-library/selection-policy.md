@@ -8,6 +8,12 @@ Prefer `safe-donor` projects for reusable skill/template code. Treat `dependency
 versioned dependency decisions, not as default copy/paste sources. Keep `study-only` projects in
 research notes or design discussion unless the user explicitly approves a license-specific path.
 
+Donor selection is domain-first. Pick the best source for the algorithm, data model, file format,
+test case, or architecture even if the donor's backend differs from the target project. The active
+lane still controls implementation: Vulkan targets port donor ideas through Vulkan tooling and
+synchronization, CUDA targets port donor ideas through CUDA tooling and kernel policy, and mixed
+CUDA/Vulkan lanes require explicit user choice or a real interop need.
+
 ## Safe-Donor Checklist
 
 Before adapting code or adding a dependency:
@@ -18,6 +24,25 @@ Before adapting code or adding a dependency:
 4. Preserve attribution and notices required by the donor license.
 5. Prefer small, idiomatic reimplementation from the concept when the implementation is simple.
 6. Avoid importing donor-specific architecture unless it fits the target repo's existing shape.
+7. Translate backend-specific memory, synchronization, shader, kernel, packaging, and runtime details through
+   the active lane skill instead of copying them across lanes.
+
+## Backend Signals
+
+Use `Backend signal:` in donor profiles to describe the donor's upstream implementation surface. These
+signals are descriptive metadata, not routing locks.
+
+Allowed values are `native-vulkan`, `native-cuda`, `native-opencl`, `native-directx`, `native-opengl`,
+`native-webgpu`, `native-metal`, `native-cpu`, `dcc-interchange`, `api-agnostic`, and
+`mixed-backend`. Multiple values may be comma-separated.
+
+Examples:
+
+- A Vulkan project may use a CUDA Gaussian-splatting donor for algorithm, data layout, numerical tests,
+  and edge cases, then implement the target path with Vulkan compute/render guidance.
+- A CUDA project may use a Vulkan, OpenCL, DirectX, or CPU simulation donor for solver organization and
+  validation fixtures, then implement kernels with CUDA lane guidance.
+- Backend mismatch should create a porting-risk note, not a silent lane switch or hidden dependency.
 
 ## Tier Meanings
 
@@ -34,6 +59,8 @@ Before adapting code or adding a dependency:
 - Missing license files, license text that only applies to part of the repo, or contradictory README/license claims.
 - Model checkpoints, datasets, pretrained weights, and assets bundled under different terms than code.
 - CUDA samples that depend on proprietary SDK components not redistributable with the target repo.
+- Backend-specific donor code that would introduce an unchosen runtime, driver, shader compiler, SDK, or
+  build dependency into the target lane.
 
 ## Attribution Pattern
 

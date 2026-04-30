@@ -87,7 +87,7 @@ Vulkan portability paths such as MoltenVK are not identical to native desktop Vu
 - `VK_KHR_portability_subset` must be queried and handled deliberately.
 - MoltenVK should be a named portability lane, not silently treated as normal native Vulkan.
 
-This is mostly a future-proofing concern for a reusable skill. The current workstation appears
+This is mostly a future-proofing concern for a reusable skill. A given validation environment may be
 Linux-focused, so native Linux ICD behavior should remain the first target unless the user asks for
 macOS/iOS portability.
 
@@ -125,4 +125,3 @@ Vulkan failures should report the failing layer:
 - Render output mismatch.
 
 This error taxonomy should prevent "Vulkan failed" from becoming an unhelpful catch-all.
-

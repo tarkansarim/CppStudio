@@ -2,6 +2,7 @@
 
 Sources: https://github.com/AcademySoftwareFoundation/OpenColorIO and https://github.com/AcademySoftwareFoundation/OpenImageIO  
 Tier: `dependency-candidate`  
+Backend signal: dcc-interchange, native-cpu, api-agnostic
 License signal: OpenColorIO is BSD-3-Clause; OpenImageIO original code is Apache-2.0 with documentation
 under CC BY 4.0 and compatible third-party licenses. Inspect license files, configs, plugins, codecs,
 and sample images at the exact revision used.

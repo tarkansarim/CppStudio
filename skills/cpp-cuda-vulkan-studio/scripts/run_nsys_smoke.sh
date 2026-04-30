@@ -6,6 +6,11 @@ if ! command -v nsys >/dev/null 2>&1; then
     exit 1
 fi
 
+if [[ "${REQUIRE_CUDA_PROFILING:-0}" == "1" ]] && ! command -v ncu >/dev/null 2>&1; then
+    echo "ncu is required when REQUIRE_CUDA_PROFILING=1" >&2
+    exit 1
+fi
+
 profile_lane="${PROFILE_LANE:-vulkan}"
 build_dir="${BUILD_DIR:-build/dev}"
 output_dir="${NSYS_OUTPUT_DIR:-artifacts/profiling}"

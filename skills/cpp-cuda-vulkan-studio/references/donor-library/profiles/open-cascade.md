@@ -2,6 +2,7 @@
 
 Source: https://github.com/Open-Cascade-SAS/OCCT  
 Tier: `dependency-candidate`  
+Backend signal: native-cpu
 License signal: LGPL-2.1 with Open CASCADE exception; inspect `LICENSE_LGPL_21.txt`,
 `OCCT_LGPL_EXCEPTION.txt`, optional modules, third-party dependencies, and sample assets at the exact
 revision used.

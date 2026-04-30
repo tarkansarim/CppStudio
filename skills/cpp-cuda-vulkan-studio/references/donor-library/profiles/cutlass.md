@@ -2,6 +2,7 @@
 
 Source: https://github.com/NVIDIA/cutlass  
 Tier: `safe-donor`  
+Backend signal: native-cuda
 License signal: BSD-3-Clause; inspect `LICENSE.txt`, `EULA.txt`, submodules, and third-party notices at
 the exact revision used.
 

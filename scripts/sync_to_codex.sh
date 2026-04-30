@@ -80,6 +80,12 @@ if [[ "${target_resolved}" != "${expected_resolved}" && "${ALLOW_SYNC_TARGET_OVE
     exit 1
 fi
 
+if [[ "${target_resolved}" != */skills/"${SKILL_NAME}" ]]; then
+    echo "Refusing TARGET_DIR that is not an exact skill directory ending in skills/${SKILL_NAME}:" >&2
+    echo "  TARGET_DIR=${TARGET_DIR}" >&2
+    exit 1
+fi
+
 case "${target_resolved}" in
     "/"|"${home_resolved}"|"${codex_home_resolved}"|"${codex_skills_resolved}"|"${root_resolved}"|"${source_resolved}")
         echo "Refusing dangerous TARGET_DIR for rsync --delete: ${TARGET_DIR}" >&2
@@ -90,6 +96,24 @@ case "${target_resolved}" in
         exit 1
         ;;
 esac
+
+if [[ -e "${target_resolved}" && ! -d "${target_resolved}" ]]; then
+    echo "Refusing TARGET_DIR that exists but is not a directory: ${TARGET_DIR}" >&2
+    exit 1
+fi
+
+if [[ -d "${target_resolved}" ]]; then
+    if find "${target_resolved}" -mindepth 1 -maxdepth 1 -print -quit | grep -q .; then
+        if [[ ! -f "${target_resolved}/SKILL.md" ]]; then
+            echo "Refusing to sync into non-empty directory without SKILL.md: ${TARGET_DIR}" >&2
+            exit 1
+        fi
+        if ! grep -Eq "^name:[[:space:]]*['\"]?${SKILL_NAME}['\"]?[[:space:]]*$" "${target_resolved}/SKILL.md"; then
+            echo "Refusing to sync into directory whose SKILL.md is not ${SKILL_NAME}: ${TARGET_DIR}" >&2
+            exit 1
+        fi
+    fi
+fi
 
 python3 "${VALIDATOR}" "${SOURCE_DIR}"
 

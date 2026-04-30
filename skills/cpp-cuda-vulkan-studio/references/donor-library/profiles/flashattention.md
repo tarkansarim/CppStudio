@@ -2,6 +2,7 @@
 
 Source: https://github.com/Dao-AILab/flash-attention  
 Tier: `safe-donor`  
+Backend signal: native-cuda
 License signal: BSD-3-Clause; inspect `LICENSE`, `third_party/`, and Python package metadata at the
 exact revision used.
 

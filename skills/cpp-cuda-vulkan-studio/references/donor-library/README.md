@@ -5,7 +5,8 @@ Last researched: 2026-04-30
 Use this library when a C++/CUDA/Vulkan/3D/AI-runtime/ML-kernel task needs source-backed donor
 projects, examples, architecture patterns, or dependency candidates. It covers rendering, geometry,
 neural 3D, grooming, DCC scene pipelines, volumes, animation, materials, CAD, 3D/physics/GPU
-simulation, and XR. Treat it as a selection map, not permission to copy large blocks of code.
+simulation, and XR. Treat it as a domain-first selection map, not permission to copy large blocks of
+code.
 
 ## How To Use
 
@@ -30,7 +31,14 @@ simulation, and XR. Treat it as a selection map, not permission to copy large bl
    - Use dependency candidates as package/API/architecture references unless the target repo already accepts
      that dependency and license shape.
    - Use study-only donors for concepts only; do not copy code into reusable skills, templates, or project code.
-4. Record the donor name, URL, license, and exact feature borrowed in project docs or comments when adopting code.
+4. Keep donor backend and target backend separate:
+   - Use donors for domain behavior, algorithms, data models, tests, architecture, and dependency shape even
+     when their upstream backend is CUDA, Vulkan, OpenCL, DirectX, CPU, or DCC-specific.
+   - Use the selected lane skill to translate backend-specific code, synchronization, memory ownership,
+     shaders, kernels, build flags, and runtime dependencies.
+   - Do not switch a Vulkan project to CUDA, or a CUDA project to Vulkan, just because the best donor uses the
+     other backend. Mixed lanes require explicit user choice or a real interop requirement.
+5. Record the donor name, URL, license, backend signal, and exact feature borrowed in project docs or comments when adopting code.
 
 ## License Tiers
 
@@ -38,6 +46,18 @@ simulation, and XR. Treat it as a selection map, not permission to copy large bl
 - `dependency-candidate`: dependency-scale, license-sensitive, copyleft-with-exception, mixed-license, or
   transitive-dependency-heavy source. Use only after exact-version dependency and license review.
 - `study-only`: non-commercial, source-available, GPL-family, unclear, or dependency/license-mixed source. Concepts can inform design, but code should not be copied without explicit approval.
+
+## Backend Signals
+
+Backend signals describe where the upstream donor's examples or implementation live. They are not
+target-lane restrictions.
+
+- `native-vulkan`, `native-cuda`, `native-opencl`, `native-directx`, `native-opengl`,
+  `native-webgpu`, `native-metal`: donor has substantial backend-specific implementation in that API.
+- `native-cpu`: donor is primarily CPU/native C++ or CPU-first.
+- `dcc-interchange`: donor is primarily scene, asset, material, animation, groom, or DCC pipeline data.
+- `api-agnostic`: donor is mainly format, architecture, algorithm, or API-independent guidance.
+- `mixed-backend`: donor intentionally supports or demonstrates multiple execution/rendering backends.
 
 ## Agent Rules
 
@@ -47,6 +67,7 @@ simulation, and XR. Treat it as a selection map, not permission to copy large bl
 - Before vendoring code, inspect the repo license file and any third-party notice files at the exact revision used.
 - Prefer linking or package-manager integration over copying whole donor trees.
 - For AI/model pipelines, treat model weights and datasets as separate license surfaces from code.
+- Backend mismatch is not a rejection reason by itself. It is a porting note for the lane-specific skill.
 
 ## Deep Profiles
 

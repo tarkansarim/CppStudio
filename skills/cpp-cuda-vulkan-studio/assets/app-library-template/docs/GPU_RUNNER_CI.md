@@ -6,10 +6,10 @@ disabled.
 
 ## Runner Labels
 
-The default workflow uses:
+The default Vulkan-first push/PR workflow uses:
 
 ```text
-self-hosted, linux, cuda, vulkan, gpu
+self-hosted, linux, vulkan, gpu
 ```
 
 Use narrower labels when a runner only supports one lane:
@@ -17,7 +17,13 @@ Use narrower labels when a runner only supports one lane:
 - `cuda`: CUDA Toolkit, NVIDIA driver, and CUDA runtime tests are available.
 - `vulkan`: Vulkan SDK tools, loader, ICD, validation layers, and a usable Vulkan physical device are available.
 - `gpu`: a physical GPU is attached and available to the runner.
-- `profile`: optional label for runners allowed to produce profiling artifacts.
+- `profile`: optional label for runners allowed to produce Nsight Systems profiling artifacts.
+
+CUDA-specific scheduled/manual jobs such as `compute-sanitizer` use:
+
+```text
+self-hosted, linux, cuda, vulkan, gpu
+```
 
 ## Required Tools
 
@@ -29,7 +35,8 @@ Use narrower labels when a runner only supports one lane:
 - `glslc`, `spirv-val`, and `vulkaninfo`
 - `compute-sanitizer` for scheduled/manual CUDA sanitizer jobs
 - `nsys` for profiling smoke jobs
-- `ncu`, RenderDoc, or Nsight Graphics on profiling/debug workstations when deeper analysis is needed
+- `ncu` only when CUDA profiling is explicitly enabled
+- RenderDoc or Nsight Graphics in graphics-debug environments when deeper analysis is needed
 
 ## Environment Policy
 
@@ -54,7 +61,7 @@ scripts/dump_vulkan_capabilities.sh
 
 | Lane | Trigger | Purpose | Artifact Policy |
 | --- | --- | --- | --- |
-| `toolcheck` | push/PR | Detect missing compilers, SDKs, drivers, shader tools, and profilers. | Logs only. |
+| `toolcheck` | push/PR | Detect missing compilers, Vulkan SDK tools, drivers, and shader tools. | Logs only. |
 | `build-dev` | push/PR | Compile default development preset. | Logs only. |
 | `quick-tests` | push/PR | Run fast deterministic CPU/Vulkan-default smoke tests. | Logs on failure. |
 | `gpu-smoke` | push/PR or manual | Run CTest GPU labels on attached hardware. | Logs on failure. |

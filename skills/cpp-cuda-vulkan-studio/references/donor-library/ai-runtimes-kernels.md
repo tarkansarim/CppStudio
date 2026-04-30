@@ -31,6 +31,9 @@ quantization, and ML compiler patterns.
 - For production model serving on NVIDIA GPUs, compare TensorRT-LLM and vLLM; use ONNX Runtime when model portability matters.
 - For CUDA kernel authoring, use CUTLASS for matrix math and FlashAttention/tiny-cuda-nn for domain-specific fused kernel patterns.
 - For DSL/compiler exploration, Triton and TVM are better donors than hand-written CUDA when portability or code generation is the goal.
+- For Vulkan, OpenCL, WebGPU, or CPU inference targets, CUDA-heavy donors still provide useful algorithm,
+  tiling, numerical, and test references. Do not add CUDA runtime requirements unless the user chose the
+  CUDA lane or a CUDA-specific dependency is required.
 
 ## Deep Profiles
 

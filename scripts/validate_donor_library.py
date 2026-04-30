@@ -11,7 +11,21 @@ from pathlib import Path
 
 LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 EXTERNAL_RE = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*:")
+URL_RE = re.compile(r"https?://[^\s,;)]+")
 ALLOWED_TIERS = {"safe-donor", "dependency-candidate", "study-only"}
+ALLOWED_BACKEND_SIGNALS = {
+    "api-agnostic",
+    "dcc-interchange",
+    "mixed-backend",
+    "native-cpu",
+    "native-cuda",
+    "native-directx",
+    "native-metal",
+    "native-opencl",
+    "native-opengl",
+    "native-vulkan",
+    "native-webgpu",
+}
 
 
 def markdown_files(root: Path) -> list[Path]:
@@ -107,13 +121,54 @@ def normalize_tier(raw: str | None) -> str:
     return (raw or "").strip().strip("`")
 
 
-def valid_tier_field(raw: str | None) -> bool:
+def tier_values(raw: str | None) -> set[str]:
     if not raw:
-        return False
-    quoted_tiers = re.findall(r"`([^`]+)`", raw)
+        return set()
+    quoted_tiers = set(re.findall(r"`([^`]+)`", raw))
     if quoted_tiers:
-        return all(tier in ALLOWED_TIERS for tier in quoted_tiers)
-    return normalize_tier(raw).split()[0] in ALLOWED_TIERS
+        return quoted_tiers
+    first = normalize_tier(raw).split()[0] if normalize_tier(raw).split() else ""
+    return {first} if first else set()
+
+
+def valid_tier_field(raw: str | None) -> bool:
+    tiers = tier_values(raw)
+    return bool(tiers) and all(tier in ALLOWED_TIERS for tier in tiers)
+
+
+def normalize_backend_signals(raw: str | None) -> list[str]:
+    if not raw:
+        return []
+    return [part.strip().strip("`") for part in raw.split(",") if part.strip()]
+
+
+def valid_backend_signal_field(raw: str | None) -> bool:
+    signals = normalize_backend_signals(raw)
+    return bool(signals) and all(signal in ALLOWED_BACKEND_SIGNALS for signal in signals)
+
+
+def normalize_url(raw: str) -> str:
+    return raw.strip().rstrip(".").rstrip("/")
+
+
+def source_urls(raw: str | None) -> set[str]:
+    if not raw:
+        return set()
+    return {normalize_url(match.group(0)) for match in URL_RE.finditer(raw)}
+
+
+def profile_metadata(donor_root: Path) -> dict[str, dict[str, object]]:
+    profiles: dict[str, dict[str, object]] = {}
+    for profile in sorted((donor_root / "profiles").glob("*.md")):
+        rel = profile.relative_to(donor_root).as_posix()
+        text = profile.read_text(encoding="utf-8")
+        source = field_value(text, "Source") or field_value(text, "Sources")
+        profiles[rel] = {
+            "sources": source_urls(source),
+            "tiers": tier_values(field_value(text, "Tier")),
+            "backend_signals": set(normalize_backend_signals(field_value(text, "Backend signal"))),
+        }
+    return profiles
 
 
 def validate_profile_schema(donor_root: Path) -> list[str]:
@@ -124,13 +179,98 @@ def validate_profile_schema(donor_root: Path) -> list[str]:
         text = profile.read_text(encoding="utf-8")
         source = field_value(text, "Source") or field_value(text, "Sources")
         tier_raw = field_value(text, "Tier")
+        backend_signal = field_value(text, "Backend signal")
         license_signal = field_value(text, "License signal")
         if not source or EXTERNAL_RE.match(source) is None:
             errors.append(f"{rel}: missing or invalid Source URL")
         if not valid_tier_field(tier_raw):
             errors.append(f"{rel}: missing or invalid Tier {tier_raw!r}")
+        if not valid_backend_signal_field(backend_signal):
+            errors.append(f"{rel}: missing or invalid Backend signal {backend_signal!r}")
         if not license_signal:
             errors.append(f"{rel}: missing License signal")
+    return errors
+
+
+def linked_profile_paths(text: str) -> set[str]:
+    profiles: set[str] = set()
+    for match in LINK_RE.finditer(text):
+        target = normalize_link_target(match.group(1))
+        if target.startswith("profiles/"):
+            profiles.add(target)
+    return profiles
+
+
+def backend_claims(text: str) -> set[str]:
+    lowered = text.lower()
+    claims: set[str] = set()
+    checks = {
+        "native-cuda": ("cuda",),
+        "native-vulkan": ("vulkan",),
+        "native-directx": ("directx", "dx11", "dx12", "d3d11", "d3d12"),
+        "native-metal": ("metal",),
+        "native-opencl": ("opencl",),
+        "native-opengl": ("opengl",),
+        "native-webgpu": ("webgpu",),
+        "native-cpu": ("cpu",),
+    }
+    for signal, needles in checks.items():
+        if any(needle in lowered for needle in needles):
+            claims.add(signal)
+    return claims
+
+
+def backend_claim_supported(profile_signals: set[str], claim: str) -> bool:
+    return claim in profile_signals or "mixed-backend" in profile_signals or "api-agnostic" in profile_signals
+
+
+def validate_category_profile_routes(donor_root: Path) -> list[str]:
+    errors: list[str] = []
+    profiles = profile_metadata(donor_root)
+    profiles_by_source: dict[str, list[str]] = {}
+    for rel, metadata in profiles.items():
+        for source in metadata["sources"]:
+            profiles_by_source.setdefault(source, []).append(rel)
+
+    for category in sorted(donor_root.glob("*.md")):
+        if category.name in {"README.md", "selection-policy.md"}:
+            continue
+        rel = category.relative_to(donor_root).as_posix()
+        text = category.read_text(encoding="utf-8")
+        category_profile_links = linked_profile_paths(text)
+        for line_number, line in enumerate(text.splitlines(), 1):
+            if not line.startswith("|"):
+                continue
+            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+            if len(cells) < 4 or cells[0] in {"Donor", "---"} or set(cells[1]) <= {"-", ":"}:
+                continue
+            match = LINK_RE.search(cells[0])
+            if not match:
+                continue
+            target = normalize_link_target(match.group(1))
+            matched_profiles = [target] if target.startswith("profiles/") else profiles_by_source.get(normalize_url(target), [])
+            for profile_rel in matched_profiles:
+                if profile_rel not in profiles:
+                    errors.append(f"{rel}:{line_number}: category row links unknown donor profile {profile_rel!r}")
+                    continue
+                metadata = profiles[profile_rel]
+                if profile_rel not in category_profile_links:
+                    errors.append(f"{rel}:{line_number}: category row matches {profile_rel!r} but does not link that profile")
+                row_tier = normalize_tier(cells[1])
+                if row_tier not in metadata["tiers"]:
+                    errors.append(
+                        f"{rel}:{line_number}: category tier {row_tier!r} conflicts with {profile_rel} "
+                        f"tiers {sorted(metadata['tiers'])}"
+                    )
+                profile_signals = metadata["backend_signals"]
+                unsupported = sorted(
+                    claim for claim in backend_claims(cells[3]) if not backend_claim_supported(profile_signals, claim)
+                )
+                if unsupported:
+                    errors.append(
+                        f"{rel}:{line_number}: category backend claim(s) {unsupported} conflict with "
+                        f"{profile_rel} signals {sorted(profile_signals)}"
+                    )
     return errors
 
 
@@ -193,6 +333,7 @@ def main() -> int:
         + validate_donor_discoverability(donor_root, donor_relative_targets)
         + validate_profile_schema(donor_root)
         + validate_category_tiers(donor_root)
+        + validate_category_profile_routes(donor_root)
     )
     if errors:
         for error in errors:

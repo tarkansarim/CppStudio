@@ -13,7 +13,7 @@ Use this skill before editing anything in `/home/tarkan/Dropbox/work/MyTools/Cpp
 - Source skill path: `skills/cpp-cuda-vulkan-studio/`.
 - Source companion-skill snippets: `companion-skill-snippets/`.
 - Research notes: `research/`.
-- Installed deployment target: `/home/tarkan/.codex/skills/cpp-cuda-vulkan-studio`.
+- Installed deployment target: `${HOME}/.codex/skills/cpp-cuda-vulkan-studio`.
 - The installed target should be produced by sync, not hand-edited as the source of truth.
 
 ## First Read
@@ -57,6 +57,10 @@ For donor-library or companion-skill link rollouts:
 ./scripts/rollout_to_codex.sh
 ```
 
+By default this updates matching installed companion skills and skips missing optional companions.
+Use `STRICT_COMPANION_SKILLS=1 ./scripts/rollout_to_codex.sh` only for maintainer checks that should
+require every known companion skill.
+
 For previewing installed changes:
 
 ```bash
@@ -68,9 +72,14 @@ For previewing installed changes:
 - Keep `cpp-cuda-vulkan-studio` generic for future C++/CUDA/Vulkan repos.
 - Do not add CudaGroomTool, ComfyNative, hair-rendering, or other project-specific instructions to
   this global skill.
-- On this Ubuntu workstation, realtime CUDA work should be constrained to physical GPU 1. Use
-  `GPU_ALLOWED_INDICES=1` or `CUDA_VISIBLE_DEVICES=1` for runtime tests/profiling; keep the reusable
-  global skill generic by documenting this through the generic GPU allowlist behavior.
+- Keep reusable GPU-selection policy generic. If a target machine has only a subset of GPUs suitable
+  for realtime CUDA, document that in the target project or local runner configuration through
+  `GPU_ALLOWED_INDICES` or `CUDA_VISIBLE_DEVICES`, not in the global skill.
+- If this repo rolls out user-level `AGENTS.md` content, merge or append only the tiny marked
+  CppStudio relay block. It should only tell agents to load `cpp-cuda-vulkan-studio` for C++
+  Vulkan/CUDA work; lane policy stays inside the skill.
+- Companion donor rollout may replace only the marked `cppstudio-donor-library` block in matching
+  installed companion skills. Preserve user-owned content outside those markers.
 - Preserve template tokens such as `{{PROJECT_NAME}}`, `{{PROJECT_NAME_LOWER}}`, and
   `{{CPP_NAMESPACE}}`.
 - Preserve companion snippet tokens such as `{{DONOR_ROOT}}` and `{{REFERENCE_ROOT}}`; rollout renders
@@ -81,5 +90,5 @@ For previewing installed changes:
 ## Close-Out Checklist
 
 - State whether validation was default or full.
-- State whether sync to `/home/tarkan/.codex/skills/cpp-cuda-vulkan-studio` was run.
+- State whether sync to `${HOME}/.codex/skills/cpp-cuda-vulkan-studio` was run.
 - State any tool gaps that affect optional lanes, such as missing `clang-format` or `clang-tidy`.

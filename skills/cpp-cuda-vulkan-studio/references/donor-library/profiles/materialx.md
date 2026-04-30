@@ -2,6 +2,7 @@
 
 Source: https://github.com/AcademySoftwareFoundation/MaterialX  
 Tier: `dependency-candidate`  
+Backend signal: dcc-interchange, api-agnostic
 License signal: Apache-2.0; inspect `LICENSE`, `THIRD-PARTY.md`, generated shaders, examples, and
 sample material assets at the exact revision used.
 

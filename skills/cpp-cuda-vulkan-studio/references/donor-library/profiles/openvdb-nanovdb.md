@@ -2,6 +2,7 @@
 
 Source: https://github.com/AcademySoftwareFoundation/openvdb  
 Tier: `dependency-candidate` for OpenVDB, `safe-donor` for narrow NanoVDB-style runtime concepts  
+Backend signal: mixed-backend, native-cpu, native-cuda, native-vulkan
 License signal: current OpenVDB releases are Apache-2.0 after re-licensing from MPL-2.0; inspect
 `LICENSE`, `RE-LICENSE_NOTE.txt`, NanoVDB files, optional components, and dependencies at the exact
 revision used.

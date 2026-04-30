@@ -83,9 +83,10 @@ Profiling smoke gate:
 scripts/run_nsys_smoke.sh
 ```
 
-The profiler smoke defaults to the Vulkan app path. Use `PROFILE_LANE=cuda BUILD_DIR=build/cuda-debug
-scripts/run_nsys_smoke.sh` for CUDA profiling. Use `GPU_ALLOWED_INDICES=<physical-index>` when CUDA
-profiling must avoid display-bound GPUs.
+The profiler smoke defaults to the Vulkan app path and requires `nsys`. Use
+`REQUIRE_CUDA_PROFILING=1 PROFILE_LANE=cuda BUILD_DIR=build/cuda-debug scripts/run_nsys_smoke.sh`
+when CUDA profiling also requires Nsight Compute tooling. Use `GPU_ALLOWED_INDICES=<physical-index>`
+when CUDA profiling must avoid display-bound GPUs.
 
 Benchmark and profiling result records should follow [BENCHMARKS.md](BENCHMARKS.md). Do not add
 timing thresholds to CI until baselines are recorded for the exact runner hardware.

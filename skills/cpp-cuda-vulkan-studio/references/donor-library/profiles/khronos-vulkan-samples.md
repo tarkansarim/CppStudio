@@ -2,6 +2,7 @@
 
 Source: https://github.com/KhronosGroup/Vulkan-Samples  
 Tier: `safe-donor`  
+Backend signal: native-vulkan
 License signal: Apache-2.0 for code; inspect `LICENSE`, `third_party/`, submodules, and asset licenses
 at the exact revision used.
 

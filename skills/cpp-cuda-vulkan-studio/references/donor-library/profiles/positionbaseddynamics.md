@@ -2,6 +2,7 @@
 
 Source: https://github.com/InteractiveComputerGraphics/PositionBasedDynamics  
 Tier: `safe-donor`  
+Backend signal: native-cpu, api-agnostic
 License signal: MIT; inspect `LICENSE`, examples, dependencies, demo assets, and Python bindings at the
 exact revision used.
 

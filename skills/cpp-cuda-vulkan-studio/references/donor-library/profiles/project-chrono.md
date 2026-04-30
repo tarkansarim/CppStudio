@@ -2,6 +2,7 @@
 
 Source: https://github.com/projectchrono/chrono  
 Tier: `dependency-candidate`  
+Backend signal: mixed-backend, native-cpu
 License signal: BSD-3-Clause; inspect `LICENSE`, module licenses, optional third-party dependencies,
 assets, data files, and build options at the exact revision used.
 

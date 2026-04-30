@@ -2,6 +2,7 @@
 
 Source: https://github.com/nerfstudio-project/gsplat  
 Tier: `safe-donor`  
+Backend signal: native-cuda
 License signal: Apache-2.0; inspect `LICENSE`, Python package metadata, dependencies, examples, and
 data/model assets at the exact revision used.
 
@@ -33,7 +34,8 @@ data/model assets at the exact revision used.
 - Compare against known small scenes and CPU/debug reference projections where possible.
 - Test batch, multi-view, empty-scene, very small/large Gaussian count, and extreme covariance cases.
 - Track memory use, training/rendering time, and image metrics separately.
-- Run reduced-shape Compute Sanitizer lanes on adapted kernels.
+- For CUDA or mixed-lane project-owned CUDA adaptations, run reduced-shape Compute Sanitizer lanes. For
+  Vulkan ports, use Vulkan validation, shader/SPIR-V checks, and offscreen image/metric fixtures instead.
 
 ## Caveats
 

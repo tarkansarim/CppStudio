@@ -2,6 +2,7 @@
 
 Source: https://github.com/KhronosGroup/OpenXR-SDK-Source  
 Tier: `safe-donor`  
+Backend signal: api-agnostic, native-vulkan
 License signal: Apache-2.0 plus generated-file and `COPYING.adoc` notices; inspect `LICENSE`,
 `COPYING.adoc`, generated headers, samples, and third-party files at the exact revision used.
 
