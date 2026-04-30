@@ -9,6 +9,8 @@ TARGET_DIR="${TARGET_DIR:-${CODEX_HOME_DIR}/skills/${SKILL_NAME}}"
 VALIDATOR="${VALIDATOR:-${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py}"
 DONOR_ROOT="${TARGET_DIR}/references/donor-library"
 SNIPPET_ROOT="${ROOT_DIR}/companion-skill-snippets"
+EXPECTED_TARGET_DIR="${CODEX_HOME_DIR}/skills/${SKILL_NAME}"
+DONOR_VALIDATOR="${ROOT_DIR}/scripts/validate_donor_library.py"
 
 usage() {
     cat <<EOF
@@ -21,6 +23,9 @@ Environment:
   SYNC_CODEX_HOME  Defaults to ${HOME}/.codex
   TARGET_DIR       Override exact installed CppStudio skill directory
   VALIDATOR        Override quick_validate.py path
+  ALLOW_ROLLOUT_TARGET_OVERRIDE=1
+                  Allow TARGET_DIR outside ${EXPECTED_TARGET_DIR}. Companion-skill donor links will
+                  point at TARGET_DIR, so use this only for deliberate staging.
 EOF
 }
 
@@ -43,8 +48,21 @@ if [[ ! -d "${SOURCE_DIR}" ]]; then
     exit 1
 fi
 
+if [[ "${TARGET_DIR}" != "${EXPECTED_TARGET_DIR}" && "${ALLOW_ROLLOUT_TARGET_OVERRIDE:-0}" != "1" ]]; then
+    echo "Refusing rollout with TARGET_DIR outside the installed skill path:" >&2
+    echo "  TARGET_DIR=${TARGET_DIR}" >&2
+    echo "  expected=${EXPECTED_TARGET_DIR}" >&2
+    echo "Set ALLOW_ROLLOUT_TARGET_OVERRIDE=1 only if companion links should point at that target." >&2
+    exit 1
+fi
+
 if [[ ! -f "${VALIDATOR}" && ! -x "${VALIDATOR}" ]]; then
     echo "Missing skill validator: ${VALIDATOR}" >&2
+    exit 1
+fi
+
+if [[ ! -f "${DONOR_VALIDATOR}" ]]; then
+    echo "Missing donor library validator: ${DONOR_VALIDATOR}" >&2
     exit 1
 fi
 
@@ -63,48 +81,7 @@ done
 SYNC_CODEX_HOME="${CODEX_HOME_DIR}" TARGET_DIR="${TARGET_DIR}" VALIDATOR="${VALIDATOR}" \
     "${ROOT_DIR}/scripts/sync_to_codex.sh"
 
-required_donor_files=(
-    README.md
-    selection-policy.md
-    graphics-rendering.md
-    geometry-simulation.md
-    ai-runtimes-kernels.md
-    neural-3d.md
-    hair-grooming-fur.md
-    dcc-scene-pipeline.md
-    volumes-voxels.md
-    animation-rigging.md
-    surfaces-subdivision.md
-    texture-material-color.md
-    cad-precision-geometry.md
-    simulation-gpu.md
-    xr-spatial.md
-    profiles/cutlass.md
-    profiles/flashattention.md
-    profiles/triton.md
-    profiles/khronos-vulkan-samples.md
-    profiles/nvidia-vk-mini-samples.md
-    profiles/gsplat.md
-    profiles/tressfx.md
-    profiles/openusd.md
-    profiles/alembic.md
-    profiles/materialx.md
-    profiles/openvdb-nanovdb.md
-    profiles/ozz-animation.md
-    profiles/acl.md
-    profiles/opensubdiv.md
-    profiles/ktx-basis.md
-    profiles/opencolorio-openimageio.md
-    profiles/open-cascade.md
-    profiles/openxr-sdk.md
-)
-
-for donor_file in "${required_donor_files[@]}"; do
-    if [[ ! -f "${DONOR_ROOT}/${donor_file}" ]]; then
-        echo "Missing rolled-out donor file: ${DONOR_ROOT}/${donor_file}" >&2
-        exit 1
-    fi
-done
+python3 "${DONOR_VALIDATOR}" "${DONOR_ROOT}" --reference-root "${TARGET_DIR}/references"
 
 python3 - "$CODEX_HOME_DIR" "$DONOR_ROOT" "$SNIPPET_ROOT" <<'PY'
 from pathlib import Path

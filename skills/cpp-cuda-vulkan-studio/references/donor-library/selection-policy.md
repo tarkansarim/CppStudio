@@ -4,8 +4,9 @@ Use this policy to keep donor-code usage clean, reusable, and auditable.
 
 ## Default Decision
 
-Prefer `safe-donor` projects for reusable skill/template code. Keep `study-only` projects in research
-notes or design discussion unless the user explicitly approves a license-specific path.
+Prefer `safe-donor` projects for reusable skill/template code. Treat `dependency-candidate` projects as
+versioned dependency decisions, not as default copy/paste sources. Keep `study-only` projects in
+research notes or design discussion unless the user explicitly approves a license-specific path.
 
 ## Safe-Donor Checklist
 
@@ -23,7 +24,7 @@ Before adapting code or adding a dependency:
 | Tier | Allowed Use | Requirements |
 | --- | --- | --- |
 | `safe-donor` | Copy/adapt small code, tests, build ideas, examples, and dependency patterns. | Preserve notices; cite donor in docs when meaningful. |
-| `dependency-candidate` | Add as dependency or study architecture. | Confirm version, build cost, transitive licenses, and target repo dependency policy. |
+| `dependency-candidate` | Add as a deliberate dependency or study architecture/API shape. Do not copy code by default. | Confirm exact version, build cost, transitive licenses, copyleft/exception terms, optional modules, and target repo dependency policy. |
 | `study-only` | Learn concepts, compare algorithms, write independent implementations. | Do not copy code into project or skills without explicit approval and license review. |
 
 ## Red Flags

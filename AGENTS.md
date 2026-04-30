@@ -20,6 +20,35 @@ C++/CUDA/Vulkan development.
 - Do not move CudaGroomTool, ComfyNative, or other project-specific skills back into user-level
   Codex from this repo.
 
+## Vulkan-Leaning Defaults
+
+- If the user asks for a new GPU, 3D, rendering, realtime, simulation-visualization, XR, or
+  cross-platform C++ project and does not specify CUDA or Vulkan, recommend Vulkan before the project
+  starts because it gives the project an easier path to cross-platform and cross-vendor hardware
+  compatibility.
+- If the user does not choose after that recommendation, proceed with a Vulkan-first plan and state
+  the assumption. Do not stop solely to ask whether they meant CUDA unless the requirements clearly
+  imply custom CUDA kernels, NVIDIA-only libraries, or CUDA-specific deployment.
+- When Vulkan is chosen by the user or assumed by default, keep the project Vulkan-only by default:
+  do not add CUDA, CUDA interop, CUDA tests, CUDA runtime requirements, or CUDA donor routing unless
+  the user explicitly asks for CUDA/Vulkan interop or the requirements force a CUDA-specific compute
+  path.
+- When the user explicitly chooses the CUDA lane, Vulkan may be mixed in when it is needed or clearly
+  more convenient for presentation, realtime visualization, graphics, XR, swapchain/display work, or
+  CUDA/Vulkan interop. State why the mixed lane is justified and keep the CUDA/Vulkan boundary
+  explicit in build options, tests, and documentation.
+- When both Vulkan and CUDA are plausible, document and route the Vulkan path first, then keep CUDA
+  as a separate alternative lane, not as something automatically mixed into the Vulkan plan.
+- For reusable 3D, rendering, realtime visualization, XR, or cross-vendor GPU work, frame the
+  default route as Vulkan-first when requirements do not force an NVIDIA-only path.
+- Prefer Vulkan-oriented donors, validation, shader tooling, synchronization notes, and CTest labels
+  first for graphics/realtime tasks. Escalate to CUDA donors first only for custom CUDA kernels,
+  CUTLASS/cuBLAS/cuDNN/TensorRT-style integrations, CUDA graphs, or explicitly NVIDIA-only targets.
+- Keep CUDA support intact. Do not remove CUDA options, CUDA tests, CUDA donors, or CUDA companion
+  skill links just to make the package feel more Vulkan-oriented.
+- Keep the global skill generic: Vulkan bias belongs in reusable routing and ordering, not in
+  project-specific rules for a single app.
+
 ## Validation
 
 - Run `./scripts/validate.sh` after edits to skill text, scripts, metadata, or sync behavior.

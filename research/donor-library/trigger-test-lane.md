@@ -106,3 +106,26 @@ from installed paths under `/home/tarkan/.codex/skills`.
     scope.
   - CAD robust geometry keeps Open CASCADE primary for CAD semantics and CGAL secondary for exact
     computational geometry.
+
+## Adversarial-Gap Rerun
+
+Run date: 2026-04-30
+
+This lane re-tested gaps found during adversarial review: subdivision/surface routing, advanced
+simulation routing, and a negative non-3D business simulation prompt. Tests used installed paths under
+`/home/tarkan/.codex/skills` after rollout.
+
+| Case | Prompt Shape | Observed Result |
+| --- | --- | --- |
+| Surfaces/subdivision | C++ donor guidance for subdivision surfaces, creases, face-varying UVs, and CPU/GPU OpenSubdiv comparison | Passed. Agent selected `cpp-cuda-vulkan-studio`, `surfaces-subdivision.md`, and `profiles/opensubdiv.md`. It did not trigger `vulkan-compute-sync` because GPU OpenSubdiv evaluation alone does not imply Vulkan barriers/descriptors/swapchains. |
+| 3D/physics/GPU simulation | Donors for cloth, deformables, particles, differentiable CUDA prototypes, and realtime rigid-body integration | Passed. Agent selected `cpp-cuda-vulkan-studio`, `simulation-gpu.md`, and the Warp, Taichi, PositionBasedDynamics, Project Chrono, and PhysX profiles. It kept `cuda-kernel-authoring` conditional until native CUDA kernels are actually written or reviewed. |
+| Business simulation negative control | Python Monte Carlo revenue forecast CLI/tests with no C++/GPU/rendering/3D/physics/CUDA/Vulkan/AI-runtime scope | Passed. Agent did not trigger `cpp-cuda-vulkan-studio` or donor-library files. It noted only a naive keyword matcher would misfire on negated terms. |
+
+## Adversarial-Gap Findings
+
+- Narrowing the skill trigger from generic "simulation" to `3D/physics/GPU simulation` reduced the false
+  positive risk without weakening intended simulation routing.
+- The subdivision lane correctly stays independent from Vulkan synchronization until Vulkan integration
+  is explicit.
+- The simulation lane now has enough deep-profile guidance for agents to distinguish prototype donors
+  from native C++ donors and SDK dependencies.

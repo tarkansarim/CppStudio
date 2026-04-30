@@ -46,7 +46,11 @@ if [[ -d "${ROOT_DIR}/.codex/skills" ]]; then
         python3 "${VALIDATOR}" "${project_skill}"
     done < <(find "${ROOT_DIR}/.codex/skills" -mindepth 1 -maxdepth 1 -type d -print0)
 fi
-python3 -m py_compile "${SKILL_DIR}"/scripts/*.py
+python3 -m py_compile "${ROOT_DIR}"/scripts/*.py "${SKILL_DIR}"/scripts/*.py
+python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
+    "${SKILL_DIR}/references/donor-library" \
+    --reference-root "${SKILL_DIR}/references"
+rm -rf "${ROOT_DIR}/scripts/__pycache__"
 rm -rf "${SKILL_DIR}/scripts/__pycache__"
 bash -n "${ROOT_DIR}"/scripts/*.sh
 bash -n "${SKILL_DIR}"/scripts/*.sh

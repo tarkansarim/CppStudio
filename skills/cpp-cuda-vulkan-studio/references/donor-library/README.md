@@ -4,8 +4,8 @@ Last researched: 2026-04-30
 
 Use this library when a C++/CUDA/Vulkan/3D/AI-runtime/ML-kernel task needs source-backed donor
 projects, examples, architecture patterns, or dependency candidates. It covers rendering, geometry,
-neural 3D, grooming, DCC scene pipelines, volumes, animation, materials, CAD, simulation, and XR.
-Treat it as a selection map, not permission to copy large blocks of code.
+neural 3D, grooming, DCC scene pipelines, volumes, animation, materials, CAD, 3D/physics/GPU
+simulation, and XR. Treat it as a selection map, not permission to copy large blocks of code.
 
 ## How To Use
 
@@ -26,15 +26,17 @@ Treat it as a selection map, not permission to copy large blocks of code.
    - [xr-spatial.md](xr-spatial.md): OpenXR, spatial interaction, headset/controller input, stereo swapchains.
    - [profiles/](profiles/): deeper first-stop notes for the highest-value donors.
 3. For implementation work, prefer these outputs:
-   - Use permissive donors for dependency candidates, implementation patterns, small adapted snippets, and tests.
-   - Use dependency-heavy donors as API or architecture references unless the target repo already accepts that stack.
+   - Use permissive safe donors for implementation patterns, small adapted snippets, and tests.
+   - Use dependency candidates as package/API/architecture references unless the target repo already accepts
+     that dependency and license shape.
    - Use study-only donors for concepts only; do not copy code into reusable skills, templates, or project code.
 4. Record the donor name, URL, license, and exact feature borrowed in project docs or comments when adopting code.
 
 ## License Tiers
 
 - `safe-donor`: permissive source license such as MIT, Apache-2.0, BSD-2/3-Clause, zlib, or CC0.
-- `dependency-candidate`: permissive license but large/heavy enough that vendoring should be deliberate.
+- `dependency-candidate`: dependency-scale, license-sensitive, copyleft-with-exception, mixed-license, or
+  transitive-dependency-heavy source. Use only after exact-version dependency and license review.
 - `study-only`: non-commercial, source-available, GPL-family, unclear, or dependency/license-mixed source. Concepts can inform design, but code should not be copied without explicit approval.
 
 ## Agent Rules
@@ -68,3 +70,9 @@ Read these only when the task matches the donor:
 - [OpenColorIO and OpenImageIO](profiles/opencolorio-openimageio.md): color management and VFX image IO.
 - [Open CASCADE Technology](profiles/open-cascade.md): CAD-native B-rep/NURBS, STEP/IGES, and precision geometry.
 - [OpenXR SDK](profiles/openxr-sdk.md): portable OpenXR loader, samples, validation layers, and Vulkan/XR structure.
+- [NVIDIA Warp](profiles/warp.md): Python-authored CUDA simulation kernels and differentiable simulation.
+- [Taichi](profiles/taichi.md): portable CPU/GPU simulation DSL and differentiable physical simulation.
+- [PositionBasedDynamics](profiles/positionbaseddynamics.md): C++ PBD/XPBD constraints for interactive simulation.
+- [Project Chrono](profiles/project-chrono.md): multiphysics and multibody dynamics simulation.
+- [SOFA](profiles/sofa.md): medical/robotics multiphysics simulation architecture.
+- [NVIDIA PhysX](profiles/physx.md): realtime physics, collision, constraints, destruction, and fluid/fire SDK lanes.
