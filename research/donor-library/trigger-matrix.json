@@ -62,6 +62,69 @@
       ]
     },
     {
+      "name": "vulkan-memory-resource-lifetime",
+      "prompt_shape": "Vulkan C++ renderer or compute app needs buffer/image allocation, memory budgets, mapped staging buffers, resource lifetime, or allocation pools.",
+      "expected_behavior": "Route to Vulkan foundation tooling before renderer samples; use VMA as the first allocation donor and keep Vulkan memory/lifetime policy separate from CUDA.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vulkan-memory-allocator.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "vulkan-shader-reflection-toolchain",
+      "prompt_shape": "Vulkan C++ project needs GLSL to SPIR-V compilation, SPIR-V validation, descriptor reflection, push constant reflection, shader cross-compilation, or Slang evaluation.",
+      "expected_behavior": "Route to Vulkan foundation tooling and SPIR-V/Slang profiles; keep compile, validation, reflection, and runtime pipeline creation as separate concerns.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/spirv-toolchain.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/slang.md"
+      ]
+    },
+    {
+      "name": "vulkan-gltf-runtime-viewer",
+      "prompt_shape": "Vulkan-first C++ app loads GLB/glTF assets, uploads buffers/textures, previews PBR materials, or needs a runtime 3D asset viewer.",
+      "expected_behavior": "Route to glTF runtime assets plus Vulkan foundation tooling; keep CPU import, GPU upload, texture/material handling, and render pipeline policy separate.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/gltf-runtime-assets.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/fastgltf-cgltf-tinygltf.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/texture-material-color.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "generic-json-negative-control",
+      "prompt_shape": "Generic JSON parser, schema validation, or business-data import task with no C++, GPU, Vulkan, rendering, 3D asset, glTF, or runtime viewer scope.",
+      "expected_behavior": "Do not route to glTF runtime asset donors just because glTF uses JSON internally.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/gltf-runtime-assets.md"
+      ]
+    },
+    {
+      "name": "generic-shader-text-negative-control",
+      "prompt_shape": "Generic text templating, syntax highlighting, or non-GPU shader-like string processing without Vulkan, SPIR-V, GLSL, HLSL, Slang, or graphics runtime scope.",
+      "expected_behavior": "Do not route to Vulkan shader tooling donors unless the task names Vulkan, SPIR-V, shader compilation, reflection, or a graphics/compute runtime.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md"
+      ]
+    },
+    {
       "name": "python-negative-control",
       "prompt_shape": "Python CLI, virtualenv, parser, or business simulation with no C++, GPU, rendering, CUDA, Vulkan, 3D, physics, or AI-runtime scope.",
       "expected_behavior": "Do not trigger CppStudio donor-library routing.",

@@ -1,6 +1,6 @@
 ---
 name: cpp-cuda-vulkan-studio
-description: "Create, audit, or upgrade reusable C++/CUDA/Vulkan project infrastructure with a studio-grade backbone: app+library layout, CMake presets, CTest labels, CUDA architecture policy, Vulkan/shader tooling, sanitizer/profile lanes, self-hosted GPU CI, dependency documentation, validation scripts, and curated 3D/AI/GPU donor-reference selection. Use for new GPU C++ repos, infrastructure upgrades, build/test/profiling standardization, or when Codex needs vetted donors for graphics, 3D, neural 3D, Gaussian splatting, grooming/fur, DCC scene pipelines, volumes/voxels, animation/rigging, textures/materials/color, CAD geometry, 3D/physics/GPU simulation, XR, CUDA, Vulkan, rendering, or AI-runtime work."
+description: "Create, audit, or upgrade reusable C++/CUDA/Vulkan project infrastructure with a studio-grade backbone: app+library layout, CMake presets, CTest labels, CUDA architecture policy, Vulkan/shader tooling, sanitizer/profile lanes, self-hosted GPU CI, dependency documentation, validation scripts, and curated 3D/AI/GPU donor-reference selection. Use for new GPU C++ repos, infrastructure upgrades, build/test/profiling standardization, or when Codex needs vetted donors for graphics, 3D, Vulkan foundation tooling, glTF/runtime assets, neural 3D, Gaussian splatting, grooming/fur, DCC scene pipelines, volumes/voxels, animation/rigging, textures/materials/color, CAD geometry, 3D/physics/GPU simulation, XR, CUDA, Vulkan, rendering, or AI-runtime work."
 ---
 
 # C++ CUDA Vulkan Studio
@@ -26,7 +26,7 @@ Use this skill when a C++/CUDA/Vulkan repo needs a repeatable professional devel
 7. For new Vulkan template work, target Vulkan 1.4 with Vulkan-Hpp RAII, GLSL compiled by `glslc`, SPIR-V validation by `spirv-val`, and optional portability-enumeration support for MoltenVK-style platforms.
 8. Register tests with CTest labels so quick, GPU, GUI, Vulkan, CUDA, shader, compute, render, validation, perf, and nightly lanes can be selected independently.
 9. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
-10. Before greenfield scaffolding or major backbone edits, read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library, CUDA+Vulkan interop app, AI runtime, neural 3D viewer, grooming/fur tool, DCC scene pipeline, volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool, 3D/physics/GPU simulation tool, or XR app.
+10. Before greenfield scaffolding or major backbone edits, read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library, CUDA+Vulkan interop app, AI runtime, neural 3D viewer, grooming/fur tool, glTF/runtime asset viewer, DCC scene pipeline, volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool, 3D/physics/GPU simulation tool, or XR app.
 11. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects, read `references/donor-library/README.md` first and then the relevant category/profile file. Treat donors as domain references first: a CUDA, Vulkan, OpenCL, DirectX, CPU, or DCC donor can still guide another target backend. Keep the selected implementation lane fixed, translate backend-specific details through the active lane skill, and keep permissive donor code, dependency candidates, and study-only references separated.
 
 ## Bundled Assets
@@ -35,8 +35,8 @@ Use this skill when a C++/CUDA/Vulkan repo needs a repeatable professional devel
 
 ## Bundled References
 
-- `references/donor-library/`: curated donor-source library for graphics, Vulkan, rendering, geometry, 3D/physics/GPU simulation, AI runtimes, CUDA kernels, neural 3D, grooming/fur, DCC scene pipelines, volumes, animation, materials, CAD, and XR code. Donor backend signals describe the upstream implementation, not a restriction on target lanes. Start with `references/donor-library/README.md`; load only the category file needed for the active task.
-- `references/project-archetypes.md`: lane-selection guide for CUDA-only, Vulkan-only, CUDA+Vulkan interop, AI runtime, neural 3D, grooming, DCC, volume, animation, material, CAD, 3D/physics/GPU simulation, and XR projects.
+- `references/donor-library/`: curated donor-source library for Vulkan foundation tooling, glTF/runtime assets, graphics, rendering, geometry, 3D/physics/GPU simulation, AI runtimes, CUDA kernels, neural 3D, grooming/fur, DCC scene pipelines, volumes, animation, materials, CAD, and XR code. Donor backend signals describe the upstream implementation, not a restriction on target lanes. Start with `references/donor-library/README.md`; load only the category file needed for the active task.
+- `references/project-archetypes.md`: lane-selection guide for CUDA-only, Vulkan-only, CUDA+Vulkan interop, AI runtime, neural 3D, grooming, glTF/runtime assets, DCC, volume, animation, material, CAD, 3D/physics/GPU simulation, and XR projects.
 
 ## Bundled Scripts
 

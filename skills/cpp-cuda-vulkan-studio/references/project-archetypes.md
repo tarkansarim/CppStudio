@@ -24,7 +24,9 @@ app without CUDA kernels.
 
 - Enable Vulkan; CUDA can be off by default.
 - Keep shader compilation and SPIR-V validation in the normal build.
-- Read [donor-library/graphics-rendering.md](donor-library/graphics-rendering.md), then Khronos
+- Read [donor-library/vulkan-foundation-tooling.md](donor-library/vulkan-foundation-tooling.md) for
+  memory, loader/bootstrap, and shader-tooling choices, then
+  [donor-library/graphics-rendering.md](donor-library/graphics-rendering.md) and Khronos
   Vulkan-Samples before vendor-specific samples.
 - Verification priority: `scripts/dump_vulkan_capabilities.sh`, shader CTest, Vulkan validation,
   offscreen render/compute CTest, then RenderDoc or Nsight Graphics.
@@ -92,6 +94,22 @@ data.
   as separate modules.
 - Verification priority: round-trip tiny stages, path/payload tests, material fixtures, animation/curve
   fixtures, then representative production scenes.
+
+## glTF Runtime Asset Viewer Or Pipeline
+
+Use when the project loads, validates, previews, converts, or renders runtime glTF/GLB assets.
+
+- Enable Vulkan when runtime preview or GPU upload is in scope; keep CPU import separate from renderer
+  upload and material translation.
+- Read [donor-library/gltf-runtime-assets.md](donor-library/gltf-runtime-assets.md),
+  [donor-library/vulkan-foundation-tooling.md](donor-library/vulkan-foundation-tooling.md),
+  [donor-library/texture-material-color.md](donor-library/texture-material-color.md), and the glTF
+  loader profile before choosing loader or validation dependencies.
+- Keep source assets, sample models, screenshots, DCC files, texture codecs, and generated caches as
+  separate license surfaces.
+- Verification priority: Khronos validator reports, tiny GLB fixtures, external-buffer fixtures,
+  material/texture fixtures, animation/skinning fixtures, Vulkan upload tests, then offscreen viewer
+  frames.
 
 ## Volume Or Voxel Renderer
 

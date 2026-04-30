@@ -287,9 +287,10 @@ skills/cpp-cuda-vulkan-studio/references/donor-library/README.md
 skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md
 ```
 
-Category files route agents toward appropriate donors for graphics, Vulkan, CUDA kernels, AI
-runtimes, neural 3D, Gaussian splatting, grooming/fur, DCC scene pipelines, volumes, animation,
-materials, CAD geometry, 3D/physics/GPU simulation, XR, and related infrastructure.
+Category files route agents toward appropriate donors for Vulkan foundation tooling, glTF/runtime
+assets, graphics, CUDA kernels, AI runtimes, neural 3D, Gaussian splatting, grooming/fur, DCC scene
+pipelines, volumes, animation, materials, CAD geometry, 3D/physics/GPU simulation, XR, and related
+infrastructure.
 
 Validate donor-library link integrity with:
 

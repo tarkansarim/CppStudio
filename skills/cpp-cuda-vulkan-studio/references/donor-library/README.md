@@ -3,17 +3,19 @@
 Last researched: 2026-04-30
 
 Use this library when a C++/CUDA/Vulkan/3D/AI-runtime/ML-kernel task needs source-backed donor
-projects, examples, architecture patterns, or dependency candidates. It covers rendering, geometry,
-neural 3D, grooming, DCC scene pipelines, volumes, animation, materials, CAD, 3D/physics/GPU
-simulation, and XR. Treat it as a domain-first selection map, not permission to copy large blocks of
-code.
+projects, examples, architecture patterns, or dependency candidates. It covers Vulkan foundation
+tooling, runtime assets, rendering, geometry, neural 3D, grooming, DCC scene pipelines, volumes,
+animation, materials, CAD, 3D/physics/GPU simulation, and XR. Treat it as a domain-first selection
+map, not permission to copy large blocks of code.
 
 ## How To Use
 
 1. Read [selection-policy.md](selection-policy.md) before copying, adapting, or recommending any donor.
 2. Pick one relevant category file and load only that file:
-   - [graphics-rendering.md](graphics-rendering.md): Vulkan, renderer backbones, WebGPU/WebGL, PBR, path tracing.
-   - [geometry-simulation.md](geometry-simulation.md): asset import, mesh processing, BVH, point clouds, physics.
+   - [vulkan-foundation-tooling.md](vulkan-foundation-tooling.md): Vulkan memory allocation, loader/bootstrap, shader reflection, SPIR-V tooling.
+   - [graphics-rendering.md](graphics-rendering.md): renderer backbones, WebGPU/WebGL, PBR, path tracing.
+   - [gltf-runtime-assets.md](gltf-runtime-assets.md): glTF loading, validation, fixtures, runtime asset handoff.
+   - [geometry-simulation.md](geometry-simulation.md): mesh processing, BVH, point clouds, physics.
    - [ai-runtimes-kernels.md](ai-runtimes-kernels.md): LLM runtimes, inference engines, CUDA kernels, ML compilers.
    - [neural-3d.md](neural-3d.md): NeRFs, Gaussian splatting, differentiable rendering, 3D ML.
    - [hair-grooming-fur.md](hair-grooming-fur.md): realtime hair/fur, strand data, grooming, groom interchange.
@@ -78,6 +80,12 @@ Read these only when the task matches the donor:
 - [Triton](profiles/triton.md): Python-authored GPU kernel DSL/compiler patterns.
 - [Khronos Vulkan-Samples](profiles/khronos-vulkan-samples.md): portable Vulkan correctness and best-practice samples.
 - [NVIDIA vk_mini_samples](profiles/nvidia-vk-mini-samples.md): NVIDIA Vulkan extensions, tooling, and compact samples.
+- [Vulkan Memory Allocator](profiles/vulkan-memory-allocator.md): Vulkan allocation, memory budgets, pools, and mapping policy.
+- [volk](profiles/volk.md): Vulkan loader, dispatch, and extension entrypoint setup.
+- [vk-bootstrap](profiles/vk-bootstrap.md): Vulkan instance/device/swapchain bootstrap helpers.
+- [SPIR-V Toolchain](profiles/spirv-toolchain.md): SPIR-V reflection, validation, compilation, and cross-compilation.
+- [Slang](profiles/slang.md): multi-target shader authoring, generics, reflection, and compiler integration.
+- [glTF C/C++ Loaders](profiles/fastgltf-cgltf-tinygltf.md): fastgltf, cgltf, tinygltf runtime loader choices.
 - [gsplat](profiles/gsplat.md): CUDA Gaussian splatting rasterization and neural 3D operator packaging.
 - [AMD TressFX](profiles/tressfx.md): realtime GPU hair/fur simulation and rendering.
 - [OpenUSD](profiles/openusd.md): scene composition, USD schemas, DCC interchange, curves, skeletons, materials.

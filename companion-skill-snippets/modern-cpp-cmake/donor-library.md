@@ -9,6 +9,11 @@ When choosing external 3D, graphics, GPU, AI-runtime, or ML-kernel dependencies,
 Use permissive donors for reusable code. Keep study-only references out of templates and shared
 infrastructure.
 
+For Vulkan foundation dependencies, route memory allocation, loader/bootstrap, and shader-tooling
+questions through `{{DONOR_ROOT}}/vulkan-foundation-tooling.md`. For runtime 3D asset loading,
+glTF/GLB validation, or viewer/importer dependencies, route through
+`{{DONOR_ROOT}}/gltf-runtime-assets.md`.
+
 Donors are domain references first, not lane locks. A donor's CUDA, Vulkan, OpenCL, DirectX, CPU, or
 DCC backend signal describes upstream implementation context only. Keep the target project's selected
 lane and dependency policy intact, and route backend-specific translation through `cpp-cuda-vulkan-studio`

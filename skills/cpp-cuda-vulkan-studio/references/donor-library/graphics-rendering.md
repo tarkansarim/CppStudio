@@ -29,6 +29,8 @@ ray/path tracing work.
 ## Selection Notes
 
 - For Vulkan correctness, start with Khronos Vulkan-Samples before vendor-specific samples.
+- For Vulkan memory allocation, loader/bootstrap, shader reflection, or SPIR-V tooling, route to
+  [vulkan-foundation-tooling.md](vulkan-foundation-tooling.md) before choosing renderer-level donors.
 - For NVIDIA-specific Vulkan extensions and tooling, use `vk_mini_samples` and keep extension fallbacks explicit.
 - For a project that needs a renderer dependency, compare Filament, Diligent Engine, bgfx, Magnum, and Dawn against the target repo's language, backend, shader, and build constraints.
 - For browser-facing 3D demos, use three.js first for lightweight scenes and Babylon.js when a fuller engine/editor stack is useful.

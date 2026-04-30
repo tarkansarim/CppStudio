@@ -22,6 +22,8 @@ color management, ACES/OCIO configs, and material/look-development exchange.
 ## Selection Notes
 
 - Use KTX/KTX2 for runtime GPU texture delivery, especially Vulkan/glTF workflows.
+- For whole-scene glTF/GLB runtime asset loading, read
+  [gltf-runtime-assets.md](gltf-runtime-assets.md) before choosing texture or material dependencies.
 - Use Basis Universal when universal compressed texture distribution/transcoding is the core issue.
 - Use OpenImageIO and OpenColorIO for production DCC/VFX pipelines; they are usually dependencies, not
   snippets to copy.
