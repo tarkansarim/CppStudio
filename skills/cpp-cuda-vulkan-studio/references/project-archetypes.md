@@ -1,9 +1,10 @@
 # Project Archetypes
 
 Use this reference before scaffolding a greenfield project or applying the backbone to a repo whose
-GPU lane is unclear. Start from the single bundled app+library template, then disable or adapt CMake
-options for the selected archetype. Do not create separate generated templates unless the user asks for
-a new reusable template family.
+GPU lane is unclear. If the user does not choose CUDA or Vulkan, recommend Vulkan and start from the
+Vulkan-only default `dev` preset for cross-platform and cross-vendor compatibility. Add CUDA only for
+an explicit CUDA lane, a CUDA-specific compute requirement, or deliberate CUDA/Vulkan interop. Do not
+create separate generated templates unless the user asks for a new reusable template family.
 
 ## CUDA Library
 
@@ -32,7 +33,8 @@ app without CUDA kernels.
 
 Use when CUDA produces or transforms data consumed by Vulkan, or Vulkan resources are shared with CUDA.
 
-- Keep CUDA and Vulkan optional but enabled in the main dev preset.
+- Use the explicit `cuda-vulkan-interop` preset. Do not use this archetype for ordinary Vulkan-first
+  projects that merely need GPU compute or rendering.
 - Prove each lane independently before adding external memory or semaphore interop tests.
 - Read CUDA external resource interop docs, [donor-library/ai-runtimes-kernels.md](donor-library/ai-runtimes-kernels.md),
   and [donor-library/graphics-rendering.md](donor-library/graphics-rendering.md).
@@ -167,3 +169,5 @@ spatial interaction.
 If a project matches more than one archetype, choose the narrowest archetype that covers the user-visible
 workflow, then add the adjacent lane as an optional CMake feature. For example, a CUDA library with a
 debug viewer is still a CUDA library first; a renderer with one CUDA denoising pass is an interop app.
+When the user has not chosen a GPU API, make the initial recommendation and implementation plan
+Vulkan-only.

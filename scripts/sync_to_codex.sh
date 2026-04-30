@@ -7,6 +7,7 @@ SOURCE_DIR="${ROOT_DIR}/skills/${SKILL_NAME}"
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 TARGET_DIR="${TARGET_DIR:-${CODEX_HOME_DIR}/skills/${SKILL_NAME}}"
 VALIDATOR="${VALIDATOR:-${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py}"
+EXPECTED_TARGET_DIR="${CODEX_HOME_DIR}/skills/${SKILL_NAME}"
 
 dry_run=0
 delete_flag="--delete"
@@ -21,6 +22,9 @@ Environment:
   SYNC_CODEX_HOME  Defaults to ${HOME}/.codex
   TARGET_DIR       Override the exact installed skill directory
   VALIDATOR        Override quick_validate.py path
+  ALLOW_SYNC_TARGET_OVERRIDE=1
+                  Allow TARGET_DIR outside ${EXPECTED_TARGET_DIR}. Refuses dangerous paths even
+                  with this override.
 
 Note:
   This repo publishes the user-level skill copy by default. Nested Codex sessions may set
@@ -59,6 +63,33 @@ if [[ ! -x "${VALIDATOR}" && ! -f "${VALIDATOR}" ]]; then
     echo "Missing skill validator: ${VALIDATOR}" >&2
     exit 1
 fi
+
+target_resolved="$(realpath -m "${TARGET_DIR}")"
+expected_resolved="$(realpath -m "${EXPECTED_TARGET_DIR}")"
+root_resolved="$(realpath -m "${ROOT_DIR}")"
+source_resolved="$(realpath -m "${SOURCE_DIR}")"
+home_resolved="$(realpath -m "${HOME}")"
+codex_home_resolved="$(realpath -m "${CODEX_HOME_DIR}")"
+codex_skills_resolved="$(realpath -m "${CODEX_HOME_DIR}/skills")"
+
+if [[ "${target_resolved}" != "${expected_resolved}" && "${ALLOW_SYNC_TARGET_OVERRIDE:-0}" != "1" ]]; then
+    echo "Refusing sync with TARGET_DIR outside the installed skill path:" >&2
+    echo "  TARGET_DIR=${TARGET_DIR}" >&2
+    echo "  expected=${EXPECTED_TARGET_DIR}" >&2
+    echo "Set ALLOW_SYNC_TARGET_OVERRIDE=1 only for deliberate staging targets." >&2
+    exit 1
+fi
+
+case "${target_resolved}" in
+    "/"|"${home_resolved}"|"${codex_home_resolved}"|"${codex_skills_resolved}"|"${root_resolved}"|"${source_resolved}")
+        echo "Refusing dangerous TARGET_DIR for rsync --delete: ${TARGET_DIR}" >&2
+        exit 1
+        ;;
+    "${root_resolved}"/*)
+        echo "Refusing TARGET_DIR inside this repo: ${TARGET_DIR}" >&2
+        exit 1
+        ;;
+esac
 
 python3 "${VALIDATOR}" "${SOURCE_DIR}"
 

@@ -1,7 +1,7 @@
 # CppStudio
 
 CppStudio is an agentic skills package for GPU-native C++ engineering. It is the canonical source
-for the reusable `cpp-cuda-vulkan-studio` Codex skill, its bundled C++/CUDA/Vulkan project
+for the reusable `cpp-cuda-vulkan-studio` Codex skill, its bundled Vulkan-first C++/CUDA project
 backbone, research notes, donor-reference routing, companion-skill snippets, and rollout scripts.
 
 Use this repo when you want coding agents to create, audit, or upgrade C++/CUDA/Vulkan projects
@@ -12,7 +12,7 @@ selection.
 
 - `skills/cpp-cuda-vulkan-studio/`: source of truth for the user-level Codex skill.
 - `skills/cpp-cuda-vulkan-studio/assets/app-library-template/`: reusable generated-project
-  template for app+library C++/CUDA/Vulkan repos.
+  template for Vulkan-first app+library C++ repos with explicit CUDA and mixed interop lanes.
 - `skills/cpp-cuda-vulkan-studio/references/`: project archetypes and donor-reference guidance.
 - `companion-skill-snippets/`: source-owned donor-library link blocks installed into companion
   skills such as `cuda-kernel-authoring`, `vulkan-compute-sync`, and `modern-cpp-cmake`.
@@ -136,7 +136,7 @@ $cpp-cuda-vulkan-studio scaffold a new C++/CUDA/Vulkan app+library project calle
 ```
 
 ```text
-Upgrade this C++ renderer repo with the CppStudio backbone and keep CUDA/Vulkan optional.
+Upgrade this C++ renderer repo with the CppStudio backbone; use Vulkan by default unless CUDA is explicitly needed.
 ```
 
 ```text
@@ -152,7 +152,7 @@ The main skill coordinates companion skills:
 - `gpu-profiling-workstation` for local GPU profiling and frame debugging on this machine
 - `verification-before-completion` before completion claims
 
-## Creating A New C++/CUDA/Vulkan Project
+## Creating A New Vulkan-First C++ Project
 
 The bundled scaffold script creates a project from
 `skills/cpp-cuda-vulkan-studio/assets/app-library-template/`.
@@ -183,6 +183,21 @@ Then build and test from the generated project:
 cmake --preset dev
 cmake --build --preset dev
 ctest --preset quick --output-on-failure
+```
+
+CUDA is available through explicit presets, not mixed into Vulkan-default projects:
+
+```bash
+cmake --preset cuda-debug
+cmake --build --preset cuda-debug
+ctest --preset cuda --output-on-failure
+```
+
+For deliberate CUDA plus Vulkan interop work:
+
+```bash
+cmake --preset cuda-vulkan-interop
+cmake --build --preset cuda-vulkan-interop
 ```
 
 ## Upgrading An Existing Repo
@@ -287,6 +302,10 @@ Use that override only for deliberate staging.
 - Do not commit generated temp projects, build directories, profiler traces, `.pyc` files, or
   `__pycache__` directories.
 - Prefer updating scripts when behavior needs to stay deterministic.
+
+## License
+
+CppStudio is released under [The Unlicense](LICENSE) for unrestricted reuse.
 
 ## Troubleshooting
 

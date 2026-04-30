@@ -21,7 +21,7 @@ fi
 if (( "$#" > 0 )); then
     command_to_run=("$@")
 else
-    command_to_run=(ctest --preset gpu --output-on-failure)
+    command_to_run=(ctest --preset cuda --output-on-failure --no-tests=error)
 fi
 
 log_path="artifacts/sanitizer/compute-sanitizer.log"

@@ -11,6 +11,7 @@ from pathlib import Path
 
 LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 EXTERNAL_RE = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*:")
+ALLOWED_TIERS = {"safe-donor", "dependency-candidate", "study-only"}
 
 
 def markdown_files(root: Path) -> list[Path]:
@@ -94,6 +95,63 @@ def validate_donor_discoverability(donor_root: Path, linked_targets: set[str]) -
     return errors
 
 
+def field_value(text: str, field_name: str) -> str | None:
+    prefix = f"{field_name}:"
+    for line in text.splitlines():
+        if line.startswith(prefix):
+            return line[len(prefix) :].strip()
+    return None
+
+
+def normalize_tier(raw: str | None) -> str:
+    return (raw or "").strip().strip("`")
+
+
+def valid_tier_field(raw: str | None) -> bool:
+    if not raw:
+        return False
+    quoted_tiers = re.findall(r"`([^`]+)`", raw)
+    if quoted_tiers:
+        return all(tier in ALLOWED_TIERS for tier in quoted_tiers)
+    return normalize_tier(raw).split()[0] in ALLOWED_TIERS
+
+
+def validate_profile_schema(donor_root: Path) -> list[str]:
+    errors: list[str] = []
+    profiles_dir = donor_root / "profiles"
+    for profile in sorted(profiles_dir.glob("*.md")):
+        rel = profile.relative_to(donor_root).as_posix()
+        text = profile.read_text(encoding="utf-8")
+        source = field_value(text, "Source") or field_value(text, "Sources")
+        tier_raw = field_value(text, "Tier")
+        license_signal = field_value(text, "License signal")
+        if not source or EXTERNAL_RE.match(source) is None:
+            errors.append(f"{rel}: missing or invalid Source URL")
+        if not valid_tier_field(tier_raw):
+            errors.append(f"{rel}: missing or invalid Tier {tier_raw!r}")
+        if not license_signal:
+            errors.append(f"{rel}: missing License signal")
+    return errors
+
+
+def validate_category_tiers(donor_root: Path) -> list[str]:
+    errors: list[str] = []
+    for category in sorted(donor_root.glob("*.md")):
+        if category.name in {"README.md", "selection-policy.md"}:
+            continue
+        rel = category.relative_to(donor_root).as_posix()
+        for line_number, line in enumerate(category.read_text(encoding="utf-8").splitlines(), 1):
+            if not line.startswith("|"):
+                continue
+            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+            if len(cells) < 4 or cells[0] in {"Donor", "---"} or set(cells[1]) <= {"-", ":"}:
+                continue
+            tier = normalize_tier(cells[1])
+            if tier not in ALLOWED_TIERS:
+                errors.append(f"{rel}:{line_number}: invalid donor tier {tier!r}")
+    return errors
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("donor_root", type=Path, help="Path to references/donor-library")
@@ -130,7 +188,12 @@ def main() -> int:
         if Path(target).is_relative_to(donor_root.relative_to(reference_root))
     }
 
-    errors = link_errors + validate_donor_discoverability(donor_root, donor_relative_targets)
+    errors = (
+        link_errors
+        + validate_donor_discoverability(donor_root, donor_relative_targets)
+        + validate_profile_schema(donor_root)
+        + validate_category_tiers(donor_root)
+    )
     if errors:
         for error in errors:
             print(error, file=sys.stderr)

@@ -56,7 +56,7 @@ scripts/dump_vulkan_capabilities.sh
 | --- | --- | --- | --- |
 | `toolcheck` | push/PR | Detect missing compilers, SDKs, drivers, shader tools, and profilers. | Logs only. |
 | `build-dev` | push/PR | Compile default development preset. | Logs only. |
-| `quick-tests` | push/PR | Run fast deterministic CPU/CUDA/Vulkan smoke tests. | Logs on failure. |
+| `quick-tests` | push/PR | Run fast deterministic CPU/Vulkan-default smoke tests. | Logs on failure. |
 | `gpu-smoke` | push/PR or manual | Run CTest GPU labels on attached hardware. | Logs on failure. |
 | `vulkan-shader` | push/PR | Compile and validate SPIR-V shader assets. | Logs on failure. |
 | `vulkan-runtime` | push/PR or manual | Prove a usable Vulkan device and runtime paths. | Capability dump on failure. |

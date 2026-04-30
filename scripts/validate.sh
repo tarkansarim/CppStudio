@@ -13,7 +13,8 @@ Usage: $0 [--full]
 Validate the canonical CppStudio skill.
 
   default  Skill metadata, Python syntax, and shell syntax.
-  --full   Also scaffold a temporary sample project and run CMake/CTest quick lanes.
+  --full   Also scaffold a temporary sample project and run CMake/CTest CPU, Vulkan, CUDA,
+           mixed CUDA/Vulkan, and sanitizer quick lanes.
 EOF
 }
 
@@ -50,6 +51,9 @@ python3 -m py_compile "${ROOT_DIR}"/scripts/*.py "${SKILL_DIR}"/scripts/*.py
 python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
     "${SKILL_DIR}/references/donor-library" \
     --reference-root "${SKILL_DIR}/references"
+python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
+    "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+    --repo-root "${ROOT_DIR}"
 rm -rf "${ROOT_DIR}/scripts/__pycache__"
 rm -rf "${SKILL_DIR}/scripts/__pycache__"
 bash -n "${ROOT_DIR}"/scripts/*.sh
@@ -57,16 +61,37 @@ bash -n "${SKILL_DIR}"/scripts/*.sh
 
 if (( full )); then
     sample_dir="$(mktemp -d /tmp/cppstudio_validate.XXXXXX)"
+    cleanup_sample() {
+        if [[ "${KEEP_VALIDATE_TMP:-0}" == "1" ]]; then
+            echo "Preserved validation sample at ${sample_dir}"
+        else
+            rm -rf "${sample_dir}"
+        fi
+    }
+    trap cleanup_sample EXIT
+
     "${SKILL_DIR}/scripts/scaffold_gpu_cpp_project.py" --name StudioValidate --output "${sample_dir}"
     "${SKILL_DIR}/scripts/validate_studio_backbone.py" "${sample_dir}" --strict-source-layout
     (
         cd "${sample_dir}"
         cmake --preset dev
         cmake --build --preset dev
-        ctest --preset quick --output-on-failure
+        ctest --preset quick --output-on-failure --no-tests=error
+        cmake --preset vulkan-debug
+        cmake --build --preset vulkan-debug
+        ctest --preset vulkan --output-on-failure --no-tests=error
+        cmake --preset vulkan-portability
+        cmake --build --preset vulkan-portability
+        ctest --test-dir build/vulkan-portability --output-on-failure --no-tests=error -L vulkan
+        scripts/run_vulkan_validation.sh
+        cmake --preset cuda-debug
+        cmake --build --preset cuda-debug
+        ctest --preset cuda --output-on-failure --no-tests=error
+        cmake --preset cuda-vulkan-interop
+        cmake --build --preset cuda-vulkan-interop
         cmake --preset asan-ubsan
         cmake --build --preset asan-ubsan
-        ctest --preset asan-ubsan-quick --output-on-failure
+        ctest --preset asan-ubsan-quick --output-on-failure --no-tests=error
     )
 fi
 

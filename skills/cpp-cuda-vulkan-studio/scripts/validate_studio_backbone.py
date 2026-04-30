@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 from pathlib import Path
 
 
@@ -42,13 +43,16 @@ REQUIRED_CONFIGURE_PRESETS = {
     "profile",
     "asan-ubsan",
     "cuda-debug",
+    "cuda-vulkan-interop",
     "vulkan-debug",
+    "vulkan-portability",
     "vulkan-validation",
     "ci-gpu",
 }
 REQUIRED_TEST_PRESETS = {
     "quick",
     "gpu",
+    "cuda",
     "vulkan-shader",
     "vulkan",
     "vulkan-compute",
@@ -62,6 +66,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("repo", help="Repository root to validate")
     parser.add_argument("--strict-source-layout", action="store_true")
+    parser.add_argument("--integration", action="store_true", help="Also configure, build, and inspect CTest registration")
     args = parser.parse_args()
 
     repo = Path(args.repo).expanduser().resolve()
@@ -100,6 +105,34 @@ def main() -> int:
         ]:
             if not (repo / relative).is_dir():
                 failures.append(f"missing directory {relative}")
+
+    for relative in [
+        "scripts/check_dev_tools.sh",
+        "scripts/select_idle_gpu.sh",
+        "scripts/run_compute_sanitizer.sh",
+        "scripts/run_vulkan_validation.sh",
+        "scripts/dump_vulkan_capabilities.sh",
+        "scripts/run_nsys_smoke.sh",
+        "scripts/format_check.sh",
+        "scripts/tidy_check.sh",
+    ]:
+        path = repo / relative
+        if path.exists() and (path.stat().st_mode & 0o111) == 0:
+            failures.append(f"script is not executable: {relative}")
+
+    if args.integration and not failures:
+        commands = [
+            ["cmake", "--preset", "dev"],
+            ["cmake", "--build", "--preset", "dev"],
+            ["ctest", "--preset", "quick", "--show-only=json-v1"],
+        ]
+        for command in commands:
+            result = subprocess.run(command, cwd=repo, text=True, capture_output=True, check=False)
+            if result.returncode != 0:
+                failures.append(
+                    f"integration command failed ({' '.join(command)}):\n{result.stdout}{result.stderr}"
+                )
+                break
 
     if failures:
         for failure in failures:

@@ -5,6 +5,9 @@ Run date: 2026-04-30
 This lane forward-tested whether fresh agents pick the intended skills and donor-reference files for
 graphics, CUDA/AI kernels, geometry/simulation, neural 3D, and a negative non-GPU task.
 
+The repeatable regression matrix for future reruns lives in `trigger-matrix.json`; repo validation
+checks that the referenced skill and donor files still exist.
+
 ## Test Matrix
 
 | Case | Prompt Shape | Expected Result | Observed Result |

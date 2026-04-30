@@ -6,9 +6,28 @@ if ! command -v nsys >/dev/null 2>&1; then
     exit 1
 fi
 
+profile_lane="${PROFILE_LANE:-vulkan}"
 build_dir="${BUILD_DIR:-build/dev}"
 output_dir="${NSYS_OUTPUT_DIR:-artifacts/profiling}"
-trace="${NSYS_TRACE:-cuda,nvtx,osrt}"
+case "${profile_lane}" in
+    vulkan)
+        default_trace="vulkan,nvtx,osrt"
+        default_app_arg="--vulkan-smoke"
+        ;;
+    cuda)
+        default_trace="cuda,nvtx,osrt"
+        default_app_arg="--cuda-smoke"
+        ;;
+    all)
+        default_trace="cuda,vulkan,nvtx,osrt"
+        default_app_arg="--gpu-smoke"
+        ;;
+    *)
+        echo "PROFILE_LANE must be one of: vulkan, cuda, all" >&2
+        exit 2
+        ;;
+esac
+trace="${NSYS_TRACE:-${default_trace}}"
 mkdir -p "${output_dir}"
 
 if [[ -z "${CUDA_VISIBLE_DEVICES:-}" && ( -n "${GPU_ALLOWED_INDICES:-}" || "${GPU_AUTO_SELECT:-0}" == "1" ) ]]; then
@@ -32,7 +51,7 @@ else
         echo "No app command supplied and no *_app executable found in ${build_dir}" >&2
         exit 1
     fi
-    command_to_run=("${app_candidate}" --smoke-test)
+    command_to_run=("${app_candidate}" "${default_app_arg}")
 fi
 
 report_prefix="${output_dir}/nsys_smoke"
@@ -50,7 +69,7 @@ if [[ ! -f "${report_path}" ]]; then
 fi
 
 stats_path="${output_dir}/nsys_smoke_stats.txt"
-nsys stats --report cuda_api_gpu_sum,cuda_gpu_kern_sum "${report_path}" >"${stats_path}" 2>&1 || {
+nsys stats "${report_path}" >"${stats_path}" 2>&1 || {
     cat "${stats_path}" >&2
     exit 1
 }

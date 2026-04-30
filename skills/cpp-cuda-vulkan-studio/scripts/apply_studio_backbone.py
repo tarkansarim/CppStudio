@@ -106,7 +106,7 @@ def main() -> int:
         "PROJECT_NAME_LOWER": project_lower,
         "PROJECT_NAME_UPPER": project_lower.upper(),
         "CPP_NAMESPACE": args.namespace or project_lower,
-        "PROJECT_DESCRIPTION": "C++/CUDA/Vulkan project",
+        "PROJECT_DESCRIPTION": "Vulkan-first C++ project with optional CUDA lanes",
     }
 
     paths = list(BACKBONE_PATHS)

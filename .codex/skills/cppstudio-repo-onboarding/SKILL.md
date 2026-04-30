@@ -45,6 +45,12 @@ For live editing with automatic publishing:
 ./scripts/watch_to_codex.sh
 ```
 
+For live donor-library or companion-skill snippet work:
+
+```bash
+./scripts/watch_to_codex.sh --rollout
+```
+
 For donor-library or companion-skill link rollouts:
 
 ```bash

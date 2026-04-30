@@ -25,6 +25,10 @@ constexpr std::uint32_t kRenderWidth = 4;
 constexpr std::uint32_t kRenderHeight = 4;
 constexpr std::uint64_t kFenceTimeoutNs = 5'000'000'000ULL;
 
+struct ValidationState {
+    bool error_seen = false;
+};
+
 bool string_equals(const char* left, std::string_view right) {
     return std::strncmp(left, right.data(), right.size()) == 0 && left[right.size()] == '\0';
 }
@@ -62,12 +66,17 @@ std::vector<std::uint32_t> read_spirv(const std::filesystem::path& path) {
 }
 
 VKAPI_ATTR vk::Bool32 VKAPI_CALL debug_callback(
-    vk::DebugUtilsMessageSeverityFlagBitsEXT,
+    vk::DebugUtilsMessageSeverityFlagBitsEXT severity,
     vk::DebugUtilsMessageTypeFlagsEXT,
     const vk::DebugUtilsMessengerCallbackDataEXT* callback_data,
-    void*) {
+    void* user_data) {
+    const bool is_error = (severity & vk::DebugUtilsMessageSeverityFlagBitsEXT::eError) ==
+        vk::DebugUtilsMessageSeverityFlagBitsEXT::eError;
+    if (is_error && user_data) {
+        static_cast<ValidationState*>(user_data)->error_seen = true;
+    }
     if (callback_data && callback_data->pMessage) {
-        std::fprintf(stderr, "Vulkan validation: %s\n", callback_data->pMessage);
+        std::fprintf(stderr, "Vulkan validation %s: %s\n", is_error ? "error" : "warning", callback_data->pMessage);
     }
     return VK_FALSE;
 }
@@ -82,6 +91,13 @@ vk::raii::Instance create_instance(vk::raii::Context& context, bool& debug_utils
     if (debug_utils_enabled) {
         enabled_extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
     }
+#if PROJECT_VULKAN_ENABLE_PORTABILITY
+    bool portability_enumeration_enabled = false;
+    if (has_extension(instance_extensions, VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME)) {
+        enabled_extensions.push_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
+        portability_enumeration_enabled = true;
+    }
+#endif
 
     std::vector<const char*> enabled_layers;
     if (PROJECT_VULKAN_ENABLE_VALIDATION) {
@@ -103,13 +119,19 @@ vk::raii::Instance create_instance(vk::raii::Context& context, bool& debug_utils
     create_info.setPApplicationInfo(&application_info)
         .setPEnabledLayerNames(enabled_layers)
         .setPEnabledExtensionNames(enabled_extensions);
+#if PROJECT_VULKAN_ENABLE_PORTABILITY
+    if (portability_enumeration_enabled) {
+        create_info.setFlags(vk::InstanceCreateFlagBits::eEnumeratePortabilityKHR);
+    }
+#endif
 
     return vk::raii::Instance(context, create_info);
 }
 
 std::optional<vk::raii::DebugUtilsMessengerEXT> create_debug_messenger(
     const vk::raii::Instance& instance,
-    bool debug_utils_enabled) {
+    bool debug_utils_enabled,
+    ValidationState& validation_state) {
     if (!debug_utils_enabled) {
         return std::nullopt;
     }
@@ -122,7 +144,8 @@ std::optional<vk::raii::DebugUtilsMessengerEXT> create_debug_messenger(
             vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral |
             vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation |
             vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance)
-        .setPfnUserCallback(debug_callback);
+        .setPfnUserCallback(debug_callback)
+        .setPUserData(&validation_state);
 
     return vk::raii::DebugUtilsMessengerEXT(instance, create_info);
 }
@@ -169,19 +192,20 @@ std::optional<DeviceSelection> select_device(const vk::raii::Instance& instance)
 
 struct VulkanSmokeContext {
     vk::raii::Context context;
+    ValidationState validation_state;
+    bool debug_utils_enabled = false;
     vk::raii::Instance instance;
     std::optional<vk::raii::DebugUtilsMessengerEXT> debug_messenger;
     vk::raii::PhysicalDevice physical_device{nullptr};
     vk::PhysicalDeviceMemoryProperties memory_properties{};
     std::uint32_t queue_family_index = 0;
-    bool debug_utils_enabled = false;
     vk::raii::Device device{nullptr};
     vk::raii::Queue queue{nullptr};
 
     VulkanSmokeContext()
         : context(),
           instance(create_instance(context, debug_utils_enabled)),
-          debug_messenger(create_debug_messenger(instance, debug_utils_enabled)) {
+          debug_messenger(create_debug_messenger(instance, debug_utils_enabled, validation_state)) {
         auto selection = select_device(instance);
         if (!selection) {
             throw std::runtime_error(
@@ -200,9 +224,22 @@ struct VulkanSmokeContext {
         vk::PhysicalDeviceVulkan13Features enabled_vulkan13_features;
         enabled_vulkan13_features.setSynchronization2(VK_TRUE).setDynamicRendering(VK_TRUE);
 
+        std::vector<const char*> enabled_device_extensions;
+#if PROJECT_VULKAN_ENABLE_PORTABILITY
+        const auto device_extensions = physical_device.enumerateDeviceExtensionProperties();
+#ifdef VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME
+        if (has_extension(device_extensions, VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME)) {
+            enabled_device_extensions.push_back(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME);
+        }
+#else
+        (void)device_extensions;
+#endif
+#endif
+
         vk::DeviceCreateInfo device_info;
         device_info.setQueueCreateInfos(queue_info)
-            .setPNext(&enabled_vulkan13_features);
+            .setPNext(&enabled_vulkan13_features)
+            .setPEnabledExtensionNames(enabled_device_extensions);
 
         device = vk::raii::Device(physical_device, device_info);
         queue = vk::raii::Queue(device, queue_family_index, 0);
@@ -234,6 +271,12 @@ struct VulkanSmokeContext {
     void name_object(const vk::Pipeline& pipeline, const std::string& name) const {
         if (debug_utils_enabled) {
             device.setDebugUtilsObjectNameEXT(pipeline, name);
+        }
+    }
+
+    void throw_if_validation_failed() const {
+        if (validation_state.error_seen) {
+            throw std::runtime_error("Vulkan validation error reported");
         }
     }
 };
@@ -444,6 +487,7 @@ void run_compute_smoke() {
     if (value != kComputeExpectedValue) {
         throw std::runtime_error("compute shader wrote unexpected value");
     }
+    context.throw_if_validation_failed();
 }
 
 void run_offscreen_render_smoke() {
@@ -589,6 +633,7 @@ void run_offscreen_render_smoke() {
     if (pixel[0] != 0 || pixel[1] < 250 || pixel[2] != 0 || pixel[3] < 250) {
         throw std::runtime_error("offscreen render produced unexpected RGBA pixel");
     }
+    context.throw_if_validation_failed();
 }
 
 VulkanSmokeResult capture_result(void (*operation)(), std::string_view success_message) {

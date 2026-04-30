@@ -1,0 +1,52 @@
+{
+  "description": "Repeatable trigger-regression matrix for the CppStudio donor and lane-routing skills. Use these cases for manual/subagent reruns; this file is also validated so referenced repo paths remain real.",
+  "cases": [
+    {
+      "name": "vulkan-default-greenfield",
+      "prompt_shape": "New realtime 3D or GPU C++ project where the user does not specify CUDA or Vulkan.",
+      "expected_behavior": "Recommend Vulkan first, proceed Vulkan-only by default, and avoid CUDA donor/runtime routing unless the user chooses CUDA or requirements force it.",
+      "expected_paths": [
+        "AGENTS.md",
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/khronos-vulkan-samples.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "explicit-cuda-kernel",
+      "prompt_shape": "Custom CUDA C++ kernel, CUTLASS-like GEMM, FlashAttention-style attention, or CUDA graph work.",
+      "expected_behavior": "Use the CUDA lane and CUDA donor profiles first; Vulkan is optional only for explicit presentation or interop needs.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/cutlass.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/flashattention.md"
+      ]
+    },
+    {
+      "name": "explicit-cuda-vulkan-interop",
+      "prompt_shape": "CUDA produces data consumed by Vulkan, or Vulkan resources are shared with CUDA.",
+      "expected_behavior": "Use the mixed lane deliberately and keep build options, tests, and docs explicit about the CUDA/Vulkan boundary.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "python-negative-control",
+      "prompt_shape": "Python CLI, virtualenv, parser, or business simulation with no C++, GPU, rendering, CUDA, Vulkan, 3D, physics, or AI-runtime scope.",
+      "expected_behavior": "Do not trigger CppStudio donor-library routing.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/README.md"
+      ]
+    }
+  ]
+}

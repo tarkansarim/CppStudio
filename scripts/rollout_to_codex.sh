@@ -85,6 +85,7 @@ python3 "${DONOR_VALIDATOR}" "${DONOR_ROOT}" --reference-root "${TARGET_DIR}/ref
 
 python3 - "$CODEX_HOME_DIR" "$DONOR_ROOT" "$SNIPPET_ROOT" <<'PY'
 from pathlib import Path
+import re
 import sys
 
 codex_home = Path(sys.argv[1])
@@ -97,9 +98,13 @@ END = "<!-- cppstudio-donor-library:end -->"
 
 
 def replace_marked_block(text: str, block: str) -> str:
+    if (BEGIN in text) != (END in text):
+        raise SystemExit("Malformed cppstudio donor marker block: begin/end markers do not match")
     if BEGIN in text and END in text:
         start = text.index(BEGIN)
         end = text.index(END) + len(END)
+        if end <= start:
+            raise SystemExit("Malformed cppstudio donor marker block: end marker precedes begin marker")
         while end < len(text) and text[end] in "\r\n":
             end += 1
         return text[:start].rstrip() + "\n\n" + block + "\n\n" + text[end:].lstrip()
@@ -169,6 +174,12 @@ def render_snippet(skill_name: str) -> str:
     text = snippet.read_text(encoding="utf-8")
     text = text.replace("{{DONOR_ROOT}}", str(donor_root))
     text = text.replace("{{REFERENCE_ROOT}}", str(donor_root.parent))
+    if "{{" in text or "}}" in text:
+        raise SystemExit(f"Unresolved placeholder in rendered snippet: {snippet}")
+    for raw_path in re.findall(r"`(/[^`]+)`", text):
+        path = Path(raw_path)
+        if not path.exists():
+            raise SystemExit(f"Rendered snippet references missing path: {path}")
     return f"{BEGIN}\n{text.rstrip()}\n{END}"
 
 

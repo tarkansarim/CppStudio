@@ -26,6 +26,13 @@ GPU gate:
 cmake --preset dev
 cmake --build --preset dev
 ctest --preset gpu --output-on-failure
+```
+
+CUDA sanitizer gate:
+
+```bash
+cmake --preset cuda-debug
+cmake --build --preset cuda-debug
 scripts/run_compute_sanitizer.sh
 ```
 
@@ -33,8 +40,8 @@ When only a subset of physical GPUs is usable for realtime CUDA work, set `CUDA_
 directly or use the helper allowlist:
 
 ```bash
-GPU_ALLOWED_INDICES=1 CUDA_VISIBLE_DEVICES="$(scripts/select_idle_gpu.sh)" ctest --preset gpu --output-on-failure
-GPU_ALLOWED_INDICES=1 scripts/run_compute_sanitizer.sh
+GPU_ALLOWED_INDICES=<physical-index> CUDA_VISIBLE_DEVICES="$(scripts/select_idle_gpu.sh)" ctest --preset cuda --output-on-failure
+GPU_ALLOWED_INDICES=<physical-index> scripts/run_compute_sanitizer.sh
 ```
 
 Vulkan shader gate:
@@ -76,7 +83,9 @@ Profiling smoke gate:
 scripts/run_nsys_smoke.sh
 ```
 
-Use `GPU_ALLOWED_INDICES=... scripts/run_nsys_smoke.sh` when profiling must avoid display-bound GPUs.
+The profiler smoke defaults to the Vulkan app path. Use `PROFILE_LANE=cuda BUILD_DIR=build/cuda-debug
+scripts/run_nsys_smoke.sh` for CUDA profiling. Use `GPU_ALLOWED_INDICES=<physical-index>` when CUDA
+profiling must avoid display-bound GPUs.
 
 Benchmark and profiling result records should follow [BENCHMARKS.md](BENCHMARKS.md). Do not add
 timing thresholds to CI until baselines are recorded for the exact runner hardware.

@@ -21,16 +21,17 @@ Use this skill when a C++/CUDA/Vulkan repo needs a repeatable professional devel
 2. For a greenfield repo, run `scripts/scaffold_gpu_cpp_project.py` from this skill and then adapt only project names and required dependency switches.
 3. For an existing repo, run `scripts/apply_studio_backbone.py` against a temporary copy first unless the user explicitly wants direct modification.
 4. Preserve any existing package manager or project-specific dependency policy. Do not introduce vcpkg, Conan, containers, FetchContent, or submodules unless there is a concrete reason.
-5. Keep CUDA and Vulkan optional through CMake cache options, but default the app+library template to both enabled.
-6. For new Vulkan template work, target Vulkan 1.4 with Vulkan-Hpp RAII, GLSL compiled by `glslc`, and SPIR-V validation by `spirv-val`; keep MoltenVK/iOS portability explicit through capability checks and portability extension notes.
-7. Register tests with CTest labels so quick, GPU, GUI, Vulkan, CUDA, shader, compute, render, validation, perf, and nightly lanes can be selected independently.
-8. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
-9. Before greenfield scaffolding or major backbone edits, read `references/project-archetypes.md` and pick the closest lane: CUDA library, Vulkan app, CUDA+Vulkan interop app, AI runtime, neural 3D viewer, grooming/fur tool, DCC scene pipeline, volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool, 3D/physics/GPU simulation tool, or XR app.
-10. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects, read `references/donor-library/README.md` first and then the relevant category/profile file. Keep permissive donor code, dependency candidates, and study-only references separated.
+5. Keep CUDA and Vulkan optional through CMake cache options. For unspecified new GPU/3D/realtime/XR/cross-platform C++ projects, recommend and scaffold Vulkan-first: the normal `dev` preset is Vulkan-only, CUDA stays off unless the user explicitly chooses the CUDA lane or the requirements force CUDA.
+6. Do not mix CUDA into a Vulkan-chosen or Vulkan-assumed project by default. Use CUDA only for explicit CUDA/Vulkan interop, CUDA-specific compute, NVIDIA-only libraries, CUDA graphs, or custom CUDA kernels. When the user explicitly chooses CUDA, Vulkan may be added for presentation, realtime visualization, XR, swapchain/display work, or interop if the boundary is documented.
+7. For new Vulkan template work, target Vulkan 1.4 with Vulkan-Hpp RAII, GLSL compiled by `glslc`, SPIR-V validation by `spirv-val`, and optional portability-enumeration support for MoltenVK-style platforms.
+8. Register tests with CTest labels so quick, GPU, GUI, Vulkan, CUDA, shader, compute, render, validation, perf, and nightly lanes can be selected independently.
+9. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
+10. Before greenfield scaffolding or major backbone edits, read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library, CUDA+Vulkan interop app, AI runtime, neural 3D viewer, grooming/fur tool, DCC scene pipeline, volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool, 3D/physics/GPU simulation tool, or XR app.
+11. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects, read `references/donor-library/README.md` first and then the relevant category/profile file. Keep permissive donor code, dependency candidates, and study-only references separated.
 
 ## Bundled Assets
 
-- `assets/app-library-template/`: full app+library C++/CUDA/Vulkan starter layout with CMake presets, CTest, sample C++ library/app, optional CUDA/Vulkan targets, docs, clang tooling, and GitHub self-hosted GPU CI.
+- `assets/app-library-template/`: full app+library C++/Vulkan-first/CUDA-optional starter layout with CMake presets, CTest, sample C++ library/app, Vulkan default targets, explicit CUDA and CUDA+Vulkan interop lanes, docs, clang tooling, and GitHub self-hosted GPU CI.
 
 ## Bundled References
 

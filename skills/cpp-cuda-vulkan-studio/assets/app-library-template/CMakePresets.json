@@ -13,7 +13,7 @@
       "cacheVariables": {
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "PROJECT_BUILD_TESTS": "ON",
-        "PROJECT_ENABLE_CUDA": "ON",
+        "PROJECT_ENABLE_CUDA": "OFF",
         "PROJECT_ENABLE_VULKAN": "ON",
         "PROJECT_CUDA_ARCHITECTURES": "native",
         "PROJECT_VULKAN_API_VERSION": "1.4",
@@ -76,6 +76,17 @@
       }
     },
     {
+      "name": "cuda-vulkan-interop",
+      "inherits": "base",
+      "displayName": "Explicit CUDA plus Vulkan interop build",
+      "binaryDir": "${sourceDir}/build/cuda-vulkan-interop",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PROJECT_ENABLE_CUDA": "ON",
+        "PROJECT_ENABLE_VULKAN": "ON"
+      }
+    },
+    {
       "name": "vulkan-debug",
       "inherits": "base",
       "displayName": "Vulkan debug build",
@@ -85,6 +96,15 @@
         "PROJECT_ENABLE_CUDA": "OFF",
         "PROJECT_ENABLE_VULKAN": "ON",
         "PROJECT_ENABLE_VULKAN_VALIDATION": "OFF"
+      }
+    },
+    {
+      "name": "vulkan-portability",
+      "inherits": "vulkan-debug",
+      "displayName": "Vulkan portability-enumeration build",
+      "binaryDir": "${sourceDir}/build/vulkan-portability",
+      "cacheVariables": {
+        "PROJECT_ENABLE_VULKAN_PORTABILITY": "ON"
       }
     },
     {
@@ -133,8 +153,18 @@
       "jobs": 0
     },
     {
+      "name": "cuda-vulkan-interop",
+      "configurePreset": "cuda-vulkan-interop",
+      "jobs": 0
+    },
+    {
       "name": "vulkan-debug",
       "configurePreset": "vulkan-debug",
+      "jobs": 0
+    },
+    {
+      "name": "vulkan-portability",
+      "configurePreset": "vulkan-portability",
       "jobs": 0
     },
     {
@@ -176,6 +206,18 @@
         },
         "exclude": {
           "label": "perf|nightly"
+        }
+      }
+    },
+    {
+      "name": "cuda",
+      "configurePreset": "cuda-debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "filter": {
+        "include": {
+          "label": "cuda"
         }
       }
     },

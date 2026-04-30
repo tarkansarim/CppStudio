@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create a new C++/CUDA/Vulkan app+library project from the bundled template."""
+"""Create a new Vulkan-first C++ app+library project from the bundled template."""
 
 from __future__ import annotations
 
@@ -91,7 +91,7 @@ def main() -> int:
     parser.add_argument("--name", required=True, help="Project name, e.g. RayLab")
     parser.add_argument("--output", required=True, help="Destination directory")
     parser.add_argument("--namespace", help="C++ namespace; defaults to snake_case project name")
-    parser.add_argument("--description", default="C++/CUDA/Vulkan app+library project")
+    parser.add_argument("--description", default="Vulkan-first C++ app+library project with optional CUDA lanes")
     parser.add_argument("--force", action="store_true", help="Overwrite files that already exist")
     args = parser.parse_args()
 
@@ -122,6 +122,10 @@ def main() -> int:
     print("  cmake --preset dev")
     print("  cmake --build --preset dev")
     print("  ctest --preset quick --output-on-failure")
+    print("Optional CUDA lane:")
+    print("  cmake --preset cuda-debug && cmake --build --preset cuda-debug && ctest --preset cuda --output-on-failure")
+    print("Optional mixed CUDA/Vulkan lane:")
+    print("  cmake --preset cuda-vulkan-interop && cmake --build --preset cuda-vulkan-interop")
     return 0
 
 

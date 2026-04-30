@@ -1,6 +1,6 @@
 # Development Environment
 
-This project follows the reusable C++/CUDA/Vulkan studio backbone.
+This project follows the reusable Vulkan-first C++ studio backbone with explicit CUDA lanes.
 
 Required baseline tools:
 
@@ -30,6 +30,10 @@ cmake --build --preset dev
 ctest --preset quick --output-on-failure
 ```
 
+The default `dev` preset enables Vulkan and leaves CUDA off. Use `cuda-debug` for CUDA-only work and
+`cuda-vulkan-interop` only when a CUDA-selected lane intentionally needs Vulkan presentation,
+realtime visualization, XR, swapchain/display work, or CUDA/Vulkan interop.
+
 The default CUDA architecture is `native`. For release artifacts or shared CI, set
 `PROJECT_CUDA_ARCHITECTURES` to the explicit target SM list for the supported GPU fleet. Use the CUDA
 Toolkit release notes and NVIDIA compute capability table before adding new architecture IDs.
@@ -39,9 +43,9 @@ even when it is visible to the driver. Pin runtime work explicitly with `CUDA_VI
 `GPU_ALLOWED_INDICES` to the physical `nvidia-smi` GPU indexes that are allowed for realtime CUDA:
 
 ```bash
-GPU_ALLOWED_INDICES=1 CUDA_VISIBLE_DEVICES="$(scripts/select_idle_gpu.sh)" ctest --preset gpu --output-on-failure
-GPU_ALLOWED_INDICES=1 scripts/run_compute_sanitizer.sh
-GPU_ALLOWED_INDICES=1 BUILD_DIR=build/profile scripts/run_nsys_smoke.sh
+GPU_ALLOWED_INDICES=<physical-index> CUDA_VISIBLE_DEVICES="$(scripts/select_idle_gpu.sh)" ctest --preset cuda --output-on-failure
+GPU_ALLOWED_INDICES=<physical-index> scripts/run_compute_sanitizer.sh
+GPU_ALLOWED_INDICES=<physical-index> PROFILE_LANE=cuda BUILD_DIR=build/cuda-debug scripts/run_nsys_smoke.sh
 ```
 
 `GPU_ALLOWED_INDICES` accepts comma, semicolon, or space separated physical indexes. The helper emits a
@@ -62,9 +66,9 @@ Shader sources live in `shaders/`. Generated `.spv` files are build artifacts un
 directory and should not be edited or committed unless a project intentionally vendors binary
 assets. The default shader path is GLSL through `glslc`, followed by `spirv-val`.
 
-For Apple/iOS-oriented work, treat MoltenVK as a named portability target. Query
-`VK_KHR_portability_enumeration` and `VK_KHR_portability_subset` deliberately rather than assuming
-native desktop Vulkan behavior.
+For Apple/iOS-oriented work, treat MoltenVK as a named portability target. Configure the
+`vulkan-portability` preset or set `PROJECT_ENABLE_VULKAN_PORTABILITY=ON` so the sample enables
+`VK_KHR_portability_enumeration` and `VK_KHR_portability_subset` when the platform advertises them.
 
 VMA is recommended for production Vulkan resource allocation policy, memory budget tracking,
 staging, and readback paths. This template documents and checks for the SDK-provided VMA header, but

@@ -1,4 +1,4 @@
 interface:
   display_name: "C++ CUDA Vulkan Studio"
-  short_description: "Reusable backbone and donor references for C++/CUDA/Vulkan/3D AI projects"
-  default_prompt: "Create or upgrade a C++/CUDA/Vulkan project with the studio backbone and vetted donor references."
+  short_description: "Vulkan-first C++ backbone with optional CUDA lanes and donor references"
+  default_prompt: "Create or upgrade a Vulkan-first C++ GPU project with explicit CUDA lanes only when needed."
