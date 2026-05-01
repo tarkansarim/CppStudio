@@ -91,4 +91,7 @@ For previewing installed changes:
 
 - State whether validation was default or full.
 - State whether sync to `${HOME}/.codex/skills/cpp-cuda-vulkan-studio` was run.
+- If skills, skill descriptions, donor profiles, donor categories, donor routing, or README donor
+  inventory changed, run a sub-agent trigger lane first and report whether the expected skill and donor
+  profiles were selected.
 - State any tool gaps that affect optional lanes, such as missing `clang-format` or `clang-tidy`.

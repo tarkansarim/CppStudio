@@ -96,6 +96,9 @@ Read these only when the task matches the donor:
 - [PyTorch](profiles/pytorch.md): tensor/autograd/runtime architecture, custom-op references, and package dependency boundaries; reference/dependency-scale for native C++.
 - [Khronos Vulkan-Samples](profiles/khronos-vulkan-samples.md): portable Vulkan correctness and best-practice samples.
 - [NVIDIA vk_mini_samples](profiles/nvidia-vk-mini-samples.md): NVIDIA Vulkan extensions, tooling, and compact samples.
+- [nvpro Vulkan Ray Tracing Tutorial KHR](profiles/nvpro-vk-raytracing-tutorial-khr.md): Vulkan RT pipelines, BLAS/TLAS, SBT, shadow rays, and swept-sphere references.
+- [NVIDIA NVRHI](profiles/nvrhi.md): cross-API renderer hardware-interface, resource lifetime, barrier, and RT abstraction patterns.
+- [NVIDIA NRI](profiles/nri.md): low-level Vulkan/D3D render-interface, capability, ray-tracing extension, and upscaler extension patterns.
 - [Vulkan Memory Allocator](profiles/vulkan-memory-allocator.md): Vulkan allocation, memory budgets, pools, and mapping policy.
 - [volk](profiles/volk.md): Vulkan loader, dispatch, and extension entrypoint setup.
 - [vk-bootstrap](profiles/vk-bootstrap.md): Vulkan instance/device/swapchain bootstrap helpers.
@@ -112,6 +115,13 @@ Read these only when the task matches the donor:
 - [pbrt-v4](profiles/pbrt-v4.md): physically based rendering algorithms, sampling, materials, scene formats, and path-tracing references.
 - [Mitsuba 3](profiles/mitsuba3.md): differentiable, retargetable, spectral, and inverse-rendering references.
 - [NVIDIA Falcor](profiles/falcor.md): realtime ray-tracing framework, render graphs, and NVIDIA RTX SDK boundary references.
+- [nvpro Vulkan glTF Renderer](profiles/nvpro-vk-gltf-renderer.md): production-scale Vulkan path tracing, glTF/PBR scene runtime, denoising hooks, and timeline pacing.
+- [nvpro vk_denoise_dlssrr](profiles/nvpro-vk-denoise-dlssrr.md): Vulkan DLSS Ray Reconstruction wrappers, guide-buffer semantics, and debug views.
+- [NVIDIA NRD](profiles/nrd.md): denoiser guide-buffer contracts, RELAX/REBLUR/SIGMA integration, and temporal validation.
+- [NVIDIA NRD Sample](profiles/nrd-sample.md): path tracing plus denoising best practices, NRD/DLSS-RR comparison lanes, and reference accumulation.
+- [NVIDIA DLSS SDK](profiles/nvidia-dlss-sdk.md): NGX/DLSS/DLSS-RR feature contracts, runtime headers, and SDK capability boundaries.
+- [NVIDIA Streamline](profiles/nvidia-streamline.md): super-resolution/reconstruction feature plugin integration and frame/resource tagging.
+- [NVIDIA Streamline Sample](profiles/nvidia-streamline-sample.md): app-side Streamline feature wiring, frame/resource tagging, plugin packaging, and sample-shell behavior.
 - [THREE.js PathTracing Renderer](profiles/threejs-pathtracing.md): browser/WebGL path-tracing demos, progressive accumulation, and interactive path-tracing UX references; reference-only for native C++.
 - [meshoptimizer](profiles/meshoptimizer.md): mesh conditioning, simplification, compression, and glTF optimization.
 - [assimp](profiles/assimp.md): broad 3D asset import/export and conversion pipeline boundaries.
@@ -129,7 +139,12 @@ Read these only when the task matches the donor:
 - [Open3D](profiles/open3d.md): 3D data processing, point clouds, reconstruction, visualization, and Open3D-ML.
 - [Neural Graphics Study-Only References](profiles/neural-graphics-study-only.md): GraphDeco Gaussian Splatting, instant-ngp, and Kaolin Wisp concepts without code reuse.
 - [AMD TressFX](profiles/tressfx.md): realtime GPU hair/fur simulation and rendering.
+- [NVIDIA RTXCR](profiles/rtxcr.md): ray-traced character hair/skin rendering, LSS/DOTS geometry, Chiang/Far-Field hair shading, and RTX path-tracer shell behavior.
+- [RTXCR Material Library](profiles/rtxcr-material-library.md): hair material contracts, Chiang/Far-Field BSDF inputs, and RTSSS material references.
+- [RTXCR Geometry Library](profiles/rtxcr-geometry-library.md): curve tessellation and LSS/DOTS geometry-helper concepts for ray-traced hair.
 - [NVIDIA HairWorks Study-Only](profiles/hairworks-study-only.md): GameWorks hair authoring/runtime concepts without code reuse.
+- [Unreal HairStrands Study-Only](profiles/unreal-hairstrands-study-only.md): runtime groom, interpolation, binding, voxelization, visibility, deep shadow, and transmittance concepts without code reuse.
+- [Unity HDRP Hair Study-Only](profiles/unity-hdrp-hair-study-only.md): HDRP hair material, multiple-scattering LUT, Shader Graph, and line-rendering concepts without code reuse.
 - [Blender Study-Only](profiles/blender-study-only.md): DCC UX, geometry nodes, grooming, import/export, and editor workflow concepts without code reuse.
 - [OpenUSD](profiles/openusd.md): scene composition, USD schemas, DCC interchange, curves, skeletons, materials.
 - [Alembic](profiles/alembic.md): baked animated geometry, curves, simulation caches, and DCC cache IO.

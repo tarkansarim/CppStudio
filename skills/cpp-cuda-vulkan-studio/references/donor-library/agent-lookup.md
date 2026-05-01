@@ -30,7 +30,16 @@ targets, then implement through the active lane skill.
   [pbrt-v4](profiles/pbrt-v4.md), [Mitsuba 3](profiles/mitsuba3.md), or
   [Falcor](profiles/falcor.md). When RTX SDK boundaries, NVIDIA Vulkan extensions, mesh/task
   shaders, Nsight/Aftermath tooling, or vendor-specific Vulkan ray-tracing samples are in scope, also
-  open [NVIDIA vk_mini_samples](profiles/nvidia-vk-mini-samples.md). Keep WebGPU/browser donors as
+  open [NVIDIA vk_mini_samples](profiles/nvidia-vk-mini-samples.md),
+  [nvpro Vulkan Ray Tracing Tutorial KHR](profiles/nvpro-vk-raytracing-tutorial-khr.md),
+  [NVIDIA NVRHI](profiles/nvrhi.md), or [NVIDIA NRI](profiles/nri.md). For DLSS-RR, NRD,
+  denoising/reconstruction, guide buffers, or Streamline requests, start with
+  [nvpro vk_denoise_dlssrr](profiles/nvpro-vk-denoise-dlssrr.md),
+  [NVIDIA DLSS SDK](profiles/nvidia-dlss-sdk.md), [NVIDIA Streamline](profiles/nvidia-streamline.md),
+  [NVIDIA Streamline Sample](profiles/nvidia-streamline-sample.md),
+  [NVIDIA NRD](profiles/nrd.md), or [NVIDIA NRD Sample](profiles/nrd-sample.md). For
+  production-scale Vulkan glTF path tracing, open
+  [nvpro Vulkan glTF Renderer](profiles/nvpro-vk-gltf-renderer.md). Keep WebGPU/browser donors as
   behavior references unless the user chooses a web target.
 - **Runtime assets, glTF/GLB, importer fixtures, renderer-ready buffers**: open
   [gltf-runtime-assets.md](gltf-runtime-assets.md). Start with
@@ -59,10 +68,16 @@ targets, then implement through the active lane skill.
   can guide Vulkan implementations without adding CUDA.
 - **Hair, fur, strands, grooming, guide curves**: open
   [hair-grooming-fur.md](hair-grooming-fur.md). Start with [AMD TressFX](profiles/tressfx.md),
+  [NVIDIA RTXCR](profiles/rtxcr.md), [RTXCR Material Library](profiles/rtxcr-material-library.md),
+  [RTXCR Geometry Library](profiles/rtxcr-geometry-library.md),
   [OpenUSD](profiles/openusd.md), [Alembic](profiles/alembic.md),
   [Blender Study-Only](profiles/blender-study-only.md), or
-  [NVIDIA HairWorks Study-Only](profiles/hairworks-study-only.md). Keep study-only grooming sources
-  conceptual.
+  [NVIDIA HairWorks Study-Only](profiles/hairworks-study-only.md). For full groom runtime,
+  interpolation, voxelization, visibility, or deep-shadow architecture, use
+  [Unreal HairStrands Study-Only](profiles/unreal-hairstrands-study-only.md). For hair material,
+  multiple-scattering LUT, Shader Graph, or line-rendering references, use
+  [Unity HDRP Hair Study-Only](profiles/unity-hdrp-hair-study-only.md). Keep study-only grooming
+  sources conceptual.
 - **DCC scene pipelines, USD, Alembic, MaterialX, editorial timelines, virtual production**: open
   [dcc-scene-pipeline.md](dcc-scene-pipeline.md). Start with [OpenUSD](profiles/openusd.md),
   [Alembic](profiles/alembic.md), [MaterialX](profiles/materialx.md),

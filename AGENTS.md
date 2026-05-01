@@ -57,6 +57,10 @@ C++/CUDA/Vulkan development.
   - scaffolding or apply scripts
   - CMake presets/modules
   - generated-project validation behavior
+- After adding or changing skills, skill descriptions, donor categories, donor profiles, donor routing,
+  or README donor inventories, run a sub-agent trigger lane before close-out. Use multiple realistic
+  prompts that should trigger the changed skill/routing, verify the agents select the expected skill and
+  donor profiles, then fix any ambiguity they find before committing.
 - The sync script validates both the repo copy and the installed Codex copy.
 - If validation fails because of a real script/template issue, fix the repo copy first, then sync.
 
@@ -102,4 +106,5 @@ When finishing work here, report:
 - files changed at the repo level
 - whether `./scripts/validate.sh` or `./scripts/validate.sh --full` passed
 - whether `./scripts/sync_to_codex.sh` was run
+- whether the sub-agent trigger lane was run when skill/donor routing changed
 - any installed-tool gaps, such as missing `clang-format` or `clang-tidy`

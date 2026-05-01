@@ -158,6 +158,19 @@ and license shape.
 - [SPIR-V Toolchain](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/spirv-toolchain.md)
 - [Slang](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/slang.md)
 
+#### Vulkan Ray Tracing, Denoising, And Reconstruction
+
+- [nvpro Vulkan Ray Tracing Tutorial KHR](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nvpro-vk-raytracing-tutorial-khr.md)
+- [NVIDIA NVRHI](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nvrhi.md)
+- [NVIDIA NRI](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nri.md)
+- [nvpro Vulkan glTF Renderer](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nvpro-vk-gltf-renderer.md)
+- [nvpro vk_denoise_dlssrr](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nvpro-vk-denoise-dlssrr.md)
+- [NVIDIA NRD](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nrd.md)
+- [NVIDIA NRD Sample](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nrd-sample.md)
+- [NVIDIA DLSS SDK](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nvidia-dlss-sdk.md)
+- [NVIDIA Streamline](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nvidia-streamline.md)
+- [NVIDIA Streamline Sample](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nvidia-streamline-sample.md)
+
 #### Rendering, Ray Tracing, And Graphics Frameworks
 
 - [Google Filament](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/filament.md)
@@ -217,8 +230,16 @@ These are AI-adjacent, but they are grouped here because their primary domain is
 
 #### Hair, Grooming, And Fur
 
+For groom interchange and DCC workflow references, see the DCC section above for OpenUSD, Alembic,
+and Blender.
+
 - [AMD TressFX](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tressfx.md)
+- [NVIDIA RTXCR](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/rtxcr.md)
+- [RTXCR Material Library](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/rtxcr-material-library.md)
+- [RTXCR Geometry Library](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/rtxcr-geometry-library.md)
 - [NVIDIA HairWorks Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/hairworks-study-only.md)
+- [Unreal HairStrands Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/unreal-hairstrands-study-only.md)
+- [Unity HDRP Hair Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/unity-hdrp-hair-study-only.md)
 
 #### Volumes, Voxels, And Scientific Visualization
 
