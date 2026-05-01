@@ -67,40 +67,30 @@ Install this CppStudio repo into my ChatGPT Codex home. Use the repo scripts, pr
 AGENTS.md content, and report what changed.
 ```
 
-For most users, that agent-run setup is enough. It installs the Codex skill package and donor
-routing. You do not need CUDA, Vulkan, CMake, or a compiler just to install this repo into Codex.
-The commands below are the reproducible checklist your agent should follow, and they remain useful
-when you want to run the setup yourself.
+For most users, that agent-run setup is enough. The agent installs the Codex skill package and donor
+routing for you. You do not need CUDA, Vulkan, CMake, or a compiler just to install this repo into
+Codex.
 
-1. Clone or open this repository:
+If your agent asks what command to use, this is the normal install/update path:
 
-   ```bash
-   cd /path/to/CppStudio
-   ```
+```bash
+cd /path/to/CppStudio
+./scripts/rollout_to_codex.sh
+```
 
-2. Confirm the source skill validates:
+Then restart any Codex session that needs to discover newly installed or changed skill metadata.
 
-   ```bash
-   ./scripts/validate.sh
-   ```
+For a smaller install that updates only the main `cpp-cuda-vulkan-studio` skill without companion
+donor links:
 
-3. Publish the source skill to user-level Codex:
+```bash
+cd /path/to/CppStudio
+./scripts/sync_to_codex.sh
+```
 
-   ```bash
-   ./scripts/sync_to_codex.sh
-   ```
-
-4. For the complete package, including donor-library links in companion skills, run rollout:
-
-   ```bash
-   ./scripts/rollout_to_codex.sh
-   ```
-
-5. Restart any Codex session that needs to discover newly installed or changed skill metadata.
-
-For normal setup, `rollout_to_codex.sh` is the best single command because it validates the repo,
-syncs the canonical skill, installs donor-library links into matching installed companion skills,
-validates affected installed skills, and verifies source/target parity.
+For a normal install, ask the agent to use rollout. That script validates the repo internally, syncs
+the canonical skill, installs donor-library links into matching companion skills, validates affected
+installed skills, and verifies source/target parity before the agent reports back.
 
 ## When To Install GPU Tools
 
@@ -210,17 +200,22 @@ Restart any Codex session after manual installation so changed skill metadata is
 ## Agentic Install For Remote Users
 
 If you are installing this repo on a different machine, ask your coding agent to inspect the repo
-first and then use the provided scripts or manual copy steps. The agent should:
+first and then use the provided scripts. In normal cases the agent can run:
 
-1. Validate the source skill with `./scripts/validate.sh`.
-2. Copy or sync `skills/cpp-cuda-vulkan-studio/` to
+```bash
+./scripts/rollout_to_codex.sh
+```
+
+If the agent needs to install manually, it should preserve the same ownership rules as the scripts:
+
+1. Copy or sync `skills/cpp-cuda-vulkan-studio/` to
    `${SYNC_CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio`.
-3. Merge only `companion-skill-snippets/user-agents/cppstudio-relay.md` into the user-level
+2. Merge only `companion-skill-snippets/user-agents/cppstudio-relay.md` into the user-level
    `AGENTS.md` if you want global routing.
-4. Preserve any existing `AGENTS.md` content outside the CppStudio markers.
-5. Replace only the marked CppStudio relay block if it already exists.
-6. Add companion donor-library blocks only to matching installed companion skills.
-7. Re-run validation or rollout after install.
+3. Preserve any existing `AGENTS.md` content outside the CppStudio markers.
+4. Replace only the marked CppStudio relay block if it already exists.
+5. Add companion donor-library blocks only to matching installed companion skills.
+6. Validate the result before reporting that the install is complete.
 
 The managed marker blocks are the only script-owned regions:
 
@@ -239,7 +234,10 @@ including Vulkan lifetime discipline, lane separation, donor-first design, visua
 evidence, and git-commit rollback expectations, lives inside the skill so it is active only for
 relevant work and does not overwrite a user's personal global agent rules.
 
-## Daily Workflows
+## Command Reference For Agents And Maintainers
+
+This section is for coding agents and maintainers editing CppStudio itself. It is not a list of
+daily tasks for users installing the skill, and users are not expected to run these commands by hand.
 
 Validate repo changes:
 
