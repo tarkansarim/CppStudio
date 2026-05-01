@@ -1,6 +1,6 @@
 ---
 name: cpp-cuda-vulkan-studio
-description: "Create, audit, or upgrade reusable C++/CUDA/Vulkan project infrastructure with a studio-grade backbone: app+library layout, CMake presets, CTest labels, CUDA architecture policy, Vulkan/shader tooling, sanitizer/profile lanes, self-hosted GPU CI, dependency documentation, validation scripts, and curated 3D/AI/GPU donor-reference selection. Use for new GPU C++ repos, infrastructure upgrades, build/test/profiling standardization, or when Codex needs vetted donors for graphics, 3D, Vulkan foundation tooling, glTF/runtime assets, WebGPU/WebGL, renderer backbones, path tracing, engine architecture, runtime mesh pipelines, AI runtimes, ML compilers, neural 3D, Gaussian splatting, grooming/fur, DCC scene pipelines, volumes/voxels, animation/rigging, textures/materials/color, CAD geometry, 3D/physics/GPU simulation, XR, CUDA, Vulkan, rendering, or AI-runtime work."
+description: "Create, audit, or upgrade native C++ GPU project infrastructure for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, CUDA architecture policy, Vulkan/shader tooling, sanitizer/profile lanes, self-hosted GPU CI, validation scripts, and donor-reference routing. Use for new or existing C++ repos, build/test/profiling standardization, custom CUDA/Vulkan implementation, or donor selection for native graphics/renderers, glTF/runtime assets, WebGPU/WebGL/OpenXR, path tracing, engine/runtime mesh pipelines, AI runtimes, ML compilers, neural 3D, Gaussian splatting, grooming/fur, DCC scene pipelines, volumes, animation, materials/color, CAD, physics/simulation, CUDA, Vulkan, or cross-backend GPU code. Do not use for design-only, frontend-only, storyboarding, generic image/video, generic AI assistant/product UI, plain text rendering, or ordinary data import unless native C++ GPU infrastructure or donor-reference selection is explicit."
 ---
 
 # C++ CUDA Vulkan Studio
@@ -28,6 +28,7 @@ Use this skill when a C++/CUDA/Vulkan repo needs a repeatable professional devel
 9. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
 10. Before greenfield scaffolding or major backbone edits, read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library, CUDA+Vulkan interop app, AI runtime, neural 3D viewer, grooming/fur tool, glTF/runtime asset viewer, renderer backbone/runtime mesh pipeline, DCC scene pipeline, volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool, 3D/physics/GPU simulation tool, or XR app.
 11. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects, read `references/donor-library/README.md` first and then the relevant category/profile file. For broad or overlapping prompts such as "3D viewer", "renderer", "simulation", "asset pipeline", "AI runtime", "volume viewer", or "XR app", read `references/donor-library/agent-lookup.md` before choosing category files. Treat donors as domain references first: a CUDA, Vulkan, OpenCL, DirectX, CPU, or DCC donor can still guide another target backend. Keep the selected implementation lane fixed, translate backend-specific details through the active lane skill, and keep permissive donor code, dependency candidates, and study-only references separated.
+12. Do not route design-only, frontend-only, storyboarding, generic image/video, generic product-AI UI, plain text rendering, or ordinary data import requests through this skill unless the user explicitly asks for native C++ GPU implementation, C++/CUDA/Vulkan infrastructure, or donor-reference selection.
 
 ## Bundled Assets
 
@@ -42,7 +43,7 @@ Use this skill when a C++/CUDA/Vulkan repo needs a repeatable professional devel
 
 - `scripts/scaffold_gpu_cpp_project.py`: create a new project from the template.
 - `scripts/apply_studio_backbone.py`: copy backbone files into an existing repo without overwriting by default.
-- `scripts/validate_studio_backbone.py`: check that required backbone files and labels are present.
+- `scripts/validate_studio_backbone.py`: check that required backbone files are present and, with `--integration`, that CMake/CTest register expected labeled tests.
 - `scripts/check_dev_tools.sh`: verify compilers, CUDA, Vulkan, shader, and optional profiler tools.
 - `scripts/select_idle_gpu.sh`: choose an idle NVIDIA GPU, optionally constrained by `GPU_ALLOWED_INDICES`, using utilization and display-server subtraction.
 - `scripts/run_compute_sanitizer.sh`: run a command or GPU CTest preset under Compute Sanitizer.

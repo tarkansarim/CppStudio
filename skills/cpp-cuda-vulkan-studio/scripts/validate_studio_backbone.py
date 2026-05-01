@@ -63,11 +63,61 @@ REQUIRED_TEST_PRESETS = {
 }
 
 
+def labels_for_test(test: dict[str, object]) -> set[str]:
+    labels: set[str] = set()
+    properties = test.get("properties", [])
+    if not isinstance(properties, list):
+        return labels
+    for property_item in properties:
+        if not isinstance(property_item, dict):
+            continue
+        if property_item.get("name") != "LABELS":
+            continue
+        value = property_item.get("value")
+        if isinstance(value, list):
+            labels.update(str(item) for item in value if str(item))
+        elif isinstance(value, str):
+            labels.update(item for item in value.split(";") if item)
+    return labels
+
+
+def validate_ctest_json(output: str, required_labels: set[str]) -> list[str]:
+    failures: list[str] = []
+    try:
+        report = json.loads(output)
+    except json.JSONDecodeError as error:
+        return [f"ctest --show-only=json-v1 did not emit valid JSON: {error}"]
+
+    tests = report.get("tests")
+    if not isinstance(tests, list) or not tests:
+        return ["ctest --show-only=json-v1 registered no tests"]
+
+    label_to_tests: dict[str, list[str]] = {label: [] for label in required_labels}
+    for test in tests:
+        if not isinstance(test, dict):
+            continue
+        name = str(test.get("name", "<unnamed>"))
+        labels = labels_for_test(test)
+        for label in required_labels & labels:
+            label_to_tests[label].append(name)
+
+    for label, names in sorted(label_to_tests.items()):
+        if not names:
+            failures.append(f"no registered CTest test has required label {label!r}")
+    return failures
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("repo", help="Repository root to validate")
     parser.add_argument("--strict-source-layout", action="store_true")
     parser.add_argument("--integration", action="store_true", help="Also configure, build, and inspect CTest registration")
+    parser.add_argument(
+        "--expected-test-label",
+        action="append",
+        default=["quick"],
+        help="CTest label that must appear in --integration show-only JSON. Repeat for multiple labels.",
+    )
     args = parser.parse_args()
 
     repo = Path(args.repo).expanduser().resolve()
@@ -134,6 +184,8 @@ def main() -> int:
                     f"integration command failed ({' '.join(command)}):\n{result.stdout}{result.stderr}"
                 )
                 break
+            if command[0] == "ctest":
+                failures.extend(validate_ctest_json(result.stdout, set(args.expected_test_label)))
 
     if failures:
         for failure in failures:

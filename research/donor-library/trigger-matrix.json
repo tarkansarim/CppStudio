@@ -1,5 +1,5 @@
 {
-  "description": "Manual/subagent trigger-regression matrix for the CppStudio donor and lane-routing skills. Repo validation checks path integrity only; fresh agent behavior still requires a manual or delegated rerun.",
+  "description": "Manual/subagent trigger-regression matrix for the CppStudio donor and lane-routing skills. Repo validation checks schema, tags, and path integrity; fresh agent behavior still requires a manual or delegated rerun.",
   "cases": [
     {
       "name": "vulkan-default-greenfield",
@@ -42,6 +42,7 @@
     },
     {
       "name": "vulkan-target-cuda-donor-reference",
+      "tags": ["positive", "vulkan", "cuda", "neural-3d"],
       "prompt_shape": "Vulkan-first C++ Gaussian splatting, neural 3D, grooming, or simulation work where the strongest donor implementation is CUDA-heavy.",
       "expected_behavior": "Stay in the Vulkan lane, use CUDA-heavy donors as algorithm/data-layout/test references, and do not add CUDA runtime, CUDA tests, or CUDA/Vulkan interop unless explicitly requested.",
       "expected_paths": [
@@ -67,6 +68,7 @@
     },
     {
       "name": "vulkan-memory-resource-lifetime",
+      "tags": ["positive", "vulkan"],
       "prompt_shape": "Vulkan C++ renderer or compute app needs buffer/image allocation, memory budgets, mapped staging buffers, resource lifetime, or allocation pools.",
       "expected_behavior": "Route to Vulkan foundation tooling before renderer samples; use VMA as the first allocation donor and keep Vulkan memory/lifetime policy separate from CUDA.",
       "expected_paths": [
@@ -81,6 +83,7 @@
     },
     {
       "name": "vulkan-shader-reflection-toolchain",
+      "tags": ["positive", "vulkan"],
       "prompt_shape": "Vulkan C++ project needs GLSL to SPIR-V compilation, SPIR-V validation, descriptor reflection, push constant reflection, shader cross-compilation, or Slang evaluation.",
       "expected_behavior": "Route to Vulkan foundation tooling and SPIR-V/Slang profiles; keep compile, validation, reflection, and runtime pipeline creation as separate concerns.",
       "expected_paths": [
@@ -109,6 +112,7 @@
     },
     {
       "name": "vulkan-renderer-architecture-donors",
+      "tags": ["positive", "vulkan", "graphics", "rendering"],
       "prompt_shape": "Vulkan-first C++ renderer needs donor guidance for renderer backbone, render graph, PBR materials, frame architecture, or graphics middleware.",
       "expected_behavior": "Route to graphics-rendering and renderer-backbone profiles; keep Vulkan foundation tooling available for API correctness without switching to CUDA or forcing a multi-backend dependency.",
       "expected_paths": [
@@ -126,6 +130,7 @@
     },
     {
       "name": "webgpu-native-dawn-donors",
+      "tags": ["positive", "webgpu", "vulkan"],
       "prompt_shape": "C++ or native tooling task explicitly asks for WebGPU, webgpu.h, Dawn, WGSL, Tint, or WebGPU portability across Vulkan, D3D, Metal, and browser-adjacent targets.",
       "expected_behavior": "Route to graphics-rendering and the Dawn profile; keep Vulkan-first policy intact unless the user explicitly chooses WebGPU as the implementation lane.",
       "expected_paths": [
@@ -139,6 +144,7 @@
     },
     {
       "name": "browser-3d-webxr-donors",
+      "tags": ["positive", "browser", "webgpu", "xr"],
       "prompt_shape": "Browser 3D, WebGL/WebGPU, WebXR, controls, loaders, or interactive 3D viewer work needs donor references before translating behavior into native C++ or a web target.",
       "expected_behavior": "Route to graphics-rendering and the three.js/Babylon.js profiles; treat browser engine behavior as a donor surface, not a reason to add CUDA or native Vulkan requirements.",
       "expected_paths": [
@@ -153,6 +159,7 @@
     },
     {
       "name": "physical-path-tracing-donors",
+      "tags": ["positive", "graphics", "rendering", "path-tracing"],
       "prompt_shape": "Renderer work needs physically based rendering, offline reference images, path tracing, sampling, material/light transport behavior, differentiable rendering, or inverse rendering references.",
       "expected_behavior": "Route to graphics-rendering and pbrt-v4/Mitsuba/THREE.js PathTracing Renderer profiles; use CUDA or OptiX paths only as references unless the target lane explicitly requires them.",
       "expected_paths": [
@@ -168,6 +175,7 @@
     },
     {
       "name": "realtime-raytracing-framework-donors",
+      "tags": ["positive", "vulkan", "graphics", "rendering"],
       "prompt_shape": "Realtime rendering framework work needs render graphs, ray tracing, path tracing, RTX SDK boundaries, shader/model loading, or prototype renderer architecture references.",
       "expected_behavior": "Route to graphics-rendering and Falcor plus Vulkan sample profiles; keep NVIDIA SDK and vendor-specific dependencies explicit rather than silently adding them to a portable Vulkan target.",
       "expected_paths": [
@@ -183,6 +191,7 @@
     },
     {
       "name": "cpu-visualization-rendering-donors",
+      "tags": ["positive", "graphics", "rendering", "simulation"],
       "prompt_shape": "C++ visualization tool needs CPU rendering, scientific visualization renderer architecture, volume renderer APIs, RenderKit, OSPRay, or a CPU reference path for GPU output.",
       "expected_behavior": "Route to geometry-simulation and OSPRay/Embree profiles; use CPU visualization as reference or dependency surface without disabling Vulkan or CUDA validation for the selected target lane.",
       "expected_paths": [
@@ -194,6 +203,7 @@
     },
     {
       "name": "engine-architecture-donors",
+      "tags": ["positive", "engine", "graphics", "simulation", "assets"],
       "prompt_shape": "C++ 3D tool or engine work needs engine/editor architecture, scene trees, component systems, asset processor design, editor/runtime split, or large-scale rendering/physics integration references.",
       "expected_behavior": "Route to project archetypes, geometry-simulation, and Godot/O3DE profiles; treat engine-scale donors as architecture references unless the project explicitly adopts an engine.",
       "expected_paths": [
@@ -254,6 +264,7 @@
     },
     {
       "name": "cad-precision-geometry-donors",
+      "tags": ["positive", "cad", "geometry"],
       "prompt_shape": "C++ CAD or precision geometry tool needs B-reps, NURBS, STEP/IGES, exact geometry, tessellation, Booleans, CGAL, Open CASCADE, or FreeCAD workflow references.",
       "expected_behavior": "Route to cad-precision-geometry and the Open CASCADE, CGAL, libigl, or FreeCAD study-only profile; keep CAD kernel data, render meshes, tolerances, and license boundaries explicit.",
       "expected_paths": [
@@ -268,6 +279,7 @@
     },
     {
       "name": "geometry-processing-donors",
+      "tags": ["positive", "geometry", "assets"],
       "prompt_shape": "C++ geometry-processing task needs subdivision surfaces, remeshing, deformation, parameterization, robust triangulation, exact predicates, mesh repair, libigl, CGAL, OpenSubdiv, or meshoptimizer references.",
       "expected_behavior": "Route to surfaces-subdivision and the matching OpenSubdiv, libigl, CGAL, or meshoptimizer profile; keep robust geometry and runtime mesh conditioning as separate choices.",
       "expected_paths": [
@@ -397,6 +409,7 @@
     },
     {
       "name": "bvh-geometry-acceleration",
+      "tags": ["positive", "bvh", "geometry", "rendering"],
       "prompt_shape": "C++ renderer or geometry tool needs BVH, ray queries, CPU reference intersections, Embree comparison, or lightweight acceleration structures.",
       "expected_behavior": "Route to geometry-simulation and BVH/Embree profiles; use CPU donors as reference or dependency candidates without forcing Vulkan ray tracing or CUDA kernels unless requested.",
       "expected_paths": [
@@ -474,6 +487,7 @@
     },
     {
       "name": "neural-3d-workflow-donors",
+      "tags": ["positive", "neural-3d", "ai-runtime", "assets"],
       "prompt_shape": "Neural 3D or Gaussian splatting workflow needs training/data processing, camera conventions, differentiable 3D ops, point-cloud reconstruction, viewer/export flows, or PyTorch reference outputs.",
       "expected_behavior": "Route to neural-3d and the relevant Nerfstudio, gsplat, Kaolin, PyTorch3D, Open3D, and PyTorch profiles while keeping datasets and weights license-separated.",
       "expected_paths": [
@@ -489,6 +503,7 @@
     },
     {
       "name": "vulkan-neural-3d-cuda-donor-reference",
+      "tags": ["positive", "vulkan", "cuda", "neural-3d", "ai-runtime"],
       "prompt_shape": "Vulkan-first neural 3D viewer or Gaussian splatting runtime wants to use gsplat, tiny-cuda-nn, PyTorch3D, or CUDA-heavy papers as references without adding CUDA.",
       "expected_behavior": "Stay Vulkan-first, use CUDA-heavy neural donors for algorithms/layouts/tests, and do not add CUDA runtime, CUDA tests, or interop unless explicitly requested.",
       "expected_paths": [
@@ -503,6 +518,7 @@
     },
     {
       "name": "neural-graphics-study-only-routing",
+      "tags": ["positive", "neural-3d", "study-only"],
       "prompt_shape": "Task asks about original GraphDeco Gaussian Splatting, instant-ngp, Kaolin Wisp, non-commercial neural graphics references, or paper behavior checks.",
       "expected_behavior": "Route to the study-only neural graphics profile and keep restricted sources as concepts/behavior checks only; prefer permissive donors for implementation patterns.",
       "expected_paths": [

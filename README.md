@@ -216,7 +216,7 @@ python3 skills/cpp-cuda-vulkan-studio/scripts/scaffold_gpu_cpp_project.py \
 Useful options:
 
 - `--namespace ray_lab`: override the generated C++ namespace.
-- `--description "Short project description"`: render a project description into generated docs.
+- `--description "Short project description"`: render a project description into the generated README.
 - `--force`: overwrite files that already exist at the destination.
 
 Validate the generated project:
@@ -224,10 +224,12 @@ Validate the generated project:
 ```bash
 python3 skills/cpp-cuda-vulkan-studio/scripts/validate_studio_backbone.py \
   /tmp/RayLab \
-  --strict-source-layout
+  --strict-source-layout \
+  --integration
 ```
 
-Then build and test from the generated project:
+The integration check configures the `dev` preset, builds it, and confirms the quick CTest lane has
+registered labeled tests. You can also run the commands directly from the generated project:
 
 ```bash
 cmake --preset dev
@@ -262,17 +264,18 @@ python3 skills/cpp-cuda-vulkan-studio/scripts/apply_studio_backbone.py /path/to/
 Useful options:
 
 - `--dry-run`: report planned writes/copies without changing the target repo.
-- `--project-name NAME`: override the rendered project name.
-- `--namespace NAME`: override the rendered C++ namespace when replacing template sources.
 - `--force`: overwrite existing backbone files.
-- `--replace-cmake-lists`: replace the root `CMakeLists.txt`; use with care because this changes the
-  existing build entrypoint.
 
 After applying, validate the target repo:
 
 ```bash
 python3 skills/cpp-cuda-vulkan-studio/scripts/validate_studio_backbone.py /path/to/repo
 ```
+
+Existing-repo application installs support files, scripts, presets, docs, and shader fixtures. It
+does not replace the root `CMakeLists.txt` or copy sample source files. Wire the CMake modules and
+CTest labels into the real project build deliberately, then run `validate_studio_backbone.py
+--integration` once the target repo can configure and build through its presets.
 
 ## Donor Library
 
@@ -303,7 +306,7 @@ python3 scripts/validate_donor_library.py \
 ```
 
 `./scripts/validate.sh` and `./scripts/rollout_to_codex.sh` run this donor validator automatically.
-Trigger-matrix validation is path-integrity only; use
+Trigger-matrix validation checks schema, controlled tags, and path integrity; use
 `research/donor-library/trigger-regression-checklist.md` for manual or subagent trigger reruns.
 
 Render a repeatable trigger-evaluation prompt pack for a fresh agent or reviewer:
@@ -315,9 +318,10 @@ python3 scripts/render_trigger_eval_prompt.py \
   --tag smoke
 ```
 
-Useful tags include `smoke`, `lookup`, `negative`, `cuda`, `vulkan`, `assets`, `simulation`,
-`ai-runtime`, and `xr`. Use installed-path mode after rollout when the evaluator should inspect the
-user-level Codex install instead of repo-relative source paths:
+Useful tags include `positive`, `negative`, `smoke`, `lookup`, `cuda`, `vulkan`, `assets`,
+`graphics`, `rendering`, `simulation`, `ai-runtime`, `neural-3d`, `webgpu`, `browser`, `xr`,
+`cad`, `geometry`, `engine`, and `study-only`. Use installed-path mode after rollout when the
+evaluator should inspect the user-level Codex install instead of repo-relative source paths:
 
 ```bash
 python3 scripts/render_trigger_eval_prompt.py \

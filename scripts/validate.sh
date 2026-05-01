@@ -5,6 +5,16 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_DIR="${ROOT_DIR}/skills/cpp-cuda-vulkan-studio"
 VALIDATOR="${VALIDATOR:-${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py}"
 full=0
+VALIDATE_TMP="$(mktemp -d "${TMPDIR:-/tmp}/cppstudio_validate.XXXXXX")"
+
+cleanup_validate_tmp() {
+    if [[ "${KEEP_VALIDATE_TMP:-0}" == "1" ]]; then
+        echo "Preserved validation temp directory at ${VALIDATE_TMP}"
+    else
+        rm -rf "${VALIDATE_TMP}"
+    fi
+}
+trap cleanup_validate_tmp EXIT
 
 usage() {
     cat <<EOF
@@ -67,14 +77,12 @@ expect_failure() {
     local description="$1"
     shift
     local output_file
-    output_file="$(mktemp /tmp/cppstudio_expect_failure.XXXXXX)"
+    output_file="$(mktemp "${VALIDATE_TMP}/expect_failure.XXXXXX")"
     if "$@" >"${output_file}" 2>&1; then
         cat "${output_file}" >&2
-        rm -f "${output_file}"
         echo "Expected failure passed unexpectedly: ${description}" >&2
         exit 1
     fi
-    rm -f "${output_file}"
 }
 
 write_companion_fixtures() {
@@ -126,36 +134,37 @@ python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
 python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
     --repo-root "${ROOT_DIR}"
+trigger_lookup_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_lookup.XXXXXX.md")"
 python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
     --repo-root "${ROOT_DIR}" \
-    --tag lookup >/tmp/cppstudio_trigger_eval_lookup.md
-grep -q "agent-lookup.md" /tmp/cppstudio_trigger_eval_lookup.md
+    --tag lookup >"${trigger_lookup_md}"
+grep -q "agent-lookup.md" "${trigger_lookup_md}"
+trigger_negative_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_negative.XXXXXX.md")"
 python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
     --repo-root "${ROOT_DIR}" \
     --tag negative \
     --installed-paths \
-    --codex-home "${ROOT_DIR}/.codex-eval" >/tmp/cppstudio_trigger_eval_negative.md
-grep -q "${ROOT_DIR}/.codex-eval/skills/cpp-cuda-vulkan-studio" /tmp/cppstudio_trigger_eval_negative.md
+    --codex-home "${ROOT_DIR}/.codex-eval" >"${trigger_negative_md}"
+grep -q "${ROOT_DIR}/.codex-eval/skills/cpp-cuda-vulkan-studio" "${trigger_negative_md}"
 expect_failure "unknown trigger eval tag" \
     python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
     --repo-root "${ROOT_DIR}" \
     --tag not-a-real-tag
-rm -f /tmp/cppstudio_trigger_eval_lookup.md /tmp/cppstudio_trigger_eval_negative.md
 python3 "${ROOT_DIR}/scripts/install_user_agents_relay.py" \
     --preflight \
-    --target "$(mktemp -u /tmp/cppstudio_agents_relay.XXXXXX)/AGENTS.md" \
-    --expected-target "$(mktemp -u /tmp/cppstudio_agents_relay.XXXXXX)/AGENTS.md" \
+    --target "$(mktemp -u "${VALIDATE_TMP}/agents_relay.XXXXXX")/AGENTS.md" \
+    --expected-target "$(mktemp -u "${VALIDATE_TMP}/agents_relay.XXXXXX")/AGENTS.md" \
     --allow-target-override \
     --snippet "${ROOT_DIR}/companion-skill-snippets/user-agents/cppstudio-relay.md"
 expect_failure "relay target without expected target" \
     python3 "${ROOT_DIR}/scripts/install_user_agents_relay.py" \
     --preflight \
-    --target "$(mktemp -u /tmp/cppstudio_agents_relay_no_expected.XXXXXX)/AGENTS.md" \
+    --target "$(mktemp -u "${VALIDATE_TMP}/agents_relay_no_expected.XXXXXX")/AGENTS.md" \
     --snippet "${ROOT_DIR}/companion-skill-snippets/user-agents/cppstudio-relay.md"
-relay_bad_snippet_tmp="$(mktemp -d /tmp/cppstudio_agents_relay_bad_snippet.XXXXXX)"
+relay_bad_snippet_tmp="$(mktemp -d "${VALIDATE_TMP}/agents_relay_bad_snippet.XXXXXX")"
 {
     printf "<!-- cppstudio-user-agents-relay:end -->\n"
     printf "bad relay body\n"
@@ -171,10 +180,10 @@ rm -rf "${relay_bad_snippet_tmp}"
 expect_failure "unsafe relay target basename" \
     python3 "${ROOT_DIR}/scripts/install_user_agents_relay.py" \
     --preflight \
-    --target "$(mktemp -u /tmp/cppstudio_agents_relay_bad.XXXXXX)/NOT_AGENTS.md" \
-    --expected-target "$(mktemp -u /tmp/cppstudio_agents_relay_bad.XXXXXX)/NOT_AGENTS.md" \
+    --target "$(mktemp -u "${VALIDATE_TMP}/agents_relay_bad.XXXXXX")/NOT_AGENTS.md" \
+    --expected-target "$(mktemp -u "${VALIDATE_TMP}/agents_relay_bad.XXXXXX")/NOT_AGENTS.md" \
     --snippet "${ROOT_DIR}/companion-skill-snippets/user-agents/cppstudio-relay.md"
-relay_symlink_tmp="$(mktemp -d /tmp/cppstudio_agents_relay_symlink.XXXXXX)"
+relay_symlink_tmp="$(mktemp -d "${VALIDATE_TMP}/agents_relay_symlink.XXXXXX")"
 touch "${relay_symlink_tmp}/real_AGENTS.md"
 ln -s "${relay_symlink_tmp}/real_AGENTS.md" "${relay_symlink_tmp}/AGENTS.md"
 expect_failure "relay target symlink" \
@@ -184,7 +193,7 @@ expect_failure "relay target symlink" \
     --expected-target "${relay_symlink_tmp}/AGENTS.md" \
     --snippet "${ROOT_DIR}/companion-skill-snippets/user-agents/cppstudio-relay.md"
 rm -rf "${relay_symlink_tmp}"
-relay_override_tmp="$(mktemp -d /tmp/cppstudio_agents_relay_override.XXXXXX)"
+relay_override_tmp="$(mktemp -d "${VALIDATE_TMP}/agents_relay_override.XXXXXX")"
 expect_failure "relay custom target without override" \
     python3 "${ROOT_DIR}/scripts/install_user_agents_relay.py" \
     --preflight \
@@ -192,7 +201,7 @@ expect_failure "relay custom target without override" \
     --expected-target "${relay_override_tmp}/expected/AGENTS.md" \
     --snippet "${ROOT_DIR}/companion-skill-snippets/user-agents/cppstudio-relay.md"
 rm -rf "${relay_override_tmp}"
-relay_reversed_tmp="$(mktemp -d /tmp/cppstudio_agents_relay_reversed.XXXXXX)"
+relay_reversed_tmp="$(mktemp -d "${VALIDATE_TMP}/agents_relay_reversed.XXXXXX")"
 {
     printf "<!-- cppstudio-user-agents-relay:end -->\n"
     printf "bad relay body\n"
@@ -205,26 +214,27 @@ expect_failure "reversed CppStudio relay markers" \
     --expected-target "${relay_reversed_tmp}/AGENTS.md" \
     --snippet "${ROOT_DIR}/companion-skill-snippets/user-agents/cppstudio-relay.md"
 rm -rf "${relay_reversed_tmp}"
-relay_duplicate_tmp="$(mktemp -d /tmp/cppstudio_agents_relay_duplicate.XXXXXX)"
+relay_duplicate_tmp="$(mktemp -d "${VALIDATE_TMP}/agents_relay_duplicate.XXXXXX")"
 {
     cat "${ROOT_DIR}/companion-skill-snippets/user-agents/cppstudio-relay.md"
     printf "\n\n"
     cat "${ROOT_DIR}/companion-skill-snippets/user-agents/cppstudio-relay.md"
 } > "${relay_duplicate_tmp}/AGENTS.md"
+relay_duplicate_out="$(mktemp "${VALIDATE_TMP}/agents_relay_duplicate.XXXXXX.out")"
 if python3 "${ROOT_DIR}/scripts/install_user_agents_relay.py" \
     --preflight \
     --target "${relay_duplicate_tmp}/AGENTS.md" \
     --expected-target "${relay_duplicate_tmp}/AGENTS.md" \
-    --snippet "${ROOT_DIR}/companion-skill-snippets/user-agents/cppstudio-relay.md" >/tmp/cppstudio_agents_relay_duplicate.out 2>&1
+    --snippet "${ROOT_DIR}/companion-skill-snippets/user-agents/cppstudio-relay.md" >"${relay_duplicate_out}" 2>&1
 then
-    cat /tmp/cppstudio_agents_relay_duplicate.out >&2
-    rm -rf "${relay_duplicate_tmp}" /tmp/cppstudio_agents_relay_duplicate.out
+    cat "${relay_duplicate_out}" >&2
+    rm -rf "${relay_duplicate_tmp}"
     echo "Duplicate CppStudio relay blocks were accepted" >&2
     exit 1
 fi
-rm -rf "${relay_duplicate_tmp}" /tmp/cppstudio_agents_relay_duplicate.out
+rm -rf "${relay_duplicate_tmp}"
 
-companion_tmp="$(mktemp -d /tmp/cppstudio_companion_install.XXXXXX)"
+companion_tmp="$(mktemp -d "${VALIDATE_TMP}/companion_install.XXXXXX")"
 write_companion_fixtures "${companion_tmp}"
 python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
     --preflight \
@@ -255,19 +265,20 @@ python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
     --snippet-root "${ROOT_DIR}/companion-skill-snippets"
 grep -q "Use the donor library to compare CUTLASS" "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
 write_companion_fixtures "${companion_tmp}"
-missing_companion_tmp="$(mktemp -d /tmp/cppstudio_companion_missing.XXXXXX)"
+missing_companion_tmp="$(mktemp -d "${VALIDATE_TMP}/companion_missing.XXXXXX")"
 write_companion_fixtures "${missing_companion_tmp}"
 rm -rf \
     "${missing_companion_tmp}/skills/vulkan-compute-sync" \
     "${missing_companion_tmp}/skills/modern-cpp-cmake"
+missing_companion_out="$(mktemp "${VALIDATE_TMP}/companion_missing.XXXXXX.out")"
 python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
     --preflight \
     --codex-home "${missing_companion_tmp}" \
     --donor-root "${missing_companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
     --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets" >/tmp/cppstudio_companion_missing.out
+    --snippet-root "${ROOT_DIR}/companion-skill-snippets" >"${missing_companion_out}"
 grep -q "preflight skipped: ${missing_companion_tmp}/skills/vulkan-compute-sync/SKILL.md" \
-    /tmp/cppstudio_companion_missing.out
+    "${missing_companion_out}"
 expect_failure "strict companion skill missing" \
     python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
     --preflight \
@@ -276,7 +287,7 @@ expect_failure "strict companion skill missing" \
     --source-skill-dir "${SKILL_DIR}" \
     --snippet-root "${ROOT_DIR}/companion-skill-snippets" \
     --strict
-rm -rf "${missing_companion_tmp}" /tmp/cppstudio_companion_missing.out
+rm -rf "${missing_companion_tmp}"
 {
     cat "${ROOT_DIR}/companion-skill-snippets/cuda-kernel-authoring/donor-library.md" \
         | sed "s#{{DONOR_ROOT}}#${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library#g" \
@@ -360,7 +371,7 @@ expect_failure "symlinked companion SKILL.md" \
     --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
     --source-skill-dir "${SKILL_DIR}" \
     --snippet-root "${ROOT_DIR}/companion-skill-snippets"
-skills_root_symlink_tmp="$(mktemp -d /tmp/cppstudio_companion_skills_symlink.XXXXXX)"
+skills_root_symlink_tmp="$(mktemp -d "${VALIDATE_TMP}/companion_skills_symlink.XXXXXX")"
 mkdir -p "${skills_root_symlink_tmp}/codex" "${skills_root_symlink_tmp}/real-skills"
 ln -s "${skills_root_symlink_tmp}/real-skills" "${skills_root_symlink_tmp}/codex/skills"
 expect_failure "symlinked Codex skills root" \
@@ -372,8 +383,16 @@ expect_failure "symlinked Codex skills root" \
     --snippet-root "${ROOT_DIR}/companion-skill-snippets"
 rm -rf "${skills_root_symlink_tmp}"
 write_companion_fixtures "${companion_tmp}"
-sed -i 's/^name: cuda-kernel-authoring$/name: wrong-skill/' "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
-sed -i '/cppstudio-donor-library/d' "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
+python3 - "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md" <<'PY'
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+text = text.replace("name: cuda-kernel-authoring\n", "name: wrong-skill\n", 1)
+text = "\n".join(line for line in text.splitlines() if "cppstudio-donor-library" not in line) + "\n"
+path.write_text(text, encoding="utf-8")
+PY
 expect_failure "companion skill frontmatter name mismatch" \
     python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
     --preflight \
@@ -428,15 +447,23 @@ expect_failure "companion snippet with managed markers" \
     --snippet-root "${snippet_tmp}"
 rm -rf "${companion_tmp}"
 
-donor_tmp="$(mktemp -d /tmp/cppstudio_donor_validate.XXXXXX)"
+donor_tmp="$(mktemp -d "${VALIDATE_TMP}/donor_validate.XXXXXX")"
 cp -a "${SKILL_DIR}/references/donor-library" "${donor_tmp}/donor-library"
-sed -i '/^Backend signal:/d' "${donor_tmp}/donor-library/profiles/gsplat.md"
+python3 - "${donor_tmp}/donor-library/profiles/gsplat.md" <<'PY'
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+text = "\n".join(line for line in text.splitlines() if not line.startswith("Backend signal:")) + "\n"
+path.write_text(text, encoding="utf-8")
+PY
 expect_failure "missing donor backend signal" \
     python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
     "${donor_tmp}/donor-library" \
     --reference-root "${donor_tmp}"
 rm -rf "${donor_tmp}"
-donor_tmp="$(mktemp -d /tmp/cppstudio_donor_validate_lookup.XXXXXX)"
+donor_tmp="$(mktemp -d "${VALIDATE_TMP}/donor_validate_lookup.XXXXXX")"
 cp -a "${SKILL_DIR}/references/donor-library" "${donor_tmp}/donor-library"
 python3 - "${donor_tmp}/donor-library/agent-lookup.md" <<'PY'
 import sys
@@ -454,7 +481,7 @@ expect_failure "agent lookup missing donor category link" \
     "${donor_tmp}/donor-library" \
     --reference-root "${donor_tmp}"
 rm -rf "${donor_tmp}"
-donor_tmp="$(mktemp -d /tmp/cppstudio_donor_validate_tier.XXXXXX)"
+donor_tmp="$(mktemp -d "${VALIDATE_TMP}/donor_validate_tier.XXXXXX")"
 cp -a "${SKILL_DIR}/references/donor-library" "${donor_tmp}/donor-library"
 python3 - "${donor_tmp}/donor-library/hair-grooming-fur.md" <<'PY'
 import sys
@@ -473,7 +500,7 @@ expect_failure "category/profile donor tier mismatch" \
     "${donor_tmp}/donor-library" \
     --reference-root "${donor_tmp}"
 rm -rf "${donor_tmp}"
-donor_tmp="$(mktemp -d /tmp/cppstudio_donor_validate_backend.XXXXXX)"
+donor_tmp="$(mktemp -d "${VALIDATE_TMP}/donor_validate_backend.XXXXXX")"
 cp -a "${SKILL_DIR}/references/donor-library" "${donor_tmp}/donor-library"
 python3 - "${donor_tmp}/donor-library/hair-grooming-fur.md" <<'PY'
 import sys
@@ -493,7 +520,7 @@ expect_failure "category/profile donor backend mismatch" \
     --reference-root "${donor_tmp}"
 rm -rf "${donor_tmp}"
 
-matrix_tmp="$(mktemp /tmp/cppstudio_trigger_matrix.XXXXXX.json)"
+matrix_tmp="$(mktemp "${VALIDATE_TMP}/trigger_matrix.XXXXXX.json")"
 python3 - "${ROOT_DIR}/research/donor-library/trigger-matrix.json" "${matrix_tmp}" <<'PY'
 import json
 import sys
@@ -510,10 +537,16 @@ expect_failure "missing trigger matrix must-not-trigger path" \
     "${matrix_tmp}" \
     --repo-root "${ROOT_DIR}"
 rm -f "${matrix_tmp}"
-matrix_tmp="$(mktemp /tmp/cppstudio_trigger_matrix_escape.XXXXXX.json)"
-escape_tmp="$(mktemp -d /tmp/cppstudio_trigger_escape.XXXXXX)"
+matrix_tmp="$(mktemp "${VALIDATE_TMP}/trigger_matrix_escape.XXXXXX.json")"
+escape_tmp="$(mktemp -d "${VALIDATE_TMP}/trigger_escape.XXXXXX")"
 touch "${escape_tmp}/outside.md"
-escaped_relative="$(realpath --relative-to "${ROOT_DIR}" "${escape_tmp}/outside.md")"
+escaped_relative="$(python3 - "${ROOT_DIR}" "${escape_tmp}/outside.md" <<'PY'
+import os
+import sys
+
+print(os.path.relpath(sys.argv[2], sys.argv[1]))
+PY
+)"
 python3 - "${ROOT_DIR}/research/donor-library/trigger-matrix.json" "${matrix_tmp}" "${escaped_relative}" <<'PY'
 import json
 import sys
@@ -532,7 +565,7 @@ expect_failure "trigger matrix escaped expected path" \
     --repo-root "${ROOT_DIR}"
 rm -f "${matrix_tmp}"
 rm -rf "${escape_tmp}"
-matrix_tmp="$(mktemp /tmp/cppstudio_trigger_matrix_overlap.XXXXXX.json)"
+matrix_tmp="$(mktemp "${VALIDATE_TMP}/trigger_matrix_overlap.XXXXXX.json")"
 python3 - "${ROOT_DIR}/research/donor-library/trigger-matrix.json" "${matrix_tmp}" <<'PY'
 import json
 import sys
@@ -550,7 +583,7 @@ expect_failure "trigger matrix expected/must-not overlap" \
     "${matrix_tmp}" \
     --repo-root "${ROOT_DIR}"
 rm -f "${matrix_tmp}"
-matrix_tmp="$(mktemp /tmp/cppstudio_trigger_matrix_bad_tags.XXXXXX.json)"
+matrix_tmp="$(mktemp "${VALIDATE_TMP}/trigger_matrix_bad_tags.XXXXXX.json")"
 python3 - "${ROOT_DIR}/research/donor-library/trigger-matrix.json" "${matrix_tmp}" <<'PY'
 import json
 import sys
@@ -567,24 +600,123 @@ expect_failure "trigger matrix empty tag" \
     "${matrix_tmp}" \
     --repo-root "${ROOT_DIR}"
 rm -f "${matrix_tmp}"
+matrix_tmp="$(mktemp "${VALIDATE_TMP}/trigger_matrix_missing_polarity.XXXXXX.json")"
+python3 - "${ROOT_DIR}/research/donor-library/trigger-matrix.json" "${matrix_tmp}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+source = Path(sys.argv[1])
+target = Path(sys.argv[2])
+data = json.loads(source.read_text(encoding="utf-8"))
+data["cases"][0]["tags"] = ["smoke", "vulkan"]
+target.write_text(json.dumps(data), encoding="utf-8")
+PY
+expect_failure "trigger matrix missing polarity tag" \
+    python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
+    "${matrix_tmp}" \
+    --repo-root "${ROOT_DIR}"
+rm -f "${matrix_tmp}"
+matrix_tmp="$(mktemp "${VALIDATE_TMP}/trigger_matrix_duplicate_polarity.XXXXXX.json")"
+python3 - "${ROOT_DIR}/research/donor-library/trigger-matrix.json" "${matrix_tmp}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+source = Path(sys.argv[1])
+target = Path(sys.argv[2])
+data = json.loads(source.read_text(encoding="utf-8"))
+data["cases"][0]["tags"] = ["positive", "negative", "vulkan"]
+target.write_text(json.dumps(data), encoding="utf-8")
+PY
+expect_failure "trigger matrix duplicate polarity tags" \
+    python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
+    "${matrix_tmp}" \
+    --repo-root "${ROOT_DIR}"
+rm -f "${matrix_tmp}"
+matrix_tmp="$(mktemp "${VALIDATE_TMP}/trigger_matrix_unknown_tag.XXXXXX.json")"
+python3 - "${ROOT_DIR}/research/donor-library/trigger-matrix.json" "${matrix_tmp}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+source = Path(sys.argv[1])
+target = Path(sys.argv[2])
+data = json.loads(source.read_text(encoding="utf-8"))
+data["cases"][0]["tags"] = ["positive", "not-a-real-tag"]
+target.write_text(json.dumps(data), encoding="utf-8")
+PY
+expect_failure "trigger matrix unknown tag" \
+    python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
+    "${matrix_tmp}" \
+    --repo-root "${ROOT_DIR}"
+rm -f "${matrix_tmp}"
+
+expect_failure "scaffold invalid namespace trailing colon" \
+    python3 "${SKILL_DIR}/scripts/scaffold_gpu_cpp_project.py" \
+    --name BadNamespace \
+    --output "${VALIDATE_TMP}/bad_namespace_colon" \
+    --namespace "foo:"
+expect_failure "scaffold invalid namespace trailing separator" \
+    python3 "${SKILL_DIR}/scripts/scaffold_gpu_cpp_project.py" \
+    --name BadNamespace \
+    --output "${VALIDATE_TMP}/bad_namespace_separator" \
+    --namespace "foo::"
+expect_failure "scaffold invalid namespace keyword" \
+    python3 "${SKILL_DIR}/scripts/scaffold_gpu_cpp_project.py" \
+    --name BadNamespace \
+    --output "${VALIDATE_TMP}/bad_namespace_keyword" \
+    --namespace "foo::class"
+description_tmp="$(mktemp -d "${VALIDATE_TMP}/description_scaffold.XXXXXX")"
+python3 "${SKILL_DIR}/scripts/scaffold_gpu_cpp_project.py" \
+    --name DescriptionSmoke \
+    --output "${description_tmp}" \
+    --description "Custom CppStudio description smoke"
+grep -q "Custom CppStudio description smoke" "${description_tmp}/README.md"
+apply_dry_run_tmp="$(mktemp -d "${VALIDATE_TMP}/apply_dry_run.XXXXXX")"
+apply_dry_run_out="$(mktemp "${VALIDATE_TMP}/apply_dry_run.XXXXXX.out")"
+python3 "${SKILL_DIR}/scripts/apply_studio_backbone.py" \
+    "${apply_dry_run_tmp}" \
+    --dry-run >"${apply_dry_run_out}"
+grep -q "CMakePresets.json" "${apply_dry_run_out}"
+
+python3 - "${SKILL_DIR}/scripts/validate_studio_backbone.py" <<'PY'
+import importlib.util
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+spec = importlib.util.spec_from_file_location("validate_studio_backbone", path)
+module = importlib.util.module_from_spec(spec)
+assert spec.loader is not None
+spec.loader.exec_module(module)
+
+empty_failures = module.validate_ctest_json('{"tests": []}', {"quick"})
+if not empty_failures:
+    raise SystemExit("empty CTest JSON unexpectedly passed")
+missing_label_failures = module.validate_ctest_json(
+    '{"tests": [{"name": "wrong_lane", "properties": [{"name": "LABELS", "value": ["gpu"]}]}]}',
+    {"quick"},
+)
+if not missing_label_failures:
+    raise SystemExit("CTest JSON without quick label unexpectedly passed")
+valid_failures = module.validate_ctest_json(
+    '{"tests": [{"name": "smoke", "properties": [{"name": "LABELS", "value": ["quick"]}]}]}',
+    {"quick"},
+)
+if valid_failures:
+    raise SystemExit("valid CTest JSON unexpectedly failed: " + "; ".join(valid_failures))
+PY
 rm -rf "${ROOT_DIR}/scripts/__pycache__"
 rm -rf "${SKILL_DIR}/scripts/__pycache__"
 bash -n "${ROOT_DIR}"/scripts/*.sh
 bash -n "${SKILL_DIR}"/scripts/*.sh
 
 if (( full )); then
-    sample_dir="$(mktemp -d /tmp/cppstudio_validate.XXXXXX)"
-    cleanup_sample() {
-        if [[ "${KEEP_VALIDATE_TMP:-0}" == "1" ]]; then
-            echo "Preserved validation sample at ${sample_dir}"
-        else
-            rm -rf "${sample_dir}"
-        fi
-    }
-    trap cleanup_sample EXIT
+    sample_dir="$(mktemp -d "${VALIDATE_TMP}/generated_project.XXXXXX")"
 
     "${SKILL_DIR}/scripts/scaffold_gpu_cpp_project.py" --name StudioValidate --output "${sample_dir}"
-    "${SKILL_DIR}/scripts/validate_studio_backbone.py" "${sample_dir}" --strict-source-layout
+    "${SKILL_DIR}/scripts/validate_studio_backbone.py" "${sample_dir}" --strict-source-layout --integration
     (
         cd "${sample_dir}"
         scripts/format_check.sh

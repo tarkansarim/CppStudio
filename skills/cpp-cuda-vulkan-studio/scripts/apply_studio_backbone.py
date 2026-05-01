@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import os
-import re
 import shutil
 import tempfile
 from pathlib import Path
@@ -43,32 +42,6 @@ RUNTIME_SCRIPTS = [
     "format_check.sh",
     "tidy_check.sh",
 ]
-
-
-def derive_project_name(repo: Path, explicit: str | None) -> str:
-    if explicit:
-        return normalize_project_name(explicit)
-    cmake = repo / "CMakeLists.txt"
-    if cmake.exists():
-        match = re.search(r"project\s*\(\s*([A-Za-z_][A-Za-z0-9_]*)", cmake.read_text(encoding="utf-8"))
-        if match:
-            return normalize_project_name(match.group(1))
-    return normalize_project_name(repo.name)
-
-
-def normalize_project_name(raw: str) -> str:
-    cleaned = re.sub(r"[^A-Za-z0-9_]", "_", raw.strip())
-    cleaned = re.sub(r"_+", "_", cleaned).strip("_")
-    if not cleaned or not re.match(r"^[A-Za-z_]", cleaned):
-        raise ValueError("project name must contain letters and start with a letter or underscore")
-    return cleaned
-
-
-def lower_name(project_name: str) -> str:
-    words = re.findall(r"[A-Z]?[a-z0-9]+|[A-Z]+(?=[A-Z]|$)", project_name)
-    if not words:
-        words = [project_name]
-    return "_".join(word.lower() for word in words)
 
 
 def render_text(text: str, replacements: dict[str, str]) -> str:
@@ -123,39 +96,20 @@ def planned_text(relative: str, target: Path, replacements: dict[str, str], forc
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("repo", help="Existing repository root")
-    parser.add_argument("--project-name", help="Override project name used in rendered templates")
-    parser.add_argument("--namespace", help="C++ namespace used only if replacing the root CMake/sample source")
     parser.add_argument("--force", action="store_true", help="Overwrite existing backbone files")
     parser.add_argument("--dry-run", action="store_true", help="Show planned writes without changing files")
-    parser.add_argument(
-        "--replace-cmake-lists",
-        action="store_true",
-        help="Replace root CMakeLists.txt with the template. This is destructive without --force discipline.",
-    )
     args = parser.parse_args()
 
     repo = Path(args.repo).expanduser().resolve()
     if not repo.exists() or not repo.is_dir():
         raise SystemExit(f"repo directory does not exist: {repo}")
 
-    project_name = derive_project_name(repo, args.project_name)
-    project_lower = lower_name(project_name)
-    replacements = {
-        "PROJECT_NAME": project_name,
-        "PROJECT_NAME_LOWER": project_lower,
-        "PROJECT_NAME_UPPER": project_lower.upper(),
-        "CPP_NAMESPACE": args.namespace or project_lower,
-        "PROJECT_DESCRIPTION": "Vulkan-first C++ project with optional CUDA lanes",
-    }
-
     paths = list(BACKBONE_PATHS)
-    if args.replace_cmake_lists:
-        paths.insert(0, "CMakeLists.txt")
 
     rendered_files: list[tuple[str, Path, str]] = []
     for relative in paths:
         target = repo / relative
-        rendered_files.append((relative, target, planned_text(relative, target, replacements, args.force)))
+        rendered_files.append((relative, target, planned_text(relative, target, {}, args.force)))
 
     scripts_dir = repo / "scripts"
     script_copies: list[tuple[Path, Path]] = []

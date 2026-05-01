@@ -21,6 +21,103 @@ RUNTIME_SCRIPTS = [
     "format_check.sh",
     "tidy_check.sh",
 ]
+CPP_KEYWORDS = {
+    "alignas",
+    "alignof",
+    "and",
+    "and_eq",
+    "asm",
+    "auto",
+    "bitand",
+    "bitor",
+    "bool",
+    "break",
+    "case",
+    "catch",
+    "char",
+    "char8_t",
+    "char16_t",
+    "char32_t",
+    "class",
+    "compl",
+    "concept",
+    "const",
+    "consteval",
+    "constexpr",
+    "constinit",
+    "const_cast",
+    "continue",
+    "co_await",
+    "co_return",
+    "co_yield",
+    "decltype",
+    "default",
+    "delete",
+    "do",
+    "double",
+    "dynamic_cast",
+    "else",
+    "enum",
+    "explicit",
+    "export",
+    "extern",
+    "false",
+    "float",
+    "for",
+    "friend",
+    "goto",
+    "if",
+    "import",
+    "inline",
+    "int",
+    "long",
+    "module",
+    "mutable",
+    "namespace",
+    "new",
+    "noexcept",
+    "not",
+    "not_eq",
+    "nullptr",
+    "operator",
+    "or",
+    "or_eq",
+    "private",
+    "protected",
+    "public",
+    "register",
+    "reinterpret_cast",
+    "requires",
+    "return",
+    "short",
+    "signed",
+    "sizeof",
+    "static",
+    "static_assert",
+    "static_cast",
+    "struct",
+    "switch",
+    "template",
+    "this",
+    "thread_local",
+    "throw",
+    "true",
+    "try",
+    "typedef",
+    "typeid",
+    "typename",
+    "union",
+    "unsigned",
+    "using",
+    "virtual",
+    "void",
+    "volatile",
+    "wchar_t",
+    "while",
+    "xor",
+    "xor_eq",
+}
+NAMESPACE_PATTERN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*(::[A-Za-z_][A-Za-z0-9_]*)*$")
 
 
 def normalize_project_name(raw: str) -> str:
@@ -41,8 +138,13 @@ def lower_name(project_name: str) -> str:
 def namespace_name(raw: str | None, project_lower: str) -> str:
     value = raw.strip() if raw else project_lower
     value = re.sub(r"[^A-Za-z0-9_:]", "_", value)
-    if not re.match(r"^[A-Za-z_]", value):
-        raise ValueError("namespace must start with a letter or underscore")
+    if not NAMESPACE_PATTERN.fullmatch(value):
+        raise ValueError(
+            "namespace must be C++ identifiers separated by '::', for example 'studio' or 'studio::render'"
+        )
+    keyword_segments = [segment for segment in value.split("::") if segment in CPP_KEYWORDS]
+    if keyword_segments:
+        raise ValueError(f"namespace segment is a C++ keyword: {keyword_segments[0]}")
     return value
 
 

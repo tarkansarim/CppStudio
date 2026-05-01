@@ -13,6 +13,35 @@ import sys
 from pathlib import Path
 
 
+POLARITY_TAGS = {"positive", "negative"}
+ALLOWED_TAGS = {
+    "ai-runtime",
+    "assets",
+    "browser",
+    "bvh",
+    "cad",
+    "cuda",
+    "dcc",
+    "engine",
+    "geometry",
+    "graphics",
+    "lookup",
+    "materials",
+    "neural-3d",
+    "path-tracing",
+    "positive",
+    "negative",
+    "rendering",
+    "simulation",
+    "smoke",
+    "study-only",
+    "vulkan",
+    "volumes",
+    "webgpu",
+    "xr",
+}
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("matrix", type=Path, help="Path to trigger-matrix.json")
@@ -76,18 +105,23 @@ def main() -> int:
             if not isinstance(value, str) or not value.strip():
                 errors.append(f"{name}: {field_name} must be a non-empty string")
 
-        tags = case.get("tags", [])
-        if not isinstance(tags, list):
-            errors.append(f"{name}: tags must be a list when present")
+        tags = case.get("tags")
+        if not isinstance(tags, list) or not tags:
+            errors.append(f"{name}: tags must be a non-empty list")
             tags = []
         seen_tags: set[str] = set()
         for tag in tags:
             if not isinstance(tag, str) or not tag.strip():
                 errors.append(f"{name}: tags must contain only non-empty strings")
                 continue
+            if tag not in ALLOWED_TAGS:
+                errors.append(f"{name}: unknown tag {tag!r}")
             if tag in seen_tags:
                 errors.append(f"{name}: duplicate tag {tag!r}")
             seen_tags.add(tag)
+        polarity = seen_tags & POLARITY_TAGS
+        if len(polarity) != 1:
+            errors.append(f"{name}: tags must contain exactly one polarity tag: positive or negative")
 
         expected_paths = case.get("expected_paths", [])
         if not isinstance(expected_paths, list) or not expected_paths:
