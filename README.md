@@ -86,6 +86,74 @@ not trigger.
   XR.
 - Coordinate companion skills for CMake, Vulkan synchronization, CUDA kernels, and verification.
 
+## Skills And Donors Included
+
+Bundled skills:
+
+- `cpp-cuda-vulkan-studio`: the installed user-level skill for Vulkan-first C++ GPU, CUDA, explicit
+  CUDA/Vulkan interop, project scaffolding, validation lanes, and donor routing.
+- `cppstudio-repo-onboarding`: a repo-local onboarding skill for agents editing this CppStudio repo.
+  It is not the public user-level C++ GPU skill.
+
+Companion skills that CppStudio can link to when they are already installed:
+
+- `modern-cpp-cmake`: CMake, target layout, presets, tests, and native C++ project hygiene.
+- `vulkan-compute-sync`: Vulkan compute/render setup, descriptors, barriers, synchronization, and
+  frame lifetime.
+- `cuda-kernel-authoring`: CUDA kernels, launch wrappers, numerical tests, and Compute Sanitizer
+  planning.
+
+The donor library is a reference map, not a vendored source tree. Agents use it to choose
+architecture patterns, APIs, tests, algorithms, and dependency candidates. Some donors are direct
+C/C++ implementation references, some are dependency-scale references, and some are explicitly
+reference-only or study-only.
+
+Donor category files:
+
+- Vulkan foundation tooling
+- graphics/rendering
+- glTF/runtime assets
+- geometry/simulation
+- AI runtimes/kernels
+- neural 3D
+- hair/grooming/fur
+- DCC scene pipelines
+- volumes/voxels
+- animation/rigging
+- surfaces/subdivision
+- texture/material/color
+- CAD/precision geometry
+- GPU simulation
+- XR/spatial
+
+All current donor profiles, grouped by domain:
+
+- Vulkan and shader tooling: Khronos Vulkan-Samples, NVIDIA vk_mini_samples, Vulkan Memory
+  Allocator, volk, vk-bootstrap, SPIR-V Toolchain, Slang.
+- CUDA, AI runtimes, and ML compilers: CUTLASS, FlashAttention, Triton, llama.cpp/ggml, ONNX
+  Runtime, TensorRT-LLM, vLLM, MLC-LLM, tiny-cuda-nn, Apache TVM, PyTorch.
+- Rendering, graphics, and browser 3D: Google Filament, Diligent Engine, bgfx, Magnum, Google Dawn,
+  three.js, Babylon.js, pbrt-v4, Mitsuba 3, NVIDIA Falcor, THREE.js PathTracing Renderer, Embree,
+  OSPRay, madmann91/bvh.
+- Assets, materials, textures, and DCC interchange: glTF C/C++ Loaders
+  (fastgltf/cgltf/tinygltf), meshoptimizer, assimp, KTX-Software/Basis Universal, OpenColorIO,
+  OpenImageIO, TinyEXR, OpenUSD, Alembic, MaterialX, OpenTimelineIO.
+- Geometry, surfaces, and CAD: OpenSubdiv, libigl, CGAL, Open CASCADE Technology, FreeCAD
+  Study-Only.
+- Neural 3D and reconstruction: gsplat, Nerfstudio, NVIDIA Kaolin, PyTorch3D, Open3D, Neural
+  Graphics Study-Only references.
+- Hair, grooming, and fur: AMD TressFX, NVIDIA HairWorks Study-Only, Blender Study-Only.
+- Volumes and scientific visualization: OpenVDB/NanoVDB, fVDB, VTK.
+- Animation: ozz-animation, Animation Compression Library.
+- Engines, physics, and simulation: Godot Engine, Open 3D Engine, Jolt Physics, Bullet Physics,
+  NVIDIA Warp, Taichi, PositionBasedDynamics, Project Chrono, SOFA, NVIDIA PhysX.
+- XR and spatial computing: OpenXR SDK, OpenXR-Hpp, Monado, Godot OpenXR Vendors.
+
+Study-only donors are concept references, not code donors. Browser, Python, notebook, DCC, service,
+JIT/DSL, or non-C++ donors can still guide algorithms, behavior, tests, UX, and architecture, but
+agents should port the idea through the active C++/Vulkan/CUDA lane instead of copying code directly
+unless the user explicitly chooses that runtime and license shape.
+
 ## When To Install GPU Tools
 
 Install extra host tools only for lanes you want to build or validate on the current machine:
