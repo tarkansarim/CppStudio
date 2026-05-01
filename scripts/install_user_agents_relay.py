@@ -11,6 +11,8 @@ from pathlib import Path
 
 BEGIN = "<!-- cppstudio-user-agents-relay:begin -->"
 END = "<!-- cppstudio-user-agents-relay:end -->"
+BEGIN_BYTES = BEGIN.encode("utf-8")
+END_BYTES = END.encode("utf-8")
 MAX_RELAY_CHARS = 500
 
 
@@ -35,7 +37,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def read_relay(snippet: Path) -> str:
+def read_relay(snippet: Path) -> bytes:
     if not snippet.is_file():
         raise FileNotFoundError(f"missing relay snippet: {snippet}")
     text = snippet.read_text(encoding="utf-8").strip()
@@ -51,41 +53,37 @@ def read_relay(snippet: Path) -> str:
         raise ValueError(f"relay snippet contains unresolved placeholders: {snippet}")
     if len(text) > MAX_RELAY_CHARS:
         raise ValueError(f"relay snippet is too large for AGENTS.md injection: {len(text)} chars")
-    return text
+    return text.encode("utf-8")
 
 
-def merge_relay(existing: str, relay: str, target: Path) -> str:
-    begin_count = existing.count(BEGIN)
-    end_count = existing.count(END)
+def merge_relay(existing: bytes, relay: bytes, target: Path) -> bytes:
+    begin_count = existing.count(BEGIN_BYTES)
+    end_count = existing.count(END_BYTES)
     if begin_count != end_count:
         raise ValueError(f"target AGENTS.md has mismatched CppStudio relay markers: {target}")
     if begin_count > 1:
         raise ValueError(f"target AGENTS.md has multiple CppStudio relay blocks: {target}")
     if begin_count == 1:
-        start = existing.index(BEGIN)
-        end_start = existing.index(END)
+        start = existing.index(BEGIN_BYTES)
+        end_start = existing.index(END_BYTES)
         if end_start <= start:
             raise ValueError(f"target AGENTS.md has reversed CppStudio relay markers: {target}")
-        end = end_start + len(END)
-        while end < len(existing) and existing[end] in "\r\n":
-            end += 1
-        prefix = existing[:start].rstrip()
-        suffix = existing[end:].lstrip()
-        if suffix:
-            return prefix + "\n\n" + relay + "\n\n" + suffix if prefix else relay + "\n\n" + suffix
-        return prefix + "\n\n" + relay + "\n" if prefix else relay + "\n"
+        end = end_start + len(END_BYTES)
+        return existing[:start] + relay + existing[end:]
 
     if relay in existing:
         return existing
-    separator = "\n\n" if existing.rstrip() else ""
-    return existing.rstrip() + separator + relay + "\n"
+    if not existing:
+        return relay + b"\n"
+    separator = b"\n" if existing.endswith((b"\n", b"\r")) else b"\n\n"
+    return existing + separator + relay + b"\n"
 
 
-def atomic_write(path: Path, text: str) -> None:
+def atomic_write(path: Path, data: bytes) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     mode = path.stat().st_mode if path.exists() else 0o644
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, delete=False) as handle:
-        handle.write(text)
+    with tempfile.NamedTemporaryFile("wb", dir=path.parent, delete=False) as handle:
+        handle.write(data)
         temp_name = handle.name
     temp_path = Path(temp_name)
     try:
@@ -119,7 +117,7 @@ def main() -> int:
     args = parse_args()
     target = validate_target(args.target, args.expected_target, args.allow_target_override)
     relay = read_relay(args.snippet.expanduser().resolve())
-    existing = target.read_text(encoding="utf-8") if target.exists() else ""
+    existing = target.read_bytes() if target.exists() else b""
     merged = merge_relay(existing, relay, target)
 
     if args.preflight:

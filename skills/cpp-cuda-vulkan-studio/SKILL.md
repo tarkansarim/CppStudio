@@ -7,12 +7,50 @@ description: "Create, audit, or upgrade native C++ GPU project infrastructure fo
 
 Use this skill when a C++/CUDA/Vulkan repo needs a repeatable professional development backbone, not a one-off local build. This skill coordinates the more specific global skills instead of replacing them.
 
+## Agent Mindset
+
+When this skill is active, work like a native C++ GPU systems engineer:
+
+- Treat Vulkan as an explicit-lifetime API. Resource ownership, synchronization, image layouts, queue
+  ownership, descriptor lifetime, command-buffer reuse, and frames-in-flight must be designed
+  deliberately.
+- Keep the active lane disciplined. Prefer Vulkan for unspecified reusable GPU/3D/realtime work, keep
+  CUDA separate unless the user chooses it or the requirements force it, and document any deliberate
+  CUDA/Vulkan interop boundary.
+- Do not silently downgrade the work to get a green run. If CMake, CUDA, Vulkan SDK tools, shader
+  compilation, validation layers, GPU selection, profilers, or tests fail, surface the failure and fix
+  the root cause when it is in scope.
+- Inspect before editing. Read the build graph, presets, target ownership, shader or kernel paths,
+  dispatch/render loop, and direct callers before changing native GPU infrastructure.
+- Before major C++/GPU edits, name the likely failure modes: synchronization or lifetime bugs, wrong
+  device/backend lane, missing validation/profiling evidence, portability breaks, and
+  dependency/license mistakes.
+- Before risky GPU refactors, broad CMake/build-system changes, backend rewrites, synchronization
+  changes, or target-project deployment/install script edits, create or confirm a recent git commit
+  so rollback is exact and cheap. If the target repo has no suitable recent commit, ask before
+  proceeding with high-risk edits.
+- Use evidence before claims. Builds, CTest labels, shader compilation, Vulkan validation,
+  Compute Sanitizer, RenderDoc/Nsight captures, screenshots, image comparisons, and profiler output
+  matter more than plausible explanations.
+- For realtime rendering, viewport, simulation, XR, or GPU-performance work, measure frame time/FPS
+  or profiler timings while implementing and verify the actual visual output.
+- Be donor-first. Use the donor library for architecture, edge cases, tests, algorithms, and
+  dependency choices before inventing a new subsystem; when no suitable donor exists, add donor
+  research before designing the implementation.
+- Never copy study-only, incompatible-license, non-C++ reference-only, or backend-mismatched donor
+  code into generated projects. Use those donors for concepts, then translate through the active
+  Vulkan, CUDA, or explicit interop lane.
+- Preserve user and project state. Managed markers may be replaced by this package, but project files,
+  local rules, custom skills, and content outside managed marker blocks are user-owned.
+- Produce usable infrastructure. Avoid stubs, toy-only scaffolds, disabled tests, placeholder kernels,
+  or sample-only shortcuts unless the user explicitly asks for a throwaway prototype.
+
 ## Coordination
 
 - Use `modern-cpp-cmake` for CMake target structure, source ownership, presets, CTest, and dependency wiring.
 - Use `cuda-kernel-authoring` when adding or reviewing custom CUDA kernels or launch wrappers.
 - Use `vulkan-compute-sync` when the project contains Vulkan compute, render, synchronization, descriptor, or frame-lifetime work.
-- Use `gpu-profiling-workstation` only when the active session exposes it and the user needs environment-specific profiling or frame-debugging commands.
+- Use available profiling or frame-debugging skills and local profiler tools only when the active environment exposes them and the user needs performance or capture evidence.
 - Use `verification-before-completion` before claiming the generated or upgraded backbone is valid.
 
 ## Workflow

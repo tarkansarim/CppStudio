@@ -1,12 +1,15 @@
+![CppStudio banner](assets/cppstudio-banner.png)
+
 # CppStudio
 
 CppStudio is an agentic skills package for GPU-native C++ engineering. It is the canonical source
 for the reusable `cpp-cuda-vulkan-studio` Codex skill, its bundled Vulkan-first C++/CUDA project
 backbone, research notes, donor-reference routing, companion-skill snippets, and rollout scripts.
 
-Use this repo when you want coding agents to create, audit, or upgrade C++/CUDA/Vulkan projects
-with consistent build structure, validation lanes, profiling hooks, and curated external reference
-selection for Vulkan, CUDA, WebGPU, rendering, 3D, and AI-runtime work.
+This package is designed for ChatGPT Codex skill workflows. Use it when you want Codex agents to
+create, audit, or upgrade C++/CUDA/Vulkan projects with consistent build structure, validation lanes,
+profiling hooks, and curated external reference selection for Vulkan, CUDA, WebGPU, rendering, 3D,
+and AI-runtime work.
 
 ## What This Repo Contains
 
@@ -35,6 +38,10 @@ Default repo validation and rollout require:
 - `rsync`
 - Codex skill validator at
   `${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py`
+
+The shipped install, sync, rollout, and validation entrypoints are Bash/POSIX scripts and are
+currently intended for Linux, macOS, or Windows through WSL. A native Windows PowerShell installer is
+not shipped yet; Windows users should use WSL or have an agent port the script flow deliberately.
 
 Optional workflows require extra tools:
 
@@ -82,6 +89,94 @@ For normal setup, `rollout_to_codex.sh` is the best single command because it va
 syncs the canonical skill, installs donor-library links into matching installed companion skills,
 validates affected installed skills, and verifies source/target parity.
 
+## Manual Installation By Platform
+
+Use manual installation when you cannot or do not want to run the Bash rollout scripts. Manual install
+touches only the managed `cpp-cuda-vulkan-studio` skill folder and, if requested, the marked relay
+block in user-level `AGENTS.md`. User-created sibling skills under `${HOME}/.codex/skills` are not
+part of this package and should be left alone.
+
+Linux:
+
+```bash
+cd /path/to/CppStudio
+mkdir -p "${HOME}/.codex/skills"
+rm -rf "${HOME}/.codex/skills/cpp-cuda-vulkan-studio"
+cp -a skills/cpp-cuda-vulkan-studio "${HOME}/.codex/skills/"
+python3 "${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py" \
+  "${HOME}/.codex/skills/cpp-cuda-vulkan-studio"
+```
+
+macOS:
+
+```bash
+cd /path/to/CppStudio
+mkdir -p "${HOME}/.codex/skills"
+rm -rf "${HOME}/.codex/skills/cpp-cuda-vulkan-studio"
+cp -a skills/cpp-cuda-vulkan-studio "${HOME}/.codex/skills/"
+python3 "${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py" \
+  "${HOME}/.codex/skills/cpp-cuda-vulkan-studio"
+```
+
+Windows PowerShell:
+
+```powershell
+Set-Location C:\path\to\CppStudio
+$CodexHome = Join-Path $HOME ".codex"
+$SkillsRoot = Join-Path $CodexHome "skills"
+$SkillTarget = Join-Path $SkillsRoot "cpp-cuda-vulkan-studio"
+New-Item -ItemType Directory -Force $SkillsRoot | Out-Null
+if (Test-Path $SkillTarget) { Remove-Item -Recurse -Force $SkillTarget }
+Copy-Item -Recurse -Force ".\skills\cpp-cuda-vulkan-studio" $SkillTarget
+python (Join-Path $HOME ".codex\skills\.system\skill-creator\scripts\quick_validate.py") $SkillTarget
+```
+
+Optional relay install for any platform with Python:
+
+```bash
+python3 scripts/install_user_agents_relay.py \
+  --install \
+  --target "${HOME}/.codex/AGENTS.md" \
+  --expected-target "${HOME}/.codex/AGENTS.md" \
+  --snippet companion-skill-snippets/user-agents/cppstudio-relay.md
+```
+
+Windows PowerShell equivalent:
+
+```powershell
+$AgentsPath = Join-Path $CodexHome "AGENTS.md"
+python .\scripts\install_user_agents_relay.py `
+  --install `
+  --target $AgentsPath `
+  --expected-target $AgentsPath `
+  --snippet ".\companion-skill-snippets\user-agents\cppstudio-relay.md"
+```
+
+Optional companion donor-link install for any platform with Python:
+
+```bash
+python3 scripts/install_companion_donor_links.py \
+  --install \
+  --codex-home "${HOME}/.codex" \
+  --donor-root "${HOME}/.codex/skills/cpp-cuda-vulkan-studio/references/donor-library" \
+  --source-skill-dir skills/cpp-cuda-vulkan-studio \
+  --snippet-root companion-skill-snippets
+```
+
+Windows PowerShell equivalent:
+
+```powershell
+$DonorRoot = Join-Path $SkillTarget "references\donor-library"
+python .\scripts\install_companion_donor_links.py `
+  --install `
+  --codex-home $CodexHome `
+  --donor-root $DonorRoot `
+  --source-skill-dir ".\skills\cpp-cuda-vulkan-studio" `
+  --snippet-root ".\companion-skill-snippets"
+```
+
+Restart any Codex session after manual installation so changed skill metadata is rediscovered.
+
 ## Agentic Install For Remote Users
 
 If you are installing this repo on a different machine, ask your coding agent to inspect the repo
@@ -107,6 +202,12 @@ The managed marker blocks are the only script-owned regions:
 Content inside those markers may be replaced by reinstall. Content outside those markers is
 user-owned and must be preserved. Duplicate or mismatched markers should be treated as a manual
 cleanup problem before reinstalling.
+
+The user-level `AGENTS.md` relay is intentionally not a full engineering policy. It only loads
+`cpp-cuda-vulkan-studio` for C++ Vulkan, C++ CUDA, and mixed CUDA/Vulkan work. The C++ GPU mindset,
+including Vulkan lifetime discipline, lane separation, donor-first design, visual/performance
+evidence, and git-commit rollback expectations, lives inside the skill so it is active only for
+relevant work and does not overwrite a user's personal global agent rules.
 
 ## Daily Workflows
 
@@ -198,8 +299,8 @@ The main skill coordinates companion skills:
 - `modern-cpp-cmake` for CMake, target layout, tests, presets, and dependency wiring
 - `cuda-kernel-authoring` for CUDA kernels, launch wrappers, and compute-sanitizer plans
 - `vulkan-compute-sync` for Vulkan compute/render setup, descriptors, barriers, and frame lifetime
-- `gpu-profiling-workstation` when the active environment exposes that skill for profiling and frame
-  debugging commands
+- optional environment-specific profiling or frame-debugging skills/tools when the active session
+  exposes them and performance or capture evidence is needed
 - `verification-before-completion` before completion claims
 
 ## Creating A New Vulkan-First C++ Project

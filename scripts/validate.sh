@@ -294,6 +294,41 @@ then
     exit 1
 fi
 rm -rf "${relay_duplicate_tmp}"
+relay_preserve_tmp="$(mktemp -d "${VALIDATE_TMP}/agents_relay_preserve.XXXXXX")"
+python3 - "${relay_preserve_tmp}/AGENTS.md" <<'PY'
+from pathlib import Path
+import sys
+
+Path(sys.argv[1]).write_bytes(
+    b"alpha trailing spaces   \r\n"
+    b"blank before\r\n"
+    b"\r\n"
+    b"<!-- cppstudio-user-agents-relay:begin -->\r\n"
+    b"old relay body\r\n"
+    b"<!-- cppstudio-user-agents-relay:end -->"
+    b"\r\n\r\n\r\n"
+    b"  after block with leading spaces\r\n"
+    b"omega\r\n"
+)
+PY
+python3 "${ROOT_DIR}/scripts/install_user_agents_relay.py" \
+    --install \
+    --target "${relay_preserve_tmp}/AGENTS.md" \
+    --expected-target "${relay_preserve_tmp}/AGENTS.md" \
+    --snippet "${ROOT_DIR}/companion-skill-snippets/user-agents/cppstudio-relay.md"
+python3 - "${relay_preserve_tmp}/AGENTS.md" <<'PY'
+from pathlib import Path
+import sys
+
+data = Path(sys.argv[1]).read_bytes()
+prefix = b"alpha trailing spaces   \r\nblank before\r\n\r\n"
+suffix = b"\r\n\r\n\r\n  after block with leading spaces\r\nomega\r\n"
+if not data.startswith(prefix):
+    raise SystemExit("relay replacement did not preserve prefix outside markers")
+if not data.endswith(suffix):
+    raise SystemExit("relay replacement did not preserve suffix outside markers")
+PY
+rm -rf "${relay_preserve_tmp}"
 
 companion_tmp="$(mktemp -d "${VALIDATE_TMP}/companion_install.XXXXXX")"
 write_companion_fixtures "${companion_tmp}"
@@ -325,6 +360,53 @@ python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
     --source-skill-dir "${SKILL_DIR}" \
     --snippet-root "${ROOT_DIR}/companion-skill-snippets"
 grep -q "Use the donor library to compare CUTLASS" "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
+write_companion_fixtures "${companion_tmp}"
+python3 - "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md" <<'PY'
+from pathlib import Path
+import sys
+
+Path(sys.argv[1]).write_bytes(
+    b"---\r\n"
+    b"name: cuda-kernel-authoring\r\n"
+    b"description: Test fixture.\r\n"
+    b"---\r\n"
+    b"# CUDA Kernel Authoring\r\n"
+    b"\r\n"
+    b"  before donor block  \r\n"
+    b"<!-- cppstudio-donor-library:begin -->\r\n"
+    b"old donor body\r\n"
+    b"<!-- cppstudio-donor-library:end -->"
+    b"\r\n\r\n\r\n"
+    b"  after donor block\r\n"
+    b"## Design Rules\r\n"
+)
+PY
+python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
+    --install \
+    --codex-home "${companion_tmp}" \
+    --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
+    --source-skill-dir "${SKILL_DIR}" \
+    --snippet-root "${ROOT_DIR}/companion-skill-snippets"
+python3 - "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md" <<'PY'
+from pathlib import Path
+import sys
+
+data = Path(sys.argv[1]).read_bytes()
+prefix = (
+    b"---\r\n"
+    b"name: cuda-kernel-authoring\r\n"
+    b"description: Test fixture.\r\n"
+    b"---\r\n"
+    b"# CUDA Kernel Authoring\r\n"
+    b"\r\n"
+    b"  before donor block  \r\n"
+)
+suffix = b"\r\n\r\n\r\n  after donor block\r\n## Design Rules\r\n"
+if not data.startswith(prefix):
+    raise SystemExit("companion donor replacement did not preserve prefix outside markers")
+if not data.endswith(suffix):
+    raise SystemExit("companion donor replacement did not preserve suffix outside markers")
+PY
 write_companion_fixtures "${companion_tmp}"
 missing_companion_tmp="$(mktemp -d "${VALIDATE_TMP}/companion_missing.XXXXXX")"
 write_companion_fixtures "${missing_companion_tmp}"

@@ -13,6 +13,8 @@ from pathlib import Path
 
 BEGIN = "<!-- cppstudio-donor-library:begin -->"
 END = "<!-- cppstudio-donor-library:end -->"
+BEGIN_BYTES = BEGIN.encode("utf-8")
+END_BYTES = END.encode("utf-8")
 
 COMPANIONS = {
     "cuda-kernel-authoring": "## Design Rules",
@@ -25,7 +27,7 @@ COMPANIONS = {
 class RenderedSkill:
     name: str
     path: Path
-    text: str
+    data: bytes
 
 
 @dataclass(frozen=True)
@@ -52,27 +54,21 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def replace_marked_block(text: str, block: str, skill_path: Path) -> str:
-    begin_count = text.count(BEGIN)
-    end_count = text.count(END)
+def replace_marked_block(data: bytes, block: bytes, skill_path: Path) -> bytes:
+    begin_count = data.count(BEGIN_BYTES)
+    end_count = data.count(END_BYTES)
     if begin_count != end_count:
         raise ValueError(f"malformed cppstudio donor marker block in {skill_path}: begin/end markers do not match")
     if begin_count > 1:
         raise ValueError(f"malformed cppstudio donor marker block in {skill_path}: multiple marker blocks found")
     if begin_count == 1:
-        start = text.index(BEGIN)
-        end_start = text.index(END)
+        start = data.index(BEGIN_BYTES)
+        end_start = data.index(END_BYTES)
         if end_start <= start:
             raise ValueError(f"malformed cppstudio donor marker block in {skill_path}: end marker precedes begin marker")
-        end = end_start + len(END)
-        while end < len(text) and text[end] in "\r\n":
-            end += 1
-        prefix = text[:start].rstrip()
-        suffix = text[end:].lstrip()
-        if suffix:
-            return prefix + "\n\n" + block + "\n\n" + suffix if prefix else block + "\n\n" + suffix
-        return prefix + "\n\n" + block + "\n" if prefix else block + "\n"
-    return text
+        end = end_start + len(END_BYTES)
+        return data[:start] + block + data[end:]
+    return data
 
 
 def frontmatter_name(text: str, skill_path: Path) -> str:
@@ -207,26 +203,28 @@ def render_skill(
     if skill_path is None:
         return None
 
-    original = skill_path.read_text(encoding="utf-8")
-    validate_companion_skill(skill_name, skill_path, original)
-    block = render_snippet(skill_name, snippet_root, donor_root, source_skill_dir, install)
-    text = replace_marked_block(original, block, skill_path)
-    if BEGIN not in text:
-        marker = COMPANIONS[skill_name]
-        if marker not in text:
-            raise ValueError(f"could not find insertion marker {marker!r} in {skill_path}")
-        text = text.replace(marker, block + "\n\n" + marker, 1)
-    if "{{" in text or "}}" in text:
+    original = skill_path.read_bytes()
+    original_text = original.decode("utf-8")
+    validate_companion_skill(skill_name, skill_path, original_text)
+    block = render_snippet(skill_name, snippet_root, donor_root, source_skill_dir, install).encode("utf-8")
+    data = replace_marked_block(original, block, skill_path)
+    if BEGIN_BYTES not in data:
+        marker_text = COMPANIONS[skill_name]
+        marker = marker_text.encode("utf-8")
+        if marker not in data:
+            raise ValueError(f"could not find insertion marker {marker_text!r} in {skill_path}")
+        data = data.replace(marker, block + b"\n\n" + marker, 1)
+    if b"{{" in data or b"}}" in data:
         raise ValueError(f"unresolved placeholder after rendering {skill_path}")
-    if text.count(BEGIN) != 1 or text.count(END) != 1:
+    if data.count(BEGIN_BYTES) != 1 or data.count(END_BYTES) != 1:
         raise ValueError(f"rendered skill must contain exactly one donor marker block: {skill_path}")
-    return RenderedSkill(skill_name, skill_path, text)
+    return RenderedSkill(skill_name, skill_path, data)
 
 
-def atomic_write(path: Path, text: str) -> None:
+def atomic_write(path: Path, data: bytes) -> None:
     mode = path.stat().st_mode
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, delete=False) as handle:
-        handle.write(text)
+    with tempfile.NamedTemporaryFile("wb", dir=path.parent, delete=False) as handle:
+        handle.write(data)
         temp_name = handle.name
     temp_path = Path(temp_name)
     try:
@@ -272,9 +270,9 @@ def main() -> int:
         return 0
 
     for item in rendered:
-        original = item.path.read_text(encoding="utf-8")
-        if item.text != original:
-            atomic_write(item.path, item.text)
+        original = item.path.read_bytes()
+        if item.data != original:
+            atomic_write(item.path, item.data)
             print(f"updated: {item.path}")
         else:
             print(f"ok: {item.path}")
