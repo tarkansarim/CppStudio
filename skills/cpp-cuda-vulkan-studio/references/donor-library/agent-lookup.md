@@ -25,8 +25,10 @@ CUDA or Vulkan lane unless the user explicitly asks for a mixed lane or real int
   [Filament](profiles/filament.md), [Diligent Engine](profiles/diligent-engine.md),
   [bgfx](profiles/bgfx.md), [Magnum](profiles/magnum.md), [Dawn](profiles/dawn.md),
   [pbrt-v4](profiles/pbrt-v4.md), [Mitsuba 3](profiles/mitsuba3.md), or
-  [Falcor](profiles/falcor.md). Keep WebGPU/browser donors as behavior references unless the user
-  chooses a web target.
+  [Falcor](profiles/falcor.md). When RTX SDK boundaries, NVIDIA Vulkan extensions, mesh/task
+  shaders, Nsight/Aftermath tooling, or vendor-specific Vulkan ray-tracing samples are in scope, also
+  open [NVIDIA vk_mini_samples](profiles/nvidia-vk-mini-samples.md). Keep WebGPU/browser donors as
+  behavior references unless the user chooses a web target.
 - **Runtime assets, glTF/GLB, importer fixtures, renderer-ready buffers**: open
   [gltf-runtime-assets.md](gltf-runtime-assets.md). Start with
   [glTF C/C++ Loaders](profiles/fastgltf-cgltf-tinygltf.md) and

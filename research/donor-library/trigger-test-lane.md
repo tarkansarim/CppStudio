@@ -180,3 +180,30 @@ runtime trigger behavior by itself.
 
 Future reruns should paste or summarize the filled evaluator results back into this file, including
 selected skills, opened files, forbidden paths used, verdicts, and any routing ambiguity.
+
+## Extensive Multi-Agent Trigger Lane
+
+Run date: 2026-05-01
+
+This lane split the full 50-case trigger matrix across five read-only subagents:
+
+| Lane | Cases | Result |
+| --- | --- | --- |
+| Vulkan, rendering, WebGPU, XR | 10 positive cases | 9 passed directly. The realtime ray-tracing case routed to Falcor and Khronos samples but did not naturally open `nvidia-vk-mini-samples.md` for "RTX SDK boundaries" before matrix comparison. |
+| Assets, DCC, volumes, materials, CAD, geometry, physics | 13 positive cases | Passed. One evaluator opened the matrix early, so this lane is weaker behavioral evidence, but the selected donor categories matched expected routing and avoided forbidden AI-runtime donors. |
+| CUDA, AI runtime, neural 3D, simulation, backend-mismatch | 14 positive cases | 13 passed directly. The generic CUDA simulation/geometry backend-mismatch case exposed that the matrix expected TressFX even though the prompt did not mention hair, fur, grooming, or strands. |
+| Negative controls | 13 negative cases | Passed. Generic AI assistant, web UI, game design, video editing, image upload, CAD mockup, VR storyboarding, Python ML, text rendering, import, JSON, shader-text, and Python CLI prompts did not route into CppStudio donor files. |
+| Installed-path smoke | 7 smoke cases | Passed. Installed `AGENTS.md`, installed `cpp-cuda-vulkan-studio`, and installed companion donor blocks routed to `/home/tarkan/.codex/skills/cpp-cuda-vulkan-studio/references/donor-library/...`. |
+
+## Extensive Lane Findings
+
+- The main CppStudio skill and installed relay trigger correctly for C++ Vulkan/CUDA/3D/realtime/XR,
+  donor-reference, and backend-mismatch prompts.
+- The negative controls are holding: keyword traps such as "render", "AI", "CAD", "VR", "shader",
+  "import", and "JSON" did not trigger the GPU donor library without native C++/GPU/3D/runtime scope.
+- `agent-lookup.md` now explicitly sends RTX SDK boundaries, NVIDIA Vulkan extensions, mesh/task
+  shaders, Nsight/Aftermath tooling, and vendor-specific Vulkan ray-tracing samples to
+  `profiles/nvidia-vk-mini-samples.md` alongside Falcor.
+- The `cuda-target-non-cuda-donor-reference` matrix expectation now uses Taichi instead of TressFX.
+  TressFX remains correct for hair, fur, grooming, strand, or TressFX-named prompts, but it was too
+  specific for a generic simulation/geometry kernel backend-mismatch prompt.
