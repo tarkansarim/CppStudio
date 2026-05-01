@@ -146,6 +146,19 @@ algorithms, behavior, tests, UX, and architecture, but agents should port the id
 C++/Vulkan/CUDA lane instead of copying code directly unless the user explicitly chooses that runtime
 and license shape.
 
+Inline identifiers:
+
+- `reference-only`: not a direct native C++ donor for this package. Use behavior, algorithms,
+  architecture, tests, fixtures, or outputs as guidance, then port intentionally through the active
+  C++/Vulkan/CUDA lane.
+- `mixed-native`: contains useful native C/C++/CUDA pieces, but the surrounding repo is shaped by
+  Python, PyTorch, service, web, generated-code, or other non-C++ runtime surfaces. Inspect and isolate
+  native subtrees before using it as an implementation donor.
+- `study-only`: concept or workflow reference only. Do not copy code into generated projects or reusable
+  skills without explicit approval and license review.
+
+Unmarked entries are still not automatic copy/paste sources; always read the linked profile first.
+
 ### 3D, Graphics, Simulation, And XR Donor Profiles
 
 #### Vulkan And Shader Tooling
@@ -187,9 +200,9 @@ and license shape.
 #### Browser 3D, WebGPU, And WebGL References
 
 - [Google Dawn](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/dawn.md)
-- [three.js](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/threejs.md)
-- [Babylon.js](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/babylonjs.md)
-- [THREE.js PathTracing Renderer](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/threejs-pathtracing.md)
+- [three.js](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/threejs.md) - `reference-only`
+- [Babylon.js](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/babylonjs.md) - `reference-only`
+- [THREE.js PathTracing Renderer](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/threejs-pathtracing.md) - `reference-only`
 
 #### Assets, Meshes, Materials, And Texture IO
 
@@ -206,7 +219,7 @@ and license shape.
 - [OpenUSD](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openusd.md)
 - [Alembic](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/alembic.md)
 - [OpenTimelineIO](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/opentimelineio.md)
-- [Blender Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/blender-study-only.md)
+- [Blender Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/blender-study-only.md) - `study-only`
 
 #### Geometry, Surfaces, And CAD
 
@@ -214,19 +227,19 @@ and license shape.
 - [libigl](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/libigl.md)
 - [CGAL](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/cgal.md)
 - [Open CASCADE Technology](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/open-cascade.md)
-- [FreeCAD Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/freecad-study-only.md)
+- [FreeCAD Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/freecad-study-only.md) - `study-only`
 
 #### Neural 3D And Reconstruction
 
 These are AI-adjacent, but they are grouped here because their primary domain is 3D reconstruction,
 3D data, or neural rendering rather than general AI runtime infrastructure.
 
-- [gsplat](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/gsplat.md)
-- [Nerfstudio](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nerfstudio.md)
-- [NVIDIA Kaolin](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/kaolin.md)
-- [PyTorch3D](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/pytorch3d.md)
+- [gsplat](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/gsplat.md) - `mixed-native`
+- [Nerfstudio](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nerfstudio.md) - `reference-only`
+- [NVIDIA Kaolin](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/kaolin.md) - `reference-only`
+- [PyTorch3D](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/pytorch3d.md) - `reference-only`
 - [Open3D](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/open3d.md)
-- [Neural Graphics Study-Only References](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/neural-graphics-study-only.md)
+- [Neural Graphics Study-Only References](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/neural-graphics-study-only.md) - `study-only`
 
 #### Hair, Grooming, And Fur
 
@@ -237,14 +250,14 @@ and Blender.
 - [NVIDIA RTXCR](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/rtxcr.md)
 - [RTXCR Material Library](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/rtxcr-material-library.md)
 - [RTXCR Geometry Library](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/rtxcr-geometry-library.md)
-- [NVIDIA HairWorks Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/hairworks-study-only.md)
-- [Unreal HairStrands Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/unreal-hairstrands-study-only.md)
-- [Unity HDRP Hair Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/unity-hdrp-hair-study-only.md)
+- [NVIDIA HairWorks Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/hairworks-study-only.md) - `study-only`
+- [Unreal HairStrands Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/unreal-hairstrands-study-only.md) - `study-only`
+- [Unity HDRP Hair Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/unity-hdrp-hair-study-only.md) - `study-only`
 
 #### Volumes, Voxels, And Scientific Visualization
 
 - [OpenVDB and NanoVDB](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openvdb-nanovdb.md)
-- [fVDB](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/fvdb.md)
+- [fVDB](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/fvdb.md) - `reference-only`
 - [VTK](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vtk.md)
 
 #### Animation
@@ -261,8 +274,8 @@ and Blender.
 
 - [Jolt Physics](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/jolt-physics.md)
 - [Bullet Physics](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/bullet-physics.md)
-- [NVIDIA Warp](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/warp.md)
-- [Taichi](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/taichi.md)
+- [NVIDIA Warp](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/warp.md) - `reference-only`
+- [Taichi](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/taichi.md) - `reference-only`
 - [PositionBasedDynamics](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/positionbaseddynamics.md)
 - [Project Chrono](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/project-chrono.md)
 - [SOFA](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/sofa.md)
@@ -280,16 +293,16 @@ and Blender.
 #### CUDA Kernels, AI Runtimes, And ML Compilers
 
 - [CUTLASS](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/cutlass.md)
-- [FlashAttention](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/flashattention.md)
-- [Triton](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/triton.md)
+- [FlashAttention](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/flashattention.md) - `mixed-native`
+- [Triton](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/triton.md) - `reference-only`
 - [llama.cpp and ggml](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/llama-ggml.md)
 - [ONNX Runtime](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/onnx-runtime.md)
 - [TensorRT-LLM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tensorrt-llm.md)
-- [vLLM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vllm.md)
+- [vLLM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vllm.md) - `reference-only`
 - [MLC-LLM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/mlc-llm.md)
 - [tiny-cuda-nn](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tiny-cuda-nn.md)
 - [Apache TVM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tvm.md)
-- [PyTorch](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/pytorch.md)
+- [PyTorch](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/pytorch.md) - `reference-only`
 
 ## When To Install GPU Tools
 
