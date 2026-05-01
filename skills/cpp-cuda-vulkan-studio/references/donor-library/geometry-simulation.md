@@ -33,7 +33,12 @@ construction, CPU ray tracing, collision, and physics infrastructure.
   in the selected Vulkan or CUDA lane.
 - For point-cloud and reconstruction workflows, Open3D is the strongest general-purpose donor.
 - For custom lightweight ray queries, use `madmann91/bvh` before pulling in a full rendering toolkit.
+- For CPU/scientific visualization rendering, use OSPRay as a dependency-scale renderer or reference path;
+  use Embree or `madmann91/bvh` for lower-level ray queries.
 - For physics in C++ apps, prefer Jolt for modern C++ and Bullet for ecosystem breadth.
+- Use Godot Engine and Open 3D Engine for engine/editor, asset-pipeline, component-system, and
+  runtime/editor architecture references. Do not treat either as a snippet source or ordinary dependency
+  for small renderer or GPU-tool projects.
 
 ## Deep Profiles
 
@@ -41,6 +46,9 @@ construction, CPU ray tracing, collision, and physics infrastructure.
 - [assimp](profiles/assimp.md): read before adopting broad runtime/offline asset import or conversion dependencies.
 - [Open3D](profiles/open3d.md): read before adopting point-cloud, reconstruction, visualization, or Open3D-ML data-processing dependencies.
 - [Embree](profiles/embree.md): read before adding CPU ray tracing kernels, CPU reference BVHs, or ray-query validation.
+- [OSPRay](profiles/ospray.md): read before adopting scalable CPU visualization renderer architecture, volumes, or RenderKit-style rendering APIs.
 - [madmann91/bvh](profiles/madmann91-bvh.md): read before adding a compact C++20 BVH reference or lightweight ray-query path.
 - [Jolt Physics](profiles/jolt-physics.md): read before adopting modern native C++ rigid-body/collision physics.
 - [Bullet Physics](profiles/bullet-physics.md): read before adopting broad physics/robotics/ML simulation ecosystem references.
+- [Godot Engine](profiles/godot-engine.md): read before borrowing engine/editor architecture, scene trees, resource ownership, or rendering/physics integration patterns.
+- [Open 3D Engine](profiles/open-3d-engine.md): read before borrowing large-scale engine architecture, asset processor, component system, or editor/runtime split patterns.

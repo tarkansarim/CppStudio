@@ -13,12 +13,20 @@ When selecting Vulkan, renderer, WebGPU, or 3D graphics donors, read:
 - `{{DONOR_ROOT}}/profiles/filament.md`, `{{DONOR_ROOT}}/profiles/diligent-engine.md`,
   `{{DONOR_ROOT}}/profiles/bgfx.md`, or `{{DONOR_ROOT}}/profiles/magnum.md` when choosing a renderer
   backbone or graphics middleware
+- `{{DONOR_ROOT}}/profiles/dawn.md` when native WebGPU, `webgpu.h`, WGSL/Tint, or WebGPU backend
+  portability is explicitly in scope
+- `{{DONOR_ROOT}}/profiles/pbrt-v4.md`, `{{DONOR_ROOT}}/profiles/mitsuba3.md`,
+  `{{DONOR_ROOT}}/profiles/falcor.md`, or `{{DONOR_ROOT}}/profiles/threejs-pathtracing.md` when
+  path tracing, physical rendering, differentiable rendering, render graphs, or realtime ray-tracing
+  framework concepts are relevant
 
 For glTF/GLB runtime asset loading or Vulkan viewers, also read `{{DONOR_ROOT}}/gltf-runtime-assets.md`
 and `{{DONOR_ROOT}}/profiles/fastgltf-cgltf-tinygltf.md`. For renderer-ready mesh conditioning, broad
 asset import, BVH, ray-query, physics, point-cloud, or simulation context, also read
 `{{DONOR_ROOT}}/geometry-simulation.md` plus the matching meshoptimizer, assimp, BVH, Embree, Jolt, or
-Bullet profile. For OpenXR, VR, AR, MR, headset/controller, or spatial interaction context, also read
+Bullet profile. Use OSPRay as a CPU visualization reference, and Godot Engine or Open 3D Engine only
+for engine/editor architecture references when that scale is in scope. For OpenXR, VR, AR, MR,
+headset/controller, or spatial interaction context, also read
 `{{DONOR_ROOT}}/xr-spatial.md` and
 `{{DONOR_ROOT}}/profiles/openxr-sdk.md`. Use Khronos samples as the first correctness reference, then
 vendor samples for vendor-specific extensions or tools. Keep study-only and non-commercial references

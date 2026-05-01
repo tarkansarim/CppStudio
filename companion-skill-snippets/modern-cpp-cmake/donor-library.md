@@ -17,9 +17,11 @@ glTF/GLB validation, or viewer/importer dependencies, route through
 For renderer backbone, graphics middleware, runtime mesh import, mesh conditioning, BVH, or
 physics/collision dependency choices, route through `{{DONOR_ROOT}}/graphics-rendering.md` and
 `{{DONOR_ROOT}}/geometry-simulation.md` before proposing CMake dependency wiring. Treat Filament,
-Diligent Engine, bgfx, assimp, Embree, Jolt, and Bullet as dependency candidates unless the target
-repo explicitly accepts them; meshoptimizer, Magnum, and madmann91/bvh can be narrower safe donors
-after exact-version review.
+Diligent Engine, bgfx, Dawn, Falcor, OSPRay, assimp, Embree, Jolt, Bullet, Godot Engine, and Open 3D
+Engine as dependency candidates unless the target repo explicitly accepts them; meshoptimizer, Magnum,
+madmann91/bvh, three.js, Babylon.js, pbrt-v4, Mitsuba 3, and THREE.js PathTracing Renderer can be
+narrower safe or reference donors after exact-version review. Use engine-scale donors for architecture
+only unless the project intentionally adopts the engine.
 
 For AI-runtime, ML compiler, neural 3D, or model-serving dependency choices, route through
 `{{DONOR_ROOT}}/ai-runtimes-kernels.md` and `{{DONOR_ROOT}}/neural-3d.md` before proposing CMake or

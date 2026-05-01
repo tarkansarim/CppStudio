@@ -6,14 +6,16 @@ backbone, research notes, donor-reference routing, companion-skill snippets, and
 
 Use this repo when you want coding agents to create, audit, or upgrade C++/CUDA/Vulkan projects
 with consistent build structure, validation lanes, profiling hooks, and curated external reference
-selection.
+selection for Vulkan, CUDA, WebGPU, rendering, 3D, and AI-runtime work.
 
 ## What This Repo Contains
 
 - `skills/cpp-cuda-vulkan-studio/`: source of truth for the user-level Codex skill.
 - `skills/cpp-cuda-vulkan-studio/assets/app-library-template/`: reusable generated-project
   template for Vulkan-first app+library C++ repos with explicit CUDA and mixed interop lanes.
-- `skills/cpp-cuda-vulkan-studio/references/`: project archetypes and donor-reference guidance.
+- `skills/cpp-cuda-vulkan-studio/references/`: project archetypes and donor-reference guidance for
+  Vulkan/CUDA lanes, WebGPU/WebGL, renderer backbones, path tracing, engine architecture, assets,
+  simulation, XR, and AI-runtime work.
 - `companion-skill-snippets/`: source-owned donor-library link blocks installed into companion
   skills such as `cuda-kernel-authoring`, `vulkan-compute-sync`, and `modern-cpp-cmake`.
 - `research/`: web research and trigger-test notes that informed the reusable skill.

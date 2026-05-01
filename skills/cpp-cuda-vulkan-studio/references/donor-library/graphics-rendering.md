@@ -34,9 +34,17 @@ frame/debug tooling, render graphs, and ray/path tracing work.
 - For NVIDIA-specific Vulkan extensions and tooling, use `vk_mini_samples` and keep extension fallbacks explicit.
 - For a project that needs a renderer dependency, compare Filament, Diligent Engine, bgfx, Magnum, and
   Dawn against the target repo's language, backend, shader, asset, and build constraints.
+- Use Dawn for native WebGPU, `webgpu.h`, WGSL/Tint, or WebGPU portability questions; do not replace a
+  Vulkan-first lane with WebGPU unless the user explicitly chooses WebGPU.
 - For runtime mesh import, conditioning, BVH, collision, or physics handoff, route to
   [geometry-simulation.md](geometry-simulation.md) after choosing the renderer boundary.
 - For browser-facing 3D demos, use three.js first for lightweight scenes and Babylon.js when a fuller engine/editor stack is useful.
+- For physically based or differentiable rendering correctness, use pbrt-v4 and Mitsuba 3 as reference
+  donors. Treat their CUDA/OptiX paths as backend-specific references, not automatic CUDA lane changes.
+- For realtime ray tracing or render-graph architecture, use Falcor only when framework-scale or
+  NVIDIA RTX-oriented decisions are truly in scope, and inspect component licenses first.
+- For browser path-tracing behavior, use THREE.js PathTracing Renderer as a compact WebGL concept donor;
+  use pbrt-v4 or Mitsuba 3 when offline physical correctness matters more than demo ergonomics.
 
 ## Deep Profiles
 
@@ -46,3 +54,10 @@ frame/debug tooling, render graphs, and ray/path tracing work.
 - [Diligent Engine](profiles/diligent-engine.md): read before adopting a cross-API renderer abstraction or DiligentFX-style high-level renderer.
 - [bgfx](profiles/bgfx.md): read before choosing bring-your-own-engine multi-backend rendering or shader-toolchain abstraction.
 - [Magnum](profiles/magnum.md): read before using lightweight C++ graphics middleware, modular utilities, or CMake-friendly graphics helpers.
+- [Google Dawn](profiles/dawn.md): read before adopting native WebGPU, `webgpu.h`, WGSL/Tint tooling, or WebGPU backend portability references.
+- [three.js](profiles/threejs.md): read before using browser 3D scene, controls, loader, WebGPU/WebGL, or WebXR behavior as a reference.
+- [Babylon.js](profiles/babylonjs.md): read before using full browser 3D engine, WebGPU/WebXR, editor/playground, or TypeScript engine architecture references.
+- [pbrt-v4](profiles/pbrt-v4.md): read before adapting physically based rendering algorithms, sampling, materials, scene formats, or CPU/GPU path-tracing references.
+- [Mitsuba 3](profiles/mitsuba3.md): read before adapting differentiable, retargetable, spectral, or inverse-rendering concepts.
+- [NVIDIA Falcor](profiles/falcor.md): read before borrowing realtime ray-tracing framework, render graph, or RTX/NVIDIA SDK integration patterns.
+- [THREE.js PathTracing Renderer](profiles/threejs-pathtracing.md): read before using browser/WebGL path-tracing demos, progressive accumulation, or shader-side path-tracing UX references.

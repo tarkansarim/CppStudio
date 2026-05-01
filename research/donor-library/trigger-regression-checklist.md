@@ -24,9 +24,18 @@ The static validator only proves that paths in `trigger-matrix.json` still exist
 - Renderer backbone, render graph, PBR renderer, graphics middleware, or multi-backend renderer
   dependency questions should route to `graphics-rendering.md` and the matching Filament, Diligent
   Engine, bgfx, or Magnum profiles.
+- Native WebGPU, `webgpu.h`, WGSL/Tint, browser 3D, WebXR, or browser path-tracing work should route
+  through `graphics-rendering.md` and the matching Dawn, three.js, Babylon.js, or THREE.js PathTracing
+  Renderer profile without silently changing a Vulkan-first C++ project into WebGPU.
+- Physical rendering, differentiable rendering, path tracing, realtime ray tracing, RTX framework, or
+  render-graph architecture work should route to `graphics-rendering.md` and the matching pbrt-v4,
+  Mitsuba 3, Falcor, or THREE.js PathTracing Renderer profile.
 - Runtime mesh conditioning, broad 3D asset import, BVH/ray-query, CPU ray tracing reference,
   physics/collision, or renderer-ready mesh handoff should route to `geometry-simulation.md` and the
   matching meshoptimizer, assimp, Embree, madmann91/bvh, Jolt, or Bullet profile.
+- CPU visualization renderer, scientific visualization, volume renderer API, engine/editor
+  architecture, scene tree, asset processor, component system, or editor/runtime split work should route
+  to `geometry-simulation.md` and the matching OSPRay, Godot Engine, or Open 3D Engine profile.
 - Local LLM inference, production serving, execution-provider routing, ML compilers, fused neural
   kernels, or tensor/autograd reference work should route to `ai-runtimes-kernels.md` and the matching
   llama.cpp/ggml, ONNX Runtime, TensorRT-LLM, vLLM, MLC-LLM, tiny-cuda-nn, TVM, or PyTorch profile.
@@ -43,6 +52,8 @@ The static validator only proves that paths in `trigger-matrix.json` still exist
   the technical requirements force actual cross-backend resource sharing.
 - Generic document rendering, text templating, CSV/JSON/business-data import, or non-3D import work
   should not trigger renderer, glTF, geometry, assimp, or meshoptimizer donor routing.
+- Generic web UI, ordinary frontend layout, game-story/design-only brainstorming, or non-implementation
+  design writing should not trigger WebGPU, renderer, engine-architecture, or donor-library routing.
 - Generic "AI assistant" application work, ordinary Python ML scripts, or non-C++/GPU/model-runtime
   tasks should not trigger CppStudio AI-runtime donors.
 - Non-GPU Python, CLI, parser, virtualenv, or business-simulation work should not trigger CppStudio

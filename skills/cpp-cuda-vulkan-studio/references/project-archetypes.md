@@ -28,6 +28,8 @@ app without CUDA kernels.
   memory, loader/bootstrap, and shader-tooling choices, then
   [donor-library/graphics-rendering.md](donor-library/graphics-rendering.md) and Khronos
   Vulkan-Samples before vendor-specific samples.
+- If the user explicitly asks for native WebGPU or browser-adjacent portability, compare Dawn as a
+  donor/dependency candidate while keeping Vulkan and WebGPU validation paths separate.
 - Verification priority: `scripts/dump_vulkan_capabilities.sh`, shader CTest, Vulkan validation,
   offscreen render/compute CTest, then RenderDoc or Nsight Graphics.
 
@@ -42,6 +44,12 @@ runtime 3D app.
 - Read [donor-library/graphics-rendering.md](donor-library/graphics-rendering.md) for renderer
   backbones, then [donor-library/geometry-simulation.md](donor-library/geometry-simulation.md) for
   assimp, meshoptimizer, BVH, Embree, Jolt, or Bullet choices.
+- For physical rendering, differentiable rendering, path tracing, or realtime ray-tracing framework
+  questions, read the pbrt-v4, Mitsuba 3, THREE.js PathTracing Renderer, or Falcor profiles as
+  targeted references before adding dependencies.
+- For engine/editor architecture, asset-processor, scene-tree, component-system, or editor/runtime split
+  questions, read the Godot Engine and Open 3D Engine profiles as architecture references, not snippet
+  sources.
 - For glTF-only viewers, read the glTF loader profile before assimp and add meshoptimizer only after
   importer semantics are defined.
 - Verification priority: tiny imported mesh fixture, meshopt conditioning checks, renderer upload tests,

@@ -31,3 +31,5 @@ compression, retargeting, blend shapes, and DCC-to-runtime animation data.
 - [ozz-animation](profiles/ozz-animation.md): read before adding skeletal runtime or sampling/blending design.
 - [Animation Compression Library](profiles/acl.md): read before adding clip compression or accuracy/size tradeoffs.
 - [assimp](profiles/assimp.md): read when animation import requires broad DCC format coverage.
+- [Godot Engine](profiles/godot-engine.md): read before borrowing engine/editor animation graph, scene tree, or runtime integration patterns.
+- [Open 3D Engine](profiles/open-3d-engine.md): read before borrowing engine-scale animation component or asset-pipeline architecture.

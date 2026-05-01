@@ -120,6 +120,89 @@
       ]
     },
     {
+      "name": "webgpu-native-dawn-donors",
+      "prompt_shape": "C++ or native tooling task explicitly asks for WebGPU, webgpu.h, Dawn, WGSL, Tint, or WebGPU portability across Vulkan, D3D, Metal, and browser-adjacent targets.",
+      "expected_behavior": "Route to graphics-rendering and the Dawn profile; keep Vulkan-first policy intact unless the user explicitly chooses WebGPU as the implementation lane.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/dawn.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "browser-3d-webxr-donors",
+      "prompt_shape": "Browser 3D, WebGL/WebGPU, WebXR, controls, loaders, or interactive 3D viewer work needs donor references before translating behavior into native C++ or a web target.",
+      "expected_behavior": "Route to graphics-rendering and the three.js/Babylon.js profiles; treat browser engine behavior as a donor surface, not a reason to add CUDA or native Vulkan requirements.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/threejs.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/babylonjs.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "physical-path-tracing-donors",
+      "prompt_shape": "Renderer work needs physically based rendering, offline reference images, path tracing, sampling, material/light transport behavior, differentiable rendering, or inverse rendering references.",
+      "expected_behavior": "Route to graphics-rendering and pbrt-v4/Mitsuba/THREE.js PathTracing Renderer profiles; use CUDA or OptiX paths only as references unless the target lane explicitly requires them.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/pbrt-v4.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/mitsuba3.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/threejs-pathtracing.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "realtime-raytracing-framework-donors",
+      "prompt_shape": "Realtime rendering framework work needs render graphs, ray tracing, path tracing, RTX SDK boundaries, shader/model loading, or prototype renderer architecture references.",
+      "expected_behavior": "Route to graphics-rendering and Falcor plus Vulkan sample profiles; keep NVIDIA SDK and vendor-specific dependencies explicit rather than silently adding them to a portable Vulkan target.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/falcor.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/khronos-vulkan-samples.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nvidia-vk-mini-samples.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "cpu-visualization-rendering-donors",
+      "prompt_shape": "C++ visualization tool needs CPU rendering, scientific visualization renderer architecture, volume renderer APIs, RenderKit, OSPRay, or a CPU reference path for GPU output.",
+      "expected_behavior": "Route to geometry-simulation and OSPRay/Embree profiles; use CPU visualization as reference or dependency surface without disabling Vulkan or CUDA validation for the selected target lane.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/ospray.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/embree.md"
+      ]
+    },
+    {
+      "name": "engine-architecture-donors",
+      "prompt_shape": "C++ 3D tool or engine work needs engine/editor architecture, scene trees, component systems, asset processor design, editor/runtime split, or large-scale rendering/physics integration references.",
+      "expected_behavior": "Route to project archetypes, geometry-simulation, and Godot/O3DE profiles; treat engine-scale donors as architecture references unless the project explicitly adopts an engine.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/godot-engine.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/open-3d-engine.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
       "name": "gltf-meshoptimizer-runtime-pipeline",
       "prompt_shape": "C++ runtime asset pipeline loads glTF/GLB, validates fixtures, optimizes vertex/index buffers, handles meshopt compression, and uploads renderer-ready buffers.",
       "expected_behavior": "Route to glTF runtime assets first, then geometry-simulation and meshoptimizer for mesh conditioning; keep CPU import, optimization, and GPU upload as separate stages.",
@@ -269,6 +352,33 @@
       ],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "generic-web-ui-negative-control",
+      "prompt_shape": "Build a normal web dashboard, landing page, form, or frontend UI with no 3D scene, WebGPU, WebGL, WebXR, renderer, native C++, CUDA, Vulkan, or GPU runtime scope.",
+      "expected_behavior": "Do not route to browser 3D, WebGPU, renderer, or CppStudio donor guidance for ordinary frontend work.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/dawn.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/threejs.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/babylonjs.md"
+      ]
+    },
+    {
+      "name": "game-story-design-negative-control",
+      "prompt_shape": "Brainstorm game story, level theme, character descriptions, UI copy, or design notes with no implementation, engine architecture, C++, Vulkan, CUDA, renderer, asset pipeline, or 3D runtime request.",
+      "expected_behavior": "Do not route to Godot, O3DE, renderer, or donor-library guidance for non-implementation game-design writing.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/godot-engine.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/open-3d-engine.md"
       ]
     },
     {

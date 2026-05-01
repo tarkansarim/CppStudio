@@ -10,6 +10,9 @@ When selecting external CUDA kernel, GPU runtime, ML inference runtime, or GPU c
 - `{{DONOR_ROOT}}/neural-3d.md` for CUDA-heavy neural 3D or Gaussian splatting operators
 - `{{DONOR_ROOT}}/geometry-simulation.md` for mesh conditioning, BVH, collision, or geometry-processing
   donors that inform CUDA kernels without adding Vulkan or other runtime dependencies
+- `{{DONOR_ROOT}}/graphics-rendering.md` plus the pbrt-v4, Mitsuba 3, Falcor, or THREE.js PathTracing
+  Renderer profiles when CUDA rendering kernels need physical rendering, path-tracing, render-graph, or
+  reference-image behavior
 - `{{DONOR_ROOT}}/profiles/cutlass.md` for GEMM/convolution/reduction/tensor-core policy
 - `{{DONOR_ROOT}}/profiles/flashattention.md` for attention kernels
 - `{{DONOR_ROOT}}/profiles/triton.md` for Triton DSL/compiler tradeoffs

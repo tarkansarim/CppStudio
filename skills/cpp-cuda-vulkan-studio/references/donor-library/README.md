@@ -4,10 +4,10 @@ Last researched: 2026-04-30
 
 Use this library when a C++/CUDA/Vulkan/3D/AI-runtime/ML-kernel task needs source-backed donor
 projects, examples, architecture patterns, or dependency candidates. It covers Vulkan foundation
-tooling, runtime assets, renderer backbones, runtime mesh pipelines, geometry, AI runtimes, ML
-compilers, neural 3D, grooming, DCC scene pipelines, volumes, animation, materials, CAD,
-3D/physics/GPU simulation, and XR. Treat it as a domain-first selection map, not permission to copy
-large blocks of code.
+tooling, runtime assets, renderer backbones, runtime mesh pipelines, WebGPU/WebGL, browser 3D,
+path tracing, physical rendering, engine architecture, geometry, AI runtimes, ML compilers, neural
+3D, grooming, DCC scene pipelines, volumes, animation, materials, CAD, 3D/physics/GPU simulation,
+and XR. Treat it as a domain-first selection map, not permission to copy large blocks of code.
 
 ## How To Use
 
@@ -99,12 +99,22 @@ Read these only when the task matches the donor:
 - [Diligent Engine](profiles/diligent-engine.md): cross-API renderer abstraction and high-level rendering components.
 - [bgfx](profiles/bgfx.md): bring-your-own-engine multi-backend renderer abstraction and shader toolchain.
 - [Magnum](profiles/magnum.md): lightweight C++ graphics middleware and modular graphics utilities.
+- [Google Dawn](profiles/dawn.md): native WebGPU, `webgpu.h`, WGSL/Tint tooling, and WebGPU backend portability references.
+- [three.js](profiles/threejs.md): browser 3D scene, controls, loader, WebGPU/WebGL, and WebXR behavior references.
+- [Babylon.js](profiles/babylonjs.md): full browser 3D engine, WebGPU/WebXR, scene tooling, and TypeScript engine architecture.
+- [pbrt-v4](profiles/pbrt-v4.md): physically based rendering algorithms, sampling, materials, scene formats, and path-tracing references.
+- [Mitsuba 3](profiles/mitsuba3.md): differentiable, retargetable, spectral, and inverse-rendering references.
+- [NVIDIA Falcor](profiles/falcor.md): realtime ray-tracing framework, render graphs, and NVIDIA RTX SDK boundary references.
+- [THREE.js PathTracing Renderer](profiles/threejs-pathtracing.md): browser/WebGL path-tracing demos, progressive accumulation, and interactive path-tracing UX references.
 - [meshoptimizer](profiles/meshoptimizer.md): mesh conditioning, simplification, compression, and glTF optimization.
 - [assimp](profiles/assimp.md): broad 3D asset import/export and conversion pipeline boundaries.
 - [Embree](profiles/embree.md): CPU ray tracing kernels, BVHs, and ray-query validation references.
+- [OSPRay](profiles/ospray.md): scalable CPU visualization renderer architecture, volumes, and RenderKit-style rendering APIs.
 - [madmann91/bvh](profiles/madmann91-bvh.md): compact C++20 BVH construction and traversal.
 - [Jolt Physics](profiles/jolt-physics.md): modern native C++ rigid-body physics and collision.
 - [Bullet Physics](profiles/bullet-physics.md): broad physics, collision, robotics, and ML simulation ecosystem references.
+- [Godot Engine](profiles/godot-engine.md): engine/editor architecture, scene trees, resource ownership, and rendering/physics integration patterns.
+- [Open 3D Engine](profiles/open-3d-engine.md): large-scale engine architecture, asset processor, component systems, and editor/runtime split patterns.
 - [gsplat](profiles/gsplat.md): CUDA Gaussian splatting rasterization and neural 3D operator packaging.
 - [Nerfstudio](profiles/nerfstudio.md): NeRF/3DGS training workflows, camera/data processing, viewers, and export flows.
 - [NVIDIA Kaolin](profiles/kaolin.md): 3D deep-learning ops, differentiable rendering, and conversion utilities.
