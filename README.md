@@ -310,11 +310,12 @@ skills.
 
 ## Using The Skill In Codex
 
-After rollout and session restart, invoke the package by mentioning the skill or by asking for work
-that matches its description:
+After rollout and session restart, you usually do not need to name the skill. Ask Codex for native
+C++ GPU, Vulkan, CUDA, renderer, realtime 3D, simulation, or donor-reference work, and Codex should
+load `cpp-cuda-vulkan-studio` automatically.
 
 ```text
-$cpp-cuda-vulkan-studio scaffold a new C++/CUDA/Vulkan app+library project called RayLab
+Create a Vulkan-first C++ application called RayLab.
 ```
 
 ```text
@@ -325,6 +326,9 @@ Upgrade this C++ renderer repo with the CppStudio backbone; use Vulkan by defaul
 Find suitable donors for a real-time grooming and fur simulation tool, then wire the selected
 patterns into this C++/Vulkan project.
 ```
+
+Mention `$cpp-cuda-vulkan-studio` explicitly only when you want to force the skill in a session where
+automatic skill routing is not available or did not trigger.
 
 The main skill coordinates companion skills:
 
