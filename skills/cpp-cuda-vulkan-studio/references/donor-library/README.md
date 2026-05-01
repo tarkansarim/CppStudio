@@ -4,9 +4,10 @@ Last researched: 2026-04-30
 
 Use this library when a C++/CUDA/Vulkan/3D/AI-runtime/ML-kernel task needs source-backed donor
 projects, examples, architecture patterns, or dependency candidates. It covers Vulkan foundation
-tooling, runtime assets, renderer backbones, runtime mesh pipelines, geometry, neural 3D, grooming,
-DCC scene pipelines, volumes, animation, materials, CAD, 3D/physics/GPU simulation, and XR. Treat it
-as a domain-first selection map, not permission to copy large blocks of code.
+tooling, runtime assets, renderer backbones, runtime mesh pipelines, geometry, AI runtimes, ML
+compilers, neural 3D, grooming, DCC scene pipelines, volumes, animation, materials, CAD,
+3D/physics/GPU simulation, and XR. Treat it as a domain-first selection map, not permission to copy
+large blocks of code.
 
 ## How To Use
 
@@ -17,7 +18,7 @@ as a domain-first selection map, not permission to copy large blocks of code.
    - [gltf-runtime-assets.md](gltf-runtime-assets.md): glTF loading, validation, fixtures, runtime asset handoff.
    - [geometry-simulation.md](geometry-simulation.md): asset import, mesh conditioning, BVH, point clouds, physics.
    - [ai-runtimes-kernels.md](ai-runtimes-kernels.md): LLM runtimes, inference engines, CUDA kernels, ML compilers.
-   - [neural-3d.md](neural-3d.md): NeRFs, Gaussian splatting, differentiable rendering, 3D ML.
+   - [neural-3d.md](neural-3d.md): NeRFs, Gaussian splatting, differentiable rendering, 3D ML workflows.
    - [hair-grooming-fur.md](hair-grooming-fur.md): realtime hair/fur, strand data, grooming, groom interchange.
    - [dcc-scene-pipeline.md](dcc-scene-pipeline.md): USD, Alembic, MaterialX, DCC interchange, editorial pipelines.
    - [volumes-voxels.md](volumes-voxels.md): sparse volumes, VDB/NanoVDB, voxel grids, GPU volume rendering.
@@ -78,6 +79,14 @@ Read these only when the task matches the donor:
 - [CUTLASS](profiles/cutlass.md): CUDA GEMM/convolution/reduction templates, CuTe, tiling, tensor-core kernels.
 - [FlashAttention](profiles/flashattention.md): IO-aware exact attention kernels and CUDA/PyTorch extension patterns.
 - [Triton](profiles/triton.md): Python-authored GPU kernel DSL/compiler patterns.
+- [llama.cpp and ggml](profiles/llama-ggml.md): local C/C++ LLM inference, GGUF, quantization, and portable backend patterns.
+- [ONNX Runtime](profiles/onnx-runtime.md): ONNX inference sessions, execution providers, and graph-runtime boundaries.
+- [TensorRT-LLM](profiles/tensorrt-llm.md): NVIDIA TensorRT LLM serving, engine orchestration, KV cache, and CUDA deployment.
+- [vLLM](profiles/vllm.md): high-throughput LLM serving, paged attention, batching, and OpenAI-compatible APIs.
+- [MLC-LLM](profiles/mlc-llm.md): compiled cross-platform LLM deployment across GPU, mobile, WebGPU, and native runtimes.
+- [tiny-cuda-nn](profiles/tiny-cuda-nn.md): CUDA fused MLPs, hash grids, neural encodings, and neural graphics kernels.
+- [Apache TVM](profiles/tvm.md): ML compiler architecture, tensor IR, generated kernels, and multi-target runtimes.
+- [PyTorch](profiles/pytorch.md): tensor/autograd/runtime architecture, custom-op references, and package dependency boundaries.
 - [Khronos Vulkan-Samples](profiles/khronos-vulkan-samples.md): portable Vulkan correctness and best-practice samples.
 - [NVIDIA vk_mini_samples](profiles/nvidia-vk-mini-samples.md): NVIDIA Vulkan extensions, tooling, and compact samples.
 - [Vulkan Memory Allocator](profiles/vulkan-memory-allocator.md): Vulkan allocation, memory budgets, pools, and mapping policy.
@@ -97,6 +106,11 @@ Read these only when the task matches the donor:
 - [Jolt Physics](profiles/jolt-physics.md): modern native C++ rigid-body physics and collision.
 - [Bullet Physics](profiles/bullet-physics.md): broad physics, collision, robotics, and ML simulation ecosystem references.
 - [gsplat](profiles/gsplat.md): CUDA Gaussian splatting rasterization and neural 3D operator packaging.
+- [Nerfstudio](profiles/nerfstudio.md): NeRF/3DGS training workflows, camera/data processing, viewers, and export flows.
+- [NVIDIA Kaolin](profiles/kaolin.md): 3D deep-learning ops, differentiable rendering, and conversion utilities.
+- [PyTorch3D](profiles/pytorch3d.md): differentiable rendering, cameras, mesh/point-cloud ops, and reference outputs.
+- [Open3D](profiles/open3d.md): 3D data processing, point clouds, reconstruction, visualization, and Open3D-ML.
+- [Neural Graphics Study-Only References](profiles/neural-graphics-study-only.md): GraphDeco Gaussian Splatting, instant-ngp, and Kaolin Wisp concepts without code reuse.
 - [AMD TressFX](profiles/tressfx.md): realtime GPU hair/fur simulation and rendering.
 - [OpenUSD](profiles/openusd.md): scene composition, USD schemas, DCC interchange, curves, skeletons, materials.
 - [Alembic](profiles/alembic.md): baked animated geometry, curves, simulation caches, and DCC cache IO.

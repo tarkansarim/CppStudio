@@ -24,6 +24,11 @@ Bullet profile. For OpenXR, VR, AR, MR, headset/controller, or spatial interacti
 vendor samples for vendor-specific extensions or tools. Keep study-only and non-commercial references
 out of reusable Vulkan code.
 
+For Vulkan-first neural 3D, Gaussian splatting, or AI-runtime visualization, also read
+`{{DONOR_ROOT}}/neural-3d.md` and the relevant gsplat, Nerfstudio, PyTorch3D, Kaolin, Open3D, or
+study-only neural graphics profile. Use CUDA-heavy neural donors for algorithms, layouts, and tests;
+do not add CUDA runtime requirements unless the user explicitly chooses CUDA or mixed interop.
+
 The donor library is shared across CUDA, Vulkan, CPU, DirectX, OpenCL, DCC, and other backend sources.
 Do not reject a CUDA or non-Vulkan donor when it is the best domain reference; use it for algorithms,
 data models, tests, or architecture, then translate backend-specific kernels, synchronization, memory

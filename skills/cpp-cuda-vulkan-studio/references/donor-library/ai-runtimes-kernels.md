@@ -1,7 +1,7 @@
 # AI Runtime, Kernel, And Compiler Donors
 
 Use these donors for local inference, LLM serving, tensor runtimes, CUDA kernels, attention,
-quantization, and ML compiler patterns.
+quantization, cross-backend inference, and ML compiler patterns.
 
 ## Inference And Serving
 
@@ -29,6 +29,9 @@ quantization, and ML compiler patterns.
 
 - For simple local LLM integration, start with llama.cpp/ggml.
 - For production model serving on NVIDIA GPUs, compare TensorRT-LLM and vLLM; use ONNX Runtime when model portability matters.
+- For cross-platform compiled deployment, compare MLC-LLM and TVM before committing to a runtime stack.
+- Treat PyTorch as a package dependency or reference-output donor, not as a default dependency for C++
+  reusable infrastructure.
 - For CUDA kernel authoring, use CUTLASS for matrix math and FlashAttention/tiny-cuda-nn for domain-specific fused kernel patterns.
 - For DSL/compiler exploration, Triton and TVM are better donors than hand-written CUDA when portability or code generation is the goal.
 - For Vulkan, OpenCL, WebGPU, or CPU inference targets, CUDA-heavy donors still provide useful algorithm,
@@ -37,6 +40,14 @@ quantization, and ML compiler patterns.
 
 ## Deep Profiles
 
+- [llama.cpp and ggml](profiles/llama-ggml.md): read before choosing local C/C++ LLM inference, GGUF, quantization, or portable backend patterns.
+- [ONNX Runtime](profiles/onnx-runtime.md): read before adopting ONNX inference, execution-provider routing, or model-session APIs.
+- [TensorRT-LLM](profiles/tensorrt-llm.md): read before NVIDIA/TensorRT LLM serving, engine build, KV cache, or CUDA-only deployment.
+- [vLLM](profiles/vllm.md): read before high-throughput LLM serving, paged attention, batching, or OpenAI-compatible APIs.
+- [MLC-LLM](profiles/mlc-llm.md): read before compiled cross-platform LLM deployment across GPU, mobile, WebGPU, or native runtimes.
 - [CUTLASS](profiles/cutlass.md): read before adapting CUDA matrix math, tiling, CuTe, or tensor-core kernel policy.
 - [FlashAttention](profiles/flashattention.md): read before adapting attention kernels or IO-aware fused attention patterns.
 - [Triton](profiles/triton.md): read before recommending Triton as a runtime/compiler dependency or benchmark donor.
+- [tiny-cuda-nn](profiles/tiny-cuda-nn.md): read before fused MLP, hash-grid, or CUDA neural graphics kernels.
+- [Apache TVM](profiles/tvm.md): read before adopting ML compiler, generated-kernel, or multi-target runtime workflows.
+- [PyTorch](profiles/pytorch.md): read before using tensor/autograd references, custom-op extension patterns, or PyTorch package dependencies.

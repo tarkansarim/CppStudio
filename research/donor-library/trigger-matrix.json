@@ -175,6 +175,115 @@
       ]
     },
     {
+      "name": "local-llm-runtime-donors",
+      "prompt_shape": "C++ app needs local LLM inference, GGUF model loading, quantization, tokenizer/model conversion, or a small OpenAI-compatible local server.",
+      "expected_behavior": "Route to AI runtime donors and llama.cpp/ggml first; keep model weights, tokenizer files, and backend selection separate from reusable C++ infrastructure.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/llama-ggml.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md"
+      ]
+    },
+    {
+      "name": "production-llm-serving-donors",
+      "prompt_shape": "Production LLM serving with batching, paged KV cache, OpenAI-compatible APIs, TensorRT engines, vLLM comparison, or NVIDIA GPU deployment.",
+      "expected_behavior": "Route to TensorRT-LLM and vLLM profiles; keep TensorRT-LLM CUDA/NVIDIA-specific and do not imply portability when the user needs cross-platform inference.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tensorrt-llm.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vllm.md"
+      ]
+    },
+    {
+      "name": "portable-inference-compiler-runtime",
+      "prompt_shape": "C++ model runtime needs ONNX execution providers, portable model inference, compiled LLM deployment, TVM code generation, Vulkan/WebGPU/mobile targets, or runtime artifact packaging.",
+      "expected_behavior": "Route to ONNX Runtime, MLC-LLM, and TVM profiles; keep compiler/runtime artifacts and target backend validation separate from model source assets.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/onnx-runtime.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/mlc-llm.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tvm.md"
+      ]
+    },
+    {
+      "name": "tiny-cuda-nn-neural-kernels",
+      "prompt_shape": "CUDA C++ neural graphics kernel needs fused MLPs, multiresolution hash grids, compact encodings, tiny neural network kernels, or instant-ngp-style CUDA components.",
+      "expected_behavior": "Route to CUDA lane plus tiny-cuda-nn; use study-only instant-ngp only for concepts and do not add it as reusable source.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tiny-cuda-nn.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/neural-graphics-study-only.md"
+      ]
+    },
+    {
+      "name": "neural-3d-workflow-donors",
+      "prompt_shape": "Neural 3D or Gaussian splatting workflow needs training/data processing, camera conventions, differentiable 3D ops, point-cloud reconstruction, viewer/export flows, or PyTorch reference outputs.",
+      "expected_behavior": "Route to neural-3d and the relevant Nerfstudio, gsplat, Kaolin, PyTorch3D, Open3D, and PyTorch profiles while keeping datasets and weights license-separated.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/neural-3d.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nerfstudio.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/gsplat.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/kaolin.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/pytorch3d.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/open3d.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/pytorch.md"
+      ]
+    },
+    {
+      "name": "vulkan-neural-3d-cuda-donor-reference",
+      "prompt_shape": "Vulkan-first neural 3D viewer or Gaussian splatting runtime wants to use gsplat, tiny-cuda-nn, PyTorch3D, or CUDA-heavy papers as references without adding CUDA.",
+      "expected_behavior": "Stay Vulkan-first, use CUDA-heavy neural donors for algorithms/layouts/tests, and do not add CUDA runtime, CUDA tests, or interop unless explicitly requested.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/neural-3d.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/gsplat.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tiny-cuda-nn.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/pytorch3d.md"
+      ]
+    },
+    {
+      "name": "neural-graphics-study-only-routing",
+      "prompt_shape": "Task asks about original GraphDeco Gaussian Splatting, instant-ngp, Kaolin Wisp, non-commercial neural graphics references, or paper behavior checks.",
+      "expected_behavior": "Route to the study-only neural graphics profile and keep restricted sources as concepts/behavior checks only; prefer permissive donors for implementation patterns.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/neural-3d.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/neural-graphics-study-only.md"
+      ]
+    },
+    {
+      "name": "generic-ai-assistant-negative-control",
+      "prompt_shape": "Build an AI assistant UI, prompt helper, chatbot workflow, or SaaS app with no C++, GPU, local model runtime, CUDA, Vulkan, ML compiler, or neural 3D scope.",
+      "expected_behavior": "Do not route to CppStudio AI-runtime donors just because the product uses AI.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "python-ml-script-negative-control",
+      "prompt_shape": "Ordinary Python scikit-learn, pandas, notebook, or training script work with no C++ extension, GPU kernel, model runtime integration, CUDA, Vulkan, or 3D scope.",
+      "expected_behavior": "Do not trigger CppStudio donor routing for ordinary Python ML work.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/neural-3d.md"
+      ]
+    },
+    {
       "name": "generic-render-text-negative-control",
       "prompt_shape": "Render a markdown document, text template, HTML string, or report with no C++, GPU, graphics API, 3D scene, mesh, renderer, or realtime visualization scope.",
       "expected_behavior": "Do not route to graphics-rendering donors just because the word render appears.",

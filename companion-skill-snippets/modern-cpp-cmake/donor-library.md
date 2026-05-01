@@ -21,6 +21,13 @@ Diligent Engine, bgfx, assimp, Embree, Jolt, and Bullet as dependency candidates
 repo explicitly accepts them; meshoptimizer, Magnum, and madmann91/bvh can be narrower safe donors
 after exact-version review.
 
+For AI-runtime, ML compiler, neural 3D, or model-serving dependency choices, route through
+`{{DONOR_ROOT}}/ai-runtimes-kernels.md` and `{{DONOR_ROOT}}/neural-3d.md` before proposing CMake or
+package wiring. Treat ONNX Runtime, TensorRT-LLM, vLLM, MLC-LLM, TVM, PyTorch, Nerfstudio, Kaolin,
+PyTorch3D, and Open3D as dependency candidates unless the target repo explicitly accepts them; keep
+model weights, generated engines, compiled artifacts, datasets, and tokenizer files out of reusable
+templates.
+
 Donors are domain references first, not lane locks. A donor's CUDA, Vulkan, OpenCL, DirectX, CPU, or
 DCC backend signal describes upstream implementation context only. Keep the target project's selected
 lane and dependency policy intact, and route backend-specific translation through `cpp-cuda-vulkan-studio`

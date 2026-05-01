@@ -39,6 +39,7 @@ construction, CPU ray tracing, collision, and physics infrastructure.
 
 - [meshoptimizer](profiles/meshoptimizer.md): read before designing mesh conditioning, simplification, compression, or glTF meshopt pipelines.
 - [assimp](profiles/assimp.md): read before adopting broad runtime/offline asset import or conversion dependencies.
+- [Open3D](profiles/open3d.md): read before adopting point-cloud, reconstruction, visualization, or Open3D-ML data-processing dependencies.
 - [Embree](profiles/embree.md): read before adding CPU ray tracing kernels, CPU reference BVHs, or ray-query validation.
 - [madmann91/bvh](profiles/madmann91-bvh.md): read before adding a compact C++20 BVH reference or lightweight ray-query path.
 - [Jolt Physics](profiles/jolt-physics.md): read before adopting modern native C++ rigid-body/collision physics.

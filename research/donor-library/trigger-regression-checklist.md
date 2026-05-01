@@ -27,6 +27,12 @@ The static validator only proves that paths in `trigger-matrix.json` still exist
 - Runtime mesh conditioning, broad 3D asset import, BVH/ray-query, CPU ray tracing reference,
   physics/collision, or renderer-ready mesh handoff should route to `geometry-simulation.md` and the
   matching meshoptimizer, assimp, Embree, madmann91/bvh, Jolt, or Bullet profile.
+- Local LLM inference, production serving, execution-provider routing, ML compilers, fused neural
+  kernels, or tensor/autograd reference work should route to `ai-runtimes-kernels.md` and the matching
+  llama.cpp/ggml, ONNX Runtime, TensorRT-LLM, vLLM, MLC-LLM, tiny-cuda-nn, TVM, or PyTorch profile.
+- Neural 3D, NeRF, Gaussian splatting, differentiable rendering, point-cloud/reconstruction ML, or
+  neural graphics workflow work should route to `neural-3d.md` and keep restricted GraphDeco,
+  instant-ngp, and Kaolin Wisp sources study-only.
 - Explicit CUDA kernel, CUTLASS, FlashAttention, CUDA graph, or NVIDIA-only runtime work should route
   to CUDA-specific donors and skills first.
 - Explicit CUDA/Vulkan interop should use the mixed lane and keep the CUDA/Vulkan boundary visible.
@@ -37,5 +43,7 @@ The static validator only proves that paths in `trigger-matrix.json` still exist
   the technical requirements force actual cross-backend resource sharing.
 - Generic document rendering, text templating, CSV/JSON/business-data import, or non-3D import work
   should not trigger renderer, glTF, geometry, assimp, or meshoptimizer donor routing.
+- Generic "AI assistant" application work, ordinary Python ML scripts, or non-C++/GPU/model-runtime
+  tasks should not trigger CppStudio AI-runtime donors.
 - Non-GPU Python, CLI, parser, virtualenv, or business-simulation work should not trigger CppStudio
   donor routing.

@@ -1,7 +1,7 @@
 # Neural 3D And 3D AI Donors
 
 Use these donors for NeRFs, Gaussian splatting, differentiable rendering, 3D ML data structures,
-and neural graphics pipelines.
+training workflows, point-cloud/reconstruction workflows, and neural graphics pipelines.
 
 ## Safe Or Dependency Candidates
 
@@ -28,8 +28,17 @@ and neural graphics pipelines.
   rasterization behavior, data layout, numerical edge cases, and tests, then port the target path through
   Vulkan compute/render guidance instead of adding CUDA by default.
 - For general neural 3D experiments, use Nerfstudio for workflow and PyTorch3D/Kaolin/Open3D for reusable operators.
+- For fused MLPs, hash grids, or compact CUDA neural kernels, route through `ai-runtimes-kernels.md` and
+  the tiny-cuda-nn profile.
+- Keep GraphDeco Gaussian Splatting, instant-ngp, and Kaolin Wisp study-only unless the user explicitly
+  approves a license-specific path.
 - Treat pretrained models, datasets, camera captures, and generated assets as separate license surfaces even when code is permissive.
 
 ## Deep Profiles
 
+- [Nerfstudio](profiles/nerfstudio.md): read before designing neural 3D training, camera/data processing, viewer, or export workflows.
 - [gsplat](profiles/gsplat.md): read before adapting CUDA Gaussian splatting rasterization or neural 3D operator packaging.
+- [NVIDIA Kaolin](profiles/kaolin.md): read before using 3D deep-learning ops, conversion utilities, or differentiable rendering references.
+- [PyTorch3D](profiles/pytorch3d.md): read before using differentiable rendering, cameras, mesh/point-cloud ops, or reference outputs.
+- [Open3D](profiles/open3d.md): read before 3D data processing, point-cloud/reconstruction, visualization, or Open3D-ML workflows.
+- [Neural Graphics Study-Only References](profiles/neural-graphics-study-only.md): read before consulting GraphDeco Gaussian Splatting, instant-ngp, or Kaolin Wisp.

@@ -13,6 +13,9 @@ When selecting external CUDA kernel, GPU runtime, ML inference runtime, or GPU c
 - `{{DONOR_ROOT}}/profiles/cutlass.md` for GEMM/convolution/reduction/tensor-core policy
 - `{{DONOR_ROOT}}/profiles/flashattention.md` for attention kernels
 - `{{DONOR_ROOT}}/profiles/triton.md` for Triton DSL/compiler tradeoffs
+- `{{DONOR_ROOT}}/profiles/tiny-cuda-nn.md` for fused MLP, hash-grid, or CUDA neural graphics kernels
+- `{{DONOR_ROOT}}/profiles/pytorch.md` for PyTorch reference outputs, custom-op boundaries, or package
+  dependency decisions
 
 Use the donor library to compare CUTLASS, Triton, FlashAttention, tiny-cuda-nn, llama.cpp/ggml,
 ONNX Runtime, TensorRT-LLM, vLLM, MLC-LLM, TVM, and PyTorch before writing or recommending custom

@@ -13,7 +13,7 @@ Use when the project is primarily a C++ library with CUDA kernels and optional c
 - Enable CUDA and C++ tests; Vulkan can be off by default.
 - Set explicit `PROJECT_CUDA_ARCHITECTURES` for CI/release.
 - Read [donor-library/ai-runtimes-kernels.md](donor-library/ai-runtimes-kernels.md), then the matching
-  CUTLASS, FlashAttention, or Triton profile.
+  CUTLASS, FlashAttention, Triton, tiny-cuda-nn, or PyTorch profile.
 - Verification priority: CPU/reference comparisons, CTest `quick`, CTest `gpu`, Compute Sanitizer,
   then Nsight Systems/Compute only after a hot path is identified.
 
@@ -64,11 +64,12 @@ Use when CUDA produces or transforms data consumed by Vulkan, or Vulkan resource
 Use when the project wraps model inference, local serving, custom CUDA kernels, quantization, batching,
 or tensor-runtime integration.
 
-- Preserve the target repo's dependency policy; do not introduce PyTorch, Triton, ONNX Runtime, or
-  TensorRT-LLM without a concrete integration reason.
+- Preserve the target repo's dependency policy; do not introduce PyTorch, Triton, ONNX Runtime,
+  TensorRT-LLM, vLLM, MLC-LLM, or TVM without a concrete integration reason.
 - Read [donor-library/ai-runtimes-kernels.md](donor-library/ai-runtimes-kernels.md) and the relevant
-  deep profiles.
-- Keep model weights, datasets, tokenizer files, and generated engines out of reusable templates.
+  deep profiles for local inference, serving, compiler/runtime, or custom-kernel work.
+- Keep model weights, datasets, tokenizer files, compiled artifacts, and generated engines out of
+  reusable templates.
 - Verification priority: numerical reference tests, deterministic small model/input tests, throughput
   benchmark records, memory-footprint records, then scheduled sanitizer/profile lanes.
 
@@ -80,8 +81,9 @@ Use when the project renders, trains, or inspects NeRF, Gaussian splatting, diff
 - Expect both graphics and AI dependency surfaces. Keep datasets, captures, models, and assets licensed
   separately from code.
 - Read [donor-library/neural-3d.md](donor-library/neural-3d.md), [donor-library/graphics-rendering.md](donor-library/graphics-rendering.md),
-  and [donor-library/profiles/gsplat.md](donor-library/profiles/gsplat.md).
-- Prefer `gsplat` over non-commercial original 3DGS code for reusable implementation patterns.
+  and the matching gsplat, Nerfstudio, Kaolin, PyTorch3D, Open3D, or study-only neural graphics profile.
+- Prefer `gsplat` over non-commercial original 3DGS code for reusable implementation patterns; keep
+  GraphDeco Gaussian Splatting, instant-ngp, and Kaolin Wisp study-only.
 - Verification priority: camera convention tests, small scene tests, offscreen visual artifacts,
   image-metric baselines, Vulkan validation for Vulkan targets, CUDA sanitizer only for explicit CUDA
   or mixed-lane project-owned CUDA kernels, then frame/profile traces.
