@@ -116,7 +116,8 @@ architecture patterns, APIs, tests, algorithms, and dependency candidates.
 
 ### Donor Category Files
 
-- [AI runtimes and kernels](skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md)
+3D, graphics, simulation, and XR category files:
+
 - [Animation and rigging](skills/cpp-cuda-vulkan-studio/references/donor-library/animation-rigging.md)
 - [CAD and precision geometry](skills/cpp-cuda-vulkan-studio/references/donor-library/cad-precision-geometry.md)
 - [DCC scene pipelines](skills/cpp-cuda-vulkan-studio/references/donor-library/dcc-scene-pipeline.md)
@@ -132,7 +133,11 @@ architecture patterns, APIs, tests, algorithms, and dependency candidates.
 - [Vulkan foundation tooling](skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md)
 - [XR and spatial computing](skills/cpp-cuda-vulkan-studio/references/donor-library/xr-spatial.md)
 
-### Donor Profiles
+Other GPU, AI, and ML category files:
+
+- [AI runtimes and kernels](skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md)
+
+### Donor Profile Caveats
 
 Some donors are direct C/C++ implementation references, some are dependency-scale references, and
 some are explicitly reference-only or study-only. Study-only donors are concept references, not code
@@ -140,6 +145,8 @@ donors. Browser, Python, notebook, DCC, service, JIT/DSL, or non-C++ donors can 
 algorithms, behavior, tests, UX, and architecture, but agents should port the idea through the active
 C++/Vulkan/CUDA lane instead of copying code directly unless the user explicitly chooses that runtime
 and license shape.
+
+### 3D, Graphics, Simulation, And XR Donor Profiles
 
 #### Vulkan And Shader Tooling
 
@@ -150,20 +157,6 @@ and license shape.
 - [vk-bootstrap](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vk-bootstrap.md)
 - [SPIR-V Toolchain](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/spirv-toolchain.md)
 - [Slang](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/slang.md)
-
-#### CUDA, AI Runtimes, And ML Compilers
-
-- [CUTLASS](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/cutlass.md)
-- [FlashAttention](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/flashattention.md)
-- [Triton](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/triton.md)
-- [llama.cpp and ggml](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/llama-ggml.md)
-- [ONNX Runtime](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/onnx-runtime.md)
-- [TensorRT-LLM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tensorrt-llm.md)
-- [vLLM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vllm.md)
-- [MLC-LLM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/mlc-llm.md)
-- [tiny-cuda-nn](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tiny-cuda-nn.md)
-- [Apache TVM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tvm.md)
-- [PyTorch](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/pytorch.md)
 
 #### Rendering, Ray Tracing, And Graphics Frameworks
 
@@ -212,6 +205,9 @@ and license shape.
 
 #### Neural 3D And Reconstruction
 
+These are AI-adjacent, but they are grouped here because their primary domain is 3D reconstruction,
+3D data, or neural rendering rather than general AI runtime infrastructure.
+
 - [gsplat](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/gsplat.md)
 - [Nerfstudio](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nerfstudio.md)
 - [NVIDIA Kaolin](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/kaolin.md)
@@ -257,6 +253,22 @@ and license shape.
 - [OpenXR-Hpp](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openxr-hpp.md)
 - [Monado](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/monado.md)
 - [Godot OpenXR Vendors](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/godot-openxr-vendors.md)
+
+### Other GPU, AI, And ML Runtime Donor Profiles
+
+#### CUDA Kernels, AI Runtimes, And ML Compilers
+
+- [CUTLASS](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/cutlass.md)
+- [FlashAttention](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/flashattention.md)
+- [Triton](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/triton.md)
+- [llama.cpp and ggml](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/llama-ggml.md)
+- [ONNX Runtime](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/onnx-runtime.md)
+- [TensorRT-LLM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tensorrt-llm.md)
+- [vLLM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vllm.md)
+- [MLC-LLM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/mlc-llm.md)
+- [tiny-cuda-nn](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tiny-cuda-nn.md)
+- [Apache TVM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tvm.md)
+- [PyTorch](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/pytorch.md)
 
 ## When To Install GPU Tools
 
