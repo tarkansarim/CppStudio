@@ -5,6 +5,12 @@ Accessed: 2026-04-30
 This source map lists the first-pass donor candidates for 3D, graphics, GPU, and AI work. License
 notes are routing signals, not a replacement for checking the upstream license file before reuse.
 
+Language/runtime caveat: `safe-donor` does not mean "direct native C++ donor." Python, JavaScript,
+TypeScript, notebook, JIT/DSL, service-runtime, web-engine, DCC-script, model, dataset, and asset
+sources are reference-only for native C++/CUDA/Vulkan unless the user explicitly chooses that
+runtime or artifact. Use them for behavior, algorithms, fixtures, architecture, and validation
+targets; implement native code through the active C++/CUDA/Vulkan lane.
+
 ## Graphics And Rendering
 
 | Source | Category | Tier | Signal |
@@ -16,12 +22,12 @@ notes are routing signals, not a replacement for checking the upstream license f
 | [bgfx](https://github.com/bkaradzic/bgfx) | Renderer backbone | dependency-candidate | BSD-2-Clause/CC0 signals; cross-platform graphics API abstraction and shader tools. |
 | [Magnum](https://github.com/mosra/magnum) | C++ graphics middleware | safe-donor | MIT/Expat lightweight graphics middleware and examples. |
 | [Google Dawn](https://github.com/google/dawn) | WebGPU | dependency-candidate | BSD-3-Clause native WebGPU implementation and Tint/WGSL tooling. |
-| [three.js](https://github.com/mrdoob/three.js) | Web 3D | safe-donor | MIT browser 3D library with a large example ecosystem. |
-| [Babylon.js](https://github.com/BabylonJS/Babylon.js/) | Web 3D | safe-donor | Apache-2.0 TypeScript/WebGPU/WebXR 3D engine. |
+| [three.js](https://github.com/mrdoob/three.js) | Web 3D | safe-donor | MIT browser 3D library with a large example ecosystem. Reference-only for native C++. |
+| [Babylon.js](https://github.com/BabylonJS/Babylon.js/) | Web 3D | safe-donor | Apache-2.0 TypeScript/WebGPU/WebXR 3D engine. Reference-only for native C++. |
 | [pbrt-v4](https://github.com/mmp/pbrt-v4) | Physical rendering | safe-donor | Apache-2.0 reference renderer for physically based rendering. |
 | [Mitsuba 3](https://github.com/mitsuba-renderer/mitsuba3) | Physical/differentiable rendering | safe-donor | BSD-style retargetable renderer with differentiable rendering support. |
 | [NVIDIA Falcor](https://github.com/NVIDIAGameWorks/Falcor) | Realtime ray tracing | dependency-candidate | BSD-3-Clause core with separate component licenses for DLSS/RTXGI/RTXDI/NRD. |
-| [THREE.js PathTracing Renderer](https://github.com/erichlof/THREE.js-PathTracing-Renderer) | Web path tracing | safe-donor | CC0-1.0 WebGL path tracing examples. |
+| [THREE.js PathTracing Renderer](https://github.com/erichlof/THREE.js-PathTracing-Renderer) | Web path tracing | safe-donor | CC0-1.0 WebGL path tracing examples. Reference-only for native C++. |
 
 ## Geometry, Assets, And Simulation
 
@@ -49,20 +55,20 @@ notes are routing signals, not a replacement for checking the upstream license f
 | [vLLM](https://github.com/vllm-project/vllm) | LLM serving | dependency-candidate | Apache-2.0 high-throughput serving with paged attention/continuous batching. |
 | [MLC-LLM](https://github.com/mlc-ai/mlc-llm) | Cross-platform LLM deployment | dependency-candidate | Apache-2.0 TVM-powered deployment across GPUs, mobile, and WebGPU. |
 | [CUTLASS](https://github.com/NVIDIA/cutlass) | CUDA kernels | safe-donor | BSD-3-Clause CUDA GEMM/convolution/reduction templates. |
-| [Triton](https://github.com/triton-lang/triton) | GPU kernel DSL/compiler | safe-donor | MIT language/compiler for custom deep-learning primitives. |
-| [FlashAttention](https://github.com/Dao-AILab/flash-attention) | Attention kernels | safe-donor | BSD-3-Clause efficient exact attention kernels and PyTorch extension patterns. |
+| [Triton](https://github.com/triton-lang/triton) | GPU kernel DSL/compiler | safe-donor | MIT Python/JIT language/compiler for custom deep-learning primitives. Reference-only for native C++ unless that toolchain is explicitly chosen. |
+| [FlashAttention](https://github.com/Dao-AILab/flash-attention) | Attention kernels | safe-donor | BSD-3-Clause efficient exact attention kernels and PyTorch extension patterns. Inspect CUDA/C++ kernels separately from Python/PyTorch packaging. |
 | [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn) | Neural CUDA kernels | safe-donor | BSD-3-Clause fused MLPs and hash-grid encoding patterns. |
 | [Apache TVM](https://github.com/apache/tvm) | ML compiler | dependency-candidate | Apache-2.0 compiler/runtime stack for model deployment across hardware backends. |
-| [PyTorch](https://github.com/pytorch/pytorch) | Tensor framework | dependency-candidate | BSD-style tensor/autograd/CUDA dispatch reference; normally consumed as a package dependency. |
+| [PyTorch](https://github.com/pytorch/pytorch) | Tensor framework | dependency-candidate | BSD-style tensor/autograd/CUDA dispatch reference; dependency-scale architecture/reference unless PyTorch/libtorch is explicitly chosen. |
 
 ## Neural 3D
 
 | Source | Category | Tier | Signal |
 | --- | --- | --- | --- |
-| [Nerfstudio](https://github.com/nerfstudio-project/nerfstudio) | NeRF/3DGS workflows | dependency-candidate | Apache-2.0 modular framework for neural radiance fields and Gaussian splatting workflows. |
-| [gsplat](https://github.com/nerfstudio-project/gsplat) | Gaussian splatting | safe-donor | Apache-2.0 CUDA accelerated Gaussian rasterization with Python bindings. |
-| [NVIDIA Kaolin](https://github.com/NVIDIAGameWorks/kaolin) | 3D deep learning | dependency-candidate | Mostly Apache-2.0, with restricted `kaolin/non_commercial` area. |
-| [PyTorch3D](https://github.com/facebookresearch/pytorch3d) | Differentiable 3D ops | dependency-candidate | BSD-style reusable components for 3D deep learning. |
+| [Nerfstudio](https://github.com/nerfstudio-project/nerfstudio) | NeRF/3DGS workflows | dependency-candidate | Apache-2.0 modular framework for neural radiance fields and Gaussian splatting workflows. Workflow reference-only for native C++. |
+| [gsplat](https://github.com/nerfstudio-project/gsplat) | Gaussian splatting | safe-donor | Apache-2.0 CUDA accelerated Gaussian rasterization with Python bindings. Inspect CUDA/C++ operator code separately; Python/PyTorch wrapper is reference-only for native C++. |
+| [NVIDIA Kaolin](https://github.com/NVIDIAGameWorks/kaolin) | 3D deep learning | dependency-candidate | Mostly Apache-2.0, with restricted `kaolin/non_commercial` area. Python/PyTorch reference-only for native C++. |
+| [PyTorch3D](https://github.com/facebookresearch/pytorch3d) | Differentiable 3D ops | dependency-candidate | BSD-style reusable components for 3D deep learning. Python/PyTorch reference-only for native C++. |
 | [graphdeco-inria/gaussian-splatting](https://github.com/graphdeco-inria/gaussian-splatting) | Original 3DGS | study-only | Non-commercial/research-only license; use for concepts and behavior checks only. |
 | [NVlabs/instant-ngp](https://github.com/NVlabs/instant-ngp) | Neural graphics primitives | study-only | NVIDIA Source Code License with non-commercial use limitation. |
 | [Kaolin Wisp](https://github.com/NVIDIAGameWorks/kaolin-wisp) | Neural fields | study-only | NVIDIA Source Code License with non-commercial use limitation. |
@@ -91,7 +97,7 @@ notes are routing signals, not a replacement for checking the upstream license f
 | --- | --- | --- | --- |
 | [OpenVDB](https://github.com/AcademySoftwareFoundation/openvdb) | Sparse volumes | dependency-candidate | Apache-2.0 current releases; older releases were MPL-2.0. |
 | [NanoVDB](https://developer.nvidia.com/nanovdb) | GPU VDB traversal | safe-donor | Part of OpenVDB; compact GPU-friendly VDB representation and traversal. |
-| [fVDB](https://openvdb.github.io/fvdb-core/) | GPU sparse-volume tensors | dependency-candidate | Apache-2.0 sparse-volume tensors and neural 3D/ML-oriented volume work. |
+| [fVDB](https://openvdb.github.io/fvdb-core/) | GPU sparse-volume tensors | dependency-candidate | Apache-2.0 sparse-volume tensors and neural 3D/ML-oriented volume work. Reference-only for native C++ unless Python/PyTorch/CUDA is explicit. |
 | [VTK](https://docs.vtk.org/en/latest/about.html) | Scientific visualization | dependency-candidate | BSD-style visualization toolkit for volume rendering and image processing. |
 
 ## Animation And Rigging
@@ -132,8 +138,8 @@ notes are routing signals, not a replacement for checking the upstream license f
 
 | Source | Category | Tier | Signal |
 | --- | --- | --- | --- |
-| [NVIDIA Warp](https://github.com/NVIDIA/warp) | GPU/differentiable simulation | dependency-candidate | Apache-2.0 Python CUDA simulation, robotics, and spatial computing framework. |
-| [Taichi](https://github.com/taichi-dev/taichi) | Portable simulation DSL | dependency-candidate | Apache-2.0 CPU/GPU programming DSL for simulation and differentiable programming. |
+| [NVIDIA Warp](https://github.com/NVIDIA/warp) | GPU/differentiable simulation | dependency-candidate | Apache-2.0 Python CUDA simulation, robotics, and spatial computing framework. Prototype/reference-only for native C++ unless Python/JIT is explicit. |
+| [Taichi](https://github.com/taichi-dev/taichi) | Portable simulation DSL | dependency-candidate | Apache-2.0 Python CPU/GPU programming DSL for simulation and differentiable programming. Reference-only for native C++. |
 | [PositionBasedDynamics](https://github.com/InteractiveComputerGraphics/PositionBasedDynamics) | PBD simulation | safe-donor | MIT rigid/deformable/fluid position-based simulation library. |
 | [Project Chrono](https://projectchrono.org/) | Multiphysics | dependency-candidate | BSD-3-Clause multibody, vehicle, terrain, granular, FEA, and fluid-solid simulation. |
 | [SOFA](https://github.com/sofa-framework/sofa) | Deformable/medical simulation | dependency-candidate | LGPL-2.1/GPL/plugin mix; inspect module licenses. |
