@@ -83,7 +83,7 @@ with a real build pipeline:
 
 Khronos' current tutorial shift toward Slang is important, especially because Slang can target
 Vulkan/SPIR-V and CUDA. That may become useful for a shared GPU studio story, but it should remain a
-deliberate choice instead of displacing established GLSL/HLSL workflows blindly.
+deliberate choice instead of displacing established GLSL/HLSL workflows without review.
 
 ## Validation Modes Should Be Separate Lanes
 
@@ -141,4 +141,3 @@ The Vulkan lane needs a tool decision table:
 
 The research does not recommend replacing existing `run_nsys_smoke.sh`; it suggests adding a
 Vulkan-specific graphics/debug counterpart later.
-

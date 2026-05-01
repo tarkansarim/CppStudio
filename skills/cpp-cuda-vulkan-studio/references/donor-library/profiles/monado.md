@@ -35,7 +35,7 @@ integration files at the exact revision used.
 - Record runtime name, version, extensions, form factor, graphics requirements, and connected device state.
 - Test missing runtime, wrong runtime, missing device, unsupported extension, and compositor startup
   failures as separate cases.
-- Compare app failures against runtime logs before blaming Vulkan resources.
+- Compare app failures against runtime logs before attributing issues to Vulkan resources.
 - Keep runtime setup notes out of reusable templates unless the project targets runtime development.
 
 ## Caveats

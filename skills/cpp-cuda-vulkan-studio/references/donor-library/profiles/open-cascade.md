@@ -20,7 +20,7 @@ revision used.
 - STEP/IGES exchange packages for import/export behavior.
 - BRepMesh and visualization examples for tessellation and display handoff.
 - Geometry kernel docs around tolerances, units, locations, and topology ownership.
-- Sample applications for workflow ideas, not as code to copy blindly.
+- Sample applications for workflow ideas, not as code to copy directly into generated projects.
 
 ## Integration Notes
 
