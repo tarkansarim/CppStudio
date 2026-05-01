@@ -30,3 +30,4 @@ compression, retargeting, blend shapes, and DCC-to-runtime animation data.
 
 - [ozz-animation](profiles/ozz-animation.md): read before adding skeletal runtime or sampling/blending design.
 - [Animation Compression Library](profiles/acl.md): read before adding clip compression or accuracy/size tradeoffs.
+- [assimp](profiles/assimp.md): read when animation import requires broad DCC format coverage.

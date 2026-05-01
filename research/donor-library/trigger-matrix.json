@@ -103,6 +103,101 @@
       ]
     },
     {
+      "name": "vulkan-renderer-architecture-donors",
+      "prompt_shape": "Vulkan-first C++ renderer needs donor guidance for renderer backbone, render graph, PBR materials, frame architecture, or graphics middleware.",
+      "expected_behavior": "Route to graphics-rendering and renderer-backbone profiles; keep Vulkan foundation tooling available for API correctness without switching to CUDA or forcing a multi-backend dependency.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/filament.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/diligent-engine.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/bgfx.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/magnum.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "gltf-meshoptimizer-runtime-pipeline",
+      "prompt_shape": "C++ runtime asset pipeline loads glTF/GLB, validates fixtures, optimizes vertex/index buffers, handles meshopt compression, and uploads renderer-ready buffers.",
+      "expected_behavior": "Route to glTF runtime assets first, then geometry-simulation and meshoptimizer for mesh conditioning; keep CPU import, optimization, and GPU upload as separate stages.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/gltf-runtime-assets.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/fastgltf-cgltf-tinygltf.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/meshoptimizer.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "assimp-vulkan-asset-import",
+      "prompt_shape": "Vulkan C++ viewer needs to import several non-glTF 3D asset formats, normalize meshes/materials, and hand them to a Vulkan renderer.",
+      "expected_behavior": "Route to geometry-simulation and assimp for broad import, then graphics/Vulkan guidance for renderer handoff; do not treat assimp as a reason to abandon Vulkan-first implementation.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/assimp.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "bvh-geometry-acceleration",
+      "prompt_shape": "C++ renderer or geometry tool needs BVH, ray queries, CPU reference intersections, Embree comparison, or lightweight acceleration structures.",
+      "expected_behavior": "Route to geometry-simulation and BVH/Embree profiles; use CPU donors as reference or dependency candidates without forcing Vulkan ray tracing or CUDA kernels unless requested.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/madmann91-bvh.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/embree.md"
+      ]
+    },
+    {
+      "name": "physics-collision-donor-selection",
+      "prompt_shape": "C++ realtime 3D app needs rigid-body physics, collision queries, broadphase/narrowphase, constraints, or debug-render handoff.",
+      "expected_behavior": "Route to geometry-simulation and Jolt/Bullet profiles; keep physics dependency choice separate from Vulkan renderer and CUDA kernel lanes.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/jolt-physics.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/bullet-physics.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "generic-render-text-negative-control",
+      "prompt_shape": "Render a markdown document, text template, HTML string, or report with no C++, GPU, graphics API, 3D scene, mesh, renderer, or realtime visualization scope.",
+      "expected_behavior": "Do not route to graphics-rendering donors just because the word render appears.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md"
+      ]
+    },
+    {
+      "name": "generic-import-negative-control",
+      "prompt_shape": "Import CSV, JSON, contacts, invoices, or business records with no C++, 3D asset, mesh, renderer, Vulkan, CUDA, glTF, or DCC scope.",
+      "expected_behavior": "Do not route to assimp, glTF, meshoptimizer, or geometry-simulation donors for ordinary data import work.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/gltf-runtime-assets.md"
+      ]
+    },
+    {
       "name": "generic-json-negative-control",
       "prompt_shape": "Generic JSON parser, schema validation, or business-data import task with no C++, GPU, Vulkan, rendering, 3D asset, glTF, or runtime viewer scope.",
       "expected_behavior": "Do not route to glTF runtime asset donors just because glTF uses JSON internally.",

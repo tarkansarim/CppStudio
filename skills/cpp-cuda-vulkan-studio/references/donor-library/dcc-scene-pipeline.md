@@ -32,5 +32,6 @@ timelines, and offline-to-runtime asset pipelines.
 
 - [OpenUSD](profiles/openusd.md): read before designing scene composition or USD-based interchange.
 - [Alembic](profiles/alembic.md): read before designing baked animated geometry, curves, or simulation caches.
+- [assimp](profiles/assimp.md): read when broad asset import/export is enough and full USD/Alembic semantics are unnecessary.
 - [MaterialX](profiles/materialx.md): read before adding material/look-development interchange.
 - [OpenSubdiv](profiles/opensubdiv.md): read when subdivision surfaces are part of the scene pipeline.

@@ -31,6 +31,22 @@ app without CUDA kernels.
 - Verification priority: `scripts/dump_vulkan_capabilities.sh`, shader CTest, Vulkan validation,
   offscreen render/compute CTest, then RenderDoc or Nsight Graphics.
 
+## Renderer Backbone Or Runtime Mesh Pipeline
+
+Use when the project needs renderer dependency selection, renderer architecture, mesh import,
+renderer-ready mesh conditioning, BVH/ray-query references, or physics/collision handoff for a
+runtime 3D app.
+
+- Recommend Vulkan first when the user has not chosen a graphics lane; keep CUDA out unless kernels or
+  CUDA/Vulkan interop are explicit.
+- Read [donor-library/graphics-rendering.md](donor-library/graphics-rendering.md) for renderer
+  backbones, then [donor-library/geometry-simulation.md](donor-library/geometry-simulation.md) for
+  assimp, meshoptimizer, BVH, Embree, Jolt, or Bullet choices.
+- For glTF-only viewers, read the glTF loader profile before assimp and add meshoptimizer only after
+  importer semantics are defined.
+- Verification priority: tiny imported mesh fixture, meshopt conditioning checks, renderer upload tests,
+  BVH/collision fixtures when used, Vulkan validation for Vulkan targets, then offscreen render frames.
+
 ## CUDA Plus Vulkan Interop App
 
 Use when CUDA produces or transforms data consumed by Vulkan, or Vulkan resources are shared with CUDA.
@@ -103,8 +119,10 @@ Use when the project loads, validates, previews, converts, or renders runtime gl
   upload and material translation.
 - Read [donor-library/gltf-runtime-assets.md](donor-library/gltf-runtime-assets.md),
   [donor-library/vulkan-foundation-tooling.md](donor-library/vulkan-foundation-tooling.md),
+  [donor-library/geometry-simulation.md](donor-library/geometry-simulation.md),
   [donor-library/texture-material-color.md](donor-library/texture-material-color.md), and the glTF
-  loader profile before choosing loader or validation dependencies.
+  loader and meshoptimizer profiles before choosing loader, mesh-conditioning, or validation
+  dependencies.
 - Keep source assets, sample models, screenshots, DCC files, texture codecs, and generated caches as
   separate license surfaces.
 - Verification priority: Khronos validator reports, tiny GLB fixtures, external-buffer fixtures,

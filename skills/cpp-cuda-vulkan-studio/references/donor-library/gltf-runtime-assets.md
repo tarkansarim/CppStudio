@@ -27,6 +27,8 @@ handoff, and Vulkan viewer/importer pipelines.
 - Keep mesh optimization, texture containers, material graphs, and color management routed through
   `geometry-simulation.md`, `texture-material-color.md`, and DCC/material profiles instead of forcing
   all asset policy into the loader.
+- For renderer-ready mesh conditioning, read the meshoptimizer profile after the glTF loader choice and
+  before designing Vulkan/CUDA buffer upload.
 - Treat sample assets, screenshots, source DCC files, model textures, and HDRIs as separate license
   surfaces from loader code.
 - For Vulkan viewers, keep CPU import, GPU buffer staging, texture upload, material translation, and
@@ -35,5 +37,6 @@ handoff, and Vulkan viewer/importer pipelines.
 ## Deep Profiles
 
 - [glTF C/C++ Loaders](profiles/fastgltf-cgltf-tinygltf.md): read before choosing or adapting a glTF runtime loader.
+- [meshoptimizer](profiles/meshoptimizer.md): read when glTF assets need vertex/index optimization, simplification, or `EXT_meshopt_compression`.
 - [KTX-Software And Basis Universal](profiles/ktx-basis.md): read when glTF textures use KTX2, Basis Universal, or runtime transcoding.
 - [MaterialX](profiles/materialx.md): read when glTF materials must bridge into DCC or shader-generation pipelines.

@@ -1,7 +1,7 @@
 # Graphics And Rendering Donors
 
-Use these donors for Vulkan, renderer architecture, WebGPU/WebGL, PBR, frame/debug tooling, and
-ray/path tracing work.
+Use these donors for Vulkan renderer samples, renderer backbone selection, WebGPU/WebGL, PBR,
+frame/debug tooling, render graphs, and ray/path tracing work.
 
 ## Primary Safe Donors
 
@@ -32,10 +32,17 @@ ray/path tracing work.
 - For Vulkan memory allocation, loader/bootstrap, shader reflection, or SPIR-V tooling, route to
   [vulkan-foundation-tooling.md](vulkan-foundation-tooling.md) before choosing renderer-level donors.
 - For NVIDIA-specific Vulkan extensions and tooling, use `vk_mini_samples` and keep extension fallbacks explicit.
-- For a project that needs a renderer dependency, compare Filament, Diligent Engine, bgfx, Magnum, and Dawn against the target repo's language, backend, shader, and build constraints.
+- For a project that needs a renderer dependency, compare Filament, Diligent Engine, bgfx, Magnum, and
+  Dawn against the target repo's language, backend, shader, asset, and build constraints.
+- For runtime mesh import, conditioning, BVH, collision, or physics handoff, route to
+  [geometry-simulation.md](geometry-simulation.md) after choosing the renderer boundary.
 - For browser-facing 3D demos, use three.js first for lightweight scenes and Babylon.js when a fuller engine/editor stack is useful.
 
 ## Deep Profiles
 
 - [Khronos Vulkan-Samples](profiles/khronos-vulkan-samples.md): read first for portable Vulkan correctness, validation, offscreen/headless, and best-practice samples.
 - [NVIDIA vk_mini_samples](profiles/nvidia-vk-mini-samples.md): read after Khronos samples when NVIDIA extensions, Nsight/Aftermath, Slang, ray tracing, mesh/task shaders, or descriptor-heap samples are relevant.
+- [Google Filament](profiles/filament.md): read before adopting a full PBR renderer, glTF viewer, or material/tool pipeline.
+- [Diligent Engine](profiles/diligent-engine.md): read before adopting a cross-API renderer abstraction or DiligentFX-style high-level renderer.
+- [bgfx](profiles/bgfx.md): read before choosing bring-your-own-engine multi-backend rendering or shader-toolchain abstraction.
+- [Magnum](profiles/magnum.md): read before using lightweight C++ graphics middleware, modular utilities, or CMake-friendly graphics helpers.

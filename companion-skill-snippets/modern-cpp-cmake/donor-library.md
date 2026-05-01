@@ -14,6 +14,13 @@ questions through `{{DONOR_ROOT}}/vulkan-foundation-tooling.md`. For runtime 3D 
 glTF/GLB validation, or viewer/importer dependencies, route through
 `{{DONOR_ROOT}}/gltf-runtime-assets.md`.
 
+For renderer backbone, graphics middleware, runtime mesh import, mesh conditioning, BVH, or
+physics/collision dependency choices, route through `{{DONOR_ROOT}}/graphics-rendering.md` and
+`{{DONOR_ROOT}}/geometry-simulation.md` before proposing CMake dependency wiring. Treat Filament,
+Diligent Engine, bgfx, assimp, Embree, Jolt, and Bullet as dependency candidates unless the target
+repo explicitly accepts them; meshoptimizer, Magnum, and madmann91/bvh can be narrower safe donors
+after exact-version review.
+
 Donors are domain references first, not lane locks. A donor's CUDA, Vulkan, OpenCL, DirectX, CPU, or
 DCC backend signal describes upstream implementation context only. Keep the target project's selected
 lane and dependency policy intact, and route backend-specific translation through `cpp-cuda-vulkan-studio`

@@ -4,18 +4,18 @@ Last researched: 2026-04-30
 
 Use this library when a C++/CUDA/Vulkan/3D/AI-runtime/ML-kernel task needs source-backed donor
 projects, examples, architecture patterns, or dependency candidates. It covers Vulkan foundation
-tooling, runtime assets, rendering, geometry, neural 3D, grooming, DCC scene pipelines, volumes,
-animation, materials, CAD, 3D/physics/GPU simulation, and XR. Treat it as a domain-first selection
-map, not permission to copy large blocks of code.
+tooling, runtime assets, renderer backbones, runtime mesh pipelines, geometry, neural 3D, grooming,
+DCC scene pipelines, volumes, animation, materials, CAD, 3D/physics/GPU simulation, and XR. Treat it
+as a domain-first selection map, not permission to copy large blocks of code.
 
 ## How To Use
 
 1. Read [selection-policy.md](selection-policy.md) before copying, adapting, or recommending any donor.
 2. Pick one relevant category file and load only that file:
    - [vulkan-foundation-tooling.md](vulkan-foundation-tooling.md): Vulkan memory allocation, loader/bootstrap, shader reflection, SPIR-V tooling.
-   - [graphics-rendering.md](graphics-rendering.md): renderer backbones, WebGPU/WebGL, PBR, path tracing.
+   - [graphics-rendering.md](graphics-rendering.md): renderer backbones, render graphs, WebGPU/WebGL, PBR, path tracing.
    - [gltf-runtime-assets.md](gltf-runtime-assets.md): glTF loading, validation, fixtures, runtime asset handoff.
-   - [geometry-simulation.md](geometry-simulation.md): mesh processing, BVH, point clouds, physics.
+   - [geometry-simulation.md](geometry-simulation.md): asset import, mesh conditioning, BVH, point clouds, physics.
    - [ai-runtimes-kernels.md](ai-runtimes-kernels.md): LLM runtimes, inference engines, CUDA kernels, ML compilers.
    - [neural-3d.md](neural-3d.md): NeRFs, Gaussian splatting, differentiable rendering, 3D ML.
    - [hair-grooming-fur.md](hair-grooming-fur.md): realtime hair/fur, strand data, grooming, groom interchange.
@@ -86,6 +86,16 @@ Read these only when the task matches the donor:
 - [SPIR-V Toolchain](profiles/spirv-toolchain.md): SPIR-V reflection, validation, compilation, and cross-compilation.
 - [Slang](profiles/slang.md): multi-target shader authoring, generics, reflection, and compiler integration.
 - [glTF C/C++ Loaders](profiles/fastgltf-cgltf-tinygltf.md): fastgltf, cgltf, tinygltf runtime loader choices.
+- [Google Filament](profiles/filament.md): realtime PBR renderer architecture, material tools, and glTF viewer pipelines.
+- [Diligent Engine](profiles/diligent-engine.md): cross-API renderer abstraction and high-level rendering components.
+- [bgfx](profiles/bgfx.md): bring-your-own-engine multi-backend renderer abstraction and shader toolchain.
+- [Magnum](profiles/magnum.md): lightweight C++ graphics middleware and modular graphics utilities.
+- [meshoptimizer](profiles/meshoptimizer.md): mesh conditioning, simplification, compression, and glTF optimization.
+- [assimp](profiles/assimp.md): broad 3D asset import/export and conversion pipeline boundaries.
+- [Embree](profiles/embree.md): CPU ray tracing kernels, BVHs, and ray-query validation references.
+- [madmann91/bvh](profiles/madmann91-bvh.md): compact C++20 BVH construction and traversal.
+- [Jolt Physics](profiles/jolt-physics.md): modern native C++ rigid-body physics and collision.
+- [Bullet Physics](profiles/bullet-physics.md): broad physics, collision, robotics, and ML simulation ecosystem references.
 - [gsplat](profiles/gsplat.md): CUDA Gaussian splatting rasterization and neural 3D operator packaging.
 - [AMD TressFX](profiles/tressfx.md): realtime GPU hair/fur simulation and rendering.
 - [OpenUSD](profiles/openusd.md): scene composition, USD schemas, DCC interchange, curves, skeletons, materials.

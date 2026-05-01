@@ -21,6 +21,12 @@ The static validator only proves that paths in `trigger-matrix.json` still exist
   or Slang evaluation should route to `vulkan-foundation-tooling.md`.
 - glTF/GLB runtime loading, Vulkan viewers, asset validation, or importer dependency choices should
   route to `gltf-runtime-assets.md` without confusing generic JSON parsing with glTF work.
+- Renderer backbone, render graph, PBR renderer, graphics middleware, or multi-backend renderer
+  dependency questions should route to `graphics-rendering.md` and the matching Filament, Diligent
+  Engine, bgfx, or Magnum profiles.
+- Runtime mesh conditioning, broad 3D asset import, BVH/ray-query, CPU ray tracing reference,
+  physics/collision, or renderer-ready mesh handoff should route to `geometry-simulation.md` and the
+  matching meshoptimizer, assimp, Embree, madmann91/bvh, Jolt, or Bullet profile.
 - Explicit CUDA kernel, CUTLASS, FlashAttention, CUDA graph, or NVIDIA-only runtime work should route
   to CUDA-specific donors and skills first.
 - Explicit CUDA/Vulkan interop should use the mixed lane and keep the CUDA/Vulkan boundary visible.
@@ -29,5 +35,7 @@ The static validator only proves that paths in `trigger-matrix.json` still exist
   OpenCL, DirectX, CPU, or DCC donors without switching lanes.
 - Mixed CUDA/Vulkan routing should happen only when the user explicitly requests interop/mixing or when
   the technical requirements force actual cross-backend resource sharing.
+- Generic document rendering, text templating, CSV/JSON/business-data import, or non-3D import work
+  should not trigger renderer, glTF, geometry, assimp, or meshoptimizer donor routing.
 - Non-GPU Python, CLI, parser, virtualenv, or business-simulation work should not trigger CppStudio
   donor routing.

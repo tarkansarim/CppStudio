@@ -23,3 +23,4 @@ geometric operators, mesh deformation, and precise surface processing.
 ## Deep Profiles
 
 - [OpenSubdiv](profiles/opensubdiv.md): read before adopting subdivision-surface evaluation.
+- [meshoptimizer](profiles/meshoptimizer.md): read when evaluated or imported meshes need runtime conditioning, simplification, or compression.

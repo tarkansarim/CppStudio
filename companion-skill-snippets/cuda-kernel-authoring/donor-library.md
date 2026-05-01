@@ -8,6 +8,8 @@ When selecting external CUDA kernel, GPU runtime, ML inference runtime, or GPU c
 - `{{DONOR_ROOT}}/simulation-gpu.md` for cloth, particles, fluids, deformables, differentiable simulation,
   robotics, or physics kernels
 - `{{DONOR_ROOT}}/neural-3d.md` for CUDA-heavy neural 3D or Gaussian splatting operators
+- `{{DONOR_ROOT}}/geometry-simulation.md` for mesh conditioning, BVH, collision, or geometry-processing
+  donors that inform CUDA kernels without adding Vulkan or other runtime dependencies
 - `{{DONOR_ROOT}}/profiles/cutlass.md` for GEMM/convolution/reduction/tensor-core policy
 - `{{DONOR_ROOT}}/profiles/flashattention.md` for attention kernels
 - `{{DONOR_ROOT}}/profiles/triton.md` for Triton DSL/compiler tradeoffs

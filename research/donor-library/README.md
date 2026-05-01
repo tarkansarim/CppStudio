@@ -27,6 +27,7 @@ The main skill now points agents to:
 
 - `references/donor-library/README.md`
 - `references/donor-library/selection-policy.md`
-- category files for rendering, geometry/simulation, AI runtimes/kernels, neural 3D, hair/grooming/fur,
-  DCC scene pipelines, volumes/voxels, animation/rigging, surfaces/subdivision, texture/material/color,
+- category files for Vulkan foundation tooling, glTF/runtime assets, renderer backbones, runtime mesh
+  pipelines, geometry/simulation, AI runtimes/kernels, neural 3D, hair/grooming/fur, DCC scene
+  pipelines, volumes/voxels, animation/rigging, surfaces/subdivision, texture/material/color,
   CAD/precision geometry, advanced simulation, and XR/spatial work.

@@ -1,7 +1,7 @@
 # Geometry, Assets, And Simulation Donors
 
-Use these donors for asset loading, mesh optimization, point-cloud processing, BVH construction,
-CPU ray tracing, and physics/collision infrastructure.
+Use these donors for asset loading, runtime mesh conditioning, point-cloud processing, BVH
+construction, CPU ray tracing, collision, and physics infrastructure.
 
 ## Asset And Mesh Pipeline
 
@@ -27,6 +27,19 @@ CPU ray tracing, and physics/collision infrastructure.
 
 - For runtime asset import, assimp is a dependency candidate; for build-time mesh conditioning,
   meshoptimizer is usually a smaller donor.
+- For glTF/GLB-only runtime loading, start with `gltf-runtime-assets.md`; use assimp when broader
+  format coverage is required.
+- For renderer-ready mesh buffers, run importer normalization before meshoptimizer and keep GPU upload
+  in the selected Vulkan or CUDA lane.
 - For point-cloud and reconstruction workflows, Open3D is the strongest general-purpose donor.
 - For custom lightweight ray queries, use `madmann91/bvh` before pulling in a full rendering toolkit.
 - For physics in C++ apps, prefer Jolt for modern C++ and Bullet for ecosystem breadth.
+
+## Deep Profiles
+
+- [meshoptimizer](profiles/meshoptimizer.md): read before designing mesh conditioning, simplification, compression, or glTF meshopt pipelines.
+- [assimp](profiles/assimp.md): read before adopting broad runtime/offline asset import or conversion dependencies.
+- [Embree](profiles/embree.md): read before adding CPU ray tracing kernels, CPU reference BVHs, or ray-query validation.
+- [madmann91/bvh](profiles/madmann91-bvh.md): read before adding a compact C++20 BVH reference or lightweight ray-query path.
+- [Jolt Physics](profiles/jolt-physics.md): read before adopting modern native C++ rigid-body/collision physics.
+- [Bullet Physics](profiles/bullet-physics.md): read before adopting broad physics/robotics/ML simulation ecosystem references.
