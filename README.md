@@ -306,6 +306,30 @@ python3 scripts/validate_donor_library.py \
 Trigger-matrix validation is path-integrity only; use
 `research/donor-library/trigger-regression-checklist.md` for manual or subagent trigger reruns.
 
+Render a repeatable trigger-evaluation prompt pack for a fresh agent or reviewer:
+
+```bash
+python3 scripts/render_trigger_eval_prompt.py \
+  research/donor-library/trigger-matrix.json \
+  --repo-root . \
+  --tag smoke
+```
+
+Useful tags include `smoke`, `lookup`, `negative`, `cuda`, `vulkan`, `assets`, `simulation`,
+`ai-runtime`, and `xr`. Use installed-path mode after rollout when the evaluator should inspect the
+user-level Codex install instead of repo-relative source paths:
+
+```bash
+python3 scripts/render_trigger_eval_prompt.py \
+  research/donor-library/trigger-matrix.json \
+  --repo-root . \
+  --tag lookup \
+  --installed-paths
+```
+
+The renderer only prepares prompts and report blanks. It does not call agents or prove trigger
+behavior by itself.
+
 ## Sync And Rollout Details
 
 `sync_to_codex.sh` copies:

@@ -159,3 +159,24 @@ CUDA/Vulkan lane locks. Tests used installed paths under `/home/tarkan/.codex/sk
     requires project-owned CUDA kernels.
 - The CUDA companion donor snippet now points simulation CUDA work to `simulation-gpu.md` and neural 3D
   CUDA work to `neural-3d.md`, instead of implying that every CUDA donor search starts with AI kernels.
+
+## Phase 7 Evaluation Harness
+
+Run date: 2026-04-30
+
+Phase 7 added a repeatable prompt-pack renderer for future manual or subagent trigger reruns:
+
+```bash
+python3 scripts/render_trigger_eval_prompt.py \
+  research/donor-library/trigger-matrix.json \
+  --repo-root . \
+  --tag smoke
+```
+
+Use `--tag lookup` for `agent-lookup.md` routing, `--tag negative` for false-positive checks, and
+`--installed-paths` after rollout when the evaluator should inspect user-level Codex paths. The
+renderer creates evaluation prompts and blank result sections only; it does not call agents or prove
+runtime trigger behavior by itself.
+
+Future reruns should paste or summarize the filled evaluator results back into this file, including
+selected skills, opened files, forbidden paths used, verdicts, and any routing ambiguity.

@@ -76,6 +76,19 @@ def main() -> int:
             if not isinstance(value, str) or not value.strip():
                 errors.append(f"{name}: {field_name} must be a non-empty string")
 
+        tags = case.get("tags", [])
+        if not isinstance(tags, list):
+            errors.append(f"{name}: tags must be a list when present")
+            tags = []
+        seen_tags: set[str] = set()
+        for tag in tags:
+            if not isinstance(tag, str) or not tag.strip():
+                errors.append(f"{name}: tags must contain only non-empty strings")
+                continue
+            if tag in seen_tags:
+                errors.append(f"{name}: duplicate tag {tag!r}")
+            seen_tags.add(tag)
+
         expected_paths = case.get("expected_paths", [])
         if not isinstance(expected_paths, list) or not expected_paths:
             errors.append(f"{name}: expected_paths must not be empty")

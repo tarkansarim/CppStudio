@@ -126,6 +126,24 @@ python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
 python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
     --repo-root "${ROOT_DIR}"
+python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
+    "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+    --repo-root "${ROOT_DIR}" \
+    --tag lookup >/tmp/cppstudio_trigger_eval_lookup.md
+grep -q "agent-lookup.md" /tmp/cppstudio_trigger_eval_lookup.md
+python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
+    "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+    --repo-root "${ROOT_DIR}" \
+    --tag negative \
+    --installed-paths \
+    --codex-home "${ROOT_DIR}/.codex-eval" >/tmp/cppstudio_trigger_eval_negative.md
+grep -q "${ROOT_DIR}/.codex-eval/skills/cpp-cuda-vulkan-studio" /tmp/cppstudio_trigger_eval_negative.md
+expect_failure "unknown trigger eval tag" \
+    python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
+    "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+    --repo-root "${ROOT_DIR}" \
+    --tag not-a-real-tag
+rm -f /tmp/cppstudio_trigger_eval_lookup.md /tmp/cppstudio_trigger_eval_negative.md
 python3 "${ROOT_DIR}/scripts/install_user_agents_relay.py" \
     --preflight \
     --target "$(mktemp -u /tmp/cppstudio_agents_relay.XXXXXX)/AGENTS.md" \
@@ -528,6 +546,23 @@ data["cases"][0]["must_not_trigger_paths"] = [path]
 target.write_text(json.dumps(data), encoding="utf-8")
 PY
 expect_failure "trigger matrix expected/must-not overlap" \
+    python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
+    "${matrix_tmp}" \
+    --repo-root "${ROOT_DIR}"
+rm -f "${matrix_tmp}"
+matrix_tmp="$(mktemp /tmp/cppstudio_trigger_matrix_bad_tags.XXXXXX.json)"
+python3 - "${ROOT_DIR}/research/donor-library/trigger-matrix.json" "${matrix_tmp}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+source = Path(sys.argv[1])
+target = Path(sys.argv[2])
+data = json.loads(source.read_text(encoding="utf-8"))
+data["cases"][0]["tags"] = ["smoke", ""]
+target.write_text(json.dumps(data), encoding="utf-8")
+PY
+expect_failure "trigger matrix empty tag" \
     python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
     "${matrix_tmp}" \
     --repo-root "${ROOT_DIR}"

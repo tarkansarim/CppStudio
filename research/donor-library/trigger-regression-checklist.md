@@ -3,6 +3,19 @@
 Use this checklist when rerunning the donor-library trigger lane with a fresh subagent or reviewer.
 The static validator only proves that paths in `trigger-matrix.json` still exist.
 
+Generate the prompt pack from the matrix instead of hand-copying cases:
+
+```bash
+python3 scripts/render_trigger_eval_prompt.py \
+  research/donor-library/trigger-matrix.json \
+  --repo-root . \
+  --tag smoke
+```
+
+Use `--installed-paths` after rollout when the evaluator should inspect `${SYNC_CODEX_HOME:-$HOME/.codex}`
+paths. Useful tags include `smoke`, `lookup`, `negative`, `cuda`, `vulkan`, `assets`, `simulation`,
+`ai-runtime`, and `xr`.
+
 ## Required Evidence
 
 - Record the run date, agent type, and whether the test used source paths or installed skill paths.
