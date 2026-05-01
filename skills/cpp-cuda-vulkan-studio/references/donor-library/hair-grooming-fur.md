@@ -1,7 +1,7 @@
 # Hair, Grooming, And Fur Donors
 
-Use these donors for strand data, guide/follow interpolation, hair/fur simulation, curve grooming,
-hair rendering, and DCC groom interchange.
+Use these donors for strand data, guide/follow interpolation, hair/fur simulation, feather-like
+strand/card systems, curve grooming, hair rendering, and DCC groom interchange.
 
 ## Runtime Hair And Fur
 
@@ -27,6 +27,9 @@ hair rendering, and DCC groom interchange.
 ## Selection Notes
 
 - For reusable C++/Vulkan/CUDA hair simulation and raster implementation patterns, start with TressFX.
+- For feathers, use this category as the closest creature-groom route. Translate feather cards, barbs,
+  guide curves, LODs, and attachment behavior from hair/fur and groom donors unless a target project
+  provides a dedicated feather donor.
 - For ray-traced hair, hair BSDFs, LSS/DOTS geometry, or RTX path-tracing architecture, inspect RTXCR,
   RTXCR Material Library, and RTXCR Geometry Library after confirming the target project accepts their
   SDK-style dependency and license shape.

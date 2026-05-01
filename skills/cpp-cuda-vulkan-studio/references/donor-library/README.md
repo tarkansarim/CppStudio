@@ -9,12 +9,27 @@ fixtures. Treat donors as domain references first, not permission to copy large 
 ## Progressive Loading
 
 1. Read [selection-policy.md](selection-policy.md) before copying, adapting, or recommending donor code.
-2. If the request is broad, read [agent-lookup.md](agent-lookup.md) and choose the smallest matching
-   category set.
-3. Open exactly one relevant category file first. Category files contain compact donor descriptions and
-   links to deeper profiles only when the task needs them.
-4. Open [profiles/README.md](profiles/README.md) only when the needed category points to a specific
+2. If the request uses VFX, game-studio, or engineering-infrastructure vocabulary, read
+   [production/README.md](production/README.md) and choose one overlay route.
+3. If the request is broad or crosses overlays, read [agent-lookup.md](agent-lookup.md) and choose the
+   smallest matching category set.
+4. Open the smallest matching category set. Choose one primary category first when possible; open
+   secondary categories only when the selected overlay or task requires them.
+5. Open [profiles/README.md](profiles/README.md) only when the needed category points to a specific
    deep profile or when auditing the whole donor inventory.
+
+## Production Overlays
+
+Use these overlays before technical category files when the prompt is phrased in studio or
+engineering discipline terms:
+
+- [production/vfx-studio.md](production/vfx-studio.md): modeling, texturing, rigging, creature FX,
+  look development, lighting, and FX.
+- [production/games.md](production/games.md): character/world art, technical art, gameplay animation,
+  realtime VFX, lighting/post, rendering, tools, physics, and XR games.
+- [production/native-engineering-infrastructure.md](production/native-engineering-infrastructure.md):
+  project templates, CMake/build layout, testing, validation, profiling, CI, dependency policy, and
+  template update safety.
 
 ## Category Router
 
@@ -65,6 +80,12 @@ AI, ML, and kernel infrastructure:
 
 - [ai-runtimes-kernels.md](ai-runtimes-kernels.md): LLM runtimes, inference engines, CUDA kernels,
   ML compilers, graph runtimes, and tensor execution backends.
+
+Native project infrastructure:
+
+- [native-engineering-infrastructure.md](native-engineering-infrastructure.md): project templates,
+  CMake/build layout, dependency policy, testing, validation, static analysis, profiling, GPU CI, and
+  template update safety.
 
 ## Donor Tiers
 

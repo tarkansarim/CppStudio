@@ -38,5 +38,6 @@ compilation, SPIR-V validation, cross-compilation, and multi-target shader workf
 - [Vulkan Memory Allocator](profiles/vulkan-memory-allocator.md): read before adding Vulkan memory allocation or budget policy.
 - [volk](profiles/volk.md): read before changing Vulkan loader or dispatch behavior.
 - [vk-bootstrap](profiles/vk-bootstrap.md): read before adopting instance/device/swapchain bootstrap helpers.
+- [GPU Shader Validation](profiles/gpu-shader-validation.md): read before changing shader CI, SPIR-V validation, Vulkan validation layers, or shader diagnostics infrastructure.
 - [SPIR-V Toolchain](profiles/spirv-toolchain.md): read before changing shader compilation, reflection, validation, or cross-compilation.
 - [Slang](profiles/slang.md): read before adopting Slang for multi-target shader authoring.

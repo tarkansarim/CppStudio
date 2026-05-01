@@ -105,11 +105,11 @@ cmake --build --preset cuda-debug
 ctest --preset cuda --output-on-failure
 ```
 
-For deliberate CUDA plus Vulkan interop work:
+For deliberate combined CUDA plus Vulkan work:
 
 ```bash
-cmake --preset cuda-vulkan-interop
-cmake --build --preset cuda-vulkan-interop
+cmake --preset cuda-vulkan-combined
+cmake --build --preset cuda-vulkan-combined
 ```
 
 ## Existing Repos

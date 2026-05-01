@@ -201,7 +201,7 @@ struct VulkanSmokeContext {
           debug_messenger(create_debug_messenger(instance, debug_utils_enabled, validation_state)) {
         auto selection = select_device(instance);
         if (!selection) {
-            throw std::runtime_error("no Vulkan 1.4 physical device with graphics+compute queue, "
+            throw std::runtime_error("no Vulkan 1.3 physical device with graphics+compute queue, "
                                      "synchronization2, and dynamic rendering");
         }
 

@@ -14,7 +14,7 @@ python3 scripts/render_trigger_eval_prompt.py \
 
 Use `--installed-paths` after rollout when the evaluator should inspect `${SYNC_CODEX_HOME:-$HOME/.codex}`
 paths. Useful tags include `smoke`, `lookup`, `negative`, `cuda`, `vulkan`, `assets`, `geometry`,
-`materials`, `volumes`, `simulation`, `ai-runtime`, and `xr`.
+`materials`, `volumes`, `simulation`, `ai-runtime`, `vfx`, `games`, `infrastructure`, and `xr`.
 
 ## Required Evidence
 
@@ -35,6 +35,15 @@ paths. Useful tags include `smoke`, `lookup`, `negative`, `cuda`, `vulkan`, `ass
 - Broad or overlapping donor prompts such as 3D viewer, renderer, simulation, asset pipeline,
   scientific volume viewer, AI-runtime visualization, or XR app should open `agent-lookup.md` first,
   then the smallest matching category set.
+- VFX studio department prompts should open `production/vfx-studio.md` first, then route to the
+  matching technical categories: modeling, texturing, rigging, creature FX, look development,
+  lighting, or FX.
+- Game studio prompts should open `production/games.md` first, then route to game-appropriate
+  technical categories for character/world art, technical art, gameplay animation, realtime VFX,
+  lighting/post, rendering, tools, physics, or XR games.
+- Native C++ project scaffolding, CMake/build layout, dependency policy, testing, validation,
+  profiling, CI/GPU runner, or template update safety work should route to
+  `native-engineering-infrastructure.md` and its matching profile bundle before domain donors.
 - Vulkan memory allocation, loader/bootstrap, shader reflection, shader compilation, SPIR-V validation,
   or Slang evaluation should route to `vulkan-foundation-tooling.md`.
 - glTF/GLB runtime loading, Vulkan viewers, asset validation, or importer dependency choices should
@@ -88,6 +97,10 @@ paths. Useful tags include `smoke`, `lookup`, `negative`, `cuda`, `vulkan`, `ass
   actions, hand/eye/body/face tracking, passthrough, scene understanding, API layers, or XR frame timing
   should route to `xr-spatial.md` and keep portable OpenXR baseline separate from vendor-specific
   extension references.
+- CMake project templates, template update systems, vcpkg/Conan/CPM/FetchContent, GoogleTest/Catch2,
+  clang-format/clang-tidy, sanitizers, Compute Sanitizer, SPIR-V validation, Tracy, Perfetto,
+  RenderDoc, Nsight, or GitHub self-hosted GPU runners should route to
+  `native-engineering-infrastructure.md` when the prompt is about native project infrastructure.
 - Local LLM inference, production serving, execution-provider routing, ML compilers, fused neural
   kernels, or tensor/autograd reference work should route to `ai-runtimes-kernels.md` and the matching
   llama.cpp/ggml, ONNX Runtime, TensorRT-LLM, vLLM, MLC-LLM, tiny-cuda-nn, TVM, or PyTorch profile.
@@ -111,5 +124,8 @@ paths. Useful tags include `smoke`, `lookup`, `negative`, `cuda`, `vulkan`, `ass
   technical domains explicitly.
 - Generic "AI assistant" application work, ordinary Python ML scripts, or non-C++/GPU/model-runtime
   tasks should not trigger CppStudio lookup or AI-runtime donors.
+- Generic project-management boards, roadmaps, status dashboards, ticket workflows, or frontend admin
+  pages should not trigger Native Engineering Infrastructure unless native C++ build/test/profiling/CI
+  infrastructure is explicitly requested.
 - Non-GPU Python, CLI, parser, virtualenv, or business-simulation work should not trigger CppStudio
   donor routing or `agent-lookup.md`.

@@ -55,13 +55,16 @@ runtime 3D app.
 - Verification priority: tiny imported mesh fixture, meshopt conditioning checks, renderer upload tests,
   BVH/collision fixtures when used, Vulkan validation for Vulkan targets, then offscreen render frames.
 
-## CUDA Plus Vulkan Interop App
+## CUDA Plus Vulkan Combined Or Interop App
 
-Use when CUDA produces or transforms data consumed by Vulkan, or Vulkan resources are shared with CUDA.
+Use when a CUDA-selected project also needs Vulkan presentation, realtime visualization, XR,
+swapchain/display work, or explicit CUDA/Vulkan external-resource sharing.
 
-- Use the explicit `cuda-vulkan-interop` preset. Do not use this archetype for ordinary Vulkan-first
-  projects that merely need GPU compute or rendering.
-- Prove each lane independently before adding external memory or semaphore interop tests.
+- Use the explicit `cuda-vulkan-combined` preset for projects that need both APIs in one build. Do not
+  use this archetype for ordinary Vulkan-first projects that merely need GPU compute or rendering.
+- The combined preset proves CUDA and Vulkan can coexist in the same build. It does not implement
+  external memory, external semaphore, or device-identity handoff by itself.
+- Prove each lane independently before adding real external memory or semaphore interop tests.
 - Read CUDA external resource interop docs, [donor-library/ai-runtimes-kernels.md](donor-library/ai-runtimes-kernels.md),
   and [donor-library/graphics-rendering.md](donor-library/graphics-rendering.md).
 - Verification priority: CUDA reference tests, Vulkan validation, UUID/LUID device matching, imported
@@ -269,6 +272,7 @@ spatial interaction.
 
 If a project matches more than one archetype, choose the narrowest archetype that covers the user-visible
 workflow, then add the adjacent lane as an optional CMake feature. For example, a CUDA library with a
-debug viewer is still a CUDA library first; a renderer with one CUDA denoising pass is an interop app.
+debug viewer is still a CUDA library first; a renderer with one CUDA denoising pass is a
+combined/interop app.
 When the user has not chosen a GPU API, make the initial recommendation and implementation plan
 Vulkan-only.

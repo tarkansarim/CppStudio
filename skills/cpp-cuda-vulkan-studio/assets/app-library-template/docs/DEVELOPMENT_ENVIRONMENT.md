@@ -8,7 +8,7 @@ Required baseline tools:
 - Ninja
 - A C++20 compiler
 - CUDA Toolkit when `PROJECT_ENABLE_CUDA=ON`
-- Vulkan SDK 1.4 or newer when `PROJECT_ENABLE_VULKAN=ON`
+- Vulkan SDK 1.3 or newer when `PROJECT_ENABLE_VULKAN=ON`
 - `glslc` and `spirv-val` for the default GLSL-to-SPIR-V shader workflow
 - A Vulkan ICD/driver when running `vulkan`, `vulkan-compute`, or `vulkan-render` tests
 
@@ -32,8 +32,9 @@ ctest --preset quick --output-on-failure
 ```
 
 The default `dev` preset enables Vulkan and leaves CUDA off. Use `cuda-debug` for CUDA-only work and
-`cuda-vulkan-interop` only when a CUDA-selected lane intentionally needs Vulkan presentation,
-realtime visualization, XR, swapchain/display work, or CUDA/Vulkan interop.
+`cuda-vulkan-combined` only when a CUDA-selected lane intentionally needs Vulkan presentation,
+realtime visualization, XR, or swapchain/display work. The combined preset proves both APIs can build
+together; it does not implement CUDA/Vulkan external-memory or semaphore interop by itself.
 
 The default CUDA architecture is `native`. For release artifacts or shared CI, set
 `PROJECT_CUDA_ARCHITECTURES` to the explicit target SM list for the supported GPU fleet. Use the CUDA
@@ -52,8 +53,9 @@ GPU_ALLOWED_INDICES=<physical-index> PROFILE_LANE=cuda BUILD_DIR=build/cuda-debu
 `GPU_ALLOWED_INDICES` accepts comma, semicolon, or space separated physical indexes. The helper emits a
 single physical index suitable for `CUDA_VISIBLE_DEVICES`.
 
-The default Vulkan API target is `PROJECT_VULKAN_API_VERSION=1.4`. The SDK provides headers,
-shader tools, validation layers, and debugging tools, but it does not install GPU drivers. Use:
+The default Vulkan API target is `PROJECT_VULKAN_API_VERSION=1.3` with synchronization2 and dynamic
+rendering. The SDK provides headers, shader tools, validation layers, and debugging tools, but it
+does not install GPU drivers. Use:
 
 ```bash
 scripts/check_dev_tools.sh

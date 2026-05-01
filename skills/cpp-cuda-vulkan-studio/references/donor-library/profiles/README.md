@@ -3,6 +3,18 @@
 Open this index only after the category router has selected a donor or when auditing the whole donor
 inventory. Category files are the normal second layer; these profiles are the third layer.
 
+## Native Engineering Infrastructure
+
+- [CMake Project Templates](cmake-project-templates.md)
+- [Template Update Systems](template-update-systems.md)
+- [Dependency Management](dependency-management.md)
+- [Testing Infrastructure](testing-infrastructure.md)
+- [Static Analysis And Formatting](static-analysis-formatting.md)
+- [Sanitizer And Validation Lanes](sanitizer-validation-lanes.md)
+- [GPU Shader Validation](gpu-shader-validation.md)
+- [Profiling And Observability](profiling-observability.md)
+- [CI And GPU Runners](ci-gpu-runners.md)
+
 ## AI Runtimes, Kernels, And Compilers
 
 - [CUTLASS](cutlass.md)

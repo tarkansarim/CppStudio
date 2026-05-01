@@ -2,8 +2,9 @@
 
 {{PROJECT_DESCRIPTION}}
 
-This project is scaffolded as a Vulkan-first C++ app and library with optional CUDA and explicit
-CUDA/Vulkan interop lanes.
+This project is scaffolded as a Vulkan-first C++ app and library with optional CUDA and combined
+CUDA plus Vulkan lanes. Real CUDA/Vulkan external-memory or semaphore interop should be added only
+when the project defines that contract deliberately.
 
 ## Validate
 
@@ -21,9 +22,9 @@ cmake --build --preset cuda-debug
 ctest --preset cuda --output-on-failure
 ```
 
-Optional CUDA plus Vulkan interop lane:
+Optional combined CUDA plus Vulkan lane:
 
 ```bash
-cmake --preset cuda-vulkan-interop
-cmake --build --preset cuda-vulkan-interop
+cmake --preset cuda-vulkan-combined
+cmake --build --preset cuda-vulkan-combined
 ```

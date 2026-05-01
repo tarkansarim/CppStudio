@@ -13,10 +13,11 @@
       "cacheVariables": {
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "PROJECT_BUILD_TESTS": "ON",
+        "PROJECT_BUILD_BENCHMARKS": "OFF",
         "PROJECT_ENABLE_CUDA": "OFF",
         "PROJECT_ENABLE_VULKAN": "ON",
         "PROJECT_CUDA_ARCHITECTURES": "native",
-        "PROJECT_VULKAN_API_VERSION": "1.4",
+        "PROJECT_VULKAN_API_VERSION": "1.3",
         "PROJECT_ENABLE_VULKAN_VALIDATION": "OFF",
         "PROJECT_ENABLE_VULKAN_DEBUG_UTILS": "ON",
         "PROJECT_ENABLE_HOST_SANITIZERS": "OFF",
@@ -55,7 +56,7 @@
     {
       "name": "asan-ubsan",
       "inherits": "base",
-      "displayName": "ASan/UBSan host build",
+      "displayName": "ASan/UBSan host build (MSVC ASan-only)",
       "binaryDir": "${sourceDir}/build/asan-ubsan",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
@@ -76,10 +77,10 @@
       }
     },
     {
-      "name": "cuda-vulkan-interop",
+      "name": "cuda-vulkan-combined",
       "inherits": "base",
-      "displayName": "Explicit CUDA plus Vulkan interop build",
-      "binaryDir": "${sourceDir}/build/cuda-vulkan-interop",
+      "displayName": "CUDA plus Vulkan combined build",
+      "binaryDir": "${sourceDir}/build/cuda-vulkan-combined",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "PROJECT_ENABLE_CUDA": "ON",
@@ -114,6 +115,15 @@
       "binaryDir": "${sourceDir}/build/vulkan-validation",
       "cacheVariables": {
         "PROJECT_ENABLE_VULKAN_VALIDATION": "ON"
+      }
+    },
+    {
+      "name": "benchmark",
+      "inherits": "profile",
+      "displayName": "Benchmark smoke build",
+      "binaryDir": "${sourceDir}/build/benchmark",
+      "cacheVariables": {
+        "PROJECT_BUILD_BENCHMARKS": "ON"
       }
     },
     {
@@ -153,8 +163,8 @@
       "jobs": 0
     },
     {
-      "name": "cuda-vulkan-interop",
-      "configurePreset": "cuda-vulkan-interop",
+      "name": "cuda-vulkan-combined",
+      "configurePreset": "cuda-vulkan-combined",
       "jobs": 0
     },
     {
@@ -170,6 +180,11 @@
     {
       "name": "vulkan-validation",
       "configurePreset": "vulkan-validation",
+      "jobs": 0
+    },
+    {
+      "name": "benchmark",
+      "configurePreset": "benchmark",
       "jobs": 0
     },
     {
@@ -296,6 +311,21 @@
       "filter": {
         "include": {
           "label": "quick"
+        }
+      }
+    },
+    {
+      "name": "benchmark",
+      "configurePreset": "benchmark",
+      "output": {
+        "outputOnFailure": true
+      },
+      "filter": {
+        "include": {
+          "label": "benchmark"
+        },
+        "exclude": {
+          "label": "nightly"
         }
       }
     }

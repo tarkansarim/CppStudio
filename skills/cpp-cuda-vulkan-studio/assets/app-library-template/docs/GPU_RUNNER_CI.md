@@ -32,7 +32,7 @@ self-hosted, linux, cuda, vulkan, gpu
 - C++20 compiler
 - CUDA Toolkit when CUDA jobs are enabled
 - NVIDIA driver compatible with the selected CUDA Toolkit
-- Vulkan SDK 1.4 or newer when Vulkan jobs are enabled
+- Vulkan SDK 1.3 or newer when Vulkan jobs are enabled
 - `glslc`, `spirv-val`, and `vulkaninfo`
 - `compute-sanitizer` for scheduled/manual CUDA sanitizer jobs
 - `nsys` for profiling smoke jobs

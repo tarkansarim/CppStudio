@@ -104,8 +104,22 @@ endif()
 project_set_warnings({{PROJECT_NAME_LOWER}}_app)
 project_enable_host_sanitizers({{PROJECT_NAME_LOWER}}_app)
 
+if(PROJECT_BUILD_BENCHMARKS)
+    add_executable({{PROJECT_NAME_LOWER}}_benchmark_smoke
+        benchmarks/benchmark_smoke.cpp
+    )
+    target_link_libraries({{PROJECT_NAME_LOWER}}_benchmark_smoke PRIVATE {{PROJECT_NAME}}::core)
+    project_set_warnings({{PROJECT_NAME_LOWER}}_benchmark_smoke)
+    project_enable_host_sanitizers({{PROJECT_NAME_LOWER}}_benchmark_smoke)
+endif()
+
 if(PROJECT_BUILD_TESTS)
     include(Testing)
+
+    if(PROJECT_BUILD_BENCHMARKS)
+        add_test(NAME {{PROJECT_NAME_LOWER}}_benchmark_smoke COMMAND {{PROJECT_NAME_LOWER}}_benchmark_smoke)
+        set_tests_properties({{PROJECT_NAME_LOWER}}_benchmark_smoke PROPERTIES LABELS "perf;benchmark")
+    endif()
 
     add_executable({{PROJECT_NAME_LOWER}}_core_test
         tests/unit/core_test.cpp

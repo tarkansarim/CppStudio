@@ -1,9 +1,11 @@
 # Donor Source Map
 
 Accessed: 2026-04-30
+Expanded: 2026-05-01
 
-This source map lists the first-pass donor candidates for 3D, graphics, GPU, and AI work. License
-notes are routing signals, not a replacement for checking the upstream license file before reuse.
+This source map lists the first-pass donor candidates for 3D, graphics, GPU, AI, production-routing,
+and native engineering infrastructure work. License notes are routing signals, not a replacement for
+checking the upstream license file before reuse.
 
 Language/runtime caveat: `safe-donor` does not mean "direct native C++ donor." Python, JavaScript,
 TypeScript, notebook, JIT/DSL, service-runtime, web-engine, DCC-script, model, dataset, and asset
@@ -171,3 +173,23 @@ selection and caveats.
 | Muscles, flesh, soft tissue, biomechanics, anatomical references | [muscle-flesh-biomechanics.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/muscle-flesh-biomechanics.md) | [muscle-flesh-biomechanics.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/muscle-flesh-biomechanics.md) | Biomechanics versus realtime deformation routing with data/model caveats. |
 | Medical/scientific volume IO, DICOM/NIfTI, transfer functions, large arrays | [medical-scientific-volumes.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/medical-scientific-volumes.md) | [medical-scientific-volume-io.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/medical-scientific-volume-io.md) | Medical/scientific dense-volume routing with patient-data caveats. |
 | XR interaction, vendor extensions, spatial input, API layers, multi-GPU XR | [xr-spatial.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/xr-spatial.md) | [xr-interaction-spatial-input.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/xr-interaction-spatial-input.md) | Portable OpenXR plus vendor/system/performance reference routing. |
+
+## 2026-05-01 Production Routing And Native Infrastructure
+
+These additions add production-language overlays and a coding-infrastructure donor category without
+duplicating the canonical technical donor files.
+
+| Source Bundle | Routing File | Deep Profile | Signal |
+| --- | --- | --- | --- |
+| VFX studio departments: modeling, texturing, rigging, creature FX, look development, lighting, FX | [vfx-studio.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/production/vfx-studio.md) | Existing technical categories | Production overlay for VFX/animation department vocabulary. |
+| Game studio disciplines: character/world art, technical art, gameplay animation, realtime VFX, rendering, tools, physics, XR games | [games.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/production/games.md) | Existing technical categories | Production overlay for game-studio and realtime-engine vocabulary. |
+| Native engineering infrastructure routing: templates, build, dependency, testing, validation, profiling, CI, update safety | [native-engineering-infrastructure.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md) | Native infrastructure profiles | Canonical coding-infrastructure donor category. |
+| CMake templates, cmake-init, cpp-best-practices/cmake_template, modern-cpp-template, Pitchfork | [native-engineering-infrastructure.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md) | [cmake-project-templates.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/cmake-project-templates.md) | C++ project layout and CMake template donors. |
+| Copier, Cruft, Cookiecutter, Yeoman | [native-engineering-infrastructure.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md) | [template-update-systems.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/template-update-systems.md) | Update-aware template and scaffold workflow donors. |
+| vcpkg, Conan, CPM.cmake, CMake FetchContent | [native-engineering-infrastructure.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md) | [dependency-management.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/dependency-management.md) | Native dependency and package-policy donors. |
+| GoogleTest, Catch2, doctest, Google Benchmark, CTest/GoogleTest CMake integration | [native-engineering-infrastructure.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md) | [testing-infrastructure.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/testing-infrastructure.md) | Test harness and benchmark donor set. |
+| clang-format, clang-tidy, include-what-you-use, cppcheck | [native-engineering-infrastructure.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md) | [static-analysis-formatting.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/static-analysis-formatting.md) | Static-analysis and formatting donor set. |
+| LLVM sanitizers and NVIDIA Compute Sanitizer | [native-engineering-infrastructure.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md) | [sanitizer-validation-lanes.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/sanitizer-validation-lanes.md) | CPU/GPU sanitizer lane references. |
+| SPIRV-Tools, shaderc, glslang, Vulkan ValidationLayers | [native-engineering-infrastructure.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md) | [gpu-shader-validation.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/gpu-shader-validation.md) | Shader and Vulkan validation lane donors. |
+| Tracy, Perfetto, RenderDoc, Nsight Systems | [native-engineering-infrastructure.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md) | [profiling-observability.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/profiling-observability.md) | Profiling and observability donor set. |
+| GitHub Actions self-hosted runners, Actions runner, NVIDIA container toolkit | [native-engineering-infrastructure.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md) | [ci-gpu-runners.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/ci-gpu-runners.md) | GPU CI and runner infrastructure references. |

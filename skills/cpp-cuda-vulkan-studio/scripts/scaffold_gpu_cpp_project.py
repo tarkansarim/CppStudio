@@ -226,8 +226,8 @@ def main() -> int:
     print("  ctest --preset quick --output-on-failure")
     print("Optional CUDA lane:")
     print("  cmake --preset cuda-debug && cmake --build --preset cuda-debug && ctest --preset cuda --output-on-failure")
-    print("Optional mixed CUDA/Vulkan lane:")
-    print("  cmake --preset cuda-vulkan-interop && cmake --build --preset cuda-vulkan-interop")
+    print("Optional combined CUDA plus Vulkan lane:")
+    print("  cmake --preset cuda-vulkan-combined && cmake --build --preset cuda-vulkan-combined")
     return 0
 
 

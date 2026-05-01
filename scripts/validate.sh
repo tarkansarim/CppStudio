@@ -85,6 +85,16 @@ if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
             exit 1
         fi
     done
+    maintainer_path_pattern="/home/tar""kan"
+    maintainer_path_hits="$(
+        git -C "${ROOT_DIR}" grep -n "${maintainer_path_pattern}" -- \
+            "*.md" "*.py" "*.sh" "*.json" "*.yml" "*.yaml" "*.txt" || true
+    )"
+    if [[ -n "${maintainer_path_hits}" ]]; then
+        printf "%s\n" "${maintainer_path_hits}" >&2
+        echo "Maintainer-local absolute paths must not be shipped in tracked public text" >&2
+        exit 1
+    fi
 fi
 
 expect_failure() {
@@ -160,19 +170,55 @@ python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
 python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
     --repo-root "${ROOT_DIR}"
+python3 - "${SKILL_DIR}/assets/app-library-template/.github/workflows/gpu-cpp.yml" <<'PY'
+import sys
+from pathlib import Path
+
+workflow = Path(sys.argv[1]).read_text(encoding="utf-8")
+expected_conditions = {
+    "toolcheck": "github.event_name == 'push' || github.event_name == 'pull_request'",
+    "build-dev": "github.event_name == 'push' || github.event_name == 'pull_request'",
+    "quick-tests": "github.event_name == 'push' || github.event_name == 'pull_request'",
+    "gpu-smoke": "github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'",
+    "vulkan-shader": "github.event_name == 'push' || github.event_name == 'pull_request'",
+    "vulkan-runtime": "github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'",
+    "vulkan-validation": "github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'",
+    "compute-sanitizer": "github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'",
+    "profile-smoke": "github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'",
+}
+missing = [
+    job for job, condition in expected_conditions.items()
+    if f"  {job}:\n    if: {condition}\n" not in workflow
+]
+if missing:
+    raise SystemExit("workflow jobs missing expected event guards: " + ", ".join(missing))
+PY
 trigger_lookup_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_lookup.XXXXXX.md")"
 python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
     --repo-root "${ROOT_DIR}" \
     --tag lookup >"${trigger_lookup_md}"
 grep -q "agent-lookup.md" "${trigger_lookup_md}"
-for trigger_tag in dcc materials volumes; do
+for trigger_tag in dcc materials volumes vfx games infrastructure; do
     trigger_tag_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_${trigger_tag}.XXXXXX.md")"
     python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
         "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
         --repo-root "${ROOT_DIR}" \
         --tag "${trigger_tag}" >"${trigger_tag_md}"
-    grep -q "${trigger_tag}" "${trigger_tag_md}"
+    case "${trigger_tag}" in
+        vfx)
+            grep -q "production/vfx-studio.md" "${trigger_tag_md}"
+            ;;
+        games)
+            grep -q "production/games.md" "${trigger_tag_md}"
+            ;;
+        infrastructure)
+            grep -q "native-engineering-infrastructure.md" "${trigger_tag_md}"
+            ;;
+        *)
+            grep -q "${trigger_tag}" "${trigger_tag_md}"
+            ;;
+    esac
 done
 trigger_negative_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_negative.XXXXXX.md")"
 python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
@@ -907,6 +953,63 @@ rm -rf "${ROOT_DIR}/scripts/__pycache__"
 rm -rf "${SKILL_DIR}/scripts/__pycache__"
 bash -n "${ROOT_DIR}"/scripts/*.sh
 bash -n "${SKILL_DIR}"/scripts/*.sh
+nsys_fake_dir="$(mktemp -d "${VALIDATE_TMP}/nsys_fake.XXXXXX")"
+cat >"${nsys_fake_dir}/nsys" <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+
+case "$1" in
+    profile)
+        shift
+        output_prefix=""
+        while (($# > 0)); do
+            case "$1" in
+                --output=*)
+                    output_prefix="${1#--output=}"
+                    shift
+                    ;;
+                --*)
+                    shift
+                    ;;
+                *)
+                    break
+                    ;;
+            esac
+        done
+        if [[ -z "${output_prefix}" ]]; then
+            echo "missing --output" >&2
+            exit 2
+        fi
+        printf "%s\n" "$@" >"${NSYS_ARGV_CAPTURE:?}"
+        touch "${output_prefix}.nsys-rep"
+        ;;
+    stats)
+        printf "stats for %s\n" "$2"
+        ;;
+    *)
+        echo "unexpected nsys command: $1" >&2
+        exit 2
+        ;;
+esac
+EOF
+chmod +x "${nsys_fake_dir}/nsys"
+nsys_arg_capture="$(mktemp "${VALIDATE_TMP}/nsys_argv.XXXXXX")"
+PATH="${nsys_fake_dir}:${PATH}" \
+    NSYS_ARGV_CAPTURE="${nsys_arg_capture}" \
+    NSYS_OUTPUT_DIR="${VALIDATE_TMP}/nsys_arg_out" \
+    "${SKILL_DIR}/scripts/run_nsys_smoke.sh" \
+    "${VALIDATE_TMP}/app with spaces" \
+    "--flag" \
+    "value with spaces"
+grep -Fx "${VALIDATE_TMP}/app with spaces" "${nsys_arg_capture}"
+grep -Fx -- "--flag" "${nsys_arg_capture}"
+grep -Fx "value with spaces" "${nsys_arg_capture}"
+expect_failure "APP_COMMAND rejects shell-split command strings" "APP_COMMAND must be a single executable path without whitespace" \
+    env PATH="${nsys_fake_dir}:${PATH}" \
+    NSYS_ARGV_CAPTURE="${nsys_arg_capture}" \
+    NSYS_OUTPUT_DIR="${VALIDATE_TMP}/nsys_bad_app_command" \
+    APP_COMMAND="${VALIDATE_TMP}/app with spaces --flag" \
+    "${SKILL_DIR}/scripts/run_nsys_smoke.sh"
 
 if (( full )); then
     sample_dir="$(mktemp -d "${VALIDATE_TMP}/generated_project.XXXXXX")"
@@ -929,8 +1032,11 @@ if (( full )); then
         cmake --preset cuda-debug
         cmake --build --preset cuda-debug
         ctest --preset cuda --output-on-failure --no-tests=error
-        cmake --preset cuda-vulkan-interop
-        cmake --build --preset cuda-vulkan-interop
+        cmake --preset cuda-vulkan-combined
+        cmake --build --preset cuda-vulkan-combined
+        cmake --preset benchmark
+        cmake --build --preset benchmark
+        ctest --preset benchmark --output-on-failure --no-tests=error
         cmake --preset asan-ubsan
         cmake --build --preset asan-ubsan
         ctest --preset asan-ubsan-quick --output-on-failure --no-tests=error

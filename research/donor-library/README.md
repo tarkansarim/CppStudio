@@ -1,9 +1,10 @@
-# 3D And AI Donor Library Research
+# 3D, AI, And Native Infrastructure Donor Library Research
 
 Generated: 2026-04-30
 Expanded: 2026-05-01
 
-This folder records the research basis for the reusable donor library wired into
+This folder records the research basis for the reusable donor library and production routing overlays
+wired into
 `skills/cpp-cuda-vulkan-studio/references/donor-library/`.
 
 The installed skill should use the reference files under the skill directory. This research folder is
@@ -36,4 +37,5 @@ The main skill now points agents to:
   geometry/simulation, AI runtimes/kernels, ML compilers, neural 3D, hair/grooming/fur, DCC scene
   pipelines, volumes/voxels, medical/scientific volumes, animation/rigging, VFX/particles,
   surfaces/subdivision, texture/material/color, assets/NURBS, BIM/IFC, terrain/geospatial,
-  CAD/precision geometry, advanced simulation, muscle/flesh/biomechanics, and XR/spatial work.
+  CAD/precision geometry, advanced simulation, muscle/flesh/biomechanics, XR/spatial work, VFX studio
+  and games production overlays, and native engineering infrastructure.

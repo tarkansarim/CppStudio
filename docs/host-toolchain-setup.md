@@ -35,7 +35,7 @@ sudo apt install -y --no-install-recommends \
 sanitizer smoke builds worked with the `build-essential` runtime set; Clang sanitizer smoke builds
 failed without the Clang runtime package.
 
-Install the LunarG Vulkan SDK for Vulkan 1.4 headers, shader tools, validation layers, and SDK
+Install the LunarG Vulkan SDK for Vulkan 1.3 or newer headers, shader tools, validation layers, and SDK
 environment variables:
 
 ```bash
@@ -60,8 +60,9 @@ vulkaninfo --summary
 
 The latest Linux SDK endpoint resolved to `1.4.341.1` during the Docker check. Ubuntu 24.04 distro
 packages such as `glslc`, `spirv-tools`, `vulkan-tools`, and `libvulkan-dev` installed successfully,
-but their Vulkan header version was `275` from a 1.3-era package set. Use the LunarG SDK above for
-the shipped Vulkan 1.4-oriented template unless you intentionally target the distro Vulkan stack.
+and their Vulkan header version was `275` from a Vulkan 1.3-era package set. The generated template
+targets Vulkan 1.3, but the LunarG SDK above is still the preferred route when you want matching SDK
+tools, validation layers, and current diagnostics.
 
 Install CUDA Toolkit on a real Ubuntu 24.04 host:
 

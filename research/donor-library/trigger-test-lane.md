@@ -21,17 +21,15 @@ checks only that referenced skill and donor files still exist. Use
 
 ## Focused Installed-Skill Rerun
 
-After the first lane, the rollout script was found to be writing empty companion-skill marker blocks
-for `cuda-kernel-authoring` and `vulkan-compute-sync`. The bug was in `scripts/rollout_to_codex.sh`:
-legacy cleanup ran after marker replacement and removed the newly inserted block body. The script now
-cleans legacy text first, then replaces or inserts the marked block.
+After the first lane, installed companion-skill donor blocks needed a focused rerun to prove marker
+replacement, legacy cleanup, and installed-path routing behaved consistently after rollout.
 
-Focused reruns used only installed paths under `/home/tarkan/.codex`:
+Focused reruns used installed paths under `${CODEX_HOME:-${HOME}/.codex}`:
 
 | Case | Expected Installed Paths | Observed Result |
 | --- | --- | --- |
-| CUDA focused | `/home/tarkan/.codex/skills/cuda-kernel-authoring/SKILL.md`, installed donor policy, `ai-runtimes-kernels.md` | Passed. Agent read installed skill files and selected FlashAttention, CUTLASS, tiny-cuda-nn, Triton. |
-| Vulkan focused | `/home/tarkan/.codex/skills/vulkan-compute-sync/SKILL.md`, installed donor policy, `graphics-rendering.md` | Passed. Agent read installed skill files and selected Khronos Vulkan-Samples first, NVIDIA vk_mini_samples second. |
+| CUDA focused | `${CODEX_HOME:-${HOME}/.codex}/skills/cuda-kernel-authoring/SKILL.md`, installed donor policy, `ai-runtimes-kernels.md` | Passed. Agent read installed skill files and selected FlashAttention, CUTLASS, tiny-cuda-nn, Triton. |
+| Vulkan focused | `${CODEX_HOME:-${HOME}/.codex}/skills/vulkan-compute-sync/SKILL.md`, installed donor policy, `graphics-rendering.md` | Passed. Agent read installed skill files and selected Khronos Vulkan-Samples first, NVIDIA vk_mini_samples second. |
 
 ## Findings
 
@@ -83,7 +81,7 @@ and project archetype reference after rollout.
 Run date: 2026-04-30
 
 This lane re-tested the added 3D donor categories, deep profiles, rollout guards, and companion links
-from installed paths under `/home/tarkan/.codex/skills`.
+from installed paths under `${CODEX_HOME:-${HOME}/.codex}/skills`.
 
 | Case | Prompt Shape | Observed Result |
 | --- | --- | --- |
@@ -117,7 +115,7 @@ Run date: 2026-04-30
 
 This lane re-tested gaps found during adversarial review: subdivision/surface routing, advanced
 simulation routing, and a negative non-3D business simulation prompt. Tests used installed paths under
-`/home/tarkan/.codex/skills` after rollout.
+`${CODEX_HOME:-${HOME}/.codex}/skills` after rollout.
 
 | Case | Prompt Shape | Observed Result |
 | --- | --- | --- |
@@ -139,7 +137,8 @@ simulation routing, and a negative non-3D business simulation prompt. Tests used
 Run date: 2026-04-30
 
 This lane re-tested the donor-library change that makes donors domain references first instead of
-CUDA/Vulkan lane locks. Tests used installed paths under `/home/tarkan/.codex/skills` after rollout.
+CUDA/Vulkan lane locks. Tests used installed paths under `${CODEX_HOME:-${HOME}/.codex}/skills` after
+rollout.
 
 | Case | Prompt Shape | Observed Result |
 | --- | --- | --- |
@@ -193,7 +192,7 @@ This lane split the full 50-case trigger matrix across five read-only subagents:
 | Assets, DCC, volumes, materials, CAD, geometry, physics | 13 positive cases | Passed. One evaluator opened the matrix early, so this lane is weaker behavioral evidence, but the selected donor categories matched expected routing and avoided forbidden AI-runtime donors. |
 | CUDA, AI runtime, neural 3D, simulation, backend-mismatch | 14 positive cases | 13 passed directly. The generic CUDA simulation/geometry backend-mismatch case exposed that the matrix expected TressFX even though the prompt did not mention hair, fur, grooming, or strands. |
 | Negative controls | 13 negative cases | Passed. Generic AI assistant, web UI, game design, video editing, image upload, CAD mockup, VR storyboarding, Python ML, text rendering, import, JSON, shader-text, and Python CLI prompts did not route into CppStudio donor files. |
-| Installed-path smoke | 7 smoke cases | Passed. Installed `AGENTS.md`, installed `cpp-cuda-vulkan-studio`, and installed companion donor blocks routed to `/home/tarkan/.codex/skills/cpp-cuda-vulkan-studio/references/donor-library/...`. |
+| Installed-path smoke | 7 smoke cases | Passed. Installed `AGENTS.md`, installed `cpp-cuda-vulkan-studio`, and installed companion donor blocks routed to `${CODEX_HOME:-${HOME}/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/...`. |
 
 ## Extensive Lane Findings
 

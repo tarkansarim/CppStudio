@@ -1,11 +1,11 @@
 ---
 name: cppstudio-repo-onboarding
-description: "Use when starting work in /home/tarkan/Dropbox/work/MyTools/CppStudio. Explains that this repo is the canonical source for the user-level cpp-cuda-vulkan-studio Codex skill, how to edit and validate it, how to sync it to ~/.codex/skills, and what project-specific content must not be added here."
+description: "Use when starting work in the CppStudio repo. Explains that this repo is the canonical source for the user-level cpp-cuda-vulkan-studio Codex skill, how to edit and validate it, how to sync it to ~/.codex/skills, and what project-specific content must not be added here."
 ---
 
 # CppStudio Repo Onboarding
 
-Use this skill before editing anything in `/home/tarkan/Dropbox/work/MyTools/CppStudio`.
+Use this skill before editing anything in the CppStudio repo.
 
 ## What This Repo Is
 

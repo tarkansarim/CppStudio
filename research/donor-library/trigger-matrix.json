@@ -738,6 +738,98 @@
       ]
     },
     {
+      "name": "vfx-creature-fx-production-overlay",
+      "tags": ["positive", "vfx", "simulation"],
+      "prompt_shape": "VFX pipeline request for creature FX: groom, fur, feathers, skin sliding, muscles, flesh, and secondary motion for a native C++/Vulkan tool.",
+      "expected_behavior": "Open the VFX studio production overlay, then route creature FX to hair/grooming, muscle/flesh, and simulation categories without treating the overlay as a donor silo.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/production/vfx-studio.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/hair-grooming-fur.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/muscle-flesh-biomechanics.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/simulation-gpu.md"
+      ]
+    },
+    {
+      "name": "vfx-lookdev-lighting-production-overlay",
+      "tags": ["positive", "vfx", "materials", "rendering"],
+      "prompt_shape": "VFX look development and lighting request for shader/material response, hair or skin appearance, HDRI lighting, shadows, and render debug views in a native renderer.",
+      "expected_behavior": "Open the VFX studio production overlay, then route lookdev and lighting to texture/material/color, graphics-rendering, volume/hair categories as needed.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/production/vfx-studio.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/texture-material-color.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/hair-grooming-fur.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "games-technical-art-tools-production-overlay",
+      "tags": ["positive", "games", "infrastructure", "assets"],
+      "prompt_shape": "Game technical art or tools request for artist-facing exporters, asset cooking, shader/material validation, DCC handoff, and repeated build/cook workflow in C++.",
+      "expected_behavior": "Open the games production overlay, then route technical art/tools work through native engineering infrastructure plus asset and rendering categories.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/production/games.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/assets-meshes-materials.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md"
+      ]
+    },
+    {
+      "name": "games-realtime-vfx-production-overlay",
+      "tags": ["positive", "games", "vfx", "simulation"],
+      "prompt_shape": "Game renderer request for realtime VFX: particles, impacts, magic, explosions, decals, weather, GPU sorting, and frame-budgeted visual effects.",
+      "expected_behavior": "Open the games production overlay, then route realtime visual effects to vfx-particles first and simulation-gpu only when solver physics is needed.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/production/games.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/vfx-particles.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vfx-particles-gpu-driven.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "native-project-scaffolding-infrastructure",
+      "tags": ["smoke", "positive", "infrastructure"],
+      "prompt_shape": "Create or upgrade native C++/Vulkan project infrastructure with app/library layout, CMake presets, dependency policy, CTest labels, validation scripts, and update-safe template behavior.",
+      "expected_behavior": "Route to Native Engineering Infrastructure, project archetypes, and the CMake/template update profiles before choosing domain donors.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/production/native-engineering-infrastructure.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/cmake-project-templates.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/template-update-systems.md"
+      ]
+    },
+    {
+      "name": "gpu-validation-profiling-infrastructure",
+      "tags": ["positive", "infrastructure", "vulkan", "cuda"],
+      "prompt_shape": "Add native GPU validation and profiling infrastructure: Vulkan validation layers, SPIR-V validation, Compute Sanitizer, ASan/UBSan, RenderDoc, Nsight, Tracy, Perfetto, and CI artifacts.",
+      "expected_behavior": "Route to Native Engineering Infrastructure and the validation/profiling profiles; use Vulkan or CUDA domain donors only for backend-specific implementation details.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/sanitizer-validation-lanes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/gpu-shader-validation.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/profiling-observability.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/ci-gpu-runners.md"
+      ]
+    },
+    {
+      "name": "generic-project-management-negative-control",
+      "tags": ["negative", "infrastructure"],
+      "prompt_shape": "Create a project management board, roadmap, ticket workflow, status dashboard, or frontend admin view with no native C++, CMake, GPU validation, build system, profiling, CI runner, Vulkan, CUDA, or generated project infrastructure scope.",
+      "expected_behavior": "Do not route to Native Engineering Infrastructure for ordinary planning, admin, or frontend project-management work.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/production/native-engineering-infrastructure.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md"
+      ]
+    },
+    {
       "name": "python-ml-script-negative-control",
       "tags": ["negative", "ai-runtime"],
       "prompt_shape": "Ordinary Python scikit-learn, pandas, notebook, or training script work with no C++ extension, GPU kernel, model runtime integration, CUDA, Vulkan, or 3D scope.",

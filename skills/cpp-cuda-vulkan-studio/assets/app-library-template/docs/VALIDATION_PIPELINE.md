@@ -20,6 +20,9 @@ cmake --build --preset asan-ubsan
 ctest --preset asan-ubsan-quick --output-on-failure
 ```
 
+The `asan-ubsan` preset uses ASan+UBSan on Clang/GCC-style toolchains. On MSVC it enables
+AddressSanitizer only because MSVC does not provide the same UBSan lane.
+
 GPU gate:
 
 ```bash
@@ -47,8 +50,8 @@ GPU_ALLOWED_INDICES=<physical-index> scripts/run_compute_sanitizer.sh
 Vulkan shader gate:
 
 ```bash
-cmake --preset dev
-cmake --build --preset dev
+cmake --preset vulkan-debug
+cmake --build --preset vulkan-debug
 ctest --preset vulkan-shader --output-on-failure
 ```
 
@@ -70,7 +73,16 @@ scripts/run_vulkan_validation.sh
 
 Run `ctest --preset vulkan-compute` for compute dispatch coverage and
 `ctest --preset vulkan-render` for the headless offscreen dynamic-rendering smoke test. These lanes
-require a usable Vulkan ICD with a Vulkan 1.4 physical device and a graphics+compute queue.
+require a usable Vulkan ICD with a Vulkan 1.3 physical device, synchronization2, dynamic rendering,
+and a graphics+compute queue.
+
+Benchmark smoke gate:
+
+```bash
+cmake --preset benchmark
+cmake --build --preset benchmark
+ctest --preset benchmark --output-on-failure
+```
 
 Use `scripts/dump_vulkan_capabilities.sh` when a Vulkan runtime lane fails before changing code. The
 failure class matters: missing SDK tools, missing loader, missing ICD, no physical devices,

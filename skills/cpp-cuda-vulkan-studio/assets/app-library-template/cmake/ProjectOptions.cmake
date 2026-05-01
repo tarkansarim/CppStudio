@@ -1,4 +1,5 @@
 option(PROJECT_BUILD_TESTS "Build project tests" ON)
+option(PROJECT_BUILD_BENCHMARKS "Build project benchmark smoke targets" OFF)
 option(PROJECT_ENABLE_CUDA "Enable CUDA language support and CUDA targets" OFF)
 option(PROJECT_ENABLE_VULKAN "Enable Vulkan discovery and Vulkan targets" ON)
 option(PROJECT_ENABLE_VULKAN_VALIDATION "Enable Vulkan validation-layer requests in sample code" OFF)
@@ -9,7 +10,7 @@ option(PROJECT_ENABLE_CLANG_TIDY "Enable clang-tidy through CMake" OFF)
 option(PROJECT_WARNINGS_AS_ERRORS "Treat project warnings as errors" OFF)
 
 set(PROJECT_CUDA_ARCHITECTURES "native" CACHE STRING "CUDA architectures for project CUDA targets")
-set(PROJECT_VULKAN_API_VERSION "1.4" CACHE STRING "Vulkan API version required for project Vulkan targets")
+set(PROJECT_VULKAN_API_VERSION "1.3" CACHE STRING "Vulkan API version required for project Vulkan targets")
 
 if(PROJECT_ENABLE_CLANG_TIDY)
     find_program(PROJECT_CLANG_TIDY_EXE NAMES clang-tidy REQUIRED)

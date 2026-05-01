@@ -48,8 +48,11 @@ fi
 if (( "$#" > 0 )); then
     command_to_run=("$@")
 elif [[ -n "${APP_COMMAND:-}" ]]; then
-    # shellcheck disable=SC2206
-    command_to_run=(${APP_COMMAND})
+    if [[ "${APP_COMMAND}" =~ [[:space:]] ]]; then
+        echo "APP_COMMAND must be a single executable path without whitespace; pass command and args directly to run_nsys_smoke.sh" >&2
+        exit 2
+    fi
+    command_to_run=("${APP_COMMAND}")
 else
     app_candidate="$(find "${build_dir}" -maxdepth 1 -type f -perm -111 -name '*_app' | sort | head -n 1 || true)"
     if [[ -z "${app_candidate}" ]]; then

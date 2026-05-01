@@ -16,6 +16,29 @@ targets, then implement through the active lane skill.
 
 ## Prompt Intent Map
 
+- **VFX studio department terms such as modeling, texturing, rigging, creature FX, look development,
+  lighting, or FX**: open [production/vfx-studio.md](production/vfx-studio.md) first, then the
+  smallest technical category set it names. Use department language only as a router; keep
+  [selection-policy.md](selection-policy.md) and category profile caveats authoritative.
+- **Game studio terms such as character art, environment/world art, technical art, gameplay
+  animation, realtime VFX, lighting/post, rendering, tools/pipeline engineering, physics, or XR
+  games**: open [production/games.md](production/games.md) first, then the smallest technical category
+  set it names. Consider runtime budgets, platform constraints, asset cooking, and repeated iteration
+  before choosing dependency-heavy donors.
+- **Native engineering infrastructure, project scaffolding, CMake/build layout, dependency policy,
+  testing, validation, profiling, CI, GPU runners, or template update safety**: open
+  [production/native-engineering-infrastructure.md](production/native-engineering-infrastructure.md)
+  and [native-engineering-infrastructure.md](native-engineering-infrastructure.md). Start with
+  [CMake Project Templates](profiles/cmake-project-templates.md),
+  [Template Update Systems](profiles/template-update-systems.md),
+  [Dependency Management](profiles/dependency-management.md),
+  [Testing Infrastructure](profiles/testing-infrastructure.md),
+  [Static Analysis And Formatting](profiles/static-analysis-formatting.md),
+  [Sanitizer And Validation Lanes](profiles/sanitizer-validation-lanes.md),
+  [GPU Shader Validation](profiles/gpu-shader-validation.md),
+  [Profiling And Observability](profiles/profiling-observability.md), or
+  [CI And GPU Runners](profiles/ci-gpu-runners.md) depending on the infrastructure request. Do not
+  route generic project-management, frontend, or non-native app work here.
 - **Vulkan setup, memory, shaders, descriptors, validation**: open
   [vulkan-foundation-tooling.md](vulkan-foundation-tooling.md). Start with
   [Khronos Vulkan-Samples](profiles/khronos-vulkan-samples.md),

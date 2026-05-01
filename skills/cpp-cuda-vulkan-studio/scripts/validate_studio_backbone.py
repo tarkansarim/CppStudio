@@ -44,12 +44,14 @@ REQUIRED_CONFIGURE_PRESETS = {
     "profile",
     "asan-ubsan",
     "cuda-debug",
-    "cuda-vulkan-interop",
+    "cuda-vulkan-combined",
     "vulkan-debug",
     "vulkan-portability",
     "vulkan-validation",
+    "benchmark",
     "ci-gpu",
 }
+REQUIRED_BUILD_PRESETS = REQUIRED_CONFIGURE_PRESETS
 REQUIRED_TEST_PRESETS = {
     "quick",
     "gpu",
@@ -60,6 +62,7 @@ REQUIRED_TEST_PRESETS = {
     "vulkan-render",
     "vulkan-validation",
     "asan-ubsan-quick",
+    "benchmark",
 }
 
 
@@ -161,13 +164,18 @@ def main() -> int:
             failures.append(f"CMakePresets.json is invalid JSON: {error}")
         else:
             configure, configure_errors = named_presets(presets, "configurePresets")
+            builds, build_errors = named_presets(presets, "buildPresets")
             tests, test_errors = named_presets(presets, "testPresets")
             failures.extend(configure_errors)
+            failures.extend(build_errors)
             failures.extend(test_errors)
             missing_configure = REQUIRED_CONFIGURE_PRESETS - configure
+            missing_builds = REQUIRED_BUILD_PRESETS - builds
             missing_tests = REQUIRED_TEST_PRESETS - tests
             if missing_configure:
                 failures.append("missing configure presets: " + ", ".join(sorted(missing_configure)))
+            if missing_builds:
+                failures.append("missing build presets: " + ", ".join(sorted(missing_builds)))
             if missing_tests:
                 failures.append("missing test presets: " + ", ".join(sorted(missing_tests)))
 

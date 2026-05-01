@@ -5,10 +5,22 @@ When choosing external 3D, graphics, GPU, AI-runtime, or ML-kernel dependencies,
 - `{{DONOR_ROOT}}/README.md`
 - `{{DONOR_ROOT}}/selection-policy.md`
 - `{{DONOR_ROOT}}/agent-lookup.md` when more than one donor category could fit the dependency request
+- `{{DONOR_ROOT}}/production/native-engineering-infrastructure.md` when the request is about project
+  scaffolding, build/test/profiling lanes, CI, dependency policy, or template update safety
+- `{{DONOR_ROOT}}/native-engineering-infrastructure.md` for CMake/project templates, testing,
+  validation, static analysis, dependency management, profiling, and GPU CI donors
 - `{{REFERENCE_ROOT}}/project-archetypes.md`
 
 Use permissive donors for reusable code. Keep study-only references out of templates and shared
 infrastructure.
+
+For native C++ project infrastructure, route through
+`{{DONOR_ROOT}}/native-engineering-infrastructure.md` before proposing CMake templates, package
+managers, test frameworks, sanitizer lanes, profiling integrations, GPU CI, or update workflows. Treat
+cmake-init, cpp-best-practices/cmake_template, modern-cpp-template, Copier, Cruft, vcpkg, Conan,
+GoogleTest, Catch2, doctest, clang tools, Compute Sanitizer, SPIR-V tooling, Tracy, Perfetto,
+RenderDoc, Nsight, and GitHub Actions runner docs as infrastructure donors; preserve the target
+repo's existing dependency and update policy unless the user explicitly asks to change it.
 
 For Vulkan foundation dependencies, route memory allocation, loader/bootstrap, and shader-tooling
 questions through `{{DONOR_ROOT}}/vulkan-foundation-tooling.md`. For runtime 3D asset loading,

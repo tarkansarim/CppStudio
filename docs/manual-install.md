@@ -18,24 +18,52 @@ Linux or macOS:
 
 ```bash
 cd /path/to/CppStudio
-mkdir -p "${HOME}/.codex/skills"
-rm -rf "${HOME}/.codex/skills/cpp-cuda-vulkan-studio"
-cp -a skills/cpp-cuda-vulkan-studio "${HOME}/.codex/skills/"
-python3 "${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py" \
-  "${HOME}/.codex/skills/cpp-cuda-vulkan-studio"
+
+codex_home="${CODEX_HOME:-${HOME}/.codex}"
+skills_root="${codex_home}/skills"
+skill_target="${skills_root}/cpp-cuda-vulkan-studio"
+validator="${skills_root}/.system/skill-creator/scripts/quick_validate.py"
+
+staging_root="$(mktemp -d)"
+staged_skill="${staging_root}/cpp-cuda-vulkan-studio"
+cp -a skills/cpp-cuda-vulkan-studio "${staged_skill}"
+python3 "${validator}" "${staged_skill}"
+
+mkdir -p "${skills_root}"
+if [[ -e "${skill_target}" ]]; then
+  backup_target="${skill_target}.backup.$(date +%Y%m%d%H%M%S)"
+  mv "${skill_target}" "${backup_target}"
+  echo "Backed up existing skill to ${backup_target}"
+fi
+mv "${staged_skill}" "${skill_target}"
+rmdir "${staging_root}" 2>/dev/null || true
+python3 "${validator}" "${skill_target}"
 ```
 
 Windows PowerShell:
 
 ```powershell
 Set-Location C:\path\to\CppStudio
-$CodexHome = Join-Path $HOME ".codex"
+$CodexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME ".codex" }
 $SkillsRoot = Join-Path $CodexHome "skills"
 $SkillTarget = Join-Path $SkillsRoot "cpp-cuda-vulkan-studio"
+$Validator = Join-Path $SkillsRoot ".system\skill-creator\scripts\quick_validate.py"
+$StagingRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("cppstudio-skill-" + [System.Guid]::NewGuid())
+$StagedSkill = Join-Path $StagingRoot "cpp-cuda-vulkan-studio"
+
+New-Item -ItemType Directory -Force $StagingRoot | Out-Null
+Copy-Item -Recurse ".\skills\cpp-cuda-vulkan-studio" $StagedSkill
+python $Validator $StagedSkill
+
 New-Item -ItemType Directory -Force $SkillsRoot | Out-Null
-if (Test-Path $SkillTarget) { Remove-Item -Recurse -Force $SkillTarget }
-Copy-Item -Recurse -Force ".\skills\cpp-cuda-vulkan-studio" $SkillTarget
-python (Join-Path $HOME ".codex\skills\.system\skill-creator\scripts\quick_validate.py") $SkillTarget
+if (Test-Path $SkillTarget) {
+  $BackupTarget = "$SkillTarget.backup.$(Get-Date -Format 'yyyyMMddHHmmss')"
+  Rename-Item -Path $SkillTarget -NewName (Split-Path $BackupTarget -Leaf)
+  Write-Host "Backed up existing skill to $BackupTarget"
+}
+Move-Item $StagedSkill $SkillTarget
+Remove-Item -Force $StagingRoot
+python $Validator $SkillTarget
 ```
 
 Restart Codex after manual installation so changed skill metadata is rediscovered.

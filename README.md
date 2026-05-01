@@ -6,6 +6,11 @@ CppStudio is an agentic ChatGPT Codex skills package for native C++ GPU engineer
 a reusable Vulkan-first C++/CUDA project backbone, lane discipline, validation hooks, and a curated
 donor-reference library for 3D, rendering, simulation, AI runtimes, CUDA, and Vulkan work.
 
+The goal is to make Codex less dependent on broad model memory when it enters specialized native GPU
+work. Instead of filling gaps from stale or incomplete training examples, agents get maintained
+repo-local guidance, known-good project structure, donor references, caveats, and validation lanes so
+their plans and code are more precise, reproducible, and easier to audit.
+
 Use it when you want Codex to create, audit, or upgrade native C++ GPU projects without turning every
 new repo into a one-off build-system and donor-research exercise.
 
@@ -77,22 +82,22 @@ not trigger.
 - Prefer Vulkan for unspecified native C++ GPU, rendering, realtime, XR, simulation-visualization, or
   cross-platform work.
 - Keep CUDA explicit and separate unless the user chooses CUDA, requirements force CUDA, or a
-  deliberate CUDA/Vulkan interop lane is needed.
+  deliberate combined CUDA/Vulkan or real interop lane is needed.
 - Scaffold or upgrade C++ app+library repos with CMake presets, CTest labels, shader tooling,
   optional CUDA lanes, validation scripts, and self-hosted GPU CI hooks.
 - Route agents through nested donor references for graphics, glTF/runtime assets, WebGPU/WebGL,
   renderer backbones, path tracing, engine architecture, mesh pipelines, asset IO, NURBS, materials,
   CAD, BIM/IFC, terrain/geospatial data, AI runtimes, neural 3D, Gaussian splatting, grooming/fur,
   DCC scene pipelines, volumes, medical/scientific data, animation, muscle/flesh simulation, VFX,
-  particles, simulation, and XR.
+  particles, simulation, XR, and native engineering infrastructure.
 - Coordinate companion skills for CMake, Vulkan synchronization, CUDA kernels, and verification.
 
 ## Skills And Donors Included
 
 ### Bundled Skills
 
-- `cpp-cuda-vulkan-studio`: installed user-level skill for Vulkan-first C++ GPU, CUDA, explicit
-  CUDA/Vulkan interop, project scaffolding, validation lanes, and donor routing.
+- `cpp-cuda-vulkan-studio`: installed user-level skill for Vulkan-first C++ GPU, CUDA, combined
+  CUDA/Vulkan builds, explicit interop work, project scaffolding, validation lanes, and donor routing.
 - `cppstudio-repo-onboarding`: repo-local onboarding skill for agents editing this CppStudio repo.
   It is not the public user-level C++ GPU skill.
 
@@ -114,6 +119,8 @@ architecture patterns, APIs, tests, algorithms, and dependency candidates.
 The routing is intentionally nested so the first loaded skill text stays small:
 
 - The donor library entrypoint gives policy and category choices.
+- Production overlays translate VFX studio, game studio, and native infrastructure vocabulary into
+  technical donor categories.
 - The agent lookup guide maps broad prompts to the right category files.
 - Category files contain compact donor maps for one domain.
 - Deep profiles are loaded only after a category is selected.
@@ -122,8 +129,19 @@ Start from these files:
 
 - [Donor library entrypoint](skills/cpp-cuda-vulkan-studio/references/donor-library/README.md)
 - [Selection policy](skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md)
+- [Production overlays](skills/cpp-cuda-vulkan-studio/references/donor-library/production/README.md)
 - [Agent lookup guide](skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md)
 - [Deep profile index](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/README.md)
+
+### Production Routing Overlays
+
+- [VFX studio](skills/cpp-cuda-vulkan-studio/references/donor-library/production/vfx-studio.md):
+  modeling, texturing, rigging, creature FX, look development, lighting, and FX.
+- [Games](skills/cpp-cuda-vulkan-studio/references/donor-library/production/games.md): character art,
+  world art, technical art, gameplay animation, realtime VFX, rendering, tools, physics, and XR games.
+- [Native engineering infrastructure](skills/cpp-cuda-vulkan-studio/references/donor-library/production/native-engineering-infrastructure.md):
+  project templates, CMake/build layout, testing, validation, profiling, CI, dependency policy, and
+  template update safety.
 
 ### Donor Category Files
 
@@ -153,6 +171,10 @@ Start from these files:
 Other GPU, AI, and ML category files:
 
 - [AI runtimes and kernels](skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md)
+
+Native project infrastructure category files:
+
+- [Native engineering infrastructure](skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md)
 
 ### Donor Profile Caveats
 
@@ -192,6 +214,8 @@ The deep profiles cover:
 - Neural 3D, Gaussian splatting, grooming/fur, volumes, medical/scientific visualization, animation,
   muscle/flesh simulation, physics, fluids, smoke, fire, VFX, particles, XR, and spatial input.
 - CUDA kernels, AI runtimes, ML compilers, inference engines, and native GPU compute references.
+- Native C++ project infrastructure, template update safety, CMake/build layout, testing, validation,
+  profiling, CI, and dependency management.
 
 Profile caveat identifiers such as `reference-only`, `mixed-native`, and `study-only` are repeated in
 the profile index and individual profile files so agents know whether a donor is suitable for direct

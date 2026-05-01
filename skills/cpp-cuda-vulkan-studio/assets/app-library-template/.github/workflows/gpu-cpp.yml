@@ -12,6 +12,7 @@ env:
 
 jobs:
   toolcheck:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: [self-hosted, linux, vulkan, gpu]
     steps:
       - uses: actions/checkout@v4
@@ -19,6 +20,7 @@ jobs:
         run: REQUIRE_CUDA=0 REQUIRE_VULKAN=1 REQUIRE_PROFILING=0 scripts/check_dev_tools.sh
 
   build-dev:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: [self-hosted, linux, vulkan, gpu]
     steps:
       - uses: actions/checkout@v4
@@ -28,6 +30,7 @@ jobs:
         run: cmake --build --preset dev
 
   quick-tests:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: [self-hosted, linux, vulkan, gpu]
     steps:
       - uses: actions/checkout@v4
@@ -36,6 +39,7 @@ jobs:
       - run: ctest --preset quick --output-on-failure
 
   gpu-smoke:
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     runs-on: [self-hosted, linux, vulkan, gpu]
     steps:
       - uses: actions/checkout@v4
@@ -44,6 +48,7 @@ jobs:
       - run: ctest --preset gpu --output-on-failure
 
   vulkan-shader:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: [self-hosted, linux, vulkan, gpu]
     steps:
       - uses: actions/checkout@v4
@@ -52,12 +57,22 @@ jobs:
       - run: ctest --preset vulkan-shader --output-on-failure
 
   vulkan-runtime:
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     runs-on: [self-hosted, linux, vulkan, gpu]
     steps:
       - uses: actions/checkout@v4
       - run: cmake --preset vulkan-debug -DPROJECT_CUDA_ARCHITECTURES="$PROJECT_CUDA_ARCHITECTURES"
       - run: cmake --build --preset vulkan-debug
       - run: ctest --preset vulkan --output-on-failure
+      - name: Dump Vulkan capabilities on failure
+        if: failure()
+        run: scripts/dump_vulkan_capabilities.sh
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: vulkan-runtime-capabilities
+          path: artifacts/vulkan
+          if-no-files-found: ignore
 
   vulkan-validation:
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'

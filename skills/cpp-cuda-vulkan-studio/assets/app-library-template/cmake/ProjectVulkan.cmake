@@ -1,9 +1,9 @@
 function(project_enable_vulkan)
-    if(NOT PROJECT_VULKAN_API_VERSION STREQUAL "1.4")
-        message(FATAL_ERROR "This template currently supports PROJECT_VULKAN_API_VERSION=1.4")
+    if(NOT PROJECT_VULKAN_API_VERSION STREQUAL "1.3")
+        message(FATAL_ERROR "This template currently supports PROJECT_VULKAN_API_VERSION=1.3")
     endif()
 
-    find_package(Vulkan 1.4 REQUIRED COMPONENTS glslc)
+    find_package(Vulkan 1.3 REQUIRED COMPONENTS glslc)
     find_program(PROJECT_SPIRV_VAL_EXECUTABLE NAMES spirv-val HINTS "$ENV{VULKAN_SDK}/bin" REQUIRED)
 
     set(PROJECT_VULKAN_SPIRV_DIR
@@ -32,8 +32,8 @@ function(project_compile_vulkan_shader out_var shader_source)
     add_custom_command(
         OUTPUT "${shader_output}"
         COMMAND "${CMAKE_COMMAND}" -E make_directory "${PROJECT_VULKAN_SPIRV_DIR}"
-        COMMAND Vulkan::glslc --target-env=vulkan1.4 "${shader_input}" -o "${shader_output}"
-        COMMAND "${PROJECT_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.4 "${shader_output}"
+        COMMAND Vulkan::glslc --target-env=vulkan1.3 "${shader_input}" -o "${shader_output}"
+        COMMAND "${PROJECT_SPIRV_VAL_EXECUTABLE}" --target-env vulkan1.3 "${shader_output}"
         DEPENDS "${shader_input}"
         VERBATIM
         COMMENT "Compiling and validating ${shader_source}"
@@ -46,7 +46,7 @@ function(project_configure_vulkan_target target_name)
     target_compile_definitions(${target_name}
         PRIVATE
             PROJECT_VULKAN_SHADER_DIR="${PROJECT_VULKAN_SPIRV_DIR}"
-            PROJECT_VULKAN_TARGET_API_VERSION=VK_API_VERSION_1_4
+            PROJECT_VULKAN_TARGET_API_VERSION=VK_API_VERSION_1_3
             PROJECT_VULKAN_ENABLE_VALIDATION=$<BOOL:${PROJECT_ENABLE_VULKAN_VALIDATION}>
             PROJECT_VULKAN_ENABLE_DEBUG_UTILS=$<BOOL:${PROJECT_ENABLE_VULKAN_DEBUG_UTILS}>
             PROJECT_VULKAN_ENABLE_PORTABILITY=$<BOOL:${PROJECT_ENABLE_VULKAN_PORTABILITY}>
