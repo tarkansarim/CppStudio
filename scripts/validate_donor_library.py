@@ -27,6 +27,7 @@ ALLOWED_BACKEND_SIGNALS = {
     "native-webgpu",
 }
 SPECIAL_DONOR_FILES = {"README.md", "selection-policy.md", "agent-lookup.md"}
+SPECIAL_PROFILE_FILES = {"README.md"}
 
 
 def markdown_files(root: Path) -> list[Path]:
@@ -35,6 +36,14 @@ def markdown_files(root: Path) -> list[Path]:
 
 def donor_category_files(donor_root: Path) -> list[Path]:
     return sorted(path for path in donor_root.glob("*.md") if path.name not in SPECIAL_DONOR_FILES)
+
+
+def donor_profile_files(donor_root: Path) -> list[Path]:
+    return sorted(
+        path
+        for path in (donor_root / "profiles").glob("*.md")
+        if path.name not in SPECIAL_PROFILE_FILES
+    )
 
 
 def normalize_link_target(raw_target: str) -> str:
@@ -97,7 +106,7 @@ def validate_donor_discoverability(donor_root: Path, linked_targets: set[str]) -
         if rel not in readme_text:
             errors.append(f"README.md does not link donor category {rel!r}")
 
-    profile_files = sorted(profiles_dir.glob("*.md"))
+    profile_files = donor_profile_files(donor_root)
     for profile in profile_files:
         rel = profile.relative_to(donor_root).as_posix()
         if rel not in linked_targets:
@@ -129,7 +138,7 @@ def validate_agent_lookup(donor_root: Path) -> list[str]:
         if rel not in lookup_text:
             errors.append(f"agent-lookup.md does not link donor category {rel!r}")
 
-    profile_files = {profile.relative_to(donor_root).as_posix() for profile in profiles_dir.glob("*.md")}
+    profile_files = {profile.relative_to(donor_root).as_posix() for profile in donor_profile_files(donor_root)}
     for profile_rel in sorted(linked_profile_paths(lookup_text)):
         if profile_rel not in profile_files:
             errors.append(f"agent-lookup.md links unknown donor profile {profile_rel!r}")
@@ -187,7 +196,7 @@ def source_urls(raw: str | None) -> set[str]:
 
 def profile_metadata(donor_root: Path) -> dict[str, dict[str, object]]:
     profiles: dict[str, dict[str, object]] = {}
-    for profile in sorted((donor_root / "profiles").glob("*.md")):
+    for profile in donor_profile_files(donor_root):
         rel = profile.relative_to(donor_root).as_posix()
         text = profile.read_text(encoding="utf-8")
         source = field_value(text, "Source") or field_value(text, "Sources")
@@ -202,7 +211,7 @@ def profile_metadata(donor_root: Path) -> dict[str, dict[str, object]]:
 def validate_profile_schema(donor_root: Path) -> list[str]:
     errors: list[str] = []
     profiles_dir = donor_root / "profiles"
-    for profile in sorted(profiles_dir.glob("*.md")):
+    for profile in donor_profile_files(donor_root):
         rel = profile.relative_to(donor_root).as_posix()
         text = profile.read_text(encoding="utf-8")
         source = field_value(text, "Source") or field_value(text, "Sources")

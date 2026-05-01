@@ -311,6 +311,117 @@
       ]
     },
     {
+      "name": "nurbs-asset-pipeline-donors",
+      "tags": ["positive", "assets", "cad"],
+      "prompt_shape": "C++/Vulkan asset tool needs Rhino .3dm import, lightweight NURBS curves or surfaces, UV atlas generation, Draco compressed geometry, ASTC/DDS conversion, OpenPBR semantics, or production asset identity.",
+      "expected_behavior": "Route to assets-meshes-materials and its deep profile; use CAD kernel routing only when the task needs B-rep/STEP/IGES topology rather than asset-transfer NURBS.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/assets-meshes-materials.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/asset-pipeline-nurbs-textures.md"
+      ]
+    },
+    {
+      "name": "terrain-geospatial-3dtiles-donors",
+      "tags": ["positive", "assets", "geometry"],
+      "prompt_shape": "C++ terrain or geospatial viewer needs 3D Tiles, quantized terrain, Cesium Native, GeoTIFF/elevation conversion, CRS transforms, point-cloud processing, LAS/LAZ, osgEarth, or vector tile map rendering.",
+      "expected_behavior": "Route to terrain-geospatial and the terrain deep profile; keep geodata conversion, CRS correctness, tile streaming, and renderer upload as separate concerns.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/terrain-geospatial.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/terrain-geospatial-3dtiles.md"
+      ]
+    },
+    {
+      "name": "realtime-vfx-particles-donors",
+      "tags": ["positive", "vulkan", "cuda", "graphics"],
+      "prompt_shape": "Realtime C++ GPU effects task needs particles, effect authoring, GPU-driven indirect drawing, particle sorting, smoke particles, Vulkan samples, CUDA samples, or FidelityFX Parallel Sort references.",
+      "expected_behavior": "Route to vfx-particles and its deep profile; use simulation-gpu only when solver physics or smoke/fire simulation is the hard part.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/vfx-particles.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vfx-particles-gpu-driven.md"
+      ]
+    },
+    {
+      "name": "fluids-smoke-fire-donors",
+      "tags": ["positive", "simulation", "vulkan", "cuda"],
+      "prompt_shape": "C++ fluid, smoke, fire, SPH, FLIP/PIC, CUDA particles, Vulkan compute fluids, MantaFlow, Vortex2D, or engineering CFD donor request.",
+      "expected_behavior": "Route to simulation-gpu and the fluids deep profile; keep CUDA/Vulkan backend translation separate from solver behavior.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/simulation-gpu.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/fluids-smoke-fire.md"
+      ]
+    },
+    {
+      "name": "bim-ifc-aec-donors",
+      "tags": ["positive", "assets", "cad"],
+      "prompt_shape": "C++ BIM/AEC tool needs IFC parsing, IfcOpenShell, IFC++, web-ifc behavior, buildingSMART validation, IDS, BCF, or building geometry conversion into a renderer.",
+      "expected_behavior": "Route to bim-aec-ifc and its deep profile; keep BIM semantics, CAD geometry conversion, and renderer upload separate.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/bim-aec-ifc.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/bim-ifc-aec.md"
+      ]
+    },
+    {
+      "name": "animation-retargeting-crowds-donors",
+      "tags": ["positive", "assets", "simulation"],
+      "prompt_shape": "C++ animation task needs retargeting, skinning decomposition, Dem Bones, glTF skinning samples, crowds, local avoidance, steering, Recast/DetourCrowd, RVO2, Menge, or fairmotion references.",
+      "expected_behavior": "Route to animation-rigging and the retargeting/crowds deep profile; keep fixtures/assets license-separated.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/animation-rigging.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/animation-retargeting-crowds.md"
+      ]
+    },
+    {
+      "name": "muscle-flesh-biomechanics-donors",
+      "tags": ["positive", "simulation", "volumes"],
+      "prompt_shape": "C++ muscle, flesh, soft tissue, biomechanics, OpenSim, FEBio, MuJoCo, tendon path, activation, anatomical model, or realtime flesh deformation request.",
+      "expected_behavior": "Route to muscle-flesh-biomechanics and its deep profile; distinguish scientific biomechanics from visual deformation before selecting dependencies.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/muscle-flesh-biomechanics.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/muscle-flesh-biomechanics.md"
+      ]
+    },
+    {
+      "name": "medical-scientific-volume-io-donors",
+      "tags": ["positive", "volumes", "assets"],
+      "prompt_shape": "C++ medical or scientific volume tool needs DICOM, NIfTI, ITK, DCMTK, dcm2niix, transfer functions, tomography, HDF5, netCDF, ADIOS2, TensorStore, Zarr, or OME NGFF donors.",
+      "expected_behavior": "Route to medical-scientific-volumes and its deep profile; keep patient data, labels/segmentations, transfer functions, and renderer upload as separate surfaces.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/medical-scientific-volumes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/medical-scientific-volume-io.md"
+      ]
+    },
+    {
+      "name": "xr-interaction-spatial-input-donors",
+      "tags": ["positive", "vulkan", "xr"],
+      "prompt_shape": "C++ OpenXR app needs hand tracking, eye gaze, body/face tracking, passthrough, scene understanding, spatial anchors, colocation, OpenXR API layers, runtime diagnostics, or Vulkan/OpenXR multi-GPU references.",
+      "expected_behavior": "Route to xr-spatial and the XR interaction deep profile; keep vendor extensions optional and feature-gated.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/xr-spatial.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/xr-interaction-spatial-input.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
       "name": "ambiguous-3d-viewer-lookup-routing",
       "tags": ["smoke", "lookup", "positive", "vulkan", "assets"],
       "prompt_shape": "C++ 3D viewer or realtime asset preview tool needs donors, but the prompt does not yet specify whether the hard part is Vulkan setup, renderer architecture, glTF import, mesh conditioning, textures, CAD, or XR.",

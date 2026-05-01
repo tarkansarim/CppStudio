@@ -13,8 +13,8 @@ python3 scripts/render_trigger_eval_prompt.py \
 ```
 
 Use `--installed-paths` after rollout when the evaluator should inspect `${SYNC_CODEX_HOME:-$HOME/.codex}`
-paths. Useful tags include `smoke`, `lookup`, `negative`, `cuda`, `vulkan`, `assets`, `simulation`,
-`ai-runtime`, and `xr`.
+paths. Useful tags include `smoke`, `lookup`, `negative`, `cuda`, `vulkan`, `assets`, `geometry`,
+`materials`, `volumes`, `simulation`, `ai-runtime`, and `xr`.
 
 ## Required Evidence
 
@@ -62,12 +62,32 @@ paths. Useful tags include `smoke`, `lookup`, `negative`, `cuda`, `vulkan`, `ass
   profile.
 - Texture containers, KTX/KTX2, Basis, EXR/HDR, TinyEXR, OpenImageIO, OpenColorIO, ACES/OCIO, or
   MaterialX should route to `texture-material-color.md` and the matching profile.
+- Rhino `.3dm`, lightweight NURBS curves/surfaces, UV atlases, Draco geometry compression, ASTC/DDS
+  tooling, OpenPBR, or OpenAssetIO should route to `assets-meshes-materials.md` and the
+  asset-pipeline profile.
 - CAD kernels, B-reps, NURBS, STEP/IGES, exact geometry, robust triangulation, Booleans, CGAL, libigl,
   or FreeCAD workflow study should route to `cad-precision-geometry.md` or
   `surfaces-subdivision.md` and the matching profile.
+- Terrain, 3D Tiles, quantized mesh, GDAL/PROJ/PDAL, LAS/LAZ, geospatial CRS, osgEarth, or MapLibre
+  Native work should route to `terrain-geospatial.md` and the geospatial profile.
+- BIM, IFC, AEC, IfcOpenShell, IFC++, web-ifc, buildingSMART validation, IDS, or BCF work should route
+  to `bim-aec-ifc.md` and keep BIM semantics, CAD geometry conversion, and renderer upload separate.
+- Medical/scientific dense-volume IO, DICOM, NIfTI, ITK, DCMTK, transfer functions, tomography, HDF5,
+  netCDF, ADIOS2, TensorStore, Zarr, or OME NGFF should route to `medical-scientific-volumes.md` and
+  keep patient/clinical data out of reusable fixtures.
+- Fluid, smoke, fire, SPH, CUDA sample fluid/smoke, Vulkan compute fluid, MantaFlow, NVIDIA Flow, CFD,
+  or LBM work should route to `simulation-gpu.md` and the fluids/smoke/fire profile.
+- Realtime VFX, particles, effect authoring, indirect draws, particle sorting, Effekseer, The Forge,
+  Wicked Engine, or FidelityFX Parallel Sort should route to `vfx-particles.md`.
+- Muscle, flesh, soft-tissue, OpenSim, Simbody, FEBio, MuJoCo, ArtiSynth, MyoSuite, MuscleMimic, or
+  anatomical model work should route to `muscle-flesh-biomechanics.md` and distinguish biomechanics
+  from visual deformation.
+- Retargeting, skinning decomposition, Dem Bones, crowd simulation, Recast/DetourCrowd, RVO2, Menge,
+  OpenSteer, or fairmotion work should route to `animation-rigging.md` and the retargeting/crowd profile.
 - OpenXR, OpenXR-Hpp, Monado runtime diagnostics, vendor-specific XR extensions, stereo swapchains,
-  actions, or XR frame timing should route to `xr-spatial.md` and keep portable OpenXR baseline separate
-  from vendor-specific extension references.
+  actions, hand/eye/body/face tracking, passthrough, scene understanding, API layers, or XR frame timing
+  should route to `xr-spatial.md` and keep portable OpenXR baseline separate from vendor-specific
+  extension references.
 - Local LLM inference, production serving, execution-provider routing, ML compilers, fused neural
   kernels, or tensor/autograd reference work should route to `ai-runtimes-kernels.md` and the matching
   llama.cpp/ggml, ONNX Runtime, TensorRT-LLM, vLLM, MLC-LLM, tiny-cuda-nn, TVM, or PyTorch profile.

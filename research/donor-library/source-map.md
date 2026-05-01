@@ -153,3 +153,21 @@ targets; implement native code through the active C++/CUDA/Vulkan lane.
 | [OpenXR-Hpp](https://github.com/KhronosGroup/OpenXR-Hpp) | C++ OpenXR bindings | safe-donor | Apache-2.0 type-safe OpenXR wrapper patterns. |
 | [Monado](https://monado.dev/) | OpenXR runtime | dependency-candidate | Permissive open-source OpenXR runtime architecture for Linux, Windows, and Android. |
 | [Godot XR docs](https://docs.godotengine.org/en/stable/tutorials/xr/index.html) | Engine XR UX | dependency-candidate | Godot MIT; plugin/vendor assets and SDKs vary. |
+
+## 2026-05-01 Gap-Pass Additions
+
+These additions were promoted from staged research into nested category files and compact deep-profile
+bundles. Category files are the normal routing layer; profile bundles are the third layer for deeper
+selection and caveats.
+
+| Source Bundle | Category File | Deep Profile | Signal |
+| --- | --- | --- | --- |
+| NURBS, Rhino `.3dm`, UV atlases, Draco, ASTC/DDS tooling, OpenPBR, OpenAssetIO | [assets-meshes-materials.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/assets-meshes-materials.md) | [asset-pipeline-nurbs-textures.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/asset-pipeline-nurbs-textures.md) | Mixed safe/dependency donor set for asset-pipeline routing. |
+| Fluids, smoke, fire, SPH, Vulkan fluids, CUDA samples, CFD/LBM study routes | [simulation-gpu.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/simulation-gpu.md) | [fluids-smoke-fire.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/fluids-smoke-fire.md) | Mixed CUDA/Vulkan/CPU/OpenCL solver references with strong license caveats. |
+| Terrain, geospatial, 3D Tiles, CRS, point clouds, vector maps | [terrain-geospatial.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/terrain-geospatial.md) | [terrain-geospatial-3dtiles.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/terrain-geospatial-3dtiles.md) | Native C++ geospatial runtime and conversion donor set. |
+| Realtime VFX, particles, indirect drawing, GPU sorting, effect runtimes | [vfx-particles.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/vfx-particles.md) | [vfx-particles-gpu-driven.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vfx-particles-gpu-driven.md) | Mixed Vulkan/CUDA/cross-API VFX donor set. |
+| BIM, AEC, IFC, buildingSMART validation, BCF | [bim-aec-ifc.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/bim-aec-ifc.md) | [bim-ifc-aec.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/bim-ifc-aec.md) | IFC/BIM routing with geometry, schema, validation, and license separation. |
+| Retargeting, skinning decomposition, crowds, steering | [animation-rigging.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/animation-rigging.md) | [animation-retargeting-crowds.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/animation-retargeting-crowds.md) | Animation/crowd donor expansion with fixture-license caveats. |
+| Muscles, flesh, soft tissue, biomechanics, anatomical references | [muscle-flesh-biomechanics.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/muscle-flesh-biomechanics.md) | [muscle-flesh-biomechanics.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/muscle-flesh-biomechanics.md) | Biomechanics versus realtime deformation routing with data/model caveats. |
+| Medical/scientific volume IO, DICOM/NIfTI, transfer functions, large arrays | [medical-scientific-volumes.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/medical-scientific-volumes.md) | [medical-scientific-volume-io.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/medical-scientific-volume-io.md) | Medical/scientific dense-volume routing with patient-data caveats. |
+| XR interaction, vendor extensions, spatial input, API layers, multi-GPU XR | [xr-spatial.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/xr-spatial.md) | [xr-interaction-spatial-input.md](../../skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/xr-interaction-spatial-input.md) | Portable OpenXR plus vendor/system/performance reference routing. |

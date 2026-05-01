@@ -46,6 +46,12 @@ targets, then implement through the active lane skill.
   [glTF C/C++ Loaders](profiles/fastgltf-cgltf-tinygltf.md) and
   [meshoptimizer](profiles/meshoptimizer.md). Use [texture-material-color.md](texture-material-color.md)
   only when texture containers, color, EXR/HDR, or material graphs are in scope.
+- **NURBS assets, Rhino `.3dm`, UV atlases, compressed geometry, ASTC/DDS tooling, OpenPBR, or
+  production asset resolver work**: open [assets-meshes-materials.md](assets-meshes-materials.md).
+  Start with OpenNURBS or tinynurbs for NURBS, xatlas for UV atlases, Draco for compressed geometry,
+  Arm ASTC Encoder or DirectXTex for offline texture conversion, and OpenAssetIO for production asset
+  identity. Use [cad-precision-geometry.md](cad-precision-geometry.md) for CAD kernels and
+  [texture-material-color.md](texture-material-color.md) for color/image pipeline work.
 - **Mesh processing, broad import, BVH, CPU ray references, physics/collision**: open
   [geometry-simulation.md](geometry-simulation.md). Start with [assimp](profiles/assimp.md),
   [meshoptimizer](profiles/meshoptimizer.md), [Embree](profiles/embree.md),
@@ -78,6 +84,11 @@ targets, then implement through the active lane skill.
   multiple-scattering LUT, Shader Graph, or line-rendering references, use
   [Unity HDRP Hair Study-Only](profiles/unity-hdrp-hair-study-only.md). Keep study-only grooming
   sources conceptual.
+- **Realtime VFX, particles, GPU-driven effects, indirect drawing, particle sorting, or effect
+  authoring runtimes**: open [vfx-particles.md](vfx-particles.md). Start with Effekseer for
+  authoring/runtime effects, The Forge or Wicked Engine for engine integration, Khronos/SaschaWillems
+  samples for Vulkan particles/indirect rendering, CUDA Samples for CUDA smoke/particles, and
+  FidelityFX Parallel Sort for GPU sorting. Keep solver physics in [simulation-gpu.md](simulation-gpu.md).
 - **DCC scene pipelines, USD, Alembic, MaterialX, editorial timelines, virtual production**: open
   [dcc-scene-pipeline.md](dcc-scene-pipeline.md). Start with [OpenUSD](profiles/openusd.md),
   [Alembic](profiles/alembic.md), [MaterialX](profiles/materialx.md),
@@ -87,10 +98,16 @@ targets, then implement through the active lane skill.
   [volumes-voxels.md](volumes-voxels.md). Start with
   [OpenVDB and NanoVDB](profiles/openvdb-nanovdb.md), [fVDB](profiles/fvdb.md), or
   [VTK](profiles/vtk.md). Keep volume IO, ML tensor work, and renderer upload as separate choices.
+- **Medical/scientific volume IO, DICOM, NIfTI, OME-Zarr, transfer functions, tomography, or large
+  scientific arrays**: open [medical-scientific-volumes.md](medical-scientific-volumes.md). Start
+  with ITK/DCMTK/GDCM/dcm2niix for medical IO, VTK/Inviwo/OSPRay/Open VKL for visualization and
+  transfer functions, and HDF5/netCDF/ADIOS2/TensorStore/Zarr/OME NGFF for large array storage.
+  Do not bundle patient data or ambiguous clinical fixtures.
 - **Animation runtime, skeletal sampling, skinning, compression**: open
   [animation-rigging.md](animation-rigging.md). Start with
   [ozz-animation](profiles/ozz-animation.md), [Animation Compression Library](profiles/acl.md), and
-  [OpenUSD](profiles/openusd.md) when interchange matters.
+  [OpenUSD](profiles/openusd.md) when interchange matters. For retargeting, skinning decomposition,
+  crowds, steering, or navigation agents, also use the retargeting/crowd section in that file.
 - **Subdivision, remeshing, robust geometry processing**: open
   [surfaces-subdivision.md](surfaces-subdivision.md). Start with
   [OpenSubdiv](profiles/opensubdiv.md), [libigl](profiles/libigl.md), [CGAL](profiles/cgal.md), or
@@ -106,19 +123,37 @@ targets, then implement through the active lane skill.
   [cad-precision-geometry.md](cad-precision-geometry.md). Start with
   [Open CASCADE Technology](profiles/open-cascade.md), [CGAL](profiles/cgal.md),
   [libigl](profiles/libigl.md), or [FreeCAD Study-Only](profiles/freecad-study-only.md). Keep source
-  CAD topology separate from display tessellation.
+  CAD topology separate from display tessellation. For `.3dm` asset transfer or lightweight NURBS math,
+  route to [assets-meshes-materials.md](assets-meshes-materials.md) after this file.
+- **Terrain, geospatial streaming, 3D Tiles, quantized mesh, CRS/projection, point clouds, or vector
+  tile maps**: open [terrain-geospatial.md](terrain-geospatial.md). Start with Cesium Native for C++
+  3D Tiles/terrain streaming, GDAL/PROJ/PDAL for conversion and coordinate correctness, LASzip for
+  narrow LAZ codec work, osgEarth for earth-view rendering architecture, and MapLibre Native for
+  vector tile maps.
+- **BIM, IFC, AEC, building models, BCF, or buildingSMART validation**: open
+  [bim-aec-ifc.md](bim-aec-ifc.md). Start with IfcOpenShell for IFC geometry/Open CASCADE handoff,
+  IFC++ for a smaller C++ IFC reference, web-ifc for parser/geometry behavior, and buildingSMART
+  specs/validators for conformance. Keep proprietary building models license-separated.
 - **3D physics, cloth, particles, fluids, deformables, differentiable simulation**: open
   [simulation-gpu.md](simulation-gpu.md). Start with [NVIDIA Warp](profiles/warp.md),
   [Taichi](profiles/taichi.md), [PositionBasedDynamics](profiles/positionbaseddynamics.md),
   [Project Chrono](profiles/project-chrono.md), [SOFA](profiles/sofa.md), or
-  [NVIDIA PhysX](profiles/physx.md). Warp and Taichi are prototype/reference-only for native C++
-  unless their Python/JIT runtimes are explicitly chosen. Do not trigger this for business or economic
-  simulations.
+  [NVIDIA PhysX](profiles/physx.md). For fluids/smoke/fire, start with SPlisHSPlasH,
+  fluid-engine-dev, SPHinXsys, DualSPHysics, CUDA Samples, Vortex2D, MantaFlow, or NVIDIA Flow as
+  listed in that file. Warp and Taichi are prototype/reference-only for native C++ unless their
+  Python/JIT runtimes are explicitly chosen. Do not trigger this for business or economic simulations.
+- **Muscle simulation, flesh deformation, soft tissue, biomechanics, muscle activation, tendon paths,
+  or anatomical model references**: open [muscle-flesh-biomechanics.md](muscle-flesh-biomechanics.md).
+  Start with OpenSim/Simbody for biomechanical muscles, FEBio/MFEM/SOFA for continuum tissue, MuJoCo
+  for actuation/control, and PBD/XPBD for realtime visual deformation. Keep anatomical models and
+  medical data separate from code.
 - **OpenXR, VR/AR/MR, headset/controller input, stereo swapchains, runtime diagnostics**: open
   [xr-spatial.md](xr-spatial.md). Start with [OpenXR SDK](profiles/openxr-sdk.md),
   [OpenXR-Hpp](profiles/openxr-hpp.md), [Monado](profiles/monado.md), and
-  [Godot OpenXR Vendors](profiles/godot-openxr-vendors.md). Keep portable OpenXR baseline separate
-  from vendor extensions.
+  [Godot OpenXR Vendors](profiles/godot-openxr-vendors.md). Use OpenXR Tutorials for guided setup,
+  StereoKit for interaction ergonomics, Microsoft/Meta samples for vendor features, ILLIXR for system
+  research, and NVIDIA xr_multi_gpu for Vulkan/OpenXR performance. Keep portable OpenXR baseline
+  separate from vendor extensions.
 
 ## Negative Controls
 

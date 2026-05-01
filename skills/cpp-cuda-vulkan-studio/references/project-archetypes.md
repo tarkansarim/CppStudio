@@ -131,9 +131,11 @@ Use when the project loads, validates, previews, converts, or renders runtime gl
 - Read [donor-library/gltf-runtime-assets.md](donor-library/gltf-runtime-assets.md),
   [donor-library/vulkan-foundation-tooling.md](donor-library/vulkan-foundation-tooling.md),
   [donor-library/geometry-simulation.md](donor-library/geometry-simulation.md),
-  [donor-library/texture-material-color.md](donor-library/texture-material-color.md), and the glTF
-  loader and meshoptimizer profiles before choosing loader, mesh-conditioning, or validation
-  dependencies.
+  [donor-library/texture-material-color.md](donor-library/texture-material-color.md), and
+  [donor-library/assets-meshes-materials.md](donor-library/assets-meshes-materials.md) when NURBS,
+  UV atlases, compressed geometry, ASTC/DDS tooling, OpenPBR, or production asset identity matter.
+  Read the glTF loader, meshoptimizer, and asset-pipeline profiles before choosing loader,
+  mesh-conditioning, or validation dependencies.
 - Keep source assets, sample models, screenshots, DCC files, texture codecs, and generated caches as
   separate license surfaces.
 - Verification priority: Khronos validator reports, tiny GLB fixtures, external-buffer fixtures,
@@ -147,7 +149,10 @@ Use when the project loads, renders, edits, simulates, or converts sparse volume
 - Enable Vulkan for render/compute visualization; enable CUDA only when CUDA kernels own volume work.
 - Read [donor-library/volumes-voxels.md](donor-library/volumes-voxels.md), then the OpenVDB/NanoVDB
   profile. Use fVDB for sparse-volume ML references and VTK for scientific visualization architecture
-  when those domains are in scope.
+  when those domains are in scope. Read
+  [donor-library/medical-scientific-volumes.md](donor-library/medical-scientific-volumes.md) when the
+  task mentions DICOM, NIfTI, OME-Zarr, HDF5, transfer functions, tomography, or medical/scientific
+  dense-volume IO.
 - Keep VDB IO, CPU grid processing, GPU upload, shader traversal, and visual rendering separated.
 - Verification priority: tiny volume metadata tests, CPU/GPU sample comparisons, empty-grid edge cases,
   offscreen render frames, then performance traces.
@@ -159,7 +164,8 @@ compression.
 
 - Enable CUDA/Vulkan only for GPU skinning, visualization, or runtime rendering needs.
 - Read [donor-library/animation-rigging.md](donor-library/animation-rigging.md), then the ozz-animation
-  and ACL profiles as needed.
+  and ACL profiles as needed. Use the retargeting/crowd profile when skinning decomposition,
+  retargeting, steering, or crowd simulation is in scope.
 - Keep offline import/conversion separate from runtime playback.
 - Verification priority: one-joint clip fixtures, hierarchy/blend tests, CPU skinning references, import
   fixtures, then GPU skinning tests.
@@ -183,7 +189,9 @@ Use when the project needs B-reps, NURBS, STEP/IGES, Booleans, tessellation, or 
 
 - Enable renderer lanes only for viewing; keep CAD kernel data separate from render meshes.
 - Read [donor-library/cad-precision-geometry.md](donor-library/cad-precision-geometry.md), then the Open
-  CASCADE profile and optionally CGAL, libigl, or FreeCAD study-only notes.
+  CASCADE profile and optionally CGAL, libigl, or FreeCAD study-only notes. Use
+  [donor-library/assets-meshes-materials.md](donor-library/assets-meshes-materials.md) for `.3dm`,
+  OpenNURBS, or lightweight NURBS asset-transfer work that does not need a full CAD kernel.
 - Make tolerance, units, topology ownership, orientation, and tessellation policy explicit.
 - Verification priority: tiny STEP fixtures, unit/bounds checks, tessellation checks, Boolean edge cases,
   then viewer/render tests.
@@ -195,10 +203,51 @@ multiphysics workflows beyond basic rigid-body collision.
 
 - Enable CUDA or Vulkan compute only where the simulation backend needs it.
 - Read [donor-library/simulation-gpu.md](donor-library/simulation-gpu.md), then choose Warp, Taichi,
-  PositionBasedDynamics, Chrono, SOFA, or PhysX based on dependency and license fit.
+  PositionBasedDynamics, Chrono, SOFA, PhysX, or the fluids/smoke/fire profile based on dependency and
+  license fit. Read [donor-library/muscle-flesh-biomechanics.md](donor-library/muscle-flesh-biomechanics.md)
+  when muscles, flesh, soft tissue, tendon paths, or anatomical model behavior are in scope.
 - Keep solver state, collision geometry, renderer handoff, training data, and benchmark scenes separated.
 - Verification priority: tiny deterministic solver fixtures, conservation/constraint checks, CPU/GPU
   comparisons, visual smoke frames, then profile traces.
+
+## Terrain Or Geospatial Viewer
+
+Use when the project owns terrain streaming, 3D Tiles, quantized mesh, geospatial raster/vector IO,
+CRS transforms, point clouds, or map/vector-tile rendering.
+
+- Enable Vulkan for runtime visualization; keep geospatial conversion/import separate from renderer upload.
+- Read [donor-library/terrain-geospatial.md](donor-library/terrain-geospatial.md), then the terrain
+  profile before choosing Cesium Native, GDAL/PROJ/PDAL, LASzip, osgEarth, or MapLibre Native.
+- Keep CRS/geodesy, tile selection, source data, caches, and GPU resources separated.
+- Verification priority: tiny tileset fixtures, CRS/unit checks, LOD selection, point-cloud/raster
+  import checks, then rendered terrain frames.
+
+## BIM Or IFC Viewer
+
+Use when the project owns IFC parsing, BIM/AEC semantics, building geometry conversion, BCF/IDS
+validation, or BIM-to-renderer handoff.
+
+- Enable Vulkan only for preview/rendering; keep IFC semantics and CAD geometry conversion independent.
+- Read [donor-library/bim-aec-ifc.md](donor-library/bim-aec-ifc.md), then the BIM/IFC profile before
+  choosing IfcOpenShell, IFC++, web-ifc behavior, or buildingSMART validation references.
+- Keep building models, schema validation, placement transforms, tessellation, and renderer upload
+  separated.
+- Verification priority: tiny IFC fixtures, unit/placement checks, property preservation, invalid-model
+  diagnostics, then viewer frames.
+
+## Realtime VFX Or Particle Tool
+
+Use when the project owns realtime visual effects, particles, effect authoring, GPU-driven indirect
+rendering, particle sorting, or presentation-side smoke/particle effects.
+
+- Enable Vulkan by default for realtime presentation; enable CUDA only for explicit CUDA kernels or interop.
+- Read [donor-library/vfx-particles.md](donor-library/vfx-particles.md), then the VFX/particles profile.
+  Use [donor-library/simulation-gpu.md](donor-library/simulation-gpu.md) only when solver physics is the
+  core requirement.
+- Keep authoring data, simulation state, GPU buffers, indirect draw counts, and renderer synchronization
+  separated.
+- Verification priority: zero-particle tests, deterministic emitter fixtures, sort/count checks,
+  offscreen frames, then frame-time traces.
 
 ## XR Or Spatial App
 
@@ -209,7 +258,8 @@ spatial interaction.
   setup.
 - Read [donor-library/xr-spatial.md](donor-library/xr-spatial.md), [donor-library/graphics-rendering.md](donor-library/graphics-rendering.md),
   and the OpenXR SDK profile. Add OpenXR-Hpp for C++ wrapper ergonomics, Monado for runtime diagnostics,
-  and Godot OpenXR Vendors only for vendor-extension references.
+  the XR interaction profile for hands/eyes/anchors/vendor features, and Godot OpenXR Vendors only for
+  vendor-extension references.
 - Keep runtime discovery, actions, reference spaces, swapchains, frame timing, and vendor extensions
   explicit.
 - Verification priority: runtime/capability dump, action binding tests, swapchain format selection,

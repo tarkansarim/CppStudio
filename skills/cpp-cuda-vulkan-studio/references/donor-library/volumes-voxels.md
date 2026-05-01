@@ -19,6 +19,8 @@ visualization, GPU volume rendering, collision fields, and neural sparse-volume 
 - Use fVDB for ML/PyTorch sparse-volume research and neural 3D experiments, not as a C++ engine
   dependency by default.
 - Use VTK for scientific visualization architecture, not as a lightweight game/rendering dependency.
+- For DICOM, NIfTI, OME-Zarr, HDF5, transfer-function UI, or medical/scientific dense-volume IO, open
+  [medical-scientific-volumes.md](medical-scientific-volumes.md) after this file.
 - Keep volume datasets, trained models, medical/scientific data, and simulation caches as separate
   license and provenance surfaces.
 

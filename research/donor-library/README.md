@@ -1,6 +1,7 @@
 # 3D And AI Donor Library Research
 
 Generated: 2026-04-30
+Expanded: 2026-05-01
 
 This folder records the research basis for the reusable donor library wired into
 `skills/cpp-cuda-vulkan-studio/references/donor-library/`.
@@ -11,6 +12,9 @@ for discussion, expansion, and source provenance before future skill updates.
 ## Files
 
 - [source-map.md](source-map.md): donor candidates, links, license tier, and category.
+- [trigger-matrix.json](trigger-matrix.json): routing regression cases for skill and donor discovery.
+- [trigger-regression-checklist.md](trigger-regression-checklist.md): manual/subagent trigger-lane
+  expectations.
 
 ## Policy Summary
 
@@ -30,5 +34,6 @@ The main skill now points agents to:
 - category files for Vulkan foundation tooling, glTF/runtime assets, renderer backbones, runtime mesh
   pipelines, WebGPU/WebGL, browser 3D, path tracing, physical rendering, engine architecture,
   geometry/simulation, AI runtimes/kernels, ML compilers, neural 3D, hair/grooming/fur, DCC scene
-  pipelines, volumes/voxels, animation/rigging, surfaces/subdivision, texture/material/color,
-  CAD/precision geometry, advanced simulation, and XR/spatial work.
+  pipelines, volumes/voxels, medical/scientific volumes, animation/rigging, VFX/particles,
+  surfaces/subdivision, texture/material/color, assets/NURBS, BIM/IFC, terrain/geospatial,
+  CAD/precision geometry, advanced simulation, muscle/flesh/biomechanics, and XR/spatial work.
