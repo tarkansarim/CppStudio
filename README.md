@@ -88,14 +88,16 @@ not trigger.
 
 ## Skills And Donors Included
 
-Bundled skills:
+### Bundled Skills
 
-- `cpp-cuda-vulkan-studio`: the installed user-level skill for Vulkan-first C++ GPU, CUDA, explicit
+- `cpp-cuda-vulkan-studio`: installed user-level skill for Vulkan-first C++ GPU, CUDA, explicit
   CUDA/Vulkan interop, project scaffolding, validation lanes, and donor routing.
-- `cppstudio-repo-onboarding`: a repo-local onboarding skill for agents editing this CppStudio repo.
+- `cppstudio-repo-onboarding`: repo-local onboarding skill for agents editing this CppStudio repo.
   It is not the public user-level C++ GPU skill.
 
-Companion skills that CppStudio can link to when they are already installed:
+### Companion Skill Links
+
+CppStudio can add donor-library links to these companion skills when they are already installed:
 
 - `modern-cpp-cmake`: CMake, target layout, presets, tests, and native C++ project hygiene.
 - `vulkan-compute-sync`: Vulkan compute/render setup, descriptors, barriers, synchronization, and
@@ -103,56 +105,158 @@ Companion skills that CppStudio can link to when they are already installed:
 - `cuda-kernel-authoring`: CUDA kernels, launch wrappers, numerical tests, and Compute Sanitizer
   planning.
 
+### Donor Index Files
+
 The donor library is a reference map, not a vendored source tree. Agents use it to choose
-architecture patterns, APIs, tests, algorithms, and dependency candidates. Some donors are direct
-C/C++ implementation references, some are dependency-scale references, and some are explicitly
-reference-only or study-only.
+architecture patterns, APIs, tests, algorithms, and dependency candidates.
 
-Donor category files:
+- [Donor library entrypoint](skills/cpp-cuda-vulkan-studio/references/donor-library/README.md)
+- [Selection policy](skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md)
+- [Agent lookup guide](skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md)
 
-- Vulkan foundation tooling
-- graphics/rendering
-- glTF/runtime assets
-- geometry/simulation
-- AI runtimes/kernels
-- neural 3D
-- hair/grooming/fur
-- DCC scene pipelines
-- volumes/voxels
-- animation/rigging
-- surfaces/subdivision
-- texture/material/color
-- CAD/precision geometry
-- GPU simulation
-- XR/spatial
+### Donor Category Files
 
-All current donor profiles, grouped by domain:
+- [AI runtimes and kernels](skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md)
+- [Animation and rigging](skills/cpp-cuda-vulkan-studio/references/donor-library/animation-rigging.md)
+- [CAD and precision geometry](skills/cpp-cuda-vulkan-studio/references/donor-library/cad-precision-geometry.md)
+- [DCC scene pipelines](skills/cpp-cuda-vulkan-studio/references/donor-library/dcc-scene-pipeline.md)
+- [Geometry and simulation](skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md)
+- [glTF runtime assets](skills/cpp-cuda-vulkan-studio/references/donor-library/gltf-runtime-assets.md)
+- [Graphics and rendering](skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md)
+- [Hair, grooming, and fur](skills/cpp-cuda-vulkan-studio/references/donor-library/hair-grooming-fur.md)
+- [Neural 3D](skills/cpp-cuda-vulkan-studio/references/donor-library/neural-3d.md)
+- [GPU simulation](skills/cpp-cuda-vulkan-studio/references/donor-library/simulation-gpu.md)
+- [Surfaces and subdivision](skills/cpp-cuda-vulkan-studio/references/donor-library/surfaces-subdivision.md)
+- [Texture, material, and color](skills/cpp-cuda-vulkan-studio/references/donor-library/texture-material-color.md)
+- [Volumes and voxels](skills/cpp-cuda-vulkan-studio/references/donor-library/volumes-voxels.md)
+- [Vulkan foundation tooling](skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md)
+- [XR and spatial computing](skills/cpp-cuda-vulkan-studio/references/donor-library/xr-spatial.md)
 
-- Vulkan and shader tooling: Khronos Vulkan-Samples, NVIDIA vk_mini_samples, Vulkan Memory
-  Allocator, volk, vk-bootstrap, SPIR-V Toolchain, Slang.
-- CUDA, AI runtimes, and ML compilers: CUTLASS, FlashAttention, Triton, llama.cpp/ggml, ONNX
-  Runtime, TensorRT-LLM, vLLM, MLC-LLM, tiny-cuda-nn, Apache TVM, PyTorch.
-- Rendering, graphics, and browser 3D: Google Filament, Diligent Engine, bgfx, Magnum, Google Dawn,
-  three.js, Babylon.js, pbrt-v4, Mitsuba 3, NVIDIA Falcor, THREE.js PathTracing Renderer, Embree,
-  OSPRay, madmann91/bvh.
-- Assets, materials, textures, and DCC interchange: glTF C/C++ Loaders
-  (fastgltf/cgltf/tinygltf), meshoptimizer, assimp, KTX-Software/Basis Universal, OpenColorIO,
-  OpenImageIO, TinyEXR, OpenUSD, Alembic, MaterialX, OpenTimelineIO.
-- Geometry, surfaces, and CAD: OpenSubdiv, libigl, CGAL, Open CASCADE Technology, FreeCAD
-  Study-Only.
-- Neural 3D and reconstruction: gsplat, Nerfstudio, NVIDIA Kaolin, PyTorch3D, Open3D, Neural
-  Graphics Study-Only references.
-- Hair, grooming, and fur: AMD TressFX, NVIDIA HairWorks Study-Only, Blender Study-Only.
-- Volumes and scientific visualization: OpenVDB/NanoVDB, fVDB, VTK.
-- Animation: ozz-animation, Animation Compression Library.
-- Engines, physics, and simulation: Godot Engine, Open 3D Engine, Jolt Physics, Bullet Physics,
-  NVIDIA Warp, Taichi, PositionBasedDynamics, Project Chrono, SOFA, NVIDIA PhysX.
-- XR and spatial computing: OpenXR SDK, OpenXR-Hpp, Monado, Godot OpenXR Vendors.
+### Donor Profiles
 
-Study-only donors are concept references, not code donors. Browser, Python, notebook, DCC, service,
-JIT/DSL, or non-C++ donors can still guide algorithms, behavior, tests, UX, and architecture, but
-agents should port the idea through the active C++/Vulkan/CUDA lane instead of copying code directly
-unless the user explicitly chooses that runtime and license shape.
+Some donors are direct C/C++ implementation references, some are dependency-scale references, and
+some are explicitly reference-only or study-only. Study-only donors are concept references, not code
+donors. Browser, Python, notebook, DCC, service, JIT/DSL, or non-C++ donors can still guide
+algorithms, behavior, tests, UX, and architecture, but agents should port the idea through the active
+C++/Vulkan/CUDA lane instead of copying code directly unless the user explicitly chooses that runtime
+and license shape.
+
+#### Vulkan And Shader Tooling
+
+- [Khronos Vulkan-Samples](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/khronos-vulkan-samples.md)
+- [NVIDIA vk_mini_samples](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nvidia-vk-mini-samples.md)
+- [Vulkan Memory Allocator](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vulkan-memory-allocator.md)
+- [volk](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/volk.md)
+- [vk-bootstrap](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vk-bootstrap.md)
+- [SPIR-V Toolchain](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/spirv-toolchain.md)
+- [Slang](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/slang.md)
+
+#### CUDA, AI Runtimes, And ML Compilers
+
+- [CUTLASS](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/cutlass.md)
+- [FlashAttention](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/flashattention.md)
+- [Triton](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/triton.md)
+- [llama.cpp and ggml](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/llama-ggml.md)
+- [ONNX Runtime](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/onnx-runtime.md)
+- [TensorRT-LLM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tensorrt-llm.md)
+- [vLLM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vllm.md)
+- [MLC-LLM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/mlc-llm.md)
+- [tiny-cuda-nn](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tiny-cuda-nn.md)
+- [Apache TVM](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tvm.md)
+- [PyTorch](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/pytorch.md)
+
+#### Rendering, Ray Tracing, And Graphics Frameworks
+
+- [Google Filament](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/filament.md)
+- [Diligent Engine](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/diligent-engine.md)
+- [bgfx](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/bgfx.md)
+- [Magnum](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/magnum.md)
+- [pbrt-v4](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/pbrt-v4.md)
+- [Mitsuba 3](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/mitsuba3.md)
+- [NVIDIA Falcor](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/falcor.md)
+- [Embree](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/embree.md)
+- [OSPRay](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/ospray.md)
+- [madmann91/bvh](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/madmann91-bvh.md)
+
+#### Browser 3D, WebGPU, And WebGL References
+
+- [Google Dawn](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/dawn.md)
+- [three.js](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/threejs.md)
+- [Babylon.js](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/babylonjs.md)
+- [THREE.js PathTracing Renderer](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/threejs-pathtracing.md)
+
+#### Assets, Meshes, Materials, And Texture IO
+
+- [glTF C/C++ Loaders](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/fastgltf-cgltf-tinygltf.md)
+- [meshoptimizer](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/meshoptimizer.md)
+- [assimp](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/assimp.md)
+- [KTX-Software and Basis Universal](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/ktx-basis.md)
+- [OpenColorIO and OpenImageIO](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/opencolorio-openimageio.md)
+- [TinyEXR](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tinyexr.md)
+- [MaterialX](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/materialx.md)
+
+#### DCC Scene And Editorial Pipelines
+
+- [OpenUSD](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openusd.md)
+- [Alembic](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/alembic.md)
+- [OpenTimelineIO](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/opentimelineio.md)
+- [Blender Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/blender-study-only.md)
+
+#### Geometry, Surfaces, And CAD
+
+- [OpenSubdiv](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/opensubdiv.md)
+- [libigl](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/libigl.md)
+- [CGAL](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/cgal.md)
+- [Open CASCADE Technology](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/open-cascade.md)
+- [FreeCAD Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/freecad-study-only.md)
+
+#### Neural 3D And Reconstruction
+
+- [gsplat](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/gsplat.md)
+- [Nerfstudio](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nerfstudio.md)
+- [NVIDIA Kaolin](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/kaolin.md)
+- [PyTorch3D](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/pytorch3d.md)
+- [Open3D](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/open3d.md)
+- [Neural Graphics Study-Only References](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/neural-graphics-study-only.md)
+
+#### Hair, Grooming, And Fur
+
+- [AMD TressFX](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tressfx.md)
+- [NVIDIA HairWorks Study-Only](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/hairworks-study-only.md)
+
+#### Volumes, Voxels, And Scientific Visualization
+
+- [OpenVDB and NanoVDB](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openvdb-nanovdb.md)
+- [fVDB](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/fvdb.md)
+- [VTK](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vtk.md)
+
+#### Animation
+
+- [ozz-animation](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/ozz-animation.md)
+- [Animation Compression Library](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/acl.md)
+
+#### Engines
+
+- [Godot Engine](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/godot-engine.md)
+- [Open 3D Engine](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/open-3d-engine.md)
+
+#### Physics And Simulation
+
+- [Jolt Physics](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/jolt-physics.md)
+- [Bullet Physics](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/bullet-physics.md)
+- [NVIDIA Warp](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/warp.md)
+- [Taichi](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/taichi.md)
+- [PositionBasedDynamics](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/positionbaseddynamics.md)
+- [Project Chrono](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/project-chrono.md)
+- [SOFA](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/sofa.md)
+- [NVIDIA PhysX](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/physx.md)
+
+#### XR And Spatial Computing
+
+- [OpenXR SDK](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openxr-sdk.md)
+- [OpenXR-Hpp](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openxr-hpp.md)
+- [Monado](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/monado.md)
+- [Godot OpenXR Vendors](skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/godot-openxr-vendors.md)
 
 ## When To Install GPU Tools
 
