@@ -205,15 +205,38 @@ NVIDIA machine for CUDA validation.
 
 ### Windows
 
+This block was checked from Linux on May 1, 2026 by querying the current
+`microsoft/winget-pkgs` manifests for package identifiers and by checking live LunarG and NVIDIA
+installer endpoints. It still must be executed and verified on a real Windows host because this repo
+cannot run Windows installers from Linux.
+
 Install baseline native tooling from an elevated PowerShell session:
 
 ```powershell
-winget install -e --id Microsoft.VisualStudio.2022.BuildTools --override "--wait --quiet --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.VC.CMake.Project"
-winget install -e --id Kitware.CMake
-winget install -e --id Ninja-build.Ninja
-winget install -e --id Git.Git
-winget install -e --id Python.Python.3.12
-winget install -e --id LLVM.LLVM
+winget source update
+
+$WingetPackages = @(
+  "Microsoft.VisualStudio.2022.BuildTools",
+  "Kitware.CMake",
+  "Ninja-build.Ninja",
+  "Git.Git",
+  "Python.Python.3.12",
+  "LLVM.LLVM"
+)
+
+foreach ($PackageId in $WingetPackages) {
+  winget show -e --id $PackageId --source winget
+}
+
+winget install -e --id Microsoft.VisualStudio.2022.BuildTools --source winget `
+  --accept-source-agreements --accept-package-agreements `
+  --override "--wait --quiet --norestart --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.VC.CMake.Project --includeRecommended"
+
+winget install -e --id Kitware.CMake --source winget --accept-source-agreements --accept-package-agreements
+winget install -e --id Ninja-build.Ninja --source winget --accept-source-agreements --accept-package-agreements
+winget install -e --id Git.Git --source winget --accept-source-agreements --accept-package-agreements
+winget install -e --id Python.Python.3.12 --source winget --accept-source-agreements --accept-package-agreements
+winget install -e --id LLVM.LLVM --source winget --accept-source-agreements --accept-package-agreements
 ```
 
 MSVC AddressSanitizer is the default Windows CPU sanitizer path. Use LLVM or WSL2 when you need
@@ -241,11 +264,14 @@ vulkaninfo --summary
 Install CUDA Toolkit and the NVIDIA driver:
 
 ```powershell
-winget install -e --id Nvidia.CUDA
+winget show -e --id Nvidia.CUDA --source winget
+winget install -e --id Nvidia.CUDA --source winget --accept-source-agreements --accept-package-agreements
 ```
 
-The NVIDIA Windows guide also supports the graphical CUDA installer and silent installer flags. After
-installation, open a new Developer PowerShell and verify:
+The `Nvidia.CUDA` winget manifest resolved to CUDA `13.2` with NVIDIA's
+`cuda_13.2.1_windows.exe` local installer during the manifest check. The NVIDIA Windows guide also
+supports the graphical CUDA installer and silent installer flags. After installation, open a new
+Developer PowerShell and verify:
 
 ```powershell
 nvidia-smi
