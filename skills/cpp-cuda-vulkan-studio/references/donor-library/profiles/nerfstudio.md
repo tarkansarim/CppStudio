@@ -3,6 +3,7 @@
 Source: https://github.com/nerfstudio-project/nerfstudio  
 Tier: `dependency-candidate`  
 Backend signal: native-cuda
+Native C++ use: workflow/reference-only; do not copy the Python training stack into native C++ projects.
 License signal: Apache-2.0; inspect `LICENSE`, dependencies, viewer assets, datasets, model checkpoints,
 examples, and plugin/package notices at the exact revision used.
 

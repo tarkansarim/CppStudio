@@ -3,6 +3,7 @@
 Source: https://github.com/erichlof/THREE.js-PathTracing-Renderer  
 Tier: `safe-donor`  
 Backend signal: native-opengl
+Native C++ use: reference-only for path-tracing behavior, shader ideas, fixtures, and UX.
 License signal: CC0-1.0; inspect `LICENSE`, demos, textures, models, HDRIs, and third-party example
 assets before reuse.
 

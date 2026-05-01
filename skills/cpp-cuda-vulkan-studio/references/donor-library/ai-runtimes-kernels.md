@@ -11,7 +11,7 @@ quantization, cross-backend inference, and ML compiler patterns.
 | [ggml](https://ggml.ai/) | safe-donor | MIT | Minimal tensor library design, quantized ops, portable backend abstractions. |
 | [ONNX Runtime](https://github.com/microsoft/onnxruntime) | dependency-candidate | MIT | Cross-platform model inference, execution providers, graph optimization, production serving API patterns. |
 | [TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM) | dependency-candidate | Apache-2.0 plus notices | NVIDIA-optimized LLM serving, batching, KV cache, C++ runtime orchestration, TensorRT integration. |
-| [vLLM](https://github.com/vllm-project/vllm) | dependency-candidate | Apache-2.0 | High-throughput LLM serving, paged attention, continuous batching, OpenAI-compatible API. |
+| [vLLM](https://github.com/vllm-project/vllm) | dependency-candidate | Apache-2.0 | High-throughput LLM serving, paged attention, continuous batching, OpenAI-compatible API. Service/runtime reference, not a direct embedded C++ donor. |
 | [MLC-LLM](https://github.com/mlc-ai/mlc-llm) | dependency-candidate | Apache-2.0 | Cross-platform compiled LLM deployment, TVM-backed GPU/mobile/WebGPU runtime ideas. |
 
 ## Kernels And Compilers
@@ -19,11 +19,11 @@ quantization, cross-backend inference, and ML compiler patterns.
 | Donor | Tier | License Signal | Best Use |
 | --- | --- | --- | --- |
 | [CUTLASS](https://github.com/NVIDIA/cutlass) | safe-donor | BSD-3-Clause | CUDA GEMM/convolution/reduction templates, tiling policies, Blackwell/Hopper/Ampere kernels. |
-| [Triton](https://github.com/triton-lang/triton) | safe-donor | MIT | Python-authored GPU kernels, MLIR compiler design, custom deep-learning primitives. |
-| [FlashAttention](https://github.com/Dao-AILab/flash-attention) | safe-donor | BSD-3-Clause | Efficient attention kernels, IO-aware algorithm design, CUDA/PyTorch extension patterns. |
+| [Triton](https://github.com/triton-lang/triton) | safe-donor | MIT | Python-authored GPU kernels, MLIR compiler design, custom deep-learning primitives. Reference-only for native C++ unless Python/JIT tooling is accepted. |
+| [FlashAttention](https://github.com/Dao-AILab/flash-attention) | safe-donor | BSD-3-Clause | Efficient attention kernels, IO-aware algorithm design, CUDA/PyTorch extension patterns. Inspect CUDA/C++ kernels separately from Python/PyTorch packaging. |
 | [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn) | safe-donor | BSD-3-Clause | Fused MLPs, multiresolution hash encodings, compact CUDA neural-network kernels. |
 | [Apache TVM](https://github.com/apache/tvm) | dependency-candidate | Apache-2.0 | ML compiler pipelines, tensor IR, GPU/Vulkan/OpenCL/Metal/WebGPU targets, auto-tuning. |
-| [PyTorch](https://github.com/pytorch/pytorch) | dependency-candidate | BSD-style | Tensor/autograd/runtime architecture, extension patterns, CUDA dispatch conventions. Usually study architecture or integrate through package dependencies. |
+| [PyTorch](https://github.com/pytorch/pytorch) | dependency-candidate | BSD-style | Tensor/autograd/runtime architecture, extension patterns, CUDA dispatch conventions. Usually study architecture or integrate through package dependencies; not a direct native C++ snippet donor. |
 
 ## Selection Notes
 
@@ -32,6 +32,8 @@ quantization, cross-backend inference, and ML compiler patterns.
 - For cross-platform compiled deployment, compare MLC-LLM and TVM before committing to a runtime stack.
 - Treat PyTorch as a package dependency or reference-output donor, not as a default dependency for C++
   reusable infrastructure.
+- Treat Triton and vLLM as reference/prototype/runtime donors for native C++ unless the project explicitly
+  accepts their Python/JIT/service stack.
 - For CUDA kernel authoring, use CUTLASS for matrix math and FlashAttention/tiny-cuda-nn for domain-specific fused kernel patterns.
 - For DSL/compiler exploration, Triton and TVM are better donors than hand-written CUDA when portability or code generation is the goal.
 - For Vulkan, OpenCL, WebGPU, or CPU inference targets, CUDA-heavy donors still provide useful algorithm,

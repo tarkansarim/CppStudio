@@ -3,6 +3,7 @@
 Source: https://github.com/NVIDIAGameWorks/kaolin  
 Tier: `dependency-candidate`  
 Backend signal: native-cuda
+Native C++ use: Python/PyTorch behavior reference only unless the user explicitly chooses that runtime.
 License signal: Mostly Apache-2.0 signals with restricted `kaolin/non_commercial`; inspect
 `LICENSE`, `kaolin/non_commercial`, examples, datasets, assets, and dependency notices at the exact
 revision used.

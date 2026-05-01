@@ -10,6 +10,9 @@ directly.
 Donors are domain references first. CUDA, Vulkan, OpenCL, DirectX, CPU, WebGPU, and DCC backend
 signals describe the upstream source, not the target lane. Keep the target project in its selected
 CUDA or Vulkan lane unless the user explicitly asks for a mixed lane or real interop is required.
+For native C++/CUDA/Vulkan projects, non-C/C++ donors are reference-only unless the user explicitly
+chooses that runtime; use them for behavior, algorithms, architecture, fixtures, and validation
+targets, then implement through the active lane skill.
 
 ## Prompt Intent Map
 
@@ -93,7 +96,9 @@ CUDA or Vulkan lane unless the user explicitly asks for a mixed lane or real int
   [simulation-gpu.md](simulation-gpu.md). Start with [NVIDIA Warp](profiles/warp.md),
   [Taichi](profiles/taichi.md), [PositionBasedDynamics](profiles/positionbaseddynamics.md),
   [Project Chrono](profiles/project-chrono.md), [SOFA](profiles/sofa.md), or
-  [NVIDIA PhysX](profiles/physx.md). Do not trigger this for business or economic simulations.
+  [NVIDIA PhysX](profiles/physx.md). Warp and Taichi are prototype/reference-only for native C++
+  unless their Python/JIT runtimes are explicitly chosen. Do not trigger this for business or economic
+  simulations.
 - **OpenXR, VR/AR/MR, headset/controller input, stereo swapchains, runtime diagnostics**: open
   [xr-spatial.md](xr-spatial.md). Start with [OpenXR SDK](profiles/openxr-sdk.md),
   [OpenXR-Hpp](profiles/openxr-hpp.md), [Monado](profiles/monado.md), and

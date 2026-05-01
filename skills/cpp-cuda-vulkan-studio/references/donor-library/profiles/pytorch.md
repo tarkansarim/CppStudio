@@ -3,6 +3,8 @@
 Source: https://github.com/pytorch/pytorch  
 Tier: `dependency-candidate`  
 Backend signal: mixed-backend
+Native C++ use: dependency-scale architecture/reference only unless the user explicitly chooses PyTorch or
+libtorch integration.
 License signal: BSD-style; inspect `LICENSE`, `NOTICE`, `third_party/`, generated code, binary package
 notices, CUDA/ROCm/oneDNN/MKL/NCCL/cuDNN dependencies, and model/assets licenses at the exact revision used.
 

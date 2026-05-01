@@ -7,10 +7,10 @@ training workflows, point-cloud/reconstruction workflows, and neural graphics pi
 
 | Donor | Tier | License Signal | Best Use |
 | --- | --- | --- | --- |
-| [Nerfstudio](https://github.com/nerfstudio-project/nerfstudio) | dependency-candidate | Apache-2.0 | NeRF/3DGS training pipelines, camera/data processing, experiment structure, viewer/export workflows. |
-| [gsplat](https://github.com/nerfstudio-project/gsplat) | safe-donor | Apache-2.0 | CUDA-accelerated Gaussian splatting rasterization, Python bindings, differentiable rasterizer API. |
-| [NVIDIA Kaolin](https://github.com/NVIDIAGameWorks/kaolin) | dependency-candidate | Mostly Apache-2.0; `kaolin/non_commercial` is restricted | 3D deep-learning ops, differentiable rendering, mesh/voxel/point-cloud conversions. Avoid non-commercial subpackage. |
-| [PyTorch3D](https://github.com/facebookresearch/pytorch3d) | dependency-candidate | BSD-style | Differentiable rendering, mesh/point-cloud ops, camera transforms, 3D learning components. |
+| [Nerfstudio](https://github.com/nerfstudio-project/nerfstudio) | dependency-candidate | Apache-2.0 | NeRF/3DGS training pipelines, camera/data processing, experiment structure, viewer/export workflows. Workflow reference-only for native C++. |
+| [gsplat](https://github.com/nerfstudio-project/gsplat) | safe-donor | Apache-2.0 | CUDA-accelerated Gaussian splatting rasterization, Python bindings, differentiable rasterizer API. Python/PyTorch wrapper is reference-only for native C++. |
+| [NVIDIA Kaolin](https://github.com/NVIDIAGameWorks/kaolin) | dependency-candidate | Mostly Apache-2.0; `kaolin/non_commercial` is restricted | 3D deep-learning ops, differentiable rendering, mesh/voxel/point-cloud conversions. Python/PyTorch reference-only for native C++; avoid non-commercial subpackage. |
+| [PyTorch3D](https://github.com/facebookresearch/pytorch3d) | dependency-candidate | BSD-style | Differentiable rendering, mesh/point-cloud ops, camera transforms, 3D learning components. Python/PyTorch reference-only for native C++. |
 | [Open3D](https://github.com/isl-org/Open3D) | dependency-candidate | MIT | 3D data processing plus Open3D-ML integration for perception and reconstruction workflows. |
 
 ## Study-Only References
@@ -28,6 +28,8 @@ training workflows, point-cloud/reconstruction workflows, and neural graphics pi
   rasterization behavior, data layout, numerical edge cases, and tests, then port the target path through
   Vulkan compute/render guidance instead of adding CUDA by default.
 - For general neural 3D experiments, use Nerfstudio for workflow and PyTorch3D/Kaolin/Open3D for reusable operators.
+- For native C++ viewers or runtimes, treat Python/PyTorch neural 3D donors as reference-output and
+  behavior sources unless the user explicitly chooses a Python/PyTorch runtime lane.
 - For fused MLPs, hash grids, or compact CUDA neural kernels, route through `ai-runtimes-kernels.md` and
   the tiny-cuda-nn profile.
 - Keep GraphDeco Gaussian Splatting, instant-ngp, and Kaolin Wisp study-only unless the user explicitly

@@ -7,8 +7,8 @@ granular media, multiphysics, robotics simulation, and CUDA/GPU simulation kerne
 
 | Donor | Tier | License Signal | Best Use |
 | --- | --- | --- | --- |
-| [NVIDIA Warp](https://github.com/NVIDIA/warp) | dependency-candidate | Apache-2.0 | Python-authored CUDA simulation kernels, differentiable simulation, robotics, physics, spatial computing. |
-| [Taichi](https://github.com/taichi-dev/taichi) | dependency-candidate | Apache-2.0 | Portable GPU/CPU simulation DSL, differentiable physical simulation, rapid solver prototyping. |
+| [NVIDIA Warp](https://github.com/NVIDIA/warp) | dependency-candidate | Apache-2.0 | Python-authored CUDA simulation kernels, differentiable simulation, robotics, physics, spatial computing. Prototype/reference-only for native C++ unless Python/JIT is explicit. |
+| [Taichi](https://github.com/taichi-dev/taichi) | dependency-candidate | Apache-2.0 | Portable Python DSL for GPU/CPU simulation, differentiable physical simulation, and rapid solver prototyping. Reference-only for native C++. |
 | [PositionBasedDynamics](https://github.com/InteractiveComputerGraphics/PositionBasedDynamics) | safe-donor | MIT | C++ position-based rigid/deformable/fluid constraints, cloth/soft-body simulation concepts. |
 
 ## Multiphysics And Large Simulation
@@ -22,6 +22,8 @@ granular media, multiphysics, robotics simulation, and CUDA/GPU simulation kerne
 ## Selection Notes
 
 - Use Warp or Taichi for GPU/differentiable simulation exploration when Python/JIT tooling is acceptable.
+  For native C++/CUDA/Vulkan deliverables, port the learned solver behavior independently and keep these
+  donors out of the direct code path.
 - Use PositionBasedDynamics for small reusable C++ constraint/cloth/soft-body patterns.
 - Use CUDA, Vulkan, CPU, or DSL simulation donors as solver and validation references across lanes. Keep
   the target lane fixed and translate execution, memory, and synchronization details through the active
@@ -34,8 +36,8 @@ granular media, multiphysics, robotics simulation, and CUDA/GPU simulation kerne
 
 ## Deep Profiles
 
-- [NVIDIA Warp](profiles/warp.md): read before adopting Python-authored CUDA simulation kernels.
-- [Taichi](profiles/taichi.md): read before adopting portable GPU/CPU simulation DSL workflows.
+- [NVIDIA Warp](profiles/warp.md): read before using Python-authored CUDA simulation kernels as prototype/reference material.
+- [Taichi](profiles/taichi.md): read before using portable Python DSL simulation workflows as prototype/reference material.
 - [PositionBasedDynamics](profiles/positionbaseddynamics.md): read before adapting C++ PBD/XPBD constraints.
 - [Project Chrono](profiles/project-chrono.md): read before adopting multiphysics or vehicle/terrain simulation.
 - [SOFA](profiles/sofa.md): read before using medical/robotics multiphysics architecture references.

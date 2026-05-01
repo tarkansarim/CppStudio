@@ -9,7 +9,7 @@ visualization, GPU volume rendering, collision fields, and neural sparse-volume 
 | --- | --- | --- | --- |
 | [OpenVDB](https://github.com/AcademySoftwareFoundation/openvdb) | dependency-candidate | Apache-2.0 in current releases; older releases were MPL-2.0 | Sparse volume data structures, VDB IO, level sets, fog volumes, production VFX volume workflows. |
 | [NanoVDB](https://developer.nvidia.com/nanovdb) | safe-donor | Part of OpenVDB; verify exact version license | GPU-friendly VDB layout, CUDA/OptiX/Vulkan-style volume traversal and rendering concepts. |
-| [fVDB](https://openvdb.github.io/fvdb-core/) | dependency-candidate | Apache-2.0 | PyTorch/GPU sparse-volume tensors, neural fields, large-domain spatial ML, GPU volume algorithms. |
+| [fVDB](https://openvdb.github.io/fvdb-core/) | dependency-candidate | Apache-2.0 | PyTorch/GPU sparse-volume tensors, neural fields, large-domain spatial ML, GPU volume algorithms. Reference-only for native C++ unless Python/PyTorch/CUDA is explicit. |
 | [VTK](https://docs.vtk.org/en/latest/about.html) | dependency-candidate | BSD-style | Scientific visualization, volume rendering, image processing, C++/Python visualization pipelines. |
 
 ## Selection Notes

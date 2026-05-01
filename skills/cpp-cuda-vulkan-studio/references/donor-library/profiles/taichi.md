@@ -3,6 +3,7 @@
 Source: https://github.com/taichi-dev/taichi  
 Tier: `dependency-candidate`  
 Backend signal: mixed-backend, native-cpu, native-cuda, native-vulkan
+Native C++ use: reference-only unless the user explicitly chooses Taichi/Python runtime embedding.
 License signal: Apache-2.0; inspect `LICENSE`, third-party dependency manifests, backend components,
 examples, and package metadata at the exact revision used.
 
@@ -24,7 +25,7 @@ examples, and package metadata at the exact revision used.
 ## Integration Notes
 
 - Treat Taichi as a Python simulation/prototyping dependency unless the target project intentionally
-  embeds that runtime.
+  embeds that runtime. Do not use it as a direct C++ donor for native C++/CUDA/Vulkan deliverables.
 - Keep Taichi kernels and generated artifacts outside reusable C++ templates.
 - Preserve CPU reference fixtures and backend-specific tolerances when comparing outputs.
 - Record backend and version context because behavior and performance can vary by backend.

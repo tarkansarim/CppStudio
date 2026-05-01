@@ -3,6 +3,7 @@
 Source: https://github.com/mrdoob/three.js  
 Tier: `safe-donor`  
 Backend signal: mixed-backend, native-webgpu, native-opengl
+Native C++ use: reference-only for behavior, UX, fixtures, and scene semantics.
 License signal: MIT; inspect `LICENSE`, `examples/`, loaders, addons, assets, textures, models, and
 third-party package notices at the exact revision used.
 

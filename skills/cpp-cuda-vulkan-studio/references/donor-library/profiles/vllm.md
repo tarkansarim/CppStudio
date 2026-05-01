@@ -3,6 +3,7 @@
 Source: https://github.com/vllm-project/vllm  
 Tier: `dependency-candidate`  
 Backend signal: mixed-backend
+Native C++ use: service/runtime reference only, not a direct embedded C++ inference donor.
 License signal: Apache-2.0; inspect `LICENSE`, `requirements/`, `csrc/`, kernel dependencies,
 third-party notices, model integrations, and serving assets at the exact revision used.
 

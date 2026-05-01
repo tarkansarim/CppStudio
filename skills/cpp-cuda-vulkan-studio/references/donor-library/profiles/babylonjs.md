@@ -3,6 +3,7 @@
 Source: https://github.com/BabylonJS/Babylon.js  
 Tier: `safe-donor`  
 Backend signal: mixed-backend, native-webgpu, native-opengl
+Native C++ use: reference-only for behavior, UX, fixtures, and web-engine architecture.
 License signal: Apache-2.0; inspect `license.md`, packages, loaders, tools, exporters, playground
 assets, sample scenes, and third-party package notices at the exact revision used.
 

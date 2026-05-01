@@ -3,6 +3,8 @@
 Source: https://github.com/Dao-AILab/flash-attention  
 Tier: `safe-donor`  
 Backend signal: native-cuda
+Native C++ use: inspect CUDA/C++ kernels separately; Python/PyTorch package surfaces are reference-only
+unless the user explicitly chooses that stack.
 License signal: BSD-3-Clause; inspect `LICENSE`, `third_party/`, and Python package metadata at the
 exact revision used.
 

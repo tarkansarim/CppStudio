@@ -3,6 +3,8 @@
 Source: https://openvdb.github.io/fvdb-core/  
 Tier: `dependency-candidate`  
 Backend signal: native-cuda, native-cpu
+Native C++ use: reference-only unless the user explicitly chooses the Python/PyTorch/CUDA sparse-volume
+stack.
 License signal: Apache-2.0 as part of the OpenVDB project; inspect repository license files,
 PyTorch/CUDA extension code, NVIDIA components, examples, notebooks, datasets, and model assets at the
 exact revision used.

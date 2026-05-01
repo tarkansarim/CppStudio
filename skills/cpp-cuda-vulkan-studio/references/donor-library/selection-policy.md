@@ -14,6 +14,24 @@ lane still controls implementation: Vulkan targets port donor ideas through Vulk
 synchronization, CUDA targets port donor ideas through CUDA tooling and kernel policy, and mixed
 CUDA/Vulkan lanes require explicit user choice or a real interop need.
 
+## Language And Runtime Boundary
+
+License tier is not the same thing as direct C++ usability. A permissive Python, JavaScript,
+TypeScript, notebook, JIT/DSL, service-runtime, DCC-script, or web-engine project can be a good
+reference while still being the wrong source for direct native C++ reuse.
+
+- Treat a donor as a direct native C/C++ donor only when the relevant implementation surface is C or
+  C++ and the selected files are license-compatible.
+- Treat non-C/C++ donors as reference-only for native C++/CUDA/Vulkan projects unless the user
+  explicitly accepts that language/runtime as part of the target project.
+- For reference-only donors, use algorithms, behavior, data layouts, architecture, fixtures,
+  expected outputs, UX patterns, and performance targets. Do not copy implementation source or add the
+  donor runtime as an implicit dependency.
+- For mixed repositories, isolate the C/C++ subtrees from Python bindings, web frontends, generated
+  code, notebooks, assets, datasets, and service wrappers before recommending any direct reuse.
+- If a profile says "reference-only for native C++", route implementation through the active C++,
+  CUDA, or Vulkan skill and write an independent port with tests.
+
 ## Safe-Donor Checklist
 
 Before adapting code or adding a dependency:
@@ -51,6 +69,9 @@ Examples:
 | `safe-donor` | Copy/adapt small code, tests, build ideas, examples, and dependency patterns. | Preserve notices; cite donor in docs when meaningful. |
 | `dependency-candidate` | Add as a deliberate dependency or study architecture/API shape. Do not copy code by default. | Confirm exact version, build cost, transitive licenses, copyleft/exception terms, optional modules, and target repo dependency policy. |
 | `study-only` | Learn concepts, compare algorithms, write independent implementations. | Do not copy code into project or skills without explicit approval and license review. |
+
+`safe-donor` only means the license is permissive enough for possible reuse. It does not override the
+language/runtime boundary above.
 
 ## Red Flags
 

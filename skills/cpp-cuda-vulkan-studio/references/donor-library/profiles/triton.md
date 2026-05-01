@@ -3,6 +3,7 @@
 Source: https://github.com/triton-lang/triton  
 Tier: `safe-donor`  
 Backend signal: mixed-backend, native-cuda
+Native C++ use: reference/prototype-only unless the user explicitly chooses Triton's Python/JIT toolchain.
 License signal: MIT; inspect `LICENSE`, `third_party/`, and compiler/runtime dependencies at the exact
 revision used.
 
@@ -23,7 +24,8 @@ revision used.
 
 ## Integration Notes
 
-- Treat Triton as a runtime/compiler dependency, not a drop-in C++ CUDA library.
+- Treat Triton as a runtime/compiler dependency, not a drop-in C++ CUDA library or direct native C++
+  code donor.
 - Use Triton to prototype a kernel shape only if the target project can accept Python or generated-code
   tooling in its workflow.
 - Preserve a C++/CUDA path when the deliverable must be standalone native code.

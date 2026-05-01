@@ -3,6 +3,7 @@
 Source: https://github.com/NVIDIA/warp  
 Tier: `dependency-candidate`  
 Backend signal: native-cuda, native-cpu
+Native C++ use: reference/prototype-only unless the user explicitly chooses Warp's Python/JIT runtime.
 License signal: Apache-2.0 for Warp, with additional third-party downloads and NVIDIA libmathdx license
 surfaces called out by upstream; inspect `LICENSE.md`, `licenses/`, build scripts, package metadata, and
 example assets at the exact revision used.
@@ -23,7 +24,8 @@ example assets at the exact revision used.
 
 ## Integration Notes
 
-- Treat Warp as a Python/JIT dependency, not a default C++ engine runtime dependency.
+- Treat Warp as a Python/JIT dependency, not a direct native C++ donor or default C++ engine runtime
+  dependency.
 - Keep simulation kernel prototypes, generated outputs, ML training data, and runtime C++ code separated.
 - Record CUDA driver, GPU, Warp version, and optional dependency versions for benchmark claims.
 - If the final project needs native C++ kernels, use Warp as a behavior/prototype donor and port the

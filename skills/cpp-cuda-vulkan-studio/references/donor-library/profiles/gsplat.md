@@ -3,6 +3,8 @@
 Source: https://github.com/nerfstudio-project/gsplat  
 Tier: `safe-donor`  
 Backend signal: native-cuda
+Native C++ use: inspect CUDA/C++ operator code separately; Python/PyTorch wrapper and training flows are
+reference-only for native C++ projects.
 License signal: Apache-2.0; inspect `LICENSE`, Python package metadata, dependencies, examples, and
 data/model assets at the exact revision used.
 

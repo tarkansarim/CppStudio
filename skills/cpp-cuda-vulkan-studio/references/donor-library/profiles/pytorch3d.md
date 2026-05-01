@@ -3,6 +3,7 @@
 Source: https://github.com/facebookresearch/pytorch3d  
 Tier: `dependency-candidate`  
 Backend signal: native-cuda
+Native C++ use: Python/PyTorch reference-output donor; do not treat as a native C++ renderer dependency.
 License signal: BSD-style; inspect `LICENSE`, `INSTALL.md`, examples, datasets, third-party notices,
 and package dependencies at the exact revision used.
 

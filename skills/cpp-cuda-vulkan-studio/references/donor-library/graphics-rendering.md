@@ -14,8 +14,8 @@ frame/debug tooling, render graphs, and ray/path tracing work.
 | [bgfx](https://github.com/bkaradzic/bgfx) | dependency-candidate | BSD-2-Clause/CC0 signals in package metadata | Bring-your-own-engine renderer abstraction, shader toolchain concepts, multi-backend graphics API handling. |
 | [Magnum](https://github.com/mosra/magnum) | safe-donor | MIT/Expat | Lightweight C++ graphics middleware, CMake-friendly modular graphics utilities, examples. |
 | [Google Dawn](https://github.com/google/dawn) | dependency-candidate | BSD-3-Clause | Native WebGPU implementation, Tint/WGSL tooling, WebGPU C/C++ headers, Vulkan/D3D/Metal backend design. |
-| [three.js](https://github.com/mrdoob/three.js) | safe-donor | MIT | Browser 3D scene patterns, WebGL/WebGPU examples, loaders, controls, interactive visualizations. |
-| [Babylon.js](https://github.com/BabylonJS/Babylon.js/) | safe-donor | Apache-2.0 | Web 3D engine architecture, TypeScript/WebGPU/WebXR examples, scene/tooling patterns. |
+| [three.js](https://github.com/mrdoob/three.js) | safe-donor | MIT | Browser 3D scene patterns, WebGL/WebGPU examples, loaders, controls, interactive visualizations. Reference-only for native C++. |
+| [Babylon.js](https://github.com/BabylonJS/Babylon.js/) | safe-donor | Apache-2.0 | Web 3D engine architecture, TypeScript/WebGPU/WebXR examples, scene/tooling patterns. Reference-only for native C++. |
 
 ## Ray And Path Tracing References
 
@@ -24,7 +24,7 @@ frame/debug tooling, render graphs, and ray/path tracing work.
 | [pbrt-v4](https://github.com/mmp/pbrt-v4) | safe-donor | Apache-2.0 | Physically based rendering algorithms, materials, sampling, scene format, CPU/GPU renderer structure. |
 | [Mitsuba 3](https://github.com/mitsuba-renderer/mitsuba3) | safe-donor | BSD-3-Clause style license | Differentiable/retargetable rendering design, plugin architecture, integrator/material ideas. |
 | [NVIDIA Falcor](https://github.com/NVIDIAGameWorks/Falcor) | dependency-candidate | BSD-3-Clause core; separate NVIDIA component licenses | Realtime rendering framework, RTX/ray-tracing architecture, render graphs. Inspect component licenses before reuse. |
-| [THREE.js PathTracing Renderer](https://github.com/erichlof/THREE.js-PathTracing-Renderer) | safe-donor | CC0-1.0 | WebGL path tracing demos, shader-side path tracing patterns, BVH/glTF browser rendering ideas. |
+| [THREE.js PathTracing Renderer](https://github.com/erichlof/THREE.js-PathTracing-Renderer) | safe-donor | CC0-1.0 | WebGL path tracing demos, shader-side path tracing patterns, BVH/glTF browser rendering ideas. Reference-only for native C++. |
 
 ## Selection Notes
 
@@ -39,6 +39,7 @@ frame/debug tooling, render graphs, and ray/path tracing work.
 - For runtime mesh import, conditioning, BVH, collision, or physics handoff, route to
   [geometry-simulation.md](geometry-simulation.md) after choosing the renderer boundary.
 - For browser-facing 3D demos, use three.js first for lightweight scenes and Babylon.js when a fuller engine/editor stack is useful.
+  For native C++ projects, translate behavior and fixtures; do not copy JavaScript/TypeScript runtime code.
 - For physically based or differentiable rendering correctness, use pbrt-v4 and Mitsuba 3 as reference
   donors. Treat their CUDA/OptiX paths as backend-specific references, not automatic CUDA lane changes.
 - For realtime ray tracing or render-graph architecture, use Falcor only when framework-scale or

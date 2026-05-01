@@ -204,6 +204,7 @@ This lane split the full 50-case trigger matrix across five read-only subagents:
 - `agent-lookup.md` now explicitly sends RTX SDK boundaries, NVIDIA Vulkan extensions, mesh/task
   shaders, Nsight/Aftermath tooling, and vendor-specific Vulkan ray-tracing samples to
   `profiles/nvidia-vk-mini-samples.md` alongside Falcor.
-- The `cuda-target-non-cuda-donor-reference` matrix expectation now uses Taichi instead of TressFX.
-  TressFX remains correct for hair, fur, grooming, strand, or TressFX-named prompts, but it was too
-  specific for a generic simulation/geometry kernel backend-mismatch prompt.
+- The `cuda-target-non-cuda-donor-reference` matrix expectation now uses native C++/SDK-oriented PhysX
+  instead of Taichi or TressFX. Taichi remains useful as a Python DSL reference/prototype donor, and
+  TressFX remains correct for hair, fur, grooming, strand, or TressFX-named prompts, but neither should
+  be implied as a direct donor for a generic native C++ simulation/geometry kernel prompt.
