@@ -28,6 +28,7 @@ want_cmd() {
 }
 
 need_cmd cmake
+need_cmd ninja
 need_cmd c++
 need_cmd git
 

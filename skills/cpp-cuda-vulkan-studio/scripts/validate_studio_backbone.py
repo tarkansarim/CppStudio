@@ -63,6 +63,29 @@ REQUIRED_TEST_PRESETS = {
 }
 
 
+def named_presets(presets: object, key: str) -> tuple[set[str], list[str]]:
+    errors: list[str] = []
+    names: set[str] = set()
+
+    if not isinstance(presets, dict):
+        return names, ["CMakePresets.json root must be an object"]
+
+    entries = presets.get(key, [])
+    if not isinstance(entries, list):
+        return names, [f"CMakePresets.json {key} must be a list"]
+
+    for index, entry in enumerate(entries, 1):
+        if not isinstance(entry, dict):
+            errors.append(f"CMakePresets.json {key}[{index}] must be an object")
+            continue
+        name = entry.get("name")
+        if not isinstance(name, str) or not name.strip():
+            errors.append(f"CMakePresets.json {key}[{index}] must have a non-empty string name")
+            continue
+        names.add(name)
+    return names, errors
+
+
 def labels_for_test(test: dict[str, object]) -> set[str]:
     labels: set[str] = set()
     properties = test.get("properties", [])
@@ -112,8 +135,11 @@ def main() -> int:
     parser.add_argument("repo", help="Repository root to validate")
     parser.add_argument("--strict-source-layout", action="store_true")
     parser.add_argument("--integration", action="store_true", help="Also configure, build, and inspect CTest registration")
+    parser.add_argument("--integration-configure-preset", default="dev", help="CMake configure preset used by --integration")
+    parser.add_argument("--integration-build-preset", help="CMake build preset used by --integration; defaults to configure preset")
+    parser.add_argument("--integration-test-preset", default="quick", help="CTest preset inspected by --integration")
     parser.add_argument(
-        "--expected-test-label",
+        "--integration-required-label",
         action="append",
         default=["quick"],
         help="CTest label that must appear in --integration show-only JSON. Repeat for multiple labels.",
@@ -134,8 +160,10 @@ def main() -> int:
         except json.JSONDecodeError as error:
             failures.append(f"CMakePresets.json is invalid JSON: {error}")
         else:
-            configure = {item.get("name") for item in presets.get("configurePresets", [])}
-            tests = {item.get("name") for item in presets.get("testPresets", [])}
+            configure, configure_errors = named_presets(presets, "configurePresets")
+            tests, test_errors = named_presets(presets, "testPresets")
+            failures.extend(configure_errors)
+            failures.extend(test_errors)
             missing_configure = REQUIRED_CONFIGURE_PRESETS - configure
             missing_tests = REQUIRED_TEST_PRESETS - tests
             if missing_configure:
@@ -172,10 +200,11 @@ def main() -> int:
             failures.append(f"script is not executable: {relative}")
 
     if args.integration and not failures:
+        build_preset = args.integration_build_preset or args.integration_configure_preset
         commands = [
-            ["cmake", "--preset", "dev"],
-            ["cmake", "--build", "--preset", "dev"],
-            ["ctest", "--preset", "quick", "--show-only=json-v1"],
+            ["cmake", "--preset", args.integration_configure_preset],
+            ["cmake", "--build", "--preset", build_preset],
+            ["ctest", "--preset", args.integration_test_preset, "--show-only=json-v1"],
         ]
         for command in commands:
             result = subprocess.run(command, cwd=repo, text=True, capture_output=True, check=False)
@@ -185,7 +214,7 @@ def main() -> int:
                 )
                 break
             if command[0] == "ctest":
-                failures.extend(validate_ctest_json(result.stdout, set(args.expected_test_label)))
+                failures.extend(validate_ctest_json(result.stdout, set(args.integration_required_label)))
 
     if failures:
         for failure in failures:

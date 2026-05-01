@@ -12,6 +12,18 @@ EXPECTED_TARGET_DIR="${CODEX_HOME_DIR}/skills/${SKILL_NAME}"
 dry_run=0
 delete_flag="--delete"
 
+require_python310() {
+    python3 - <<'PY'
+import sys
+
+if sys.version_info < (3, 10):
+    raise SystemExit(
+        "Python 3.10+ is required; found "
+        f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+    )
+PY
+}
+
 usage() {
     cat <<EOF
 Usage: $0 [--dry-run] [--no-delete]
@@ -59,6 +71,8 @@ if [[ ! -f "${SOURCE_DIR}/SKILL.md" ]]; then
     exit 1
 fi
 
+require_python310
+
 if [[ ! -x "${VALIDATOR}" && ! -f "${VALIDATOR}" ]]; then
     echo "Missing skill validator: ${VALIDATOR}" >&2
     exit 1
@@ -71,6 +85,16 @@ source_resolved="$(realpath -m "${SOURCE_DIR}")"
 home_resolved="$(realpath -m "${HOME}")"
 codex_home_resolved="$(realpath -m "${CODEX_HOME_DIR}")"
 codex_skills_resolved="$(realpath -m "${CODEX_HOME_DIR}/skills")"
+
+if [[ -L "${CODEX_HOME_DIR}/skills" ]]; then
+    echo "Refusing symlinked Codex skills root: ${CODEX_HOME_DIR}/skills" >&2
+    exit 1
+fi
+
+if [[ -L "${TARGET_DIR}" ]]; then
+    echo "Refusing symlinked TARGET_DIR for rsync --delete: ${TARGET_DIR}" >&2
+    exit 1
+fi
 
 if [[ "${target_resolved}" != "${expected_resolved}" && "${ALLOW_SYNC_TARGET_OVERRIDE:-0}" != "1" ]]; then
     echo "Refusing sync with TARGET_DIR outside the installed skill path:" >&2

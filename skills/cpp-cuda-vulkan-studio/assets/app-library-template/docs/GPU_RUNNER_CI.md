@@ -28,6 +28,7 @@ self-hosted, linux, cuda, vulkan, gpu
 ## Required Tools
 
 - CMake 3.25 or newer
+- Ninja
 - C++20 compiler
 - CUDA Toolkit when CUDA jobs are enabled
 - NVIDIA driver compatible with the selected CUDA Toolkit

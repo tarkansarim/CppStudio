@@ -5,6 +5,7 @@ This project follows the reusable Vulkan-first C++ studio backbone with explicit
 Required baseline tools:
 
 - CMake 3.25 or newer
+- Ninja
 - A C++20 compiler
 - CUDA Toolkit when `PROJECT_ENABLE_CUDA=ON`
 - Vulkan SDK 1.4 or newer when `PROJECT_ENABLE_VULKAN=ON`

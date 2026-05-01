@@ -31,7 +31,7 @@ source of truth. Edit this repo, then publish with the scripts below.
 Default repo validation and rollout require:
 
 - Bash
-- Python 3
+- Python 3.10 or newer
 - `rsync`
 - Codex skill validator at
   `${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py`
@@ -39,7 +39,7 @@ Default repo validation and rollout require:
 Optional workflows require extra tools:
 
 - `inotifywait` from `inotify-tools` for watch mode
-- CMake, CTest, Ninja or Make, and a C++ compiler for full generated-project validation
+- CMake, CTest, Ninja, and a C++ compiler for full generated-project validation
 - CUDA Toolkit and NVIDIA driver for CUDA lanes
 - Vulkan SDK tools such as `glslc`, `spirv-val`, `vulkaninfo`, and validation layers for Vulkan lanes
 - Nsight Systems for optional profiling smoke lanes
@@ -408,6 +408,14 @@ CppStudio is released under [The Unlicense](LICENSE) for unrestricted reuse.
 
 ## Troubleshooting
 
+Missing or old Python:
+
+```text
+Python 3.10+ is required
+```
+
+Install Python 3.10 or newer and rerun validation.
+
 Missing skill validator:
 
 ```text
@@ -424,7 +432,7 @@ sudo apt install inotify-tools
 
 Full validation fails during CMake configure or build:
 
-- Confirm CMake and a C++ compiler are installed.
+- Confirm CMake, Ninja, and a C++ compiler are installed.
 - If CUDA or Vulkan-specific generated lanes are enabled, confirm the relevant SDK/tool paths.
 - Fix template or validation behavior in the repo copy first, then rerun `./scripts/validate.sh --full`.
 

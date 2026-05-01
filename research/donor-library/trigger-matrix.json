@@ -219,7 +219,7 @@
     },
     {
       "name": "dcc-editorial-pipeline-donors",
-      "tags": ["positive", "assets"],
+      "tags": ["positive", "assets", "dcc"],
       "prompt_shape": "C++ DCC pipeline or virtual-production tool needs scene interchange, USD/Alembic caches, MaterialX look data, editorial timelines, OTIO, review handoff, or Blender workflow references.",
       "expected_behavior": "Route to dcc-scene-pipeline and the matching OpenUSD, Alembic, MaterialX, OpenTimelineIO, OpenSubdiv, or Blender study-only profile; keep DCC plugins and assets license-separated.",
       "expected_paths": [
@@ -235,7 +235,7 @@
     },
     {
       "name": "volume-voxel-rendering-donors",
-      "tags": ["positive", "assets"],
+      "tags": ["positive", "assets", "volumes"],
       "prompt_shape": "C++ or GPU volume tool needs sparse VDB/NanoVDB IO, voxel grids, GPU volume traversal, fVDB sparse-volume ML, VTK scientific visualization, or volume-rendering references.",
       "expected_behavior": "Route to volumes-voxels and the OpenVDB/NanoVDB, fVDB, and VTK profiles; keep volume IO, ML tensors, renderer upload, and visualization toolkit choices separate.",
       "expected_paths": [
@@ -249,7 +249,7 @@
     },
     {
       "name": "material-texture-color-pipeline-donors",
-      "tags": ["positive", "assets"],
+      "tags": ["positive", "assets", "materials"],
       "prompt_shape": "C++ asset or renderer pipeline needs KTX/KTX2, Basis transcoding, EXR/HDR image IO, TinyEXR, OpenImageIO, OpenColorIO, color management, ACES/OCIO, or MaterialX references.",
       "expected_behavior": "Route to texture-material-color and the matching KTX/Basis, OpenColorIO/OpenImageIO, TinyEXR, or MaterialX profile; keep assets, configs, textures, and color data license-separated.",
       "expected_paths": [

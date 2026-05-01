@@ -16,6 +16,18 @@ USER_AGENTS_RELAY_INSTALLER="${ROOT_DIR}/scripts/install_user_agents_relay.py"
 USER_AGENTS_RELAY_SNIPPET="${SNIPPET_ROOT}/user-agents/cppstudio-relay.md"
 USER_AGENTS_RELAY_TARGET="${USER_AGENTS_RELAY_TARGET:-${CODEX_HOME_DIR}/AGENTS.md}"
 
+require_python310() {
+    python3 - <<'PY'
+import sys
+
+if sys.version_info < (3, 10):
+    raise SystemExit(
+        "Python 3.10+ is required; found "
+        f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+    )
+PY
+}
+
 usage() {
     cat <<EOF
 Usage: $0
@@ -62,8 +74,20 @@ if [[ ! -d "${SOURCE_DIR}" ]]; then
     exit 1
 fi
 
+require_python310
+
 target_resolved="$(realpath -m "${TARGET_DIR}")"
 expected_resolved="$(realpath -m "${EXPECTED_TARGET_DIR}")"
+
+if [[ -L "${CODEX_HOME_DIR}/skills" ]]; then
+    echo "Refusing symlinked Codex skills root: ${CODEX_HOME_DIR}/skills" >&2
+    exit 1
+fi
+
+if [[ -L "${TARGET_DIR}" ]]; then
+    echo "Refusing symlinked rollout TARGET_DIR: ${TARGET_DIR}" >&2
+    exit 1
+fi
 
 if [[ "${target_resolved}" != "${expected_resolved}" && "${ALLOW_ROLLOUT_TARGET_OVERRIDE:-0}" != "1" ]]; then
     echo "Refusing rollout with TARGET_DIR outside the installed skill path:" >&2

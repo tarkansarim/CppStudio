@@ -93,6 +93,12 @@ def planned_text(relative: str, target: Path, replacements: dict[str, str], forc
     return text
 
 
+def status_for_target(target: Path, force: bool) -> str:
+    if target.exists():
+        return "overwrite" if force else "exists"
+    return "write"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("repo", help="Existing repository root")
@@ -107,9 +113,15 @@ def main() -> int:
     paths = list(BACKBONE_PATHS)
 
     rendered_files: list[tuple[str, Path, str]] = []
+    dry_run_conflicts: list[Path] = []
     for relative in paths:
         target = repo / relative
-        rendered_files.append((relative, target, planned_text(relative, target, {}, args.force)))
+        if args.dry_run:
+            if target.exists() and not args.force:
+                dry_run_conflicts.append(target)
+            rendered_files.append((relative, target, ""))
+        else:
+            rendered_files.append((relative, target, planned_text(relative, target, {}, args.force)))
 
     scripts_dir = repo / "scripts"
     script_copies: list[tuple[Path, Path]] = []
@@ -118,15 +130,25 @@ def main() -> int:
         if not source.is_file():
             raise FileNotFoundError(f"missing runtime script: {source}")
         target = scripts_dir / script_name
-        if target.exists() and not args.force:
+        if args.dry_run:
+            if target.exists() and not args.force:
+                dry_run_conflicts.append(target)
+        elif target.exists() and not args.force:
             raise FileExistsError(f"refusing to overwrite existing file: {target}")
         script_copies.append((source, target))
 
     if args.dry_run:
         for relative, target, _ in rendered_files:
-            print(f"write: {target}")
+            status = status_for_target(target, args.force)
+            print(f"{status}: {target}")
         for _, target in script_copies:
-            print(f"copy: {target}")
+            status = "overwrite" if target.exists() and args.force else "copy"
+            if target.exists() and not args.force:
+                status = "exists"
+            print(f"{status}: {target}")
+        if dry_run_conflicts:
+            print("Dry run found existing files; rerun with --force to overwrite.", flush=True)
+            return 1
         print(f"Dry run complete for {repo}")
         return 0
 
