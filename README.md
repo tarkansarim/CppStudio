@@ -197,16 +197,20 @@ python .\scripts\install_companion_donor_links.py `
 
 Restart any Codex session after manual installation so changed skill metadata is rediscovered.
 
-## Agentic Install For Remote Users
+## What The Agent Installs
 
-If you are installing this repo on a different machine, ask your coding agent to inspect the repo
-first and then use the provided scripts. In normal cases the agent can run:
+When you ask a coding agent to install CppStudio, it should use the repo scripts whenever possible:
 
 ```bash
 ./scripts/rollout_to_codex.sh
 ```
 
-If the agent needs to install manually, it should preserve the same ownership rules as the scripts:
+That command installs the main skill and donor-library links into the Codex home on the machine where
+the command runs. The default Codex home is `${HOME}/.codex`; agents can use `SYNC_CODEX_HOME` when
+they need to install into a different Codex home on the same machine.
+
+If the agent cannot use the script and needs to install manually, it should preserve the same
+ownership rules:
 
 1. Copy or sync `skills/cpp-cuda-vulkan-studio/` to
    `${SYNC_CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio`.
