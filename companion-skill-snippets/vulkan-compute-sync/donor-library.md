@@ -3,6 +3,8 @@
 When selecting Vulkan, renderer, WebGPU, or 3D graphics donors, read:
 
 - `{{DONOR_ROOT}}/selection-policy.md`
+- `{{DONOR_ROOT}}/agent-lookup.md` first when the prompt mixes Vulkan with broad 3D, renderer,
+  simulation, asset-pipeline, volume, neural, or XR wording
 - `{{DONOR_ROOT}}/vulkan-foundation-tooling.md` for memory allocation, loader/bootstrap, shader
   reflection, SPIR-V validation, and shader compilation/cross-compilation
 - `{{DONOR_ROOT}}/graphics-rendering.md`

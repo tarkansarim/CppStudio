@@ -3,6 +3,8 @@
 When selecting external CUDA kernel, GPU runtime, ML inference runtime, or GPU compiler donors, read:
 
 - `{{DONOR_ROOT}}/selection-policy.md`
+- `{{DONOR_ROOT}}/agent-lookup.md` first for non-AI CUDA geometry, simulation, rendering, volume,
+  texture, CAD, or neural-3D prompts where several donor categories could apply
 - `{{DONOR_ROOT}}/ai-runtimes-kernels.md` for tensor, inference, attention, GEMM, quantization, fused-op,
   and GPU compiler work
 - `{{DONOR_ROOT}}/simulation-gpu.md` for cloth, particles, fluids, deformables, differentiable simulation,

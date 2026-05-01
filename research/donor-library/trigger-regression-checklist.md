@@ -11,12 +11,17 @@ The static validator only proves that paths in `trigger-matrix.json` still exist
 - For negative controls, record that `cpp-cuda-vulkan-studio` and donor-library files were not used.
 - Treat ambiguous triggers as findings only when they would route an implementation to the wrong
   lane or donor category.
+- For broad prompts, record whether `agent-lookup.md` was opened before category files and whether it
+  narrowed the request instead of causing broad library loading.
 
 ## Expected Routing
 
 - Unspecified C++ realtime, 3D, rendering, XR, or cross-platform GPU work should route to
   `cpp-cuda-vulkan-studio`, recommend Vulkan first, and avoid CUDA donors unless requirements force
   CUDA.
+- Broad or overlapping donor prompts such as 3D viewer, renderer, simulation, asset pipeline,
+  scientific volume viewer, AI-runtime visualization, or XR app should open `agent-lookup.md` first,
+  then the smallest matching category set.
 - Vulkan memory allocation, loader/bootstrap, shader reflection, shader compilation, SPIR-V validation,
   or Slang evaluation should route to `vulkan-foundation-tooling.md`.
 - glTF/GLB runtime loading, Vulkan viewers, asset validation, or importer dependency choices should
@@ -72,6 +77,6 @@ The static validator only proves that paths in `trigger-matrix.json` still exist
   trigger DCC, texture/material/color, CAD, or XR donor routing unless implementation asks for those
   technical domains explicitly.
 - Generic "AI assistant" application work, ordinary Python ML scripts, or non-C++/GPU/model-runtime
-  tasks should not trigger CppStudio AI-runtime donors.
+  tasks should not trigger CppStudio lookup or AI-runtime donors.
 - Non-GPU Python, CLI, parser, virtualenv, or business-simulation work should not trigger CppStudio
-  donor routing.
+  donor routing or `agent-lookup.md`.

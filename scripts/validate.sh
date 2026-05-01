@@ -418,6 +418,24 @@ expect_failure "missing donor backend signal" \
     "${donor_tmp}/donor-library" \
     --reference-root "${donor_tmp}"
 rm -rf "${donor_tmp}"
+donor_tmp="$(mktemp -d /tmp/cppstudio_donor_validate_lookup.XXXXXX)"
+cp -a "${SKILL_DIR}/references/donor-library" "${donor_tmp}/donor-library"
+python3 - "${donor_tmp}/donor-library/agent-lookup.md" <<'PY'
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+old = "[graphics-rendering.md](graphics-rendering.md)"
+if old not in text:
+    raise SystemExit("agent lookup graphics route fixture not found")
+path.write_text(text.replace(old, "graphics rendering route removed"), encoding="utf-8")
+PY
+expect_failure "agent lookup missing donor category link" \
+    python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
+    "${donor_tmp}/donor-library" \
+    --reference-root "${donor_tmp}"
+rm -rf "${donor_tmp}"
 donor_tmp="$(mktemp -d /tmp/cppstudio_donor_validate_tier.XXXXXX)"
 cp -a "${SKILL_DIR}/references/donor-library" "${donor_tmp}/donor-library"
 python3 - "${donor_tmp}/donor-library/hair-grooming-fur.md" <<'PY'

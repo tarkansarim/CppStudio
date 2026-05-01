@@ -26,10 +26,15 @@ ALLOWED_BACKEND_SIGNALS = {
     "native-vulkan",
     "native-webgpu",
 }
+SPECIAL_DONOR_FILES = {"README.md", "selection-policy.md", "agent-lookup.md"}
 
 
 def markdown_files(root: Path) -> list[Path]:
     return sorted(path for path in root.rglob("*.md") if ".git" not in path.parts)
+
+
+def donor_category_files(donor_root: Path) -> list[Path]:
+    return sorted(path for path in donor_root.glob("*.md") if path.name not in SPECIAL_DONOR_FILES)
 
 
 def normalize_link_target(raw_target: str) -> str:
@@ -87,12 +92,7 @@ def validate_donor_discoverability(donor_root: Path, linked_targets: set[str]) -
         return errors
 
     readme_text = readme.read_text(encoding="utf-8")
-    category_files = sorted(
-        path
-        for path in donor_root.glob("*.md")
-        if path.name not in {"README.md", "selection-policy.md"}
-    )
-    for category in category_files:
+    for category in donor_category_files(donor_root):
         rel = category.relative_to(donor_root).as_posix()
         if rel not in readme_text:
             errors.append(f"README.md does not link donor category {rel!r}")
@@ -105,6 +105,34 @@ def validate_donor_discoverability(donor_root: Path, linked_targets: set[str]) -
 
     if not profile_files:
         errors.append("donor-library profiles directory is empty")
+
+    return errors
+
+
+def validate_agent_lookup(donor_root: Path) -> list[str]:
+    errors: list[str] = []
+    readme = donor_root / "README.md"
+    lookup = donor_root / "agent-lookup.md"
+    profiles_dir = donor_root / "profiles"
+
+    if not lookup.is_file():
+        return ["missing required donor-library path: agent-lookup.md"]
+
+    readme_text = readme.read_text(encoding="utf-8") if readme.is_file() else ""
+    lookup_text = lookup.read_text(encoding="utf-8")
+
+    if "agent-lookup.md" not in readme_text:
+        errors.append("README.md does not link donor lookup 'agent-lookup.md'")
+
+    for category in donor_category_files(donor_root):
+        rel = category.relative_to(donor_root).as_posix()
+        if rel not in lookup_text:
+            errors.append(f"agent-lookup.md does not link donor category {rel!r}")
+
+    profile_files = {profile.relative_to(donor_root).as_posix() for profile in profiles_dir.glob("*.md")}
+    for profile_rel in sorted(linked_profile_paths(lookup_text)):
+        if profile_rel not in profile_files:
+            errors.append(f"agent-lookup.md links unknown donor profile {profile_rel!r}")
 
     return errors
 
@@ -232,9 +260,7 @@ def validate_category_profile_routes(donor_root: Path) -> list[str]:
         for source in metadata["sources"]:
             profiles_by_source.setdefault(source, []).append(rel)
 
-    for category in sorted(donor_root.glob("*.md")):
-        if category.name in {"README.md", "selection-policy.md"}:
-            continue
+    for category in donor_category_files(donor_root):
         rel = category.relative_to(donor_root).as_posix()
         text = category.read_text(encoding="utf-8")
         category_profile_links = linked_profile_paths(text)
@@ -276,9 +302,7 @@ def validate_category_profile_routes(donor_root: Path) -> list[str]:
 
 def validate_category_tiers(donor_root: Path) -> list[str]:
     errors: list[str] = []
-    for category in sorted(donor_root.glob("*.md")):
-        if category.name in {"README.md", "selection-policy.md"}:
-            continue
+    for category in donor_category_files(donor_root):
         rel = category.relative_to(donor_root).as_posix()
         for line_number, line in enumerate(category.read_text(encoding="utf-8").splitlines(), 1):
             if not line.startswith("|"):
@@ -331,6 +355,7 @@ def main() -> int:
     errors = (
         link_errors
         + validate_donor_discoverability(donor_root, donor_relative_targets)
+        + validate_agent_lookup(donor_root)
         + validate_profile_schema(donor_root)
         + validate_category_tiers(donor_root)
         + validate_category_profile_routes(donor_root)

@@ -4,6 +4,7 @@ When choosing external 3D, graphics, GPU, AI-runtime, or ML-kernel dependencies,
 
 - `{{DONOR_ROOT}}/README.md`
 - `{{DONOR_ROOT}}/selection-policy.md`
+- `{{DONOR_ROOT}}/agent-lookup.md` when more than one donor category could fit the dependency request
 - `{{REFERENCE_ROOT}}/project-archetypes.md`
 
 Use permissive donors for reusable code. Keep study-only references out of templates and shared

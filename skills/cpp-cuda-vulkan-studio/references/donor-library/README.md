@@ -12,7 +12,9 @@ and XR. Treat it as a domain-first selection map, not permission to copy large b
 ## How To Use
 
 1. Read [selection-policy.md](selection-policy.md) before copying, adapting, or recommending any donor.
-2. Pick one relevant category file and load only that file:
+2. For broad or overlapping prompts, read [agent-lookup.md](agent-lookup.md) to choose the smallest
+   category/profile set. Skip it when the request already names a specific category.
+3. Pick one relevant category file and load only that file:
    - [vulkan-foundation-tooling.md](vulkan-foundation-tooling.md): Vulkan memory allocation, loader/bootstrap, shader reflection, SPIR-V tooling.
    - [graphics-rendering.md](graphics-rendering.md): renderer backbones, render graphs, WebGPU/WebGL, PBR, path tracing.
    - [gltf-runtime-assets.md](gltf-runtime-assets.md): glTF loading, validation, fixtures, runtime asset handoff.
@@ -29,19 +31,19 @@ and XR. Treat it as a domain-first selection map, not permission to copy large b
    - [simulation-gpu.md](simulation-gpu.md): differentiable simulation, cloth, fluids, deformables, multiphysics.
    - [xr-spatial.md](xr-spatial.md): OpenXR, spatial interaction, headset/controller input, stereo swapchains.
    - [profiles/](profiles/): deeper first-stop notes for the highest-value donors.
-3. For implementation work, prefer these outputs:
+4. For implementation work, prefer these outputs:
    - Use permissive safe donors for implementation patterns, small adapted snippets, and tests.
    - Use dependency candidates as package/API/architecture references unless the target repo already accepts
      that dependency and license shape.
    - Use study-only donors for concepts only; do not copy code into reusable skills, templates, or project code.
-4. Keep donor backend and target backend separate:
+5. Keep donor backend and target backend separate:
    - Use donors for domain behavior, algorithms, data models, tests, architecture, and dependency shape even
      when their upstream backend is CUDA, Vulkan, OpenCL, DirectX, CPU, or DCC-specific.
    - Use the selected lane skill to translate backend-specific code, synchronization, memory ownership,
      shaders, kernels, build flags, and runtime dependencies.
    - Do not switch a Vulkan project to CUDA, or a CUDA project to Vulkan, just because the best donor uses the
      other backend. Mixed lanes require explicit user choice or a real interop requirement.
-5. Record the donor name, URL, license, backend signal, and exact feature borrowed in project docs or comments when adopting code.
+6. Record the donor name, URL, license, backend signal, and exact feature borrowed in project docs or comments when adopting code.
 
 ## License Tiers
 

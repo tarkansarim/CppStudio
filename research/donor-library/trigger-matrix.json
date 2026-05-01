@@ -290,6 +290,66 @@
       ]
     },
     {
+      "name": "ambiguous-3d-viewer-lookup-routing",
+      "prompt_shape": "C++ 3D viewer or realtime asset preview tool needs donors, but the prompt does not yet specify whether the hard part is Vulkan setup, renderer architecture, glTF import, mesh conditioning, textures, CAD, or XR.",
+      "expected_behavior": "Open agent-lookup first, then narrow to the smallest category set; prefer Vulkan-first implementation unless requirements force CUDA or another backend.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/README.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/gltf-runtime-assets.md"
+      ]
+    },
+    {
+      "name": "ambiguous-gpu-simulation-lookup-routing",
+      "prompt_shape": "GPU simulation request mentions particles, cloth, physics, CUDA, Vulkan, and visualization without saying whether the main need is solver donors, CUDA kernels, Vulkan rendering, or physics SDK selection.",
+      "expected_behavior": "Open agent-lookup first, then route solver/reference donors through simulation-gpu while keeping CUDA kernels and Vulkan visualization as separate lane-specific choices.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/simulation-gpu.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md"
+      ]
+    },
+    {
+      "name": "asset-pipeline-lookup-routing",
+      "prompt_shape": "C++ asset pipeline or viewer request mentions USD, glTF, textures, materials, mesh optimization, importer fixtures, and renderer upload in one broad prompt.",
+      "expected_behavior": "Open agent-lookup first, then split DCC interchange, glTF runtime loading, texture/material/color, and mesh conditioning instead of treating the whole request as one dependency.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/dcc-scene-pipeline.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/gltf-runtime-assets.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/texture-material-color.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md"
+      ]
+    },
+    {
+      "name": "scientific-volume-viewer-lookup-routing",
+      "prompt_shape": "Scientific C++ volume viewer request mentions VTK data, VDB/NanoVDB volumes, Vulkan visualization, and optional sparse-volume ML references.",
+      "expected_behavior": "Open agent-lookup first, then route volume data through volumes-voxels, visualization through Vulkan/graphics only when rendering is in scope, and ML sparse tensors through fVDB only when needed.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/volumes-voxels.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vtk.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openvdb-nanovdb.md"
+      ]
+    },
+    {
+      "name": "ai-runtime-visualization-lookup-routing",
+      "prompt_shape": "C++ tool combines local model inference or AI runtime output with Vulkan visualization, 3D viewer UX, or neural 3D assets.",
+      "expected_behavior": "Open agent-lookup first, then keep AI runtime, neural 3D, renderer, and Vulkan synchronization decisions separate instead of routing everything through CUDA kernel donors.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/neural-3d.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md"
+      ]
+    },
+    {
       "name": "gltf-meshoptimizer-runtime-pipeline",
       "prompt_shape": "C++ runtime asset pipeline loads glTF/GLB, validates fixtures, optimizes vertex/index buffers, handles meshopt compression, and uploads renderer-ready buffers.",
       "expected_behavior": "Route to glTF runtime assets first, then geometry-simulation and meshoptimizer for mesh conditioning; keep CPU import, optimization, and GPU upload as separate stages.",
@@ -438,6 +498,7 @@
         "research/donor-library/trigger-test-lane.md"
       ],
       "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
       ]
     },
@@ -463,6 +524,7 @@
         "research/donor-library/trigger-test-lane.md"
       ],
       "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/godot-engine.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/open-3d-engine.md"
@@ -528,6 +590,7 @@
         "research/donor-library/trigger-test-lane.md"
       ],
       "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/neural-3d.md"
       ]
@@ -585,6 +648,7 @@
         "research/donor-library/trigger-test-lane.md"
       ],
       "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/README.md"
       ]
     }
