@@ -18,7 +18,12 @@ geometry, tessellation, Boolean operations, and precision modeling workflows.
 - Use CGAL when robust computational geometry matters more than CAD file semantics.
 - Use libigl for mesh-side geometry processing and repair concepts.
 - Treat FreeCAD as study-only unless the project explicitly accepts its license/dependency shape.
+- Keep CAD source files, vendor models, generated meshes, workbench scripts, and example projects as
+  separate license and provenance surfaces.
 
 ## Deep Profiles
 
 - [Open CASCADE Technology](profiles/open-cascade.md): read before adopting CAD kernel or precision geometry patterns.
+- [CGAL](profiles/cgal.md): read before adopting robust computational geometry, exact predicates, mesh generation, triangulation, or Booleans.
+- [libigl](profiles/libigl.md): read before using mesh-side geometry processing, repair, deformation, or parameterization references.
+- [FreeCAD Study-Only](profiles/freecad-study-only.md): read for CAD UX, parametric modeling, workbench, or Open CASCADE application workflow concepts without code reuse.

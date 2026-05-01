@@ -25,6 +25,10 @@ timelines, and offline-to-runtime asset pipelines.
 - Use OpenUSD when composition, layering, variants, payloads, or DCC collaboration matter.
 - Use Alembic when the problem is baked animated geometry or curves, not live scene composition.
 - Use MaterialX for material graph interchange instead of inventing renderer-specific material schemas.
+- Use OpenTimelineIO when editorial timeline, cut, review, or virtual-production handoff matters; it is
+  not a media container.
+- Treat Blender as study-only workflow and UX context. Do not copy GPL source into permissive reusable
+  outputs.
 - Keep DCC plugins, example assets, sample scenes, and proprietary SDK bridges as separate license
   surfaces from the core donor library.
 
@@ -34,4 +38,6 @@ timelines, and offline-to-runtime asset pipelines.
 - [Alembic](profiles/alembic.md): read before designing baked animated geometry, curves, or simulation caches.
 - [assimp](profiles/assimp.md): read when broad asset import/export is enough and full USD/Alembic semantics are unnecessary.
 - [MaterialX](profiles/materialx.md): read before adding material/look-development interchange.
+- [OpenTimelineIO](profiles/opentimelineio.md): read before adding editorial timeline, review, or virtual-production interchange.
 - [OpenSubdiv](profiles/opensubdiv.md): read when subdivision surfaces are part of the scene pipeline.
+- [Blender Study-Only](profiles/blender-study-only.md): read for DCC UX, import/export, geometry-node, grooming, or editor workflow concepts without code reuse.

@@ -115,7 +115,8 @@ data.
 
 - Enable only the runtime GPU lanes the target viewer or converter actually needs.
 - Read [donor-library/dcc-scene-pipeline.md](donor-library/dcc-scene-pipeline.md), then OpenUSD,
-  Alembic, MaterialX, and OpenSubdiv profiles as needed.
+  Alembic, MaterialX, OpenTimelineIO, and OpenSubdiv profiles as needed. Use Blender study-only for
+  DCC workflow context without code reuse.
 - Keep scene composition, material translation, asset path resolution, generated caches, and DCC plugins
   as separate modules.
 - Verification priority: round-trip tiny stages, path/payload tests, material fixtures, animation/curve
@@ -145,7 +146,8 @@ Use when the project loads, renders, edits, simulates, or converts sparse volume
 
 - Enable Vulkan for render/compute visualization; enable CUDA only when CUDA kernels own volume work.
 - Read [donor-library/volumes-voxels.md](donor-library/volumes-voxels.md), then the OpenVDB/NanoVDB
-  profile.
+  profile. Use fVDB for sparse-volume ML references and VTK for scientific visualization architecture
+  when those domains are in scope.
 - Keep VDB IO, CPU grid processing, GPU upload, shader traversal, and visual rendering separated.
 - Verification priority: tiny volume metadata tests, CPU/GPU sample comparisons, empty-grid edge cases,
   offscreen render frames, then performance traces.
@@ -169,7 +171,7 @@ material interchange.
 
 - Enable Vulkan when runtime texture upload or material preview is in scope.
 - Read [donor-library/texture-material-color.md](donor-library/texture-material-color.md), then KTX/Basis,
-  OpenColorIO/OpenImageIO, or MaterialX profiles.
+  OpenColorIO/OpenImageIO, TinyEXR, or MaterialX profiles.
 - Keep offline conversion, runtime loading, color transforms, shader generation, and asset metadata
   separated.
 - Verification priority: tiny texture/image fixtures, metadata and color-space tests, transcoding format
@@ -181,7 +183,7 @@ Use when the project needs B-reps, NURBS, STEP/IGES, Booleans, tessellation, or 
 
 - Enable renderer lanes only for viewing; keep CAD kernel data separate from render meshes.
 - Read [donor-library/cad-precision-geometry.md](donor-library/cad-precision-geometry.md), then the Open
-  CASCADE profile and optionally CGAL/libigl notes.
+  CASCADE profile and optionally CGAL, libigl, or FreeCAD study-only notes.
 - Make tolerance, units, topology ownership, orientation, and tessellation policy explicit.
 - Verification priority: tiny STEP fixtures, unit/bounds checks, tessellation checks, Boolean edge cases,
   then viewer/render tests.
@@ -206,7 +208,8 @@ spatial interaction.
 - Enable Vulkan when it is the graphics backend; keep XR runtime detection separate from Vulkan device
   setup.
 - Read [donor-library/xr-spatial.md](donor-library/xr-spatial.md), [donor-library/graphics-rendering.md](donor-library/graphics-rendering.md),
-  and the OpenXR SDK profile.
+  and the OpenXR SDK profile. Add OpenXR-Hpp for C++ wrapper ergonomics, Monado for runtime diagnostics,
+  and Godot OpenXR Vendors only for vendor-extension references.
 - Keep runtime discovery, actions, reference spaces, swapchains, frame timing, and vendor extensions
   explicit.
 - Verification priority: runtime/capability dump, action binding tests, swapchain format selection,

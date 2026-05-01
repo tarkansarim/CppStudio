@@ -21,6 +21,10 @@ swapchains, frame timing, spatial interaction, and Vulkan/OpenXR integration.
 ## Selection Notes
 
 - Use Khronos `hello_xr` before vendor samples for portable OpenXR app structure.
+- Use OpenXR-Hpp for C++ wrapper ergonomics after baseline OpenXR SDK behavior is understood.
+- Use Monado for runtime architecture and Linux runtime diagnostics, not as a portable app API.
+- Use Godot OpenXR Vendors only when vendor-specific extensions, Android export workflows, or
+  Godot/GDExtension plugin boundaries are in scope.
 - Keep runtime selection, action bindings, graphics API binding, swapchain format, frame timing, and
   controller input as explicit test surfaces.
 - Treat vendor SDKs, controller models, hand models, and runtime assets as separate license surfaces.
@@ -30,3 +34,6 @@ swapchains, frame timing, spatial interaction, and Vulkan/OpenXR integration.
 ## Deep Profiles
 
 - [OpenXR SDK](profiles/openxr-sdk.md): read before adding OpenXR/Vulkan app scaffolding or tests.
+- [OpenXR-Hpp](profiles/openxr-hpp.md): read before adding C++ OpenXR wrapper bindings or RAII-style OpenXR API ergonomics.
+- [Monado](profiles/monado.md): read before using open-source OpenXR runtime architecture, diagnostics, or Linux runtime behavior as a reference.
+- [Godot OpenXR Vendors](profiles/godot-openxr-vendors.md): read before borrowing vendor-extension wrappers, Android XR export, or Godot XR plugin references.

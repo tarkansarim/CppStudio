@@ -23,4 +23,6 @@ geometric operators, mesh deformation, and precise surface processing.
 ## Deep Profiles
 
 - [OpenSubdiv](profiles/opensubdiv.md): read before adopting subdivision-surface evaluation.
+- [libigl](profiles/libigl.md): read before borrowing mesh processing, deformation, remeshing, or parameterization references.
+- [CGAL](profiles/cgal.md): read before adopting robust computational geometry, exact predicates, triangulation, Booleans, or mesh generation.
 - [meshoptimizer](profiles/meshoptimizer.md): read when evaluated or imported meshes need runtime conditioning, simplification, or compression.

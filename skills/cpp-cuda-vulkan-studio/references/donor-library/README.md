@@ -122,17 +122,29 @@ Read these only when the task matches the donor:
 - [Open3D](profiles/open3d.md): 3D data processing, point clouds, reconstruction, visualization, and Open3D-ML.
 - [Neural Graphics Study-Only References](profiles/neural-graphics-study-only.md): GraphDeco Gaussian Splatting, instant-ngp, and Kaolin Wisp concepts without code reuse.
 - [AMD TressFX](profiles/tressfx.md): realtime GPU hair/fur simulation and rendering.
+- [NVIDIA HairWorks Study-Only](profiles/hairworks-study-only.md): GameWorks hair authoring/runtime concepts without code reuse.
+- [Blender Study-Only](profiles/blender-study-only.md): DCC UX, geometry nodes, grooming, import/export, and editor workflow concepts without code reuse.
 - [OpenUSD](profiles/openusd.md): scene composition, USD schemas, DCC interchange, curves, skeletons, materials.
 - [Alembic](profiles/alembic.md): baked animated geometry, curves, simulation caches, and DCC cache IO.
 - [MaterialX](profiles/materialx.md): material/look-development graph interchange and shader generation boundaries.
+- [OpenTimelineIO](profiles/opentimelineio.md): editorial timeline, review, and virtual-production interchange.
 - [OpenVDB and NanoVDB](profiles/openvdb-nanovdb.md): sparse volume IO and GPU-friendly VDB traversal.
+- [fVDB](profiles/fvdb.md): sparse-volume tensors, PyTorch/CUDA sparse-grid ML, and neural-volume references.
+- [VTK](profiles/vtk.md): scientific visualization, volume rendering, and VTK data/filter pipeline architecture.
 - [ozz-animation](profiles/ozz-animation.md): data-oriented skeletal animation runtime and offline conversion.
 - [Animation Compression Library](profiles/acl.md): animation clip compression, decompression, and accuracy benchmarks.
 - [OpenSubdiv](profiles/opensubdiv.md): subdivision-surface semantics and CPU/GPU evaluation.
+- [libigl](profiles/libigl.md): mesh processing, deformation, remeshing, parameterization, and geometry-processing references.
+- [CGAL](profiles/cgal.md): robust computational geometry, exact predicates, triangulation, Booleans, and mesh generation.
 - [KTX-Software and Basis Universal](profiles/ktx-basis.md): KTX2 texture containers and GPU texture transcoding.
 - [OpenColorIO and OpenImageIO](profiles/opencolorio-openimageio.md): color management and VFX image IO.
+- [TinyEXR](profiles/tinyexr.md): minimal EXR/HDR image IO and small renderer image fixtures.
 - [Open CASCADE Technology](profiles/open-cascade.md): CAD-native B-rep/NURBS, STEP/IGES, and precision geometry.
+- [FreeCAD Study-Only](profiles/freecad-study-only.md): CAD UX, parametric modeling, workbench, and Open CASCADE application workflow concepts without code reuse.
 - [OpenXR SDK](profiles/openxr-sdk.md): portable OpenXR loader, samples, validation layers, and Vulkan/XR structure.
+- [OpenXR-Hpp](profiles/openxr-hpp.md): type-safe C++ OpenXR bindings and wrapper ergonomics.
+- [Monado](profiles/monado.md): OpenXR runtime architecture, diagnostics, and Linux runtime behavior references.
+- [Godot OpenXR Vendors](profiles/godot-openxr-vendors.md): vendor-specific OpenXR extension wrappers and Godot XR plugin references.
 - [NVIDIA Warp](profiles/warp.md): Python-authored CUDA simulation kernels and differentiable simulation.
 - [Taichi](profiles/taichi.md): portable CPU/GPU simulation DSL and differentiable physical simulation.
 - [PositionBasedDynamics](profiles/positionbaseddynamics.md): C++ PBD/XPBD constraints for interactive simulation.

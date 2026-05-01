@@ -36,6 +36,20 @@ The static validator only proves that paths in `trigger-matrix.json` still exist
 - CPU visualization renderer, scientific visualization, volume renderer API, engine/editor
   architecture, scene tree, asset processor, component system, or editor/runtime split work should route
   to `geometry-simulation.md` and the matching OSPRay, Godot Engine, or Open 3D Engine profile.
+- DCC scene interchange, USD/Alembic caches, MaterialX, editorial timelines, virtual production, OTIO, or
+  Blender workflow study should route to `dcc-scene-pipeline.md` and the matching OpenUSD, Alembic,
+  MaterialX, OpenTimelineIO, OpenSubdiv, or Blender study-only profile.
+- Sparse volumes, VDB/NanoVDB, fVDB, VTK, volume rendering, voxel grids, scientific visualization, or
+  sparse-volume ML should route to `volumes-voxels.md` and the matching OpenVDB/NanoVDB, fVDB, or VTK
+  profile.
+- Texture containers, KTX/KTX2, Basis, EXR/HDR, TinyEXR, OpenImageIO, OpenColorIO, ACES/OCIO, or
+  MaterialX should route to `texture-material-color.md` and the matching profile.
+- CAD kernels, B-reps, NURBS, STEP/IGES, exact geometry, robust triangulation, Booleans, CGAL, libigl,
+  or FreeCAD workflow study should route to `cad-precision-geometry.md` or
+  `surfaces-subdivision.md` and the matching profile.
+- OpenXR, OpenXR-Hpp, Monado runtime diagnostics, vendor-specific XR extensions, stereo swapchains,
+  actions, or XR frame timing should route to `xr-spatial.md` and keep portable OpenXR baseline separate
+  from vendor-specific extension references.
 - Local LLM inference, production serving, execution-provider routing, ML compilers, fused neural
   kernels, or tensor/autograd reference work should route to `ai-runtimes-kernels.md` and the matching
   llama.cpp/ggml, ONNX Runtime, TensorRT-LLM, vLLM, MLC-LLM, tiny-cuda-nn, TVM, or PyTorch profile.
@@ -54,6 +68,9 @@ The static validator only proves that paths in `trigger-matrix.json` still exist
   should not trigger renderer, glTF, geometry, assimp, or meshoptimizer donor routing.
 - Generic web UI, ordinary frontend layout, game-story/design-only brainstorming, or non-implementation
   design writing should not trigger WebGPU, renderer, engine-architecture, or donor-library routing.
+- Ordinary video editing, image upload/resize, CAD-looking mockups, or VR storyboarding should not
+  trigger DCC, texture/material/color, CAD, or XR donor routing unless implementation asks for those
+  technical domains explicitly.
 - Generic "AI assistant" application work, ordinary Python ML scripts, or non-C++/GPU/model-runtime
   tasks should not trigger CppStudio AI-runtime donors.
 - Non-GPU Python, CLI, parser, virtualenv, or business-simulation work should not trigger CppStudio

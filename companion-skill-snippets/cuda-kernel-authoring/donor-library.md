@@ -13,6 +13,9 @@ When selecting external CUDA kernel, GPU runtime, ML inference runtime, or GPU c
 - `{{DONOR_ROOT}}/graphics-rendering.md` plus the pbrt-v4, Mitsuba 3, Falcor, or THREE.js PathTracing
   Renderer profiles when CUDA rendering kernels need physical rendering, path-tracing, render-graph, or
   reference-image behavior
+- `{{DONOR_ROOT}}/volumes-voxels.md`, `{{DONOR_ROOT}}/texture-material-color.md`, or
+  `{{DONOR_ROOT}}/cad-precision-geometry.md` when CUDA kernels need sparse volume, image/EXR,
+  texture, exact-geometry, or mesh-processing reference behavior
 - `{{DONOR_ROOT}}/profiles/cutlass.md` for GEMM/convolution/reduction/tensor-core policy
 - `{{DONOR_ROOT}}/profiles/flashattention.md` for attention kernels
 - `{{DONOR_ROOT}}/profiles/triton.md` for Triton DSL/compiler tradeoffs

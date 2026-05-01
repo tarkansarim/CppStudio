@@ -30,9 +30,13 @@ hair rendering, and DCC groom interchange.
 - For interchange, prefer OpenUSD curves for modern scene pipelines and Alembic for established
   animated-geometry/groom cache workflows.
 - Treat HairWorks as study-only until a project has an explicit GameWorks/license path.
+- Prefer TressFX for permissive implementation patterns when HairWorks and Blender only provide concept
+  or artist-workflow references.
 
 ## Deep Profiles
 
 - [AMD TressFX](profiles/tressfx.md): read before adapting realtime hair/fur simulation or rendering.
 - [OpenUSD](profiles/openusd.md): read before choosing USD curves or scene composition for grooms.
 - [Alembic](profiles/alembic.md): read before using baked animated curve or groom caches.
+- [Blender Study-Only](profiles/blender-study-only.md): read for grooming UX, hair curves, geometry-node, and artist workflow concepts without code reuse.
+- [NVIDIA HairWorks Study-Only](profiles/hairworks-study-only.md): read for GameWorks hair authoring/runtime concepts without code reuse.

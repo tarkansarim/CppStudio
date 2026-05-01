@@ -30,6 +30,14 @@ PyTorch3D, and Open3D as dependency candidates unless the target repo explicitly
 model weights, generated engines, compiled artifacts, datasets, and tokenizer files out of reusable
 templates.
 
+For DCC, volume, texture/material/color, CAD, geometry-processing, or XR dependencies, route through the
+matching donor category before proposing package wiring. Treat OpenUSD, Alembic, MaterialX,
+OpenTimelineIO, OpenVDB, fVDB, VTK, OpenColorIO/OpenImageIO, OCCT, CGAL, Monado, and Godot OpenXR
+Vendors as dependency candidates unless the target repo explicitly accepts them; keep Blender, FreeCAD,
+and HairWorks study-only unless the user explicitly accepts their license/dependency shape. TinyEXR,
+OpenXR-Hpp, OpenSubdiv, ozz-animation, ACL, and narrow Basis Universal use can be smaller donors after
+exact-version review.
+
 Donors are domain references first, not lane locks. A donor's CUDA, Vulkan, OpenCL, DirectX, CPU, or
 DCC backend signal describes upstream implementation context only. Keep the target project's selected
 lane and dependency policy intact, and route backend-specific translation through `cpp-cuda-vulkan-studio`

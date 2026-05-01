@@ -203,6 +203,93 @@
       ]
     },
     {
+      "name": "dcc-editorial-pipeline-donors",
+      "prompt_shape": "C++ DCC pipeline or virtual-production tool needs scene interchange, USD/Alembic caches, MaterialX look data, editorial timelines, OTIO, review handoff, or Blender workflow references.",
+      "expected_behavior": "Route to dcc-scene-pipeline and the matching OpenUSD, Alembic, MaterialX, OpenTimelineIO, OpenSubdiv, or Blender study-only profile; keep DCC plugins and assets license-separated.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/dcc-scene-pipeline.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openusd.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/alembic.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/materialx.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/opentimelineio.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/blender-study-only.md"
+      ]
+    },
+    {
+      "name": "volume-voxel-rendering-donors",
+      "prompt_shape": "C++ or GPU volume tool needs sparse VDB/NanoVDB IO, voxel grids, GPU volume traversal, fVDB sparse-volume ML, VTK scientific visualization, or volume-rendering references.",
+      "expected_behavior": "Route to volumes-voxels and the OpenVDB/NanoVDB, fVDB, and VTK profiles; keep volume IO, ML tensors, renderer upload, and visualization toolkit choices separate.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/volumes-voxels.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openvdb-nanovdb.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/fvdb.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vtk.md"
+      ]
+    },
+    {
+      "name": "material-texture-color-pipeline-donors",
+      "prompt_shape": "C++ asset or renderer pipeline needs KTX/KTX2, Basis transcoding, EXR/HDR image IO, TinyEXR, OpenImageIO, OpenColorIO, color management, ACES/OCIO, or MaterialX references.",
+      "expected_behavior": "Route to texture-material-color and the matching KTX/Basis, OpenColorIO/OpenImageIO, TinyEXR, or MaterialX profile; keep assets, configs, textures, and color data license-separated.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/texture-material-color.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/ktx-basis.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/opencolorio-openimageio.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tinyexr.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/materialx.md"
+      ]
+    },
+    {
+      "name": "cad-precision-geometry-donors",
+      "prompt_shape": "C++ CAD or precision geometry tool needs B-reps, NURBS, STEP/IGES, exact geometry, tessellation, Booleans, CGAL, Open CASCADE, or FreeCAD workflow references.",
+      "expected_behavior": "Route to cad-precision-geometry and the Open CASCADE, CGAL, libigl, or FreeCAD study-only profile; keep CAD kernel data, render meshes, tolerances, and license boundaries explicit.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/cad-precision-geometry.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/open-cascade.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/cgal.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/libigl.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/freecad-study-only.md"
+      ]
+    },
+    {
+      "name": "geometry-processing-donors",
+      "prompt_shape": "C++ geometry-processing task needs subdivision surfaces, remeshing, deformation, parameterization, robust triangulation, exact predicates, mesh repair, libigl, CGAL, OpenSubdiv, or meshoptimizer references.",
+      "expected_behavior": "Route to surfaces-subdivision and the matching OpenSubdiv, libigl, CGAL, or meshoptimizer profile; keep robust geometry and runtime mesh conditioning as separate choices.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/surfaces-subdivision.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/opensubdiv.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/libigl.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/cgal.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/meshoptimizer.md"
+      ]
+    },
+    {
+      "name": "xr-openxr-runtime-donors",
+      "prompt_shape": "C++ XR app needs OpenXR loader/runtime guidance, OpenXR-Hpp C++ bindings, Monado runtime diagnostics, vendor-specific OpenXR extensions, Godot OpenXR Vendors, stereo swapchains, actions, or frame timing.",
+      "expected_behavior": "Route to xr-spatial, graphics-rendering, OpenXR SDK, OpenXR-Hpp, Monado, and Godot OpenXR Vendors profiles; keep portable OpenXR baseline separate from vendor-specific extensions.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/xr-spatial.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openxr-sdk.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openxr-hpp.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/monado.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/godot-openxr-vendors.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
       "name": "gltf-meshoptimizer-runtime-pipeline",
       "prompt_shape": "C++ runtime asset pipeline loads glTF/GLB, validates fixtures, optimizes vertex/index buffers, handles meshopt compression, and uploads renderer-ready buffers.",
       "expected_behavior": "Route to glTF runtime assets first, then geometry-simulation and meshoptimizer for mesh conditioning; keep CPU import, optimization, and GPU upload as separate stages.",
@@ -379,6 +466,58 @@
         "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/godot-engine.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/open-3d-engine.md"
+      ]
+    },
+    {
+      "name": "generic-video-editing-negative-control",
+      "prompt_shape": "Edit, trim, caption, transcode, or export an ordinary video timeline with no C++, DCC interchange, OpenTimelineIO, media pipeline architecture, virtual production, or coding-agent donor request.",
+      "expected_behavior": "Do not route to DCC or OpenTimelineIO donors for ordinary video editing instructions.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/dcc-scene-pipeline.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/opentimelineio.md"
+      ]
+    },
+    {
+      "name": "ordinary-image-upload-negative-control",
+      "prompt_shape": "Add ordinary image upload, thumbnail resize, PNG/JPEG preview, CSS color picker, or web form image handling with no C++, renderer, GPU texture pipeline, EXR/HDR, OCIO, KTX, or MaterialX scope.",
+      "expected_behavior": "Do not route to texture/material/color donors for ordinary web or app image handling.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/texture-material-color.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tinyexr.md"
+      ]
+    },
+    {
+      "name": "cad-ui-mockup-negative-control",
+      "prompt_shape": "Design a CAD-looking dashboard, landing page, icon, or UI mockup with no CAD kernel, B-rep, NURBS, STEP/IGES, exact geometry, tessellation, C++, Vulkan, or implementation scope.",
+      "expected_behavior": "Do not route to CAD, CGAL, Open CASCADE, libigl, or FreeCAD donor guidance for visual mockups.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/cad-precision-geometry.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/open-cascade.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/cgal.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/freecad-study-only.md"
+      ]
+    },
+    {
+      "name": "vr-storyboarding-negative-control",
+      "prompt_shape": "Brainstorm VR game story, headset marketing copy, immersive scene concept art, or non-implementation spatial experience ideas with no OpenXR, C++, Vulkan, runtime, device, swapchain, or extension work.",
+      "expected_behavior": "Do not route to XR/OpenXR donor guidance for non-implementation ideation.",
+      "expected_paths": [
+        "research/donor-library/trigger-test-lane.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/xr-spatial.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openxr-sdk.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openxr-hpp.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/monado.md"
       ]
     },
     {

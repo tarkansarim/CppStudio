@@ -32,6 +32,13 @@ headset/controller, or spatial interaction context, also read
 vendor samples for vendor-specific extensions or tools. Keep study-only and non-commercial references
 out of reusable Vulkan code.
 
+For Vulkan-adjacent volume, texture, material, CAD viewing, or XR work, also route through
+`{{DONOR_ROOT}}/volumes-voxels.md`, `{{DONOR_ROOT}}/texture-material-color.md`,
+`{{DONOR_ROOT}}/cad-precision-geometry.md`, and `{{DONOR_ROOT}}/xr-spatial.md` as needed. Use fVDB,
+VTK, CGAL, Monado, and Godot OpenXR Vendors as dependency/reference-scale donors; use TinyEXR and
+OpenXR-Hpp only for narrow EXR or C++ OpenXR wrapper needs. Keep Blender, FreeCAD, and HairWorks
+study-only.
+
 For Vulkan-first neural 3D, Gaussian splatting, or AI-runtime visualization, also read
 `{{DONOR_ROOT}}/neural-3d.md` and the relevant gsplat, Nerfstudio, PyTorch3D, Kaolin, Open3D, or
 study-only neural graphics profile. Use CUDA-heavy neural donors for algorithms, layouts, and tests;

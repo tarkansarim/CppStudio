@@ -19,7 +19,11 @@ visualization, GPU volume rendering, collision fields, and neural sparse-volume 
 - Use fVDB for ML/PyTorch sparse-volume research and neural 3D experiments, not as a C++ engine
   dependency by default.
 - Use VTK for scientific visualization architecture, not as a lightweight game/rendering dependency.
+- Keep volume datasets, trained models, medical/scientific data, and simulation caches as separate
+  license and provenance surfaces.
 
 ## Deep Profiles
 
 - [OpenVDB And NanoVDB](profiles/openvdb-nanovdb.md): read before adopting VDB volume IO or GPU VDB traversal.
+- [fVDB](profiles/fvdb.md): read before using sparse-volume tensors, PyTorch/CUDA sparse-grid ML, or neural-volume references.
+- [VTK](profiles/vtk.md): read before adopting scientific visualization, volume-rendering toolkit architecture, or VTK data/filter pipelines.
