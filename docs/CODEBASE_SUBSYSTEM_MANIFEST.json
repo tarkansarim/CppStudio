@@ -115,7 +115,8 @@
         "CONTRIBUTING.md",
         "CHANGELOG.md",
         ".github/workflows/validate.yml",
-        "assets/cppstudio-banner.png"
+        "assets/cppstudio-banner.png",
+        "assets/videos"
       ]
     }
   ]

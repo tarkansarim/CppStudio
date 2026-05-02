@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added README sample-project videos for CUDA Groom Tool and Wetbrush, with public assets moved under
+  `assets/videos/`.
 - Tightened active code-map behavior so agents use the architecture index and manifest as the first
   navigation step before code changes, including repos that declare their own maintained map.
 - Clarified that target repos with their own maintained maps and repo-local skills are the subsystem

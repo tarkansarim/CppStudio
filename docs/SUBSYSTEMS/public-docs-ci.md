@@ -1,7 +1,7 @@
 # Public Docs And CI
 
 Owns the public README, contribution guidance, changelog, host setup docs, root GitHub validation
-workflow, and repo banner/assets.
+workflow, and repo banner/sample assets.
 
 ## Canonical Docs
 
@@ -17,6 +17,7 @@ workflow, and repo banner/assets.
 - `CHANGELOG.md`
 - `.github/workflows/validate.yml`
 - `assets/cppstudio-banner.png`
+- `assets/videos/`
 
 ## Update When
 

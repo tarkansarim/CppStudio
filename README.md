@@ -26,6 +26,35 @@ CppStudio focuses on:
 - Validation, profiling, rollout, and optional project-memory workflows that keep agent output
   auditable.
 
+## Sample Projects Built With This Workflow
+
+These are examples of native GPU projects built with this kind of CppStudio agent workflow: scoped
+skills, maintained project maps, donor-guided implementation, and validation-heavy iteration.
+
+### CUDA Groom Tool
+
+<video src="assets/videos/cuda-groom-tool.mp4" controls muted loop playsinline width="100%"></video>
+
+Realtime C++/CUDA hair grooming with CUDA strand editing kernels, a live 3D viewport, Maya-style
+camera controls, and a production-shaped brush set for combing, screen-space grooming, puffing,
+pinching, smoothing, length work, selection masking, parting, clumping, frizz, randomization, and
+cutting. The project grew into a sophisticated realtime hair lab: shell-aware sparse voxel envelopes
+for volume-aware grooming, soft selection-aware edits, deferred/asynchronous smooth guide rebuilds,
+CUDA density-grid shadow tracing, scalp receiver shadows, persistent viewport UI settings, scripted
+viewport smoke tests, and an RTX-oriented render track covering ray tracing, Chiang/Far-Field hair
+shading, DLSS/RR-style reconstruction lanes, and lookdev/debug controls.
+
+### Wetbrush Paint Simulation
+
+<video src="assets/videos/wetbrush-paint-simulation.mp4" controls muted loop playsinline width="100%"></video>
+
+A C++ GPU painting simulation based on the Wetbrush paper, with bristle-level brush dynamics,
+grid-based liquid, particle-based liquid, bristle-particle transfer, grid-particle transfer, and a
+late-frame rendering path for persistent paint and particle visualization. The project uses a
+maintained code map and repo-local skills to keep the paper sections, CUDA kernels, brush/input
+timing, particle carrier path, liquid grid, transfer lanes, persistent canvas, playback reports, and
+performance evidence connected as the implementation evolves.
+
 ## Quick Start
 
 Open this repo in ChatGPT Codex and ask:
