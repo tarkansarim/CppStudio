@@ -1,11 +1,11 @@
 ---
 name: cpp-cuda-vulkan-studio
-description: "Create, audit, or upgrade native C++ GPU project infrastructure for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, CUDA architecture policy, Vulkan/shader tooling, sanitizer/profile lanes, self-hosted GPU CI, validation scripts, and donor-reference routing. Use for new or existing C++ repos, build/test/profiling standardization, custom CUDA/Vulkan implementation, or donor selection for native graphics/renderers, glTF/runtime assets, WebGPU/WebGL/OpenXR, path tracing, engine/runtime mesh pipelines, AI runtimes, ML compilers, neural 3D, Gaussian splatting, grooming/fur, DCC scene pipelines, volumes, animation, materials/color, CAD, physics/simulation, CUDA, Vulkan, or cross-backend GPU code. Do not use for design-only, frontend-only, storyboarding, generic image/video, generic AI assistant/product UI, plain text rendering, or ordinary data import unless native C++ GPU infrastructure or donor-reference selection is explicit."
+description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: code-map readiness audits, architecture indexes, app+library layout, CMake presets, CTest labels, CUDA architecture policy, Vulkan/shader tooling, sanitizer/profile lanes, GPU CI, validation scripts, and donor routing. Use for new or existing C++ GPU/CUDA/Vulkan repos, code-map or architecture-map requests in native GPU projects, build/test/profiling standardization, custom CUDA/Vulkan work, or donor selection for graphics/renderers, glTF/runtime assets, WebGPU/WebGL/OpenXR, path tracing, engine pipelines, AI runtimes, ML compilers, neural 3D, Gaussian splatting, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. Do not use for generic docs maps or non-native-GPU work unless C++ GPU infrastructure, C++/CUDA/Vulkan code-map work, or donor selection is explicit."
 ---
 
 # C++ CUDA Vulkan Studio
 
-Use this skill when a native C++ GPU, C++/Vulkan, C++/CUDA, or mixed CUDA/Vulkan repo needs a repeatable professional development backbone, not a one-off local build. This skill coordinates the more specific global skills instead of replacing them.
+Use this skill when a native C++ GPU, C++/Vulkan, C++/CUDA, or mixed CUDA/Vulkan repo needs a repeatable professional development backbone or maintained code map, not a one-off local build. There is no separate CppStudio code-map skill; the code-map protocol lives here. This skill coordinates the more specific global skills instead of replacing them.
 
 ## Agent Mindset
 

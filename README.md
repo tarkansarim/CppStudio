@@ -25,6 +25,10 @@ For existing projects, the code map has a readiness step before enablement. Code
 layout first, reports nonstandard structure and rough cleanup cost, then asks whether to restructure
 before mapping, preserve the current layout with documented exceptions, or decline the map.
 
+There is no standalone CppStudio code-map skill. Code-map routing, readiness audits, bootstrap
+scripts, and maintenance rules are part of `cpp-cuda-vulkan-studio` so they stay tied to the same
+native C++ GPU lane policy, validation rules, and donor-routing context.
+
 Use it when you want Codex to create, audit, or upgrade native C++ GPU projects without turning every
 new repo into a one-off build-system and donor-research exercise.
 
@@ -107,7 +111,8 @@ toolchains only when you want this machine to build or validate generated C++ GP
 - Optional companion donor links for installed companion skills such as `cuda-kernel-authoring`,
   `vulkan-compute-sync`, and `modern-cpp-cmake`
 - Optional tiny user-level `AGENTS.md` relay that tells agents to load `cpp-cuda-vulkan-studio` for
-  native C++ GPU, realtime rendering/visualization, Vulkan, CUDA, or mixed CUDA/Vulkan work
+  native C++ GPU, realtime rendering/visualization, C++ GPU code-map, Vulkan, CUDA, or mixed
+  CUDA/Vulkan work
 
 Existing user content is preserved. CppStudio scripts only replace content inside their own marked
 blocks:
@@ -122,6 +127,12 @@ blocks:
 After installation and a Codex restart, you usually do not need to name the skill. Ask Codex for
 native C++ GPU, Vulkan, CUDA, renderer, realtime 3D, simulation, or donor-reference work, and Codex
 should load `cpp-cuda-vulkan-studio` automatically.
+
+For a code map, ask for it in the same native C++ GPU project context:
+
+```text
+Create a maintained CppStudio code map for this existing C++/Vulkan renderer repo.
+```
 
 ```text
 Create a Vulkan-first C++ application called RayLab.

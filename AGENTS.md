@@ -94,9 +94,10 @@ C++/CUDA/Vulkan development.
   `docs/SUBSYSTEMS/*.md` doc and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` in the same work stream.
 - If this repo installs user-level `AGENTS.md` content, merge or append only the tiny marked
   CppStudio relay block. It should only tell agents to load `cpp-cuda-vulkan-studio` for native
-  C++ GPU/realtime/Vulkan/CUDA work; lane policy stays inside the skill. Content inside the marked relay block is
-  managed by this repo and may be replaced on reinstall; content outside the markers is user-owned
-  and must be preserved. Relay targets must be named `AGENTS.md` and must not be symlinks.
+  C++ GPU/realtime/code-map/Vulkan/CUDA work; lane policy stays inside the skill. Content inside the
+  marked relay block is managed by this repo and may be replaced on reinstall; content outside the
+  markers is user-owned and must be preserved. Relay targets must be named `AGENTS.md` and must not
+  be symlinks.
 - Companion-skill donor rollout may replace only the marked `cppstudio-donor-library` block. Content
   outside those markers is user-owned and must be preserved, even if it looks like an older donor
   note.

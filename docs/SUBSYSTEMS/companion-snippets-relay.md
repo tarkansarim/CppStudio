@@ -1,6 +1,8 @@
 # Companion Snippets And User Relay
 
-Owns managed donor-link snippets for companion skills and the tiny user-level `AGENTS.md` relay.
+Owns managed donor-link snippets for companion skills and the tiny user-level `AGENTS.md` relay,
+including the code-map trigger wording that points native C++ GPU map requests at
+`cpp-cuda-vulkan-studio`.
 
 ## Canonical Docs
 

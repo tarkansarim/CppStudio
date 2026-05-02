@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Clarified that code-map routing is part of `cpp-cuda-vulkan-studio`, not a separate skill, and
+  added code-map wording to the skill metadata and user relay.
 - Added an existing-project code-map readiness protocol and audit mode so agents inspect structure,
   estimate cleanup cost, and ask whether to restructure or preserve layout before enabling maps.
 - Promoted the code map in the README as a primary CppStudio feature and explained its purpose for
