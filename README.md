@@ -33,9 +33,9 @@ skills, maintained project maps, donor-guided implementation, and validation-hea
 
 ### CUDA Groom Tool
 
-[![CUDA Groom Tool sample](assets/videos/cuda-groom-tool-poster.jpg)](https://tarkansarim.github.io/CppStudio/assets/videos/cuda-groom-tool.mp4)
+[![CUDA Groom Tool sample](assets/videos/cuda-groom-tool-poster.jpg)](https://tarkansarim.github.io/CppStudio/samples/#cuda-groom-tool)
 
-[Watch the CUDA Groom Tool sample video](https://tarkansarim.github.io/CppStudio/assets/videos/cuda-groom-tool.mp4).
+[Open the CUDA Groom Tool sample player](https://tarkansarim.github.io/CppStudio/samples/#cuda-groom-tool).
 
 Realtime C++/CUDA hair grooming with CUDA strand editing kernels, a live 3D viewport, Maya-style
 camera controls, and a production-shaped brush set for combing, screen-space grooming, puffing,
@@ -48,9 +48,9 @@ shading, DLSS/RR-style reconstruction lanes, and lookdev/debug controls.
 
 ### Wetbrush Paint Simulation
 
-[![Wetbrush Paint Simulation sample](assets/videos/wetbrush-paint-simulation-poster.jpg)](https://tarkansarim.github.io/CppStudio/assets/videos/wetbrush-paint-simulation.mp4)
+[![Wetbrush Paint Simulation sample](assets/videos/wetbrush-paint-simulation-poster.jpg)](https://tarkansarim.github.io/CppStudio/samples/#wetbrush-paint-simulation)
 
-[Watch the Wetbrush Paint Simulation sample video](https://tarkansarim.github.io/CppStudio/assets/videos/wetbrush-paint-simulation.mp4).
+[Open the Wetbrush Paint Simulation sample player](https://tarkansarim.github.io/CppStudio/samples/#wetbrush-paint-simulation).
 
 A C++ GPU painting simulation based on the Wetbrush paper, with bristle-level brush dynamics,
 grid-based liquid, particle-based liquid, bristle-particle transfer, grid-particle transfer, and a

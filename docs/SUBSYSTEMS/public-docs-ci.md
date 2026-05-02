@@ -19,6 +19,7 @@ workflow, and repo banner/sample assets.
 - `.nojekyll`
 - `assets/cppstudio-banner.png`
 - `assets/videos/`
+- `samples/`
 
 ## Update When
 

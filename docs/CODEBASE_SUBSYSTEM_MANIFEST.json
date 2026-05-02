@@ -117,7 +117,8 @@
         ".github/workflows/validate.yml",
         ".nojekyll",
         "assets/cppstudio-banner.png",
-        "assets/videos"
+        "assets/videos",
+        "samples"
       ]
     }
   ]

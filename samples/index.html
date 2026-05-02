@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CppStudio Sample Projects</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #080d12;
+        --panel: #101820;
+        --panel-2: #121f29;
+        --text: #ecf3f8;
+        --muted: #a8b7c3;
+        --line: #263744;
+        --accent: #61d2e8;
+        --accent-2: #f3a43b;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 16px/1.55 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      main {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 36px 0 56px;
+      }
+
+      header {
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 28px;
+        padding-bottom: 20px;
+      }
+
+      h1,
+      h2 {
+        line-height: 1.15;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 4vw, 3.25rem);
+      }
+
+      h2 {
+        font-size: clamp(1.4rem, 2.4vw, 2rem);
+      }
+
+      p {
+        color: var(--muted);
+        margin: 12px 0 0;
+      }
+
+      a {
+        color: var(--accent);
+      }
+
+      .back-link {
+        display: inline-flex;
+        margin-bottom: 18px;
+        text-decoration: none;
+      }
+
+      .samples {
+        display: grid;
+        gap: 32px;
+      }
+
+      .sample {
+        background: linear-gradient(180deg, var(--panel), var(--panel-2));
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .sample-copy {
+        padding: 22px;
+      }
+
+      .video-wrap {
+        background: #000;
+        border-top: 1px solid var(--line);
+      }
+
+      video {
+        aspect-ratio: 16 / 9;
+        display: block;
+        width: 100%;
+        max-height: 78vh;
+        background: #000;
+      }
+
+      .actions {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 14px 22px 20px;
+      }
+
+      button,
+      .button-link {
+        appearance: none;
+        background: #182934;
+        border: 1px solid #36505f;
+        border-radius: 6px;
+        color: var(--text);
+        cursor: pointer;
+        font: inherit;
+        padding: 8px 12px;
+        text-decoration: none;
+      }
+
+      button:hover,
+      .button-link:hover {
+        border-color: var(--accent);
+      }
+
+      .lane {
+        color: var(--accent-2);
+        font-size: 0.92rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="back-link" href="../">Back to CppStudio</a>
+      <header>
+        <h1>CppStudio Sample Projects</h1>
+        <p>
+          Native GPU projects built with the CppStudio agent workflow: scoped skills, maintained
+          project maps, donor-guided implementation, and validation-heavy iteration.
+        </p>
+      </header>
+
+      <section class="samples" aria-label="Sample project videos">
+        <article class="sample" id="cuda-groom-tool">
+          <div class="sample-copy">
+            <div class="lane">CUDA realtime grooming</div>
+            <h2>CUDA Groom Tool</h2>
+            <p>
+              Realtime C++/CUDA hair grooming with CUDA strand editing kernels, a live 3D viewport,
+              Maya-style camera controls, production-shaped brushes, sparse voxel envelopes,
+              density-grid shadows, RTX-oriented rendering tracks, Chiang/Far-Field hair shading,
+              DLSS/RR-style reconstruction lanes, and lookdev/debug controls.
+            </p>
+          </div>
+          <div class="video-wrap">
+            <video
+              id="cuda-groom-tool-video"
+              controls
+              playsinline
+              preload="metadata"
+              poster="../assets/videos/cuda-groom-tool-poster.jpg"
+              src="../assets/videos/cuda-groom-tool.mp4"
+            ></video>
+          </div>
+          <div class="actions">
+            <button type="button" data-fullscreen-target="cuda-groom-tool-video">Fullscreen</button>
+            <a class="button-link" href="../assets/videos/cuda-groom-tool.mp4">Open MP4</a>
+          </div>
+        </article>
+
+        <article class="sample" id="wetbrush-paint-simulation">
+          <div class="sample-copy">
+            <div class="lane">GPU paint simulation</div>
+            <h2>Wetbrush Paint Simulation</h2>
+            <p>
+              A C++ GPU painting simulation based on the Wetbrush paper, with bristle-level brush
+              dynamics, grid-based and particle-based liquid, transfer lanes, persistent paint,
+              playback reports, performance evidence, and maintained repo-local code-map guidance.
+            </p>
+          </div>
+          <div class="video-wrap">
+            <video
+              id="wetbrush-paint-simulation-video"
+              controls
+              playsinline
+              preload="metadata"
+              poster="../assets/videos/wetbrush-paint-simulation-poster.jpg"
+              src="../assets/videos/wetbrush-paint-simulation.mp4"
+            ></video>
+          </div>
+          <div class="actions">
+            <button type="button" data-fullscreen-target="wetbrush-paint-simulation-video">
+              Fullscreen
+            </button>
+            <a class="button-link" href="../assets/videos/wetbrush-paint-simulation.mp4">Open MP4</a>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      for (const button of document.querySelectorAll("[data-fullscreen-target]")) {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.fullscreenTarget);
+          if (!target) {
+            return;
+          }
+          const request =
+            target.requestFullscreen ||
+            target.webkitRequestFullscreen ||
+            target.msRequestFullscreen;
+          if (request) {
+            request.call(target);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
