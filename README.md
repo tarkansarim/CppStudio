@@ -5,39 +5,34 @@
 [![Validate](https://github.com/tarkansarim/CppStudio/actions/workflows/validate.yml/badge.svg)](https://github.com/tarkansarim/CppStudio/actions/workflows/validate.yml)
 
 CppStudio is an agentic ChatGPT Codex skills package for native C++ GPU engineering. It gives Codex
-a reusable Vulkan-first C++/CUDA project backbone, an opt-in maintained code map for project
-architecture, lane discipline, validation hooks, and a curated donor-reference library for 3D,
-rendering, simulation, AI runtimes, CUDA, and Vulkan work.
+a reusable Vulkan-first C++/CUDA project backbone, lane discipline, validation hooks, and a curated
+donor-reference library for 3D, rendering, simulation, AI runtimes, CUDA, and Vulkan work. It also
+includes optional code-map support for projects that need durable architecture context across future
+agent sessions.
 
 The goal is to make Codex less dependent on broad model memory when it enters specialized native GPU
 work. Instead of filling gaps from stale or incomplete training examples, agents get maintained
 repo-local guidance, known-good project structure, donor references, caveats, and validation lanes so
 their plans and code are more precise, reproducible, and easier to audit.
 
-The code map is one of the main reasons this package exists. For generated or upgraded projects,
-CppStudio can bootstrap a maintained architecture index that records subsystem ownership, backend
-boundaries, build/test lanes, validation entrypoints, and map files for future agents. Its purpose is
-to reduce repeated cold reads, make multi-agent work easier to route, and keep large native C++ GPU
-repos understandable as they evolve. It is still opt-in for each target project: agents load and
-maintain it only when `.cppstudio/code-map-state.json` says `enabled`.
-
-For existing projects, the code map has a readiness step before enablement. Codex audits the repo
-layout first, reports nonstandard structure and rough cleanup cost, then asks whether to restructure
-before mapping, preserve the current layout with documented exceptions, or decline the map.
-
 There is no standalone CppStudio code-map skill. Code-map routing, readiness audits, bootstrap
 scripts, and maintenance rules are part of `cpp-cuda-vulkan-studio` so they stay tied to the same
 native C++ GPU lane policy, validation rules, and donor-routing context.
 
+Code maps are opt-in per target project. For generated or upgraded projects, they record subsystem
+ownership, backend boundaries, build/test lanes, and validation entrypoints so future agents can
+orient faster without rereading the entire repo. Existing projects get a readiness audit first so
+unorthodox layouts are either cleaned up or documented deliberately.
+
 Use it when you want Codex to create, audit, or upgrade native C++ GPU projects without turning every
 new repo into a one-off build-system and donor-research exercise.
 
-CppStudio has three primary surfaces:
+CppStudio focuses on:
 
 - A Vulkan-first native C++ GPU project backbone with optional CUDA and combined CUDA/Vulkan lanes.
-- A maintained code map system that gives agents durable architecture context for larger projects.
 - A nested donor-reference library that routes agents to relevant 3D, AI, simulation, rendering,
   CUDA, Vulkan, and infrastructure references without loading the whole library into context.
+- Validation, profiling, rollout, and optional code-map workflows that keep agent output auditable.
 
 ## Quick Start
 
