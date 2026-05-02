@@ -21,6 +21,10 @@ to reduce repeated cold reads, make multi-agent work easier to route, and keep l
 repos understandable as they evolve. It is still opt-in for each target project: agents load and
 maintain it only when `.cppstudio/code-map-state.json` says `enabled`.
 
+For existing projects, the code map has a readiness step before enablement. Codex audits the repo
+layout first, reports nonstandard structure and rough cleanup cost, then asks whether to restructure
+before mapping, preserve the current layout with documented exceptions, or decline the map.
+
 Use it when you want Codex to create, audit, or upgrade native C++ GPU projects without turning every
 new repo into a one-off build-system and donor-research exercise.
 
@@ -151,7 +155,8 @@ not trigger.
 - Bootstrap and maintain an opt-in codebase architecture map for generated or upgraded C++ projects
   so agents can preserve subsystem ownership, backend boundaries, validation lanes, and future
   navigation context. Support files may be present before enablement, but agents maintain and load the
-  map only when `.cppstudio/code-map-state.json` says `enabled`.
+  map only when `.cppstudio/code-map-state.json` says `enabled`. Existing projects get a readiness
+  audit before enablement so unorthodox layouts are either cleaned up first or documented deliberately.
 - Coordinate companion skills for CMake, Vulkan synchronization, CUDA kernels, and verification.
 
 ## Skills And Donors Included

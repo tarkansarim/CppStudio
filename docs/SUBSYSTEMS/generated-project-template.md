@@ -22,4 +22,4 @@ scaffold/apply behavior, and generated-project validation.
 - template files, CMake presets, docs, shader fixtures, runtime scripts, or CI files change
 - scaffold or existing-repo apply behavior changes
 - generated-project validation expectations change
-- code-map template files or generated-project code-map behavior changes
+- code-map template files, readiness audit behavior, or generated-project code-map behavior changes

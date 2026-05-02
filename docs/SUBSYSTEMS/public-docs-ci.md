@@ -21,6 +21,7 @@ workflow, and repo banner/assets.
 ## Update When
 
 - public install/use instructions change
+- public code-map positioning, readiness protocol, or user-facing workflow changes
 - contribution, release, or change-history policy changes
 - host setup commands or GPU toolchain notes change
 - root CI behavior, badge targets, or public assets change

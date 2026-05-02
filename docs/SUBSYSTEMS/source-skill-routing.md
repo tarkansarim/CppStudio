@@ -20,4 +20,4 @@ lane policy, donor-router entrypoints, and generated-project workflow instructio
 - Vulkan/CUDA lane policy changes
 - project archetype routing changes
 - the repo-local onboarding skill changes
-- code-map bootstrap or maintenance behavior changes for agents
+- code-map readiness, bootstrap, or maintenance behavior changes for agents

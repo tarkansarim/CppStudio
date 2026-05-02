@@ -931,6 +931,9 @@ test -x "${description_tmp}/scripts/validate_code_map.py"
 python3 "${description_tmp}/scripts/validate_code_map.py" "${description_tmp}"
 (
     cd "${description_tmp}"
+    scripts/bootstrap_code_map.py --audit-existing
+    test -f docs/CODEMAP_BOOTSTRAP_AUDIT.md
+    grep -q "Code Map Readiness Audit" docs/CODEMAP_BOOTSTRAP_AUDIT.md
     scripts/bootstrap_code_map.py --decline
     scripts/validate_code_map.py
 )
@@ -964,6 +967,12 @@ python3 "${SKILL_DIR}/scripts/apply_studio_backbone.py" \
     --with-code-map >"${apply_code_map_out}"
 grep -q "CODEBASE_ARCHITECTURE_INDEX.md" "${apply_code_map_out}"
 grep -q "bootstrap_code_map.py" "${apply_code_map_out}"
+audit_tmp="$(mktemp -d "${VALIDATE_TMP}/code_map_audit.XXXXXX")"
+touch "${audit_tmp}/main.cpp"
+python3 "${SKILL_DIR}/scripts/bootstrap_code_map.py" "${audit_tmp}" --audit-existing
+test -f "${audit_tmp}/docs/CODEMAP_BOOTSTRAP_AUDIT.md"
+grep -q "Missing root CMake entrypoint" "${audit_tmp}/docs/CODEMAP_BOOTSTRAP_AUDIT.md"
+grep -q "Estimated restructuring cost" "${audit_tmp}/docs/CODEMAP_BOOTSTRAP_AUDIT.md"
 apply_conflict_tmp="$(mktemp -d "${VALIDATE_TMP}/apply_conflict.XXXXXX")"
 touch "${apply_conflict_tmp}/.gitignore" "${apply_conflict_tmp}/CMakePresets.json"
 apply_conflict_out="$(mktemp "${VALIDATE_TMP}/apply_conflict.XXXXXX.out")"

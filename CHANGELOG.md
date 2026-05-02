@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added an existing-project code-map readiness protocol and audit mode so agents inspect structure,
+  estimate cleanup cost, and ask whether to restructure or preserve layout before enabling maps.
 - Promoted the code map in the README as a primary CppStudio feature and explained its purpose for
   durable project architecture context, multi-agent routing, and reduced repeated cold reads.
 - Clarified automatic skill relay wording for native C++ GPU/realtime prompts and the distinction

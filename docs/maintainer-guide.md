@@ -48,9 +48,14 @@ python3 scripts/validate_code_map.py . --require-enabled
 ```
 
 Generated or upgraded C++ projects use the same scripts, but their map is opt-in. Agents should check
-only `.cppstudio/code-map-state.json` first, ask once when the state is missing, enable with
-`scripts/bootstrap_code_map.py --enable`, and record declined state with
-`scripts/bootstrap_code_map.py --decline`.
+only `.cppstudio/code-map-state.json` first and ask once when the state is missing. For greenfield
+scaffolds, enable with `scripts/bootstrap_code_map.py --enable` after acceptance, or record declined
+state with `scripts/bootstrap_code_map.py --decline`.
+
+For existing projects, enabling the map has a readiness protocol. Run
+`scripts/bootstrap_code_map.py --audit-existing` first, review `docs/CODEMAP_BOOTSTRAP_AUDIT.md`,
+summarize nonstandard layout findings and estimated cleanup cost, then ask whether to restructure
+first, preserve the current layout with documented exceptions, or decline the map.
 
 ## Publish To Codex
 
@@ -174,8 +179,10 @@ Useful options:
 - `--dry-run`: report planned writes/copies without changing the target repo.
 - `--force`: overwrite existing backbone files.
 - `--with-code-map`: copy code-map support docs and scripts without enabling the map. Use this only
-  when the user has asked to bootstrap or evaluate code-map support for the existing repo, then run
-  `scripts/bootstrap_code_map.py --enable` only after the user accepts maintained map behavior.
+  when the user has asked to bootstrap or evaluate code-map support for the existing repo. Run
+  `scripts/bootstrap_code_map.py --audit-existing` first, ask whether to restructure or preserve the
+  layout, then run `scripts/bootstrap_code_map.py --enable` only after the user accepts maintained map
+  behavior.
 
 After applying, validate the target repo:
 
