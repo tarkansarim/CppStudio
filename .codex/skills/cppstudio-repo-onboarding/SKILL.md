@@ -12,6 +12,8 @@ Use this skill before editing anything in the CppStudio repo.
 - Canonical working repo for the global reusable `cpp-cuda-vulkan-studio` Codex skill.
 - Source skill path: `skills/cpp-cuda-vulkan-studio/`.
 - Source companion-skill snippets: `companion-skill-snippets/`.
+- Maintained code map: `docs/CODEBASE_ARCHITECTURE_INDEX.md` and
+  `docs/CODEBASE_SUBSYSTEM_MANIFEST.json`.
 - Research notes: `research/`.
 - Installed deployment target: `${HOME}/.codex/skills/cpp-cuda-vulkan-studio`.
 - The installed target should be produced by sync, not hand-edited as the source of truth.
@@ -19,15 +21,18 @@ Use this skill before editing anything in the CppStudio repo.
 ## First Read
 
 1. `AGENTS.md`
-2. `README.md`
-3. `skills/cpp-cuda-vulkan-studio/SKILL.md`
-4. The specific script/template file being changed.
+2. `docs/CODEBASE_ARCHITECTURE_INDEX.md`
+3. `docs/CODEBASE_SUBSYSTEM_MANIFEST.json`
+4. `README.md`
+5. `skills/cpp-cuda-vulkan-studio/SKILL.md`
+6. The specific subsystem doc, script, template, or reference file being changed.
 
 ## Standard Workflows
 
 For skill text, metadata, or script changes:
 
 ```bash
+python3 scripts/validate_code_map.py . --require-enabled
 ./scripts/validate.sh
 ./scripts/sync_to_codex.sh
 ```
@@ -35,6 +40,7 @@ For skill text, metadata, or script changes:
 For template, scaffold, CMake, generated-project, or validation-behavior changes:
 
 ```bash
+python3 scripts/validate_code_map.py . --require-enabled
 ./scripts/validate.sh --full
 ./scripts/sync_to_codex.sh
 ```
@@ -70,6 +76,8 @@ For previewing installed changes:
 ## Rules
 
 - Keep `cpp-cuda-vulkan-studio` generic for future C++/CUDA/Vulkan repos.
+- Keep `docs/CODEBASE_ARCHITECTURE_INDEX.md`, `docs/CODEBASE_SUBSYSTEM_MANIFEST.json`, and the
+  matching `docs/SUBSYSTEMS/*.md` file updated when subsystem ownership or routing changes.
 - Do not add private-app-only, local-workstation-only, or other project-specific instructions to this
   global skill.
 - Keep reusable GPU-selection policy generic. If a target machine has only a subset of GPUs suitable
@@ -86,11 +94,14 @@ For previewing installed changes:
   them for installed user-level skills.
 - Do not add generated build outputs, temp scaffold projects, profiler traces, or `__pycache__`.
 - If sync or validation fails, fix the repo copy first, then rerun sync.
+- Before pushing to remote, add a concise `CHANGELOG.md` entry for the tracked change.
 
 ## Close-Out Checklist
 
 - State whether validation was default or full.
+- State whether `python3 scripts/validate_code_map.py . --require-enabled` passed.
 - State whether sync to `${HOME}/.codex/skills/cpp-cuda-vulkan-studio` was run.
+- State whether `CHANGELOG.md` was updated before any push to remote.
 - If skills, skill descriptions, donor profiles, donor categories, donor routing, or README donor
   inventory changed, run a sub-agent trigger lane first and report whether the expected skill and donor
   profiles were selected.

@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "skill_root": "skills",
+  "router_doc": "docs/CODEBASE_ARCHITECTURE_INDEX.md",
+  "subsystems": [
+    {
+      "id": "build_and_presets",
+      "name": "Build And Presets",
+      "router_doc": "docs/SUBSYSTEMS/build-and-presets.md",
+      "canonical_docs": [
+        "docs/DEVELOPMENT_ENVIRONMENT.md",
+        "docs/VALIDATION_PIPELINE.md"
+      ],
+      "primary_paths": [
+        "CMakeLists.txt",
+        "CMakePresets.json",
+        "cmake"
+      ]
+    },
+    {
+      "id": "app_core",
+      "name": "App Core",
+      "router_doc": "docs/SUBSYSTEMS/app-core.md",
+      "canonical_docs": [
+        "README.md"
+      ],
+      "primary_paths": [
+        "src/app",
+        "src/core",
+        "include"
+      ]
+    },
+    {
+      "id": "vulkan_lane",
+      "name": "Vulkan Lane",
+      "router_doc": "docs/SUBSYSTEMS/vulkan-lane.md",
+      "canonical_docs": [
+        "docs/DEVELOPMENT_ENVIRONMENT.md",
+        "docs/VALIDATION_PIPELINE.md"
+      ],
+      "primary_paths": [
+        "src/render",
+        "shaders"
+      ]
+    },
+    {
+      "id": "cuda_lane",
+      "name": "CUDA Lane",
+      "router_doc": "docs/SUBSYSTEMS/cuda-lane.md",
+      "canonical_docs": [
+        "docs/DEVELOPMENT_ENVIRONMENT.md",
+        "docs/VALIDATION_PIPELINE.md"
+      ],
+      "primary_paths": [
+        "src/cuda",
+        "include/*/cuda_vector_add.hpp"
+      ]
+    },
+    {
+      "id": "validation_ci",
+      "name": "Validation And CI",
+      "router_doc": "docs/SUBSYSTEMS/validation-ci.md",
+      "canonical_docs": [
+        "docs/VALIDATION_PIPELINE.md",
+        "docs/GPU_RUNNER_CI.md",
+        "docs/BENCHMARKS.md"
+      ],
+      "primary_paths": [
+        "tests",
+        "benchmarks",
+        "scripts",
+        ".github/workflows"
+      ]
+    }
+  ]
+}

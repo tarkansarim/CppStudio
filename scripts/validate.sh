@@ -68,10 +68,18 @@ require_python310
 required_repo_files=(
     "scripts/install_companion_donor_links.py"
     "scripts/install_user_agents_relay.py"
+    "scripts/bootstrap_code_map.py"
+    "scripts/validate_code_map.py"
     "scripts/quick_validate_skill.py"
+    ".cppstudio/code-map-state.json"
+    "CHANGELOG.md"
+    "docs/CODEBASE_ARCHITECTURE_INDEX.md"
+    "docs/CODEBASE_SUBSYSTEM_MANIFEST.json"
     "companion-skill-snippets/user-agents/cppstudio-relay.md"
     "research/donor-library/trigger-regression-checklist.md"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/.gitignore"
+    "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md"
+    "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/CODEBASE_SUBSYSTEM_MANIFEST.json"
 )
 for rel_path in "${required_repo_files[@]}"; do
     if [[ ! -e "${ROOT_DIR}/${rel_path}" ]]; then
@@ -195,6 +203,7 @@ if [[ -d "${ROOT_DIR}/.codex/skills" ]]; then
     done < <(find "${ROOT_DIR}/.codex/skills" -mindepth 1 -maxdepth 1 -type d -print0)
 fi
 python3 -m py_compile "${ROOT_DIR}"/scripts/*.py "${SKILL_DIR}"/scripts/*.py
+python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${ROOT_DIR}" --require-enabled
 python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
     "${SKILL_DIR}/references/donor-library" \
     --reference-root "${SKILL_DIR}/references"
@@ -915,12 +924,46 @@ python3 "${SKILL_DIR}/scripts/scaffold_gpu_cpp_project.py" \
     --output "${description_tmp}" \
     --description "Custom CppStudio description smoke"
 grep -q "Custom CppStudio description smoke" "${description_tmp}/README.md"
+test -f "${description_tmp}/docs/CODEBASE_ARCHITECTURE_INDEX.md"
+test -f "${description_tmp}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json"
+test -x "${description_tmp}/scripts/bootstrap_code_map.py"
+test -x "${description_tmp}/scripts/validate_code_map.py"
+python3 "${description_tmp}/scripts/validate_code_map.py" "${description_tmp}"
+(
+    cd "${description_tmp}"
+    scripts/bootstrap_code_map.py --decline
+    scripts/validate_code_map.py
+)
+grep -q '"code_map": "declined"' "${description_tmp}/.cppstudio/code-map-state.json"
+expect_failure "declined code map is not enabled" "code map is declined" \
+    python3 "${description_tmp}/scripts/validate_code_map.py" "${description_tmp}" --require-enabled
+(
+    cd "${description_tmp}"
+    scripts/bootstrap_code_map.py --enable
+    scripts/validate_code_map.py --require-enabled
+)
+python3 "${SKILL_DIR}/scripts/validate_studio_backbone.py" \
+    "${description_tmp}" \
+    --strict-source-layout \
+    --code-map
 apply_dry_run_tmp="$(mktemp -d "${VALIDATE_TMP}/apply_dry_run.XXXXXX")"
 apply_dry_run_out="$(mktemp "${VALIDATE_TMP}/apply_dry_run.XXXXXX.out")"
 python3 "${SKILL_DIR}/scripts/apply_studio_backbone.py" \
     "${apply_dry_run_tmp}" \
     --dry-run >"${apply_dry_run_out}"
 grep -q "CMakePresets.json" "${apply_dry_run_out}"
+if grep -q "CODEBASE_ARCHITECTURE_INDEX" "${apply_dry_run_out}"; then
+    cat "${apply_dry_run_out}" >&2
+    echo "Existing-repo dry run copied code map files without --with-code-map" >&2
+    exit 1
+fi
+apply_code_map_out="$(mktemp "${VALIDATE_TMP}/apply_code_map.XXXXXX.out")"
+python3 "${SKILL_DIR}/scripts/apply_studio_backbone.py" \
+    "${apply_dry_run_tmp}" \
+    --dry-run \
+    --with-code-map >"${apply_code_map_out}"
+grep -q "CODEBASE_ARCHITECTURE_INDEX.md" "${apply_code_map_out}"
+grep -q "bootstrap_code_map.py" "${apply_code_map_out}"
 apply_conflict_tmp="$(mktemp -d "${VALIDATE_TMP}/apply_conflict.XXXXXX")"
 touch "${apply_conflict_tmp}/.gitignore" "${apply_conflict_tmp}/CMakePresets.json"
 apply_conflict_out="$(mktemp "${VALIDATE_TMP}/apply_conflict.XXXXXX.out")"
@@ -1100,6 +1143,12 @@ if (( full )); then
     sample_dir="$(mktemp -d "${VALIDATE_TMP}/generated_project.XXXXXX")"
 
     "${SKILL_DIR}/scripts/scaffold_gpu_cpp_project.py" --name StudioValidate --output "${sample_dir}"
+    (
+        cd "${sample_dir}"
+        scripts/bootstrap_code_map.py --enable
+        scripts/validate_code_map.py --require-enabled
+    )
+    "${SKILL_DIR}/scripts/validate_studio_backbone.py" "${sample_dir}" --strict-source-layout --code-map
     "${SKILL_DIR}/scripts/validate_studio_backbone.py" "${sample_dir}" --strict-source-layout --integration
     (
         cd "${sample_dir}"

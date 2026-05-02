@@ -133,6 +133,8 @@ not trigger.
   CAD, BIM/IFC, terrain/geospatial data, AI runtimes, neural 3D, Gaussian splatting, grooming/fur,
   DCC scene pipelines, volumes, medical/scientific data, animation, muscle/flesh simulation, VFX,
   particles, simulation, XR, and native engineering infrastructure.
+- Offer an opt-in maintained codebase architecture map for generated or upgraded C++ projects, using
+  a tiny `.cppstudio/code-map-state.json` marker so declined maps do not keep loading into context.
 - Coordinate companion skills for CMake, Vulkan synchronization, CUDA kernels, and verification.
 
 ## Skills And Donors Included
@@ -291,6 +293,7 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
 - `skills/cpp-cuda-vulkan-studio/`: source of truth for the user-level Codex skill
 - `skills/cpp-cuda-vulkan-studio/assets/app-library-template/`: generated-project template
 - `skills/cpp-cuda-vulkan-studio/references/`: project archetypes and donor-reference guidance
+- `.cppstudio/` and `docs/CODEBASE_*`: maintained code map for this CppStudio repo
 - `companion-skill-snippets/`: managed donor-link snippets for companion skills and user-level relay
 - `research/`: source research and trigger-test notes
 - `scripts/`: validation, sync, rollout, and watch helpers
@@ -308,6 +311,9 @@ source of truth. Edit this repo, then have an agent publish with the repo script
 - [Maintainer guide](docs/maintainer-guide.md): validation, sync, rollout, generated-project, donor,
   and troubleshooting details for agents editing this repo
 - [Contributing](CONTRIBUTING.md): public contribution, donor update, validation, and release notes
+- [Changelog](CHANGELOG.md): tracked change history for pushed repo changes
+- [Codebase architecture index](docs/CODEBASE_ARCHITECTURE_INDEX.md): maintained map for agents
+  editing CppStudio itself
 - [Donor library](skills/cpp-cuda-vulkan-studio/references/donor-library/README.md): curated donor
   selection entrypoint
 

@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "state": ".cppstudio/code-map-state.json",
+  "router_doc": "docs/CODEBASE_ARCHITECTURE_INDEX.md",
+  "subsystems": [
+    {
+      "id": "source_skill_routing",
+      "name": "Source Skill And Agent Routing",
+      "router_doc": "docs/SUBSYSTEMS/source-skill-routing.md",
+      "skill_path": ".codex/skills/cppstudio-repo-onboarding/SKILL.md",
+      "canonical_docs": [
+        "AGENTS.md",
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md"
+      ],
+      "primary_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        ".codex/skills/cppstudio-repo-onboarding/SKILL.md"
+      ]
+    },
+    {
+      "id": "donor_library",
+      "name": "Donor Library",
+      "router_doc": "docs/SUBSYSTEMS/donor-library.md",
+      "canonical_docs": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/README.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md"
+      ],
+      "primary_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles",
+        "research/donor-library/trigger-matrix.json"
+      ]
+    },
+    {
+      "id": "generated_project_template",
+      "name": "Generated Project Template",
+      "router_doc": "docs/SUBSYSTEMS/generated-project-template.md",
+      "canonical_docs": [
+        "skills/cpp-cuda-vulkan-studio/assets/app-library-template/README.md",
+        "docs/maintainer-guide.md"
+      ],
+      "primary_paths": [
+        "skills/cpp-cuda-vulkan-studio/assets/app-library-template",
+        "skills/cpp-cuda-vulkan-studio/scripts/scaffold_gpu_cpp_project.py",
+        "skills/cpp-cuda-vulkan-studio/scripts/apply_studio_backbone.py",
+        "skills/cpp-cuda-vulkan-studio/scripts/validate_studio_backbone.py",
+        "skills/cpp-cuda-vulkan-studio/scripts/bootstrap_code_map.py",
+        "skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py"
+      ]
+    },
+    {
+      "id": "validation_sync_rollout",
+      "name": "Validation Sync And Rollout",
+      "router_doc": "docs/SUBSYSTEMS/validation-sync-rollout.md",
+      "canonical_docs": [
+        "docs/maintainer-guide.md",
+        "docs/manual-install.md"
+      ],
+      "primary_paths": [
+        "scripts/validate.sh",
+        "scripts/sync_to_codex.sh",
+        "scripts/rollout_to_codex.sh",
+        "scripts/watch_to_codex.sh",
+        "scripts/quick_validate_skill.py",
+        "scripts/bootstrap_code_map.py",
+        "scripts/validate_code_map.py"
+      ]
+    },
+    {
+      "id": "companion_snippets_relay",
+      "name": "Companion Snippets And User Relay",
+      "router_doc": "docs/SUBSYSTEMS/companion-snippets-relay.md",
+      "canonical_docs": [
+        "docs/manual-install.md",
+        "docs/maintainer-guide.md"
+      ],
+      "primary_paths": [
+        "companion-skill-snippets",
+        "scripts/install_companion_donor_links.py",
+        "scripts/install_user_agents_relay.py"
+      ]
+    },
+    {
+      "id": "research_notes",
+      "name": "Research Notes",
+      "router_doc": "docs/SUBSYSTEMS/research-notes.md",
+      "canonical_docs": [
+        "research/vulkan-lane/README.md",
+        "research/cuda-lane/README.md",
+        "research/donor-library/README.md"
+      ],
+      "primary_paths": [
+        "research/vulkan-lane",
+        "research/cuda-lane",
+        "research/donor-library",
+        "research/maintainer-donor-ingest.md"
+      ]
+    },
+    {
+      "id": "public_docs_ci",
+      "name": "Public Docs And CI",
+      "router_doc": "docs/SUBSYSTEMS/public-docs-ci.md",
+      "canonical_docs": [
+        "README.md",
+        "CONTRIBUTING.md",
+        "CHANGELOG.md",
+        "docs/host-toolchain-setup.md"
+      ],
+      "primary_paths": [
+        "README.md",
+        "CONTRIBUTING.md",
+        "CHANGELOG.md",
+        ".github/workflows/validate.yml",
+        "assets/cppstudio-banner.png"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "code_map": "enabled",
+  "index": "docs/CODEBASE_ARCHITECTURE_INDEX.md",
+  "manifest": "docs/CODEBASE_SUBSYSTEM_MANIFEST.json",
+  "maintenance": "Update the code map when CppStudio subsystem ownership, routing, validation, rollout, template, donor-library, or public-doc behavior changes."
+}

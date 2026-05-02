@@ -8,12 +8,14 @@ list for people installing the skill.
 For ordinary skill text, script, metadata, donor, or README changes:
 
 ```bash
+python3 scripts/validate_code_map.py . --require-enabled
 ./scripts/validate.sh
 ```
 
 For template, scaffold, CMake, generated-project, or generated-project validation behavior changes:
 
 ```bash
+python3 scripts/validate_code_map.py . --require-enabled
 ./scripts/validate.sh --full
 ```
 
@@ -25,6 +27,30 @@ VALIDATOR="${PWD}/scripts/quick_validate_skill.py" ./scripts/validate.sh
 ```
 
 Use the Codex system validator for normal local maintainer validation when it is available.
+
+## Code Map Maintenance
+
+CppStudio itself has an enabled code map:
+
+```bash
+docs/CODEBASE_ARCHITECTURE_INDEX.md
+docs/CODEBASE_SUBSYSTEM_MANIFEST.json
+```
+
+Update the matching `docs/SUBSYSTEMS/*.md` file and manifest whenever subsystem ownership, routing,
+generated-template behavior, validation/sync/rollout behavior, companion snippets, donor-library
+structure, public docs, CI, or change-history policy changes.
+
+Validate the map:
+
+```bash
+python3 scripts/validate_code_map.py . --require-enabled
+```
+
+Generated or upgraded C++ projects use the same scripts, but their map is opt-in. Agents should check
+only `.cppstudio/code-map-state.json` first, ask once when the state is missing, enable with
+`scripts/bootstrap_code_map.py --enable`, and record declined state with
+`scripts/bootstrap_code_map.py --decline`.
 
 ## Publish To Codex
 
@@ -60,6 +86,10 @@ Optionally merge the minimal user-level `AGENTS.md` relay during rollout:
 INSTALL_USER_AGENTS_RELAY=1 ./scripts/rollout_to_codex.sh
 ```
 
+Before pushing CppStudio to remote, update `CHANGELOG.md` with a concise entry for the tracked
+change. The final response should also mention the pushed commit(s), but the changelog is the durable
+history.
+
 ## Watch Mode
 
 Continuously validate and publish source-skill edits:
@@ -93,6 +123,15 @@ Useful options:
 - `--namespace ray_lab`: override the generated C++ namespace.
 - `--description "Short project description"`: render a project description into the generated README.
 - `--force`: overwrite files that already exist at the destination.
+
+The scaffold includes opt-in code-map scripts and starter docs. After the user accepts code-map
+maintenance for the generated project, run:
+
+```bash
+cd /tmp/RayLab
+scripts/bootstrap_code_map.py --enable
+scripts/validate_code_map.py --require-enabled
+```
 
 Validate the generated project:
 
@@ -134,6 +173,8 @@ Useful options:
 
 - `--dry-run`: report planned writes/copies without changing the target repo.
 - `--force`: overwrite existing backbone files.
+- `--with-code-map`: also copy opt-in code-map docs and scripts. Use this only when the user has
+  asked to bootstrap or evaluate code-map support for the existing repo.
 
 After applying, validate the target repo:
 

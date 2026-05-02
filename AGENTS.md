@@ -15,6 +15,8 @@ C++/CUDA/Vulkan development.
 ## Source Of Truth
 
 - Edit `skills/cpp-cuda-vulkan-studio/` in this repo.
+- Use `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` as the
+  maintained code map for this repo.
 - Publish to user-level Codex with `./scripts/sync_to_codex.sh`.
 - Do not hand-edit `${HOME}/.codex/skills/cpp-cuda-vulkan-studio` as the long-term source.
 - Do not move private app, local workstation, or other project-specific skills back into user-level
@@ -51,6 +53,9 @@ C++/CUDA/Vulkan development.
 
 ## Validation
 
+- Run `python3 scripts/validate_code_map.py . --require-enabled` after edits that affect CppStudio
+  subsystem ownership, routing, generated template behavior, validation, rollout, public docs, CI, or
+  changelog policy.
 - Run `./scripts/validate.sh` after edits to skill text, scripts, metadata, or sync behavior.
 - Run `./scripts/validate.sh --full` after edits to:
   - `assets/app-library-template/`
@@ -83,6 +88,10 @@ C++/CUDA/Vulkan development.
 
 - Keep reusable policy generic. Do not add private-app-only, local-workstation-only, or machine-only
   workflow rules to `skills/cpp-cuda-vulkan-studio/`; those belong in project-level skills.
+- Keep the maintained code map in sync. If a change affects source skill routing, donor-library
+  routing, generated-project template behavior, validation/sync/rollout scripts, companion snippets,
+  research provenance, public docs, CI, or change-history policy, update the matching
+  `docs/SUBSYSTEMS/*.md` doc and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` in the same work stream.
 - If this repo installs user-level `AGENTS.md` content, merge or append only the tiny marked
   CppStudio relay block. It should only tell agents to load `cpp-cuda-vulkan-studio` for C++
   Vulkan/CUDA work; lane policy stays inside the skill. Content inside the marked relay block is
@@ -98,6 +107,9 @@ C++/CUDA/Vulkan development.
   must stay deterministic.
 - Keep research notes under `research/` and reusable skill instructions under
   `skills/cpp-cuda-vulkan-studio/`; do not mix process notes into installed user-level skill files.
+- Before pushing to remote, update `CHANGELOG.md` with a concise entry for tracked user-visible
+  changes, validation/CI changes, generated-template changes, donor-library changes, or install/sync
+  behavior changes.
 
 ## Close-Out
 
@@ -107,4 +119,5 @@ When finishing work here, report:
 - whether `./scripts/validate.sh` or `./scripts/validate.sh --full` passed
 - whether `./scripts/sync_to_codex.sh` was run
 - whether the sub-agent trigger lane was run when skill/donor routing changed
+- whether `CHANGELOG.md` was updated before any push to remote
 - any installed-tool gaps, such as missing `clang-format` or `clang-tidy`

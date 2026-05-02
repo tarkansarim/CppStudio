@@ -137,6 +137,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("repo", help="Repository root to validate")
     parser.add_argument("--strict-source-layout", action="store_true")
+    parser.add_argument("--code-map", action="store_true", help="Also require and validate an enabled CppStudio code map")
     parser.add_argument("--integration", action="store_true", help="Also configure, build, and inspect CTest registration")
     parser.add_argument("--integration-configure-preset", default="dev", help="CMake configure preset used by --integration")
     parser.add_argument("--integration-build-preset", help="CMake build preset used by --integration; defaults to configure preset")
@@ -206,6 +207,28 @@ def main() -> int:
         path = repo / relative
         if path.exists() and (path.stat().st_mode & 0o111) == 0:
             failures.append(f"script is not executable: {relative}")
+
+    if args.code_map:
+        for relative in [
+            ".cppstudio/code-map-state.json",
+            "docs/CODEBASE_ARCHITECTURE_INDEX.md",
+            "docs/CODEBASE_SUBSYSTEM_MANIFEST.json",
+            "scripts/bootstrap_code_map.py",
+            "scripts/validate_code_map.py",
+        ]:
+            if not (repo / relative).exists():
+                failures.append(f"missing code map file {relative}")
+        validator = repo / "scripts/validate_code_map.py"
+        if validator.exists() and not failures:
+            result = subprocess.run(
+                ["python3", str(validator), str(repo), "--require-enabled"],
+                cwd=repo,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            if result.returncode != 0:
+                failures.append(f"code map validation failed:\n{result.stdout}{result.stderr}")
 
     if args.integration and not failures:
         build_preset = args.integration_build_preset or args.integration_configure_preset

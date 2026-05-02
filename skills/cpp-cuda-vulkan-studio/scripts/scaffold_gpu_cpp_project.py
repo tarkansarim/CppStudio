@@ -20,6 +20,8 @@ RUNTIME_SCRIPTS = [
     "run_nsys_smoke.sh",
     "format_check.sh",
     "tidy_check.sh",
+    "bootstrap_code_map.py",
+    "validate_code_map.py",
 ]
 CPP_KEYWORDS = {
     "alignas",

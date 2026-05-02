@@ -6,6 +6,24 @@ This project is scaffolded as a Vulkan-first C++ app and library with optional C
 CUDA plus Vulkan lanes. Real CUDA/Vulkan external-memory or semaphore interop should be added only
 when the project defines that contract deliberately.
 
+## Code Map
+
+This template includes opt-in CppStudio code-map docs and scripts. The map is maintained only after
+`.cppstudio/code-map-state.json` says `enabled`.
+
+Enable it after the user accepts:
+
+```bash
+scripts/bootstrap_code_map.py --enable
+scripts/validate_code_map.py --require-enabled
+```
+
+Record a decline so agents stop prompting:
+
+```bash
+scripts/bootstrap_code_map.py --decline
+```
+
 ## Validate
 
 ```bash

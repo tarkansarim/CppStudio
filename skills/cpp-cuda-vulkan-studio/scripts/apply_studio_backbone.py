@@ -32,6 +32,15 @@ BACKBONE_PATHS = [
     "shaders/offscreen_triangle.vert",
     "shaders/offscreen_triangle.frag",
 ]
+CODE_MAP_BACKBONE_PATHS = [
+    "docs/CODEBASE_ARCHITECTURE_INDEX.md",
+    "docs/CODEBASE_SUBSYSTEM_MANIFEST.json",
+    "docs/SUBSYSTEMS/build-and-presets.md",
+    "docs/SUBSYSTEMS/app-core.md",
+    "docs/SUBSYSTEMS/vulkan-lane.md",
+    "docs/SUBSYSTEMS/cuda-lane.md",
+    "docs/SUBSYSTEMS/validation-ci.md",
+]
 RUNTIME_SCRIPTS = [
     "check_dev_tools.sh",
     "select_idle_gpu.sh",
@@ -41,6 +50,10 @@ RUNTIME_SCRIPTS = [
     "run_nsys_smoke.sh",
     "format_check.sh",
     "tidy_check.sh",
+]
+CODE_MAP_RUNTIME_SCRIPTS = [
+    "bootstrap_code_map.py",
+    "validate_code_map.py",
 ]
 
 
@@ -104,13 +117,20 @@ def main() -> int:
     parser.add_argument("repo", help="Existing repository root")
     parser.add_argument("--force", action="store_true", help="Overwrite existing backbone files")
     parser.add_argument("--dry-run", action="store_true", help="Show planned writes without changing files")
+    parser.add_argument("--with-code-map", action="store_true", help="Also copy opt-in code-map docs and scripts")
     args = parser.parse_args()
 
     repo = Path(args.repo).expanduser().resolve()
     if not repo.exists() or not repo.is_dir():
         raise SystemExit(f"repo directory does not exist: {repo}")
+    replacements = {
+        "PROJECT_NAME": repo.name,
+        "PROJECT_DESCRIPTION": "Vulkan-first C++ app+library project with optional CUDA lanes",
+    }
 
     paths = list(BACKBONE_PATHS)
+    if args.with_code_map:
+        paths.extend(CODE_MAP_BACKBONE_PATHS)
 
     rendered_files: list[tuple[str, Path, str]] = []
     dry_run_conflicts: list[Path] = []
@@ -121,11 +141,14 @@ def main() -> int:
                 dry_run_conflicts.append(target)
             rendered_files.append((relative, target, ""))
         else:
-            rendered_files.append((relative, target, planned_text(relative, target, {}, args.force)))
+            rendered_files.append((relative, target, planned_text(relative, target, replacements, args.force)))
 
     scripts_dir = repo / "scripts"
     script_copies: list[tuple[Path, Path]] = []
-    for script_name in RUNTIME_SCRIPTS:
+    script_names = list(RUNTIME_SCRIPTS)
+    if args.with_code_map:
+        script_names.extend(CODE_MAP_RUNTIME_SCRIPTS)
+    for script_name in script_names:
         source = SKILL_ROOT / "scripts" / script_name
         if not source.is_file():
             raise FileNotFoundError(f"missing runtime script: {source}")

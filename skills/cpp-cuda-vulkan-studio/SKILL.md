@@ -44,6 +44,8 @@ When this skill is active, work like a native C++ GPU systems engineer:
   local rules, custom skills, and content outside managed marker blocks are user-owned.
 - Produce usable infrastructure. Avoid stubs, toy-only scaffolds, disabled tests, placeholder kernels,
   or sample-only shortcuts unless the user explicitly asks for a throwaway prototype.
+- Keep code maps lazy. Check only `.cppstudio/code-map-state.json` first; load the codebase map only
+  when that state says `enabled`, and do not keep prompting when it says `declined`.
 
 ## Coordination
 
@@ -55,18 +57,20 @@ When this skill is active, work like a native C++ GPU systems engineer:
 
 ## Workflow
 
-1. Inspect the target repo first: `CMakeLists.txt`, `CMakePresets.json`, package manifests, `.github/workflows`, `cmake/`, `tests/`, `scripts/`, and docs.
+1. Inspect the target repo first: `CMakeLists.txt`, `CMakePresets.json`, package manifests, `.github/workflows`, `cmake/`, `tests/`, `scripts/`, docs, and `.cppstudio/code-map-state.json` when present.
 2. For a greenfield repo, run `scripts/scaffold_gpu_cpp_project.py` from this skill and then adapt only project names and required dependency switches.
 3. For an existing repo, run `scripts/apply_studio_backbone.py` against a temporary copy first unless the user explicitly wants direct modification.
-4. Preserve any existing package manager or project-specific dependency policy. Do not introduce vcpkg, Conan, containers, FetchContent, or submodules unless there is a concrete reason.
-5. Keep CUDA and Vulkan optional through CMake cache options. For unspecified new GPU/3D/realtime/XR/cross-platform C++ projects, recommend and scaffold Vulkan-first: the normal `dev` preset is Vulkan-only, CUDA stays off unless the user explicitly chooses the CUDA lane or the requirements force CUDA.
-6. Do not mix CUDA into a Vulkan-chosen or Vulkan-assumed project by default. Use CUDA only for explicit CUDA/Vulkan interop, CUDA-specific compute, NVIDIA-only libraries, CUDA graphs, or custom CUDA kernels. When the user explicitly chooses CUDA, Vulkan may be added for presentation, realtime visualization, XR, swapchain/display work, or interop if the boundary is documented.
-7. For new Vulkan template work, target Vulkan 1.3 with Vulkan-Hpp RAII, synchronization2, dynamic rendering, GLSL compiled by `glslc`, SPIR-V validation by `spirv-val`, and optional portability-enumeration support for MoltenVK-style platforms.
-8. Register tests with CTest labels so quick, GPU, GUI, Vulkan, CUDA, shader, compute, render, validation, perf, and nightly lanes can be selected independently.
-9. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
-10. Before greenfield scaffolding or major backbone edits, read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library, CUDA+Vulkan combined/interop app, AI runtime, neural 3D viewer, grooming/fur tool, glTF/runtime asset viewer, renderer backbone/runtime mesh pipeline, DCC scene pipeline, volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool, 3D/physics/GPU simulation tool, or XR app.
-11. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects, use the nested donor router. Read `references/donor-library/README.md` for policy; when the prompt uses VFX studio, game studio, or native engineering infrastructure vocabulary, use the production overlays under `references/donor-library/production/`; use `references/donor-library/agent-lookup.md` only when the prompt is broad or overlapping; then open the smallest matching category set, choosing one primary category first when possible, and only the donor profiles those categories name. Treat donors as domain references first: a CUDA, Vulkan, OpenCL, DirectX, CPU, or DCC donor can still guide another target backend. Keep the selected implementation lane fixed, translate backend-specific details through the active lane skill, and keep permissive donor code, dependency candidates, and study-only references separated.
-12. Do not route design-only, frontend-only, storyboarding, generic image/video, generic product-AI UI, plain text rendering, or ordinary data import requests through this skill unless the user explicitly asks for native C++ GPU implementation, C++/CUDA/Vulkan infrastructure, or donor-reference selection.
+4. For a new or newly upgraded project with no `.cppstudio/code-map-state.json`, ask once whether to create a maintained codebase architecture map. State the benefits: faster cold starts, cleaner multi-agent routing, explicit subsystem ownership, and less repeated code reading. If the user accepts, run `scripts/bootstrap_code_map.py --enable`; if they decline, run `scripts/bootstrap_code_map.py --decline` and do not prompt again unless asked.
+5. When `.cppstudio/code-map-state.json` says `enabled`, read `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before broad edits. Keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, or public runtime behavior changes. If the user asks for a code map mid-project, bootstrap it then; for large existing repos, use parallel subsystem audits when delegation is explicitly available.
+6. Preserve any existing package manager or project-specific dependency policy. Do not introduce vcpkg, Conan, containers, FetchContent, or submodules unless there is a concrete reason.
+7. Keep CUDA and Vulkan optional through CMake cache options. For unspecified new GPU/3D/realtime/XR/cross-platform C++ projects, recommend and scaffold Vulkan-first: the normal `dev` preset is Vulkan-only, CUDA stays off unless the user explicitly chooses the CUDA lane or the requirements force CUDA.
+8. Do not mix CUDA into a Vulkan-chosen or Vulkan-assumed project by default. Use CUDA only for explicit CUDA/Vulkan interop, CUDA-specific compute, NVIDIA-only libraries, CUDA graphs, or custom CUDA kernels. When the user explicitly chooses CUDA, Vulkan may be added for presentation, realtime visualization, XR, swapchain/display work, or interop if the boundary is documented.
+9. For new Vulkan template work, target Vulkan 1.3 with Vulkan-Hpp RAII, synchronization2, dynamic rendering, GLSL compiled by `glslc`, SPIR-V validation by `spirv-val`, and optional portability-enumeration support for MoltenVK-style platforms.
+10. Register tests with CTest labels so quick, GPU, GUI, Vulkan, CUDA, shader, compute, render, validation, perf, and nightly lanes can be selected independently.
+11. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
+12. Before greenfield scaffolding or major backbone edits, read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library, CUDA+Vulkan combined/interop app, AI runtime, neural 3D viewer, grooming/fur tool, glTF/runtime asset viewer, renderer backbone/runtime mesh pipeline, DCC scene pipeline, volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool, 3D/physics/GPU simulation tool, or XR app.
+13. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects, use the nested donor router. Read `references/donor-library/README.md` for policy; when the prompt uses VFX studio, game studio, or native engineering infrastructure vocabulary, use the production overlays under `references/donor-library/production/`; use `references/donor-library/agent-lookup.md` only when the prompt is broad or overlapping; then open the smallest matching category set, choosing one primary category first when possible, and only the donor profiles those categories name. Treat donors as domain references first: a CUDA, Vulkan, OpenCL, DirectX, CPU, or DCC donor can still guide another target backend. Keep the selected implementation lane fixed, translate backend-specific details through the active lane skill, and keep permissive donor code, dependency candidates, and study-only references separated.
+14. Do not route design-only, frontend-only, storyboarding, generic image/video, generic product-AI UI, plain text rendering, or ordinary data import requests through this skill unless the user explicitly asks for native C++ GPU implementation, C++/CUDA/Vulkan infrastructure, or donor-reference selection.
 
 ## Bundled Assets
 
@@ -90,6 +94,8 @@ When this skill is active, work like a native C++ GPU systems engineer:
 - `scripts/run_nsys_smoke.sh`: run an app/probe under Nsight Systems and verify stats can read the report.
 - `scripts/format_check.sh`: run clang-format in check-only mode.
 - `scripts/tidy_check.sh`: run clang-tidy against a compile database in check-only mode.
+- `scripts/bootstrap_code_map.py`: enable or decline the opt-in CppStudio codebase map for a target repo.
+- `scripts/validate_code_map.py`: validate enabled or declined CppStudio code-map state and manifest links.
 
 ## Acceptance
 
