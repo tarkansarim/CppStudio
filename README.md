@@ -35,6 +35,16 @@ That installs the main skill and donor-library links into the Codex home on the 
 command runs. The default Codex home is `${HOME}/.codex`. Restart Codex after installation so changed
 skill metadata is discovered.
 
+For a non-default Codex home, pass `SYNC_CODEX_HOME` to the rollout script:
+
+```bash
+cd /path/to/CppStudio
+SYNC_CODEX_HOME=/path/to/.codex ./scripts/rollout_to_codex.sh
+```
+
+The rollout and sync scripts use `SYNC_CODEX_HOME`, not `CODEX_HOME`, so nested agent sessions do not
+accidentally install into an isolated session home.
+
 You do not need CUDA, Vulkan, CMake, or a compiler just to install CppStudio into Codex. Install GPU
 toolchains only when you want this machine to build or validate generated C++ GPU projects.
 
