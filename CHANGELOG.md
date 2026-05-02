@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Promoted the code map in the README as a primary CppStudio feature and explained its purpose for
+  durable project architecture context, multi-agent routing, and reduced repeated cold reads.
 - Clarified automatic skill relay wording for native C++ GPU/realtime prompts and the distinction
   between copied code-map support files and an enabled maintained code map.
 - Added an opt-in CppStudio code-map system with bootstrap and validation scripts, generated-project
