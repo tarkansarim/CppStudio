@@ -1,0 +1,53 @@
+name: Validate
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Repo Validation
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install lightweight validation tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends rsync shellcheck
+
+      - name: Check shell syntax
+        run: |
+          bash -n scripts/*.sh
+          bash -n skills/cpp-cuda-vulkan-studio/scripts/*.sh
+
+      - name: Run ShellCheck
+        run: |
+          shellcheck scripts/*.sh
+          shellcheck skills/cpp-cuda-vulkan-studio/scripts/*.sh
+
+      - name: Check Python syntax
+        run: |
+          python3 -m py_compile scripts/*.py skills/cpp-cuda-vulkan-studio/scripts/*.py
+
+      - name: Validate donor library and trigger matrix
+        run: |
+          python3 scripts/validate_donor_library.py \
+            skills/cpp-cuda-vulkan-studio/references/donor-library \
+            --reference-root skills/cpp-cuda-vulkan-studio/references
+          python3 scripts/validate_trigger_matrix.py \
+            research/donor-library/trigger-matrix.json \
+            --repo-root .
+
+      - name: Run CppStudio validation
+        env:
+          VALIDATOR: ${{ github.workspace }}/scripts/quick_validate_skill.py
+        run: ./scripts/validate.sh

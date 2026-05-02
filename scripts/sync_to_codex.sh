@@ -10,7 +10,7 @@ VALIDATOR="${VALIDATOR:-${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/q
 EXPECTED_TARGET_DIR="${CODEX_HOME_DIR}/skills/${SKILL_NAME}"
 
 dry_run=0
-delete_flag="--delete"
+delete_args=(--delete)
 
 require_python310() {
     python3 - <<'PY'
@@ -51,7 +51,7 @@ while (($# > 0)); do
             dry_run=1
             ;;
         --no-delete)
-            delete_flag=""
+            delete_args=()
             ;;
         -h|--help)
             usage
@@ -148,7 +148,7 @@ fi
 rsync_args=(
     -a
     --omit-dir-times
-    ${delete_flag}
+    "${delete_args[@]}"
     --exclude "__pycache__/"
     --exclude "*.pyc"
     --exclude ".DS_Store"

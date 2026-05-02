@@ -17,6 +17,15 @@ For template, scaffold, CMake, generated-project, or generated-project validatio
 ./scripts/validate.sh --full
 ```
 
+Public CI uses the repo-local metadata validator because clean GitHub runners do not have Codex's
+system `skill-creator` validator installed:
+
+```bash
+VALIDATOR="${PWD}/scripts/quick_validate_skill.py" ./scripts/validate.sh
+```
+
+Use the Codex system validator for normal local maintainer validation when it is available.
+
 ## Publish To Codex
 
 Preview sync changes:
@@ -261,6 +270,8 @@ Missing skill validator: ${HOME}/.codex/skills/.system/skill-creator/scripts/qui
 ```
 
 Install or restore the system `skill-creator` skill in the target Codex home, then rerun validation.
+For public CI parity without a local Codex install, run
+`VALIDATOR="${PWD}/scripts/quick_validate_skill.py" ./scripts/validate.sh`.
 
 Watch mode fails with `inotifywait is required for watch mode`:
 

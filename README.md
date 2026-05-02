@@ -2,6 +2,8 @@
 
 # CppStudio
 
+[![Validate](https://github.com/tarkansarim/CppStudio/actions/workflows/validate.yml/badge.svg)](https://github.com/tarkansarim/CppStudio/actions/workflows/validate.yml)
+
 CppStudio is an agentic ChatGPT Codex skills package for native C++ GPU engineering. It gives Codex
 a reusable Vulkan-first C++/CUDA project backbone, lane discipline, validation hooks, and a curated
 donor-reference library for 3D, rendering, simulation, AI runtimes, CUDA, and Vulkan work.
@@ -13,6 +15,37 @@ their plans and code are more precise, reproducible, and easier to audit.
 
 Use it when you want Codex to create, audit, or upgrade native C++ GPU projects without turning every
 new repo into a one-off build-system and donor-research exercise.
+
+## Quick Start
+
+Open this repo in ChatGPT Codex and ask:
+
+```text
+Install this CppStudio repo into my ChatGPT Codex home. Use the repo scripts, preserve my existing
+AGENTS.md content, and report what changed.
+```
+
+Restart Codex after installation, then ask for native C++ GPU work:
+
+```text
+Create a Vulkan-first C++ application called RayLab.
+```
+
+Expected result: Codex loads `cpp-cuda-vulkan-studio`, keeps the project Vulkan-first unless CUDA is
+explicitly needed, scaffolds or upgrades the native C++ project, and opens only the donor references
+that match the task.
+
+## Requirements
+
+For installing CppStudio as a Codex skill:
+
+- ChatGPT Codex with local skill support.
+- Shell access for the installing agent.
+- Git, Python 3.10 or newer, and `rsync` for the normal Linux/macOS/WSL rollout scripts.
+- Windows users without Bash/`rsync` can use the manual PowerShell install reference.
+
+CUDA, Vulkan, CMake, and a C++ compiler are not required just to install the skill. Install those
+only on machines that should build or validate generated native GPU projects.
 
 ## Install
 
@@ -231,6 +264,14 @@ Profile caveat identifiers such as `reference-only`, `mixed-native`, and `study-
 the profile index and individual profile files so agents know whether a donor is suitable for direct
 C/C++ use or only as behavior, architecture, or algorithmic reference.
 
+### Donor Maintenance
+
+The donor library is curated guidance, not vendored source code. Refresh donor profiles when upstream
+SDKs, toolchains, licenses, or major repo structures change, and update researched-date notes when a
+meaningful review happens. Donor refreshes should keep the same classification discipline: direct
+native donors, dependency candidates, mixed-native references, reference-only material, and study-only
+concept sources must stay clearly separated.
+
 ## When To Install GPU Tools
 
 Install extra host tools only for lanes you want to build or validate on the current machine:
@@ -266,6 +307,7 @@ source of truth. Edit this repo, then have an agent publish with the repo script
   setup notes
 - [Maintainer guide](docs/maintainer-guide.md): validation, sync, rollout, generated-project, donor,
   and troubleshooting details for agents editing this repo
+- [Contributing](CONTRIBUTING.md): public contribution, donor update, validation, and release notes
 - [Donor library](skills/cpp-cuda-vulkan-studio/references/donor-library/README.md): curated donor
   selection entrypoint
 

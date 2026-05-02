@@ -68,6 +68,7 @@ require_python310
 required_repo_files=(
     "scripts/install_companion_donor_links.py"
     "scripts/install_user_agents_relay.py"
+    "scripts/quick_validate_skill.py"
     "companion-skill-snippets/user-agents/cppstudio-relay.md"
     "research/donor-library/trigger-regression-checklist.md"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/.gitignore"

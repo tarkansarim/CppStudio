@@ -12,6 +12,19 @@ Manual install touches only:
 User-created sibling skills under `${HOME}/.codex/skills` are not part of this package and should be
 left alone.
 
+## Codex Home Variables
+
+Manual snippets use `CODEX_HOME` because a person or agent is choosing one target Codex home
+directly. The automated rollout and sync scripts intentionally use `SYNC_CODEX_HOME` instead, because
+nested Codex sessions may set `CODEX_HOME` to an isolated session home. For normal scripted installs,
+prefer:
+
+```bash
+SYNC_CODEX_HOME=/path/to/.codex ./scripts/rollout_to_codex.sh
+```
+
+Use the manual `CODEX_HOME` snippets below only when direct copy/review is required.
+
 ## Main Skill
 
 Linux or macOS:
