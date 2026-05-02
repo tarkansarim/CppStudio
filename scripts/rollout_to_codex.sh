@@ -27,6 +27,11 @@ INSTALL_USER_AGENTS_RELAY="${INSTALL_USER_AGENTS_RELAY:-1}"
 if [[ "${SKIP_USER_AGENTS_RELAY:-0}" == "1" ]]; then
     INSTALL_USER_AGENTS_RELAY=0
 fi
+ROLLBACK_TMP=""
+rollback_paths=()
+rollback_backups=()
+rollback_existed=()
+rollout_transaction_complete=0
 
 require_python310() {
     python3 - <<'PY'
@@ -38,6 +43,41 @@ if sys.version_info < (3, 10):
         f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
     )
 PY
+}
+
+backup_rollout_path() {
+    local path="$1"
+    local backup_path="${ROLLBACK_TMP}/item_${#rollback_paths[@]}"
+    rollback_paths+=("${path}")
+    rollback_backups+=("${backup_path}")
+    if [[ -e "${path}" ]]; then
+        rollback_existed+=("1")
+        cp -a "${path}" "${backup_path}"
+    else
+        rollback_existed+=("0")
+    fi
+}
+
+restore_rollout_backups() {
+    local exit_code=$?
+    local index
+    if (( rollout_transaction_complete )); then
+        return "${exit_code}"
+    fi
+    for (( index=${#rollback_paths[@]} - 1; index >= 0; index-- )); do
+        local path="${rollback_paths[index]}"
+        local backup_path="${rollback_backups[index]}"
+        if [[ "${rollback_existed[index]}" == "1" ]]; then
+            rm -rf "${path}"
+            mkdir -p "$(dirname "${path}")"
+            mv "${backup_path}" "${path}"
+        else
+            rm -rf "${path}"
+        fi
+    done
+    rm -rf "${ROLLBACK_TMP}"
+    echo "Rolled back CppStudio rollout after failure." >&2
+    return "${exit_code}"
 }
 
 usage() {
@@ -183,6 +223,19 @@ if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
         "${relay_args[@]}"
 fi
 
+ROLLBACK_TMP="$(mktemp -d "${TMPDIR:-/tmp}/cppstudio_rollout_rollback.XXXXXX")"
+backup_rollout_path "${target_resolved}"
+for companion in cuda-kernel-authoring vulkan-compute-sync modern-cpp-cmake; do
+    companion_skill="${CODEX_HOME_DIR}/skills/${companion}/SKILL.md"
+    if [[ -e "${companion_skill}" ]]; then
+        backup_rollout_path "$(realpath -m "${companion_skill}")"
+    fi
+done
+if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
+    backup_rollout_path "$(realpath -m "${USER_AGENTS_RELAY_TARGET}")"
+fi
+trap restore_rollout_backups ERR INT TERM
+
 if [[ "${ALLOW_ROLLOUT_TARGET_OVERRIDE:-0}" == "1" ]]; then
     ALLOW_SYNC_TARGET_OVERRIDE=1 SYNC_CODEX_HOME="${CODEX_HOME_DIR}" TARGET_DIR="${TARGET_DIR}" \
         VALIDATOR="${VALIDATOR}" "${ROOT_DIR}/scripts/sync_to_codex.sh"
@@ -194,11 +247,7 @@ fi
 python3 "${DONOR_VALIDATOR}" "${DONOR_ROOT}" --reference-root "${TARGET_DIR}/references"
 python3 "${COMPANION_INSTALLER}" \
     --install \
-    "${companion_args[@]}" || {
-        echo "Companion-skill install failed after main skill sync. The main skill may already be updated at ${TARGET_DIR}." >&2
-        echo "Fix the companion install error and rerun ${ROOT_DIR}/scripts/rollout_to_codex.sh." >&2
-        exit 1
-    }
+    "${companion_args[@]}"
 
 if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
     python3 "${USER_AGENTS_RELAY_INSTALLER}" \
@@ -219,7 +268,14 @@ for companion in cuda-kernel-authoring vulkan-compute-sync modern-cpp-cmake; do
     fi
 done
 
-diff -qr "${SOURCE_DIR}" "${TARGET_DIR}" >/dev/null
+diff -qr \
+    --exclude "__pycache__" \
+    --exclude "*.pyc" \
+    --exclude ".DS_Store" \
+    "${SOURCE_DIR}" "${TARGET_DIR}" >/dev/null
+rollout_transaction_complete=1
+trap - ERR INT TERM
+rm -rf "${ROLLBACK_TMP}"
 
 echo "Rolled out ${SOURCE_DIR} -> ${TARGET_DIR}"
 echo "Verified donor library at ${DONOR_ROOT}"

@@ -7,6 +7,7 @@ import argparse
 import json
 import os
 import re
+import sys
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -415,23 +416,28 @@ does not modify source layout and it does not decide for the user.
 Present this audit before enabling the map. Include the estimated cleanup cost and ask which route the
 user wants:
 
-1. Restructure first, validate the new layout, then run `scripts/bootstrap_code_map.py --enable`.
+1. Restructure first, validate the new layout, then run `scripts/bootstrap_code_map.py --enable`
+   or `scripts/bootstrap_code_map.py --enable --force` if replacing generated map files was accepted.
 2. Keep the current layout, enable the map, and document the unorthodox structure in subsystem docs.
 3. Decline the map for now with `scripts/bootstrap_code_map.py --decline`.
 """
 
 
-def audit_existing(repo: Path, force: bool) -> None:
+def audit_existing(repo: Path, force: bool, write_audit: bool) -> None:
     findings, signals = audit_existing_repo(repo)
     cost, _ = assess_restructure_cost(findings)
-    wrote = atomic_write_text(repo / AUDIT_PATH, audit_text(repo, findings, signals), force)
-    print(("wrote" if wrote else "exists") + f": {repo / AUDIT_PATH}")
-    print(f"Code map readiness findings: {len(findings)}")
-    print(f"Estimated restructuring cost: {cost}")
-    if findings:
-        print("Ask the user whether to restructure first or preserve the current layout before enabling the map.")
+    text = audit_text(repo, findings, signals)
+    if write_audit:
+        wrote = atomic_write_text(repo / AUDIT_PATH, text, force)
+        print(("wrote" if wrote else "exists") + f": {repo / AUDIT_PATH}")
     else:
-        print("No obvious restructuring blockers found before enabling the map.")
+        print(text.rstrip())
+    print(f"Code map readiness findings: {len(findings)}", file=sys.stderr)
+    print(f"Estimated restructuring cost: {cost}", file=sys.stderr)
+    if findings:
+        print("Ask the user whether to restructure first or preserve the current layout before enabling the map.", file=sys.stderr)
+    else:
+        print("No obvious restructuring blockers found before enabling the map.", file=sys.stderr)
 
 
 def state_payload(status: str) -> dict[str, Any]:
@@ -568,18 +574,21 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("repo", nargs="?", default=".", help="Repository root")
     action = parser.add_mutually_exclusive_group(required=True)
-    action.add_argument("--audit-existing", action="store_true", help="Write a non-destructive existing-project code-map readiness audit")
+    action.add_argument("--audit-existing", action="store_true", help="Print a non-destructive existing-project code-map readiness audit")
     action.add_argument("--enable", action="store_true", help="Enable and create a maintained code map")
     action.add_argument("--decline", action="store_true", help="Record that the user declined the code map")
     parser.add_argument("--force", action="store_true", help="Overwrite existing generated map files")
+    parser.add_argument("--write-audit", action="store_true", help=f"Write the audit to {AUDIT_PATH} instead of stdout")
     args = parser.parse_args()
+    if args.write_audit and not args.audit_existing:
+        parser.error("--write-audit can only be used with --audit-existing")
 
     repo = Path(args.repo).expanduser().resolve()
     if not repo.is_dir():
         raise SystemExit(f"repo directory does not exist: {repo}")
 
     if args.audit_existing:
-        audit_existing(repo, args.force)
+        audit_existing(repo, args.force, args.write_audit)
     elif args.enable:
         enable_map(repo, args.force)
     else:

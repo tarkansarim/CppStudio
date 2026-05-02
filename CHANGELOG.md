@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Made sync/rollout rollback-aware, hardened local path validation for code maps and donor docs,
+  strengthened the repo-local skill validator, made existing-project code-map audits stdout-first,
+  and refreshed stale generated-project/readiness docs.
 - Added repo-local validator fallback for validation, sync, and rollout scripts, including regression
   coverage for fresh Codex homes and non-default `SYNC_CODEX_HOME` rollout validation.
 - Isolated those fresh-home validation regressions from inherited `VALIDATOR` overrides so CI proves

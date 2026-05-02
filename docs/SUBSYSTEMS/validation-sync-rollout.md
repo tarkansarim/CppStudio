@@ -29,7 +29,12 @@ skills, and watch-mode publishing behavior.
 ## Current Rollout Posture
 
 - Validation, sync, and rollout prefer an explicit `VALIDATOR`, then the target Codex system
-  validator, then the repo-local `scripts/quick_validate_skill.py` fallback.
+  validator, then the repo-local `scripts/quick_validate_skill.py` fallback. The fallback validates
+  frontmatter, `agents/openai.yaml`, and bundled local references.
+- Non-dry-run sync stages and validates the skill before replacing the installed target, then restores
+  the previous target if final validation fails.
+- Rollout snapshots the main skill, matching companion skill files, and the optional user-level
+  `AGENTS.md` relay target before mutation, then restores them if a later step fails.
 - `rollout_to_codex.sh` installs the minimal user-level `AGENTS.md` relay by default and preserves
   user-owned content outside the marked CppStudio relay block.
 - Set `SKIP_USER_AGENTS_RELAY=1` only for deliberate relay opt-out installs.

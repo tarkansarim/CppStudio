@@ -7,6 +7,7 @@ import argparse
 import re
 import sys
 from pathlib import Path
+from urllib.parse import unquote
 
 
 LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
@@ -52,11 +53,19 @@ def normalize_link_target(raw_target: str) -> str:
         target = target[1 : target.index(">")]
     else:
         target = target.split()[0] if target.split() else ""
-    return target.split("#", 1)[0]
+    return unquote(target.split("#", 1)[0])
 
 
 def is_external_or_empty(target: str) -> bool:
     return not target or target.startswith("#") or EXTERNAL_RE.match(target) is not None
+
+
+def local_link_error(target: str) -> str | None:
+    if not target or "\0" in target:
+        return "link target is empty or contains a NUL byte"
+    if target.startswith(("/", "~")) or Path(target).is_absolute():
+        return "local link target must be relative"
+    return None
 
 
 def collect_local_links(files: list[Path], root: Path) -> tuple[list[str], set[str]]:
@@ -69,20 +78,27 @@ def collect_local_links(files: list[Path], root: Path) -> tuple[list[str], set[s
         for line_number, line in enumerate(text.splitlines(), 1):
             for match in LINK_RE.finditer(line):
                 target = normalize_link_target(match.group(1))
-                if is_external_or_empty(target) or target.startswith("/"):
+                if is_external_or_empty(target):
+                    continue
+                link_error = local_link_error(target)
+                if link_error:
+                    rel_path = path.relative_to(root)
+                    errors.append(f"{rel_path}:{line_number}: invalid local link target {target!r}: {link_error}")
                     continue
 
                 resolved = (path.parent / target).resolve()
+                try:
+                    resolved_rel = resolved.relative_to(root_resolved).as_posix()
+                except ValueError:
+                    rel_path = path.relative_to(root)
+                    errors.append(f"{rel_path}:{line_number}: local link target escapes reference root {target!r}")
+                    continue
                 if not resolved.exists():
                     rel_path = path.relative_to(root)
                     errors.append(f"{rel_path}:{line_number}: missing local link target {target!r}")
                     continue
 
-                try:
-                    resolved_targets.add(resolved.relative_to(root_resolved).as_posix())
-                except ValueError:
-                    # Local links may point outside the checked reference root. Existence is enough.
-                    pass
+                resolved_targets.add(resolved_rel)
 
     return errors, resolved_targets
 

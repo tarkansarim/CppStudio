@@ -103,6 +103,8 @@ for rel_path in "${required_repo_files[@]}"; do
         exit 1
     fi
 done
+grep -q "scripts/bootstrap_code_map.py --enable --force" \
+    "${SKILL_DIR}/assets/app-library-template/README.md"
 if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     for rel_path in "${required_repo_files[@]}"; do
         if ! git -C "${ROOT_DIR}" ls-files --error-unmatch "${rel_path}" >/dev/null 2>&1; then
@@ -184,7 +186,7 @@ expect_failure() {
         echo "Expected failure produced a Python traceback: ${description}" >&2
         exit 1
     fi
-    if ! grep -Fq "${expected}" "${output_file}"; then
+    if ! grep -Fq -- "${expected}" "${output_file}"; then
         cat "${output_file}" >&2
         echo "Expected failure did not contain diagnostic '${expected}': ${description}" >&2
         exit 1
@@ -259,7 +261,46 @@ if [[ -d "${ROOT_DIR}/.codex/skills" ]]; then
         python3 "${VALIDATOR}" "${project_skill}"
     done < <(find "${ROOT_DIR}/.codex/skills" -mindepth 1 -maxdepth 1 -type d -print0)
 fi
-python3 -m py_compile "${ROOT_DIR}"/scripts/*.py "${SKILL_DIR}"/scripts/*.py
+pycache_tmp="$(mktemp -d "${VALIDATE_TMP}/pycache.XXXXXX")"
+PYTHONPYCACHEPREFIX="${pycache_tmp}" python3 -m py_compile "${ROOT_DIR}"/scripts/*.py "${SKILL_DIR}"/scripts/*.py
+quick_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/quick_validator.XXXXXX")"
+mkdir -p "${quick_validator_tmp}/duplicate" "${quick_validator_tmp}/bad-openai/agents" "${quick_validator_tmp}/missing-reference"
+cat >"${quick_validator_tmp}/duplicate/SKILL.md" <<'EOF'
+---
+name: duplicate-frontmatter
+name: duplicate-frontmatter-again
+description: Test fixture.
+---
+# Duplicate
+EOF
+expect_failure "quick validator duplicate frontmatter" "duplicate front matter field" \
+    python3 "${ROOT_DIR}/scripts/quick_validate_skill.py" "${quick_validator_tmp}/duplicate"
+cat >"${quick_validator_tmp}/bad-openai/SKILL.md" <<'EOF'
+---
+name: bad-openai
+description: Test fixture.
+---
+# Bad OpenAI Metadata
+EOF
+cat >"${quick_validator_tmp}/bad-openai/agents/openai.yaml" <<'EOF'
+interface:
+  display_name: "Bad OpenAI"
+  short_description: "Missing default prompt"
+EOF
+expect_failure "quick validator bad openai metadata" "missing required fields" \
+    python3 "${ROOT_DIR}/scripts/quick_validate_skill.py" "${quick_validator_tmp}/bad-openai"
+cat >"${quick_validator_tmp}/missing-reference/SKILL.md" <<'EOF'
+---
+name: missing-reference
+description: Test fixture.
+---
+# Missing Reference
+
+Use `scripts/missing.py`.
+EOF
+expect_failure "quick validator missing bundled reference" "bundled reference does not exist" \
+    python3 "${ROOT_DIR}/scripts/quick_validate_skill.py" "${quick_validator_tmp}/missing-reference"
+rm -rf "${quick_validator_tmp}"
 python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${ROOT_DIR}" --require-enabled
 code_map_enable_tmp="$(mktemp -d "${VALIDATE_TMP}/code_map_enable.XXXXXX")"
 write_code_map_project_fixture "${code_map_enable_tmp}"
@@ -302,6 +343,44 @@ text = text.replace("./SUBSYSTEMS/build-and-presets.md", "./SUBSYSTEMS/stale-bui
 path.write_text(text, encoding="utf-8")
 PY
 expect_failure "generated code map index mismatch" "router_doc is not linked from index" \
+    python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
+python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_stale_tmp}" --enable --force
+python3 - "${code_map_stale_tmp}/.cppstudio/code-map-state.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+state = json.loads(path.read_text(encoding="utf-8"))
+state["index"] = "/tmp/absolute-code-map-index.md"
+path.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "code map state rejects absolute paths" "path must be relative" \
+    python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
+python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_stale_tmp}" --enable --force
+python3 - "${code_map_stale_tmp}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+manifest = json.loads(path.read_text(encoding="utf-8"))
+manifest["subsystems"][0]["router_doc"] = "../outside.md"
+path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "code map manifest rejects escaping paths" "path escapes repository" \
+    python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
+python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_stale_tmp}" --enable --force
+python3 - "${code_map_stale_tmp}/docs/CODEBASE_ARCHITECTURE_INDEX.md" <<'PY'
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+text = text + "\n- Escaped: [outside](../../outside.md)\n"
+path.write_text(text, encoding="utf-8")
+PY
+expect_failure "code map index rejects escaping local links" "local link escapes repository" \
     python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
 python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
     "${SKILL_DIR}/references/donor-library" \
@@ -474,6 +553,40 @@ if [[ -e "${sync_fresh_home}" ]]; then
     exit 1
 fi
 rm -rf "${sync_fresh_home_tmp}"
+sync_rollback_tmp="$(mktemp -d "${VALIDATE_TMP}/sync_rollback.XXXXXX")"
+sync_rollback_home="${sync_rollback_tmp}/codex"
+sync_rollback_target="${sync_rollback_home}/skills/cpp-cuda-vulkan-studio"
+mkdir -p "${sync_rollback_target}" "${sync_rollback_tmp}/validator"
+cat >"${sync_rollback_target}/SKILL.md" <<'EOF'
+---
+name: cpp-cuda-vulkan-studio
+description: Existing installed skill.
+---
+# Existing Installed Skill
+EOF
+touch "${sync_rollback_target}/OLD_INSTALL_MARKER"
+cat >"${sync_rollback_tmp}/validator/quick_validate.py" <<'PY'
+#!/usr/bin/env python3
+import os
+import subprocess
+import sys
+
+target = os.environ.get("FAIL_SYNC_TARGET")
+if target and sys.argv[1:] and os.path.realpath(sys.argv[1]) == os.path.realpath(target):
+    print("intentional final target validation failure", file=sys.stderr)
+    raise SystemExit(42)
+raise SystemExit(subprocess.call([sys.executable, os.environ["REPO_VALIDATOR_PATH"], *sys.argv[1:]]))
+PY
+chmod +x "${sync_rollback_tmp}/validator/quick_validate.py"
+expect_failure "sync rollback after final validation failure" "intentional final target validation failure" \
+    env SYNC_CODEX_HOME="${sync_rollback_home}" \
+    FAIL_SYNC_TARGET="${sync_rollback_target}" \
+    REPO_VALIDATOR_PATH="${ROOT_DIR}/scripts/quick_validate_skill.py" \
+    VALIDATOR="${sync_rollback_tmp}/validator/quick_validate.py" \
+    "${ROOT_DIR}/scripts/sync_to_codex.sh"
+test -f "${sync_rollback_target}/OLD_INSTALL_MARKER"
+grep -q "Existing Installed Skill" "${sync_rollback_target}/SKILL.md"
+rm -rf "${sync_rollback_tmp}"
 if [[ "${CPPSTUDIO_SKIP_ROLLOUT_VALIDATOR_REGRESSION:-0}" != "1" ]]; then
     rollout_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/rollout_validator.XXXXXX")"
     rollout_codex_home="${rollout_validator_tmp}/codex"
@@ -503,6 +616,54 @@ PY
     grep -q "used" "${rollout_marker}"
     grep -q "Rolled out" "${rollout_validator_tmp}/rollout.out"
     rm -rf "${rollout_validator_tmp}"
+
+    rollout_rollback_tmp="$(mktemp -d "${VALIDATE_TMP}/rollout_rollback.XXXXXX")"
+    rollout_rollback_home="${rollout_rollback_tmp}/codex"
+    rollout_rollback_target="${rollout_rollback_home}/skills/cpp-cuda-vulkan-studio"
+    rollout_rollback_companion="${rollout_rollback_home}/skills/modern-cpp-cmake"
+    mkdir -p "${rollout_rollback_target}" "${rollout_rollback_companion}" "${rollout_rollback_tmp}/validator"
+    cat >"${rollout_rollback_target}/SKILL.md" <<'EOF'
+---
+name: cpp-cuda-vulkan-studio
+description: Existing installed skill.
+---
+# Existing Installed Skill
+EOF
+    touch "${rollout_rollback_target}/OLD_MAIN_MARKER"
+    cat >"${rollout_rollback_companion}/SKILL.md" <<'EOF'
+---
+name: modern-cpp-cmake
+description: Existing companion skill.
+---
+# Existing Companion
+## Renderer Bootstrap
+OLD_COMPANION_MARKER
+EOF
+    printf "old agents\n" >"${rollout_rollback_home}/AGENTS.md"
+    cat >"${rollout_rollback_tmp}/validator/quick_validate.py" <<'PY'
+#!/usr/bin/env python3
+import os
+import subprocess
+import sys
+
+path = os.path.realpath(sys.argv[1]) if sys.argv[1:] else ""
+fail_path = os.path.realpath(os.environ.get("FAIL_COMPANION_PATH", ""))
+if path == fail_path:
+    print("intentional companion validation failure", file=sys.stderr)
+    raise SystemExit(43)
+raise SystemExit(subprocess.call([sys.executable, os.environ["REPO_VALIDATOR_PATH"], *sys.argv[1:]]))
+PY
+    chmod +x "${rollout_rollback_tmp}/validator/quick_validate.py"
+    expect_failure "rollout restores prior install after post-sync failure" "intentional companion validation failure" \
+        env SYNC_CODEX_HOME="${rollout_rollback_home}" \
+        FAIL_COMPANION_PATH="${rollout_rollback_companion}" \
+        REPO_VALIDATOR_PATH="${ROOT_DIR}/scripts/quick_validate_skill.py" \
+        VALIDATOR="${rollout_rollback_tmp}/validator/quick_validate.py" \
+        "${ROOT_DIR}/scripts/rollout_to_codex.sh"
+    test -f "${rollout_rollback_target}/OLD_MAIN_MARKER"
+    grep -q "OLD_COMPANION_MARKER" "${rollout_rollback_companion}/SKILL.md"
+    grep -q "^old agents$" "${rollout_rollback_home}/AGENTS.md"
+    rm -rf "${rollout_rollback_tmp}"
 fi
 relay_reversed_tmp="$(mktemp -d "${VALIDATE_TMP}/agents_relay_reversed.XXXXXX")"
 {
@@ -913,6 +1074,14 @@ expect_failure "category/profile donor backend mismatch" "backend" \
     "${donor_tmp}/donor-library" \
     --reference-root "${donor_tmp}"
 rm -rf "${donor_tmp}"
+donor_tmp="$(mktemp -d "${VALIDATE_TMP}/donor_validate_escape.XXXXXX")"
+cp -a "${SKILL_DIR}/references/donor-library" "${donor_tmp}/donor-library"
+printf "\n[escaped](../../outside.md)\n[absolute](/tmp/outside.md)\n" >>"${donor_tmp}/donor-library/README.md"
+expect_failure "donor validator rejects escaping local links" "local link target escapes reference root" \
+    python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
+    "${donor_tmp}/donor-library" \
+    --reference-root "${donor_tmp}"
+rm -rf "${donor_tmp}"
 
 matrix_tmp="$(mktemp "${VALIDATE_TMP}/trigger_matrix.XXXXXX.json")"
 python3 - "${ROOT_DIR}/research/donor-library/trigger-matrix.json" "${matrix_tmp}" <<'PY'
@@ -1074,7 +1243,13 @@ test -x "${description_tmp}/scripts/validate_code_map.py"
 python3 "${description_tmp}/scripts/validate_code_map.py" "${description_tmp}"
 (
     cd "${description_tmp}"
-    scripts/bootstrap_code_map.py --audit-existing
+    scripts/bootstrap_code_map.py --audit-existing >"${VALIDATE_TMP}/description_audit_stdout.md"
+    grep -q "Code Map Readiness Audit" "${VALIDATE_TMP}/description_audit_stdout.md"
+    if [[ -e docs/CODEMAP_BOOTSTRAP_AUDIT.md ]]; then
+        echo "audit-existing wrote an audit file without --write-audit" >&2
+        exit 1
+    fi
+    scripts/bootstrap_code_map.py --audit-existing --write-audit
     test -f docs/CODEMAP_BOOTSTRAP_AUDIT.md
     grep -q "Code Map Readiness Audit" docs/CODEMAP_BOOTSTRAP_AUDIT.md
     scripts/bootstrap_code_map.py --decline
@@ -1112,10 +1287,18 @@ grep -q "CODEBASE_ARCHITECTURE_INDEX.md" "${apply_code_map_out}"
 grep -q "bootstrap_code_map.py" "${apply_code_map_out}"
 audit_tmp="$(mktemp -d "${VALIDATE_TMP}/code_map_audit.XXXXXX")"
 touch "${audit_tmp}/main.cpp"
-python3 "${SKILL_DIR}/scripts/bootstrap_code_map.py" "${audit_tmp}" --audit-existing
+audit_stdout="$(mktemp "${VALIDATE_TMP}/code_map_audit_stdout.XXXXXX.md")"
+python3 "${SKILL_DIR}/scripts/bootstrap_code_map.py" "${audit_tmp}" --audit-existing >"${audit_stdout}"
+grep -q "Missing root CMake entrypoint" "${audit_stdout}"
+grep -q "Estimated restructuring cost" "${audit_stdout}"
+if [[ -e "${audit_tmp}/docs/CODEMAP_BOOTSTRAP_AUDIT.md" ]]; then
+    echo "audit-existing wrote an audit file without --write-audit" >&2
+    exit 1
+fi
+python3 "${SKILL_DIR}/scripts/bootstrap_code_map.py" "${audit_tmp}" --audit-existing --write-audit
 test -f "${audit_tmp}/docs/CODEMAP_BOOTSTRAP_AUDIT.md"
-grep -q "Missing root CMake entrypoint" "${audit_tmp}/docs/CODEMAP_BOOTSTRAP_AUDIT.md"
-grep -q "Estimated restructuring cost" "${audit_tmp}/docs/CODEMAP_BOOTSTRAP_AUDIT.md"
+expect_failure "write-audit requires audit-existing" "--write-audit can only be used with --audit-existing" \
+    python3 "${SKILL_DIR}/scripts/bootstrap_code_map.py" "${audit_tmp}" --decline --write-audit
 apply_conflict_tmp="$(mktemp -d "${VALIDATE_TMP}/apply_conflict.XXXXXX")"
 touch "${apply_conflict_tmp}/.gitignore" "${apply_conflict_tmp}/CMakePresets.json"
 apply_conflict_out="$(mktemp "${VALIDATE_TMP}/apply_conflict.XXXXXX.out")"
@@ -1189,8 +1372,6 @@ expect_failure "malformed CMakePresets preset entries" "configurePresets[1] must
     python3 "${SKILL_DIR}/scripts/validate_studio_backbone.py" \
     "${malformed_backbone_tmp}" \
     --strict-source-layout
-rm -rf "${ROOT_DIR}/scripts/__pycache__"
-rm -rf "${SKILL_DIR}/scripts/__pycache__"
 bash -n "${ROOT_DIR}"/scripts/*.sh
 bash -n "${SKILL_DIR}"/scripts/*.sh
 compute_fake_dir="$(mktemp -d "${VALIDATE_TMP}/compute_fake.XXXXXX")"

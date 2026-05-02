@@ -19,6 +19,9 @@ EXPECTED_TARGET_DIR="${CODEX_HOME_DIR}/skills/${SKILL_NAME}"
 
 dry_run=0
 delete_args=(--delete)
+sync_tmp_parent=""
+sync_backup_path=""
+sync_transaction_complete=0
 
 require_python310() {
     python3 - <<'PY'
@@ -167,12 +170,45 @@ if (( dry_run )); then
     rsync_args+=(--dry-run --itemize-changes)
 fi
 
-rsync "${rsync_args[@]}" "${SOURCE_DIR}/" "${TARGET_DIR}/"
+if (( dry_run )); then
+    rsync "${rsync_args[@]}" "${SOURCE_DIR}/" "${TARGET_DIR}/"
+    echo "Dry run complete for ${SOURCE_DIR} -> ${TARGET_DIR}"
+else
+    target_parent="$(dirname "${target_resolved}")"
+    mkdir -p "${target_parent}"
+    sync_tmp_parent="$(mktemp -d "${target_parent}/.${SKILL_NAME}.sync.XXXXXX")"
+    staged_target="${sync_tmp_parent}/${SKILL_NAME}"
 
-if (( ! dry_run )); then
+    restore_sync_backup() {
+        local exit_code=$?
+        if (( sync_transaction_complete )); then
+            return "${exit_code}"
+        fi
+        if [[ -n "${sync_backup_path}" && -e "${sync_backup_path}" ]]; then
+            rm -rf "${target_resolved}"
+            mv "${sync_backup_path}" "${target_resolved}"
+            echo "Restored previous skill after failed sync: ${TARGET_DIR}" >&2
+        else
+            rm -rf "${target_resolved}"
+        fi
+        rm -rf "${sync_tmp_parent}"
+        return "${exit_code}"
+    }
+    trap restore_sync_backup ERR INT TERM
+
+    rsync "${rsync_args[@]}" "${SOURCE_DIR}/" "${staged_target}/"
+    find "${staged_target}/scripts" -type f \( -name "*.sh" -o -name "*.py" \) -exec chmod +x {} + 2>/dev/null || true
+    python3 "${VALIDATOR}" "${staged_target}"
+
+    if [[ -e "${target_resolved}" ]]; then
+        sync_backup_path="${target_resolved}.backup.$(date +%Y%m%d%H%M%S).$$"
+        mv "${target_resolved}" "${sync_backup_path}"
+    fi
+    mv "${staged_target}" "${target_resolved}"
     find "${TARGET_DIR}/scripts" -type f \( -name "*.sh" -o -name "*.py" \) -exec chmod +x {} + 2>/dev/null || true
     python3 "${VALIDATOR}" "${TARGET_DIR}"
+    sync_transaction_complete=1
+    trap - ERR INT TERM
+    rm -rf "${sync_backup_path}" "${sync_tmp_parent}"
     echo "Synced ${SOURCE_DIR} -> ${TARGET_DIR}"
-else
-    echo "Dry run complete for ${SOURCE_DIR} -> ${TARGET_DIR}"
 fi

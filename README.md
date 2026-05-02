@@ -121,6 +121,10 @@ SYNC_CODEX_HOME=/path/to/.codex ./scripts/rollout_to_codex.sh
 The rollout and sync scripts use `SYNC_CODEX_HOME`, not `CODEX_HOME`, so nested agent sessions do not
 accidentally install into an isolated session home.
 
+The install path is rollback-aware: the main skill is staged and validated before replacement, and
+rollout restores the previous main skill, companion edits, and optional `AGENTS.md` relay target if a
+later validation or install step fails.
+
 You do not need CUDA, Vulkan, CMake, or a compiler just to install CppStudio into Codex. Install GPU
 toolchains only when you want this machine to build or validate generated C++ GPU projects.
 
@@ -203,10 +207,10 @@ For an existing project, ask for a maintained CppStudio code map in the same nat
 Create a maintained CppStudio code map for this existing C++/Vulkan renderer repo.
 ```
 
-The agent should audit the existing layout first, then ask whether to restructure first, preserve the
-current layout and document it, or decline code-map enablement. Existing generated map files are not
-replaced unless the user explicitly accepts that. For a new project, an explicit code-map request
-counts as acceptance after scaffolding:
+The agent should audit the existing layout first without writing audit files by default, then ask
+whether to restructure first, preserve the current layout and document it, or decline code-map
+enablement. Existing generated map files are not replaced unless the user explicitly accepts that.
+For a new project, an explicit code-map request counts as acceptance after scaffolding:
 
 ```text
 Create a Vulkan-first C++ application called RayLab and make sure future agents have a code map.

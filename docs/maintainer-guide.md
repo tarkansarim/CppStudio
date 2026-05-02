@@ -62,11 +62,11 @@ map during project creation counts as acceptance; run `scripts/bootstrap_code_ma
 after scaffolding.
 
 For existing projects, enabling the map has a readiness protocol. Run
-`scripts/bootstrap_code_map.py --audit-existing` first, review `docs/CODEMAP_BOOTSTRAP_AUDIT.md`,
-summarize nonstandard layout findings and estimated cleanup cost, then ask whether to restructure
-first, preserve the current layout with documented exceptions, or decline the map. If generated map
-files already exist, `--enable` refuses to replace them unless `--force` is explicit after user
-acceptance.
+`scripts/bootstrap_code_map.py --audit-existing` first, review its stdout, summarize nonstandard
+layout findings and estimated cleanup cost, then ask whether to restructure first, preserve the
+current layout with documented exceptions, or decline the map. Save the audit with `--write-audit`
+only when the user wants `docs/CODEMAP_BOOTSTRAP_AUDIT.md` recorded. If generated map files already
+exist, `--enable` refuses to replace them unless `--force` is explicit after user acceptance.
 
 ## Publish To Codex
 
@@ -192,9 +192,10 @@ Useful options:
 - `--force`: overwrite existing backbone files.
 - `--with-code-map`: copy code-map support docs and scripts without enabling the map. Use this only
   when the user has asked to bootstrap or evaluate code-map support for the existing repo. Run
-  `scripts/bootstrap_code_map.py --audit-existing` first, ask whether to restructure or preserve the
-  layout, then run `scripts/bootstrap_code_map.py --enable` only after the user accepts maintained map
-  behavior. Use `--enable --force` only when replacing existing generated map files was explicitly
+  `scripts/bootstrap_code_map.py --audit-existing` first, summarize the stdout audit, ask whether to
+  restructure or preserve the layout, then run `scripts/bootstrap_code_map.py --enable` only after
+  the user accepts maintained map behavior. Use `--write-audit` only when the user wants the audit
+  saved. Use `--enable --force` only when replacing existing generated map files was explicitly
   accepted.
 
 After applying, validate the target repo:
@@ -265,8 +266,9 @@ It intentionally ignores `CODEX_HOME` unless `SYNC_CODEX_HOME` or `TARGET_DIR` i
 nested Codex sessions may set isolated homes.
 
 Validation uses `VALIDATOR` when provided, otherwise the target Codex system validator when present,
-and finally the repo-local `scripts/quick_validate_skill.py` fallback. Fresh staging homes can use the
-scripts without preinstalling the system `skill-creator` validator.
+and finally the repo-local `scripts/quick_validate_skill.py` fallback. The fallback checks the
+package metadata, `agents/openai.yaml`, duplicate frontmatter fields, and bundled local references.
+Fresh staging homes can use the scripts without preinstalling the system `skill-creator` validator.
 
 Use a custom Codex home:
 
@@ -284,6 +286,10 @@ The target must be an exact skill directory ending in `skills/cpp-cuda-vulkan-st
 refuses broad directories such as home, `/tmp`, a repo root, or a generic `skills/` directory even
 when override mode is enabled.
 
+Non-dry-run sync is transactional: the script copies into a staged directory, validates the staged
+skill, swaps it into place, validates the final target, and restores the previous installed skill on
+failure.
+
 `rollout_to_codex.sh` rejects non-standard `TARGET_DIR` values unless explicitly allowed, because it
 renders absolute donor-library links into companion skills:
 
@@ -296,6 +302,10 @@ Use that override only for deliberate staging.
 By default, companion donor-link rollout skips absent optional companion skills. Set
 `STRICT_COMPANION_SKILLS=1` when validating a full local release environment where
 `cuda-kernel-authoring`, `vulkan-compute-sync`, and `modern-cpp-cmake` must all be installed.
+
+Rollout snapshots the main skill, matching companion `SKILL.md` files, and the optional user-level
+`AGENTS.md` relay target before mutation, then restores those paths if any post-sync validation or
+install step fails.
 
 `rollout_to_codex.sh` installs the tiny user-level `AGENTS.md` relay by default. It merges only
 `companion-skill-snippets/user-agents/cppstudio-relay.md` into

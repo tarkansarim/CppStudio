@@ -19,7 +19,7 @@ Enable it after the user accepts. If the user explicitly requested a code map du
 creation, that counts as acceptance for a greenfield scaffold:
 
 ```bash
-scripts/bootstrap_code_map.py --enable
+scripts/bootstrap_code_map.py --enable --force
 scripts/validate_code_map.py --require-enabled
 ```
 
@@ -29,8 +29,9 @@ For an existing project, run the readiness audit before enabling:
 scripts/bootstrap_code_map.py --audit-existing
 ```
 
-Review `docs/CODEMAP_BOOTSTRAP_AUDIT.md`, then ask whether to restructure first, preserve the
-current layout with documented exceptions, or decline the map.
+Review the audit output, then ask whether to restructure first, preserve the current layout with
+documented exceptions, or decline the map. If the user wants the audit saved, rerun with
+`--write-audit` to write `docs/CODEMAP_BOOTSTRAP_AUDIT.md`.
 
 Record a decline so agents stop prompting:
 

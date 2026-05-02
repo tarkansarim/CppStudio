@@ -31,3 +31,5 @@ validation.
   as well as newer SDK headers.
 - Code-map enablement refuses existing generated map files without `--force` and writes the enabled
   state only after generated map files are replaced.
+- Existing-project code-map audits print to stdout by default. Use `--write-audit` only when the user
+  wants `docs/CODEMAP_BOOTSTRAP_AUDIT.md` saved.

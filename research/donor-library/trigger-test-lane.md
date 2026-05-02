@@ -184,7 +184,7 @@ selected skills, opened files, forbidden paths used, verdicts, and any routing a
 
 Run date: 2026-05-01
 
-This lane split the full 50-case trigger matrix across five read-only subagents:
+This lane split the full 66-case trigger matrix across five read-only subagents:
 
 | Lane | Cases | Result |
 | --- | --- | --- |
