@@ -35,3 +35,5 @@ workflow, and repo banner/sample assets.
   CMake, Vulkan, CUDA compile, benchmark, and sanitizer lanes stay covered.
 - Hosted CPU CI compiles CUDA with an explicit architecture and skips only CUDA runtime CTest when no
   CUDA device is available.
+- Hosted CPU CI selects the available Lavapipe ICD path before running Vulkan runtime smoke tests;
+  Ubuntu packages may install either `lvp_icd.json` or an architecture-suffixed filename.

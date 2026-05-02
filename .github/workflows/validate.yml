@@ -44,6 +44,26 @@ jobs:
           echo "/usr/local/cuda-12.6/bin" >> "${GITHUB_PATH}"
           echo "CUDAToolkit_ROOT=/usr/local/cuda-12.6" >> "${GITHUB_ENV}"
 
+      - name: Configure Vulkan CPU ICD
+        run: |
+          for icd in \
+            /usr/share/vulkan/icd.d/lvp_icd.x86_64.json \
+            /usr/share/vulkan/icd.d/lvp_icd.json
+          do
+            if [[ -f "${icd}" ]]; then
+              echo "Using Vulkan CPU ICD: ${icd}"
+              echo "VK_DRIVER_FILES=${icd}" >> "${GITHUB_ENV}"
+              echo "VK_ICD_FILENAMES=${icd}" >> "${GITHUB_ENV}"
+              export VK_DRIVER_FILES="${icd}"
+              export VK_ICD_FILENAMES="${icd}"
+              vulkaninfo --summary
+              exit 0
+            fi
+          done
+          find /usr/share/vulkan/icd.d -maxdepth 1 -type f -print >&2
+          echo "No Lavapipe Vulkan CPU ICD found" >&2
+          exit 1
+
       - name: Check shell syntax
         run: |
           bash -n scripts/*.sh
@@ -72,6 +92,4 @@ jobs:
           VALIDATOR: ${{ github.workspace }}/scripts/quick_validate_skill.py
           CPPSTUDIO_FULL_CUDA_ARCHITECTURES: "75"
           CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS: "1"
-          VK_DRIVER_FILES: /usr/share/vulkan/icd.d/lvp_icd.x86_64.json
-          VK_ICD_FILENAMES: /usr/share/vulkan/icd.d/lvp_icd.x86_64.json
         run: ./scripts/validate.sh --full

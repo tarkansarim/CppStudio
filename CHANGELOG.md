@@ -6,6 +6,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 - Made public CI run `./scripts/validate.sh --full`, including generated-project scaffold/build
   validation with hosted-CI CUDA runtime tests skipped only when no CUDA device is available.
+- Made public CI discover the installed Lavapipe Vulkan CPU ICD path before running Vulkan runtime
+  tests on hosted Ubuntu runners.
 - Made the tiny user-level `AGENTS.md` relay install by default during rollout, with
   `SKIP_USER_AGENTS_RELAY=1` as the explicit opt-out.
 - Hardened manual install guidance with symlink checks and rollback-on-validation-failure behavior.
