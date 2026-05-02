@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Pointed README sample video links at the GitHub Pages site so browser playback uses the Pages
+  static-file path instead of GitHub's non-previewable blob view.
 - Re-encoded README sample MP4s as video-only 720p H.264 files under 10 MB for GitHub-friendly
   uploads and previews.
 - Replaced README video embeds with GitHub-visible poster thumbnails that link to the MP4 samples.

@@ -16,6 +16,7 @@ workflow, and repo banner/sample assets.
 - `CONTRIBUTING.md`
 - `CHANGELOG.md`
 - `.github/workflows/validate.yml`
+- `.nojekyll`
 - `assets/cppstudio-banner.png`
 - `assets/videos/`
 
