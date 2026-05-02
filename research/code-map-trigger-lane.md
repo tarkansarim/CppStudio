@@ -1,7 +1,6 @@
 # Code Map Trigger Lane
 
-Read-only subagent checks on 2026-05-02 used
-`/home/tarkan/Dropbox/work/MyTools/wetbrush_lin` as a target repo with an existing maintained map.
+Read-only subagent checks on 2026-05-02 used a Wetbrush target repo with an existing maintained map.
 Wetbrush does not use the newer `.cppstudio/code-map-state.json` marker, but its `AGENTS.md`
 declares map maintenance mandatory and its routing lives in:
 
