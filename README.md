@@ -4,11 +4,10 @@
 
 [![Validate](https://github.com/tarkansarim/CppStudio/actions/workflows/validate.yml/badge.svg)](https://github.com/tarkansarim/CppStudio/actions/workflows/validate.yml)
 
-CppStudio is an agentic ChatGPT Codex skills package for native C++ GPU engineering. It gives Codex
-a reusable Vulkan-first C++/CUDA project backbone, lane discipline, validation hooks, and a curated
-donor-reference library for 3D, rendering, simulation, AI runtimes, CUDA, and Vulkan work. It also
-includes optional code-map support for projects that need durable architecture context across future
-agent sessions.
+CppStudio is an agentic native C++ GPU development harness for ChatGPT Codex, delivered as a reusable
+skill package. It gives Codex a Vulkan-first C++/CUDA project backbone, lane discipline, validation
+hooks, rollout scripts, optional code maps, and a curated donor-reference library for 3D, rendering,
+simulation, AI runtimes, CUDA, and Vulkan work.
 
 The goal is to make Codex less dependent on broad model memory when it enters specialized native GPU
 work. Instead of filling gaps from stale or incomplete training examples, agents get maintained
@@ -18,13 +17,13 @@ their plans and code are more precise, reproducible, and easier to audit.
 Use it when you want Codex to create, audit, or upgrade native C++ GPU projects without turning every
 new repo into a one-off build-system and donor-research exercise.
 
-CppStudio focuses on:
+As a harness, CppStudio focuses on:
 
 - A Vulkan-first native C++ GPU project backbone with optional CUDA and combined CUDA/Vulkan lanes.
 - A nested donor-reference library that routes agents to relevant 3D, AI, simulation, rendering,
   CUDA, Vulkan, and infrastructure references without loading the whole library into context.
-- Validation, profiling, rollout, and optional project-memory workflows that keep agent output
-  auditable.
+- Validation, profiling, rollout, install safety, and optional project-memory workflows that keep
+  agent output auditable.
 
 ## Sample Projects Built With This Workflow
 

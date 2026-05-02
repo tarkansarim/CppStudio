@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Clarified the README positioning: CppStudio is a native C++ GPU development harness delivered as a
+  Codex skill package, not merely a loose skill pack.
 - Hardened code-map glob path validation, sync rollback state tracking, and quoted `#` parsing in
   repo-local OpenAI agent metadata validation.
 - Made sync/rollout rollback-aware, hardened local path validation for code maps and donor docs,
