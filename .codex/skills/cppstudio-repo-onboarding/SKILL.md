@@ -70,8 +70,8 @@ For previewing installed changes:
 ## Rules
 
 - Keep `cpp-cuda-vulkan-studio` generic for future C++/CUDA/Vulkan repos.
-- Do not add CudaGroomTool, ComfyNative, hair-rendering, or other project-specific instructions to
-  this global skill.
+- Do not add private-app-only, local-workstation-only, or other project-specific instructions to this
+  global skill.
 - Keep reusable GPU-selection policy generic. If a target machine has only a subset of GPUs suitable
   for realtime CUDA, document that in the target project or local runner configuration through
   `GPU_ALLOWED_INDICES` or `CUDA_VISIBLE_DEVICES`, not in the global skill.

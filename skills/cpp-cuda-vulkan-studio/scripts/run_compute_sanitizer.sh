@@ -25,4 +25,4 @@ else
 fi
 
 log_path="artifacts/sanitizer/compute-sanitizer.log"
-compute-sanitizer --target-processes all "${command_to_run[@]}" 2>&1 | tee "${log_path}"
+compute-sanitizer --error-exitcode=99 --target-processes all "${command_to_run[@]}" 2>&1 | tee "${log_path}"

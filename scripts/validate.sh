@@ -95,6 +95,36 @@ if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         echo "Maintainer-local absolute paths must not be shipped in tracked public text" >&2
         exit 1
     fi
+    private_provenance_hits=""
+    private_provenance_patterns=(
+        "Cuda""Groom""Tool"
+        "Comfy""Native"
+        "cuda""groom"
+        "RT_""RESTART"
+        "HAIR_""RENDER_""UPGRADE"
+        ".codex/skills/""rt-"
+        "unreal-hair-""reference"
+        "unity-hair-""reference"
+    )
+    for private_pattern in "${private_provenance_patterns[@]}"; do
+        pattern_hits="$(
+            git -C "${ROOT_DIR}" grep -ni -- "${private_pattern}" -- \
+                "*.md" "*.py" "*.sh" "*.json" "*.yml" "*.yaml" "*.txt" || true
+        )"
+        if [[ -n "${pattern_hits}" ]]; then
+            private_provenance_hits+="${pattern_hits}"$'\n'
+        fi
+    done
+    private_filename_regex="cuda""groom|RT_""RESTART|HAIR_""RENDER_""UPGRADE|unreal-hair-""reference|unity-hair-""reference"
+    private_filename_hits="$(git -C "${ROOT_DIR}" ls-files | grep -Ei "${private_filename_regex}" || true)"
+    if [[ -n "${private_filename_hits}" ]]; then
+        private_provenance_hits+="${private_filename_hits}"$'\n'
+    fi
+    if [[ -n "${private_provenance_hits}" ]]; then
+        printf "%s" "${private_provenance_hits}" >&2
+        echo "Private maintainer-project provenance must not be shipped in tracked public text or filenames" >&2
+        exit 1
+    fi
 fi
 
 expect_failure() {
@@ -308,6 +338,19 @@ expect_failure "rollout symlinked target dir" "Refusing symlinked rollout TARGET
     VALIDATOR="${VALIDATOR}" \
     "${ROOT_DIR}/scripts/rollout_to_codex.sh"
 rm -rf "${sync_symlink_target_tmp}"
+sync_dry_run_tmp="$(mktemp -d "${VALIDATE_TMP}/sync_dry_run_nowrite.XXXXXX")"
+sync_dry_run_home="${sync_dry_run_tmp}/missing-codex-home"
+sync_dry_run_out="$(mktemp "${VALIDATE_TMP}/sync_dry_run_nowrite.XXXXXX.out")"
+env SYNC_CODEX_HOME="${sync_dry_run_home}" \
+    VALIDATOR="${VALIDATOR}" \
+    "${ROOT_DIR}/scripts/sync_to_codex.sh" --dry-run >"${sync_dry_run_out}"
+grep -q "Dry run complete" "${sync_dry_run_out}"
+if [[ -e "${sync_dry_run_home}" ]]; then
+    find "${sync_dry_run_tmp}" -maxdepth 3 -print >&2
+    echo "sync_to_codex.sh --dry-run created the target Codex home" >&2
+    exit 1
+fi
+rm -rf "${sync_dry_run_tmp}"
 relay_reversed_tmp="$(mktemp -d "${VALIDATE_TMP}/agents_relay_reversed.XXXXXX")"
 {
     printf "<!-- cppstudio-user-agents-relay:end -->\n"
@@ -953,6 +996,46 @@ rm -rf "${ROOT_DIR}/scripts/__pycache__"
 rm -rf "${SKILL_DIR}/scripts/__pycache__"
 bash -n "${ROOT_DIR}"/scripts/*.sh
 bash -n "${SKILL_DIR}"/scripts/*.sh
+compute_fake_dir="$(mktemp -d "${VALIDATE_TMP}/compute_fake.XXXXXX")"
+cat >"${compute_fake_dir}/compute-sanitizer" <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+
+printf "%s\n" "$@" >"${COMPUTE_SANITIZER_ARGV_CAPTURE:?}"
+EOF
+chmod +x "${compute_fake_dir}/compute-sanitizer"
+compute_direct_tmp="$(mktemp -d "${VALIDATE_TMP}/compute_direct.XXXXXX")"
+compute_direct_capture="$(mktemp "${VALIDATE_TMP}/compute_direct_argv.XXXXXX")"
+(
+    cd "${compute_direct_tmp}"
+    PATH="${compute_fake_dir}:${PATH}" \
+        COMPUTE_SANITIZER_ARGV_CAPTURE="${compute_direct_capture}" \
+        "${SKILL_DIR}/scripts/run_compute_sanitizer.sh" \
+        "${VALIDATE_TMP}/cuda app with spaces" \
+        "--flag" \
+        "value with spaces"
+)
+grep -Fx -- "--error-exitcode=99" "${compute_direct_capture}"
+grep -Fx -- "--target-processes" "${compute_direct_capture}"
+grep -Fx "all" "${compute_direct_capture}"
+grep -Fx "${VALIDATE_TMP}/cuda app with spaces" "${compute_direct_capture}"
+grep -Fx -- "--flag" "${compute_direct_capture}"
+grep -Fx "value with spaces" "${compute_direct_capture}"
+test -f "${compute_direct_tmp}/artifacts/sanitizer/compute-sanitizer.log"
+compute_default_tmp="$(mktemp -d "${VALIDATE_TMP}/compute_default.XXXXXX")"
+compute_default_capture="$(mktemp "${VALIDATE_TMP}/compute_default_argv.XXXXXX")"
+(
+    cd "${compute_default_tmp}"
+    PATH="${compute_fake_dir}:${PATH}" \
+        COMPUTE_SANITIZER_ARGV_CAPTURE="${compute_default_capture}" \
+        "${SKILL_DIR}/scripts/run_compute_sanitizer.sh"
+)
+grep -Fx -- "--error-exitcode=99" "${compute_default_capture}"
+grep -Fx "ctest" "${compute_default_capture}"
+grep -Fx -- "--preset" "${compute_default_capture}"
+grep -Fx "cuda" "${compute_default_capture}"
+grep -Fx -- "--output-on-failure" "${compute_default_capture}"
+grep -Fx -- "--no-tests=error" "${compute_default_capture}"
 nsys_fake_dir="$(mktemp -d "${VALIDATE_TMP}/nsys_fake.XXXXXX")"
 cat >"${nsys_fake_dir}/nsys" <<'EOF'
 #!/usr/bin/env bash
@@ -1032,6 +1115,14 @@ if (( full )); then
         cmake --preset cuda-debug
         cmake --build --preset cuda-debug
         ctest --preset cuda --output-on-failure --no-tests=error
+        compute_generated_capture="$(mktemp "${VALIDATE_TMP}/compute_generated_argv.XXXXXX")"
+        PATH="${compute_fake_dir}:${PATH}" \
+            COMPUTE_SANITIZER_ARGV_CAPTURE="${compute_generated_capture}" \
+            scripts/run_compute_sanitizer.sh
+        grep -Fx -- "--error-exitcode=99" "${compute_generated_capture}"
+        grep -Fx "ctest" "${compute_generated_capture}"
+        grep -Fx -- "--preset" "${compute_generated_capture}"
+        grep -Fx "cuda" "${compute_generated_capture}"
         cmake --preset cuda-vulkan-combined
         cmake --build --preset cuda-vulkan-combined
         cmake --preset benchmark

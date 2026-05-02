@@ -77,10 +77,13 @@ mindset lives inside the skill.
 Linux or macOS:
 
 ```bash
+codex_home="${CODEX_HOME:-${HOME}/.codex}"
+agents_path="${codex_home}/AGENTS.md"
+
 python3 scripts/install_user_agents_relay.py \
   --install \
-  --target "${HOME}/.codex/AGENTS.md" \
-  --expected-target "${HOME}/.codex/AGENTS.md" \
+  --target "${agents_path}" \
+  --expected-target "${agents_path}" \
   --snippet companion-skill-snippets/user-agents/cppstudio-relay.md
 ```
 
@@ -100,10 +103,14 @@ python .\scripts\install_user_agents_relay.py `
 Linux or macOS:
 
 ```bash
+codex_home="${CODEX_HOME:-${HOME}/.codex}"
+skill_target="${codex_home}/skills/cpp-cuda-vulkan-studio"
+donor_root="${skill_target}/references/donor-library"
+
 python3 scripts/install_companion_donor_links.py \
   --install \
-  --codex-home "${HOME}/.codex" \
-  --donor-root "${HOME}/.codex/skills/cpp-cuda-vulkan-studio/references/donor-library" \
+  --codex-home "${codex_home}" \
+  --donor-root "${donor_root}" \
   --source-skill-dir skills/cpp-cuda-vulkan-studio \
   --snippet-root companion-skill-snippets
 ```

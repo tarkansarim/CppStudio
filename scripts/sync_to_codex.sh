@@ -141,7 +141,9 @@ fi
 
 python3 "${VALIDATOR}" "${SOURCE_DIR}"
 
-mkdir -p "$(dirname "${TARGET_DIR}")"
+if (( ! dry_run )); then
+    mkdir -p "$(dirname "${TARGET_DIR}")"
+fi
 
 rsync_args=(
     -a

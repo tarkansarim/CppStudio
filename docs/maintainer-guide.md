@@ -234,7 +234,7 @@ symlinks.
 - Edit `skills/cpp-cuda-vulkan-studio/` in this repo, not the installed user-level copy.
 - Edit companion donor-link text in `companion-skill-snippets/`, not directly in installed companion
   skills.
-- Keep the reusable skill generic. Do not add CudaGroomTool-only, ComfyNative-only, or other
+- Keep the reusable skill generic. Do not add private-app-only, local-workstation-only, or other
   project-specific policy here.
 - User-level `AGENTS.md` rollout is relay-only. Merge or append the marked CppStudio relay block and
   preserve existing user content; do not copy full skill policy into `AGENTS.md`.

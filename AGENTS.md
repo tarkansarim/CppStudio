@@ -17,7 +17,7 @@ C++/CUDA/Vulkan development.
 - Edit `skills/cpp-cuda-vulkan-studio/` in this repo.
 - Publish to user-level Codex with `./scripts/sync_to_codex.sh`.
 - Do not hand-edit `${HOME}/.codex/skills/cpp-cuda-vulkan-studio` as the long-term source.
-- Do not move CudaGroomTool, ComfyNative, or other project-specific skills back into user-level
+- Do not move private app, local workstation, or other project-specific skills back into user-level
   Codex from this repo.
 
 ## Vulkan-Leaning Defaults
@@ -81,7 +81,7 @@ C++/CUDA/Vulkan development.
 
 ## Safe Editing Rules
 
-- Keep reusable policy generic. Do not add CudaGroomTool-only, ComfyNative-only, or machine-only
+- Keep reusable policy generic. Do not add private-app-only, local-workstation-only, or machine-only
   workflow rules to `skills/cpp-cuda-vulkan-studio/`; those belong in project-level skills.
 - If this repo installs user-level `AGENTS.md` content, merge or append only the tiny marked
   CppStudio relay block. It should only tell agents to load `cpp-cuda-vulkan-studio` for C++
