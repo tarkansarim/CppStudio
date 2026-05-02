@@ -35,7 +35,16 @@ cd /path/to/CppStudio
 codex_home="${CODEX_HOME:-${HOME}/.codex}"
 skills_root="${codex_home}/skills"
 skill_target="${skills_root}/cpp-cuda-vulkan-studio"
-validator="${skills_root}/.system/skill-creator/scripts/quick_validate.py"
+system_validator="${skills_root}/.system/skill-creator/scripts/quick_validate.py"
+repo_validator="${PWD}/scripts/quick_validate_skill.py"
+if [[ -f "${system_validator}" ]]; then
+  validator="${system_validator}"
+elif [[ -f "${repo_validator}" ]]; then
+  validator="${repo_validator}"
+else
+  echo "Missing skill validator: ${system_validator} or ${repo_validator}" >&2
+  exit 1
+fi
 
 staging_root="$(mktemp -d)"
 staged_skill="${staging_root}/cpp-cuda-vulkan-studio"
@@ -78,7 +87,15 @@ Set-Location C:\path\to\CppStudio
 $CodexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME ".codex" }
 $SkillsRoot = Join-Path $CodexHome "skills"
 $SkillTarget = Join-Path $SkillsRoot "cpp-cuda-vulkan-studio"
-$Validator = Join-Path $SkillsRoot ".system\skill-creator\scripts\quick_validate.py"
+$SystemValidator = Join-Path $SkillsRoot ".system\skill-creator\scripts\quick_validate.py"
+$RepoValidator = Join-Path (Get-Location) "scripts\quick_validate_skill.py"
+if (Test-Path $SystemValidator) {
+  $Validator = $SystemValidator
+} elseif (Test-Path $RepoValidator) {
+  $Validator = $RepoValidator
+} else {
+  throw "Missing skill validator: $SystemValidator or $RepoValidator"
+}
 $StagingRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("cppstudio-skill-" + [System.Guid]::NewGuid())
 $StagedSkill = Join-Path $StagingRoot "cpp-cuda-vulkan-studio"
 

@@ -3,7 +3,16 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_DIR="${ROOT_DIR}/skills/cpp-cuda-vulkan-studio"
-VALIDATOR="${VALIDATOR:-${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py}"
+CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
+SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
+REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
+if [[ -z "${VALIDATOR:-}" ]]; then
+    if [[ -f "${SYSTEM_VALIDATOR}" || -x "${SYSTEM_VALIDATOR}" ]]; then
+        VALIDATOR="${SYSTEM_VALIDATOR}"
+    else
+        VALIDATOR="${REPO_VALIDATOR}"
+    fi
+fi
 full=0
 full_cuda_architectures="${CPPSTUDIO_FULL_CUDA_ARCHITECTURES:-native}"
 skip_cuda_runtime_tests="${CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS:-0}"
@@ -41,6 +50,9 @@ Validate the canonical CppStudio skill.
            mixed CUDA/Vulkan, and sanitizer quick lanes. Set CPPSTUDIO_FULL_CUDA_ARCHITECTURES
            on CI hosts without a discoverable NVIDIA GPU; set CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS=1
            only when CUDA can be compiled but no CUDA runtime device is available.
+
+Validator resolution:
+  VALIDATOR override, target Codex system validator, then repo-local quick_validate_skill.py.
 EOF
 }
 
@@ -215,6 +227,32 @@ description: Test fixture.
 EOF
 }
 
+write_code_map_project_fixture() {
+    local repo="$1"
+    mkdir -p \
+        "${repo}/.github/workflows" \
+        "${repo}/benchmarks" \
+        "${repo}/cmake" \
+        "${repo}/docs" \
+        "${repo}/include/studio_validate" \
+        "${repo}/scripts" \
+        "${repo}/shaders" \
+        "${repo}/src/app" \
+        "${repo}/src/core" \
+        "${repo}/src/cuda" \
+        "${repo}/src/render" \
+        "${repo}/tests"
+    touch \
+        "${repo}/CMakeLists.txt" \
+        "${repo}/CMakePresets.json" \
+        "${repo}/README.md" \
+        "${repo}/docs/BENCHMARKS.md" \
+        "${repo}/docs/DEVELOPMENT_ENVIRONMENT.md" \
+        "${repo}/docs/GPU_RUNNER_CI.md" \
+        "${repo}/docs/VALIDATION_PIPELINE.md" \
+        "${repo}/include/studio_validate/cuda_vector_add.hpp"
+}
+
 python3 "${VALIDATOR}" "${SKILL_DIR}"
 if [[ -d "${ROOT_DIR}/.codex/skills" ]]; then
     while IFS= read -r -d '' project_skill; do
@@ -223,6 +261,48 @@ if [[ -d "${ROOT_DIR}/.codex/skills" ]]; then
 fi
 python3 -m py_compile "${ROOT_DIR}"/scripts/*.py "${SKILL_DIR}"/scripts/*.py
 python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${ROOT_DIR}" --require-enabled
+code_map_enable_tmp="$(mktemp -d "${VALIDATE_TMP}/code_map_enable.XXXXXX")"
+write_code_map_project_fixture "${code_map_enable_tmp}"
+python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_enable_tmp}" --enable
+python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_enable_tmp}" --require-enabled
+code_map_stale_tmp="$(mktemp -d "${VALIDATE_TMP}/code_map_stale.XXXXXX")"
+write_code_map_project_fixture "${code_map_stale_tmp}"
+printf "# stale architecture index\n" >"${code_map_stale_tmp}/docs/CODEBASE_ARCHITECTURE_INDEX.md"
+printf '{"version":1,"skill_root":"skills","router_doc":"docs/CODEBASE_ARCHITECTURE_INDEX.md","subsystems":[]}\n' \
+    >"${code_map_stale_tmp}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json"
+expect_failure "code map enable over stale files" "Refusing to enable a CppStudio code map over existing map files" \
+    python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_stale_tmp}" --enable
+if [[ -e "${code_map_stale_tmp}/.cppstudio/code-map-state.json" ]]; then
+    find "${code_map_stale_tmp}" -maxdepth 3 -print >&2
+    echo "code map enable wrote enabled state after refusing stale files" >&2
+    exit 1
+fi
+python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_stale_tmp}" --enable --force
+python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
+python3 - "${code_map_stale_tmp}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+manifest = json.loads(path.read_text(encoding="utf-8"))
+manifest["subsystems"][0]["id"] = "stale_subsystem"
+path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "generated code map subsystem mismatch" "generated map subsystem ids must be" \
+    python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
+python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_stale_tmp}" --enable --force
+python3 - "${code_map_stale_tmp}/docs/CODEBASE_ARCHITECTURE_INDEX.md" <<'PY'
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+text = text.replace("./SUBSYSTEMS/build-and-presets.md", "./SUBSYSTEMS/stale-build-and-presets.md")
+path.write_text(text, encoding="utf-8")
+PY
+expect_failure "generated code map index mismatch" "router_doc is not linked from index" \
+    python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
 python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
     "${SKILL_DIR}/references/donor-library" \
     --reference-root "${SKILL_DIR}/references"
@@ -380,6 +460,48 @@ if [[ -e "${sync_dry_run_home}" ]]; then
     exit 1
 fi
 rm -rf "${sync_dry_run_tmp}"
+sync_fresh_home_tmp="$(mktemp -d "${VALIDATE_TMP}/sync_fresh_home.XXXXXX")"
+sync_fresh_home="${sync_fresh_home_tmp}/fresh-codex-home"
+sync_fresh_out="$(mktemp "${VALIDATE_TMP}/sync_fresh_home.XXXXXX.out")"
+env HOME="${sync_fresh_home_tmp}/empty-home" \
+    SYNC_CODEX_HOME="${sync_fresh_home}" \
+    "${ROOT_DIR}/scripts/sync_to_codex.sh" --dry-run >"${sync_fresh_out}"
+grep -q "Dry run complete" "${sync_fresh_out}"
+if [[ -e "${sync_fresh_home}" ]]; then
+    find "${sync_fresh_home_tmp}" -maxdepth 3 -print >&2
+    echo "sync_to_codex.sh --dry-run with repo-local validator fallback created the target Codex home" >&2
+    exit 1
+fi
+rm -rf "${sync_fresh_home_tmp}"
+if [[ "${CPPSTUDIO_SKIP_ROLLOUT_VALIDATOR_REGRESSION:-0}" != "1" ]]; then
+    rollout_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/rollout_validator.XXXXXX")"
+    rollout_codex_home="${rollout_validator_tmp}/codex"
+    rollout_validator_dir="${rollout_codex_home}/skills/.system/skill-creator/scripts"
+    rollout_marker="${rollout_validator_tmp}/validator-used.txt"
+    mkdir -p "${rollout_validator_dir}"
+    cat >"${rollout_validator_dir}/quick_validate.py" <<'PY'
+#!/usr/bin/env python3
+import os
+import subprocess
+import sys
+
+with open(os.environ["VALIDATOR_MARKER"], "a", encoding="utf-8") as marker:
+    marker.write("used\n")
+
+raise SystemExit(
+    subprocess.call([sys.executable, os.environ["REPO_VALIDATOR_PATH"], *sys.argv[1:]])
+)
+PY
+    chmod +x "${rollout_validator_dir}/quick_validate.py"
+    env HOME="${rollout_validator_tmp}/empty-home" \
+        SYNC_CODEX_HOME="${rollout_codex_home}" \
+        VALIDATOR_MARKER="${rollout_marker}" \
+        REPO_VALIDATOR_PATH="${ROOT_DIR}/scripts/quick_validate_skill.py" \
+        "${ROOT_DIR}/scripts/rollout_to_codex.sh" >"${rollout_validator_tmp}/rollout.out"
+    grep -q "used" "${rollout_marker}"
+    grep -q "Rolled out" "${rollout_validator_tmp}/rollout.out"
+    rm -rf "${rollout_validator_tmp}"
+fi
 relay_reversed_tmp="$(mktemp -d "${VALIDATE_TMP}/agents_relay_reversed.XXXXXX")"
 {
     printf "<!-- cppstudio-user-agents-relay:end -->\n"
@@ -961,7 +1083,7 @@ expect_failure "declined code map is not enabled" "code map is declined" \
     python3 "${description_tmp}/scripts/validate_code_map.py" "${description_tmp}" --require-enabled
 (
     cd "${description_tmp}"
-    scripts/bootstrap_code_map.py --enable
+    scripts/bootstrap_code_map.py --enable --force
     scripts/validate_code_map.py --require-enabled
 )
 python3 "${SKILL_DIR}/scripts/validate_studio_backbone.py" \
@@ -1173,7 +1295,7 @@ if (( full )); then
     "${SKILL_DIR}/scripts/scaffold_gpu_cpp_project.py" --name StudioValidate --output "${sample_dir}"
     (
         cd "${sample_dir}"
-        scripts/bootstrap_code_map.py --enable
+        scripts/bootstrap_code_map.py --enable --force
         scripts/validate_code_map.py --require-enabled
     )
     "${SKILL_DIR}/scripts/validate_studio_backbone.py" "${sample_dir}" --strict-source-layout --code-map

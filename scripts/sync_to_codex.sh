@@ -6,7 +6,15 @@ SKILL_NAME="${SKILL_NAME:-cpp-cuda-vulkan-studio}"
 SOURCE_DIR="${ROOT_DIR}/skills/${SKILL_NAME}"
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 TARGET_DIR="${TARGET_DIR:-${CODEX_HOME_DIR}/skills/${SKILL_NAME}}"
-VALIDATOR="${VALIDATOR:-${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py}"
+SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
+REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
+if [[ -z "${VALIDATOR:-}" ]]; then
+    if [[ -f "${SYSTEM_VALIDATOR}" || -x "${SYSTEM_VALIDATOR}" ]]; then
+        VALIDATOR="${SYSTEM_VALIDATOR}"
+    else
+        VALIDATOR="${REPO_VALIDATOR}"
+    fi
+fi
 EXPECTED_TARGET_DIR="${CODEX_HOME_DIR}/skills/${SKILL_NAME}"
 
 dry_run=0
@@ -33,7 +41,8 @@ Sync ${SOURCE_DIR} to ${TARGET_DIR}.
 Environment:
   SYNC_CODEX_HOME  Defaults to ${HOME}/.codex
   TARGET_DIR       Override the exact installed skill directory
-  VALIDATOR        Override quick_validate.py path
+  VALIDATOR        Override quick_validate.py path. By default, use the target Codex system
+                  validator when present, then the repo-local validator fallback.
   ALLOW_SYNC_TARGET_OVERRIDE=1
                   Allow TARGET_DIR outside ${EXPECTED_TARGET_DIR}. Refuses dangerous paths even
                   with this override.

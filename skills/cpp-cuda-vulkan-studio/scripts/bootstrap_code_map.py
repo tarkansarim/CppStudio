@@ -527,21 +527,35 @@ def subsystem_text(item: dict[str, Any]) -> str:
 """
 
 
-def enable_map(repo: Path, force: bool) -> None:
-    project_title = title_from_repo(repo)
-    state_wrote = atomic_write_text(repo / STATE_PATH, json.dumps(state_payload("enabled"), indent=2) + "\n", True)
-    print(("wrote" if state_wrote else "exists") + f": {repo / STATE_PATH}")
-
+def generated_map_writes(repo: Path, project_title: str) -> list[tuple[Path, str]]:
     writes = [
         (repo / INDEX_PATH, index_text(project_title)),
         (repo / MANIFEST_PATH, json.dumps(manifest_payload(), indent=2) + "\n"),
     ]
     for item in BASE_SUBSYSTEMS:
         writes.append((repo / item["router_doc"], subsystem_text(item)))
+    return writes
+
+
+def enable_map(repo: Path, force: bool) -> None:
+    project_title = title_from_repo(repo)
+    writes = generated_map_writes(repo, project_title)
+    existing = [path for path, _ in writes if path.exists()]
+    if existing and not force:
+        paths = "\n".join(f"  - {path}" for path in existing)
+        raise SystemExit(
+            "Refusing to enable a CppStudio code map over existing map files without --force:\n"
+            f"{paths}\n"
+            "Run --audit-existing first, then rerun --enable --force only if the user accepts "
+            "replacing the generated map files."
+        )
 
     for path, text in writes:
         wrote = atomic_write_text(path, text, force)
         print(("wrote" if wrote else "exists") + f": {path}")
+
+    state_wrote = atomic_write_text(repo / STATE_PATH, json.dumps(state_payload("enabled"), indent=2) + "\n", True)
+    print(("wrote" if state_wrote else "exists") + f": {repo / STATE_PATH}")
 
 
 def decline_map(repo: Path, force: bool) -> None:

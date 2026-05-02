@@ -6,7 +6,15 @@ SKILL_NAME="${SKILL_NAME:-cpp-cuda-vulkan-studio}"
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SOURCE_DIR="${ROOT_DIR}/skills/${SKILL_NAME}"
 TARGET_DIR="${TARGET_DIR:-${CODEX_HOME_DIR}/skills/${SKILL_NAME}}"
-VALIDATOR="${VALIDATOR:-${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py}"
+SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
+REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
+if [[ -z "${VALIDATOR:-}" ]]; then
+    if [[ -f "${SYSTEM_VALIDATOR}" || -x "${SYSTEM_VALIDATOR}" ]]; then
+        VALIDATOR="${SYSTEM_VALIDATOR}"
+    else
+        VALIDATOR="${REPO_VALIDATOR}"
+    fi
+fi
 DONOR_ROOT="${TARGET_DIR}/references/donor-library"
 SNIPPET_ROOT="${ROOT_DIR}/companion-skill-snippets"
 EXPECTED_TARGET_DIR="${CODEX_HOME_DIR}/skills/${SKILL_NAME}"
@@ -42,7 +50,8 @@ library links.
 Environment:
   SYNC_CODEX_HOME  Defaults to ${HOME}/.codex
   TARGET_DIR       Override exact installed CppStudio skill directory
-  VALIDATOR        Override quick_validate.py path
+  VALIDATOR        Override quick_validate.py path. By default, use the target Codex system
+                  validator when present, then the repo-local validator fallback.
   ALLOW_ROLLOUT_TARGET_OVERRIDE=1
                   Allow TARGET_DIR outside ${EXPECTED_TARGET_DIR}. Companion-skill donor links will
                   point at TARGET_DIR, so use this only for deliberate staging.
@@ -141,7 +150,10 @@ do
     fi
 done
 
-"${ROOT_DIR}/scripts/validate.sh"
+CPPSTUDIO_SKIP_ROLLOUT_VALIDATOR_REGRESSION=1 \
+    SYNC_CODEX_HOME="${CODEX_HOME_DIR}" \
+    VALIDATOR="${VALIDATOR}" \
+    "${ROOT_DIR}/scripts/validate.sh"
 companion_args=(
     --codex-home "${CODEX_HOME_DIR}"
     --donor-root "${DONOR_ROOT}"

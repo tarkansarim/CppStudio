@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -12,6 +13,15 @@ from typing import Any
 
 STATE_PATH = Path(".cppstudio/code-map-state.json")
 VALID_STATES = {"enabled", "declined"}
+GENERATED_SKILL_ROOT = "skills"
+GENERATED_SUBSYSTEM_IDS = {
+    "build_and_presets",
+    "app_core",
+    "vulkan_lane",
+    "cuda_lane",
+    "validation_ci",
+}
+LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 
 
 def load_json(path: Path) -> Any:
@@ -38,7 +48,32 @@ def path_exists(repo: Path, path_text: str) -> bool:
     return (repo / path_text).exists()
 
 
-def validate_manifest(repo: Path, manifest_path: Path) -> list[str]:
+def normalize_link_target(raw_target: str) -> str:
+    target = raw_target.strip()
+    if target.startswith("<") and ">" in target:
+        target = target[1 : target.index(">")]
+    else:
+        target = target.split()[0] if target.split() else ""
+    return target.split("#", 1)[0]
+
+
+def collect_index_links(repo: Path, index_path: Path) -> set[str]:
+    links: set[str] = set()
+    repo_resolved = repo.resolve()
+    text = index_path.read_text(encoding="utf-8")
+    for match in LINK_RE.finditer(text):
+        target = normalize_link_target(match.group(1))
+        if not target or target.startswith("#") or re.match(r"^[A-Za-z][A-Za-z0-9+.-]*:", target):
+            continue
+        resolved = (index_path.parent / target).resolve()
+        try:
+            links.add(resolved.relative_to(repo_resolved).as_posix())
+        except ValueError:
+            continue
+    return links
+
+
+def validate_manifest(repo: Path, manifest_path: Path, index_links: set[str] | None = None) -> list[str]:
     failures: list[str] = []
     manifest = load_json(manifest_path)
     if not isinstance(manifest, dict):
@@ -73,6 +108,8 @@ def validate_manifest(repo: Path, manifest_path: Path) -> list[str]:
 
         if not path_exists(repo, router_doc):
             failures.append(f"{context}: router_doc does not exist: {router_doc}")
+        if index_links is not None and router_doc not in index_links:
+            failures.append(f"{context}: router_doc is not linked from index: {router_doc}")
 
         skill_path = subsystem.get("skill_path")
         if skill_path is not None:
@@ -92,6 +129,12 @@ def validate_manifest(repo: Path, manifest_path: Path) -> list[str]:
                     continue
                 if not path_exists(repo, value):
                     failures.append(f"{context}: {field_name} entry does not exist: {value}")
+
+    if manifest.get("skill_root") == GENERATED_SKILL_ROOT and seen_ids != GENERATED_SUBSYSTEM_IDS:
+        failures.append(
+            f"{manifest_path}: generated map subsystem ids must be "
+            f"{sorted(GENERATED_SUBSYSTEM_IDS)}, found {sorted(seen_ids)}"
+        )
 
     return failures
 
@@ -126,10 +169,13 @@ def validate_repo(repo: Path, require_enabled: bool) -> list[str]:
 
     if not index_path.is_file():
         failures.append(f"{STATE_PATH}: index does not exist: {index}")
+        index_links = None
+    else:
+        index_links = collect_index_links(repo, index_path)
     if not manifest_path.is_file():
         failures.append(f"{STATE_PATH}: manifest does not exist: {manifest}")
     else:
-        failures.extend(validate_manifest(repo, manifest_path))
+        failures.extend(validate_manifest(repo, manifest_path, index_links))
 
     return failures
 

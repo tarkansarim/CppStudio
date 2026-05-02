@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added repo-local validator fallback for validation, sync, and rollout scripts, including regression
+  coverage for fresh Codex homes and non-default `SYNC_CODEX_HOME` rollout validation.
+- Hardened generated code-map enablement so stale existing map files require explicit `--force`, the
+  enabled state is written last, and validation catches generated-map subsystem/index mismatches.
+- Clarified donor tier versus caveat terminology in contributor and donor-library docs.
 - Made public CI run `./scripts/validate.sh --full`, including generated-project scaffold/build
   validation with hosted-CI CUDA runtime tests skipped only when no CUDA device is available.
 - Made public CI discover the installed Lavapipe Vulkan CPU ICD path before running Vulkan runtime

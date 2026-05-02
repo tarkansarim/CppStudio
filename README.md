@@ -83,6 +83,10 @@ For installing CppStudio as a Codex skill:
 - Git, Python 3.10 or newer, and `rsync` for the normal Linux/macOS/WSL rollout scripts.
 - Windows users without Bash/`rsync` can use the manual PowerShell install reference.
 
+The rollout and sync scripts prefer the target Codex system skill validator when it exists, then fall
+back to this repo's bundled validator. A fresh Codex home does not need the system validator just to
+install CppStudio.
+
 CUDA, Vulkan, CMake, and a C++ compiler are not required just to install the skill. Install those
 only on machines that should build or validate generated native GPU projects.
 
@@ -200,8 +204,9 @@ Create a maintained CppStudio code map for this existing C++/Vulkan renderer rep
 ```
 
 The agent should audit the existing layout first, then ask whether to restructure first, preserve the
-current layout and document it, or decline code-map enablement. For a new project, an explicit
-code-map request counts as acceptance after scaffolding:
+current layout and document it, or decline code-map enablement. Existing generated map files are not
+replaced unless the user explicitly accepts that. For a new project, an explicit code-map request
+counts as acceptance after scaffolding:
 
 ```text
 Create a Vulkan-first C++ application called RayLab and make sure future agents have a code map.
@@ -303,7 +308,8 @@ algorithms, behavior, tests, UX, and architecture, but agents should port the id
 C++/Vulkan/CUDA lane instead of copying code directly unless the user explicitly chooses that runtime
 and license shape.
 
-Inline identifiers:
+Machine-readable donor tiers are `safe-donor`, `dependency-candidate`, and `study-only`. Inline
+caveat identifiers add native-use context:
 
 - `reference-only`: not a direct native C++ donor for this package. Use behavior, algorithms,
   architecture, tests, fixtures, or outputs as guidance, then port intentionally through the active

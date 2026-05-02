@@ -29,3 +29,5 @@ validation.
 
 - Vulkan template code should use Vulkan-Hpp forms that compile against Ubuntu packaged Vulkan-Hpp
   as well as newer SDK headers.
+- Code-map enablement refuses existing generated map files without `--force` and writes the enabled
+  state only after generated map files are replaced.

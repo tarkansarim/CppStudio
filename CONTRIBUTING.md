@@ -14,8 +14,10 @@ project templates.
 - Keep the maintained code map current when subsystem ownership, routing, validation, sync/rollout,
   template, donor-library, public docs, CI, or changelog policy changes.
 - Add a concise `CHANGELOG.md` entry before pushing tracked changes to remote.
-- Classify donor entries deliberately as `safe-donor`, `dependency-candidate`, `reference-only`,
-  `mixed-native`, or `study-only`.
+- Classify donor entries with the validated tier values: `safe-donor`, `dependency-candidate`, or
+  `study-only`.
+- Use caveat wording such as `reference-only` or `mixed-native` in profile/native-use notes when a
+  donor is useful as context but is not a direct native C++ implementation donor.
 - Treat donor links as references, not vendored code. Check the exact upstream license and revision
   before copying, vendoring, or generating code from a donor.
 
@@ -35,14 +37,14 @@ python3 scripts/validate_code_map.py . --require-enabled
 ./scripts/validate.sh --full
 ```
 
-If the local Codex system validator is unavailable, use the repo-local validator for public CI parity:
+The scripts prefer the target Codex system validator when it exists and otherwise use the repo-local
+validator for public CI parity. You can still override explicitly:
 
 ```bash
 VALIDATOR="${PWD}/scripts/quick_validate_skill.py" ./scripts/validate.sh
 ```
 
-The GitHub workflow runs the CI-safe validation path. It does not require CUDA, Vulkan, CMake, or a
-GPU.
+The GitHub workflow installs its CI-safe CMake, CUDA, and Vulkan toolchain. It does not require a GPU.
 
 ## Donor Updates
 
@@ -51,8 +53,8 @@ When adding or refreshing donors:
 - Update the smallest matching category file first.
 - Add or update a profile only when the category entry needs more caveats, routing, tests, or license
   notes than a table row can carry.
-- Keep non-C++ or restricted-license donors clearly marked as `reference-only`, `mixed-native`, or
-  `study-only`.
+- Keep non-C++ or restricted-license donors clearly marked with an appropriate tier and caveat
+  wording such as `reference-only` or `mixed-native`.
 - Update researched-date notes when a meaningful donor refresh happens.
 
 ## Releases

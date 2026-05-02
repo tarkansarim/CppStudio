@@ -28,6 +28,8 @@ skills, and watch-mode publishing behavior.
 
 ## Current Rollout Posture
 
+- Validation, sync, and rollout prefer an explicit `VALIDATOR`, then the target Codex system
+  validator, then the repo-local `scripts/quick_validate_skill.py` fallback.
 - `rollout_to_codex.sh` installs the minimal user-level `AGENTS.md` relay by default and preserves
   user-owned content outside the marked CppStudio relay block.
 - Set `SKIP_USER_AGENTS_RELAY=1` only for deliberate relay opt-out installs.

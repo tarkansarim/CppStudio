@@ -49,21 +49,24 @@ python3 scripts/validate_code_map.py . --require-enabled
 
 Generated or upgraded C++ projects use the same scripts, but their map is opt-in. Agents should check
 only `.cppstudio/code-map-state.json` first and ask once when the state is missing. For greenfield
-scaffolds, enable with `scripts/bootstrap_code_map.py --enable` after acceptance, or record declined
-state with `scripts/bootstrap_code_map.py --decline`.
+scaffolds, enable with `scripts/bootstrap_code_map.py --enable --force` after acceptance because the
+template includes starter generated map files, or record declined state with
+`scripts/bootstrap_code_map.py --decline`.
 
 When a map is enabled, use `docs/CODEBASE_ARCHITECTURE_INDEX.md` and
 `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` as the first navigation step before code changes. Select the
 matching subsystem doc and primary paths from the map before editing.
 
 For greenfield scaffolds, an explicit user request for a code map, architecture map, or future-agent
-map during project creation counts as acceptance; run `scripts/bootstrap_code_map.py --enable` after
-scaffolding.
+map during project creation counts as acceptance; run `scripts/bootstrap_code_map.py --enable --force`
+after scaffolding.
 
 For existing projects, enabling the map has a readiness protocol. Run
 `scripts/bootstrap_code_map.py --audit-existing` first, review `docs/CODEMAP_BOOTSTRAP_AUDIT.md`,
 summarize nonstandard layout findings and estimated cleanup cost, then ask whether to restructure
-first, preserve the current layout with documented exceptions, or decline the map.
+first, preserve the current layout with documented exceptions, or decline the map. If generated map
+files already exist, `--enable` refuses to replace them unless `--force` is explicit after user
+acceptance.
 
 ## Publish To Codex
 
@@ -143,7 +146,7 @@ code-map behavior for the generated project, run:
 
 ```bash
 cd /tmp/RayLab
-scripts/bootstrap_code_map.py --enable
+scripts/bootstrap_code_map.py --enable --force
 scripts/validate_code_map.py --require-enabled
 ```
 
@@ -191,7 +194,8 @@ Useful options:
   when the user has asked to bootstrap or evaluate code-map support for the existing repo. Run
   `scripts/bootstrap_code_map.py --audit-existing` first, ask whether to restructure or preserve the
   layout, then run `scripts/bootstrap_code_map.py --enable` only after the user accepts maintained map
-  behavior.
+  behavior. Use `--enable --force` only when replacing existing generated map files was explicitly
+  accepted.
 
 After applying, validate the target repo:
 
@@ -260,6 +264,10 @@ ${SYNC_CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio
 It intentionally ignores `CODEX_HOME` unless `SYNC_CODEX_HOME` or `TARGET_DIR` is provided, because
 nested Codex sessions may set isolated homes.
 
+Validation uses `VALIDATOR` when provided, otherwise the target Codex system validator when present,
+and finally the repo-local `scripts/quick_validate_skill.py` fallback. Fresh staging homes can use the
+scripts without preinstalling the system `skill-creator` validator.
+
 Use a custom Codex home:
 
 ```bash
@@ -321,16 +329,14 @@ Python 3.10+ is required
 
 Install Python 3.10 or newer and rerun the agent's install or validation command.
 
-Missing skill validator:
+Missing skill validator after an explicit override:
 
 ```text
-Missing skill validator: ${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py
+Missing skill validator: /path/to/validator
 ```
 
-Install or restore the system `skill-creator` skill in the target Codex home, then rerun validation.
-For public CI parity without a local Codex install, run
-`VALIDATOR="${PWD}/scripts/quick_validate_skill.py" ./scripts/validate.sh --full`. On hosted CPU
-CI, set `CPPSTUDIO_FULL_CUDA_ARCHITECTURES` to a concrete architecture and
+Unset the bad `VALIDATOR` override or point it at `scripts/quick_validate_skill.py`. On hosted CPU CI,
+set `CPPSTUDIO_FULL_CUDA_ARCHITECTURES` to a concrete architecture and
 `CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS=1` so the generated CUDA lane is compiled without requiring a CUDA
 device for runtime tests.
 

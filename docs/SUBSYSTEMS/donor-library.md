@@ -18,6 +18,7 @@ selection policy, and trigger-regression metadata.
 ## Update When
 
 - donor categories, production overlays, profiles, or caveat identifiers change
-- a donor is reclassified as safe, dependency-candidate, mixed-native, reference-only, or study-only
+- a donor tier changes between safe-donor, dependency-candidate, or study-only
+- a donor caveat such as mixed-native or reference-only changes
 - trigger prompts, expected donor routing, or donor inventory in the README changes
 - donor refresh dates or source research notes change
