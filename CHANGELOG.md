@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Replaced the sample-project poster/link fallback with GitHub uploaded attachment URLs so the
+  CUDA Groom Tool and Wetbrush MP4 samples render as inline players on the README page.
 - Added a GitHub Pages sample-player page with inline video controls and explicit fullscreen buttons,
   then pointed README sample thumbnails at the player sections.
 - Pointed README sample video links at the GitHub Pages site so browser playback uses the Pages
