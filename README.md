@@ -15,15 +15,6 @@ work. Instead of filling gaps from stale or incomplete training examples, agents
 repo-local guidance, known-good project structure, donor references, caveats, and validation lanes so
 their plans and code are more precise, reproducible, and easier to audit.
 
-There is no standalone CppStudio code-map skill. Code-map routing, readiness audits, bootstrap
-scripts, and maintenance rules are part of `cpp-cuda-vulkan-studio` so they stay tied to the same
-native C++ GPU lane policy, validation rules, and donor-routing context.
-
-Code maps are opt-in per target project. For generated or upgraded projects, they record subsystem
-ownership, backend boundaries, build/test lanes, and validation entrypoints so future agents can
-orient faster without rereading the entire repo. Existing projects get a readiness audit first so
-unorthodox layouts are either cleaned up or documented deliberately.
-
 Use it when you want Codex to create, audit, or upgrade native C++ GPU projects without turning every
 new repo into a one-off build-system and donor-research exercise.
 
@@ -32,7 +23,8 @@ CppStudio focuses on:
 - A Vulkan-first native C++ GPU project backbone with optional CUDA and combined CUDA/Vulkan lanes.
 - A nested donor-reference library that routes agents to relevant 3D, AI, simulation, rendering,
   CUDA, Vulkan, and infrastructure references without loading the whole library into context.
-- Validation, profiling, rollout, and optional code-map workflows that keep agent output auditable.
+- Validation, profiling, rollout, and optional project-memory workflows that keep agent output
+  auditable.
 
 ## Quick Start
 
@@ -123,18 +115,6 @@ After installation and a Codex restart, you usually do not need to name the skil
 native C++ GPU, Vulkan, CUDA, renderer, realtime 3D, simulation, or donor-reference work, and Codex
 should load `cpp-cuda-vulkan-studio` automatically.
 
-For a code map, ask for it in the same native C++ GPU project context:
-
-```text
-Create a maintained CppStudio code map for this existing C++/Vulkan renderer repo.
-```
-
-For a new project, an explicit code-map request counts as acceptance:
-
-```text
-Create a Vulkan-first C++ application called RayLab and make sure future agents have a code map.
-```
-
 ```text
 Create a Vulkan-first C++ application called RayLab.
 ```
@@ -164,12 +144,37 @@ not trigger.
   CAD, BIM/IFC, terrain/geospatial data, AI runtimes, neural 3D, Gaussian splatting, grooming/fur,
   DCC scene pipelines, volumes, medical/scientific data, animation, muscle/flesh simulation, VFX,
   particles, simulation, XR, and native engineering infrastructure.
-- Bootstrap and maintain an opt-in codebase architecture map for generated or upgraded C++ projects
-  so agents can preserve subsystem ownership, backend boundaries, validation lanes, and future
-  navigation context. Support files may be present before enablement, but agents maintain and load the
-  map only when `.cppstudio/code-map-state.json` says `enabled`. Existing projects get a readiness
-  audit before enablement so unorthodox layouts are either cleaned up first or documented deliberately.
+- Offer an optional code map for larger generated or upgraded C++ GPU projects that need durable
+  architecture context across future agent sessions.
 - Coordinate companion skills for CMake, Vulkan synchronization, CUDA kernels, and verification.
+
+## Optional Code Maps
+
+CppStudio can add a maintained code map to a target native C++ GPU project, but it is optional and
+per project. The benefit is practical project memory: future agents can find subsystem ownership,
+backend boundaries, build and test lanes, validation entrypoints, and donor decisions without
+rereading the entire repo from scratch.
+
+There is no standalone CppStudio code-map skill. The workflow lives inside `cpp-cuda-vulkan-studio`
+so the map follows the same Vulkan/CUDA lane policy, validation rules, and donor-routing context as
+the project it describes.
+
+For an existing project, ask for a maintained CppStudio code map in the same native C++ GPU context:
+
+```text
+Create a maintained CppStudio code map for this existing C++/Vulkan renderer repo.
+```
+
+The agent should audit the existing layout first, then ask whether to restructure first, preserve the
+current layout and document it, or decline code-map enablement. For a new project, an explicit
+code-map request counts as acceptance after scaffolding:
+
+```text
+Create a Vulkan-first C++ application called RayLab and make sure future agents have a code map.
+```
+
+Support files may exist before a map is enabled, but agents should maintain and load the map only
+when `.cppstudio/code-map-state.json` says `enabled`.
 
 ## Skills And Donors Included
 
@@ -342,6 +347,8 @@ source of truth. Edit this repo, then have an agent publish with the repo script
 - [Manual install reference](docs/manual-install.md): copy steps for agents that cannot run rollout
 - [Host toolchain setup](docs/host-toolchain-setup.md): Linux, macOS, and Windows C++/Vulkan/CUDA
   setup notes
+- [Optional code maps](#optional-code-maps): opt-in architecture context for larger generated or
+  upgraded native C++ GPU projects
 - [Maintainer guide](docs/maintainer-guide.md): validation, sync, rollout, generated-project, donor,
   and troubleshooting details for agents editing this repo
 - [Contributing](CONTRIBUTING.md): public contribution, donor update, validation, and release notes

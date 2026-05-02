@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Moved README code-map details into a dedicated optional section with benefits, invocation examples,
+  and enablement behavior.
 - Rebalanced README positioning so code maps are described as optional support for durable project
   context, not as a primary reason CppStudio exists.
 - Clarified greenfield code-map opt-in: explicit project-creation requests for a code map or
