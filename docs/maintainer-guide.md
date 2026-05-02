@@ -124,8 +124,8 @@ Useful options:
 - `--description "Short project description"`: render a project description into the generated README.
 - `--force`: overwrite files that already exist at the destination.
 
-The scaffold includes opt-in code-map scripts and starter docs. After the user accepts code-map
-maintenance for the generated project, run:
+The scaffold includes code-map support scripts and starter docs. After the user accepts maintained
+code-map behavior for the generated project, run:
 
 ```bash
 cd /tmp/RayLab
@@ -173,8 +173,9 @@ Useful options:
 
 - `--dry-run`: report planned writes/copies without changing the target repo.
 - `--force`: overwrite existing backbone files.
-- `--with-code-map`: also copy opt-in code-map docs and scripts. Use this only when the user has
-  asked to bootstrap or evaluate code-map support for the existing repo.
+- `--with-code-map`: copy code-map support docs and scripts without enabling the map. Use this only
+  when the user has asked to bootstrap or evaluate code-map support for the existing repo, then run
+  `scripts/bootstrap_code_map.py --enable` only after the user accepts maintained map behavior.
 
 After applying, validate the target repo:
 

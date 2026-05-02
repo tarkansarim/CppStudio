@@ -5,7 +5,7 @@ description: "Create, audit, or upgrade native C++ GPU project infrastructure fo
 
 # C++ CUDA Vulkan Studio
 
-Use this skill when a C++/CUDA/Vulkan repo needs a repeatable professional development backbone, not a one-off local build. This skill coordinates the more specific global skills instead of replacing them.
+Use this skill when a native C++ GPU, C++/Vulkan, C++/CUDA, or mixed CUDA/Vulkan repo needs a repeatable professional development backbone, not a one-off local build. This skill coordinates the more specific global skills instead of replacing them.
 
 ## Agent Mindset
 
@@ -61,7 +61,7 @@ When this skill is active, work like a native C++ GPU systems engineer:
 2. For a greenfield repo, run `scripts/scaffold_gpu_cpp_project.py` from this skill and then adapt only project names and required dependency switches.
 3. For an existing repo, run `scripts/apply_studio_backbone.py` against a temporary copy first unless the user explicitly wants direct modification.
 4. For a new or newly upgraded project with no `.cppstudio/code-map-state.json`, ask once whether to create a maintained codebase architecture map. State the benefits: faster cold starts, cleaner multi-agent routing, explicit subsystem ownership, and less repeated code reading. If the user accepts, run `scripts/bootstrap_code_map.py --enable`; if they decline, run `scripts/bootstrap_code_map.py --decline` and do not prompt again unless asked.
-5. When `.cppstudio/code-map-state.json` says `enabled`, read `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before broad edits. Keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, or public runtime behavior changes. If the user asks for a code map mid-project, bootstrap it then; for large existing repos, use parallel subsystem audits when delegation is explicitly available.
+5. When `.cppstudio/code-map-state.json` says `enabled`, read `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before broad edits. Keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, or public runtime behavior changes. If the user asks about a code map mid-project, explain it and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; for large existing repos, use parallel subsystem audits when delegation is explicitly available.
 6. Preserve any existing package manager or project-specific dependency policy. Do not introduce vcpkg, Conan, containers, FetchContent, or submodules unless there is a concrete reason.
 7. Keep CUDA and Vulkan optional through CMake cache options. For unspecified new GPU/3D/realtime/XR/cross-platform C++ projects, recommend and scaffold Vulkan-first: the normal `dev` preset is Vulkan-only, CUDA stays off unless the user explicitly chooses the CUDA lane or the requirements force CUDA.
 8. Do not mix CUDA into a Vulkan-chosen or Vulkan-assumed project by default. Use CUDA only for explicit CUDA/Vulkan interop, CUDA-specific compute, NVIDIA-only libraries, CUDA graphs, or custom CUDA kernels. When the user explicitly chooses CUDA, Vulkan may be added for presentation, realtime visualization, XR, swapchain/display work, or interop if the boundary is documented.

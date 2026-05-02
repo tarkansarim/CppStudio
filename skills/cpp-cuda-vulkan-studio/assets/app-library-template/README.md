@@ -8,8 +8,8 @@ when the project defines that contract deliberately.
 
 ## Code Map
 
-This template includes opt-in CppStudio code-map docs and scripts. The map is maintained only after
-`.cppstudio/code-map-state.json` says `enabled`.
+This template includes CppStudio code-map support files. The maintained map is opt-in: agents load
+and maintain it only after `.cppstudio/code-map-state.json` says `enabled`.
 
 Enable it after the user accepts:
 

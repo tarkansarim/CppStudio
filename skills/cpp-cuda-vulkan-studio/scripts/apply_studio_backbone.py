@@ -117,7 +117,11 @@ def main() -> int:
     parser.add_argument("repo", help="Existing repository root")
     parser.add_argument("--force", action="store_true", help="Overwrite existing backbone files")
     parser.add_argument("--dry-run", action="store_true", help="Show planned writes without changing files")
-    parser.add_argument("--with-code-map", action="store_true", help="Also copy opt-in code-map docs and scripts")
+    parser.add_argument(
+        "--with-code-map",
+        action="store_true",
+        help="Copy code-map support docs and scripts without enabling the map",
+    )
     args = parser.parse_args()
 
     repo = Path(args.repo).expanduser().resolve()

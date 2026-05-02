@@ -84,8 +84,8 @@ Restart Codex after manual installation so changed skill metadata is rediscovere
 ## Optional AGENTS.md Relay
 
 The user-level `AGENTS.md` relay is intentionally tiny. It only tells agents to load
-`cpp-cuda-vulkan-studio` for C++ Vulkan, C++ CUDA, and mixed CUDA/Vulkan work. The full C++ GPU
-mindset lives inside the skill.
+`cpp-cuda-vulkan-studio` for native C++ GPU, realtime rendering/visualization, Vulkan, CUDA, or
+mixed CUDA/Vulkan work. The full C++ GPU mindset lives inside the skill.
 
 Linux or macOS:
 

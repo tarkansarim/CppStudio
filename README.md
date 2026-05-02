@@ -88,7 +88,7 @@ toolchains only when you want this machine to build or validate generated C++ GP
 - Optional companion donor links for installed companion skills such as `cuda-kernel-authoring`,
   `vulkan-compute-sync`, and `modern-cpp-cmake`
 - Optional tiny user-level `AGENTS.md` relay that tells agents to load `cpp-cuda-vulkan-studio` for
-  C++ Vulkan, C++ CUDA, or mixed CUDA/Vulkan work
+  native C++ GPU, realtime rendering/visualization, Vulkan, CUDA, or mixed CUDA/Vulkan work
 
 Existing user content is preserved. CppStudio scripts only replace content inside their own marked
 blocks:
@@ -133,8 +133,9 @@ not trigger.
   CAD, BIM/IFC, terrain/geospatial data, AI runtimes, neural 3D, Gaussian splatting, grooming/fur,
   DCC scene pipelines, volumes, medical/scientific data, animation, muscle/flesh simulation, VFX,
   particles, simulation, XR, and native engineering infrastructure.
-- Offer an opt-in maintained codebase architecture map for generated or upgraded C++ projects, using
-  a tiny `.cppstudio/code-map-state.json` marker so declined maps do not keep loading into context.
+- Offer an opt-in maintained codebase architecture map for generated or upgraded C++ projects. Support
+  files may be present before enablement, but agents maintain and load the map only when
+  `.cppstudio/code-map-state.json` says `enabled`.
 - Coordinate companion skills for CMake, Vulkan synchronization, CUDA kernels, and verification.
 
 ## Skills And Donors Included
