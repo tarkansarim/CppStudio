@@ -76,6 +76,9 @@ For previewing installed changes:
 ## Rules
 
 - Keep `cpp-cuda-vulkan-studio` generic for future C++/CUDA/Vulkan repos.
+- Before changing CppStudio repo files, use `docs/CODEBASE_ARCHITECTURE_INDEX.md` and
+  `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` to choose the matching subsystem doc and primary paths for
+  the work.
 - Keep `docs/CODEBASE_ARCHITECTURE_INDEX.md`, `docs/CODEBASE_SUBSYSTEM_MANIFEST.json`, and the
   matching `docs/SUBSYSTEMS/*.md` file updated when subsystem ownership or routing changes.
 - Do not add private-app-only, local-workstation-only, or other project-specific instructions to this

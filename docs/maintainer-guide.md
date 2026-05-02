@@ -52,6 +52,10 @@ only `.cppstudio/code-map-state.json` first and ask once when the state is missi
 scaffolds, enable with `scripts/bootstrap_code_map.py --enable` after acceptance, or record declined
 state with `scripts/bootstrap_code_map.py --decline`.
 
+When a map is enabled, use `docs/CODEBASE_ARCHITECTURE_INDEX.md` and
+`docs/CODEBASE_SUBSYSTEM_MANIFEST.json` as the first navigation step before code changes. Select the
+matching subsystem doc and primary paths from the map before editing.
+
 For greenfield scaffolds, an explicit user request for a code map, architecture map, or future-agent
 map during project creation counts as acceptance; run `scripts/bootstrap_code_map.py --enable` after
 scaffolding.

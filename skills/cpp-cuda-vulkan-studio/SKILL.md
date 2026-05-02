@@ -44,8 +44,15 @@ When this skill is active, work like a native C++ GPU systems engineer:
   local rules, custom skills, and content outside managed marker blocks are user-owned.
 - Produce usable infrastructure. Avoid stubs, toy-only scaffolds, disabled tests, placeholder kernels,
   or sample-only shortcuts unless the user explicitly asks for a throwaway prototype.
-- Keep code maps lazy. Check only `.cppstudio/code-map-state.json` first; load the codebase map only
-  when that state says `enabled`, and do not keep prompting when it says `declined`.
+- Keep code maps lazy before activation and decisive after activation. Check
+  `.cppstudio/code-map-state.json` first when present. When it says `enabled`, or when target
+  repo instructions declare a maintained codebase map required, use the architecture index and
+  manifest as the first navigation step before code changes: choose the subsystem route, read the
+  matching subsystem doc, then inspect the files named by that route. Do not keep prompting when
+  state says `declined`.
+- When working in a target repo other than CppStudio itself, treat that repo's `AGENTS.md`,
+  codebase map, manifest, and repo-local skills as the subsystem routing authority. CppStudio supplies
+  the native C++/GPU lane policy, backbone, validation, and donor routing around the target repo's map.
 
 ## Coordination
 
@@ -57,12 +64,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
 
 ## Workflow
 
-1. Inspect the target repo first: `CMakeLists.txt`, `CMakePresets.json`, package manifests, `.github/workflows`, `cmake/`, `tests/`, `scripts/`, docs, and `.cppstudio/code-map-state.json` when present.
+1. Inspect the target repo first: `AGENTS.md`, `CMakeLists.txt`, `CMakePresets.json`, package manifests, `.github/workflows`, `cmake/`, `tests/`, `scripts/`, docs, `docs/CODEBASE_ARCHITECTURE_INDEX.md`, `docs/CODEBASE_SUBSYSTEM_MANIFEST.json`, and `.cppstudio/code-map-state.json` when present.
 2. For a greenfield repo, run `scripts/scaffold_gpu_cpp_project.py` from this skill and then adapt only project names and required dependency switches.
 3. For an existing repo, run `scripts/apply_studio_backbone.py` against a temporary copy first unless the user explicitly wants direct modification.
 4. For a greenfield scaffold with no `.cppstudio/code-map-state.json`, ask once whether to create a maintained codebase architecture map. State the benefits: faster cold starts, cleaner multi-agent routing, explicit subsystem ownership, and less repeated code reading. If the user already explicitly asked for a code map, architecture map, or future-agent map during project creation, treat that as acceptance and run `scripts/bootstrap_code_map.py --enable` after scaffolding. If they decline, run `scripts/bootstrap_code_map.py --decline` and do not prompt again unless asked.
 5. For an existing project with no `.cppstudio/code-map-state.json`, treat code-map enablement as a readiness protocol. Run `scripts/bootstrap_code_map.py --audit-existing` first, read `docs/CODEMAP_BOOTSTRAP_AUDIT.md`, and summarize structure findings, nonstandard layout risks, and the estimated cleanup cost. Ask whether the user wants to restructure first, preserve the current layout and document exceptions, or decline the map. Do not run `--enable` until the user chooses either restructure-complete or preserve-as-is.
-6. When `.cppstudio/code-map-state.json` says `enabled`, read `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before broad edits. Keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, or public runtime behavior changes. If the user asks about a code map mid-project, explain it, run the existing-project readiness protocol, and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; for large existing repos, use parallel subsystem audits when delegation is explicitly available.
+6. When `.cppstudio/code-map-state.json` says `enabled`, or when repo-local instructions declare a maintained codebase map required, read the target repo's `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before code changes. Use that map to select the subsystem doc and primary paths for the change, then keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, or public runtime behavior changes. If the user asks about a code map mid-project, explain it, run the existing-project readiness protocol, and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; for large existing repos, use parallel subsystem audits when delegation is explicitly available.
 7. Preserve any existing package manager or project-specific dependency policy. Do not introduce vcpkg, Conan, containers, FetchContent, or submodules unless there is a concrete reason.
 8. Keep CUDA and Vulkan optional through CMake cache options. For unspecified new GPU/3D/realtime/XR/cross-platform C++ projects, recommend and scaffold Vulkan-first: the normal `dev` preset is Vulkan-only, CUDA stays off unless the user explicitly chooses the CUDA lane or the requirements force CUDA.
 9. Do not mix CUDA into a Vulkan-chosen or Vulkan-assumed project by default. Use CUDA only for explicit CUDA/Vulkan interop, CUDA-specific compute, NVIDIA-only libraries, CUDA graphs, or custom CUDA kernels. When the user explicitly chooses CUDA, Vulkan may be added for presentation, realtime visualization, XR, swapchain/display work, or interop if the boundary is documented.

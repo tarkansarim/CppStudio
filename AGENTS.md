@@ -17,6 +17,8 @@ C++/CUDA/Vulkan development.
 - Edit `skills/cpp-cuda-vulkan-studio/` in this repo.
 - Use `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` as the
   maintained code map for this repo.
+- Before changing repo files, use the maintained code map to choose the matching subsystem doc and
+  primary paths for the work.
 - Publish to user-level Codex with `./scripts/sync_to_codex.sh`.
 - Do not hand-edit `${HOME}/.codex/skills/cpp-cuda-vulkan-studio` as the long-term source.
 - Do not move private app, local workstation, or other project-specific skills back into user-level

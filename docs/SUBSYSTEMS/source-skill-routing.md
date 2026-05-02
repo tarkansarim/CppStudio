@@ -1,8 +1,8 @@
 # Source Skill And Agent Routing
 
 Owns the user-level `cpp-cuda-vulkan-studio` skill source, CppStudio repo onboarding, Vulkan-first
-lane policy, code-map trigger metadata, donor-router entrypoints, and generated-project workflow
-instructions.
+lane policy, code-map trigger metadata, active-map navigation behavior, donor-router entrypoints, and
+generated-project workflow instructions.
 
 ## Canonical Docs
 
@@ -22,3 +22,4 @@ instructions.
 - project archetype routing changes
 - the repo-local onboarding skill changes
 - code-map readiness, bootstrap, or maintenance behavior changes for agents
+- target-repo code-map authority or map-first navigation behavior changes

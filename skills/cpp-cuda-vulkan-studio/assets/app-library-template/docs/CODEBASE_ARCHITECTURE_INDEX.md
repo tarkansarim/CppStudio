@@ -14,6 +14,12 @@ The map is actively maintained only when `.cppstudio/code-map-state.json` says `
 state is missing, CppStudio agents should ask once whether to enable the maintained code map. If the
 state says `declined`, do not prompt again unless the user asks.
 
+## Navigation Rule
+
+When code-map state is `enabled`, use this index and the manifest as the first navigation step before
+code changes. Pick the matching subsystem route, read that subsystem doc, then inspect the primary
+paths named by the route.
+
 ## Subsystem Routes
 
 - Build and presets: [SUBSYSTEMS/build-and-presets.md](./SUBSYSTEMS/build-and-presets.md)

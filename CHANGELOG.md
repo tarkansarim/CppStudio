@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Tightened active code-map behavior so agents use the architecture index and manifest as the first
+  navigation step before code changes, including repos that declare their own maintained map.
+- Clarified that target repos with their own maintained maps and repo-local skills are the subsystem
+  routing authority, and recorded Wetbrush subagent trigger-lane evidence.
 - Moved README code-map details into a dedicated optional section with benefits, invocation examples,
   and enablement behavior.
 - Rebalanced README positioning so code maps are described as optional support for durable project

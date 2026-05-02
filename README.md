@@ -155,6 +155,10 @@ per project. The benefit is practical project memory: future agents can find sub
 backend boundaries, build and test lanes, validation entrypoints, and donor decisions without
 rereading the entire repo from scratch.
 
+When a map is enabled, agents use it as the first navigation step before code changes: the
+architecture index and manifest point them to the matching subsystem doc and primary paths for the
+work.
+
 There is no standalone CppStudio code-map skill. The workflow lives inside `cpp-cuda-vulkan-studio`
 so the map follows the same Vulkan/CUDA lane policy, validation rules, and donor-routing context as
 the project it describes.

@@ -1,7 +1,8 @@
 # Generated Project Template
 
 Owns the Vulkan-first C++ app/library template, optional CUDA and combined lanes, template docs,
-scaffold/apply behavior, and generated-project validation.
+scaffold/apply behavior, generated-project code-map navigation behavior, and generated-project
+validation.
 
 ## Canonical Docs
 

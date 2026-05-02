@@ -21,6 +21,11 @@ without loading every reference file at once.
 - Research notes: [SUBSYSTEMS/research-notes.md](./SUBSYSTEMS/research-notes.md)
 - Public docs and CI: [SUBSYSTEMS/public-docs-ci.md](./SUBSYSTEMS/public-docs-ci.md)
 
+## Navigation Rule
+
+Use this index and the manifest as the first navigation step before changing repo files. Pick the
+matching subsystem route, read that subsystem doc, then inspect the primary paths named by the route.
+
 ## Maintenance Rule
 
 When a change affects source-of-truth routing, donor selection, generated project files, validation,

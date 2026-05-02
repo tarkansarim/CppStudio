@@ -8,6 +8,7 @@ the reusable skill and donor library.
 - `research/vulkan-lane/README.md`
 - `research/cuda-lane/README.md`
 - `research/donor-library/README.md`
+- `research/code-map-trigger-lane.md`
 
 ## Primary Paths
 
@@ -15,6 +16,7 @@ the reusable skill and donor library.
 - `research/cuda-lane/`
 - `research/donor-library/`
 - `research/maintainer-donor-ingest.md`
+- `research/code-map-trigger-lane.md`
 
 ## Update When
 
@@ -22,3 +24,4 @@ the reusable skill and donor library.
 - donor candidates are gathered for later ingestion
 - Vulkan or CUDA lane assumptions change
 - trigger-test findings or donor-source maps change
+- code-map trigger-lane findings change

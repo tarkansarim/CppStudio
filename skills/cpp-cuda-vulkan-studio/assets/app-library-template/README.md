@@ -11,6 +11,10 @@ when the project defines that contract deliberately.
 This template includes CppStudio code-map support files. The maintained map is opt-in: agents load
 and maintain it only after `.cppstudio/code-map-state.json` says `enabled`.
 
+When enabled, the code map is the first navigation step before code changes. Agents should use
+`docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` to pick the
+matching subsystem route, then read that subsystem doc before editing.
+
 Enable it after the user accepts. If the user explicitly requested a code map during project
 creation, that counts as acceptance for a greenfield scaffold:
 

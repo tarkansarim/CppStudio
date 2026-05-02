@@ -446,6 +446,7 @@ def state_payload(status: str) -> dict[str, Any]:
         "code_map": "enabled",
         "index": str(INDEX_PATH),
         "manifest": str(MANIFEST_PATH),
+        "navigation": "Use the architecture index and manifest as the first navigation step before code changes. Pick the subsystem route, read the subsystem doc, then inspect the route's primary paths.",
         "maintenance": "Update the code map when subsystem ownership, data flow, build/test lanes, backend boundaries, validation, or CI behavior changes.",
     }
 
@@ -488,6 +489,12 @@ manifest instead of forcing every session to load all implementation notes.
 ## Subsystem Routes
 
 {rows}
+
+## Navigation Rule
+
+When code-map state is `enabled`, use this index and the manifest as the first navigation step before
+code changes. Pick the matching subsystem route, read that subsystem doc, then inspect the primary
+paths named by the route.
 
 ## Maintenance Rule
 

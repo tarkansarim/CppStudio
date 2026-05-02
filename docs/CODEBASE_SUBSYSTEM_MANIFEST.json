@@ -89,13 +89,15 @@
       "canonical_docs": [
         "research/vulkan-lane/README.md",
         "research/cuda-lane/README.md",
-        "research/donor-library/README.md"
+        "research/donor-library/README.md",
+        "research/code-map-trigger-lane.md"
       ],
       "primary_paths": [
         "research/vulkan-lane",
         "research/cuda-lane",
         "research/donor-library",
-        "research/maintainer-donor-ingest.md"
+        "research/maintainer-donor-ingest.md",
+        "research/code-map-trigger-lane.md"
       ]
     },
     {
