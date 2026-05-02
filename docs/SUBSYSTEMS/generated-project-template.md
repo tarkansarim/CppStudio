@@ -24,3 +24,8 @@ validation.
 - scaffold or existing-repo apply behavior changes
 - generated-project validation expectations change
 - code-map template files, readiness audit behavior, or generated-project code-map behavior changes
+
+## Current Portability Notes
+
+- Vulkan template code should use Vulkan-Hpp forms that compile against Ubuntu packaged Vulkan-Hpp
+  as well as newer SDK headers.

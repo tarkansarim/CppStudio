@@ -11,6 +11,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 - Hardened manual install guidance with symlink checks and rollback-on-validation-failure behavior.
 - Clarified private-provenance validation so public sample labels remain allowed while compact
   maintainer project codenames stay blocked.
+- Fixed generated Vulkan template debug-utils code to compile against Ubuntu packaged Vulkan-Hpp
+  headers as well as newer SDK headers.
 - Replaced the sample-project poster/link fallback with GitHub uploaded attachment URLs so the
   CUDA Groom Tool and Wetbrush MP4 samples render as inline players on the README page.
 - Added a GitHub Pages sample-player page as a fallback/supporting sample view with inline video

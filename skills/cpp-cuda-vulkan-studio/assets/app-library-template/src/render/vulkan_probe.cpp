@@ -65,11 +65,10 @@ std::vector<std::uint32_t> read_spirv(const std::filesystem::path& path) {
     return words;
 }
 
-VKAPI_ATTR vk::Bool32 VKAPI_CALL
-debug_callback(vk::DebugUtilsMessageSeverityFlagBitsEXT severity, vk::DebugUtilsMessageTypeFlagsEXT,
-               const vk::DebugUtilsMessengerCallbackDataEXT* callback_data, void* user_data) {
-    const bool is_error = (severity & vk::DebugUtilsMessageSeverityFlagBitsEXT::eError) ==
-                          vk::DebugUtilsMessageSeverityFlagBitsEXT::eError;
+VKAPI_ATTR VkBool32 VKAPI_CALL
+debug_callback(VkDebugUtilsMessageSeverityFlagBitsEXT severity, VkDebugUtilsMessageTypeFlagsEXT,
+               const VkDebugUtilsMessengerCallbackDataEXT* callback_data, void* user_data) {
+    const bool is_error = (severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT) != 0;
     if (is_error && user_data) {
         static_cast<ValidationState*>(user_data)->error_seen = true;
     }
@@ -78,6 +77,14 @@ debug_callback(vk::DebugUtilsMessageSeverityFlagBitsEXT severity, vk::DebugUtils
                      callback_data->pMessage);
     }
     return VK_FALSE;
+}
+
+template <typename Handle> std::uint64_t vulkan_object_handle_to_uint64(Handle handle) {
+#if defined(VK_USE_64_BIT_PTR_DEFINES) && (VK_USE_64_BIT_PTR_DEFINES == 1)
+    return reinterpret_cast<std::uint64_t>(handle);
+#else
+    return static_cast<std::uint64_t>(handle);
+#endif
 }
 
 vk::raii::Instance create_instance(vk::raii::Context& context, bool& debug_utils_enabled) {
@@ -130,15 +137,17 @@ create_debug_messenger(const vk::raii::Instance& instance, bool debug_utils_enab
         return std::nullopt;
     }
 
-    vk::DebugUtilsMessengerCreateInfoEXT create_info;
-    create_info
-        .setMessageSeverity(vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning |
-                            vk::DebugUtilsMessageSeverityFlagBitsEXT::eError)
-        .setMessageType(vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral |
-                        vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation |
-                        vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance)
-        .setPfnUserCallback(debug_callback)
-        .setPUserData(&validation_state);
+    VkDebugUtilsMessengerCreateInfoEXT raw_create_info{};
+    raw_create_info.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+    raw_create_info.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+                                      VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+    raw_create_info.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
+                                  VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
+                                  VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+    raw_create_info.pfnUserCallback = debug_callback;
+    raw_create_info.pUserData = &validation_state;
+
+    const vk::DebugUtilsMessengerCreateInfoEXT create_info(raw_create_info);
 
     return vk::raii::DebugUtilsMessengerEXT(instance, create_info);
 }
@@ -251,19 +260,31 @@ struct VulkanSmokeContext {
 
     void name_object(const vk::Buffer& buffer, const std::string& name) const {
         if (debug_utils_enabled) {
-            device.setDebugUtilsObjectNameEXT(buffer, name);
+            vk::DebugUtilsObjectNameInfoEXT name_info;
+            name_info.setObjectType(vk::ObjectType::eBuffer)
+                .setObjectHandle(vulkan_object_handle_to_uint64(static_cast<VkBuffer>(buffer)))
+                .setPObjectName(name.c_str());
+            device.setDebugUtilsObjectNameEXT(name_info);
         }
     }
 
     void name_object(const vk::Image& image, const std::string& name) const {
         if (debug_utils_enabled) {
-            device.setDebugUtilsObjectNameEXT(image, name);
+            vk::DebugUtilsObjectNameInfoEXT name_info;
+            name_info.setObjectType(vk::ObjectType::eImage)
+                .setObjectHandle(vulkan_object_handle_to_uint64(static_cast<VkImage>(image)))
+                .setPObjectName(name.c_str());
+            device.setDebugUtilsObjectNameEXT(name_info);
         }
     }
 
     void name_object(const vk::Pipeline& pipeline, const std::string& name) const {
         if (debug_utils_enabled) {
-            device.setDebugUtilsObjectNameEXT(pipeline, name);
+            vk::DebugUtilsObjectNameInfoEXT name_info;
+            name_info.setObjectType(vk::ObjectType::ePipeline)
+                .setObjectHandle(vulkan_object_handle_to_uint64(static_cast<VkPipeline>(pipeline)))
+                .setPObjectName(name.c_str());
+            device.setDebugUtilsObjectNameEXT(name_info);
         }
     }
 
