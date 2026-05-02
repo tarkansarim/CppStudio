@@ -84,8 +84,8 @@ For previewing installed changes:
   for realtime CUDA, document that in the target project or local runner configuration through
   `GPU_ALLOWED_INDICES` or `CUDA_VISIBLE_DEVICES`, not in the global skill.
 - If this repo rolls out user-level `AGENTS.md` content, merge or append only the tiny marked
-  CppStudio relay block. It should only tell agents to load `cpp-cuda-vulkan-studio` for C++
-  Vulkan/CUDA work; lane policy stays inside the skill.
+  CppStudio relay block. It should only tell agents to load `cpp-cuda-vulkan-studio` for native
+  C++ GPU/realtime/code-map/Vulkan/CUDA work; lane policy stays inside the skill.
 - Companion donor rollout may replace only the marked `cppstudio-donor-library` block in matching
   installed companion skills. Preserve user-owned content outside those markers.
 - Preserve template tokens such as `{{PROJECT_NAME}}`, `{{PROJECT_NAME_LOWER}}`, and

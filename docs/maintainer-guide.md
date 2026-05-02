@@ -52,6 +52,10 @@ only `.cppstudio/code-map-state.json` first and ask once when the state is missi
 scaffolds, enable with `scripts/bootstrap_code_map.py --enable` after acceptance, or record declined
 state with `scripts/bootstrap_code_map.py --decline`.
 
+For greenfield scaffolds, an explicit user request for a code map, architecture map, or future-agent
+map during project creation counts as acceptance; run `scripts/bootstrap_code_map.py --enable` after
+scaffolding.
+
 For existing projects, enabling the map has a readiness protocol. Run
 `scripts/bootstrap_code_map.py --audit-existing` first, review `docs/CODEMAP_BOOTSTRAP_AUDIT.md`,
 summarize nonstandard layout findings and estimated cleanup cost, then ask whether to restructure

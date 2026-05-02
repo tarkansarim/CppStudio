@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Clarified greenfield code-map opt-in: explicit project-creation requests for a code map or
+  future-agent map count as acceptance after scaffolding.
 - Clarified that code-map routing is part of `cpp-cuda-vulkan-studio`, not a separate skill, and
   added code-map wording to the skill metadata and user relay.
 - Added an existing-project code-map readiness protocol and audit mode so agents inspect structure,

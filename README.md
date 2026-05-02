@@ -134,6 +134,12 @@ For a code map, ask for it in the same native C++ GPU project context:
 Create a maintained CppStudio code map for this existing C++/Vulkan renderer repo.
 ```
 
+For a new project, an explicit code-map request counts as acceptance:
+
+```text
+Create a Vulkan-first C++ application called RayLab and make sure future agents have a code map.
+```
+
 ```text
 Create a Vulkan-first C++ application called RayLab.
 ```

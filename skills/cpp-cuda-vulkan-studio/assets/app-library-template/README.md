@@ -11,7 +11,8 @@ when the project defines that contract deliberately.
 This template includes CppStudio code-map support files. The maintained map is opt-in: agents load
 and maintain it only after `.cppstudio/code-map-state.json` says `enabled`.
 
-Enable it after the user accepts:
+Enable it after the user accepts. If the user explicitly requested a code map during project
+creation, that counts as acceptance for a greenfield scaffold:
 
 ```bash
 scripts/bootstrap_code_map.py --enable
