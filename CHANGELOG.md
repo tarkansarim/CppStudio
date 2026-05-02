@@ -4,6 +4,7 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Replaced README video embeds with GitHub-visible poster thumbnails that link to the MP4 samples.
 - Added README sample-project videos for CUDA Groom Tool and Wetbrush, with public assets moved under
   `assets/videos/`.
 - Tightened active code-map behavior so agents use the architecture index and manifest as the first
