@@ -463,7 +463,8 @@ rm -rf "${sync_dry_run_tmp}"
 sync_fresh_home_tmp="$(mktemp -d "${VALIDATE_TMP}/sync_fresh_home.XXXXXX")"
 sync_fresh_home="${sync_fresh_home_tmp}/fresh-codex-home"
 sync_fresh_out="$(mktemp "${VALIDATE_TMP}/sync_fresh_home.XXXXXX.out")"
-env HOME="${sync_fresh_home_tmp}/empty-home" \
+env -u VALIDATOR \
+    HOME="${sync_fresh_home_tmp}/empty-home" \
     SYNC_CODEX_HOME="${sync_fresh_home}" \
     "${ROOT_DIR}/scripts/sync_to_codex.sh" --dry-run >"${sync_fresh_out}"
 grep -q "Dry run complete" "${sync_fresh_out}"
@@ -493,7 +494,8 @@ raise SystemExit(
 )
 PY
     chmod +x "${rollout_validator_dir}/quick_validate.py"
-    env HOME="${rollout_validator_tmp}/empty-home" \
+    env -u VALIDATOR \
+        HOME="${rollout_validator_tmp}/empty-home" \
         SYNC_CODEX_HOME="${rollout_codex_home}" \
         VALIDATOR_MARKER="${rollout_marker}" \
         REPO_VALIDATOR_PATH="${ROOT_DIR}/scripts/quick_validate_skill.py" \
