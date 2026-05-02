@@ -300,6 +300,23 @@ Use `scripts/missing.py`.
 EOF
 expect_failure "quick validator missing bundled reference" "bundled reference does not exist" \
     python3 "${ROOT_DIR}/scripts/quick_validate_skill.py" "${quick_validator_tmp}/missing-reference"
+python3 - "${ROOT_DIR}/scripts/quick_validate_skill.py" <<'PY'
+import importlib.util
+import sys
+
+spec = importlib.util.spec_from_file_location("quick_validate_skill", sys.argv[1])
+module = importlib.util.module_from_spec(spec)
+assert spec.loader is not None
+sys.modules[spec.name] = module
+spec.loader.exec_module(module)
+
+quoted = module.parse_simple_scalar(' "Use #include <vulkan/vulkan.hpp>" # trailing comment')
+if quoted != "Use #include <vulkan/vulkan.hpp>":
+    raise SystemExit(f"quoted hash scalar was parsed incorrectly: {quoted!r}")
+unquoted = module.parse_simple_scalar("plain value # trailing comment")
+if unquoted != "plain value":
+    raise SystemExit(f"unquoted hash comment was parsed incorrectly: {unquoted!r}")
+PY
 rm -rf "${quick_validator_tmp}"
 python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${ROOT_DIR}" --require-enabled
 code_map_enable_tmp="$(mktemp -d "${VALIDATE_TMP}/code_map_enable.XXXXXX")"
@@ -368,7 +385,7 @@ manifest = json.loads(path.read_text(encoding="utf-8"))
 manifest["subsystems"][0]["router_doc"] = "../outside.md"
 path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 PY
-expect_failure "code map manifest rejects escaping paths" "path escapes repository" \
+expect_failure "code map manifest rejects escaping paths" "path must not contain '..'" \
     python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
 python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_stale_tmp}" --enable --force
 python3 - "${code_map_stale_tmp}/docs/CODEBASE_ARCHITECTURE_INDEX.md" <<'PY'
@@ -380,7 +397,32 @@ text = path.read_text(encoding="utf-8")
 text = text + "\n- Escaped: [outside](../../outside.md)\n"
 path.write_text(text, encoding="utf-8")
 PY
-expect_failure "code map index rejects escaping local links" "local link escapes repository" \
+expect_failure "code map index rejects escaping local links" "path must not contain '..'" \
+    python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
+python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_stale_tmp}" --enable --force
+python3 - "${code_map_stale_tmp}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+manifest = json.loads(path.read_text(encoding="utf-8"))
+manifest["subsystems"][0]["primary_paths"].append("docs/SUBSYSTEMS/*.md")
+path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+PY
+python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
+touch "${VALIDATE_TMP}/outside-code-map-glob.md"
+python3 - "${code_map_stale_tmp}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+manifest = json.loads(path.read_text(encoding="utf-8"))
+manifest["subsystems"][0]["primary_paths"] = ["../*.md"]
+path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "code map manifest rejects escaping globs" "path must not contain '..'" \
     python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
 python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
     "${SKILL_DIR}/references/donor-library" \
@@ -586,6 +628,39 @@ expect_failure "sync rollback after final validation failure" "intentional final
     "${ROOT_DIR}/scripts/sync_to_codex.sh"
 test -f "${sync_rollback_target}/OLD_INSTALL_MARKER"
 grep -q "Existing Installed Skill" "${sync_rollback_target}/SKILL.md"
+sync_backup_fail_home="${sync_rollback_tmp}/backup-fail-codex"
+sync_backup_fail_target="${sync_backup_fail_home}/skills/cpp-cuda-vulkan-studio"
+sync_backup_fail_fakebin="${sync_rollback_tmp}/fake-bin"
+mkdir -p "${sync_backup_fail_target}" "${sync_backup_fail_fakebin}"
+cat >"${sync_backup_fail_target}/SKILL.md" <<'EOF'
+---
+name: cpp-cuda-vulkan-studio
+description: Existing installed skill.
+---
+# Existing Installed Skill Before Backup Failure
+EOF
+touch "${sync_backup_fail_target}/OLD_BACKUP_FAIL_MARKER"
+mv_real="$(command -v mv)"
+cat >"${sync_backup_fail_fakebin}/mv" <<'SH'
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ -n "${FAIL_BACKUP_SOURCE:-}" && "$#" -eq 2 && "$1" == "${FAIL_BACKUP_SOURCE}" && "$2" == *".backup."* ]]; then
+    echo "intentional backup move failure" >&2
+    exit 44
+fi
+exec "${MV_REAL}" "$@"
+SH
+chmod +x "${sync_backup_fail_fakebin}/mv"
+expect_failure "sync preserves existing target after backup move failure" "intentional backup move failure" \
+    env PATH="${sync_backup_fail_fakebin}:${PATH}" \
+    MV_REAL="${mv_real}" \
+    FAIL_BACKUP_SOURCE="${sync_backup_fail_target}" \
+    SYNC_CODEX_HOME="${sync_backup_fail_home}" \
+    VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py" \
+    "${ROOT_DIR}/scripts/sync_to_codex.sh"
+test -f "${sync_backup_fail_target}/OLD_BACKUP_FAIL_MARKER"
+grep -q "Existing Installed Skill Before Backup Failure" "${sync_backup_fail_target}/SKILL.md"
 rm -rf "${sync_rollback_tmp}"
 if [[ "${CPPSTUDIO_SKIP_ROLLOUT_VALIDATOR_REGRESSION:-0}" != "1" ]]; then
     rollout_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/rollout_validator.XXXXXX")"

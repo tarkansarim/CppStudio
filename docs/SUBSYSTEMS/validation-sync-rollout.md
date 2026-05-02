@@ -33,6 +33,8 @@ skills, and watch-mode publishing behavior.
   frontmatter, `agents/openai.yaml`, and bundled local references.
 - Non-dry-run sync stages and validates the skill before replacing the installed target, then restores
   the previous target if final validation fails.
+- Sync rollback tracks whether the previous target existed and whether backup creation completed, so
+  a failed backup move leaves the existing installed skill in place.
 - Rollout snapshots the main skill, matching companion skill files, and the optional user-level
   `AGENTS.md` relay target before mutation, then restores them if a later step fails.
 - `rollout_to_codex.sh` installs the minimal user-level `AGENTS.md` relay by default and preserves

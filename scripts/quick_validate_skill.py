@@ -73,9 +73,22 @@ def parse_frontmatter(skill_md: Path) -> ParsedSkill:
 
 def parse_simple_scalar(raw: str) -> str:
     raw = raw.strip()
+    if not raw:
+        return ""
+    if raw[0] in {"'", '"'}:
+        quote = raw[0]
+        escaped = False
+        for index, character in enumerate(raw[1:], start=1):
+            if quote == '"' and character == "\\" and not escaped:
+                escaped = True
+                continue
+            if character == quote and not escaped:
+                return unquote(raw[: index + 1])
+            escaped = False
+        return unquote(raw)
     if "#" in raw:
         raw = raw.split("#", 1)[0].rstrip()
-    return unquote(raw)
+    return raw
 
 
 def parse_openai_yaml(path: Path) -> dict[str, Any]:

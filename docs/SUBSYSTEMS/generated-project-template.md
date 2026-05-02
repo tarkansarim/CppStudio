@@ -33,3 +33,5 @@ validation.
   state only after generated map files are replaced.
 - Existing-project code-map audits print to stdout by default. Use `--write-audit` only when the user
   wants `docs/CODEMAP_BOOTSTRAP_AUDIT.md` saved.
+- Code-map validation accepts repo-relative files and globs only; absolute paths, `..` segments,
+  escaping links, and glob matches that resolve outside the repo are rejected.

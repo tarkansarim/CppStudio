@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened code-map glob path validation, sync rollback state tracking, and quoted `#` parsing in
+  repo-local OpenAI agent metadata validation.
 - Made sync/rollout rollback-aware, hardened local path validation for code maps and donor docs,
   strengthened the repo-local skill validator, made existing-project code-map audits stdout-first,
   and refreshed stale generated-project/readiness docs.

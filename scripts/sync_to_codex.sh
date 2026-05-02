@@ -21,6 +21,8 @@ dry_run=0
 delete_args=(--delete)
 sync_tmp_parent=""
 sync_backup_path=""
+sync_target_existed=0
+sync_backup_created=0
 sync_transaction_complete=0
 
 require_python310() {
@@ -184,11 +186,11 @@ else
         if (( sync_transaction_complete )); then
             return "${exit_code}"
         fi
-        if [[ -n "${sync_backup_path}" && -e "${sync_backup_path}" ]]; then
+        if (( sync_backup_created )); then
             rm -rf "${target_resolved}"
             mv "${sync_backup_path}" "${target_resolved}"
             echo "Restored previous skill after failed sync: ${TARGET_DIR}" >&2
-        else
+        elif (( ! sync_target_existed )); then
             rm -rf "${target_resolved}"
         fi
         rm -rf "${sync_tmp_parent}"
@@ -201,8 +203,10 @@ else
     python3 "${VALIDATOR}" "${staged_target}"
 
     if [[ -e "${target_resolved}" ]]; then
+        sync_target_existed=1
         sync_backup_path="${target_resolved}.backup.$(date +%Y%m%d%H%M%S).$$"
         mv "${target_resolved}" "${sync_backup_path}"
+        sync_backup_created=1
     fi
     mv "${staged_target}" "${target_resolved}"
     find "${TARGET_DIR}/scripts" -type f \( -name "*.sh" -o -name "*.py" \) -exec chmod +x {} + 2>/dev/null || true

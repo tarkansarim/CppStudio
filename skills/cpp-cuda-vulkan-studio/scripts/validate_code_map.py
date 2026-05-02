@@ -44,6 +44,10 @@ def path_has_glob(path_text: str) -> bool:
     return any(marker in path_text for marker in "*?[")
 
 
+def normalized_path_parts(path_text: str) -> list[str]:
+    return path_text.replace("\\", "/").split("/")
+
+
 def local_path_error(path_text: str) -> str | None:
     if not path_text or "\0" in path_text:
         return "path is empty or contains a NUL byte"
@@ -51,6 +55,8 @@ def local_path_error(path_text: str) -> str | None:
         return "path must be a repo-relative local path, not a URL or URI"
     if path_text.startswith(("/", "~")) or Path(path_text).is_absolute():
         return "path must be relative to the repository root"
+    if any(part == ".." for part in normalized_path_parts(path_text)):
+        return "path must not contain '..'"
     return None
 
 
@@ -104,7 +110,17 @@ def validate_manifest_path(repo: Path, path_text: str, context: str) -> str | No
         return f"{context}: invalid path {path_text!r}: {error}"
     repo_resolved = repo.resolve()
     resolved = (repo / path_text).resolve()
-    if not path_has_glob(path_text):
+    if path_has_glob(path_text):
+        try:
+            matches = list(repo.glob(path_text))
+        except ValueError as error:
+            return f"{context}: invalid glob path {path_text!r}: {error}"
+        for match in matches:
+            try:
+                match.resolve().relative_to(repo_resolved)
+            except ValueError:
+                return f"{context}: glob path escapes repository: {path_text}"
+    else:
         try:
             resolved.relative_to(repo_resolved)
         except ValueError:
