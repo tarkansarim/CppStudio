@@ -522,9 +522,10 @@ expect_failure "strict companion skill missing" "missing installed companion ski
     --strict
 rm -rf "${missing_companion_tmp}"
 {
-    cat "${ROOT_DIR}/companion-skill-snippets/cuda-kernel-authoring/donor-library.md" \
-        | sed "s#{{DONOR_ROOT}}#${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library#g" \
-        | sed "s#{{REFERENCE_ROOT}}#${companion_tmp}/skills/cpp-cuda-vulkan-studio/references#g"
+    sed \
+        -e "s#{{DONOR_ROOT}}#${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library#g" \
+        -e "s#{{REFERENCE_ROOT}}#${companion_tmp}/skills/cpp-cuda-vulkan-studio/references#g" \
+        "${ROOT_DIR}/companion-skill-snippets/cuda-kernel-authoring/donor-library.md"
     printf "\n"
 } >"${companion_tmp}/rendered_cuda_block.md"
 bad_companion_skill_tmp="$(mktemp "${VALIDATE_TMP}/bad_companion_skill.XXXXXX.md")"
