@@ -103,9 +103,9 @@ cd /path/to/CppStudio
 ./scripts/rollout_to_codex.sh
 ```
 
-That installs the main skill and donor-library links into the Codex home on the machine where the
-command runs. The default Codex home is `${HOME}/.codex`. Restart Codex after installation so changed
-skill metadata is discovered.
+That installs the main skill, donor-library links, and the tiny user-level `AGENTS.md` relay into
+the Codex home on the machine where the command runs. The default Codex home is `${HOME}/.codex`.
+Restart Codex after installation so changed skill metadata is discovered.
 
 For a non-default Codex home, pass `SYNC_CODEX_HOME` to the rollout script:
 
@@ -126,9 +126,10 @@ toolchains only when you want this machine to build or validate generated C++ GP
   `${HOME}/.codex/skills/cpp-cuda-vulkan-studio`
 - Optional companion donor links for installed companion skills such as `cuda-kernel-authoring`,
   `vulkan-compute-sync`, and `modern-cpp-cmake`
-- Optional tiny user-level `AGENTS.md` relay that tells agents to load `cpp-cuda-vulkan-studio` for
+- Tiny user-level `AGENTS.md` relay that tells agents to load `cpp-cuda-vulkan-studio` for
   native C++ GPU, realtime rendering/visualization, C++ GPU code-map, Vulkan, CUDA, or mixed
-  CUDA/Vulkan work
+  CUDA/Vulkan work. Set `SKIP_USER_AGENTS_RELAY=1` during rollout only if you explicitly do not want
+  this relay installed or updated.
 
 Existing user content is preserved. CppStudio scripts only replace content inside their own marked
 blocks:

@@ -4,15 +4,19 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Made public CI run `./scripts/validate.sh --full`, including generated-project scaffold/build
+  validation with hosted-CI CUDA runtime tests skipped only when no CUDA device is available.
+- Made the tiny user-level `AGENTS.md` relay install by default during rollout, with
+  `SKIP_USER_AGENTS_RELAY=1` as the explicit opt-out.
+- Hardened manual install guidance with symlink checks and rollback-on-validation-failure behavior.
+- Clarified private-provenance validation so public sample labels remain allowed while compact
+  maintainer project codenames stay blocked.
 - Replaced the sample-project poster/link fallback with GitHub uploaded attachment URLs so the
   CUDA Groom Tool and Wetbrush MP4 samples render as inline players on the README page.
-- Added a GitHub Pages sample-player page with inline video controls and explicit fullscreen buttons,
-  then pointed README sample thumbnails at the player sections.
-- Pointed README sample video links at the GitHub Pages site so browser playback uses the Pages
-  static-file path instead of GitHub's non-previewable blob view.
+- Added a GitHub Pages sample-player page as a fallback/supporting sample view with inline video
+  controls and explicit fullscreen buttons.
 - Re-encoded README sample MP4s as video-only 720p H.264 files under 10 MB for GitHub-friendly
-  uploads and previews.
-- Replaced README video embeds with GitHub-visible poster thumbnails that link to the MP4 samples.
+  uploads and inline playback.
 - Added README sample-project videos for CUDA Groom Tool and Wetbrush, with public assets moved under
   `assets/videos/`.
 - Tightened active code-map behavior so agents use the architecture index and manifest as the first

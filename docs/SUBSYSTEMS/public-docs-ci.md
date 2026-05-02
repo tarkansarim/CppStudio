@@ -28,3 +28,10 @@ workflow, and repo banner/sample assets.
 - contribution, release, or change-history policy changes
 - host setup commands or GPU toolchain notes change
 - root CI behavior, badge targets, or public assets change
+
+## Current CI Posture
+
+- The public validation badge runs `./scripts/validate.sh --full` so generated-project scaffold,
+  CMake, Vulkan, CUDA compile, benchmark, and sanitizer lanes stay covered.
+- Hosted CPU CI compiles CUDA with an explicit architecture and skips only CUDA runtime CTest when no
+  CUDA device is available.

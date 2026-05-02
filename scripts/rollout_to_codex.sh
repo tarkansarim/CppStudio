@@ -15,6 +15,10 @@ COMPANION_INSTALLER="${ROOT_DIR}/scripts/install_companion_donor_links.py"
 USER_AGENTS_RELAY_INSTALLER="${ROOT_DIR}/scripts/install_user_agents_relay.py"
 USER_AGENTS_RELAY_SNIPPET="${SNIPPET_ROOT}/user-agents/cppstudio-relay.md"
 USER_AGENTS_RELAY_TARGET="${USER_AGENTS_RELAY_TARGET:-${CODEX_HOME_DIR}/AGENTS.md}"
+INSTALL_USER_AGENTS_RELAY="${INSTALL_USER_AGENTS_RELAY:-1}"
+if [[ "${SKIP_USER_AGENTS_RELAY:-0}" == "1" ]]; then
+    INSTALL_USER_AGENTS_RELAY=0
+fi
 
 require_python310() {
     python3 - <<'PY'
@@ -42,8 +46,10 @@ Environment:
   ALLOW_ROLLOUT_TARGET_OVERRIDE=1
                   Allow TARGET_DIR outside ${EXPECTED_TARGET_DIR}. Companion-skill donor links will
                   point at TARGET_DIR, so use this only for deliberate staging.
-  INSTALL_USER_AGENTS_RELAY=1
-                  Merge the minimal CppStudio relay into USER_AGENTS_RELAY_TARGET.
+  INSTALL_USER_AGENTS_RELAY
+                  Defaults to 1. Merge the minimal CppStudio relay into USER_AGENTS_RELAY_TARGET.
+  SKIP_USER_AGENTS_RELAY=1
+                  Opt out of installing or updating the user-level AGENTS.md relay.
   USER_AGENTS_RELAY_TARGET
                   Defaults to ${CODEX_HOME_DIR}/AGENTS.md when relay install is enabled.
   ALLOW_USER_AGENTS_RELAY_TARGET_OVERRIDE=1

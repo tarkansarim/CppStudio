@@ -25,3 +25,9 @@ skills, and watch-mode publishing behavior.
 - sync or rollout target safety rules change
 - installed skill parity or companion validation behavior changes
 - public install/manual install commands change
+
+## Current Rollout Posture
+
+- `rollout_to_codex.sh` installs the minimal user-level `AGENTS.md` relay by default and preserves
+  user-owned content outside the marked CppStudio relay block.
+- Set `SKIP_USER_AGENTS_RELAY=1` only for deliberate relay opt-out installs.

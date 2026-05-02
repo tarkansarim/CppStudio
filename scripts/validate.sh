@@ -5,6 +5,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_DIR="${ROOT_DIR}/skills/cpp-cuda-vulkan-studio"
 VALIDATOR="${VALIDATOR:-${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py}"
 full=0
+full_cuda_architectures="${CPPSTUDIO_FULL_CUDA_ARCHITECTURES:-native}"
+skip_cuda_runtime_tests="${CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS:-0}"
 VALIDATE_TMP="$(mktemp -d "${TMPDIR:-/tmp}/cppstudio_validate.XXXXXX")"
 
 cleanup_validate_tmp() {
@@ -36,7 +38,9 @@ Validate the canonical CppStudio skill.
 
   default  Skill metadata, Python syntax, and shell syntax.
   --full   Also scaffold a temporary sample project and run CMake/CTest CPU, Vulkan, CUDA,
-           mixed CUDA/Vulkan, and sanitizer quick lanes.
+           mixed CUDA/Vulkan, and sanitizer quick lanes. Set CPPSTUDIO_FULL_CUDA_ARCHITECTURES
+           on CI hosts without a discoverable NVIDIA GPU; set CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS=1
+           only when CUDA can be compiled but no CUDA runtime device is available.
 EOF
 }
 
@@ -105,6 +109,9 @@ if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         exit 1
     fi
     private_provenance_hits=""
+    # Public README sample labels such as "CUDA Groom Tool" and "Wetbrush Paint Simulation" are
+    # allowed. This guard blocks compact private codenames, local paths, and private provenance
+    # markers that should not leak into the reusable public package.
     private_provenance_patterns=(
         "Cuda""Groom""Tool"
         "Comfy""Native"
@@ -115,6 +122,18 @@ if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         "unreal-hair-""reference"
         "unity-hair-""reference"
     )
+    public_sample_labels=(
+        "CUDA Groom Tool"
+        "Wetbrush Paint Simulation"
+    )
+    for public_sample_label in "${public_sample_labels[@]}"; do
+        for private_pattern in "${private_provenance_patterns[@]}"; do
+            if [[ "${public_sample_label,,}" == "${private_pattern,,}" ]]; then
+                echo "Public sample label is also listed as blocked private provenance: ${public_sample_label}" >&2
+                exit 1
+            fi
+        done
+    done
     for private_pattern in "${private_provenance_patterns[@]}"; do
         pattern_hits="$(
             git -C "${ROOT_DIR}" grep -ni -- "${private_pattern}" -- \
@@ -1172,9 +1191,13 @@ if (( full )); then
         cmake --build --preset vulkan-portability
         ctest --test-dir build/vulkan-portability --output-on-failure --no-tests=error -L vulkan
         scripts/run_vulkan_validation.sh
-        cmake --preset cuda-debug
+        cmake --preset cuda-debug -DPROJECT_CUDA_ARCHITECTURES="${full_cuda_architectures}"
         cmake --build --preset cuda-debug
-        ctest --preset cuda --output-on-failure --no-tests=error
+        if [[ "${skip_cuda_runtime_tests}" == "1" ]]; then
+            echo "Skipping CUDA runtime CTest lane because CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS=1"
+        else
+            ctest --preset cuda --output-on-failure --no-tests=error
+        fi
         compute_generated_capture="$(mktemp "${VALIDATE_TMP}/compute_generated_argv.XXXXXX")"
         PATH="${compute_fake_dir}:${PATH}" \
             COMPUTE_SANITIZER_ARGV_CAPTURE="${compute_generated_capture}" \
@@ -1183,7 +1206,7 @@ if (( full )); then
         grep -Fx "ctest" "${compute_generated_capture}"
         grep -Fx -- "--preset" "${compute_generated_capture}"
         grep -Fx "cuda" "${compute_generated_capture}"
-        cmake --preset cuda-vulkan-combined
+        cmake --preset cuda-vulkan-combined -DPROJECT_CUDA_ARCHITECTURES="${full_cuda_architectures}"
         cmake --build --preset cuda-vulkan-combined
         cmake --preset benchmark
         cmake --build --preset benchmark

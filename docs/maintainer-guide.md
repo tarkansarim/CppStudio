@@ -93,10 +93,11 @@ companions. Maintainer checks can require the full companion set:
 STRICT_COMPANION_SKILLS=1 ./scripts/rollout_to_codex.sh
 ```
 
-Optionally merge the minimal user-level `AGENTS.md` relay during rollout:
+The minimal user-level `AGENTS.md` relay is installed by default during rollout. To opt out for a
+deliberate staging or docs-only install, run:
 
 ```bash
-INSTALL_USER_AGENTS_RELAY=1 ./scripts/rollout_to_codex.sh
+SKIP_USER_AGENTS_RELAY=1 ./scripts/rollout_to_codex.sh
 ```
 
 Before pushing CppStudio to remote, update `CHANGELOG.md` with a concise entry for the tracked
@@ -288,12 +289,12 @@ By default, companion donor-link rollout skips absent optional companion skills.
 `STRICT_COMPANION_SKILLS=1` when validating a full local release environment where
 `cuda-kernel-authoring`, `vulkan-compute-sync`, and `modern-cpp-cmake` must all be installed.
 
-`rollout_to_codex.sh` does not modify user-level `AGENTS.md` by default. With
-`INSTALL_USER_AGENTS_RELAY=1`, it merges only
+`rollout_to_codex.sh` installs the tiny user-level `AGENTS.md` relay by default. It merges only
 `companion-skill-snippets/user-agents/cppstudio-relay.md` into
-`${SYNC_CODEX_HOME:-$HOME/.codex}/AGENTS.md` or `USER_AGENTS_RELAY_TARGET`. Custom relay targets
-require `ALLOW_USER_AGENTS_RELAY_TARGET_OVERRIDE=1`, must be named `AGENTS.md`, and must not be
-symlinks.
+`${SYNC_CODEX_HOME:-$HOME/.codex}/AGENTS.md` or `USER_AGENTS_RELAY_TARGET`. Set
+`SKIP_USER_AGENTS_RELAY=1` only when the relay should not be installed or updated. Custom relay
+targets require `ALLOW_USER_AGENTS_RELAY_TARGET_OVERRIDE=1`, must be named `AGENTS.md`, and must not
+be symlinks.
 
 ## Editing Rules
 
@@ -328,7 +329,10 @@ Missing skill validator: ${HOME}/.codex/skills/.system/skill-creator/scripts/qui
 
 Install or restore the system `skill-creator` skill in the target Codex home, then rerun validation.
 For public CI parity without a local Codex install, run
-`VALIDATOR="${PWD}/scripts/quick_validate_skill.py" ./scripts/validate.sh`.
+`VALIDATOR="${PWD}/scripts/quick_validate_skill.py" ./scripts/validate.sh --full`. On hosted CPU
+CI, set `CPPSTUDIO_FULL_CUDA_ARCHITECTURES` to a concrete architecture and
+`CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS=1` so the generated CUDA lane is compiled without requiring a CUDA
+device for runtime tests.
 
 Watch mode fails with `inotifywait is required for watch mode`:
 

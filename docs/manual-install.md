@@ -43,6 +43,23 @@ cp -a skills/cpp-cuda-vulkan-studio "${staged_skill}"
 python3 "${validator}" "${staged_skill}"
 
 mkdir -p "${skills_root}"
+if [[ -L "${skills_root}" ]]; then
+  echo "Refusing symlinked Codex skills root: ${skills_root}" >&2
+  exit 1
+fi
+if [[ -L "${skill_target}" ]]; then
+  echo "Refusing symlinked skill target: ${skill_target}" >&2
+  exit 1
+fi
+backup_target=""
+restore_on_error() {
+  if [[ -n "${backup_target}" && -e "${backup_target}" ]]; then
+    rm -rf "${skill_target}"
+    mv "${backup_target}" "${skill_target}"
+    echo "Restored previous skill from ${backup_target}" >&2
+  fi
+}
+trap restore_on_error ERR
 if [[ -e "${skill_target}" ]]; then
   backup_target="${skill_target}.backup.$(date +%Y%m%d%H%M%S)"
   mv "${skill_target}" "${backup_target}"
@@ -51,6 +68,7 @@ fi
 mv "${staged_skill}" "${skill_target}"
 rmdir "${staging_root}" 2>/dev/null || true
 python3 "${validator}" "${skill_target}"
+trap - ERR
 ```
 
 Windows PowerShell:
@@ -69,6 +87,17 @@ Copy-Item -Recurse ".\skills\cpp-cuda-vulkan-studio" $StagedSkill
 python $Validator $StagedSkill
 
 New-Item -ItemType Directory -Force $SkillsRoot | Out-Null
+if ((Get-Item $SkillsRoot).LinkType) {
+  throw "Refusing symlinked Codex skills root: $SkillsRoot"
+}
+if (Test-Path $SkillTarget) {
+  $TargetItem = Get-Item $SkillTarget
+  if ($TargetItem.LinkType) {
+    throw "Refusing symlinked skill target: $SkillTarget"
+  }
+}
+$BackupTarget = $null
+try {
 if (Test-Path $SkillTarget) {
   $BackupTarget = "$SkillTarget.backup.$(Get-Date -Format 'yyyyMMddHHmmss')"
   Rename-Item -Path $SkillTarget -NewName (Split-Path $BackupTarget -Leaf)
@@ -77,6 +106,16 @@ if (Test-Path $SkillTarget) {
 Move-Item $StagedSkill $SkillTarget
 Remove-Item -Force $StagingRoot
 python $Validator $SkillTarget
+} catch {
+  if ($BackupTarget -and (Test-Path $BackupTarget)) {
+    if (Test-Path $SkillTarget) {
+      Remove-Item -Recurse -Force $SkillTarget
+    }
+    Rename-Item -Path $BackupTarget -NewName (Split-Path $SkillTarget -Leaf)
+    Write-Error "Restored previous skill from $BackupTarget"
+  }
+  throw
+}
 ```
 
 Restart Codex after manual installation so changed skill metadata is rediscovered.
