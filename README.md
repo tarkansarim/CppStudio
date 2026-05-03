@@ -30,7 +30,7 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
-- `1d2e77a` - Added AgentSys-style performance investigation gates with success criteria,
+- `e79974e` - Added AgentSys-style performance investigation gates with success criteria,
   hypotheses, breaking-point search, repeated validation, and consolidation reports.
 - `ba8fa15` - Added the generated GPU optimization loop with AutoKernel-style baseline,
   keep/revert, report, and commit-highlight maintenance guidance.
