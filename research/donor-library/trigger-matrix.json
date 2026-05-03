@@ -152,7 +152,7 @@
       "name": "initial-native-gpu-project-planning",
       "tags": ["positive", "planning", "vulkan", "gui", "simulation"],
       "prompt_shape": "User wants to plan or brainstorm a substantial new native C++ Vulkan/CUDA/realtime app with unresolved template, GUI, donor, web research, input-device, code-map, and validation choices.",
-      "expected_behavior": "Trigger cppstudio-project-planner before implementation; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; open project intake, choice matrix, CppStudio project archetypes, GUI/HUD option links, donor routing, and run targeted upstream web checks before recommending architecture.",
+      "expected_behavior": "Trigger cppstudio-project-planner before implementation; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; open project intake, choice matrix, CppStudio project archetypes, GUI/HUD option links, donor routing, and run an extensive state-of-the-art upstream web ceiling check before recommending architecture. Separate current leading approaches from legacy or low-effort options and prefer the best available option unless the user asks for a lighter route.",
       "expected_paths": [
         "skills/cppstudio-project-planner/SKILL.md",
         "skills/cppstudio-project-planner/references/project-intake.md",
@@ -169,7 +169,7 @@
       "name": "artist-tool-planning-with-stylus",
       "tags": ["positive", "planning", "games", "gui", "hud"],
       "prompt_shape": "User wants to plan a native C++ realtime artist or game technical-art tool with Wacom/stylus pressure, brush input, viewport HUD, gizmos, and donor-backed architecture choices.",
-      "expected_behavior": "Trigger cppstudio-project-planner and native-cpp-gui-hud; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; treat tablet/stylus pressure, tilt, hover, stroke sampling, undo/redo, viewport picking, and input capture as first-class planning decisions; present GUI choices with source and visual links immediately before any GUI choice question; route through games/native GUI/rendering donor categories before implementation.",
+      "expected_behavior": "Trigger cppstudio-project-planner and native-cpp-gui-hud; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; treat tablet/stylus pressure, tilt, hover, stroke sampling, undo/redo, viewport picking, and input capture as first-class planning decisions; present GUI choices with source and visual links immediately before any GUI choice question; run an extensive state-of-the-art web ceiling check, separate current leading approaches from legacy or low-effort options, and route through games/native GUI/rendering donor categories before implementation.",
       "expected_paths": [
         "skills/cppstudio-project-planner/SKILL.md",
         "skills/cppstudio-project-planner/references/project-intake.md",
@@ -446,7 +446,7 @@
       "name": "realtime-vulkan-fluid-fire-shatter-brainstorm",
       "tags": ["smoke", "positive", "lookup", "vulkan", "simulation", "vfx", "volumes"],
       "prompt_shape": "Brainstorm a realtime Vulkan C++ fluids simulation that can do fire, smoke, water, and shatter.",
-      "expected_behavior": "Do not answer from general model knowledge alone. Route through project archetypes, selection policy, agent lookup, simulation-gpu, and the fluids deep profile; add vfx-particles for realtime effect presentation, volumes-voxels for smoke/fire representation, and geometry-simulation for rigid fragments/collision/destruction. Perform targeted web ceiling checks against upstream or primary sources before ranking architecture options, even if the user only says brainstorm.",
+      "expected_behavior": "Do not answer from general model knowledge alone. Route through project archetypes, selection policy, agent lookup, simulation-gpu, and the fluids deep profile; add vfx-particles for realtime effect presentation, volumes-voxels for smoke/fire representation, and geometry-simulation for rigid fragments/collision/destruction. Perform an extensive state-of-the-art web ceiling check against upstream or primary sources before ranking architecture options, even if the user only says brainstorm. Separate current leading approaches from legacy or low-effort options and prefer the best available option unless the user asks for a lighter route.",
       "expected_paths": [
         "skills/cpp-cuda-vulkan-studio/SKILL.md",
         "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",

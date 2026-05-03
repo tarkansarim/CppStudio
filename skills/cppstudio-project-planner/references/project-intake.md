@@ -7,8 +7,9 @@ GPU/realtime project. The output is a planning packet, not code.
 
 If the project has unresolved choices across template, GUI, GPU lane, dependencies, input devices, or
 donor strategy, gather a pre-plan research brief before asking the user to switch to Plan mode or
-presenting decision questions. The brief should use local CppStudio skill/donor routing plus targeted
-web checks against upstream or primary sources, so the user is choosing from researched options.
+presenting decision questions. The brief should use local CppStudio skill/donor routing plus an
+extensive state-of-the-art web ceiling check against upstream or primary sources, so the user is
+choosing from researched options.
 
 The pre-plan research brief should include:
 
@@ -16,8 +17,13 @@ The pre-plan research brief should include:
 - likely GPU lane and alternatives
 - GUI/HUD candidates with source/docs and visual inspection links
 - relevant donor categories/profiles opened
-- web/current sources checked
-- recommended default and why
+- web/current sources checked, with freshness/adoption signals where available
+- current state-of-the-art or actively popular approaches, separated from legacy approaches
+- recommended best-available default and why
+
+Do not default to the easiest route if a better current approach exists. Recommend simpler, older, or
+lower-ceiling options only as tradeoffs when the user asks for a lightweight solution, conservative
+dependencies, teaching/demo code, or a throwaway prototype.
 
 Then ask the user to switch to Plan mode before implementation, unless the current turn explicitly
 says the session is already in Plan mode.
@@ -63,8 +69,9 @@ Collect these facts before committing to architecture:
   animation clips, groom curves, volume data, AI models, or custom binary formats.
 - Donor grounding: matching production overlay, donor categories, deep profiles, and any reference
   material that is study-only or non-C++ reference-only.
-- Web ceiling check: upstream repos/docs, official SDK docs, papers, samples, or vendor pages that
-  could change the recommendation.
+- Web ceiling check: upstream repos/docs, official SDK docs, recent papers, active samples, release
+  notes, vendor pages, standards docs, and adoption/freshness signals that could change the
+  recommendation.
 - Dependency policy: system packages, vcpkg, Conan, FetchContent, submodules, vendored source,
   commercial SDKs, license constraints, and offline/air-gapped requirements.
 - Code map: ask whether the project should maintain a CppStudio code map for future agents. For
@@ -99,6 +106,7 @@ Artist/input requirements:
 Skills opened:
 Donors opened:
 Web sources checked:
+Current vs legacy:
 Recommended default:
 Questions before implementation:
 Code-map choice:

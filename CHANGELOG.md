@@ -7,6 +7,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 - Changed initial CppStudio planning flow so agents gather a pre-plan research brief first, including
   local donor routing and targeted upstream web checks, then ask the user to switch to Plan mode for
   decisions.
+- Strengthened the project planner's web ceiling check so initial planning looks for current
+  state-of-the-art or actively popular approaches, separates them from legacy options, and avoids
+  defaulting to easy lower-ceiling choices unless the user asks for a lightweight route.
 - Hardened GUI/HUD selection behavior so interactive choice prompts must be preceded by visible
   source/docs and visual-inspection links, with compact URLs included in option descriptions when the
   question UI allows it.

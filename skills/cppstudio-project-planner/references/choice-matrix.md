@@ -50,8 +50,11 @@ substitute for clickable links.
 - For game/tooling wording, open `production/games.md`.
 - For native engineering infrastructure, open `production/native-engineering-infrastructure.md`.
 - For GUI/HUD choices, open `native-gui-hud.md` and the `native-cpp-gui-hud` skill.
-- For current best-choice or ceiling claims, web-check upstream repositories, official SDK docs,
-  standards docs, vendor samples, or papers before ranking options.
+- For current best-choice or ceiling claims, run an extensive state-of-the-art web scan before
+  ranking options. Use upstream repositories, official SDK docs, standards docs, recent papers,
+  vendor samples, release notes, active engine/tool samples, and adoption/freshness signals.
+- Rank the best available current approach first. Separate it from legacy, simpler, teaching, or
+  low-effort approaches; present those only as tradeoffs unless the user asks for a lighter route.
 
 ## Validation Choices
 

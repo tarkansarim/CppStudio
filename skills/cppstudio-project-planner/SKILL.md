@@ -1,6 +1,6 @@
 ---
 name: cppstudio-project-planner
-description: "Plan native C++ GPU/realtime projects before scaffolding or major architecture work: gather requirements, choose CppStudio project archetype/template, Vulkan/CUDA/interop lane, GUI/HUD stack, artist input such as Wacom/stylus pressure, donor categories, web ceiling checks, code-map policy, validation lanes, and user decisions. Use for initial project planning, project intake, architecture blueprints, or when a C++/Vulkan/CUDA/3D/AI/simulation/tool app has multiple unresolved choices."
+description: "Plan native C++ GPU/realtime projects before scaffolding or major architecture work: gather requirements, choose CppStudio project archetype/template, Vulkan/CUDA/interop lane, GUI/HUD stack, artist input such as Wacom/stylus pressure, donor categories, state-of-the-art web ceiling checks, code-map policy, validation lanes, and user decisions. Use for initial project planning, project intake, architecture blueprints, 'what stack should we use' questions, best-current-stack selection, or when a C++/Vulkan/CUDA/3D/AI/simulation/tool app has multiple unresolved choices."
 ---
 
 # CppStudio Project Planner
@@ -17,10 +17,16 @@ unresolved.
 For a substantial initial project request, gather a pre-plan research brief before asking the user to
 switch to Plan mode or presenting decision questions. Do not jump straight into question UI.
 
-The pre-plan research brief must open the relevant local skill/donor references and run targeted web
-checks against upstream/primary sources for current GUI, SDK, simulation, renderer, dependency, or
-hardware choices. Keep it concise, but it must be enough that the user is choosing between researched
-options rather than unsupported guesses.
+The pre-plan research brief must open the relevant local skill/donor references and run an extensive
+state-of-the-art web ceiling check against upstream/primary sources for current GUI, SDK, simulation,
+renderer, dependency, or hardware choices. Keep the user-facing brief concise, but the research must
+be deep enough that the user is choosing between current, competitive options rather than unsupported
+guesses.
+
+Default to the best available approach for the target project, not the easiest implementation. Do not
+recommend a simpler, older, or lower-ceiling route just because it is quick to scaffold unless the
+user explicitly asks for a lighter solution, throwaway prototype, conservative dependency set, or
+teaching/demo path.
 
 Then ask for Plan mode with this handoff:
 
@@ -59,13 +65,18 @@ it.
 2. Run a pre-plan research pass before asking for choices: target platform implications, likely
    template/archetype, GPU lane, GUI/HUD stack, input devices, donor categories, dependency policy,
    validation budget, and code-map preference.
-3. Run a targeted web ceiling check for current dependencies, SDKs, GUI/toolkit choices, papers,
-   samples, or vendor guidance that could affect architecture. Prefer upstream docs, official repos,
-   standards bodies, papers, and vendor documentation.
+3. Run an extensive state-of-the-art web ceiling check for current dependencies, SDKs, GUI/toolkit
+   choices, papers, samples, engines, or vendor guidance that could affect architecture. Prefer
+   upstream docs, official repos, standards bodies, recent papers, vendor documentation, active
+   samples, release notes, and adoption signals.
 4. Open the smallest matching donor categories and profiles before recommending solvers, renderer
    backbones, GUI stacks, asset/runtime formats, AI runtimes, or simulation architecture.
-5. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
-   routes, and web sources checked, then ask for Plan mode and only then ask decision questions.
+5. Separate current leading approaches from legacy/outdated approaches, state the freshness evidence,
+   and call out when a local donor is still useful only as reference because the current best approach
+   has moved on.
+6. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
+   routes, web sources checked, current-vs-legacy notes, and the reasoning for the best available
+   option, then ask for Plan mode and only then ask decision questions.
 
 ## Planning Packet
 
@@ -79,6 +90,7 @@ Every substantial plan should include:
   undo/redo stroke recording, multi-touch, SpaceMouse, XR controllers, or viewport picking
 - skill routes opened and donor categories/profiles selected
 - web sources checked and what changed because of them
+- current state-of-the-art or actively popular approaches, separated from legacy approaches
 - unresolved user decisions, grouped into no more than three questions at a time
 - code-map recommendation and whether it is accepted, declined, or pending
 - validation/profiling plan for the first implementation milestone
@@ -93,3 +105,5 @@ Every substantial plan should include:
   and ImPlot, then compares Qt/wxWidgets or RmlUi/NoesisGUI when the product shape calls for them.
 - For brush, sculpt, paint, grooming, terrain, rigging, animation, or other artist-facing tools,
   treat tablet/stylus input as a first-class planning decision.
+- Prefer the highest-quality current approach that fits the target project. Offer simpler legacy or
+  low-effort approaches only as explicit tradeoffs, not as the default, unless the user asks for that.

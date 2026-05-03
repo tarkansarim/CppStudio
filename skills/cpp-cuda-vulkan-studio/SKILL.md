@@ -1,6 +1,6 @@
 ---
 name: cpp-cuda-vulkan-studio
-description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. For big initial planning, research first, then ask for Plan mode."
+description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. For big initial planning or 'what stack should we use' questions, use cppstudio-project-planner first, research first, then ask for Plan mode."
 ---
 
 # C++ CUDA Vulkan Studio
@@ -16,7 +16,8 @@ decision questions.
 
 Minimum pre-plan research pass:
 
-- Open `cppstudio-project-planner` when available, `references/project-archetypes.md`, and the
+- Open `cppstudio-project-planner` immediately when available; do not rely on this top-level skill
+  body alone for substantial project intake. Also open `references/project-archetypes.md` and the
   smallest matching donor-router/category files.
 - For GUI/HUD/editor choices, open `native-cpp-gui-hud` and its GUI option matrix, then verify
   current upstream official docs/repos or visual pages before ranking options.
@@ -84,14 +85,16 @@ When this skill is active, work like a native C++ GPU systems engineer:
   conceptual chat. Before making concrete solver, renderer, dependency, subsystem, or MVP-order
   recommendations, open the smallest relevant donor categories/profiles and state which guidance is
   donor-backed versus inference. If the prompt asks for current best choices, state-of-the-art,
-  "ceiling", or rapidly moving GPU/tooling options, run a targeted web check against upstream or
-  primary sources before ranking choices.
+  "ceiling", or rapidly moving GPU/tooling options, run an extensive web ceiling check against
+  upstream or primary sources before ranking choices. Separate current leading approaches from
+  legacy, teaching, or low-effort approaches, and prefer the best available option unless the user
+  asks for a lighter route.
 - For ambitious realtime simulation/graphics brainstorms, including fluid, fire, smoke, water,
   destruction, shatter, neural 3D, upscaling/reconstruction, XR, or renderer architecture that is
-  likely to depend on current engines, SDKs, papers, samples, or hardware capabilities, run a small
-  web ceiling check even when the user only says "brainstorm." Use official upstream repos, vendor
-  docs, papers, or project docs; then separate current-source evidence from local donor guidance and
-  inference.
+  likely to depend on current engines, SDKs, papers, samples, or hardware capabilities, run a real
+  state-of-the-art web ceiling check even when the user only says "brainstorm." Use official upstream
+  repos, vendor docs, recent papers, project docs, active samples, release notes, and adoption signals;
+  then separate current-source evidence from local donor guidance and inference.
 - Never copy study-only, incompatible-license, non-C++ reference-only, or backend-mismatched donor
   code into generated projects. Use those donors for concepts, then translate through the active
   Vulkan, CUDA, or explicit interop lane.

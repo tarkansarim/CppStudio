@@ -126,6 +126,12 @@ grep -q "scripts/bootstrap_code_map.py --enable --force" \
     "${SKILL_DIR}/assets/app-library-template/README.md"
 grep -q "do a pre-plan research pass before asking the user to switch to Plan mode" \
     "${SKILL_DIR}/SKILL.md"
+grep -q "Open \`cppstudio-project-planner\` immediately when available" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "Separate current leading approaches from" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "extensive state-of-the-art web ceiling check" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "visible link table has been shown" \
     "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
 if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
@@ -628,6 +634,8 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning; 
             grep -q "cppstudio-project-planner" "${trigger_tag_md}"
             grep -q "project-intake.md" "${trigger_tag_md}"
             grep -q "pre-plan research brief before asking the user to switch to Plan mode" "${trigger_tag_md}"
+            grep -q "extensive state-of-the-art upstream web ceiling check" "${trigger_tag_md}"
+            grep -q "prefer the best available option unless the user asks for a lighter route" "${trigger_tag_md}"
             ;;
         *)
             grep -q "${trigger_tag}" "${trigger_tag_md}"
