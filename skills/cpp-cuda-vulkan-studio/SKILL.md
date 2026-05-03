@@ -1,11 +1,31 @@
 ---
 name: cpp-cuda-vulkan-studio
-description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, CUDA architecture policy, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests in native GPU projects, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices for realtime tools, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, engine pipelines, AI runtimes, neural 3D, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code."
+description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. For big initial planning, first ask the user to switch to Plan mode."
 ---
 
 # C++ CUDA Vulkan Studio
 
 Use this skill when a native C++ GPU, C++/Vulkan, C++/CUDA, or mixed CUDA/Vulkan repo needs a repeatable professional development backbone or maintained code map, not a one-off local build. There is no separate CppStudio code-map skill; the code-map protocol lives here. This skill coordinates the more specific global skills instead of replacing them.
+
+## Initial Planning Gate
+
+For a substantial new project, brainstorm, or first big application plan with unresolved template,
+GUI/HUD, input-device, Vulkan/CUDA lane, donor, web-check, code-map, dependency, or validation
+choices, the first visible response must ask the user to switch to Plan mode before architecture
+advice or implementation details.
+
+Use this handoff before any solver ranking, donor summary, GUI comparison, or MVP design:
+
+```text
+Please switch to Plan mode before implementation so I can ask the project-shaping questions. I need
+to lock down the template, GUI/input stack, GPU lane, donor routes, web checks, code-map choice, and
+validation plan before files are created.
+```
+
+This rule applies even if `cppstudio-project-planner` is not listed in the current session. If the
+current turn explicitly says the session is already in Plan mode, proceed with the planning packet.
+If Plan mode is unavailable or the user says to continue without it, ask no more than three blocking
+questions at a time and do not scaffold until the critical choices are clear.
 
 ## Agent Mindset
 
@@ -70,8 +90,9 @@ When this skill is active, work like a native C++ GPU systems engineer:
 
 - Use `cppstudio-project-planner` before scaffolding or major architecture work when the project has
   unresolved template, GUI/HUD, GPU lane, donor, input-device, code-map, dependency, or validation
-  decisions. The planner should ask the user to switch to Plan mode for substantial project intake,
-  gather choices, run donor and web checks, then hand implementation back to this skill.
+  decisions. For substantial project intake, the planner's first visible response must ask the user
+  to switch to Plan mode before implementation, gather choices, run donor and web checks, then hand
+  implementation back to this skill.
 - Use `modern-cpp-cmake` for CMake target structure, source ownership, presets, CTest, and dependency wiring.
 - Use `cuda-kernel-authoring` when adding or reviewing custom CUDA kernels or launch wrappers.
 - Use `vulkan-compute-sync` when the project contains Vulkan compute, render, synchronization, descriptor, or frame-lifetime work.

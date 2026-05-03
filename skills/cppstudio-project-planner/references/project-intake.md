@@ -6,9 +6,20 @@ GPU/realtime project. The output is a planning packet, not code.
 ## Plan Mode Gate
 
 If the project has unresolved choices across template, GUI, GPU lane, dependencies, input devices, or
-donor strategy, ask the user to switch to Plan mode before implementation. Explain that the benefit
-is fewer wrong dependencies, cleaner Vulkan/CUDA lane boundaries, better donor grounding, and a
+donor strategy, the first visible response must ask the user to switch to Plan mode before
+implementation, unless the current turn explicitly says the session is already in Plan mode. Do this
+before presenting a full project packet or architecture recommendation.
+
+Use a direct handoff:
+
+```text
+Please switch to Plan mode before implementation so I can ask the project-shaping questions. I need
+to lock down the template, GUI/input stack, GPU lane, donor routes, web checks, code-map choice, and
 validation plan before files are created.
+```
+
+The benefit is fewer wrong dependencies, cleaner Vulkan/CUDA lane boundaries, better donor
+grounding, and a validation plan before files are created.
 
 If Plan mode is unavailable, ask no more than three questions at a time. Do not scaffold until the
 critical choices are resolved.

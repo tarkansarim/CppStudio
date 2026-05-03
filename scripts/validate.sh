@@ -124,6 +124,8 @@ for rel_path in "${required_repo_files[@]}"; do
 done
 grep -q "scripts/bootstrap_code_map.py --enable --force" \
     "${SKILL_DIR}/assets/app-library-template/README.md"
+grep -q "This rule applies even if \`cppstudio-project-planner\` is not listed" \
+    "${SKILL_DIR}/SKILL.md"
 if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     for rel_path in "${required_repo_files[@]}"; do
         if ! git -C "${ROOT_DIR}" ls-files --error-unmatch "${rel_path}" >/dev/null 2>&1; then
@@ -622,6 +624,7 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning; 
         planning)
             grep -q "cppstudio-project-planner" "${trigger_tag_md}"
             grep -q "project-intake.md" "${trigger_tag_md}"
+            grep -q "first visible response must ask the user to switch to Plan mode" "${trigger_tag_md}"
             ;;
         *)
             grep -q "${trigger_tag}" "${trigger_tag_md}"

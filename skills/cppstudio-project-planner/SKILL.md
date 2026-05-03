@@ -12,10 +12,21 @@ implementation to the specific CppStudio, GUI, Vulkan, CUDA, CMake, and donor ro
 ## Core Rule
 
 Do not scaffold or make broad architecture commitments while major project-shaping choices are still
-unresolved. If the session is not already in Plan mode and the work is more than a tiny one-shot,
-ask the user to switch to Plan mode before implementation so you can ask the required planning
-questions. If Plan mode tooling is unavailable, ask at most three concise questions at a time and
-continue only after the critical choices are clear.
+unresolved.
+
+For a substantial initial project request, the first visible response must include a Plan mode
+handoff before any architecture packet, donor ranking, or implementation advice, unless the current
+turn explicitly says the session is already in Plan mode. Use this shape:
+
+```text
+Please switch to Plan mode before implementation so I can ask the project-shaping questions. I need
+to lock down the template, GUI/input stack, GPU lane, donor routes, web checks, code-map choice, and
+validation plan before files are created.
+```
+
+After that handoff, ask the first one to three blocking questions. If Plan mode tooling is
+unavailable or the user explicitly says to continue without it, keep the planning conversation to no
+more than three questions at a time and do not scaffold until the critical choices are clear.
 
 ## What To Load
 
