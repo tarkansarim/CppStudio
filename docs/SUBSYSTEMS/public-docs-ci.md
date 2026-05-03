@@ -43,3 +43,5 @@ workflow, and repo banner/sample assets.
   CUDA device is available.
 - Hosted CPU CI selects the available Lavapipe ICD path before running Vulkan runtime smoke tests;
   Ubuntu packages may install either `lvp_icd.json` or an architecture-suffixed filename.
+- Hosted CI redirects Python bytecode from syntax checks into the runner temp directory so generated
+  `__pycache__` trees never contaminate the skill package before manifest validation.

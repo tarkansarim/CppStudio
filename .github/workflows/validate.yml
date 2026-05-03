@@ -75,6 +75,8 @@ jobs:
           shellcheck skills/cpp-cuda-vulkan-studio/scripts/*.sh
 
       - name: Check Python syntax
+        env:
+          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/python-bytecode-cache
         run: |
           python3 -m py_compile scripts/*.py skills/cpp-cuda-vulkan-studio/scripts/*.py
 
