@@ -108,12 +108,14 @@
         "README.md",
         "CONTRIBUTING.md",
         "CHANGELOG.md",
+        "docs/BACKLOG.md",
         "docs/host-toolchain-setup.md"
       ],
       "primary_paths": [
         "README.md",
         "CONTRIBUTING.md",
         "CHANGELOG.md",
+        "docs/BACKLOG.md",
         ".github/workflows/validate.yml",
         ".nojekyll",
         "assets/cppstudio-banner.png",

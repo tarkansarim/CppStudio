@@ -8,6 +8,7 @@ workflow, and repo banner/sample assets.
 - `README.md`
 - `CONTRIBUTING.md`
 - `CHANGELOG.md`
+- `docs/BACKLOG.md`
 - `docs/host-toolchain-setup.md`
 
 ## Primary Paths
@@ -15,6 +16,7 @@ workflow, and repo banner/sample assets.
 - `README.md`
 - `CONTRIBUTING.md`
 - `CHANGELOG.md`
+- `docs/BACKLOG.md`
 - `.github/workflows/validate.yml`
 - `.nojekyll`
 - `assets/cppstudio-banner.png`
@@ -24,6 +26,7 @@ workflow, and repo banner/sample assets.
 ## Update When
 
 - public install/use instructions change
+- public backlog or future roadmap notes change
 - public code-map positioning, readiness protocol, or user-facing workflow changes
 - contribution, release, or change-history policy changes
 - host setup commands or GPU toolchain notes change

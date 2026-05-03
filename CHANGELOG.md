@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added `docs/BACKLOG.md` for future CppStudio ideas, including optimization loops, artist-tool
+  recipes, engine/DCC bridge guidance, project profiles, packaging, and donor refresh work.
 - Made the README opening description agent-agnostic so Codex-specific wording is kept to install
   and packaging instructions instead of the main positioning copy.
 - Clarified the README positioning: CppStudio is a native C++ GPU development harness delivered as a

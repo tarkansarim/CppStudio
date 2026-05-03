@@ -395,6 +395,7 @@ source of truth. Edit this repo, then have an agent publish with the repo script
 - [Maintainer guide](docs/maintainer-guide.md): validation, sync, rollout, generated-project, donor,
   and troubleshooting details for agents editing this repo
 - [Contributing](CONTRIBUTING.md): public contribution, donor update, validation, and release notes
+- [Backlog](docs/BACKLOG.md): candidate ideas for future harness, donor, code-map, and tooling work
 - [Changelog](CHANGELOG.md): tracked change history for pushed repo changes
 - [Codebase architecture index](docs/CODEBASE_ARCHITECTURE_INDEX.md): maintained map for agents
   editing CppStudio itself
