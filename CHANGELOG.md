@@ -4,6 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a bundled `cppstudio-project-planner` skill for initial native C++ GPU project intake before
+  scaffolding, including Plan mode handoff, template/archetype choice, GPU lane choice, GUI/HUD
+  links, donor routing, web ceiling checks, code-map policy, validation planning, and artist-input
+  requirements such as Wacom/stylus pressure.
+- Updated rollout, validation, package-integrity docs, manual install docs, and trigger-matrix
+  coverage so the project planner installs and validates as a bundled auxiliary skill.
 - Added a bundled `native-cpp-gui-hud` skill and native GUI/HUD donor route covering Dear ImGui,
   ImGuizmo, ImPlot, Qt, wxWidgets, RmlUi, NoesisGUI, Nuklear, FLTK, libui-ng, and CEF, with visual
   inspection links required when agents present options.

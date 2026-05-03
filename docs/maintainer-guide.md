@@ -86,6 +86,7 @@ For a bundled auxiliary skill, set `SKILL_NAME` explicitly:
 
 ```bash
 SKILL_NAME=native-cpp-gui-hud ./scripts/sync_to_codex.sh
+SKILL_NAME=cppstudio-project-planner ./scripts/sync_to_codex.sh
 ```
 
 Publish the main skill, bundled auxiliary skills, and companion-skill donor-library links:
@@ -271,9 +272,9 @@ to:
 ${SYNC_CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio
 ```
 
-Set `SKILL_NAME=native-cpp-gui-hud` to sync the bundled GUI/HUD skill instead. Normal public
-installation should use `rollout_to_codex.sh`, which installs the main skill and bundled auxiliary
-skills together.
+Set `SKILL_NAME=native-cpp-gui-hud` or `SKILL_NAME=cppstudio-project-planner` to sync a bundled
+auxiliary skill instead. Normal public installation should use `rollout_to_codex.sh`, which installs
+the main skill and bundled auxiliary skills together.
 
 It intentionally ignores `CODEX_HOME` unless `SYNC_CODEX_HOME` or `TARGET_DIR` is provided, because
 nested Codex sessions may set isolated homes.
@@ -291,6 +292,7 @@ only after package contents change:
 ```bash
 python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio --write-manifest
 python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud --write-manifest
+python3 scripts/validate_skill_package.py skills/cppstudio-project-planner --write-manifest
 ```
 
 Then validate normally:
@@ -298,6 +300,7 @@ Then validate normally:
 ```bash
 python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio
 python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud
+python3 scripts/validate_skill_package.py skills/cppstudio-project-planner
 ```
 
 Use a custom Codex home:

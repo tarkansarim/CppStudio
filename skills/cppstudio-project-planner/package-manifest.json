@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "package": "cppstudio-project-planner",
+  "hash_algorithm": "sha256",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "role": "main",
+      "disclosure_group": "entrypoint",
+      "size": 4625,
+      "sha256": "cc8245d6f5b535157cc90da9d32ff1e17a11e876764eb715c153eaf68432f9a5"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "role": "metadata",
+      "disclosure_group": "entrypoint",
+      "size": 282,
+      "sha256": "ef16db8bca2d8ebbe64e48d92ddcf35d8477873d3a4c943cd946b5e051fda70e"
+    },
+    {
+      "path": "references/choice-matrix.md",
+      "role": "reference",
+      "disclosure_group": "reference",
+      "size": 5428,
+      "sha256": "466687ad1a06018a01bd801c15aa066e7836ba8a6a5be5392f54d89e3492cd72"
+    },
+    {
+      "path": "references/project-intake.md",
+      "role": "reference",
+      "disclosure_group": "reference",
+      "size": 3866,
+      "sha256": "3ace0127ebe1321d4635aa1cf0a8a88057270a04e5a244a294f611905342b8e6"
+    }
+  ]
+}

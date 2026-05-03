@@ -21,6 +21,7 @@ skills, and watch-mode publishing behavior.
 - `scripts/validate_code_map.py`
 - `skills/cpp-cuda-vulkan-studio/package-manifest.json`
 - `skills/native-cpp-gui-hud/package-manifest.json`
+- `skills/cppstudio-project-planner/package-manifest.json`
 - `skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py`
 
 ## Update When
@@ -56,8 +57,8 @@ skills, and watch-mode publishing behavior.
   documented Linux, macOS, and WSL install path does not require GNU `realpath -m`.
 - Rollout snapshots the main skill, auxiliary bundled skills, matching companion skill files, and the optional user-level
   `AGENTS.md` relay target before mutation, then restores them if a later step fails.
-- `rollout_to_codex.sh` installs bundled auxiliary skills such as `native-cpp-gui-hud`, installs the
-  minimal user-level `AGENTS.md` relay by default, and preserves
+- `rollout_to_codex.sh` installs bundled auxiliary skills such as `native-cpp-gui-hud` and
+  `cppstudio-project-planner`, installs the minimal user-level `AGENTS.md` relay by default, and preserves
   user-owned content outside the marked CppStudio relay block.
 - Set `SKIP_USER_AGENTS_RELAY=1` only for deliberate relay opt-out installs.
 - `validate.sh` includes a synthetic GPU optimization fixture that exercises success-criteria

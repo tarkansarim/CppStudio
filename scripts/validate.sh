@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_DIR="${ROOT_DIR}/skills/cpp-cuda-vulkan-studio"
-AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud")
+AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner")
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
 REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
@@ -101,6 +101,11 @@ required_repo_files=(
     "skills/native-cpp-gui-hud/agents/openai.yaml"
     "skills/native-cpp-gui-hud/references/gui-options.md"
     "skills/native-cpp-gui-hud/package-manifest.json"
+    "skills/cppstudio-project-planner/SKILL.md"
+    "skills/cppstudio-project-planner/agents/openai.yaml"
+    "skills/cppstudio-project-planner/references/project-intake.md"
+    "skills/cppstudio-project-planner/references/choice-matrix.md"
+    "skills/cppstudio-project-planner/package-manifest.json"
     "research/donor-library/trigger-regression-checklist.md"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/.gitignore"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md"
@@ -594,7 +599,7 @@ python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     --repo-root "${ROOT_DIR}" \
     --tag lookup >"${trigger_lookup_md}"
 grep -q "agent-lookup.md" "${trigger_lookup_md}"
-for trigger_tag in dcc materials volumes vfx games infrastructure gui; do
+for trigger_tag in dcc materials volumes vfx games infrastructure gui planning; do
     trigger_tag_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_${trigger_tag}.XXXXXX.md")"
     python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
         "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
@@ -613,6 +618,10 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui; do
         gui)
             grep -q "native-gui-hud.md" "${trigger_tag_md}"
             grep -q "native-cpp-gui-hud" "${trigger_tag_md}"
+            ;;
+        planning)
+            grep -q "cppstudio-project-planner" "${trigger_tag_md}"
+            grep -q "project-intake.md" "${trigger_tag_md}"
             ;;
         *)
             grep -q "${trigger_tag}" "${trigger_tag_md}"

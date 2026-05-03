@@ -149,6 +149,40 @@
       ]
     },
     {
+      "name": "initial-native-gpu-project-planning",
+      "tags": ["positive", "planning", "vulkan", "gui", "simulation"],
+      "prompt_shape": "User wants to plan or brainstorm a substantial new native C++ Vulkan/CUDA/realtime app with unresolved template, GUI, donor, web research, input-device, code-map, and validation choices.",
+      "expected_behavior": "Trigger cppstudio-project-planner before implementation; ask for Plan mode when choices are unresolved; open project intake, choice matrix, CppStudio project archetypes, GUI/HUD option links, donor routing, and run targeted upstream web checks before recommending architecture.",
+      "expected_paths": [
+        "skills/cppstudio-project-planner/SKILL.md",
+        "skills/cppstudio-project-planner/references/project-intake.md",
+        "skills/cppstudio-project-planner/references/choice-matrix.md",
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/README.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/native-cpp-gui-hud/SKILL.md",
+        "skills/native-cpp-gui-hud/references/gui-options.md"
+      ]
+    },
+    {
+      "name": "artist-tool-planning-with-stylus",
+      "tags": ["positive", "planning", "games", "gui", "hud"],
+      "prompt_shape": "User wants to plan a native C++ realtime artist or game technical-art tool with Wacom/stylus pressure, brush input, viewport HUD, gizmos, and donor-backed architecture choices.",
+      "expected_behavior": "Trigger cppstudio-project-planner and native-cpp-gui-hud; treat tablet/stylus pressure, tilt, hover, stroke sampling, undo/redo, viewport picking, and input capture as first-class planning decisions; present GUI choices with source and visual links; route through games/native GUI/rendering donor categories before implementation.",
+      "expected_paths": [
+        "skills/cppstudio-project-planner/SKILL.md",
+        "skills/cppstudio-project-planner/references/project-intake.md",
+        "skills/cppstudio-project-planner/references/choice-matrix.md",
+        "skills/native-cpp-gui-hud/SKILL.md",
+        "skills/native-cpp-gui-hud/references/gui-options.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/production/games.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md"
+      ]
+    },
+    {
       "name": "game-technical-art-native-ui-overlay",
       "tags": ["positive", "games", "gui", "hud"],
       "prompt_shape": "Game technical art tool request asks for native C++ artist panels, viewport controls, debug HUDs, inspectors, gizmos, performance graphs, or editor UI around a realtime renderer.",

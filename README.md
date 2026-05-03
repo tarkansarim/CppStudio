@@ -115,6 +115,14 @@ Expected result: Codex loads `cpp-cuda-vulkan-studio`, keeps the project Vulkan-
 explicitly needed, scaffolds or upgrades the native C++ project, and opens only the donor references
 that match the task.
 
+For larger apps where template, GUI, input devices, donors, or validation choices matter, ask for
+planning first:
+
+```text
+Plan a realtime Vulkan C++ artist tool before implementation. Include GUI options, donor references,
+web checks, stylus/input needs, and the questions I need to answer.
+```
+
 ## Requirements
 
 For installing CppStudio as a Codex skill:
@@ -286,6 +294,10 @@ when `.cppstudio/code-map-state.json` says `enabled`.
 
 - `cpp-cuda-vulkan-studio`: installed user-level skill for Vulkan-first C++ GPU, CUDA, combined
   CUDA/Vulkan builds, explicit interop work, project scaffolding, validation lanes, and donor routing.
+- `cppstudio-project-planner`: installed user-level skill for upfront project intake before
+  scaffolding or major architecture work. It chooses the CppStudio archetype/template, GPU lane,
+  GUI/HUD options, donor routes, web checks, artist-input requirements such as Wacom/stylus pressure,
+  code-map policy, and validation plan with the user.
 - `native-cpp-gui-hud`: installed user-level skill for choosing native C++ GUI, HUD, editor UI,
   viewport overlay, gizmo, plotting, desktop UI, runtime/game UI, and embedded-web UI stacks. When it
   presents options, it includes links where users can inspect how each GUI looks.
@@ -441,10 +453,13 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
 ## Repository Layout
 
 - `skills/cpp-cuda-vulkan-studio/`: source of truth for the user-level Codex skill
+- `skills/cppstudio-project-planner/`: bundled planning skill for project intake, option gathering,
+  GUI links, donor routes, web checks, and implementation handoff
+- `skills/native-cpp-gui-hud/`: bundled GUI/HUD skill for native C++ tool UI choices and visual
+  inspection links
 - `skills/cpp-cuda-vulkan-studio/assets/app-library-template/`: generated-project template
 - `skills/cpp-cuda-vulkan-studio/references/`: project archetypes and donor-reference guidance
-- `skills/cpp-cuda-vulkan-studio/package-manifest.json`: deterministic skill package inventory and
-  integrity metadata
+- `skills/*/package-manifest.json`: deterministic skill package inventories and integrity metadata
 - `.cppstudio/` and `docs/CODEBASE_*`: maintained code map for this CppStudio repo
 - `companion-skill-snippets/`: managed donor-link snippets for companion skills and user-level relay
 - `research/`: source research and trigger-test notes

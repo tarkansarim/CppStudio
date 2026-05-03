@@ -33,6 +33,7 @@ ALLOWED_TAGS = {
     "materials",
     "neural-3d",
     "path-tracing",
+    "planning",
     "positive",
     "negative",
     "rendering",

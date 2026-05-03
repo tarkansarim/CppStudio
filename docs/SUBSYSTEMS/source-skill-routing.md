@@ -9,12 +9,14 @@ generated-project workflow instructions.
 - `AGENTS.md`
 - `skills/cpp-cuda-vulkan-studio/SKILL.md`
 - `skills/native-cpp-gui-hud/SKILL.md`
+- `skills/cppstudio-project-planner/SKILL.md`
 - `skills/cpp-cuda-vulkan-studio/references/project-archetypes.md`
 
 ## Primary Paths
 
 - `skills/cpp-cuda-vulkan-studio/SKILL.md`
 - `skills/native-cpp-gui-hud/SKILL.md`
+- `skills/cppstudio-project-planner/SKILL.md`
 - `.codex/skills/cppstudio-repo-onboarding/SKILL.md`
 
 ## Update When
@@ -28,3 +30,5 @@ generated-project workflow instructions.
 - donor-grounding or web-ceiling-check expectations for native GPU brainstorming/design proposals
   change
 - native C++ GUI/HUD/editor UI skill routing or option-presentation behavior changes
+- initial native C++ GPU project planning, Plan mode handoff, template-choice, or artist-input
+  planning behavior changes

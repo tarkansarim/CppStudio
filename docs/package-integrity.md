@@ -11,6 +11,7 @@ Each shipped skill directory contains its own manifest. Current packaged skills 
 ```text
 skills/cpp-cuda-vulkan-studio/package-manifest.json
 skills/native-cpp-gui-hud/package-manifest.json
+skills/cppstudio-project-planner/package-manifest.json
 ```
 
 This manifest records every shipped skill file except the manifest itself. Each entry includes:
@@ -27,6 +28,7 @@ change:
 ```bash
 python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio --write-manifest
 python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud --write-manifest
+python3 scripts/validate_skill_package.py skills/cppstudio-project-planner --write-manifest
 ```
 
 Validate it without rewriting:
@@ -34,6 +36,7 @@ Validate it without rewriting:
 ```bash
 python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio
 python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud
+python3 scripts/validate_skill_package.py skills/cppstudio-project-planner
 ```
 
 ## Progressive Disclosure Groups

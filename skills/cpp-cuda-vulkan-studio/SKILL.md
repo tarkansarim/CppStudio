@@ -1,6 +1,6 @@
 ---
 name: cpp-cuda-vulkan-studio
-description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, CUDA architecture policy, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, code-map requests in native GPU projects, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices for realtime tools, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, engine pipelines, AI runtimes, neural 3D, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code."
+description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, CUDA architecture policy, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests in native GPU projects, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices for realtime tools, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, engine pipelines, AI runtimes, neural 3D, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code."
 ---
 
 # C++ CUDA Vulkan Studio
@@ -68,6 +68,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
 
 ## Coordination
 
+- Use `cppstudio-project-planner` before scaffolding or major architecture work when the project has
+  unresolved template, GUI/HUD, GPU lane, donor, input-device, code-map, dependency, or validation
+  decisions. The planner should ask the user to switch to Plan mode for substantial project intake,
+  gather choices, run donor and web checks, then hand implementation back to this skill.
 - Use `modern-cpp-cmake` for CMake target structure, source ownership, presets, CTest, and dependency wiring.
 - Use `cuda-kernel-authoring` when adding or reviewing custom CUDA kernels or launch wrappers.
 - Use `vulkan-compute-sync` when the project contains Vulkan compute, render, synchronization, descriptor, or frame-lifetime work.
