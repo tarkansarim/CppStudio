@@ -15,6 +15,11 @@ When comparing GUI options for the user, always include links where they can ins
 or example output. Do not present a GUI choice as abstract library trivia; show what it looks like and
 state what kind of app it fits.
 
+If using interactive question UI such as `request_user_input`, do not ask the GUI/HUD choice question
+until a visible link table has been shown in the conversation immediately before the question. Also
+include compact source or visual URLs in the option descriptions when the question UI allows it. The
+choice UI alone is not enough if it only shows short labels and prose.
+
 ## Default Selection
 
 - For Vulkan/CUDA/realtime tools, default to **Dear ImGui + ImGuizmo + ImPlot** unless the user wants
@@ -42,10 +47,11 @@ state what kind of app it fits.
    - source/docs link
    - visual/gallery/examples link
    - license/dependency caveat
-6. Before adding a dependency, check the target repo's package policy and exact upstream license.
-7. If CppStudio is available, read its donor category first:
+6. Only after that link table is visible, ask the user to choose among the researched options.
+7. Before adding a dependency, check the target repo's package policy and exact upstream license.
+8. If CppStudio is available, read its donor category first:
    `cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md`.
-8. For current best-choice or version-sensitive questions, web-check official project docs/repos before
+9. For current best-choice or version-sensitive questions, web-check official project docs/repos before
    ranking options.
 
 ## Bundled Reference

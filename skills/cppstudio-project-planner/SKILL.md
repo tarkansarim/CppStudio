@@ -14,9 +14,15 @@ implementation to the specific CppStudio, GUI, Vulkan, CUDA, CMake, and donor ro
 Do not scaffold or make broad architecture commitments while major project-shaping choices are still
 unresolved.
 
-For a substantial initial project request, the first visible response must include a Plan mode
-handoff before any architecture packet, donor ranking, or implementation advice, unless the current
-turn explicitly says the session is already in Plan mode. Use this shape:
+For a substantial initial project request, gather a pre-plan research brief before asking the user to
+switch to Plan mode or presenting decision questions. Do not jump straight into question UI.
+
+The pre-plan research brief must open the relevant local skill/donor references and run targeted web
+checks against upstream/primary sources for current GUI, SDK, simulation, renderer, dependency, or
+hardware choices. Keep it concise, but it must be enough that the user is choosing between researched
+options rather than unsupported guesses.
+
+Then ask for Plan mode with this handoff:
 
 ```text
 Please switch to Plan mode before implementation so I can ask the project-shaping questions. I need
@@ -24,9 +30,15 @@ to lock down the template, GUI/input stack, GPU lane, donor routes, web checks, 
 validation plan before files are created.
 ```
 
-After that handoff, ask the first one to three blocking questions. If Plan mode tooling is
-unavailable or the user explicitly says to continue without it, keep the planning conversation to no
-more than three questions at a time and do not scaffold until the critical choices are clear.
+If the current turn explicitly says the session is already in Plan mode, still do the pre-plan
+research brief before calling any question UI. If Plan mode tooling is unavailable or the user
+explicitly says to continue without it, keep the planning conversation to no more than three
+questions at a time and do not scaffold until the critical choices are clear.
+
+For GUI/HUD/tool UI choices, links must be visible at decision time. Before using interactive
+question UI such as `request_user_input`, present a compact option table with source/docs and visual
+inspection links; also include a compact URL in each option description when the question UI allows
+it.
 
 ## What To Load
 
@@ -44,16 +56,16 @@ more than three questions at a time and do not scaffold until the critical choic
 1. Classify the project: renderer, simulation, artist tool, game technical-art tool, DCC/asset
    pipeline, AI runtime, CUDA library, Vulkan app, explicit CUDA/Vulkan interop app, XR app, or
    existing-repo upgrade.
-2. Gather the minimum user choices needed before implementation: target platform, primary user,
-   GPU lane, template/archetype, GUI/HUD stack, input devices, donor categories, dependency policy,
+2. Run a pre-plan research pass before asking for choices: target platform implications, likely
+   template/archetype, GPU lane, GUI/HUD stack, input devices, donor categories, dependency policy,
    validation budget, and code-map preference.
 3. Run a targeted web ceiling check for current dependencies, SDKs, GUI/toolkit choices, papers,
    samples, or vendor guidance that could affect architecture. Prefer upstream docs, official repos,
    standards bodies, papers, and vendor documentation.
 4. Open the smallest matching donor categories and profiles before recommending solvers, renderer
    backbones, GUI stacks, asset/runtime formats, AI runtimes, or simulation architecture.
-5. Present a compact project planning packet with choices, recommended defaults, links, donor
-   routes, web sources checked, validation plan, and implementation handoff.
+5. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
+   routes, and web sources checked, then ask for Plan mode and only then ask decision questions.
 
 ## Planning Packet
 

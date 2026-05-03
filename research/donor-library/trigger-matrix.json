@@ -132,7 +132,7 @@
       "name": "native-cpp-gui-hud-options",
       "tags": ["positive", "gui", "hud", "vulkan"],
       "prompt_shape": "Native C++ Vulkan/CUDA/realtime tool asks what GUI, HUD, editor panel, docking, inspector, gizmo, plotting, runtime UI, or desktop UI options are available.",
-      "expected_behavior": "Trigger native-cpp-gui-hud and cpp-cuda-vulkan-studio, route to native-gui-hud, present Dear ImGui/ImGuizmo/ImPlot, Qt, wxWidgets, RmlUi, NoesisGUI, Nuklear, FLTK, libui-ng, and CEF with source/docs and visual inspection links so the user can inspect how each GUI looks.",
+      "expected_behavior": "Trigger native-cpp-gui-hud and cpp-cuda-vulkan-studio, route to native-gui-hud, present Dear ImGui/ImGuizmo/ImPlot, Qt, wxWidgets, RmlUi, NoesisGUI, Nuklear, FLTK, libui-ng, and CEF with source/docs and visual inspection links so the user can inspect how each GUI looks. If an interactive question UI asks the user to choose, a visible link table must appear immediately before the question and compact URLs should appear in option descriptions when possible.",
       "expected_paths": [
         "skills/native-cpp-gui-hud/SKILL.md",
         "skills/native-cpp-gui-hud/references/gui-options.md",
@@ -152,7 +152,7 @@
       "name": "initial-native-gpu-project-planning",
       "tags": ["positive", "planning", "vulkan", "gui", "simulation"],
       "prompt_shape": "User wants to plan or brainstorm a substantial new native C++ Vulkan/CUDA/realtime app with unresolved template, GUI, donor, web research, input-device, code-map, and validation choices.",
-      "expected_behavior": "Trigger cppstudio-project-planner before implementation; the first visible response must ask the user to switch to Plan mode when choices are unresolved; open project intake, choice matrix, CppStudio project archetypes, GUI/HUD option links, donor routing, and run targeted upstream web checks before recommending architecture.",
+      "expected_behavior": "Trigger cppstudio-project-planner before implementation; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; open project intake, choice matrix, CppStudio project archetypes, GUI/HUD option links, donor routing, and run targeted upstream web checks before recommending architecture.",
       "expected_paths": [
         "skills/cppstudio-project-planner/SKILL.md",
         "skills/cppstudio-project-planner/references/project-intake.md",
@@ -169,7 +169,7 @@
       "name": "artist-tool-planning-with-stylus",
       "tags": ["positive", "planning", "games", "gui", "hud"],
       "prompt_shape": "User wants to plan a native C++ realtime artist or game technical-art tool with Wacom/stylus pressure, brush input, viewport HUD, gizmos, and donor-backed architecture choices.",
-      "expected_behavior": "Trigger cppstudio-project-planner and native-cpp-gui-hud; the first visible response must ask the user to switch to Plan mode before implementation; treat tablet/stylus pressure, tilt, hover, stroke sampling, undo/redo, viewport picking, and input capture as first-class planning decisions; present GUI choices with source and visual links; route through games/native GUI/rendering donor categories before implementation.",
+      "expected_behavior": "Trigger cppstudio-project-planner and native-cpp-gui-hud; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; treat tablet/stylus pressure, tilt, hover, stroke sampling, undo/redo, viewport picking, and input capture as first-class planning decisions; present GUI choices with source and visual links immediately before any GUI choice question; route through games/native GUI/rendering donor categories before implementation.",
       "expected_paths": [
         "skills/cppstudio-project-planner/SKILL.md",
         "skills/cppstudio-project-planner/references/project-intake.md",

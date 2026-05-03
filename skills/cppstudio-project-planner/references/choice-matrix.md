@@ -23,6 +23,10 @@ When these options are presented to the user, include the source/docs and visual
 they can click through before choosing. The authoritative detailed table is
 `native-cpp-gui-hud/references/gui-options.md`.
 
+Before asking the user to choose through interactive question UI, show this link table or a shorter
+task-specific version of it in the visible conversation. Compact option descriptions are not a
+substitute for clickable links.
+
 | Option | Use When | Source/Docs | Visual Inspection |
 | --- | --- | --- | --- |
 | Dear ImGui | Internal realtime tools, debug HUDs, inspectors, quick artist panels | <https://github.com/ocornut/imgui> | <https://github.com/ocornut/imgui#gallery> |

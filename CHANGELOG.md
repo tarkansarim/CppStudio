@@ -4,10 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
-- Tightened the `cppstudio-project-planner` and main `cpp-cuda-vulkan-studio` Plan mode gates so
-  substantial initial project requests require a visible first-response prompt to switch to Plan mode
-  before architecture or implementation advice, even when the auxiliary planner is not yet discoverable
-  in the active session.
+- Changed initial CppStudio planning flow so agents gather a pre-plan research brief first, including
+  local donor routing and targeted upstream web checks, then ask the user to switch to Plan mode for
+  decisions.
+- Hardened GUI/HUD selection behavior so interactive choice prompts must be preceded by visible
+  source/docs and visual-inspection links, with compact URLs included in option descriptions when the
+  question UI allows it.
 - Added a bundled `cppstudio-project-planner` skill for initial native C++ GPU project intake before
   scaffolding, including Plan mode handoff, template/archetype choice, GPU lane choice, GUI/HUD
   links, donor routing, web ceiling checks, code-map policy, validation planning, and artist-input

@@ -1,6 +1,6 @@
 ---
 name: cpp-cuda-vulkan-studio
-description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. For big initial planning, first ask the user to switch to Plan mode."
+description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. For big initial planning, research first, then ask for Plan mode."
 ---
 
 # C++ CUDA Vulkan Studio
@@ -11,10 +11,27 @@ Use this skill when a native C++ GPU, C++/Vulkan, C++/CUDA, or mixed CUDA/Vulkan
 
 For a substantial new project, brainstorm, or first big application plan with unresolved template,
 GUI/HUD, input-device, Vulkan/CUDA lane, donor, web-check, code-map, dependency, or validation
-choices, the first visible response must ask the user to switch to Plan mode before architecture
-advice or implementation details.
+choices, do a pre-plan research pass before asking the user to switch to Plan mode or asking
+decision questions.
 
-Use this handoff before any solver ranking, donor summary, GUI comparison, or MVP design:
+Minimum pre-plan research pass:
+
+- Open `cppstudio-project-planner` when available, `references/project-archetypes.md`, and the
+  smallest matching donor-router/category files.
+- For GUI/HUD/editor choices, open `native-cpp-gui-hud` and its GUI option matrix, then verify
+  current upstream official docs/repos or visual pages before ranking options.
+- For simulation, renderer, SDK, hardware, or "best/current/ceiling" claims, web-check official
+  upstream repos, standards docs, vendor docs, papers, or primary project docs.
+
+The first visible response after that research should be a concise **Pre-Plan Research Brief**:
+
+- choices discovered
+- source/visual links for GUI options
+- donor categories/profiles opened
+- web/current sources checked
+- clear recommended default and alternatives
+
+Then ask the user to switch to Plan mode before implementation:
 
 ```text
 Please switch to Plan mode before implementation so I can ask the project-shaping questions. I need
@@ -23,9 +40,15 @@ validation plan before files are created.
 ```
 
 This rule applies even if `cppstudio-project-planner` is not listed in the current session. If the
-current turn explicitly says the session is already in Plan mode, proceed with the planning packet.
-If Plan mode is unavailable or the user says to continue without it, ask no more than three blocking
-questions at a time and do not scaffold until the critical choices are clear.
+current turn explicitly says the session is already in Plan mode, still do the pre-plan research
+brief before calling any question UI. If Plan mode is unavailable or the user says to continue without
+it, ask no more than three blocking questions at a time and do not scaffold until the critical choices
+are clear.
+
+When asking the user to choose a GUI/HUD/tool UI stack, links must be visible at decision time. Before
+calling any interactive question UI such as `request_user_input`, show a compact GUI option table with
+source/docs and visual inspection links. Also put a compact URL in each option description when the
+question UI allows it.
 
 ## Agent Mindset
 
@@ -90,9 +113,9 @@ When this skill is active, work like a native C++ GPU systems engineer:
 
 - Use `cppstudio-project-planner` before scaffolding or major architecture work when the project has
   unresolved template, GUI/HUD, GPU lane, donor, input-device, code-map, dependency, or validation
-  decisions. For substantial project intake, the planner's first visible response must ask the user
-  to switch to Plan mode before implementation, gather choices, run donor and web checks, then hand
-  implementation back to this skill.
+  decisions. For substantial project intake, do the pre-plan research pass first, show links and
+  sources, then ask the user to switch to Plan mode before implementation and hand implementation back
+  to this skill after choices are clear.
 - Use `modern-cpp-cmake` for CMake target structure, source ownership, presets, CTest, and dependency wiring.
 - Use `cuda-kernel-authoring` when adding or reviewing custom CUDA kernels or launch wrappers.
 - Use `vulkan-compute-sync` when the project contains Vulkan compute, render, synchronization, descriptor, or frame-lifetime work.

@@ -6,9 +6,21 @@ GPU/realtime project. The output is a planning packet, not code.
 ## Plan Mode Gate
 
 If the project has unresolved choices across template, GUI, GPU lane, dependencies, input devices, or
-donor strategy, the first visible response must ask the user to switch to Plan mode before
-implementation, unless the current turn explicitly says the session is already in Plan mode. Do this
-before presenting a full project packet or architecture recommendation.
+donor strategy, gather a pre-plan research brief before asking the user to switch to Plan mode or
+presenting decision questions. The brief should use local CppStudio skill/donor routing plus targeted
+web checks against upstream or primary sources, so the user is choosing from researched options.
+
+The pre-plan research brief should include:
+
+- likely project archetype/template
+- likely GPU lane and alternatives
+- GUI/HUD candidates with source/docs and visual inspection links
+- relevant donor categories/profiles opened
+- web/current sources checked
+- recommended default and why
+
+Then ask the user to switch to Plan mode before implementation, unless the current turn explicitly
+says the session is already in Plan mode.
 
 Use a direct handoff:
 
@@ -21,8 +33,14 @@ validation plan before files are created.
 The benefit is fewer wrong dependencies, cleaner Vulkan/CUDA lane boundaries, better donor
 grounding, and a validation plan before files are created.
 
-If Plan mode is unavailable, ask no more than three questions at a time. Do not scaffold until the
-critical choices are resolved.
+If the session is already in Plan mode, still show the pre-plan research brief before calling any
+question UI. If Plan mode is unavailable, ask no more than three questions at a time. Do not scaffold
+until the critical choices are resolved.
+
+For GUI/HUD/tool UI choices, links must be visible when the user is asked to choose. Before calling
+interactive question UI such as `request_user_input`, show a compact link table. Include compact URLs
+inside option descriptions when the question UI allows it; if the UI truncates them, the preceding
+link table is mandatory.
 
 ## Intake Checklist
 
