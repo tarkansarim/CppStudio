@@ -36,6 +36,11 @@ headset/controller, or spatial interaction context, also read
 vendor samples for vendor-specific extensions or tools. Keep study-only and non-commercial references
 out of reusable Vulkan code.
 
+For Vulkan-integrated native GUI/HUD/editor UI work, also read
+`{{DONOR_ROOT}}/native-gui-hud.md` before selecting Dear ImGui, ImGuizmo, ImPlot, Qt, wxWidgets,
+RmlUi, NoesisGUI, Nuklear, FLTK, libui-ng, or CEF. Keep UI descriptor/font/render-pass ownership
+explicit and include visual inspection links when presenting GUI choices.
+
 For Vulkan-adjacent volume, medical/scientific volume, texture, material, NURBS/asset-pipeline,
 terrain/geospatial, BIM/IFC, CAD viewing, VFX/particles, fluids, muscle/flesh, or XR work, also route
 through `{{DONOR_ROOT}}/volumes-voxels.md`, `{{DONOR_ROOT}}/medical-scientific-volumes.md`,

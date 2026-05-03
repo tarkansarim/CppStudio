@@ -39,6 +39,8 @@ engineering discipline terms:
   validation, shader compilation/reflection, and SPIR-V tooling.
 - [graphics-rendering.md](graphics-rendering.md): renderer backbones, render graphs, WebGPU/WebGL,
   PBR, path tracing, denoising, and reconstruction.
+- [native-gui-hud.md](native-gui-hud.md): native C++ GUI toolkits, debug HUDs, editor panels,
+  viewport overlays, gizmos, plotting, desktop app shells, runtime/game UI, and embedded web UI.
 - [gltf-runtime-assets.md](gltf-runtime-assets.md): glTF loading, validation, fixtures, and runtime
   asset handoff.
 - [assets-meshes-materials.md](assets-meshes-materials.md): NURBS/Rhino, UV atlases, compressed

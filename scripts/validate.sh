@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_DIR="${ROOT_DIR}/skills/cpp-cuda-vulkan-studio"
+AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud")
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
 REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
@@ -96,6 +97,10 @@ required_repo_files=(
     "research/skill-packaging-agent-skills-mapping.md"
     "companion-skill-snippets/user-agents/cppstudio-relay.md"
     "skills/cpp-cuda-vulkan-studio/package-manifest.json"
+    "skills/native-cpp-gui-hud/SKILL.md"
+    "skills/native-cpp-gui-hud/agents/openai.yaml"
+    "skills/native-cpp-gui-hud/references/gui-options.md"
+    "skills/native-cpp-gui-hud/package-manifest.json"
     "research/donor-library/trigger-regression-checklist.md"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/.gitignore"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md"
@@ -266,6 +271,11 @@ write_code_map_project_fixture() {
 
 python3 "${VALIDATOR}" "${SKILL_DIR}"
 python3 "${PACKAGE_VALIDATOR}" "${SKILL_DIR}"
+for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
+    auxiliary_skill_dir="${ROOT_DIR}/skills/${auxiliary_skill_name}"
+    python3 "${VALIDATOR}" "${auxiliary_skill_dir}"
+    python3 "${PACKAGE_VALIDATOR}" "${auxiliary_skill_dir}"
+done
 if [[ -d "${ROOT_DIR}/.codex/skills" ]]; then
     while IFS= read -r -d '' project_skill; do
         python3 "${VALIDATOR}" "${project_skill}"
@@ -584,7 +594,7 @@ python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     --repo-root "${ROOT_DIR}" \
     --tag lookup >"${trigger_lookup_md}"
 grep -q "agent-lookup.md" "${trigger_lookup_md}"
-for trigger_tag in dcc materials volumes vfx games infrastructure; do
+for trigger_tag in dcc materials volumes vfx games infrastructure gui; do
     trigger_tag_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_${trigger_tag}.XXXXXX.md")"
     python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
         "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
@@ -599,6 +609,10 @@ for trigger_tag in dcc materials volumes vfx games infrastructure; do
             ;;
         infrastructure)
             grep -q "native-engineering-infrastructure.md" "${trigger_tag_md}"
+            ;;
+        gui)
+            grep -q "native-gui-hud.md" "${trigger_tag_md}"
+            grep -q "native-cpp-gui-hud" "${trigger_tag_md}"
             ;;
         *)
             grep -q "${trigger_tag}" "${trigger_tag_md}"

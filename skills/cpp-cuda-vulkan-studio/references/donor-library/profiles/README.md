@@ -59,6 +59,10 @@ inventory. Category files are the normal second layer; these profiles are the th
 - [THREE.js PathTracing Renderer](threejs-pathtracing.md)
 - [three.js](threejs.md)
 - [Babylon.js](babylonjs.md)
+- [Dear ImGui Tooling Stack](imgui-tooling.md)
+- [Desktop GUI Toolkits](desktop-gui-toolkits.md)
+- [Runtime UI Middleware](runtime-ui-middleware.md)
+- [Lightweight And Embedded-Web GUI](lightweight-embedded-gui.md)
 
 ## Assets, Geometry, DCC, And CAD
 

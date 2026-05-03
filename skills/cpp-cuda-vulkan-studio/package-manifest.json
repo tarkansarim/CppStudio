@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 19470,
-      "sha256": "a3e1ac0324f277344bfdcf5b0a6d1ef8663f6ed1f97486994374365096ab4e71"
+      "size": 19627,
+      "sha256": "4d8f47eb99c40576c9bb5c254b4d55794d0b18a2aa1cf09128f7c31002924fbc"
     },
     {
       "path": "agents/openai.yaml",
@@ -308,15 +308,15 @@
       "path": "references/donor-library/README.md",
       "role": "reference",
       "disclosure_group": "donor-router",
-      "size": 7344,
-      "sha256": "b0155de4ae09bff56ac44b553f91b6a18d938c41fe0ed349a594fec385127fa6"
+      "size": 7535,
+      "sha256": "2e2e63e64c1dda71f95c722a7fd3bf80969d0d8300aee997c349eefbc8fd10e9"
     },
     {
       "path": "references/donor-library/agent-lookup.md",
       "role": "reference",
       "disclosure_group": "donor-router",
-      "size": 15622,
-      "sha256": "af9445d756ccfa7b83d02bae159e07f302d442ef77e90dd752417a82c5dcfec9"
+      "size": 16434,
+      "sha256": "d9124c65811701269be8f7c23b2e5308ccb55ac32fec45b8929268baf9878018"
     },
     {
       "path": "references/donor-library/ai-runtimes-kernels.md",
@@ -410,6 +410,13 @@
       "sha256": "38a7967776218b7cf698274dd7d102ce1d2336f8eace28a3838e442cba95bf08"
     },
     {
+      "path": "references/donor-library/native-gui-hud.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 5444,
+      "sha256": "77d3de7ce0a3ca2e311315a983f9a22e63c950bae6fc7d4fd8e9dbbb70151968"
+    },
+    {
       "path": "references/donor-library/neural-3d.md",
       "role": "reference",
       "disclosure_group": "donor-category",
@@ -427,8 +434,8 @@
       "path": "references/donor-library/production/games.md",
       "role": "reference",
       "disclosure_group": "production-overlay",
-      "size": 4440,
-      "sha256": "2bcbdf89a6b13723fa13fa27073645243d6c726715a7660ae9d274c77125ec2f"
+      "size": 4722,
+      "sha256": "59138188bae18da4e598aa205c04059a3b24b0912d8c6d32d7b29013df2f5794"
     },
     {
       "path": "references/donor-library/production/native-engineering-infrastructure.md",
@@ -441,15 +448,15 @@
       "path": "references/donor-library/production/vfx-studio.md",
       "role": "reference",
       "disclosure_group": "production-overlay",
-      "size": 3251,
-      "sha256": "855d6098dcdb91f41464fc760dd6cb12a41b6d596f34d729d4e69ab664a6039f"
+      "size": 3443,
+      "sha256": "da2036d57c74a94afbe935faac28080f7ab09c7aa90ef12da588053f74e1c637"
     },
     {
       "path": "references/donor-library/profiles/README.md",
       "role": "reference",
       "disclosure_group": "donor-profile",
-      "size": 4764,
-      "sha256": "3e6e1d8cf6e9a9a32de8c69a88876678c3981fdac25f2681f44bfea916eae9de"
+      "size": 4979,
+      "sha256": "9ac21677d1ac839945ad0fec73b57794e59f93999695e6eefdfc322355f7d2eb"
     },
     {
       "path": "references/donor-library/profiles/acl.md",
@@ -564,6 +571,13 @@
       "sha256": "90b91eca1ed4395e2d2bfe2e671dfbda7fe0aeb26af5d21aaf24acdcd3911154"
     },
     {
+      "path": "references/donor-library/profiles/desktop-gui-toolkits.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2615,
+      "sha256": "9ec848a5a80834ea1563eb4ab9cb58acb13945a4651fdd992240e9a4abf3d0b6"
+    },
+    {
       "path": "references/donor-library/profiles/diligent-engine.md",
       "role": "reference",
       "disclosure_group": "donor-profile",
@@ -662,6 +676,13 @@
       "sha256": "9c00b9048d8a4781e385a0d940e1edcf9aaeda29c1206efd46e4c49887f13db2"
     },
     {
+      "path": "references/donor-library/profiles/imgui-tooling.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2648,
+      "sha256": "c215ba9405a384192b5d440e9aa08eebc451887cd029d7a7ed38724edc26cfd2"
+    },
+    {
       "path": "references/donor-library/profiles/jolt-physics.md",
       "role": "reference",
       "disclosure_group": "donor-profile",
@@ -695,6 +716,13 @@
       "disclosure_group": "donor-profile",
       "size": 2085,
       "sha256": "3da28a56e9408c9506f947cf3e7d22b4202d20cfe5088ea8f2fb2f93726b1c04"
+    },
+    {
+      "path": "references/donor-library/profiles/lightweight-embedded-gui.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2327,
+      "sha256": "07b46eb1efc5087f04ff7d800177484bea2f06fef16f18897bb3d20df30b4a89"
     },
     {
       "path": "references/donor-library/profiles/llama-ggml.md",
@@ -1019,6 +1047,13 @@
       "sha256": "a28d5faf5b968c07f71575e14b4de3b03dd4427f1952c5050d1cc1f108fff7ff"
     },
     {
+      "path": "references/donor-library/profiles/runtime-ui-middleware.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2033,
+      "sha256": "a36a70b8a0900ca96b8f94f7c1c93223ecfb8910b2b923e38e1d81ed4c41af11"
+    },
+    {
       "path": "references/donor-library/profiles/sanitizer-validation-lanes.md",
       "role": "reference",
       "disclosure_group": "donor-profile",
@@ -1274,8 +1309,8 @@
       "path": "references/project-archetypes.md",
       "role": "reference",
       "disclosure_group": "entrypoint",
-      "size": 16804,
-      "sha256": "32ba620b17577e3a86e85af57695cf91bf84d13a11c3a750585df0319a7e1a6f"
+      "size": 17842,
+      "sha256": "ddd063b43d4a46bc0ec59089d5e2cc29688950d3cac7e13db2b3bf4c8464cad7"
     },
     {
       "path": "scripts/apply_studio_backbone.py",

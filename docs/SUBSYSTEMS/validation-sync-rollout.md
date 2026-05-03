@@ -20,15 +20,17 @@ skills, and watch-mode publishing behavior.
 - `scripts/bootstrap_code_map.py`
 - `scripts/validate_code_map.py`
 - `skills/cpp-cuda-vulkan-studio/package-manifest.json`
+- `skills/native-cpp-gui-hud/package-manifest.json`
 - `skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py`
 
 ## Update When
 
 - validation coverage, required package files, CI-safe validator behavior, or full validation changes
 - skill package manifest, package integrity validation, or sync/rollout audit metadata changes
+- auxiliary user-level skill installation or validation behavior changes
 - CppStudio code-map validation or bootstrap wrapper behavior changes
 - sync or rollout target safety rules change
-- installed skill parity or companion validation behavior changes
+- installed skill parity, auxiliary bundled skill rollout, or companion validation behavior changes
 - public install/manual install commands change
 
 ## Current Rollout Posture
@@ -36,14 +38,15 @@ skills, and watch-mode publishing behavior.
 - Validation, sync, and rollout prefer an explicit `VALIDATOR`, then the target Codex system
   validator, then the repo-local `scripts/quick_validate_skill.py` fallback. The fallback validates
   frontmatter, `agents/openai.yaml`, and bundled local references.
-- Package validation uses `scripts/validate_skill_package.py` and
-  `skills/cpp-cuda-vulkan-studio/package-manifest.json` to verify shipped file hashes, sizes,
+- Package validation uses `scripts/validate_skill_package.py` plus the main and auxiliary skill
+  `package-manifest.json` files to verify shipped file hashes, sizes,
   disclosure groups, package layout, and package hygiene. Manifest writes reject unsupported
   top-level files plus VCS, editor, cache, env, secret-like, archive, log, swap, and temp artifacts.
 - Non-dry-run sync stages and validates the skill before replacing the installed target, then restores
   the previous target if final validation fails.
-- Sync validates the source skill, staged skill, and final installed skill against the package
-  manifest. Rollout validates the installed main skill before completion.
+- Sync validates the selected source skill, staged skill, and final installed skill against that
+  package manifest. Rollout validates the installed main skill and auxiliary bundled skills before
+  completion.
 - Sync and rollout append best-effort JSONL audit records to
   `${SYNC_CODEX_HOME:-$HOME/.codex}/cppstudio-install-audit.jsonl` unless `CPPSTUDIO_AUDIT_LOG`
   overrides the path.
@@ -51,9 +54,10 @@ skills, and watch-mode publishing behavior.
   a failed backup move leaves the existing installed skill in place.
 - Sync and rollout resolve safety-check paths through Python `Path.resolve(strict=False)` so the
   documented Linux, macOS, and WSL install path does not require GNU `realpath -m`.
-- Rollout snapshots the main skill, matching companion skill files, and the optional user-level
+- Rollout snapshots the main skill, auxiliary bundled skills, matching companion skill files, and the optional user-level
   `AGENTS.md` relay target before mutation, then restores them if a later step fails.
-- `rollout_to_codex.sh` installs the minimal user-level `AGENTS.md` relay by default and preserves
+- `rollout_to_codex.sh` installs bundled auxiliary skills such as `native-cpp-gui-hud`, installs the
+  minimal user-level `AGENTS.md` relay by default, and preserves
   user-owned content outside the marked CppStudio relay block.
 - Set `SKIP_USER_AGENTS_RELAY=1` only for deliberate relay opt-out installs.
 - `validate.sh` includes a synthetic GPU optimization fixture that exercises success-criteria

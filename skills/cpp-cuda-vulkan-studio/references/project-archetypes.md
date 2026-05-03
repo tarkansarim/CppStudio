@@ -55,6 +55,23 @@ runtime 3D app.
 - Verification priority: tiny imported mesh fixture, meshopt conditioning checks, renderer upload tests,
   BVH/collision fixtures when used, Vulkan validation for Vulkan targets, then offscreen render frames.
 
+## Native GUI, HUD, Or Editor UI
+
+Use when the project needs a C++ GUI toolkit, debug HUD, viewport overlay, editor panels, docking,
+inspectors, transform gizmos, timelines, telemetry plots, or runtime/game UI.
+
+- For Vulkan/CUDA realtime artist tools, recommend Dear ImGui first, with ImGuizmo for viewport
+  manipulation and ImPlot for telemetry only when those features are needed.
+- For polished desktop products, compare Qt and wxWidgets before choosing an in-renderer debug UI.
+- For shipped runtime/game UI, compare RmlUi and NoesisGUI instead of treating a debug HUD as product
+  UI.
+- Read [donor-library/native-gui-hud.md](donor-library/native-gui-hud.md) and, when installed as a
+  separate skill, `native-cpp-gui-hud`.
+- When presenting options, include source/docs links and visual inspection links so the user can see
+  what each GUI looks like.
+- Verification priority: tiny UI smoke app, input capture/focus, DPI/resize behavior, Vulkan
+  validation for in-renderer UI, and a screenshot or offscreen frame when possible.
+
 ## CUDA Plus Vulkan Combined Or Interop App
 
 Use when a CUDA-selected project also needs Vulkan presentation, realtime visualization, XR,

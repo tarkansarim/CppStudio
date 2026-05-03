@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "package": "native-cpp-gui-hud",
+  "hash_algorithm": "sha256",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "role": "main",
+      "disclosure_group": "entrypoint",
+      "size": 3158,
+      "sha256": "38014aade70b4597249d8bf5c9a99b8ca4800b3fdff861726bbd59f16033816b"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "role": "metadata",
+      "disclosure_group": "entrypoint",
+      "size": 235,
+      "sha256": "17ab8916cde7e1e43b49c8780486e776e8db7ce862b4a1cf8881236faad5ed9b"
+    },
+    {
+      "path": "references/gui-options.md",
+      "role": "reference",
+      "disclosure_group": "reference",
+      "size": 3899,
+      "sha256": "858222fba96fd7cf2070f30fcb11bafa1baadd9486298224b7ac16cee881ee72"
+    }
+  ]
+}

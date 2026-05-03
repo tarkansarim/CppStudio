@@ -24,3 +24,5 @@ categories.
   and [simulation-gpu.md](../simulation-gpu.md) for solver physics.
 - Use [dcc-scene-pipeline.md](../dcc-scene-pipeline.md) whenever USD, Alembic, MaterialX, OpenTimelineIO,
   DCC handoff, virtual production, or review/editorial context is part of the request.
+- Use [native-gui-hud.md](../native-gui-hud.md) whenever the VFX request includes native tool panels,
+  inspectors, brush controls, viewport overlays, debug HUDs, or artist-facing desktop UI.

@@ -27,6 +27,11 @@ questions through `{{DONOR_ROOT}}/vulkan-foundation-tooling.md`. For runtime 3D 
 glTF/GLB validation, or viewer/importer dependencies, route through
 `{{DONOR_ROOT}}/gltf-runtime-assets.md`.
 
+For native C++ GUI, HUD, editor panels, viewport overlays, docking, gizmos, plotting, desktop app UI,
+runtime/game UI, or embedded web UI dependencies, route through `{{DONOR_ROOT}}/native-gui-hud.md`
+before proposing Qt, wxWidgets, Dear ImGui, ImGuizmo, ImPlot, RmlUi, NoesisGUI, Nuklear, FLTK,
+libui-ng, or CEF wiring. Include visual inspection links when presenting the options to the user.
+
 For renderer backbone, graphics middleware, runtime mesh import, mesh conditioning, BVH, or
 physics/collision dependency choices, route through `{{DONOR_ROOT}}/graphics-rendering.md` and
 `{{DONOR_ROOT}}/geometry-simulation.md` before proposing CMake dependency wiring. Treat Filament,

@@ -14,7 +14,8 @@ python3 scripts/render_trigger_eval_prompt.py \
 
 Use `--installed-paths` after rollout when the evaluator should inspect `${SYNC_CODEX_HOME:-$HOME/.codex}`
 paths. Useful tags include `smoke`, `lookup`, `negative`, `cuda`, `vulkan`, `assets`, `geometry`,
-`materials`, `volumes`, `simulation`, `ai-runtime`, `vfx`, `games`, `infrastructure`, and `xr`.
+`materials`, `volumes`, `simulation`, `ai-runtime`, `vfx`, `games`, `gui`, `hud`, `infrastructure`,
+and `xr`.
 
 ## Required Evidence
 
@@ -51,6 +52,9 @@ paths. Useful tags include `smoke`, `lookup`, `negative`, `cuda`, `vulkan`, `ass
 - Renderer backbone, render graph, PBR renderer, graphics middleware, or multi-backend renderer
   dependency questions should route to `graphics-rendering.md` and the matching Filament, Diligent
   Engine, bgfx, or Magnum profiles.
+- Native C++ GUI, HUD, editor panels, viewport overlays, docking, gizmos, plotting, desktop app UI,
+  runtime/game UI, or embedded web UI should route to `native-cpp-gui-hud` and
+  `native-gui-hud.md`; option summaries must include source/docs links and visual inspection links.
 - Native WebGPU, `webgpu.h`, WGSL/Tint, browser 3D, WebXR, or browser path-tracing work should route
   through `graphics-rendering.md` and the matching Dawn, three.js, Babylon.js, or THREE.js PathTracing
   Renderer profile without silently changing a Vulkan-first C++ project into WebGPU.

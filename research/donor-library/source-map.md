@@ -31,6 +31,22 @@ targets; implement native code through the active C++/CUDA/Vulkan lane.
 | [NVIDIA Falcor](https://github.com/NVIDIAGameWorks/Falcor) | Realtime ray tracing | dependency-candidate | BSD-3-Clause core with separate component licenses for DLSS/RTXGI/RTXDI/NRD. |
 | [THREE.js PathTracing Renderer](https://github.com/erichlof/THREE.js-PathTracing-Renderer) | Web path tracing | safe-donor | CC0-1.0 WebGL path tracing examples. Reference-only for native C++. |
 
+## Native GUI, HUD, And Editor UI
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [Dear ImGui](https://github.com/ocornut/imgui) | Immediate-mode tool UI | safe-donor | MIT C++ debug HUD, editor panel, viewport overlay, and realtime tool UI stack with multiple renderer backends. |
+| [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo) | Viewport gizmos | safe-donor | MIT Dear ImGui extension for transform/view gizmos and adjacent editor controls. |
+| [ImPlot](https://github.com/epezent/implot) | Plotting and telemetry | safe-donor | MIT Dear ImGui plotting extension for realtime profiler, telemetry, curves, and heatmaps. |
+| [Qt](https://doc.qt.io/qt-6/) | Desktop app framework | dependency-candidate | Commercial/GPL/LGPL module mix; full C++ desktop/QML framework and tooling. |
+| [wxWidgets](https://wxwidgets.org/) | Native desktop widgets | dependency-candidate | wxWindows License with exception; C++ cross-platform native-widget desktop apps. |
+| [RmlUi](https://github.com/mikke89/RmlUi) | Runtime/game UI | safe-donor | MIT HTML/CSS-like C++ UI library for game HUDs, menus, overlays, and tool UI. |
+| [NoesisGUI](https://www.noesisengine.com/noesisgui/) | Commercial runtime UI | dependency-candidate | Commercial XAML-style UI middleware for games and realtime applications. |
+| [Nuklear](https://github.com/Immediate-Mode-UI/Nuklear) | Tiny immediate-mode UI | safe-donor | MIT/public-domain single-header C immediate-mode GUI. |
+| [FLTK](https://www.fltk.org/) | Lightweight desktop UI | dependency-candidate | LGPL with exception; small cross-platform C++ GUI toolkit. |
+| [libui-ng](https://github.com/libui-ng/libui-ng) | Small native widgets | dependency-candidate | MIT portable C native-widget library; maturity risk to evaluate. |
+| [Chromium Embedded Framework](https://chromiumembedded.github.io/cef/) | Embedded web UI | dependency-candidate | BSD-style CEF plus Chromium notice/deployment surface for HTML/CSS/JS UI in native apps. |
+
 ## Geometry, Assets, And Simulation
 
 | Source | Category | Tier | Signal |

@@ -76,13 +76,19 @@ Preview sync changes:
 ./scripts/sync_to_codex.sh --dry-run
 ```
 
-Publish only the main `cpp-cuda-vulkan-studio` skill:
+Publish only one selected skill, defaulting to the main `cpp-cuda-vulkan-studio` skill:
 
 ```bash
 ./scripts/sync_to_codex.sh
 ```
 
-Publish the main skill and reinstall companion-skill donor-library links:
+For a bundled auxiliary skill, set `SKILL_NAME` explicitly:
+
+```bash
+SKILL_NAME=native-cpp-gui-hud ./scripts/sync_to_codex.sh
+```
+
+Publish the main skill, bundled auxiliary skills, and companion-skill donor-library links:
 
 ```bash
 ./scripts/rollout_to_codex.sh
@@ -117,14 +123,15 @@ Continuously validate and publish source-skill edits:
 ./scripts/watch_to_codex.sh
 ```
 
-Continuously validate and publish source-skill edits plus companion snippets:
+Continuously validate and publish source-skill edits plus bundled auxiliary skills and companion
+snippets:
 
 ```bash
 ./scripts/watch_to_codex.sh --rollout
 ```
 
-Use `--rollout` when editing `companion-skill-snippets/`; normal sync does not update companion
-skills.
+Use `--rollout` when editing bundled auxiliary skills or `companion-skill-snippets/`; normal sync
+publishes only the selected `SKILL_NAME`.
 
 ## Generated Projects
 
@@ -236,7 +243,7 @@ python3 scripts/render_trigger_eval_prompt.py \
 
 Useful tags include `positive`, `negative`, `smoke`, `lookup`, `cuda`, `vulkan`, `assets`,
 `graphics`, `rendering`, `simulation`, `ai-runtime`, `neural-3d`, `webgpu`, `browser`, `xr`,
-`cad`, `geometry`, `engine`, and `study-only`. Use installed-path mode after rollout when the
+`gui`, `hud`, `cad`, `geometry`, `engine`, and `study-only`. Use installed-path mode after rollout when the
 evaluator should inspect the user-level Codex install instead of repo-relative source paths:
 
 ```bash
@@ -252,7 +259,7 @@ behavior by itself.
 
 ## Sync And Rollout Details
 
-`sync_to_codex.sh` copies:
+`sync_to_codex.sh` copies the selected skill. By default this is:
 
 ```bash
 skills/cpp-cuda-vulkan-studio/
@@ -264,6 +271,10 @@ to:
 ${SYNC_CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio
 ```
 
+Set `SKILL_NAME=native-cpp-gui-hud` to sync the bundled GUI/HUD skill instead. Normal public
+installation should use `rollout_to_codex.sh`, which installs the main skill and bundled auxiliary
+skills together.
+
 It intentionally ignores `CODEX_HOME` unless `SYNC_CODEX_HOME` or `TARGET_DIR` is provided, because
 nested Codex sessions may set isolated homes.
 
@@ -272,19 +283,21 @@ and finally the repo-local `scripts/quick_validate_skill.py` fallback. The fallb
 package metadata, `agents/openai.yaml`, duplicate frontmatter fields, and bundled local references.
 Fresh staging homes can use the scripts without preinstalling the system `skill-creator` validator.
 
-Package integrity uses `skills/cpp-cuda-vulkan-studio/package-manifest.json` and
+Package integrity uses each packaged skill's `package-manifest.json` and
 `scripts/validate_skill_package.py`. The manifest records every shipped skill file except itself,
-with file role, progressive disclosure group, size, and SHA-256. Regenerate it only after package
-contents change:
+with file role, progressive disclosure group, size, and SHA-256. Regenerate the matching manifest
+only after package contents change:
 
 ```bash
 python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio --write-manifest
+python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud --write-manifest
 ```
 
 Then validate normally:
 
 ```bash
 python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio
+python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud
 ```
 
 Use a custom Codex home:
@@ -326,11 +339,12 @@ By default, companion donor-link rollout skips absent optional companion skills.
 `STRICT_COMPANION_SKILLS=1` when validating a full local release environment where
 `cuda-kernel-authoring`, `vulkan-compute-sync`, and `modern-cpp-cmake` must all be installed.
 
-Rollout snapshots the main skill, matching companion `SKILL.md` files, and the optional user-level
-`AGENTS.md` relay target before mutation, then restores those paths if any post-sync validation or
-install step fails.
+Rollout snapshots the main skill, bundled auxiliary skills, matching companion `SKILL.md` files, and
+the optional user-level `AGENTS.md` relay target before mutation, then restores those paths if any
+post-sync validation or install step fails.
 
-Rollout also verifies the installed main skill against the package manifest before reporting success.
+Rollout also verifies installed packaged skills against their package manifests before reporting
+success.
 
 `rollout_to_codex.sh` installs the tiny user-level `AGENTS.md` relay by default. It merges only
 `companion-skill-snippets/user-agents/cppstudio-relay.md` into
@@ -341,7 +355,8 @@ be symlinks.
 
 ## Editing Rules
 
-- Edit `skills/cpp-cuda-vulkan-studio/` in this repo, not the installed user-level copy.
+- Edit `skills/cpp-cuda-vulkan-studio/` or bundled auxiliary skills under `skills/` in this repo,
+  not the installed user-level copies.
 - Edit companion donor-link text in `companion-skill-snippets/`, not directly in installed companion
   skills.
 - Keep the reusable skill generic. Do not add private-app-only, local-workstation-only, or other
@@ -393,6 +408,7 @@ Rollout refuses a custom target:
 - Use `ALLOW_ROLLOUT_TARGET_OVERRIDE=1` only when companion-skill links should intentionally point
   at the custom target.
 - The custom target must end in `skills/cpp-cuda-vulkan-studio`.
+  Bundled auxiliary skills are installed next to that target during rollout.
 
 Relay install refuses a custom `AGENTS.md` target:
 

@@ -11,10 +11,12 @@
       "canonical_docs": [
         "AGENTS.md",
         "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/native-cpp-gui-hud/SKILL.md",
         "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md"
       ],
       "primary_paths": [
         "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/native-cpp-gui-hud/SKILL.md",
         ".codex/skills/cppstudio-repo-onboarding/SKILL.md"
       ]
     },
@@ -70,6 +72,7 @@
         "scripts/bootstrap_code_map.py",
         "scripts/validate_code_map.py",
         "skills/cpp-cuda-vulkan-studio/package-manifest.json",
+        "skills/native-cpp-gui-hud/package-manifest.json",
         "skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py"
       ]
     },

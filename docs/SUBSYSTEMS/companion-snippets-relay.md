@@ -18,6 +18,7 @@ including the code-map trigger wording that points native C++ GPU map requests a
 ## Update When
 
 - companion donor-link snippets change
+- companion snippets add or change donor routes such as native GUI/HUD categories
 - managed marker names or replacement behavior changes
 - user-level relay wording changes
 - install scripts change preservation, target safety, or preflight behavior

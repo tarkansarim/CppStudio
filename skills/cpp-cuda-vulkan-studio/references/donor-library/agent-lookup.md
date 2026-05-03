@@ -76,6 +76,15 @@ targets, then implement through the active lane skill.
   production-scale Vulkan glTF path tracing, open
   [nvpro Vulkan glTF Renderer](profiles/nvpro-vk-gltf-renderer.md). Keep WebGPU/browser donors as
   behavior references unless the user chooses a web target.
+- **Native C++ GUI, HUD, editor panels, viewport overlays, docking, gizmos, plotting, desktop app UI,
+  runtime/game UI, or embedded web UI**: open [native-gui-hud.md](native-gui-hud.md). Start with
+  [Dear ImGui Tooling Stack](profiles/imgui-tooling.md) for Vulkan/CUDA realtime tools, debug HUDs,
+  editor panels, ImGuizmo transform controls, and ImPlot telemetry; use
+  [Desktop GUI Toolkits](profiles/desktop-gui-toolkits.md) for Qt or wxWidgets desktop products;
+  use [Runtime UI Middleware](profiles/runtime-ui-middleware.md) for RmlUi or NoesisGUI game/runtime
+  UI; use [Lightweight And Embedded-Web GUI](profiles/lightweight-embedded-gui.md) for Nuklear, FLTK,
+  libui-ng, or CEF. When presenting choices, include the visual inspection links from the category so
+  the user can see how each GUI looks.
 - **Runtime assets, glTF/GLB, importer fixtures, renderer-ready buffers**: open
   [gltf-runtime-assets.md](gltf-runtime-assets.md). Start with
   [glTF C/C++ Loaders](profiles/fastgltf-cgltf-tinygltf.md) and

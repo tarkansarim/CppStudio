@@ -6,10 +6,11 @@ distribution work.
 
 ## Package Manifest
 
-The canonical skill directory contains:
+Each shipped skill directory contains its own manifest. Current packaged skills include:
 
 ```text
 skills/cpp-cuda-vulkan-studio/package-manifest.json
+skills/native-cpp-gui-hud/package-manifest.json
 ```
 
 This manifest records every shipped skill file except the manifest itself. Each entry includes:
@@ -25,12 +26,14 @@ change:
 
 ```bash
 python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio --write-manifest
+python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud --write-manifest
 ```
 
 Validate it without rewriting:
 
 ```bash
 python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio
+python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud
 ```
 
 ## Progressive Disclosure Groups
@@ -50,10 +53,10 @@ metadata, not a replacement for the routing text.
 
 ## Validation And Sync
 
-`./scripts/validate.sh` checks the package manifest as part of normal validation. `sync_to_codex.sh`
-validates the source skill, the staged copy, and the final installed copy before reporting success.
-`rollout_to_codex.sh` validates the installed main skill after sync and before companion-link
-rollout is considered complete.
+`./scripts/validate.sh` checks packaged skill manifests as part of normal validation.
+`sync_to_codex.sh` validates the selected source skill, the staged copy, and the final installed copy
+before reporting success. `rollout_to_codex.sh` validates the installed main skill and bundled
+auxiliary skills after sync and before companion-link rollout is considered complete.
 
 The validator rejects:
 

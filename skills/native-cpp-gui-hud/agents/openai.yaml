@@ -1,0 +1,4 @@
+interface:
+  display_name: "Native C++ GUI HUD"
+  short_description: "C++ GUI, HUD, editor UI choices."
+  default_prompt: "Use $native-cpp-gui-hud to choose a native C++ GUI/HUD stack and show visual inspection links for each option."

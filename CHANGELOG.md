@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a bundled `native-cpp-gui-hud` skill and native GUI/HUD donor route covering Dear ImGui,
+  ImGuizmo, ImPlot, Qt, wxWidgets, RmlUi, NoesisGUI, Nuklear, FLTK, libui-ng, and CEF, with visual
+  inspection links required when agents present options.
+- Updated rollout, watch mode, validation, package manifests, companion snippets, and manual install
+  docs so bundled auxiliary skills are validated and installed with the CppStudio harness.
 - Tightened native GPU brainstorming behavior so concrete architecture recommendations must be
   donor-grounded, with targeted upstream web checks for current best-choice or ceiling questions.
 - Required a web ceiling check for broad realtime simulation/graphics brainstorms such as Vulkan

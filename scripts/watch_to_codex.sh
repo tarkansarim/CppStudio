@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_NAME="${SKILL_NAME:-cpp-cuda-vulkan-studio}"
 SOURCE_DIR="${ROOT_DIR}/skills/${SKILL_NAME}"
+AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud")
 SNIPPET_ROOT="${ROOT_DIR}/companion-skill-snippets"
 SYNC_SCRIPT="${ROOT_DIR}/scripts/sync_to_codex.sh"
 ROLLOUT_SCRIPT="${ROOT_DIR}/scripts/rollout_to_codex.sh"
@@ -16,7 +17,8 @@ Usage: $0 [--rollout]
 Watch and publish CppStudio skill edits.
 
   default    Watch only ${SOURCE_DIR} and run sync_to_codex.sh.
-  --rollout  Watch ${SOURCE_DIR} plus companion-skill snippets and run rollout_to_codex.sh.
+  --rollout  Watch ${SOURCE_DIR}, auxiliary bundled skills, and companion-skill snippets, then run
+             rollout_to_codex.sh.
 
 Use --rollout when editing donor-library companion snippets; normal sync does not update companion
 skills.
@@ -58,6 +60,14 @@ if (( rollout )); then
     fi
     run_script="${ROLLOUT_SCRIPT}"
     watch_dirs=("${SOURCE_DIR}" "${SNIPPET_ROOT}")
+    for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
+        auxiliary_source_dir="${ROOT_DIR}/skills/${auxiliary_skill_name}"
+        if [[ ! -d "${auxiliary_source_dir}" ]]; then
+            echo "Missing auxiliary source skill directory: ${auxiliary_source_dir}" >&2
+            exit 1
+        fi
+        watch_dirs+=("${auxiliary_source_dir}")
+    done
     echo "Rollout watch mode: companion snippets will be installed into user-level skills."
 else
     run_script="${SYNC_SCRIPT}"

@@ -129,6 +129,42 @@
       ]
     },
     {
+      "name": "native-cpp-gui-hud-options",
+      "tags": ["positive", "gui", "hud", "vulkan"],
+      "prompt_shape": "Native C++ Vulkan/CUDA/realtime tool asks what GUI, HUD, editor panel, docking, inspector, gizmo, plotting, runtime UI, or desktop UI options are available.",
+      "expected_behavior": "Trigger native-cpp-gui-hud and cpp-cuda-vulkan-studio, route to native-gui-hud, present Dear ImGui/ImGuizmo/ImPlot, Qt, wxWidgets, RmlUi, NoesisGUI, Nuklear, FLTK, libui-ng, and CEF with source/docs and visual inspection links so the user can inspect how each GUI looks.",
+      "expected_paths": [
+        "skills/native-cpp-gui-hud/SKILL.md",
+        "skills/native-cpp-gui-hud/references/gui-options.md",
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/imgui-tooling.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/desktop-gui-toolkits.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/runtime-ui-middleware.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/lightweight-embedded-gui.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "game-technical-art-native-ui-overlay",
+      "tags": ["positive", "games", "gui", "hud"],
+      "prompt_shape": "Game technical art tool request asks for native C++ artist panels, viewport controls, debug HUDs, inspectors, gizmos, performance graphs, or editor UI around a realtime renderer.",
+      "expected_behavior": "Open the games production overlay and route tools/technical art through native GUI/HUD plus native infrastructure and rendering donors; include visual inspection links when presenting GUI options.",
+      "expected_paths": [
+        "skills/native-cpp-gui-hud/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/production/games.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
       "name": "native-gpu-performance-optimization-loop",
       "tags": ["positive", "cuda", "vulkan", "rendering", "simulation"],
       "prompt_shape": "CUDA kernel, Vulkan compute, render pass, simulation, or realtime frame-time work asks the agent to optimize performance safely without chasing isolated microbenchmarks.",

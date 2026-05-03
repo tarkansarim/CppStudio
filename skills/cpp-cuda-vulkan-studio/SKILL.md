@@ -1,6 +1,6 @@
 ---
 name: cpp-cuda-vulkan-studio
-description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: code-map readiness audits, architecture indexes, app+library layout, CMake presets, CTest labels, CUDA architecture policy, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, and donor routing. Use for new or existing C++ GPU/CUDA/Vulkan repos, code-map or architecture-map requests in native GPU projects, build/test/profiling standardization, custom CUDA/Vulkan work, or donor selection for graphics/renderers, glTF/runtime assets, WebGPU/WebGL/OpenXR, path tracing, engine pipelines, AI runtimes, ML compilers, neural 3D, Gaussian splatting, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. Do not use for generic docs maps or non-native-GPU work unless C++ GPU infrastructure, C++/CUDA/Vulkan code-map work, or donor selection is explicit."
+description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, CUDA architecture policy, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, code-map requests in native GPU projects, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices for realtime tools, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, engine pipelines, AI runtimes, neural 3D, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code."
 ---
 
 # C++ CUDA Vulkan Studio
@@ -71,6 +71,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
 - Use `modern-cpp-cmake` for CMake target structure, source ownership, presets, CTest, and dependency wiring.
 - Use `cuda-kernel-authoring` when adding or reviewing custom CUDA kernels or launch wrappers.
 - Use `vulkan-compute-sync` when the project contains Vulkan compute, render, synchronization, descriptor, or frame-lifetime work.
+- Use `native-cpp-gui-hud` when choosing, comparing, or integrating native C++ GUI/HUD/editor UI,
+  viewport overlays, docking panels, transform gizmos, plotting, desktop app UI, runtime/game UI, or
+  embedded web UI. When presenting GUI options, include links where the user can inspect how each GUI
+  looks.
 - Use available profiling or frame-debugging skills and local profiler tools only when the active environment exposes them and the user needs performance or capture evidence.
 - Use `verification-before-completion` before claiming the generated or upgraded backbone is valid.
 
@@ -103,7 +107,7 @@ When this skill is active, work like a native C++ GPU systems engineer:
 13. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
 14. Before greenfield scaffolding, major backbone edits, or native GPU architecture brainstorming,
     read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library,
-    CUDA+Vulkan combined/interop app, AI runtime, neural 3D viewer, grooming/fur tool,
+    CUDA+Vulkan combined/interop app, native GUI/HUD/editor UI, AI runtime, neural 3D viewer, grooming/fur tool,
     glTF/runtime asset viewer, renderer backbone/runtime mesh pipeline, DCC scene pipeline,
     volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool,
     3D/physics/GPU simulation tool, or XR app.
@@ -144,8 +148,8 @@ Before enabling a maintained code map for an existing repo, confirm the repo can
 
 ## Bundled References
 
-- `references/donor-library/`: curated donor-source library for Vulkan foundation tooling, glTF/runtime assets, WebGPU/WebGL, renderer backbones, path tracing, engine architecture, runtime mesh pipelines, graphics, rendering, geometry, 3D/physics/GPU simulation, AI runtimes, ML compilers, CUDA kernels, neural 3D, grooming/fur, DCC scene pipelines, volumes, animation, materials, CAD, XR, and native engineering infrastructure. Donor backend signals describe the upstream implementation, not a restriction on target lanes. Start with `references/donor-library/README.md`; for VFX studio, games, or native infrastructure vocabulary use `references/donor-library/production/`; for broad or ambiguous donor requests use `references/donor-library/agent-lookup.md`, then load the smallest category set needed for the active task.
-- `references/project-archetypes.md`: lane-selection guide for CUDA-only, Vulkan-only, CUDA+Vulkan interop, AI runtime, neural 3D, grooming, glTF/runtime assets, renderer backbone/runtime mesh pipeline, DCC, volume, animation, material, CAD, 3D/physics/GPU simulation, and XR projects.
+- `references/donor-library/`: curated donor-source library for Vulkan foundation tooling, glTF/runtime assets, WebGPU/WebGL, native GUI/HUD/editor UI, renderer backbones, path tracing, engine architecture, runtime mesh pipelines, graphics, rendering, geometry, 3D/physics/GPU simulation, AI runtimes, ML compilers, CUDA kernels, neural 3D, grooming/fur, DCC scene pipelines, volumes, animation, materials, CAD, XR, and native engineering infrastructure. Donor backend signals describe the upstream implementation, not a restriction on target lanes. Start with `references/donor-library/README.md`; for VFX studio, games, or native infrastructure vocabulary use `references/donor-library/production/`; for broad or ambiguous donor requests use `references/donor-library/agent-lookup.md`, then load the smallest category set needed for the active task.
+- `references/project-archetypes.md`: lane-selection guide for CUDA-only, Vulkan-only, CUDA+Vulkan interop, native GUI/HUD/editor UI, AI runtime, neural 3D, grooming, glTF/runtime assets, renderer backbone/runtime mesh pipeline, DCC, volume, animation, material, CAD, 3D/physics/GPU simulation, and XR projects.
 
 ## Bundled Scripts
 

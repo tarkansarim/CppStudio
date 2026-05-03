@@ -286,6 +286,9 @@ when `.cppstudio/code-map-state.json` says `enabled`.
 
 - `cpp-cuda-vulkan-studio`: installed user-level skill for Vulkan-first C++ GPU, CUDA, combined
   CUDA/Vulkan builds, explicit interop work, project scaffolding, validation lanes, and donor routing.
+- `native-cpp-gui-hud`: installed user-level skill for choosing native C++ GUI, HUD, editor UI,
+  viewport overlay, gizmo, plotting, desktop UI, runtime/game UI, and embedded-web UI stacks. When it
+  presents options, it includes links where users can inspect how each GUI looks.
 - `cppstudio-repo-onboarding`: repo-local onboarding skill for agents editing this CppStudio repo.
   It is not the public user-level C++ GPU skill.
 
@@ -346,6 +349,7 @@ Start from these files:
 - [Hair, grooming, and fur](skills/cpp-cuda-vulkan-studio/references/donor-library/hair-grooming-fur.md)
 - [Medical and scientific volumes](skills/cpp-cuda-vulkan-studio/references/donor-library/medical-scientific-volumes.md)
 - [Muscle, flesh, and biomechanics](skills/cpp-cuda-vulkan-studio/references/donor-library/muscle-flesh-biomechanics.md)
+- [Native GUI, HUD, and editor UI](skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md)
 - [Neural 3D](skills/cpp-cuda-vulkan-studio/references/donor-library/neural-3d.md)
 - [GPU simulation](skills/cpp-cuda-vulkan-studio/references/donor-library/simulation-gpu.md)
 - [Surfaces and subdivision](skills/cpp-cuda-vulkan-studio/references/donor-library/surfaces-subdivision.md)
@@ -399,6 +403,8 @@ The deep profiles cover:
 - Vulkan foundations, shader tooling, ray tracing, denoising, reconstruction, and frame/debug
   patterns.
 - Rendering engines, path tracers, BVH libraries, WebGPU/WebGL references, and engine architecture.
+- Native C++ GUI/HUD/tool UI stacks including Dear ImGui, ImGuizmo, ImPlot, Qt, wxWidgets, RmlUi,
+  NoesisGUI, Nuklear, FLTK, libui-ng, and CEF.
 - Asset, mesh, material, texture, NURBS, DCC, CAD, BIM/IFC, terrain, and geospatial pipelines.
 - Neural 3D, Gaussian splatting, grooming/fur, volumes, medical/scientific visualization, animation,
   muscle/flesh simulation, physics, fluids, smoke, fire, VFX, particles, XR, and spatial input.

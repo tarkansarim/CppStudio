@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_NAME="${SKILL_NAME:-cpp-cuda-vulkan-studio}"
+AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud")
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SOURCE_DIR="${ROOT_DIR}/skills/${SKILL_NAME}"
 TARGET_DIR="${TARGET_DIR:-${CODEX_HOME_DIR}/skills/${SKILL_NAME}}"
@@ -209,11 +210,19 @@ if [[ ! -d "${SOURCE_DIR}" ]]; then
     echo "Missing source skill directory: ${SOURCE_DIR}" >&2
     exit 1
 fi
+for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
+    auxiliary_source_dir="${ROOT_DIR}/skills/${auxiliary_skill_name}"
+    if [[ ! -f "${auxiliary_source_dir}/SKILL.md" ]]; then
+        echo "Missing auxiliary source skill: ${auxiliary_source_dir}/SKILL.md" >&2
+        exit 1
+    fi
+done
 
 require_python310
 
 target_resolved="$(resolve_path "${TARGET_DIR}")"
 expected_resolved="$(resolve_path "${EXPECTED_TARGET_DIR}")"
+target_skills_dir="$(dirname "${target_resolved}")"
 
 if [[ -L "${CODEX_HOME_DIR}/skills" ]]; then
     echo "Refusing symlinked Codex skills root: ${CODEX_HOME_DIR}/skills" >&2
@@ -311,6 +320,9 @@ fi
 
 ROLLBACK_TMP="$(mktemp -d "${TMPDIR:-/tmp}/cppstudio_rollout_rollback.XXXXXX")"
 backup_rollout_path "${target_resolved}"
+for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
+    backup_rollout_path "$(resolve_path "${target_skills_dir}/${auxiliary_skill_name}")"
+done
 for companion in cuda-kernel-authoring vulkan-compute-sync modern-cpp-cmake; do
     companion_skill="${CODEX_HOME_DIR}/skills/${companion}/SKILL.md"
     if [[ -e "${companion_skill}" ]]; then
@@ -329,6 +341,14 @@ else
     SYNC_CODEX_HOME="${CODEX_HOME_DIR}" TARGET_DIR="${TARGET_DIR}" VALIDATOR="${VALIDATOR}" \
         "${ROOT_DIR}/scripts/sync_to_codex.sh"
 fi
+for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
+    SYNC_CODEX_HOME="${CODEX_HOME_DIR}" \
+        SKILL_NAME="${auxiliary_skill_name}" \
+        TARGET_DIR="${target_skills_dir}/${auxiliary_skill_name}" \
+        ALLOW_SYNC_TARGET_OVERRIDE=1 \
+        VALIDATOR="${VALIDATOR}" \
+        "${ROOT_DIR}/scripts/sync_to_codex.sh"
+done
 
 python3 "${DONOR_VALIDATOR}" "${DONOR_ROOT}" --reference-root "${TARGET_DIR}/references"
 python3 "${COMPANION_INSTALLER}" \
@@ -343,6 +363,11 @@ fi
 
 python3 "${VALIDATOR}" "${TARGET_DIR}"
 python3 "${PACKAGE_VALIDATOR}" "${TARGET_DIR}"
+for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
+    auxiliary_target_dir="${target_skills_dir}/${auxiliary_skill_name}"
+    python3 "${VALIDATOR}" "${auxiliary_target_dir}"
+    python3 "${PACKAGE_VALIDATOR}" "${auxiliary_target_dir}"
+done
 for companion in cuda-kernel-authoring vulkan-compute-sync modern-cpp-cmake; do
     companion_dir="${CODEX_HOME_DIR}/skills/${companion}"
     if [[ -d "${companion_dir}" ]]; then
@@ -360,6 +385,13 @@ diff -qr \
     --exclude "*.pyc" \
     --exclude ".DS_Store" \
     "${SOURCE_DIR}" "${TARGET_DIR}" >/dev/null
+for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
+    diff -qr \
+        --exclude "__pycache__" \
+        --exclude "*.pyc" \
+        --exclude ".DS_Store" \
+        "${ROOT_DIR}/skills/${auxiliary_skill_name}" "${target_skills_dir}/${auxiliary_skill_name}" >/dev/null
+done
 rollout_transaction_complete=1
 trap - ERR INT TERM
 rm -rf "${ROLLBACK_TMP}"
@@ -367,5 +399,8 @@ write_cppstudio_audit "rollout" "true" "${TARGET_DIR}" "rolled out"
 rollout_audit_logged=1
 
 echo "Rolled out ${SOURCE_DIR} -> ${TARGET_DIR}"
+for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
+    echo "Rolled out ${ROOT_DIR}/skills/${auxiliary_skill_name} -> ${target_skills_dir}/${auxiliary_skill_name}"
+done
 echo "Verified donor library at ${DONOR_ROOT}"
 echo "Verified companion skill links for matching installed skills in ${CODEX_HOME_DIR}/skills"
