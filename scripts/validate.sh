@@ -2063,9 +2063,18 @@ FORMATS
         fi
         report_name=""
         stats_format=""
+        force_export=""
         input_file=""
         while (($# > 0)); do
             case "$1" in
+                --force-export=*)
+                    force_export="${1#--force-export=}"
+                    shift
+                    ;;
+                --force-export)
+                    force_export="$2"
+                    shift 2
+                    ;;
                 --report)
                     report_name="$2"
                     shift 2
@@ -2087,8 +2096,12 @@ FORMATS
             echo "unsupported report or format" >&2
             exit 2
         fi
-        printf "%s|%s|%s\n" "${report_name}" "${stats_format:-default}" "${input_file}" >>"${NSYS_STATS_ARGV_CAPTURE:?}"
-        printf "stats report=%s format=%s input=%s\n" "${report_name}" "${stats_format:-default}" "${input_file}"
+        if [[ "${force_export}" != "true" ]]; then
+            echo "missing --force-export=true" >&2
+            exit 2
+        fi
+        printf "%s|%s|force=%s|%s\n" "${report_name}" "${stats_format:-default}" "${force_export}" "${input_file}" >>"${NSYS_STATS_ARGV_CAPTURE:?}"
+        printf "stats report=%s format=%s force_export=%s input=%s\n" "${report_name}" "${stats_format:-default}" "${force_export}" "${input_file}"
         ;;
     *)
         echo "unexpected nsys command: $1" >&2
@@ -2110,11 +2123,13 @@ PATH="${nsys_fake_dir}:${PATH}" \
 grep -Fx "${VALIDATE_TMP}/app with spaces" "${nsys_arg_capture}"
 grep -Fx -- "--flag" "${nsys_arg_capture}"
 grep -Fx "value with spaces" "${nsys_arg_capture}"
-grep -F "vulkan_api_sum|column|${VALIDATE_TMP}/nsys_arg_out/nsys_smoke.nsys-rep" "${nsys_stats_capture}"
-grep -F "vulkan_gpu_marker_sum|column|${VALIDATE_TMP}/nsys_arg_out/nsys_smoke.nsys-rep" "${nsys_stats_capture}"
-grep -F "nvtx_sum|column|${VALIDATE_TMP}/nsys_arg_out/nsys_smoke.nsys-rep" "${nsys_stats_capture}"
+grep -F "vulkan_api_sum,osrt_sum,nvtx_sum|column|force=true|${VALIDATE_TMP}/nsys_arg_out/nsys_smoke.nsys-rep" "${nsys_stats_capture}"
 if grep -F "summary|" "${nsys_stats_capture}" >/dev/null || grep -F "|text|" "${nsys_stats_capture}" >/dev/null; then
     echo "run_nsys_smoke.sh used unsupported legacy summary/text stats options" >&2
+    exit 1
+fi
+if grep -F "vulkan_gpu_marker_sum" "${nsys_stats_capture}" >/dev/null || grep -F "vulkan_marker_sum" "${nsys_stats_capture}" >/dev/null; then
+    echo "run_nsys_smoke.sh defaulted to marker reports instead of the stable Vulkan stats set" >&2
     exit 1
 fi
 nsys_cuda_arg_capture="$(mktemp "${VALIDATE_TMP}/nsys_cuda_argv.XXXXXX")"
@@ -2128,8 +2143,7 @@ PATH="${nsys_fake_dir}:${PATH}" \
     "${VALIDATE_TMP}/cuda app with spaces" \
     "--flag" \
     "value with spaces"
-grep -F "cuda_api_gpu_sum|column|${VALIDATE_TMP}/nsys_cuda_arg_out/nsys_smoke.nsys-rep" "${nsys_cuda_stats_capture}"
-grep -F "cuda_gpu_kern_sum|column|${VALIDATE_TMP}/nsys_cuda_arg_out/nsys_smoke.nsys-rep" "${nsys_cuda_stats_capture}"
+grep -F "cuda_api_gpu_sum,cuda_gpu_kern_sum,osrt_sum,nvtx_sum|column|force=true|${VALIDATE_TMP}/nsys_cuda_arg_out/nsys_smoke.nsys-rep" "${nsys_cuda_stats_capture}"
 expect_failure "APP_COMMAND rejects shell-split command strings" "APP_COMMAND must be a single executable path without whitespace" \
     env PATH="${nsys_fake_dir}:${PATH}" \
     NSYS_ARGV_CAPTURE="${nsys_arg_capture}" \

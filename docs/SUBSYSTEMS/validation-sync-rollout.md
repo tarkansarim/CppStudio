@@ -69,7 +69,7 @@ skills, and watch-mode publishing behavior.
   passes, beam-style round planning, keep/revert attempts, malformed benchmark revert behavior, final
   reporting, and scaffold installation of `scripts/run_gpu_optimization_loop.py`.
 - `validate.sh` also fakes Nsight Systems report/format discovery so `run_nsys_smoke.sh` proves it
-  avoids unsupported legacy stats options and selects lane-appropriate Vulkan/CUDA summaries from the
-  installed `nsys` surface.
+  avoids unsupported legacy stats options, uses `--force-export=true`, and selects
+  lane-appropriate explicit Vulkan/CUDA report sets from the installed `nsys` surface.
 - Code-map validation checks that each subsystem router doc's `## Primary Paths` section matches the
   machine-readable manifest `primary_paths`, so future routing changes stay discoverable to agents.

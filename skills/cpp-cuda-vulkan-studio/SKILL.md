@@ -225,7 +225,8 @@ Before enabling a maintained code map for an existing repo, confirm the repo can
 - `scripts/run_vulkan_validation.sh`: run a Vulkan command or validation CTest preset with Khronos validation enabled.
 - `scripts/dump_vulkan_capabilities.sh`: capture `vulkaninfo` summary and text reports for loader/ICD diagnostics.
 - `scripts/run_nsys_smoke.sh`: run an app/probe under Nsight Systems, discover supported stats
-  reports/formats from the installed `nsys`, and read back lane-appropriate report summaries.
+  reports/formats from the installed `nsys`, and read back lane-appropriate explicit reports with
+  forced SQLite export.
 - `scripts/run_gpu_optimization_loop.py`: initialize, baseline, hardware profile, log hypotheses, search breaking points, plan beam-style rounds, attempt, keep/revert, orchestrate, and report evidence-gated GPU optimization sessions.
 - `scripts/format_check.sh`: run clang-format in check-only mode.
 - `scripts/tidy_check.sh`: run clang-tidy against a compile database in check-only mode.

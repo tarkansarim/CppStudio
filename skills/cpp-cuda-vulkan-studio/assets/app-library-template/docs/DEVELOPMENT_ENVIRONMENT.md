@@ -70,7 +70,8 @@ CUDA lanes, `REQUIRE_PROFILING=1` when validating Nsight Systems profiling, and
 
 Nsight Systems report names and stats formats are version-specific. Before writing manual `nsys
 stats` commands, check `nsys stats --help-reports` and `nsys stats --help`; prefer
-`scripts/run_nsys_smoke.sh` because it discovers compatible reports for the active `PROFILE_LANE`.
+`scripts/run_nsys_smoke.sh` because it discovers compatible reports for the active `PROFILE_LANE`
+and uses explicit column stats with `--force-export=true` when the local Nsight version supports it.
 
 Shader sources live in `shaders/`. Generated `.spv` files are build artifacts under the CMake binary
 directory and should not be edited or committed unless a project intentionally vendors binary

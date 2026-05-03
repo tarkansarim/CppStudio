@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Tightened `run_nsys_smoke.sh` stats readback to use one explicit `nsys stats --force-export=true`
+  command with lane-specific column reports such as `vulkan_api_sum,osrt_sum,nvtx_sum`, avoiding
+  stale SQLite reuse warnings and marker-report defaults on Nsight versions without `summary`/`text`.
 - Added a bundled `agentic-control-harness` skill and planner routing so interactive native C++
   apps default to local HTTP/curl or CLI controls, optional MCP facades, state/log/visual
   observation, and autonomous agent test/troubleshooting lanes before routine user manual testing.

@@ -60,6 +60,22 @@ has_line() {
     grep -Fxq "${needle}" <<<"${haystack}"
 }
 
+join_by_comma() {
+    local joined=""
+    local value
+
+    for value in "$@"; do
+        if [[ -z "${value}" ]]; then
+            continue
+        fi
+        if [[ -n "${joined}" ]]; then
+            joined+=","
+        fi
+        joined+="${value}"
+    done
+    printf "%s" "${joined}"
+}
+
 trim_value() {
     local value="$1"
     value="${value#"${value%%[![:space:]]*}"}"
@@ -170,13 +186,13 @@ fi
 
 case "${profile_lane}" in
     vulkan)
-        preferred_reports=(vulkan_api_sum vulkan_gpu_marker_sum vulkan_marker_sum nvtx_sum osrt_sum)
+        preferred_reports=(vulkan_api_sum osrt_sum nvtx_sum)
         ;;
     cuda)
-        preferred_reports=(cuda_api_gpu_sum cuda_api_sum cuda_gpu_kern_sum cuda_gpu_mem_time_sum cuda_kern_exec_sum nvtx_sum osrt_sum)
+        preferred_reports=(cuda_api_gpu_sum cuda_gpu_kern_sum osrt_sum nvtx_sum)
         ;;
     all)
-        preferred_reports=(cuda_api_gpu_sum cuda_gpu_kern_sum vulkan_api_sum vulkan_gpu_marker_sum vulkan_marker_sum nvtx_sum osrt_sum)
+        preferred_reports=(cuda_api_gpu_sum cuda_gpu_kern_sum vulkan_api_sum osrt_sum nvtx_sum)
         ;;
 esac
 
@@ -196,30 +212,22 @@ if ((${#stats_reports[@]} == 0)); then
 fi
 
 : >"${stats_path}"
-stats_success_count=0
-for stats_report in "${stats_reports[@]}"; do
-    {
-        echo "==== nsys stats report: ${stats_report} ===="
-        echo "format=${stats_format:-default}"
-    } >>"${stats_path}"
+stats_reports_csv="$(join_by_comma "${stats_reports[@]}")"
+{
+    echo "==== nsys stats reports: ${stats_reports_csv} ===="
+    echo "format=${stats_format:-default}"
+    echo "force_export=true"
+} >>"${stats_path}"
 
-    stats_cmd=(nsys stats --report "${stats_report}")
-    if [[ -n "${stats_format}" ]]; then
-        stats_cmd+=(--format "${stats_format}")
-    fi
-    stats_cmd+=("${report_path}")
+stats_cmd=(nsys stats --force-export=true --report "${stats_reports_csv}")
+if [[ -n "${stats_format}" ]]; then
+    stats_cmd+=(--format "${stats_format}")
+fi
+stats_cmd+=("${report_path}")
 
-    if "${stats_cmd[@]}" >>"${stats_path}" 2>&1; then
-        stats_success_count=$((stats_success_count + 1))
-    else
-        echo "==== skipped nsys stats report: ${stats_report} ====" >>"${stats_path}"
-    fi
-    echo >>"${stats_path}"
-done
-
-if ((stats_success_count == 0)); then
+if ! "${stats_cmd[@]}" >>"${stats_path}" 2>&1; then
     cat "${stats_path}" >&2
-    echo "nsys profile succeeded but stats readback failed for every compatible report." >&2
+    echo "nsys profile succeeded but stats readback failed for reports: ${stats_reports_csv}" >&2
     echo "Inspect ${report_path} directly in Nsight Systems or set NSYS_STATS_REPORTS to reports supported by this install." >&2
     exit 1
 fi
