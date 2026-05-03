@@ -30,6 +30,8 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `ab3c176` - Added deterministic skill package integrity metadata, manifest validation,
+  progressive-disclosure file roles, and sync/rollout audit logging.
 - `e79974e` - Added AgentSys-style performance investigation gates with success criteria,
   hypotheses, breaking-point search, repeated validation, and consolidation reports.
 - `ba8fa15` - Added the generated GPU optimization loop with AutoKernel-style baseline,
