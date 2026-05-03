@@ -23,3 +23,5 @@ generated-project workflow instructions.
 - the repo-local onboarding skill changes
 - code-map readiness, bootstrap, or maintenance behavior changes for agents
 - target-repo code-map authority or map-first navigation behavior changes
+- donor-grounding or web-ceiling-check expectations for native GPU brainstorming/design proposals
+  change

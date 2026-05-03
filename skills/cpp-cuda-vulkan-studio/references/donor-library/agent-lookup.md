@@ -16,6 +16,18 @@ targets, then implement through the active lane skill.
 
 ## Prompt Intent Map
 
+- **Native C++ GPU architecture brainstorming or design proposals**: do not answer from skill framing
+  or general model knowledge alone. Open [project-archetypes.md](../project-archetypes.md),
+  [selection-policy.md](selection-policy.md), then the smallest category/profile set for the design.
+  For realtime Vulkan fluids/fire/smoke/water/destruction brainstorming, start with
+  [simulation-gpu.md](simulation-gpu.md) and
+  [Fluids, Smoke, Fire, And Solver References](profiles/fluids-smoke-fire.md); add
+  [vfx-particles.md](vfx-particles.md) for realtime effect presentation,
+  [volumes-voxels.md](volumes-voxels.md) for smoke/fire volume representation, and
+  [geometry-simulation.md](geometry-simulation.md) for rigid fragments, collisions, and destruction.
+  Always do a small web ceiling check for this fluids/fire/smoke/water/destruction brainstorm shape,
+  even when the user only says "brainstorm"; use upstream repos, vendor docs, papers, or project docs
+  to avoid relying on stale model memory before ranking recommendations.
 - **VFX studio department terms such as modeling, texturing, rigging, creature FX, look development,
   lighting, or FX**: open [production/vfx-studio.md](production/vfx-studio.md) first, then the
   smallest technical category set it names. Use department language only as a router; keep

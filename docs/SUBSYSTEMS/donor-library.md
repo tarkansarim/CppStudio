@@ -22,3 +22,4 @@ selection policy, and trigger-regression metadata.
 - a donor caveat such as mixed-native or reference-only changes
 - trigger prompts, expected donor routing, or donor inventory in the README changes
 - donor refresh dates or source research notes change
+- donor-grounding or web-ceiling-check expectations for broad native GPU design prompts change

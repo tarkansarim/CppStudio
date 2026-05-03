@@ -37,6 +37,18 @@ When this skill is active, work like a native C++ GPU systems engineer:
 - Be donor-first. Use the donor library for architecture, edge cases, tests, algorithms, and
   dependency choices before inventing a new subsystem; when no suitable donor exists, add donor
   research before designing the implementation.
+- Treat native C++ GPU brainstorming and architecture proposals as donor-grounded work, not just
+  conceptual chat. Before making concrete solver, renderer, dependency, subsystem, or MVP-order
+  recommendations, open the smallest relevant donor categories/profiles and state which guidance is
+  donor-backed versus inference. If the prompt asks for current best choices, state-of-the-art,
+  "ceiling", or rapidly moving GPU/tooling options, run a targeted web check against upstream or
+  primary sources before ranking choices.
+- For ambitious realtime simulation/graphics brainstorms, including fluid, fire, smoke, water,
+  destruction, shatter, neural 3D, upscaling/reconstruction, XR, or renderer architecture that is
+  likely to depend on current engines, SDKs, papers, samples, or hardware capabilities, run a small
+  web ceiling check even when the user only says "brainstorm." Use official upstream repos, vendor
+  docs, papers, or project docs; then separate current-source evidence from local donor guidance and
+  inference.
 - Never copy study-only, incompatible-license, non-C++ reference-only, or backend-mismatched donor
   code into generated projects. Use those donors for concepts, then translate through the active
   Vulkan, CUDA, or explicit interop lane.
@@ -89,8 +101,29 @@ When this skill is active, work like a native C++ GPU systems engineer:
     use `plan-round` for beam-style parallel worker slots when exploring multiple bottlenecks, use
     `next` for move-on decisions, and generate a consolidation report before claiming speedups.
 13. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
-14. Before greenfield scaffolding or major backbone edits, read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library, CUDA+Vulkan combined/interop app, AI runtime, neural 3D viewer, grooming/fur tool, glTF/runtime asset viewer, renderer backbone/runtime mesh pipeline, DCC scene pipeline, volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool, 3D/physics/GPU simulation tool, or XR app.
-15. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects, use the nested donor router. Read `references/donor-library/README.md` for policy; when the prompt uses VFX studio, game studio, or native engineering infrastructure vocabulary, use the production overlays under `references/donor-library/production/`; use `references/donor-library/agent-lookup.md` only when the prompt is broad or overlapping; then open the smallest matching category set, choosing one primary category first when possible, and only the donor profiles those categories name. Treat donors as domain references first: a CUDA, Vulkan, OpenCL, DirectX, CPU, or DCC donor can still guide another target backend. Keep the selected implementation lane fixed, translate backend-specific details through the active lane skill, and keep permissive donor code, dependency candidates, and study-only references separated.
+14. Before greenfield scaffolding, major backbone edits, or native GPU architecture brainstorming,
+    read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library,
+    CUDA+Vulkan combined/interop app, AI runtime, neural 3D viewer, grooming/fur tool,
+    glTF/runtime asset viewer, renderer backbone/runtime mesh pipeline, DCC scene pipeline,
+    volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool,
+    3D/physics/GPU simulation tool, or XR app.
+15. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects,
+    or when brainstorming native GPU architecture that will recommend solvers, rendering paths,
+    dependencies, subsystem boundaries, or MVP order, use the nested donor router before giving the
+    recommendation. Read `references/donor-library/README.md` for policy; when the prompt uses VFX
+    studio, game studio, or native engineering infrastructure vocabulary, use the production overlays
+    under `references/donor-library/production/`; use `references/donor-library/agent-lookup.md`
+    when the prompt is broad, overlapping, or exploratory; then open the smallest matching category
+    set, choosing one primary category first when possible, and only the donor profiles those
+    categories name. Treat donors as domain references first: a CUDA, Vulkan, OpenCL, DirectX, CPU,
+    or DCC donor can still guide another target backend. Keep the selected implementation lane fixed,
+    translate backend-specific details through the active lane skill, and keep permissive donor code,
+    dependency candidates, and study-only references separated. If the prompt asks for the best
+    current choices, state of the art, ceiling, or recently moving GPU/tooling options, web-check
+    upstream or primary sources before ranking options. For broad realtime simulation/graphics
+    brainstorms that mention fluid, fire, smoke, water, destruction, shatter, neural 3D,
+    upscaling/reconstruction, XR, or renderer architecture, do the web ceiling check even if the user
+    did not use "current" or "best."
 16. Do not route design-only, frontend-only, storyboarding, generic image/video, generic product-AI UI, plain text rendering, or ordinary data import requests through this skill unless the user explicitly asks for native C++ GPU implementation, C++/CUDA/Vulkan infrastructure, or donor-reference selection.
 
 ## Existing Project Code Map Readiness Protocol

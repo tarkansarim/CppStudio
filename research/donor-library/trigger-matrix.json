@@ -373,6 +373,23 @@
       ]
     },
     {
+      "name": "realtime-vulkan-fluid-fire-shatter-brainstorm",
+      "tags": ["smoke", "positive", "lookup", "vulkan", "simulation", "vfx", "volumes"],
+      "prompt_shape": "Brainstorm a realtime Vulkan C++ fluids simulation that can do fire, smoke, water, and shatter.",
+      "expected_behavior": "Do not answer from general model knowledge alone. Route through project archetypes, selection policy, agent lookup, simulation-gpu, and the fluids deep profile; add vfx-particles for realtime effect presentation, volumes-voxels for smoke/fire representation, and geometry-simulation for rigid fragments/collision/destruction. Perform targeted web ceiling checks against upstream or primary sources before ranking architecture options, even if the user only says brainstorm.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/simulation-gpu.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/fluids-smoke-fire.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/vfx-particles.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/volumes-voxels.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md"
+      ]
+    },
+    {
       "name": "bim-ifc-aec-donors",
       "tags": ["positive", "assets", "cad"],
       "prompt_shape": "C++ BIM/AEC tool needs IFC parsing, IfcOpenShell, IFC++, web-ifc behavior, buildingSMART validation, IDS, BCF, or building geometry conversion into a renderer.",
