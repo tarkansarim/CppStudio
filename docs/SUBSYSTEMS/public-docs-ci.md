@@ -35,6 +35,14 @@ workflow, and repo banner/sample assets.
 - host setup commands or GPU toolchain notes change
 - root CI behavior, badge targets, or public assets change
 
+## Current Public Docs Posture
+
+- The README positions optional code maps as practical project memory plus section-level onboarding:
+  enabled maps route agents to the relevant subsystem doc and source paths, then explain what that
+  code section owns before edits.
+- Code maps are described as the first navigation step before code changes, not a replacement for
+  source inspection or a hard gate around normal engineering work.
+
 ## Current CI Posture
 
 - The public validation badge runs `./scripts/validate.sh --full` so generated-project scaffold,

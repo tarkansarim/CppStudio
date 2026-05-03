@@ -245,13 +245,14 @@ not trigger.
 ## Optional Code Maps
 
 CppStudio can add a maintained code map to a target native C++ GPU project, but it is optional and
-per project. The benefit is practical project memory: future agents can find subsystem ownership,
-backend boundaries, build and test lanes, validation entrypoints, and donor decisions without
-rereading the entire repo from scratch.
+per project. The benefit is practical project memory and section-level onboarding: future agents can
+find subsystem ownership, backend boundaries, build and test lanes, validation entrypoints, and donor
+decisions without rereading the entire repo from scratch.
 
-When a map is enabled, agents use it as the first navigation step before code changes: the
-architecture index and manifest point them to the matching subsystem doc and primary paths for the
-work.
+When a map is enabled, agents use it as the first navigation step before code changes, not as a
+replacement for source inspection. The architecture index and manifest route them to the matching
+subsystem doc and primary paths, then the subsystem doc gives concise context about what that section
+of the code owns, how it behaves, and what validation expectations apply before editing.
 
 There is no standalone CppStudio code-map skill. The workflow lives inside `cpp-cuda-vulkan-studio`
 so the map follows the same Vulkan/CUDA lane policy, validation rules, and donor-routing context as
