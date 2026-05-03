@@ -100,6 +100,7 @@ required_repo_files=(
     "skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py"
     "research/gpu-optimization-autokernel-mapping.md"
     "research/gpu-optimization-kernelagent-mapping.md"
+    "research/gpu-optimization-agentsys-mapping.md"
 )
 for rel_path in "${required_repo_files[@]}"; do
     if [[ ! -e "${ROOT_DIR}/${rel_path}" ]]; then
@@ -1378,16 +1379,32 @@ echo "gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed=19.0"
 echo "sm__pipe_tensor_cycles_active.avg.pct_of_peak_sustained_active=0.0"
 echo "bottleneck=compute"
 EOF
-chmod +x "${optimization_tmp}/verify.sh" "${optimization_tmp}/benchmark.sh" "${optimization_tmp}/profile.sh"
-cat >"${optimization_tmp}/docs/GPU_OPTIMIZATION_TARGETS.tsv" <<'EOF'
+cat >"${optimization_tmp}/breaking.sh" <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+value="${PERF_PARAM_VALUE:?}"
+echo "correctness=PASS"
+echo "elapsed_us=${value}"
+EOF
+chmod +x "${optimization_tmp}/verify.sh" "${optimization_tmp}/benchmark.sh" "${optimization_tmp}/profile.sh" "${optimization_tmp}/breaking.sh"
+cat >"${optimization_tmp}/docs/GPU_OPTIMIZATION_TARGETS_BAD.tsv" <<'EOF'
 target_id	lane	workload	share_pct	benchmark_cmd	verify_cmd	profile_cmd	scope_paths	metric_name	direction	notes
-cuda_kernel	cuda	synthetic CUDA kernel	50	./benchmark.sh	./verify.sh	./profile.sh	src/cuda	elapsed_us	lower	validation fixture
+cuda_kernel	cuda	synthetic CUDA kernel	50	./benchmark.sh	./verify.sh	./profile.sh	src/cuda	elapsed_us	lower	missing success criteria fixture
+EOF
+cat >"${optimization_tmp}/docs/GPU_OPTIMIZATION_TARGETS.tsv" <<'EOF'
+target_id	lane	workload	share_pct	benchmark_cmd	verify_cmd	profile_cmd	scope_paths	success_criteria	validation_passes	metric_name	direction	notes
+cuda_kernel	cuda	synthetic CUDA kernel	50	./benchmark.sh	./verify.sh	./profile.sh	src/cuda	elapsed_us must improve while correctness stays PASS	2	elapsed_us	lower	validation fixture
 EOF
 git -C "${optimization_tmp}" init -q
 git -C "${optimization_tmp}" config user.email "cppstudio@example.invalid"
 git -C "${optimization_tmp}" config user.name "CppStudio Validate"
 git -C "${optimization_tmp}" add .
 git -C "${optimization_tmp}" commit -q -m "baseline"
+expect_failure "GPU optimization target table requires success criteria" "missing columns: success_criteria" \
+    python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" init \
+        --repo "${optimization_tmp}" \
+        --session opt-bad \
+        --targets docs/GPU_OPTIMIZATION_TARGETS_BAD.tsv
 python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" init \
     --repo "${optimization_tmp}" \
     --session opt-test \
@@ -1406,6 +1423,18 @@ python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" profile \
     --profile-id baseline-ncu
 grep -q "compute_sol_pct" \
     "${optimization_tmp}/artifacts/optimization/opt-test/targets/cuda_kernel/profiles/baseline-ncu/profile_metrics.json"
+python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" breaking-point \
+    --repo "${optimization_tmp}" \
+    --session opt-test \
+    --target-id cuda_kernel \
+    --param-name elements \
+    --min 10 \
+    --max 160 \
+    --threshold 90 \
+    --direction lower \
+    --cmd './breaking.sh --elements {value}'
+grep -q '"largest_passing"' \
+    "${optimization_tmp}/artifacts/optimization/opt-test/targets/cuda_kernel/breaking-point/elements/breaking_point.json"
 python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" plan-round \
     --repo "${optimization_tmp}" \
     --session opt-test \
@@ -1414,6 +1443,16 @@ python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" plan-round \
     --bottlenecks compute,memory
 test -f "${optimization_tmp}/artifacts/optimization/opt-test/targets/cuda_kernel/rounds/round001/round_plan.json"
 test -f "${optimization_tmp}/artifacts/optimization/opt-test/targets/cuda_kernel/rounds/round001/workers/worker001/worker.json"
+python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" hypothesis \
+    --repo "${optimization_tmp}" \
+    --session opt-test \
+    --target-id cuda_kernel \
+    --hypothesis-id H1 \
+    --confidence medium \
+    --summary "Lower synthetic metric by editing the kernel fixture." \
+    --evidence "baseline elapsed_us=100 and profile bottleneck=compute" \
+    --expected-effect "elapsed_us lower"
+grep -q "H1" "${optimization_tmp}/artifacts/optimization/opt-test/hypotheses.tsv"
 printf "metric=80\n" >"${optimization_tmp}/src/cuda/kernel.cu"
 python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" attempt \
     --repo "${optimization_tmp}" \
@@ -1424,12 +1463,24 @@ python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" attempt \
     --parent-attempt-id baseline \
     --attempt-id faster \
     --tag faster \
+    --hypothesis-id H1 \
     --description "Faster synthetic kernel metric." \
     --auto-revert \
     --commit-keep
 grep -q $'opt-test\tcuda_kernel\tattempt\tfaster\tfaster\tKEEP' \
     "${optimization_tmp}/artifacts/optimization/opt-test/results.tsv"
+test -f "${optimization_tmp}/artifacts/optimization/opt-test/targets/cuda_kernel/rounds/round001/workers/worker001/attempt/verify_pass_001.log"
+test -f "${optimization_tmp}/artifacts/optimization/opt-test/targets/cuda_kernel/rounds/round001/workers/worker001/attempt/verify_pass_002.log"
 git -C "${optimization_tmp}" log -1 --pretty=%s | grep -q "opt(cuda_kernel): faster"
+python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" hypothesis \
+    --repo "${optimization_tmp}" \
+    --session opt-test \
+    --target-id cuda_kernel \
+    --hypothesis-id H2 \
+    --confidence low \
+    --summary "A deliberately slower fixture should be rejected." \
+    --evidence "validation fixture exercises revert behavior" \
+    --expected-effect "elapsed_us higher and rejected"
 printf "metric=120\n" >"${optimization_tmp}/src/cuda/kernel.cu"
 expect_failure "slower GPU optimization attempt reverts" "decision=REVERT" \
     python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" attempt \
@@ -1438,9 +1489,19 @@ expect_failure "slower GPU optimization attempt reverts" "decision=REVERT" \
         --target-id cuda_kernel \
         --attempt-id slower \
         --tag slower \
+        --hypothesis-id H2 \
         --description "Slower synthetic kernel metric." \
         --auto-revert
 grep -q "metric=80" "${optimization_tmp}/src/cuda/kernel.cu"
+python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" hypothesis \
+    --repo "${optimization_tmp}" \
+    --session opt-test \
+    --target-id cuda_kernel \
+    --hypothesis-id H3 \
+    --confidence low \
+    --summary "A failed validation command should reject before benchmarking." \
+    --evidence "validation fixture overrides verify command with false" \
+    --expected-effect "attempt reverts before run.log benchmark"
 printf "metric=70\n" >"${optimization_tmp}/src/cuda/kernel.cu"
 expect_failure "failed GPU optimization verification reverts" "decision=REVERT" \
     python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" attempt \
@@ -1449,6 +1510,7 @@ expect_failure "failed GPU optimization verification reverts" "decision=REVERT" 
         --target-id cuda_kernel \
         --attempt-id badverify \
         --tag badverify \
+        --hypothesis-id H3 \
         --description "Verification failure synthetic attempt." \
         --verify-cmd false \
         --auto-revert
@@ -1464,6 +1526,10 @@ python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" report \
     --final-cmd ./verify.sh
 grep -q "GPU Optimization Report" "${optimization_tmp}/artifacts/optimization/opt-test/final_report.md"
 grep -q "Estimated end-to-end speedup" "${optimization_tmp}/artifacts/optimization/opt-test/final_report.md"
+grep -q "Success Criteria" "${optimization_tmp}/artifacts/optimization/opt-test/final_report.md"
+grep -q "Hypotheses" "${optimization_tmp}/artifacts/optimization/opt-test/final_report.md"
+grep -q "Breaking Points" "${optimization_tmp}/artifacts/optimization/opt-test/final_report.md"
+grep -q "Consolidation" "${optimization_tmp}/artifacts/optimization/opt-test/final_report.md"
 apply_dry_run_tmp="$(mktemp -d "${VALIDATE_TMP}/apply_dry_run.XXXXXX")"
 apply_dry_run_out="$(mktemp "${VALIDATE_TMP}/apply_dry_run.XXXXXX.out")"
 python3 "${SKILL_DIR}/scripts/apply_studio_backbone.py" \

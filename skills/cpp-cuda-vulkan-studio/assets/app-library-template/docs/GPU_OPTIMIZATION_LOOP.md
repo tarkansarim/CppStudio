@@ -1,23 +1,25 @@
 # GPU Optimization Loop
 
 Use this loop when improving CUDA kernels, Vulkan compute shaders, render passes, simulation kernels,
-or realtime frame time. The goal is to make performance work reproducible: baseline, one focused
-hypothesis, verify, benchmark, keep or revert, then report.
+or realtime frame time. The goal is to make performance work reproducible: define success criteria,
+baseline, profile, log one focused hypothesis, validate, benchmark, keep or revert, then consolidate
+the evidence before claiming a speedup.
 
 ## Target Table
 
 Create a project-owned TSV such as `docs/GPU_OPTIMIZATION_TARGETS.tsv`:
 
 ```text
-target_id	lane	workload	share_pct	benchmark_cmd	verify_cmd	profile_cmd	scope_paths	metric_name	direction	notes
-cuda_vector_add	cuda	CUDA vector add benchmark	12	ctest --preset benchmark --output-on-failure	ctest --preset cuda --output-on-failure	ncu --csv --page=raw --metrics sm__throughput.avg.pct_of_peak_sustained_elapsed,gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed ./build/dev/tests/cuda_vector_add_bench	src/cuda;include	elapsed_us	lower	replace share with profiler evidence
-vulkan_compute	vulkan	Vulkan compute dispatch	18	ctest --preset benchmark --output-on-failure	ctest --preset vulkan-compute --output-on-failure	<project-owned Vulkan profile command that prints pct_peak_compute/pct_peak_bandwidth/bottleneck>	src/render;shaders	frame_ms	lower	representative dispatch or frame workload
+target_id	lane	workload	share_pct	benchmark_cmd	verify_cmd	profile_cmd	scope_paths	success_criteria	validation_passes	metric_name	direction	notes
+cuda_vector_add	cuda	CUDA vector add benchmark	12	ctest --preset benchmark --output-on-failure	ctest --preset cuda --output-on-failure	ncu --csv --page=raw --metrics sm__throughput.avg.pct_of_peak_sustained_elapsed,gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed ./build/dev/tests/cuda_vector_add_bench	src/cuda;include	correctness stays green and elapsed_us improves on the representative benchmark	2	elapsed_us	lower	replace share with profiler evidence
+vulkan_compute	vulkan	Vulkan compute dispatch	18	ctest --preset benchmark --output-on-failure	ctest --preset vulkan-compute --output-on-failure	<project-owned Vulkan profile command that prints pct_peak_compute/pct_peak_bandwidth/bottleneck>	src/render;shaders	correctness stays green and frame_ms improves on the representative dispatch	2	frame_ms	lower	representative dispatch or frame workload
 ```
 
 Required columns are `target_id`, `lane`, `workload`, `share_pct`, `benchmark_cmd`, `verify_cmd`,
-and `scope_paths`. `profile_cmd` is optional but recommended for CUDA, Vulkan compute, render-pass,
-or frame-time work where hardware counters are available. Use semicolons in `scope_paths` when one
-target owns more than one directory.
+`scope_paths`, and `success_criteria`. `profile_cmd` is optional but recommended for CUDA, Vulkan
+compute, render-pass, or frame-time work where hardware counters are available. `validation_passes`
+is optional and defaults to `2`; if present it must be at least `2`. Use semicolons in `scope_paths`
+when one target owns more than one directory.
 
 ## Workflow
 
@@ -46,6 +48,22 @@ scripts/run_gpu_optimization_loop.py profile \
   --profile-id baseline-ncu
 ```
 
+Optional breaking-point search can map the workload size where the target first fails or degrades
+beyond the declared threshold:
+
+```bash
+scripts/run_gpu_optimization_loop.py breaking-point \
+  --session opt-session \
+  --target-id cuda_vector_add \
+  --param-name elements \
+  --param-env PERF_PARAM_VALUE \
+  --min 10000 \
+  --max 1000000 \
+  --threshold 5000 \
+  --direction lower \
+  --cmd './build/dev/tests/cuda_vector_add_bench --elements {value}'
+```
+
 When multiple directions are worth trying, create beam-style worker artifacts for parallel agents:
 
 ```bash
@@ -60,6 +78,19 @@ Each worker gets `targets/<target>/rounds/<round>/workers/<worker>/worker.json` 
 parent attempt, bottleneck direction, scope paths, and commands. Run each worker in its own branch or
 worktree when agents are editing in parallel.
 
+Before editing, log the hypothesis that the attempt will test:
+
+```bash
+scripts/run_gpu_optimization_loop.py hypothesis \
+  --session opt-session \
+  --target-id cuda_vector_add \
+  --hypothesis-id H1 \
+  --confidence medium \
+  --summary "Shared-memory tiling should reduce global load pressure." \
+  --evidence "baseline-ncu reports bottleneck=memory and low compute SOL" \
+  --expected-effect "elapsed_us lower and memory SOL closer to compute SOL"
+```
+
 Make one focused edit under the target's declared `scope_paths`, then measure it:
 
 ```bash
@@ -71,9 +102,14 @@ scripts/run_gpu_optimization_loop.py attempt \
   --parent-attempt-id baseline \
   --attempt-id tile-128 \
   --tag tile-128 \
+  --hypothesis-id H1 \
   --description "Test 128-thread tile layout." \
   --auto-revert
 ```
+
+`attempt` runs the target verification command sequentially for the configured validation-pass count
+before benchmarking. A failed validation pass rejects or reverts the attempt before performance is
+considered.
 
 If an attempt is kept and more experiments will follow, create a normal git commit before making the
 next edit, or pass `--commit-keep` when the user has approved autonomous optimization commits. This
@@ -93,6 +129,21 @@ scripts/run_gpu_optimization_loop.py report --session opt-session
 
 Use `--final-cmd "<representative command>"` with `report` when the project has an end-to-end app,
 frame, simulation, or inference validation command.
+
+## Investigation Phases
+
+Keep performance sessions in this order unless the user explicitly narrows the work:
+
+1. Define scenario, representative target, success criteria, and benchmark command.
+2. Record a fixed baseline.
+3. Optionally run breaking-point search for workload size or quality limits.
+4. Profile the current target and classify the dominant bottleneck.
+5. Log up to a small set of hypotheses with evidence and confidence.
+6. Plan a round when multiple parent attempts or bottlenecks are worth exploring.
+7. Apply one focused edit tied to one hypothesis.
+8. Run two or more validation passes, then benchmark only if correctness stays green.
+9. Keep, reject, or revert based on the measured representative result.
+10. Generate the final consolidation report before publishing performance claims.
 
 ## Benchmark Contract
 
@@ -151,12 +202,16 @@ Artifacts live under `artifacts/optimization/<session>/`:
 - `state.json`: per-target orchestration state.
 - `run.log`: session-level JSONL event log.
 - `results.tsv`: greppable baseline and attempt table.
+- `hypotheses.tsv`: evidence-backed hypothesis table.
 - `targets/<target>/baseline/`: baseline logs.
 - `targets/<target>/profiles/<profile>/`: profiler logs and parsed roofline/SOL metrics.
+- `targets/<target>/hypotheses/`: per-hypothesis JSON records.
+- `targets/<target>/breaking-point/<param>/`: binary-search trial logs and summary JSON.
 - `targets/<target>/rounds/<round>/workers/<worker>/`: beam-style worker plans and attempt logs.
 - `targets/<target>/attempts/<attempt>/`: attempt logs.
 - `patches/`: patch snapshots for measured attempts.
-- `final_report.md`: close-out report.
+- `final_report.md`: consolidation report with success criteria, hypotheses, breaking points,
+  validation-pass evidence, accepted/rejected attempts, and final recommendation.
 
 `artifacts/` is ignored by the template. Keep important summaries in issue comments, PR notes, or
 project-owned docs only after the report is generated.

@@ -38,4 +38,5 @@ validation.
   escaping links, and glob matches that resolve outside the repo are rejected.
 - The generated GPU optimization loop is command-driven rather than Triton/PyTorch-specific. Hardware
   profiling should emit greppable NCU/SOL or project counter lines that `profile` can parse, while
-  `plan-round` writes per-round worker artifacts for agents, branches, or worktrees.
+  `hypothesis`, `breaking-point`, and `plan-round` record evidence-backed investigation state and
+  per-round worker artifacts for agents, branches, or worktrees.

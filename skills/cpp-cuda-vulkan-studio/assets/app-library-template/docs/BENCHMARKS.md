@@ -16,6 +16,8 @@ the result or explain why it changed.
 - median and p95 timing or throughput
 - profiler artifact path when a profiler was used
 - before/after comparison when the benchmark supports a change claim
+- success criteria for the scenario before optimization starts
+- hypothesis id, evidence, and validation-pass count for measured optimization attempts
 
 ## Baseline Format
 
@@ -45,8 +47,9 @@ questions. Use `ncu` only after a hot CUDA kernel has been identified.
 
 Use [GPU_OPTIMIZATION_LOOP.md](GPU_OPTIMIZATION_LOOP.md) for agent-run performance work. Its script
 keeps baselines, hardware profile logs, roofline/SOL summaries, beam-round worker plans, attempt
-logs, patch snapshots, target state, and final reports under `artifacts/optimization/<session>/`.
-Copy only durable summaries into tracked docs or PR notes.
+logs, repeated validation-pass logs, hypothesis records, breaking-point searches, patch snapshots,
+target state, and final consolidation reports under `artifacts/optimization/<session>/`. Copy only
+durable summaries into tracked docs or PR notes.
 
 ## CI Policy
 

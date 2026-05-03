@@ -66,6 +66,7 @@ cmake --build --preset cuda-vulkan-combined
 
 For CUDA kernels, Vulkan compute shaders, render passes, simulations, or frame-time work, use the
 evidence-gated loop in [GPU_OPTIMIZATION_LOOP.md](docs/GPU_OPTIMIZATION_LOOP.md). It records fixed
-baselines, hardware profile and roofline/SOL diagnosis, beam-style round plans for parallel agents,
+baselines, success criteria, hardware profile and roofline/SOL diagnosis, hypothesis records,
+breaking-point searches, beam-style round plans for parallel agents, repeated validation-pass logs,
 per-attempt `run.log` files, `results.tsv`, keep/revert decisions, target move-on state, convergence
-or near-roofline stops, and a final report under `artifacts/optimization/<session>/`.
+or near-roofline stops, and a consolidation report under `artifacts/optimization/<session>/`.

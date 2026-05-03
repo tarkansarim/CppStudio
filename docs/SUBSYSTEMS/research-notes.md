@@ -11,6 +11,7 @@ the reusable skill and donor library.
 - `research/code-map-trigger-lane.md`
 - `research/gpu-optimization-autokernel-mapping.md`
 - `research/gpu-optimization-kernelagent-mapping.md`
+- `research/gpu-optimization-agentsys-mapping.md`
 
 ## Primary Paths
 
@@ -21,6 +22,7 @@ the reusable skill and donor library.
 - `research/code-map-trigger-lane.md`
 - `research/gpu-optimization-autokernel-mapping.md`
 - `research/gpu-optimization-kernelagent-mapping.md`
+- `research/gpu-optimization-agentsys-mapping.md`
 
 ## Update When
 

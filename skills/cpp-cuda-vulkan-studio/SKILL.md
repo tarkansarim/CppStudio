@@ -76,15 +76,18 @@ When this skill is active, work like a native C++ GPU systems engineer:
 10. For new Vulkan template work, target Vulkan 1.3 with Vulkan-Hpp RAII, synchronization2, dynamic rendering, GLSL compiled by `glslc`, SPIR-V validation by `spirv-val`, and optional portability-enumeration support for MoltenVK-style platforms.
 11. Register tests with CTest labels so quick, GPU, GUI, Vulkan, CUDA, shader, compute, render, validation, perf, and nightly lanes can be selected independently.
 12. For GPU performance work, use the generated optimization loop when available. Start from
-    `docs/GPU_OPTIMIZATION_LOOP.md`, or the bundled template copy if an existing repo has not copied
-    it yet. Create a representative target table so agents do not chase isolated microbenchmarks,
-    record a fixed baseline, run hardware profiling such as Nsight Compute/NCU, Nsight Graphics GPU
-    Trace, vendor tools, timestamp-query summaries, or project counters before edits when counters
-    are available, record the tool gap when they are not, use roofline/SOL diagnosis when metrics are
-    available, test one focused hypothesis at a time, keep only correct improvements, revert rejected
-    or divergent attempts, use `plan-round` for beam-style parallel worker slots when exploring
-    multiple bottlenecks, use `next` for move-on decisions, and generate a final report before
-    claiming speedups.
+    the target project's `docs/GPU_OPTIMIZATION_LOOP.md`; when working in this source package before
+    that doc has been copied, use the bundled template copy at
+    `assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md`. Create a representative target table
+    with explicit success criteria so agents do not chase isolated microbenchmarks, record a fixed
+    baseline, run hardware profiling such as Nsight Compute/NCU, Nsight Graphics GPU Trace, vendor
+    tools, timestamp-query summaries, or project counters before edits when counters are available,
+    record the tool gap when they are not, use roofline/SOL diagnosis when metrics are available, log
+    evidence-backed hypotheses before edits, optionally run breaking-point search for workload
+    limits, test one focused hypothesis at a time, run two or more validation passes before
+    benchmarking an attempt, keep only correct improvements, revert rejected or divergent attempts,
+    use `plan-round` for beam-style parallel worker slots when exploring multiple bottlenecks, use
+    `next` for move-on decisions, and generate a consolidation report before claiming speedups.
 13. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
 14. Before greenfield scaffolding or major backbone edits, read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library, CUDA+Vulkan combined/interop app, AI runtime, neural 3D viewer, grooming/fur tool, glTF/runtime asset viewer, renderer backbone/runtime mesh pipeline, DCC scene pipeline, volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool, 3D/physics/GPU simulation tool, or XR app.
 15. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects, use the nested donor router. Read `references/donor-library/README.md` for policy; when the prompt uses VFX studio, game studio, or native engineering infrastructure vocabulary, use the production overlays under `references/donor-library/production/`; use `references/donor-library/agent-lookup.md` only when the prompt is broad or overlapping; then open the smallest matching category set, choosing one primary category first when possible, and only the donor profiles those categories name. Treat donors as domain references first: a CUDA, Vulkan, OpenCL, DirectX, CPU, or DCC donor can still guide another target backend. Keep the selected implementation lane fixed, translate backend-specific details through the active lane skill, and keep permissive donor code, dependency candidates, and study-only references separated.
@@ -122,7 +125,7 @@ Before enabling a maintained code map for an existing repo, confirm the repo can
 - `scripts/run_vulkan_validation.sh`: run a Vulkan command or validation CTest preset with Khronos validation enabled.
 - `scripts/dump_vulkan_capabilities.sh`: capture `vulkaninfo` summary and text reports for loader/ICD diagnostics.
 - `scripts/run_nsys_smoke.sh`: run an app/probe under Nsight Systems and verify stats can read the report.
-- `scripts/run_gpu_optimization_loop.py`: initialize, baseline, hardware profile, plan beam-style rounds, attempt, keep/revert, orchestrate, and report evidence-gated GPU optimization sessions.
+- `scripts/run_gpu_optimization_loop.py`: initialize, baseline, hardware profile, log hypotheses, search breaking points, plan beam-style rounds, attempt, keep/revert, orchestrate, and report evidence-gated GPU optimization sessions.
 - `scripts/format_check.sh`: run clang-format in check-only mode.
 - `scripts/tidy_check.sh`: run clang-tidy against a compile database in check-only mode.
 - `scripts/bootstrap_code_map.py`: audit existing repo readiness, enable, or decline the opt-in CppStudio codebase map for a target repo.

@@ -30,6 +30,8 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `1d2e77a` - Added AgentSys-style performance investigation gates with success criteria,
+  hypotheses, breaking-point search, repeated validation, and consolidation reports.
 - `ba8fa15` - Added the generated GPU optimization loop with AutoKernel-style baseline,
   keep/revert, report, and commit-highlight maintenance guidance.
 - `13501a2` - Added `docs/BACKLOG.md` to collect future harness, donor, code-map, and tooling ideas.
@@ -203,8 +205,9 @@ not trigger.
 - Scaffold or upgrade C++ app+library repos with CMake presets, CTest labels, shader tooling,
   optional CUDA lanes, validation scripts, and self-hosted GPU CI hooks.
 - Guide CUDA kernel, Vulkan compute, render-pass, simulation, and frame-time optimization through
-  evidence-gated baseline/profile/attempt/keep-or-revert loops with roofline/SOL diagnosis, beam
-  round planning, convergence stops, and final reports.
+  evidence-gated success-criteria, baseline/profile/hypothesis/attempt/keep-or-revert loops with
+  roofline/SOL diagnosis, breaking-point search, repeated validation passes, beam round planning,
+  convergence stops, and consolidation reports.
 - Route agents through nested donor references for graphics, glTF/runtime assets, WebGPU/WebGL,
   renderer backbones, path tracing, engine architecture, mesh pipelines, asset IO, NURBS, materials,
   CAD, BIM/IFC, terrain/geospatial data, AI runtimes, neural 3D, Gaussian splatting, grooming/fur,
@@ -420,8 +423,9 @@ source of truth. Edit this repo, then have an agent publish with the repo script
 - [Host toolchain setup](docs/host-toolchain-setup.md): Linux, macOS, and Windows C++/Vulkan/CUDA
   setup notes
 - [Generated GPU optimization loop](skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md):
-  baseline, hardware profile, roofline/SOL diagnosis, beam round planning, keep/revert, target
-  orchestration, and final-report protocol for generated or upgraded projects
+  success criteria, baseline, hardware profile, roofline/SOL diagnosis, hypothesis logs,
+  breaking-point search, beam round planning, keep/revert, target orchestration, and consolidation
+  reports for generated or upgraded projects
 - [Optional code maps](#optional-code-maps): opt-in architecture context for larger generated or
   upgraded native C++ GPU projects
 - [Maintainer guide](docs/maintainer-guide.md): validation, sync, rollout, generated-project, donor,

@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added AgentSys-inspired performance investigation discipline to generated GPU optimization loops:
+  success criteria, hypothesis logs, breaking-point search, repeated validation passes, and
+  consolidation reports.
 - Extended the generated GPU optimization loop with KernelAgent-inspired NCU/SOL profiling,
   roofline classification, bottleneck-first round planning, beam-style worker artifacts,
   convergence stops, and divergence-aware reject/revert handling.

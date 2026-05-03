@@ -90,14 +90,17 @@ GPU optimization loop:
 scripts/run_gpu_optimization_loop.py init --session opt-session --targets docs/GPU_OPTIMIZATION_TARGETS.tsv
 scripts/run_gpu_optimization_loop.py baseline --session opt-session --target-id <target>
 scripts/run_gpu_optimization_loop.py profile --session opt-session --target-id <target>
+scripts/run_gpu_optimization_loop.py breaking-point --session opt-session --target-id <target> --param-name <name> --min <n> --max <n> --threshold <metric-threshold> --direction lower --cmd '<benchmark using {value}>'
 scripts/run_gpu_optimization_loop.py plan-round --session opt-session --target-id <target>
-scripts/run_gpu_optimization_loop.py attempt --session opt-session --target-id <target> --round-id <round> --worker-id <worker> --tag <tag> --description "<hypothesis>" --auto-revert
+scripts/run_gpu_optimization_loop.py hypothesis --session opt-session --target-id <target> --hypothesis-id H1 --confidence medium --summary "<hypothesis>" --evidence "<profile or code evidence>" --expected-effect "<expected metric effect>"
+scripts/run_gpu_optimization_loop.py attempt --session opt-session --target-id <target> --round-id <round> --worker-id <worker> --tag <tag> --hypothesis-id H1 --description "<focused change>" --auto-revert
 scripts/run_gpu_optimization_loop.py report --session opt-session
 ```
 
 The loop is for deliberate performance sessions, not the default CI gate. It writes ignored
 artifacts under `artifacts/optimization/`; use [GPU_OPTIMIZATION_LOOP.md](GPU_OPTIMIZATION_LOOP.md)
-for the target-table schema, profiler/SOL contract, benchmark contract, beam-round planning, and
+for the target-table schema, success-criteria gate, hypothesis log, profiler/SOL contract,
+breaking-point search, benchmark contract, repeated validation passes, beam-round planning, and
 keep/revert rules.
 
 Use `scripts/dump_vulkan_capabilities.sh` when a Vulkan runtime lane fails before changing code. The
