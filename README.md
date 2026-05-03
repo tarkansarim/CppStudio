@@ -463,6 +463,23 @@ source of truth. Edit this repo, then have an agent publish with the repo script
 - [Donor library](skills/cpp-cuda-vulkan-studio/references/donor-library/README.md): curated donor
   selection entrypoint
 
+## Acknowledgements
+
+CppStudio's GPU optimization and package-integrity workflows were informed by public reference repos,
+adapted for native C++/CUDA/Vulkan agent work rather than copied wholesale. No source code from these
+projects is vendored into this repo.
+
+- [AutoKernel](https://github.com/RightNow-AI/autokernel): fixed-baseline, focused experiment,
+  benchmark, keep/revert, and report-loop discipline.
+- [KernelAgent](https://github.com/meta-pytorch/KernelAgent): NCU/SOL-style hardware metrics,
+  bottleneck diagnosis, best-so-far tracking, and parallel optimization-worker ideas.
+- [AgentSys](https://github.com/agent-sh/agentsys): performance investigation phases, hypothesis
+  evidence, validation-pass discipline, breaking-point search, and consolidation reports.
+- [agent-skills](https://github.com/tech-leads-club/agent-skills): skill/reference packaging hygiene,
+  progressive disclosure, audit/update concepts, and integrity metadata ideas.
+
+Detailed mapping notes live under [`research/`](research/).
+
 ## License
 
 CppStudio is released under [The Unlicense](LICENSE) for unrestricted reuse.

@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added README acknowledgements for the public reference repos that informed the GPU optimization
+  and package-integrity workflows, with a clear no-vendored-source note.
 - Fixed fresh-review hardening issues around GPU optimization new-file auto-reverts, portable
   sync/rollout path resolution, code-map doc/manifest parity, and closed package-manifest schemas.
 - Hardened generated GPU optimization loops so benchmark parse/evaluation failures auto-revert when
