@@ -1,6 +1,6 @@
 ---
 name: cppstudio-project-planner
-description: "Plan native C++ GPU/realtime projects before scaffolding or major architecture work: gather requirements, choose CppStudio project archetype/template, Vulkan/CUDA/interop lane, GUI/HUD stack, agentic control harness, artist input such as Wacom/stylus pressure, donor categories, state-of-the-art web ceiling checks, code-map policy, validation lanes, and user decisions. Use for initial project planning, project intake, architecture blueprints, 'what stack should we use' questions, best-current-stack selection, or when a C++/Vulkan/CUDA/3D/AI/simulation/tool app has multiple unresolved choices."
+description: "Plan native C++ GPU/realtime projects before scaffolding or major architecture work: gather requirements, choose CppStudio project archetype/template, project authoring model/source-of-truth, Vulkan/CUDA/interop lane, GUI/HUD stack, agentic control harness, artist input such as Wacom/stylus pressure, donor categories, state-of-the-art web ceiling checks, code-map policy, validation lanes, and user decisions. Use for initial project planning, project intake, architecture blueprints, 'what stack should we use' questions, best-current-stack selection, or when a C++/Vulkan/CUDA/3D/AI/simulation/tool app has multiple unresolved choices."
 ---
 
 # CppStudio Project Planner
@@ -19,9 +19,19 @@ switch to Plan mode or presenting decision questions. Do not jump straight into 
 
 The pre-plan research brief must open the relevant local skill/donor references and run an extensive
 state-of-the-art web ceiling check against upstream/primary sources for current GUI, SDK, simulation,
-renderer, dependency, or hardware choices. Keep the user-facing brief concise, but the research must
-be deep enough that the user is choosing between current, competitive options rather than unsupported
-guesses.
+renderer, dependency, authoring-model, or hardware choices. Keep the user-facing brief concise, but
+the research must be deep enough that the user is choosing between current, competitive options
+rather than unsupported guesses.
+
+For any project with an interactive tool, editor, procedural workflow, scene/content pipeline,
+simulation setup, material/shader workflow, timeline, graph, layer stack, scripting surface, or other
+nontrivial user-authored state, the research brief must include a peer-practice scan for the
+project's authoring model and source of truth. Look at how comparable current tools let users build,
+connect, edit, serialize, evaluate, reuse, and package work. Surface the likely choices, such as node
+or dataflow graph, layer/stack, timeline/sequencer, scene tree/component model, direct parameter
+inspector, scripting API, or hybrids. Do not assume a dock-panel or direct-parameter workflow just
+because it is easier to scaffold; recommend the authoring model that peer research supports and ask
+the user to confirm or choose an alternative before files are created.
 
 Default to the best available approach for the target project, not the easiest implementation. Do not
 recommend a simpler, older, or lower-ceiling route just because it is quick to scaffold unless the
@@ -32,8 +42,9 @@ Then ask for Plan mode with this handoff:
 
 ```text
 Please switch to Plan mode before implementation so I can ask the project-shaping questions. I need
-to lock down the template, GUI/input stack, GPU lane, agentic control harness, donor routes, web
-checks, code-map choice, and validation plan before files are created.
+to lock down the template, authoring model/source of truth, GUI/input stack, GPU lane, agentic
+control harness, donor routes, web checks, code-map choice, and validation plan before files are
+created.
 ```
 
 If the current turn explicitly says the session is already in Plan mode, still do the pre-plan
@@ -71,20 +82,24 @@ facade over the same API, and which state/log/visual observation surfaces are ne
    pipeline, AI runtime, CUDA library, Vulkan app, explicit CUDA/Vulkan interop app, XR app, or
    existing-repo upgrade.
 2. Run a pre-plan research pass before asking for choices: target platform implications, likely
-   template/archetype, GPU lane, GUI/HUD stack, agentic control harness, input devices, donor
-   categories, dependency policy, validation budget, and code-map preference.
+   template/archetype, authoring model/source of truth, GPU lane, GUI/HUD stack, agentic control
+   harness, input devices, donor categories, dependency policy, validation budget, and code-map
+   preference.
 3. Run an extensive state-of-the-art web ceiling check for current dependencies, SDKs, GUI/toolkit
-   choices, papers, samples, engines, or vendor guidance that could affect architecture. Prefer
-   upstream docs, official repos, standards bodies, recent papers, vendor documentation, active
-   samples, release notes, and adoption signals.
+   choices, authoring workflows, papers, samples, engines, or vendor guidance that could affect
+   architecture. Prefer upstream docs, official repos, standards bodies, recent papers, vendor
+   documentation, active samples, release notes, and adoption signals. Include current comparable
+   tools from the same user/workflow domain, and extract their common authoring practices before
+   proposing a source-of-truth model.
 4. Open the smallest matching donor categories and profiles before recommending solvers, renderer
    backbones, GUI stacks, asset/runtime formats, AI runtimes, or simulation architecture.
 5. Separate current leading approaches from legacy/outdated approaches, state the freshness evidence,
    and call out when a local donor is still useful only as reference because the current best approach
    has moved on.
 6. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
-   routes, web sources checked, current-vs-legacy notes, and the reasoning for the best available
-   option, then ask for Plan mode and only then ask decision questions.
+   routes, peer-tool authoring-model findings, web sources checked, current-vs-legacy notes, and the
+   reasoning for the best available option, then ask for Plan mode and only then ask decision
+   questions.
 
 ## Planning Packet
 
@@ -92,6 +107,7 @@ Every substantial plan should include:
 
 - project intent and target users
 - recommended CppStudio archetype/template
+- authoring model/source of truth options and recommendation, with peer-practice evidence
 - GPU lane: Vulkan-first, CUDA, or explicit interop, with why
 - GUI/HUD/editor UI options with clickable source/docs and visual inspection links
 - agentic control harness plan: local transport, MCP facade timing, command/readback surfaces,
@@ -101,6 +117,7 @@ Every substantial plan should include:
 - skill routes opened and donor categories/profiles selected
 - web sources checked and what changed because of them
 - current state-of-the-art or actively popular approaches, separated from legacy approaches
+- comparable current tools checked and what their common authoring practices imply
 - unresolved user decisions, grouped into no more than three questions at a time
 - code-map recommendation and whether it is accepted, declined, or pending
 - validation/profiling plan for the first implementation milestone
@@ -117,5 +134,9 @@ Every substantial plan should include:
   optional MCP layered over the same API after the basic command/readback surface is proven.
 - For brush, sculpt, paint, grooming, terrain, rigging, animation, or other artist-facing tools,
   treat tablet/stylus input as a first-class planning decision.
+- For tools with user-authored state, derive the authoring model from peer research. If comparable
+  current tools cluster around a graph, stack, timeline, scene tree, scripting surface, or hybrid,
+  present that as the leading option and ask the user to confirm or choose another model before
+  implementation.
 - Prefer the highest-quality current approach that fits the target project. Offer simpler legacy or
   low-effort approaches only as explicit tradeoffs, not as the default, unless the user asks for that.

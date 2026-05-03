@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Strengthened project-planner research gates so agents must investigate comparable current tools and
+  common authoring models/source-of-truth patterns before asking Plan mode questions or scaffolding.
 - Hardened Nsight Systems profiling guidance so agents use explicit supported reports/formats and do
   not fall back to stale `nsys stats --report summary --format text` commands.
 - Tightened `run_nsys_smoke.sh` stats readback to use one explicit `nsys stats --force-export=true`

@@ -34,5 +34,6 @@ generated-project workflow instructions.
 - native C++ GUI/HUD/editor UI skill routing or option-presentation behavior changes
 - initial native C++ GPU project planning, Plan mode handoff, template-choice, or artist-input
   planning behavior changes
+- project authoring-model/source-of-truth research expectations or decision gates change
 - agentic control harness routing, autonomous app testing expectations, launch/control registry, or
   visual/UI observation behavior changes

@@ -123,10 +123,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
 ## Coordination
 
 - Use `cppstudio-project-planner` before scaffolding or major architecture work when the project has
-  unresolved template, GUI/HUD, agentic control harness, GPU lane, donor, input-device, code-map,
-  dependency, or validation decisions. For substantial project intake, do the pre-plan research pass
-  first, show links and sources, then ask the user to switch to Plan mode before implementation and
-  hand implementation back to this skill after choices are clear.
+  unresolved template, authoring-model/source-of-truth, GUI/HUD, agentic control harness, GPU lane,
+  donor, input-device, code-map, dependency, or validation decisions. For substantial project intake,
+  do the pre-plan research pass first, show links and sources, then ask the user to switch to Plan
+  mode before implementation and hand implementation back to this skill after choices are clear.
 - Use `modern-cpp-cmake` for CMake target structure, source ownership, presets, CTest, and dependency wiring.
 - Use `cuda-kernel-authoring` when adding or reviewing custom CUDA kernels or launch wrappers.
 - Use `vulkan-compute-sync` when the project contains Vulkan compute, render, synchronization, descriptor, or frame-lifetime work.

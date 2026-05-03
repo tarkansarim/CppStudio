@@ -136,6 +136,12 @@ grep -q "Separate current leading approaches from" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "extensive state-of-the-art web ceiling check" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "authoring model/source of truth" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "comparable current tools" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+grep -q "Authoring Model Choices" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "agentic control harness in the initial plan by default" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "primary control and observation layer" \

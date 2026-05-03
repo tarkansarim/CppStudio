@@ -10,12 +10,28 @@ that match the project.
 | Vulkan renderer or compute app | CppStudio app+library scaffold, Vulkan-only `dev` lane | `cpp-cuda-vulkan-studio`, `vulkan-compute-sync`, project archetypes, Vulkan foundation donors |
 | CUDA library or kernel package | Existing CMake/CUDA layout or CppStudio CUDA preset | `cpp-cuda-vulkan-studio`, `modern-cpp-cmake`, `cuda-kernel-authoring`, AI/runtime/kernel donors |
 | CUDA plus Vulkan interop app | Explicit combined/interoperability plan | CppStudio interop archetype, CUDA donors, Vulkan donors, device identity and sync planning |
-| Realtime artist tool | Vulkan-first app+library plus GUI/HUD skill | `native-cpp-gui-hud`, graphics/rendering donors, asset/input donors, validation screenshots |
-| Game technical-art tool | Games production overlay plus native GUI/HUD | games overlay, native engineering infrastructure, rendering/assets/simulation donors |
-| VFX/DCC pipeline tool | VFX production overlay plus DCC/asset categories | DCC, USD/Alembic/MaterialX/OpenVDB/assets donors |
-| Simulation visualizer | Vulkan-first renderer plus simulation category | simulation-gpu, fluids/smoke/fire, geometry, volumes, rendering donors |
+| Realtime artist tool | Vulkan-first app+library plus GUI/HUD skill and researched authoring model | `native-cpp-gui-hud`, graphics/rendering donors, asset/input donors, peer-tool authoring-model scan, validation screenshots |
+| Game technical-art tool | Games production overlay plus native GUI/HUD and researched authoring model | games overlay, native engineering infrastructure, rendering/assets/simulation donors, peer-tool authoring-model scan |
+| VFX/DCC pipeline tool | VFX production overlay plus DCC/asset categories and researched authoring model | DCC, USD/Alembic/MaterialX/OpenVDB/assets donors, peer-tool authoring-model scan |
+| Simulation visualizer | Vulkan-first renderer plus simulation category and researched authoring model when users author scenarios | simulation-gpu, fluids/smoke/fire, geometry, volumes, rendering donors, peer-tool authoring-model scan |
 | AI runtime or neural 3D tool | AI runtime category plus graphics/runtime viewer categories | AI runtimes, neural 3D, CUDA or Vulkan lane depending on actual implementation |
 | Existing project upgrade | Read repo map if present, then code-map readiness audit if requested | existing layout audit, dependency policy, validation gaps, staged backbone application |
+
+## Authoring Model Choices
+
+For tools with user-authored state, research comparable current tools before choosing. This choice
+often controls data ownership, serialization, undo/redo, validation, agentic controls, UI structure,
+and whether docks/panels inspect a model or own the model.
+
+| Option | Use When Peer Research Supports | Required Planning |
+| --- | --- | --- |
+| Node/dataflow graph | Users compose operations, dependencies, materials, procedures, effects, simulations, or reusable compounds visually | Graph data model, stable IDs, sockets/types, validation, serialization, evaluation order, inspector sync, create/connect/set/evaluate harness commands |
+| Layer/modifier stack | Users apply ordered non-destructive operations with local parameters | Stack ordering, enable/disable, parameter schema, invalidation, presets, undo/redo, stack test fixtures |
+| Timeline/sequencer | Time, events, clips, triggers, or staged transitions are the main authoring surface | Timeline model, keyframes/events, preview/bake behavior, scrubbing tests, agentic playback controls |
+| Scene tree/component model | Hierarchical objects, components, resources, or entities are the primary mental model | Node/entity IDs, transforms, component schema, resource ownership, selection/inspector sync |
+| Parameter/inspector-driven scene | The project is small, fixed-shape, or intentionally direct-control oriented | Explicit reason for avoiding richer authoring models, parameter schema, saved state, undo/redo, agentic set/get commands |
+| Scripting/API-first | Technical users need programmable generation or batch workflows more than visual authoring | Script API, examples, sandbox/safety, deterministic fixtures, CLI/harness commands |
+| Hybrid | Peer tools split work across graph, stack, timeline, scene tree, scripting, or direct controls | Declare the source of truth for each domain and how the surfaces sync without conflicting ownership |
 
 ## Agentic Control Harness Choices
 
@@ -67,6 +83,8 @@ substitute for clickable links.
 - For current best-choice or ceiling claims, run an extensive state-of-the-art web scan before
   ranking options. Use upstream repositories, official SDK docs, standards docs, recent papers,
   vendor samples, release notes, active engine/tool samples, and adoption/freshness signals.
+- For authoring-model choices, include comparable current tools from the same user/workflow domain
+  and record their common authoring practices before recommending a source of truth.
 - Rank the best available current approach first. Separate it from legacy, simpler, teaching, or
   low-effort approaches; present those only as tradeoffs unless the user asks for a lighter route.
 
@@ -80,4 +98,5 @@ substitute for clickable links.
 | Artist brush/stylus | input event trace, pressure curve test, stroke replay, undo/redo recording, latency/frame-time measure |
 | Asset pipeline | tiny fixture import/export, metadata tests, material/texture fixtures, round-trip or validator report |
 | Simulation | deterministic tiny case, conservation or bounds checks, visual frame artifact, per-pass timing |
+| Node/stack/timeline authoring | serialization round-trip, invalid graph/stack/timeline diagnostics, undo/redo, create/connect/set/evaluate harness commands, visual or textual graph readback |
 | Performance work | representative target table, baseline, profiling, hypothesis log, keep/revert attempts, final report |

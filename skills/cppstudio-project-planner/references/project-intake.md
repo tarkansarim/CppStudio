@@ -5,15 +5,16 @@ GPU/realtime project. The output is a planning packet, not code.
 
 ## Plan Mode Gate
 
-If the project has unresolved choices across template, GUI, GPU lane, agentic control harness,
-dependencies, input devices, or donor strategy, gather a pre-plan research brief before asking the
-user to switch to Plan mode or presenting decision questions. The brief should use local CppStudio
-skill/donor routing plus an extensive state-of-the-art web ceiling check against upstream or primary
-sources, so the user is choosing from researched options.
+If the project has unresolved choices across template, authoring model/source of truth, GUI, GPU
+lane, agentic control harness, dependencies, input devices, or donor strategy, gather a pre-plan
+research brief before asking the user to switch to Plan mode or presenting decision questions. The
+brief should use local CppStudio skill/donor routing plus an extensive state-of-the-art web ceiling
+check against upstream or primary sources, so the user is choosing from researched options.
 
 The pre-plan research brief should include:
 
 - likely project archetype/template
+- likely authoring model/source-of-truth options and comparable-tool evidence
 - likely GPU lane and alternatives
 - GUI/HUD candidates with source/docs and visual inspection links
 - default agentic control harness shape for interactive apps
@@ -33,8 +34,9 @@ Use a direct handoff:
 
 ```text
 Please switch to Plan mode before implementation so I can ask the project-shaping questions. I need
-to lock down the template, GUI/input stack, GPU lane, agentic control harness, donor routes, web
-checks, code-map choice, and validation plan before files are created.
+to lock down the template, authoring model/source of truth, GUI/input stack, GPU lane, agentic
+control harness, donor routes, web checks, code-map choice, and validation plan before files are
+created.
 ```
 
 The benefit is fewer wrong dependencies, cleaner Vulkan/CUDA lane boundaries, better donor
@@ -62,6 +64,10 @@ Collect these facts before committing to architecture:
   first for cross-vendor realtime work.
 - Template/archetype: greenfield scaffold, existing-repo backbone upgrade, library-only, app+library,
   renderer, simulation visualizer, tool shell, or headless compute package.
+- Authoring model/source of truth: node/dataflow graph, layer or modifier stack,
+  timeline/sequencer, scene tree/component model, parameter/inspector-driven scene, scripting API, or
+  hybrid. Research comparable current tools first, then ask before implementation when the choice
+  changes architecture, serialization, evaluation, undo/redo, validation, or agentic controls.
 - GUI/HUD/editor stack: debug HUD, internal artist tool, polished desktop app, runtime game UI,
   embedded web UI, or mixed.
 - Agentic control harness: default local-only HTTP/curl for interactive apps, optional MCP facade,
@@ -75,7 +81,8 @@ Collect these facts before committing to architecture:
   material that is study-only or non-C++ reference-only.
 - Web ceiling check: upstream repos/docs, official SDK docs, recent papers, active samples, release
   notes, vendor pages, standards docs, and adoption/freshness signals that could change the
-  recommendation.
+  recommendation. Include comparable current tools from the same user/workflow domain and identify
+  their common authoring practices, not only their rendering, solver, or dependency choices.
 - Dependency policy: system packages, vcpkg, Conan, FetchContent, submodules, vendored source,
   commercial SDKs, license constraints, and offline/air-gapped requirements.
 - Code map: ask whether the project should maintain a CppStudio code map for future agents. For
@@ -96,6 +103,27 @@ For artist-facing tools, explicitly plan the input model:
   coordinate mapping
 - whether input is captured through the windowing layer, GUI toolkit, native tablet APIs, or a
   project-specific input abstraction
+
+## Authoring Model Checklist
+
+For tools with user-authored state, do not treat panels, sliders, or direct structs as the default
+source of truth until peer research supports that choice. Identify:
+
+- primary authoring surface: node/dataflow graph, stack/layers, timeline, scene tree, parameter
+  inspector, scripting, or hybrid
+- graph or object model: DAG, cyclic graph with solvers, ordered stack, event/timeline system,
+  scene/component hierarchy, or command script
+- serialization: project file shape, stable node/object IDs, versioning, presets/assets, imports,
+  exports, and migration path
+- evaluation: dependency tracking, invalidation, caching, baking, live preview, partial updates, and
+  background work
+- UX requirements: node search, grouping, comments, exposed controls, reusable compounds/assets,
+  undo/redo, copy/paste, selection sync, and inspector behavior
+- agentic control surface: create/edit/connect authoring objects, set parameters, evaluate, inspect
+  errors, capture visual output, and serialize test fixtures
+
+If comparable current tools converge on one authoring model, present that as the recommended default
+with evidence and ask the user to confirm or pick an alternative before creating files.
 
 ## Agentic Control Harness Checklist
 
@@ -128,6 +156,7 @@ Use this shape for the response:
 ```text
 Project intent:
 Recommended archetype/template:
+Authoring model/source of truth:
 GPU lane:
 GUI/HUD options:
 Agentic control harness:

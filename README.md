@@ -124,22 +124,24 @@ that match the task.
 ## Project Planning And Control Skills
 
 CppStudio installs companion planning and control skills for substantial new apps or major
-architecture decisions. When a request has unresolved choices such as template, GUI/HUD, tablet or
-stylus input, agentic control harness, Vulkan/CUDA lane, donor routes, dependencies, or validation
-strategy, `cppstudio-project-planner` should research first, then ask for Plan mode before
-implementation.
+architecture decisions. When a request has unresolved choices such as template, authoring
+model/source of truth, GUI/HUD, tablet or stylus input, agentic control harness, Vulkan/CUDA lane,
+donor routes, dependencies, or validation strategy, `cppstudio-project-planner` should research
+first, then ask for Plan mode before implementation.
 
 The planner is meant to prevent agents from grabbing whatever is easiest or most familiar. It opens
-the local donor library, checks current upstream sources, looks for state-of-the-art or actively used
-approaches, separates those from legacy or low-effort options, and presents the best available route
-unless you explicitly ask for something lightweight.
+the local donor library, checks current upstream sources and comparable current tools, looks for
+state-of-the-art or actively used approaches, identifies common authoring practices such as graphs,
+stacks, timelines, scene trees, scripting, or direct parameter workflows, separates current patterns
+from legacy or low-effort options, and presents the best available route unless you explicitly ask
+for something lightweight.
 
 For larger apps where template, GUI, input devices, donors, or validation choices matter, ask for
 planning first:
 
 ```text
 Plan a realtime Vulkan C++ artist tool before implementation. Include GUI options, donor references,
-web checks, stylus/input needs, and the questions I need to answer.
+web checks, authoring-model options, stylus/input needs, and the questions I need to answer.
 ```
 
 For interactive apps, the planner defaults to a local agentic control harness. The goal is not to
