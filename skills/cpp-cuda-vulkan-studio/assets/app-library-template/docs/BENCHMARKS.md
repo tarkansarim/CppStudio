@@ -43,6 +43,11 @@ Debugger for frame contents, pipeline state, descriptors, and event order. Use N
 Trace or `nsys` for frame timing and queue overlap. Use Nsight Systems first for CUDA launch/overlap
 questions. Use `ncu` only after a hot CUDA kernel has been identified.
 
+When using `nsys stats`, choose reports from the installed tool with `nsys stats --help-reports`
+instead of assuming a generic summary report exists. For generated CppStudio projects,
+`scripts/run_nsys_smoke.sh` selects lane-appropriate Vulkan, CUDA, NVTX, and OS runtime reports that
+the local Nsight Systems version advertises.
+
 ## Optimization Sessions
 
 Use [GPU_OPTIMIZATION_LOOP.md](GPU_OPTIMIZATION_LOOP.md) for agent-run performance work. Its script

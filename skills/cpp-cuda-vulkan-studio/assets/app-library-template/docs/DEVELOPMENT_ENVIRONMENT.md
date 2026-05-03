@@ -68,6 +68,10 @@ availability. A build-only Vulkan lane can pass without proving a usable hardwar
 CUDA lanes, `REQUIRE_PROFILING=1` when validating Nsight Systems profiling, and
 `REQUIRE_CUDA_PROFILING=1` only when validating Nsight Compute/CUDA profiling.
 
+Nsight Systems report names and stats formats are version-specific. Before writing manual `nsys
+stats` commands, check `nsys stats --help-reports` and `nsys stats --help`; prefer
+`scripts/run_nsys_smoke.sh` because it discovers compatible reports for the active `PROFILE_LANE`.
+
 Shader sources live in `shaders/`. Generated `.spv` files are build artifacts under the CMake binary
 directory and should not be edited or committed unless a project intentionally vendors binary
 assets. The default shader path is GLSL through `glslc`, followed by `spirv-val`.

@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Made `run_nsys_smoke.sh` query installed Nsight Systems stats reports/formats and select
+  lane-appropriate summaries, avoiding stale `summary`/`text` assumptions across Nsight versions.
 - Documented the bundled `cppstudio-project-planner` skill in the README, including its role in
   researching current best approaches before major project choices.
 - Changed initial CppStudio planning flow so agents gather a pre-plan research brief first, including

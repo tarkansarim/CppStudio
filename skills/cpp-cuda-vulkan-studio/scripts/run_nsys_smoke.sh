@@ -35,6 +35,98 @@ esac
 trace="${NSYS_TRACE:-${default_trace}}"
 mkdir -p "${output_dir}"
 
+collect_nsys_reports() {
+    nsys stats --help-reports 2>/dev/null | awk '
+        /^[[:space:]]+[[:alnum:]_].* -- / {
+            gsub(/^[[:space:]]+/, "", $0)
+            split($0, fields, " ")
+            split(fields[1], name, /[:[]/)
+            print name[1]
+        }
+    ' || true
+}
+
+collect_nsys_formats() {
+    nsys stats --help 2>/dev/null | awk '
+        /^[[:space:]]+(column|table|csv|tsv|json|hdoc|htable)[[:space:]]/ {
+            print $1
+        }
+    ' || true
+}
+
+has_line() {
+    local needle="$1"
+    local haystack="$2"
+    grep -Fxq "${needle}" <<<"${haystack}"
+}
+
+trim_value() {
+    local value="$1"
+    value="${value#"${value%%[![:space:]]*}"}"
+    value="${value%"${value##*[![:space:]]}"}"
+    printf "%s" "${value}"
+}
+
+select_stats_format() {
+    local available_formats="$1"
+    local requested_format="${NSYS_STATS_FORMAT:-}"
+    local candidate
+
+    if [[ -n "${requested_format}" ]]; then
+        if [[ -n "${available_formats}" ]] && ! has_line "${requested_format}" "${available_formats}"; then
+            echo "NSYS_STATS_FORMAT=${requested_format} is not supported by this nsys install" >&2
+            echo "Supported formats:" >&2
+            echo "${available_formats}" >&2
+            exit 2
+        fi
+        printf "%s" "${requested_format}"
+        return
+    fi
+
+    if [[ -z "${available_formats}" ]]; then
+        return
+    fi
+
+    for candidate in column table csv tsv json; do
+        if has_line "${candidate}" "${available_formats}"; then
+            printf "%s" "${candidate}"
+            return
+        fi
+    done
+}
+
+select_stats_reports() {
+    local available_reports="$1"
+    shift
+    local selected=()
+    local requested_reports="${NSYS_STATS_REPORTS:-}"
+    local report raw_report
+
+    if [[ -n "${requested_reports}" ]]; then
+        IFS=',' read -r -a selected <<<"${requested_reports}"
+        for raw_report in "${selected[@]}"; do
+            report="$(trim_value "${raw_report}")"
+            if [[ -z "${report}" ]]; then
+                continue
+            fi
+            if [[ -n "${available_reports}" ]] && ! has_line "${report}" "${available_reports}"; then
+                echo "NSYS_STATS_REPORTS requested unsupported report: ${report}" >&2
+                echo "Supported reports:" >&2
+                echo "${available_reports}" >&2
+                exit 2
+            fi
+            printf "%s\n" "${report}"
+        done
+        return
+    fi
+
+    for report in "$@"; do
+        if [[ -z "${available_reports}" ]] || has_line "${report}" "${available_reports}"; then
+            printf "%s\n" "${report}"
+        fi
+    done
+}
+
 if [[ -z "${CUDA_VISIBLE_DEVICES:-}" && ( -n "${GPU_ALLOWED_INDICES:-}" || "${GPU_AUTO_SELECT:-0}" == "1" ) ]]; then
     if [[ ! -x "scripts/select_idle_gpu.sh" ]]; then
         echo "scripts/select_idle_gpu.sh is required for GPU auto-selection" >&2
@@ -76,11 +168,61 @@ if [[ ! -f "${report_path}" ]]; then
     exit 1
 fi
 
+case "${profile_lane}" in
+    vulkan)
+        preferred_reports=(vulkan_api_sum vulkan_gpu_marker_sum vulkan_marker_sum nvtx_sum osrt_sum)
+        ;;
+    cuda)
+        preferred_reports=(cuda_api_gpu_sum cuda_api_sum cuda_gpu_kern_sum cuda_gpu_mem_time_sum cuda_kern_exec_sum nvtx_sum osrt_sum)
+        ;;
+    all)
+        preferred_reports=(cuda_api_gpu_sum cuda_gpu_kern_sum vulkan_api_sum vulkan_gpu_marker_sum vulkan_marker_sum nvtx_sum osrt_sum)
+        ;;
+esac
+
 stats_path="${output_dir}/nsys_smoke_stats.txt"
-nsys stats "${report_path}" >"${stats_path}" 2>&1 || {
+available_reports="$(collect_nsys_reports)"
+available_formats="$(collect_nsys_formats)"
+stats_format="$(select_stats_format "${available_formats}")"
+mapfile -t stats_reports < <(select_stats_reports "${available_reports}" "${preferred_reports[@]}")
+
+if ((${#stats_reports[@]} == 0)); then
+    {
+        echo "nsys profile succeeded but no compatible stats reports were found for PROFILE_LANE=${profile_lane}."
+        echo "Run 'nsys stats --help-reports' on this machine and set NSYS_STATS_REPORTS explicitly if needed."
+    } >"${stats_path}"
     cat "${stats_path}" >&2
     exit 1
-}
+fi
+
+: >"${stats_path}"
+stats_success_count=0
+for stats_report in "${stats_reports[@]}"; do
+    {
+        echo "==== nsys stats report: ${stats_report} ===="
+        echo "format=${stats_format:-default}"
+    } >>"${stats_path}"
+
+    stats_cmd=(nsys stats --report "${stats_report}")
+    if [[ -n "${stats_format}" ]]; then
+        stats_cmd+=(--format "${stats_format}")
+    fi
+    stats_cmd+=("${report_path}")
+
+    if "${stats_cmd[@]}" >>"${stats_path}" 2>&1; then
+        stats_success_count=$((stats_success_count + 1))
+    else
+        echo "==== skipped nsys stats report: ${stats_report} ====" >>"${stats_path}"
+    fi
+    echo >>"${stats_path}"
+done
+
+if ((stats_success_count == 0)); then
+    cat "${stats_path}" >&2
+    echo "nsys profile succeeded but stats readback failed for every compatible report." >&2
+    echo "Inspect ${report_path} directly in Nsight Systems or set NSYS_STATS_REPORTS to reports supported by this install." >&2
+    exit 1
+fi
 
 echo "Wrote ${report_path}"
 echo "Wrote ${stats_path}"

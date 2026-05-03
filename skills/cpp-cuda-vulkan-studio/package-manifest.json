@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 22698,
-      "sha256": "4a14ff8b7786c4e044e9948aa73959dd43433da3da12ce181d9b19f55c4ef013"
+      "size": 22780,
+      "sha256": "7b8619ea10473d26f09a52c3c29f41cd0c881ab6d91cf7930bed44c05fddf3e9"
     },
     {
       "path": "agents/openai.yaml",
@@ -119,8 +119,8 @@
       "path": "assets/app-library-template/docs/BENCHMARKS.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 2729,
-      "sha256": "8c86d2b5a66c58321f36bc4aa7355c5987a5b64e6b0ee5801a6792826dde488d"
+      "size": 3060,
+      "sha256": "e8c5f6957de238fe9a5d4af5bc299c9522ae1266f2ddde1ea5ae241b73977dcd"
     },
     {
       "path": "assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md",
@@ -140,8 +140,8 @@
       "path": "assets/app-library-template/docs/DEVELOPMENT_ENVIRONMENT.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 3940,
-      "sha256": "92e4f1c086c8ab1e5efc6ff221a8da162656ebd97cb3f242c6fc112730773dcf"
+      "size": 4219,
+      "sha256": "f51edd07839dade11ff8ac62cd3489ba338f6ca3681a20f6766d9fb555aa81f7"
     },
     {
       "path": "assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md",
@@ -196,8 +196,8 @@
       "path": "assets/app-library-template/docs/VALIDATION_PIPELINE.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 4950,
-      "sha256": "9aaecb2ba10a6beade8ab5a214b5c61eeec651ab3dbd9f3fd282c3b7f102176f"
+      "size": 5629,
+      "sha256": "004e39f1c4c807a57e07df1bb0f6ceadbb4e1dd9bb844d2d6cb39b26d750430c"
     },
     {
       "path": "assets/app-library-template/include/{{PROJECT_NAME}}/cuda_vector_add.hpp",
@@ -1365,8 +1365,8 @@
       "path": "scripts/run_nsys_smoke.sh",
       "role": "script",
       "disclosure_group": "script",
-      "size": 2553,
-      "sha256": "61acdf0dbe244f37b7f7264dd80f617db479e243260cdacfa5096b5f9c969bee"
+      "size": 7082,
+      "sha256": "0990f5eb04098b418f8352c8ddb24b814b1cdf0373926fe5703049a97129d3dd"
     },
     {
       "path": "scripts/run_vulkan_validation.sh",

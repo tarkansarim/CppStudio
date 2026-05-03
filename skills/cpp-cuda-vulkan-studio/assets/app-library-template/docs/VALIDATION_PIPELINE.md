@@ -119,6 +119,19 @@ The profiler smoke defaults to the Vulkan app path and requires `nsys`. Use
 when CUDA profiling also requires Nsight Compute tooling. Use `GPU_ALLOWED_INDICES=<physical-index>`
 when CUDA profiling must avoid display-bound GPUs.
 
+`run_nsys_smoke.sh` treats the `.nsys-rep` file as the primary artifact, then queries the installed
+Nsight Systems CLI for supported stats reports and output formats before reading summaries. Do not
+assume legacy report names such as `summary` or unsupported formats such as `text`; report names vary
+between Nsight Systems versions. Override the auto-selected summaries only after checking the local
+tool:
+
+```bash
+nsys stats --help-reports
+nsys stats --help
+PROFILE_LANE=vulkan NSYS_STATS_REPORTS=vulkan_api_sum,nvtx_sum,osrt_sum scripts/run_nsys_smoke.sh
+PROFILE_LANE=cuda NSYS_STATS_REPORTS=cuda_api_gpu_sum,cuda_gpu_kern_sum,nvtx_sum,osrt_sum scripts/run_nsys_smoke.sh
+```
+
 Benchmark and profiling result records should follow [BENCHMARKS.md](BENCHMARKS.md). Do not add
 timing thresholds to CI until baselines are recorded for the exact runner hardware.
 

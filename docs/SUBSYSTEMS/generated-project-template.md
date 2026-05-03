@@ -44,3 +44,6 @@ validation.
   `--auto-revert`, missing or invalid primary metrics are recorded in `results.tsv` and the captured
   patch is reversed. Intent-to-add new files are reset from the index after reversal so the next
   attempt starts clean. Profiler/counter gaps should be recorded with `profile --tool-gap`.
+- The generated Nsight Systems smoke script treats `.nsys-rep` as the primary profiling artifact and
+  probes the installed `nsys stats` reports/formats before reading summaries, so generated projects do
+  not rely on stale report names such as `summary` or unsupported formats such as `text`.
