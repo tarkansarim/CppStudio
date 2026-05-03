@@ -32,6 +32,8 @@ commit-level changes readable for people scanning the repo.
 
 - `57e7a2a` - Added README acknowledgements for the public reference repos that informed the GPU
   optimization and package-integrity workflows.
+- `d8a9cdc` - Clarified optional code maps as section-level onboarding and map-first navigation
+  before source inspection.
 - `1096936` - Fixed hosted CI bytecode-cache handling so Python syntax checks do not contaminate
   strict skill-package validation.
 - `3138a6c` - Fixed review hardening issues around optimization auto-reverts, macOS-safe rollout
