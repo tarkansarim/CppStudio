@@ -30,6 +30,8 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `3138a6c` - Fixed review hardening issues around optimization auto-reverts, macOS-safe rollout
+  path resolution, code-map parity checks, and closed package-manifest schemas.
 - `ccb6aeb` - Hardened GPU optimization loops with parser-failure auto-reverts, profiler tool-gap
   artifacts, target numeric validation, and stricter package-manifest hygiene checks.
 - `ab3c176` - Added deterministic skill package integrity metadata, manifest validation,
