@@ -1,4 +1,4 @@
 interface:
   display_name: "CppStudio Project Planner"
   short_description: "Initial native C++ GPU project planning."
-  default_prompt: "Use $cppstudio-project-planner to plan a native C++ GPU app before scaffolding, including template, GUI, donors, web checks, and user choices."
+  default_prompt: "Use $cppstudio-project-planner to plan a native C++ GPU app before scaffolding, including template, GUI, agentic controls, donors, web checks, and user choices."

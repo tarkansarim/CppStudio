@@ -1,6 +1,6 @@
 ---
 name: cpp-cuda-vulkan-studio
-description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. For big initial planning or 'what stack should we use' questions, use cppstudio-project-planner first, research first, then ask for Plan mode."
+description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, agentic control harnesses, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, local HTTP/curl/MCP app controls, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. For big initial planning or 'what stack should we use' questions, use cppstudio-project-planner first, research first, then ask for Plan mode."
 ---
 
 # C++ CUDA Vulkan Studio
@@ -10,9 +10,9 @@ Use this skill when a native C++ GPU, C++/Vulkan, C++/CUDA, or mixed CUDA/Vulkan
 ## Initial Planning Gate
 
 For a substantial new project, brainstorm, or first big application plan with unresolved template,
-GUI/HUD, input-device, Vulkan/CUDA lane, donor, web-check, code-map, dependency, or validation
-choices, do a pre-plan research pass before asking the user to switch to Plan mode or asking
-decision questions.
+GUI/HUD, agentic control harness, input-device, Vulkan/CUDA lane, donor, web-check, code-map,
+dependency, or validation choices, do a pre-plan research pass before asking the user to switch to
+Plan mode or asking decision questions.
 
 Minimum pre-plan research pass:
 
@@ -21,6 +21,9 @@ Minimum pre-plan research pass:
   smallest matching donor-router/category files.
 - For GUI/HUD/editor choices, open `native-cpp-gui-hud` and its GUI option matrix, then verify
   current upstream official docs/repos or visual pages before ranking options.
+- For interactive apps/tools/viewers/simulators, open `agentic-control-harness` and plan a local
+  control surface so agents can launch, drive, inspect, screenshot, and troubleshoot the app before
+  asking the user for routine manual testing.
 - For simulation, renderer, SDK, hardware, or "best/current/ceiling" claims, web-check official
   upstream repos, standards docs, vendor docs, papers, or primary project docs.
 
@@ -28,6 +31,7 @@ The first visible response after that research should be a concise **Pre-Plan Re
 
 - choices discovered
 - source/visual links for GUI options
+- agentic control harness default and any real opt-out reason
 - donor categories/profiles opened
 - web/current sources checked
 - clear recommended default and alternatives
@@ -36,8 +40,8 @@ Then ask the user to switch to Plan mode before implementation:
 
 ```text
 Please switch to Plan mode before implementation so I can ask the project-shaping questions. I need
-to lock down the template, GUI/input stack, GPU lane, donor routes, web checks, code-map choice, and
-validation plan before files are created.
+to lock down the template, GUI/input stack, GPU lane, agentic control harness, donor routes, web
+checks, code-map choice, and validation plan before files are created.
 ```
 
 This rule applies even if `cppstudio-project-planner` is not listed in the current session. If the
@@ -78,6 +82,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
   matter more than plausible explanations.
 - For realtime rendering, viewport, simulation, XR, or GPU-performance work, measure frame time/FPS
   or profiler timings while implementing and verify the actual visual output.
+- When a target app has an agentic control harness, use it as the first route for routine launch,
+  feature driving, state/log readback, screenshots, and visual/UI troubleshooting before asking the
+  user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
+  the harness instead of repeatedly handing small verification chores to the user.
 - Be donor-first. Use the donor library for architecture, edge cases, tests, algorithms, and
   dependency choices before inventing a new subsystem; when no suitable donor exists, add donor
   research before designing the implementation.
@@ -115,10 +123,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
 ## Coordination
 
 - Use `cppstudio-project-planner` before scaffolding or major architecture work when the project has
-  unresolved template, GUI/HUD, GPU lane, donor, input-device, code-map, dependency, or validation
-  decisions. For substantial project intake, do the pre-plan research pass first, show links and
-  sources, then ask the user to switch to Plan mode before implementation and hand implementation back
-  to this skill after choices are clear.
+  unresolved template, GUI/HUD, agentic control harness, GPU lane, donor, input-device, code-map,
+  dependency, or validation decisions. For substantial project intake, do the pre-plan research pass
+  first, show links and sources, then ask the user to switch to Plan mode before implementation and
+  hand implementation back to this skill after choices are clear.
 - Use `modern-cpp-cmake` for CMake target structure, source ownership, presets, CTest, and dependency wiring.
 - Use `cuda-kernel-authoring` when adding or reviewing custom CUDA kernels or launch wrappers.
 - Use `vulkan-compute-sync` when the project contains Vulkan compute, render, synchronization, descriptor, or frame-lifetime work.
@@ -126,6 +134,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
   viewport overlays, docking panels, transform gizmos, plotting, desktop app UI, runtime/game UI, or
   embedded web UI. When presenting GUI options, include links where the user can inspect how each GUI
   looks.
+- Use `agentic-control-harness` when planning or implementing local controls that let agents launch,
+  drive, inspect, screenshot, and troubleshoot native apps through HTTP/curl, CLI, or MCP-backed
+  surfaces. For interactive apps, make this default-on unless the user opts out or the target is a
+  headless library or security-sensitive product surface.
 - Use available profiling or frame-debugging skills and local profiler tools only when the active environment exposes them and the user needs performance or capture evidence.
 - Use `verification-before-completion` before claiming the generated or upgraded backbone is valid.
 

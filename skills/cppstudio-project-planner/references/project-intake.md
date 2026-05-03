@@ -5,17 +5,18 @@ GPU/realtime project. The output is a planning packet, not code.
 
 ## Plan Mode Gate
 
-If the project has unresolved choices across template, GUI, GPU lane, dependencies, input devices, or
-donor strategy, gather a pre-plan research brief before asking the user to switch to Plan mode or
-presenting decision questions. The brief should use local CppStudio skill/donor routing plus an
-extensive state-of-the-art web ceiling check against upstream or primary sources, so the user is
-choosing from researched options.
+If the project has unresolved choices across template, GUI, GPU lane, agentic control harness,
+dependencies, input devices, or donor strategy, gather a pre-plan research brief before asking the
+user to switch to Plan mode or presenting decision questions. The brief should use local CppStudio
+skill/donor routing plus an extensive state-of-the-art web ceiling check against upstream or primary
+sources, so the user is choosing from researched options.
 
 The pre-plan research brief should include:
 
 - likely project archetype/template
 - likely GPU lane and alternatives
 - GUI/HUD candidates with source/docs and visual inspection links
+- default agentic control harness shape for interactive apps
 - relevant donor categories/profiles opened
 - web/current sources checked, with freshness/adoption signals where available
 - current state-of-the-art or actively popular approaches, separated from legacy approaches
@@ -32,8 +33,8 @@ Use a direct handoff:
 
 ```text
 Please switch to Plan mode before implementation so I can ask the project-shaping questions. I need
-to lock down the template, GUI/input stack, GPU lane, donor routes, web checks, code-map choice, and
-validation plan before files are created.
+to lock down the template, GUI/input stack, GPU lane, agentic control harness, donor routes, web
+checks, code-map choice, and validation plan before files are created.
 ```
 
 The benefit is fewer wrong dependencies, cleaner Vulkan/CUDA lane boundaries, better donor
@@ -63,6 +64,9 @@ Collect these facts before committing to architecture:
   renderer, simulation visualizer, tool shell, or headless compute package.
 - GUI/HUD/editor stack: debug HUD, internal artist tool, polished desktop app, runtime game UI,
   embedded web UI, or mixed.
+- Agentic control harness: default local-only HTTP/curl for interactive apps, optional MCP facade,
+  command/scenario surfaces, readback endpoints, warning/log capture, visual/frame capture, and
+  whether the target has a reason to opt out.
 - Input devices: mouse/keyboard, Wacom/stylus, multi-touch, SpaceMouse, gamepad, MIDI/control
   surface, VR controllers, hand tracking, or custom hardware.
 - Asset/data surfaces: glTF/GLB, USD, Alembic, OpenVDB/NanoVDB, textures/materials, CAD/NURBS,
@@ -93,6 +97,30 @@ For artist-facing tools, explicitly plan the input model:
 - whether input is captured through the windowing layer, GUI toolkit, native tablet APIs, or a
   project-specific input abstraction
 
+## Agentic Control Harness Checklist
+
+For interactive native apps, tools, viewers, renderers, simulations, and editor-like workflows,
+include a control harness from the first milestone by default. Ask about scope and transport, not
+whether it should exist, unless the user explicitly opts out or the target is a headless library or
+security-sensitive product surface.
+
+The purpose is agent autonomy. The harness should let agents launch the app, drive features, inspect
+state, collect warnings/logs, and capture what the user would see in the UI or viewport before
+asking the user to test routine changes manually.
+
+Plan:
+
+- local-only transport: HTTP plus curl, CLI/script adapter, or both
+- optional MCP facade timing over the same stable API
+- launch mode and how agents discover it
+- command or scenario surface for milestone features
+- state readback for every meaningful mutation
+- recent log/warning/error readback
+- screenshot, offscreen frame, render-target dump, or text-readable viewport/UI state for visual apps
+- main-thread or render-thread routing for app/GPU mutations
+- docs/registry updates such as `docs/AGENTIC_CONTROL.md` and optional JSON control registry
+- smoke/stress lanes for invalid commands, repeated commands, startup races, and feature interactions
+
 ## Planning Packet Template
 
 Use this shape for the response:
@@ -102,6 +130,7 @@ Project intent:
 Recommended archetype/template:
 GPU lane:
 GUI/HUD options:
+Agentic control harness:
 Artist/input requirements:
 Skills opened:
 Donors opened:

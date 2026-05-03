@@ -72,6 +72,26 @@ inspectors, transform gizmos, timelines, telemetry plots, or runtime/game UI.
 - Verification priority: tiny UI smoke app, input capture/focus, DPI/resize behavior, Vulkan
   validation for in-renderer UI, and a screenshot or offscreen frame when possible.
 
+## Agentic Control Harness For Interactive Apps
+
+Use when the project is an interactive native app, tool, viewer, renderer, simulator, or editor-like
+workflow that agents will need to test or troubleshoot without constantly asking the user to drive
+the UI manually.
+
+- Default to a local-only HTTP/curl control surface from milestone 1, with an optional MCP facade
+  over the same API after the basic commands and readback are proven.
+- Keep controls dev/test scoped, bind to `127.0.0.1`, and avoid remote exposure or arbitrary command
+  execution unless the user explicitly asks for a secure productized remote-control design.
+- Route app, UI, scene, renderer, and GPU mutations through the safe main/render thread or serialized
+  command queue.
+- Include state readback, recent warnings/logs, and screenshot/offscreen-frame/render-target evidence
+  for UI or viewport-heavy tools so agents can see what the user would see.
+- Read `agentic-control-harness` before designing endpoint shape, launch/control registry,
+  observation surfaces, or feature-control maintenance rules.
+- Verification priority: launch through the harness, health ping, one real feature command,
+  state/readback proof, recent warning/log query, visual evidence when relevant, and invalid-command
+  failure behavior.
+
 ## CUDA Plus Vulkan Combined Or Interop App
 
 Use when a CUDA-selected project also needs Vulkan presentation, realtime visualization, XR,

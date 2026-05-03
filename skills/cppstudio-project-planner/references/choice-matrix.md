@@ -17,6 +17,20 @@ that match the project.
 | AI runtime or neural 3D tool | AI runtime category plus graphics/runtime viewer categories | AI runtimes, neural 3D, CUDA or Vulkan lane depending on actual implementation |
 | Existing project upgrade | Read repo map if present, then code-map readiness audit if requested | existing layout audit, dependency policy, validation gaps, staged backbone application |
 
+## Agentic Control Harness Choices
+
+For interactive native apps, tools, viewers, renderers, simulations, and editor-like workflows,
+default to a local agentic control harness from milestone 1. The harness should let agents test,
+troubleshoot, inspect state/logs, and capture UI or viewport evidence before asking the user for
+manual verification.
+
+| Option | Use When | Required Routing |
+| --- | --- | --- |
+| Local HTTP plus curl | Default for realtime apps, tools, viewers, and simulators that need reproducible agent control | `agentic-control-harness`, launch/control registry, state/log/visual readback |
+| CLI or script adapter | Headless tools, batch converters, libraries with executable smoke paths, or projects where a server is too much for milestone 1 | `agentic-control-harness`, deterministic command docs, structured stdout/stderr |
+| Optional MCP facade | The HTTP/curl or CLI control API is stable enough to wrap for richer agent integration | `agentic-control-harness`, same underlying API, no MCP-only controls |
+| Deferred or disabled | Headless library, security-sensitive product surface, or explicit user opt-out | Record why, keep validation lanes strong, and do not repeatedly ask again |
+
 ## GUI/HUD Choices
 
 When these options are presented to the user, include the source/docs and visual inspection links so

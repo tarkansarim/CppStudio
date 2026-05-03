@@ -27,6 +27,7 @@ ALLOWED_TAGS = {
     "gui",
     "graphics",
     "games",
+    "harness",
     "hud",
     "infrastructure",
     "lookup",

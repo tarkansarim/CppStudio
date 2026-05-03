@@ -1,6 +1,6 @@
 ---
 name: cppstudio-project-planner
-description: "Plan native C++ GPU/realtime projects before scaffolding or major architecture work: gather requirements, choose CppStudio project archetype/template, Vulkan/CUDA/interop lane, GUI/HUD stack, artist input such as Wacom/stylus pressure, donor categories, state-of-the-art web ceiling checks, code-map policy, validation lanes, and user decisions. Use for initial project planning, project intake, architecture blueprints, 'what stack should we use' questions, best-current-stack selection, or when a C++/Vulkan/CUDA/3D/AI/simulation/tool app has multiple unresolved choices."
+description: "Plan native C++ GPU/realtime projects before scaffolding or major architecture work: gather requirements, choose CppStudio project archetype/template, Vulkan/CUDA/interop lane, GUI/HUD stack, agentic control harness, artist input such as Wacom/stylus pressure, donor categories, state-of-the-art web ceiling checks, code-map policy, validation lanes, and user decisions. Use for initial project planning, project intake, architecture blueprints, 'what stack should we use' questions, best-current-stack selection, or when a C++/Vulkan/CUDA/3D/AI/simulation/tool app has multiple unresolved choices."
 ---
 
 # CppStudio Project Planner
@@ -32,8 +32,8 @@ Then ask for Plan mode with this handoff:
 
 ```text
 Please switch to Plan mode before implementation so I can ask the project-shaping questions. I need
-to lock down the template, GUI/input stack, GPU lane, donor routes, web checks, code-map choice, and
-validation plan before files are created.
+to lock down the template, GUI/input stack, GPU lane, agentic control harness, donor routes, web
+checks, code-map choice, and validation plan before files are created.
 ```
 
 If the current turn explicitly says the session is already in Plan mode, still do the pre-plan
@@ -46,6 +46,12 @@ question UI such as `request_user_input`, present a compact option table with so
 inspection links; also include a compact URL in each option description when the question UI allows
 it.
 
+For interactive native apps, include an agentic control harness in the initial plan by default. Do
+not frame it as an optional nice-to-have unless the target is a headless library, a
+security-sensitive product surface, or the user explicitly opts out. The decision to ask the user is
+which local control shape to use first: localhost HTTP plus curl, CLI/script adapter, optional MCP
+facade over the same API, and which state/log/visual observation surfaces are needed for milestone 1.
+
 ## What To Load
 
 1. Read `references/project-intake.md` for the planning protocol and project packet.
@@ -54,7 +60,9 @@ it.
    donor routing, and implementation handoff.
 4. Use `native-cpp-gui-hud` for GUI/HUD/editor UI decisions. When presenting GUI options, include
    source/docs links and visual inspection links from `native-cpp-gui-hud/references/gui-options.md`.
-5. Use `modern-cpp-cmake`, `vulkan-compute-sync`, and `cuda-kernel-authoring` only when their lane is
+5. Use `agentic-control-harness` for local HTTP/curl controls, optional MCP facade, launch/control
+   registry, main-thread routing, app observation, and feature-control maintenance.
+6. Use `modern-cpp-cmake`, `vulkan-compute-sync`, and `cuda-kernel-authoring` only when their lane is
    selected or needed for a concrete planning decision.
 
 ## Planning Workflow
@@ -63,8 +71,8 @@ it.
    pipeline, AI runtime, CUDA library, Vulkan app, explicit CUDA/Vulkan interop app, XR app, or
    existing-repo upgrade.
 2. Run a pre-plan research pass before asking for choices: target platform implications, likely
-   template/archetype, GPU lane, GUI/HUD stack, input devices, donor categories, dependency policy,
-   validation budget, and code-map preference.
+   template/archetype, GPU lane, GUI/HUD stack, agentic control harness, input devices, donor
+   categories, dependency policy, validation budget, and code-map preference.
 3. Run an extensive state-of-the-art web ceiling check for current dependencies, SDKs, GUI/toolkit
    choices, papers, samples, engines, or vendor guidance that could affect architecture. Prefer
    upstream docs, official repos, standards bodies, recent papers, vendor documentation, active
@@ -86,6 +94,8 @@ Every substantial plan should include:
 - recommended CppStudio archetype/template
 - GPU lane: Vulkan-first, CUDA, or explicit interop, with why
 - GUI/HUD/editor UI options with clickable source/docs and visual inspection links
+- agentic control harness plan: local transport, MCP facade timing, command/readback surfaces,
+  curl examples, safety policy, and feature-maintenance rule
 - artist-input needs such as Wacom/stylus pressure, tilt, eraser, hover, smoothing, sampling,
   undo/redo stroke recording, multi-touch, SpaceMouse, XR controllers, or viewport picking
 - skill routes opened and donor categories/profiles selected
@@ -103,6 +113,8 @@ Every substantial plan should include:
 - Keep Vulkan-only projects Vulkan-only unless CUDA is explicitly chosen or required.
 - For realtime internal artist tools, default GUI comparison starts with Dear ImGui plus ImGuizmo
   and ImPlot, then compares Qt/wxWidgets or RmlUi/NoesisGUI when the product shape calls for them.
+- For interactive native apps, default the agentic control harness to local-only HTTP plus curl with
+  optional MCP layered over the same API after the basic command/readback surface is proven.
 - For brush, sculpt, paint, grooming, terrain, rigging, animation, or other artist-facing tools,
   treat tablet/stylus input as a first-class planning decision.
 - Prefer the highest-quality current approach that fits the target project. Offer simpler legacy or

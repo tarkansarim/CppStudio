@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a bundled `agentic-control-harness` skill and planner routing so interactive native C++
+  apps default to local HTTP/curl or CLI controls, optional MCP facades, state/log/visual
+  observation, and autonomous agent test/troubleshooting lanes before routine user manual testing.
 - Made `run_nsys_smoke.sh` query installed Nsight Systems stats reports/formats and select
   lane-appropriate summaries, avoiding stale `summary`/`text` assumptions across Nsight versions.
 - Documented the bundled `cppstudio-project-planner` skill in the README, including its role in

@@ -10,6 +10,7 @@ generated-project workflow instructions.
 - `skills/cpp-cuda-vulkan-studio/SKILL.md`
 - `skills/native-cpp-gui-hud/SKILL.md`
 - `skills/cppstudio-project-planner/SKILL.md`
+- `skills/agentic-control-harness/SKILL.md`
 - `skills/cpp-cuda-vulkan-studio/references/project-archetypes.md`
 
 ## Primary Paths
@@ -17,6 +18,7 @@ generated-project workflow instructions.
 - `skills/cpp-cuda-vulkan-studio/SKILL.md`
 - `skills/native-cpp-gui-hud/SKILL.md`
 - `skills/cppstudio-project-planner/SKILL.md`
+- `skills/agentic-control-harness/SKILL.md`
 - `.codex/skills/cppstudio-repo-onboarding/SKILL.md`
 
 ## Update When
@@ -32,3 +34,5 @@ generated-project workflow instructions.
 - native C++ GUI/HUD/editor UI skill routing or option-presentation behavior changes
 - initial native C++ GPU project planning, Plan mode handoff, template-choice, or artist-input
   planning behavior changes
+- agentic control harness routing, autonomous app testing expectations, launch/control registry, or
+  visual/UI observation behavior changes

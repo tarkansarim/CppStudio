@@ -7,29 +7,29 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 6969,
-      "sha256": "dfb437875378dc5100a30dcb16b82449bb1e1e91206be39ec609bee49d273333"
+      "size": 8063,
+      "sha256": "b69573566f23f5ee38afac1a599a4390d4bf5cb3ed118e52500eaf9b204ffba7"
     },
     {
       "path": "agents/openai.yaml",
       "role": "metadata",
       "disclosure_group": "entrypoint",
-      "size": 282,
-      "sha256": "ef16db8bca2d8ebbe64e48d92ddcf35d8477873d3a4c943cd946b5e051fda70e"
+      "size": 300,
+      "sha256": "672d868f6b35f4553bfc0d872771570064c60ecbdddb7ec168e51f07990d0299"
     },
     {
       "path": "references/choice-matrix.md",
       "role": "reference",
       "disclosure_group": "reference",
-      "size": 5971,
-      "sha256": "5b75136f8d70d73909f6bc0f086c314b26a5f6841cebee9c1b0b634b48a011f9"
+      "size": 7187,
+      "sha256": "dbb845dccdfb9378999a0680609e8680d1d80cb18fc6ad62ce41c268f46d3d0c"
     },
     {
       "path": "references/project-intake.md",
       "role": "reference",
       "disclosure_group": "reference",
-      "size": 5764,
-      "sha256": "340cf2fb363d91ded122fa444be9fb268aebfa2c0abfc1bab352cafb36214d49"
+      "size": 7422,
+      "sha256": "a1a521c8b84ef894f9716cd56203c31c7ae75c094669a09593c602181de157ab"
     }
   ]
 }

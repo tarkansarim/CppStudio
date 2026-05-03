@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agentic Control Harness"
+  short_description: "Local controls for agent-driven app testing."
+  default_prompt: "Use $agentic-control-harness to plan a local HTTP/curl/MCP control surface for a native C++ realtime app."

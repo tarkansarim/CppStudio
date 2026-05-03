@@ -13,12 +13,14 @@
         "skills/cpp-cuda-vulkan-studio/SKILL.md",
         "skills/native-cpp-gui-hud/SKILL.md",
         "skills/cppstudio-project-planner/SKILL.md",
+        "skills/agentic-control-harness/SKILL.md",
         "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md"
       ],
       "primary_paths": [
         "skills/cpp-cuda-vulkan-studio/SKILL.md",
         "skills/native-cpp-gui-hud/SKILL.md",
         "skills/cppstudio-project-planner/SKILL.md",
+        "skills/agentic-control-harness/SKILL.md",
         ".codex/skills/cppstudio-repo-onboarding/SKILL.md"
       ]
     },
@@ -76,6 +78,7 @@
         "skills/cpp-cuda-vulkan-studio/package-manifest.json",
         "skills/native-cpp-gui-hud/package-manifest.json",
         "skills/cppstudio-project-planner/package-manifest.json",
+        "skills/agentic-control-harness/package-manifest.json",
         "skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py"
       ]
     },

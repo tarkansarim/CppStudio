@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "package": "agentic-control-harness",
+  "hash_algorithm": "sha256",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "role": "main",
+      "disclosure_group": "entrypoint",
+      "size": 4743,
+      "sha256": "719dd8bae135168cabbc2c9ad6cc57ee9ba94e4407c19460fae45ef1efc7c065"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "role": "metadata",
+      "disclosure_group": "entrypoint",
+      "size": 247,
+      "sha256": "31f6387c651a640ccd712d7afd9f21c47b2433569fc12ed8ab36bbd772604439"
+    },
+    {
+      "path": "references/control-harness.md",
+      "role": "reference",
+      "disclosure_group": "reference",
+      "size": 6204,
+      "sha256": "bcdf911c4405885fc4602bc466bcbceb59ce35595168bf25420d1a5146466611"
+    }
+  ]
+}

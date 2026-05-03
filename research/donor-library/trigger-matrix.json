@@ -152,11 +152,13 @@
       "name": "initial-native-gpu-project-planning",
       "tags": ["positive", "planning", "vulkan", "gui", "simulation"],
       "prompt_shape": "User wants to plan or brainstorm a substantial new native C++ Vulkan/CUDA/realtime app with unresolved template, GUI, donor, web research, input-device, code-map, and validation choices.",
-      "expected_behavior": "Trigger cppstudio-project-planner before implementation; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; open project intake, choice matrix, CppStudio project archetypes, GUI/HUD option links, donor routing, and run an extensive state-of-the-art upstream web ceiling check before recommending architecture. Separate current leading approaches from legacy or low-effort options and prefer the best available option unless the user asks for a lighter route.",
+      "expected_behavior": "Trigger cppstudio-project-planner before implementation; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; open project intake, choice matrix, CppStudio project archetypes, GUI/HUD option links, agentic-control-harness, donor routing, and run an extensive state-of-the-art upstream web ceiling check before recommending architecture. For interactive apps, include a default local agentic control harness so agents can launch, drive, inspect, screenshot, and troubleshoot the app before asking the user for routine manual testing. Separate current leading approaches from legacy or low-effort options and prefer the best available option unless the user asks for a lighter route.",
       "expected_paths": [
         "skills/cppstudio-project-planner/SKILL.md",
         "skills/cppstudio-project-planner/references/project-intake.md",
         "skills/cppstudio-project-planner/references/choice-matrix.md",
+        "skills/agentic-control-harness/SKILL.md",
+        "skills/agentic-control-harness/references/control-harness.md",
         "skills/cpp-cuda-vulkan-studio/SKILL.md",
         "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/README.md",
@@ -169,17 +171,31 @@
       "name": "artist-tool-planning-with-stylus",
       "tags": ["positive", "planning", "games", "gui", "hud"],
       "prompt_shape": "User wants to plan a native C++ realtime artist or game technical-art tool with Wacom/stylus pressure, brush input, viewport HUD, gizmos, and donor-backed architecture choices.",
-      "expected_behavior": "Trigger cppstudio-project-planner and native-cpp-gui-hud; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; treat tablet/stylus pressure, tilt, hover, stroke sampling, undo/redo, viewport picking, and input capture as first-class planning decisions; present GUI choices with source and visual links immediately before any GUI choice question; run an extensive state-of-the-art web ceiling check, separate current leading approaches from legacy or low-effort options, and route through games/native GUI/rendering donor categories before implementation.",
+      "expected_behavior": "Trigger cppstudio-project-planner, native-cpp-gui-hud, and agentic-control-harness; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; treat tablet/stylus pressure, tilt, hover, stroke sampling, undo/redo, viewport picking, and input capture as first-class planning decisions; present GUI choices with source and visual links immediately before any GUI choice question; default the control harness for the artist tool so agents can inspect UI/viewport output and test brush/tool behavior through local controls before asking the user for routine manual checks; run an extensive state-of-the-art web ceiling check, separate current leading approaches from legacy or low-effort options, and route through games/native GUI/rendering donor categories before implementation.",
       "expected_paths": [
         "skills/cppstudio-project-planner/SKILL.md",
         "skills/cppstudio-project-planner/references/project-intake.md",
         "skills/cppstudio-project-planner/references/choice-matrix.md",
+        "skills/agentic-control-harness/SKILL.md",
+        "skills/agentic-control-harness/references/control-harness.md",
         "skills/native-cpp-gui-hud/SKILL.md",
         "skills/native-cpp-gui-hud/references/gui-options.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/production/games.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md"
+      ]
+    },
+    {
+      "name": "agentic-control-harness-default",
+      "tags": ["positive", "planning", "harness", "gui", "vulkan"],
+      "prompt_shape": "User plans or builds an interactive native C++ realtime app, viewer, renderer, simulator, artist tool, or game tool that an agent should be able to test, inspect, troubleshoot, or control.",
+      "expected_behavior": "Trigger agentic-control-harness with cppstudio-project-planner or cpp-cuda-vulkan-studio; treat the harness as default-on for interactive apps unless the user opts out or the target is headless/security-sensitive; plan local-only HTTP/curl or CLI controls with optional MCP facade over the same API; include state readback, recent logs/warnings, visual/UI or viewport evidence, launch/control registry docs, feature-control maintenance, and stress lanes so agents test routine changes before asking the user for manual verification.",
+      "expected_paths": [
+        "skills/agentic-control-harness/SKILL.md",
+        "skills/agentic-control-harness/references/control-harness.md",
+        "skills/cppstudio-project-planner/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/SKILL.md"
       ]
     },
     {

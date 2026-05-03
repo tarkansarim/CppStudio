@@ -21,7 +21,9 @@ As a harness, CppStudio focuses on:
 
 - A Vulkan-first native C++ GPU project backbone with optional CUDA and combined CUDA/Vulkan lanes.
 - A dedicated project-planning skill that researches current best approaches before large stack,
-  GUI, input, donor, and validation choices are locked in.
+  GUI, input, agentic control, donor, and validation choices are locked in.
+- A local agentic control-harness skill for interactive apps, so agents can launch, drive, inspect,
+  screenshot, and troubleshoot generated tools before asking users for routine manual testing.
 - A nested donor-reference library that routes agents to relevant 3D, AI, simulation, rendering,
   CUDA, Vulkan, and infrastructure references without loading the whole library into context.
 - Validation, profiling, package integrity checks, rollout safety, and optional project-memory
@@ -119,12 +121,13 @@ Expected result: Codex loads `cpp-cuda-vulkan-studio`, keeps the project Vulkan-
 explicitly needed, scaffolds or upgrades the native C++ project, and opens only the donor references
 that match the task.
 
-## Project Planning Skill
+## Project Planning And Control Skills
 
-CppStudio installs a companion `cppstudio-project-planner` skill for substantial new apps or major
+CppStudio installs companion planning and control skills for substantial new apps or major
 architecture decisions. When a request has unresolved choices such as template, GUI/HUD, tablet or
-stylus input, Vulkan/CUDA lane, donor routes, dependencies, or validation strategy, the planner should
-research first, then ask for Plan mode before implementation.
+stylus input, agentic control harness, Vulkan/CUDA lane, donor routes, dependencies, or validation
+strategy, `cppstudio-project-planner` should research first, then ask for Plan mode before
+implementation.
 
 The planner is meant to prevent agents from grabbing whatever is easiest or most familiar. It opens
 the local donor library, checks current upstream sources, looks for state-of-the-art or actively used
@@ -138,6 +141,10 @@ planning first:
 Plan a realtime Vulkan C++ artist tool before implementation. Include GUI options, donor references,
 web checks, stylus/input needs, and the questions I need to answer.
 ```
+
+For interactive apps, the planner defaults to a local agentic control harness. The goal is not to
+make users manually test every small fix; the generated app should expose local controls, readback,
+logs/warnings, and visual or viewport evidence so agents can verify routine behavior themselves.
 
 ## Requirements
 
@@ -201,6 +208,10 @@ toolchains only when you want this machine to build or validate generated C++ GP
 
 - Main skill:
   `${HOME}/.codex/skills/cpp-cuda-vulkan-studio`
+- Bundled auxiliary skills:
+  `${HOME}/.codex/skills/cppstudio-project-planner`,
+  `${HOME}/.codex/skills/native-cpp-gui-hud`, and
+  `${HOME}/.codex/skills/agentic-control-harness`
 - Optional companion donor links for installed companion skills such as `cuda-kernel-authoring`,
   `vulkan-compute-sync`, and `modern-cpp-cmake`
 - Tiny user-level `AGENTS.md` relay that tells agents to load `cpp-cuda-vulkan-studio` for
@@ -312,11 +323,14 @@ when `.cppstudio/code-map-state.json` says `enabled`.
   CUDA/Vulkan builds, explicit interop work, project scaffolding, validation lanes, and donor routing.
 - `cppstudio-project-planner`: installed user-level skill for upfront project intake before
   scaffolding or major architecture work. It chooses the CppStudio archetype/template, GPU lane,
-  GUI/HUD options, donor routes, web checks, artist-input requirements such as Wacom/stylus pressure,
-  code-map policy, and validation plan with the user.
+  GUI/HUD options, agentic control harness, donor routes, web checks, artist-input requirements such
+  as Wacom/stylus pressure, code-map policy, and validation plan with the user.
 - `native-cpp-gui-hud`: installed user-level skill for choosing native C++ GUI, HUD, editor UI,
   viewport overlay, gizmo, plotting, desktop UI, runtime/game UI, and embedded-web UI stacks. When it
   presents options, it includes links where users can inspect how each GUI looks.
+- `agentic-control-harness`: installed user-level skill for local HTTP/curl controls, optional MCP
+  facades, launch/control registries, state/log/visual observation, and autonomous test lanes for
+  native C++ realtime apps.
 - `cppstudio-repo-onboarding`: repo-local onboarding skill for agents editing this CppStudio repo.
   It is not the public user-level C++ GPU skill.
 
@@ -470,9 +484,11 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
 
 - `skills/cpp-cuda-vulkan-studio/`: source of truth for the user-level Codex skill
 - `skills/cppstudio-project-planner/`: bundled planning skill for project intake, option gathering,
-  GUI links, donor routes, web checks, and implementation handoff
+  GUI links, agentic controls, donor routes, web checks, and implementation handoff
 - `skills/native-cpp-gui-hud/`: bundled GUI/HUD skill for native C++ tool UI choices and visual
   inspection links
+- `skills/agentic-control-harness/`: bundled control-harness skill for autonomous app launch,
+  control, observation, visual/UI evidence, and troubleshooting
 - `skills/cpp-cuda-vulkan-studio/assets/app-library-template/`: generated-project template
 - `skills/cpp-cuda-vulkan-studio/references/`: project archetypes and donor-reference guidance
 - `skills/*/package-manifest.json`: deterministic skill package inventories and integrity metadata

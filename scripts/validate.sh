@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_DIR="${ROOT_DIR}/skills/cpp-cuda-vulkan-studio"
-AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner")
+AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness")
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
 REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
@@ -106,6 +106,10 @@ required_repo_files=(
     "skills/cppstudio-project-planner/references/project-intake.md"
     "skills/cppstudio-project-planner/references/choice-matrix.md"
     "skills/cppstudio-project-planner/package-manifest.json"
+    "skills/agentic-control-harness/SKILL.md"
+    "skills/agentic-control-harness/agents/openai.yaml"
+    "skills/agentic-control-harness/references/control-harness.md"
+    "skills/agentic-control-harness/package-manifest.json"
     "research/donor-library/trigger-regression-checklist.md"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/.gitignore"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md"
@@ -124,7 +128,7 @@ for rel_path in "${required_repo_files[@]}"; do
 done
 grep -q "scripts/bootstrap_code_map.py --enable --force" \
     "${SKILL_DIR}/assets/app-library-template/README.md"
-grep -q "do a pre-plan research pass before asking the user to switch to Plan mode" \
+grep -q "do a pre-plan research pass before asking the user to switch to" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "Open \`cppstudio-project-planner\` immediately when available" \
     "${SKILL_DIR}/SKILL.md"
@@ -132,6 +136,12 @@ grep -q "Separate current leading approaches from" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "extensive state-of-the-art web ceiling check" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "agentic control harness in the initial plan by default" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "primary control and observation layer" \
+    "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
+grep -q "what the user is seeing" \
+    "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
 grep -q "visible link table has been shown" \
     "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
 if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
@@ -609,7 +619,7 @@ python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     --repo-root "${ROOT_DIR}" \
     --tag lookup >"${trigger_lookup_md}"
 grep -q "agent-lookup.md" "${trigger_lookup_md}"
-for trigger_tag in dcc materials volumes vfx games infrastructure gui planning; do
+for trigger_tag in dcc materials volumes vfx games infrastructure gui planning harness; do
     trigger_tag_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_${trigger_tag}.XXXXXX.md")"
     python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
         "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
@@ -636,6 +646,13 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning; 
             grep -q "pre-plan research brief before asking the user to switch to Plan mode" "${trigger_tag_md}"
             grep -q "extensive state-of-the-art upstream web ceiling check" "${trigger_tag_md}"
             grep -q "prefer the best available option unless the user asks for a lighter route" "${trigger_tag_md}"
+            grep -q "agentic-control-harness" "${trigger_tag_md}"
+            grep -q "before asking the user for routine manual testing" "${trigger_tag_md}"
+            ;;
+        harness)
+            grep -q "agentic-control-harness" "${trigger_tag_md}"
+            grep -q "visual/UI or viewport evidence" "${trigger_tag_md}"
+            grep -q "before asking the user for manual verification" "${trigger_tag_md}"
             ;;
         *)
             grep -q "${trigger_tag}" "${trigger_tag_md}"
