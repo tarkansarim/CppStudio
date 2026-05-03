@@ -816,10 +816,12 @@ def capture_patch(repo: Path, root: Path, attempt_id: str, changed: list[str]) -
     return patch_path
 
 
-def reverse_patch(repo: Path, patch_path: Path) -> None:
+def reverse_patch(repo: Path, patch_path: Path, changed: list[str]) -> None:
     result = subprocess.run(["git", "apply", "-R", str(patch_path)], cwd=repo, text=True, capture_output=True, check=False)
     if result.returncode != 0:
         raise ToolError(f"auto-revert failed:\n{result.stdout}{result.stderr}")
+    if changed:
+        run_git(repo, ["reset", "-q", "--", *changed], check=True)
 
 
 def commit_keep(repo: Path, target: dict[str, Any], attempt_id: str, changed: list[str], message: str) -> str:
@@ -1500,7 +1502,7 @@ def attempt_command(args: argparse.Namespace) -> int:
 
     commit_sha = ""
     if decision == "REVERT":
-        reverse_patch(repo, patch_path)
+        reverse_patch(repo, patch_path, changed)
         append_event(root, "attempt_reverted", target_id=target["target_id"], attempt_id=attempt_id)
     elif decision == "KEEP":
         target["best_value"] = metric_value

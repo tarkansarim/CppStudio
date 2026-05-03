@@ -19,6 +19,7 @@ skills, and watch-mode publishing behavior.
 - `scripts/validate_skill_package.py`
 - `scripts/bootstrap_code_map.py`
 - `scripts/validate_code_map.py`
+- `skills/cpp-cuda-vulkan-studio/package-manifest.json`
 - `skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py`
 
 ## Update When
@@ -48,6 +49,8 @@ skills, and watch-mode publishing behavior.
   overrides the path.
 - Sync rollback tracks whether the previous target existed and whether backup creation completed, so
   a failed backup move leaves the existing installed skill in place.
+- Sync and rollout resolve safety-check paths through Python `Path.resolve(strict=False)` so the
+  documented Linux, macOS, and WSL install path does not require GNU `realpath -m`.
 - Rollout snapshots the main skill, matching companion skill files, and the optional user-level
   `AGENTS.md` relay target before mutation, then restores them if a later step fails.
 - `rollout_to_codex.sh` installs the minimal user-level `AGENTS.md` relay by default and preserves
@@ -58,3 +61,5 @@ skills, and watch-mode publishing behavior.
   profiler tool-gap artifacts, hypothesis logging, breaking-point search, repeated validation
   passes, beam-style round planning, keep/revert attempts, malformed benchmark revert behavior, final
   reporting, and scaffold installation of `scripts/run_gpu_optimization_loop.py`.
+- Code-map validation checks that each subsystem router doc's `## Primary Paths` section matches the
+  machine-readable manifest `primary_paths`, so future routing changes stay discoverable to agents.

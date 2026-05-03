@@ -1323,8 +1323,8 @@
       "path": "scripts/run_gpu_optimization_loop.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 88295,
-      "sha256": "c7940eee3c5ec72ab79783887550946a02065fdc108797b57069416b6de11462"
+      "size": 88407,
+      "sha256": "f80646d4ce683e176cfdc5da05d94a1c86f987cbef5722ba4820fad3e8f37260"
     },
     {
       "path": "scripts/run_nsys_smoke.sh",
@@ -1365,8 +1365,8 @@
       "path": "scripts/validate_code_map.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 10390,
-      "sha256": "8b7bbfe6664ee0bccf4a18dd93fc577eadbcfbf6cd9addcc1774bcbd8c4bad2a"
+      "size": 11647,
+      "sha256": "35ed0099ec33097ebd5828c2f14207505182aba4e4f5ce76c64310656828c2a8"
     },
     {
       "path": "scripts/validate_studio_backbone.py",

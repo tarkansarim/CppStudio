@@ -355,6 +355,36 @@ rm -f "${package_validator_tmp}/cpp-cuda-vulkan-studio/agents/openai.yaml"
 expect_failure "package validator detects missing file" "missing manifested file" \
     python3 "${PACKAGE_VALIDATOR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
 rm -rf "${package_validator_tmp}"
+package_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/package_validator_unknown_top.XXXXXX")"
+cp -a "${SKILL_DIR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+python3 - "${package_validator_tmp}/cpp-cuda-vulkan-studio/package-manifest.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+manifest = json.loads(path.read_text(encoding="utf-8"))
+manifest["generated_at"] = "not allowed"
+path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "package validator rejects unknown manifest fields" "unexpected fields: generated_at" \
+    python3 "${PACKAGE_VALIDATOR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+rm -rf "${package_validator_tmp}"
+package_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/package_validator_unknown_entry.XXXXXX")"
+cp -a "${SKILL_DIR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+python3 - "${package_validator_tmp}/cpp-cuda-vulkan-studio/package-manifest.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+manifest = json.loads(path.read_text(encoding="utf-8"))
+manifest["files"][0]["local_note"] = "not allowed"
+path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "package validator rejects unknown manifest file-entry fields" "unexpected fields: local_note" \
+    python3 "${PACKAGE_VALIDATOR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+rm -rf "${package_validator_tmp}"
 package_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/package_validator_symlink.XXXXXX")"
 cp -a "${SKILL_DIR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
 ln -s "../project-archetypes.md" \
@@ -469,8 +499,41 @@ from pathlib import Path
 
 path = Path(sys.argv[1])
 manifest = json.loads(path.read_text(encoding="utf-8"))
+manifest["subsystems"][0]["primary_paths"].append("README.md")
+path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "code map validates router doc primary path parity" "router_doc Primary Paths differ from manifest primary_paths" \
+    python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
+python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_stale_tmp}" --enable --force
+python3 - "${code_map_stale_tmp}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+manifest = json.loads(path.read_text(encoding="utf-8"))
 manifest["subsystems"][0]["primary_paths"].append("docs/SUBSYSTEMS/*.md")
 path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+PY
+python3 - "${code_map_stale_tmp}/docs/SUBSYSTEMS/build-and-presets.md" <<'PY'
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+lines = path.read_text(encoding="utf-8").splitlines()
+out = []
+inserted = False
+in_primary = False
+for line in lines:
+    if line.startswith("## "):
+        if in_primary and not inserted:
+            out.append("- `docs/SUBSYSTEMS/*.md`")
+            inserted = True
+        in_primary = line.strip() == "## Primary Paths"
+    out.append(line)
+if in_primary and not inserted:
+    out.append("- `docs/SUBSYSTEMS/*.md`")
+path.write_text("\n".join(out) + "\n", encoding="utf-8")
 PY
 python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
 touch "${VALIDATE_TMP}/outside-code-map-glob.md"
@@ -1709,7 +1772,11 @@ expect_failure "intent-to-add GPU optimization new file diff is measured" "decis
         --description "New in-scope file synthetic attempt." \
         --auto-revert
 test ! -e "${optimization_tmp}/src/cuda/new_file.cu"
-git -C "${optimization_tmp}" reset -q -- src/cuda/new_file.cu || true
+if git -C "${optimization_tmp}" status --short -- src/cuda/new_file.cu | grep -q .; then
+    git -C "${optimization_tmp}" status --short -- src/cuda/new_file.cu >&2
+    echo "intent-to-add new file left dirty git state after auto-revert" >&2
+    exit 1
+fi
 optimization_next_out="$(mktemp "${VALIDATE_TMP}/gpu_optimization_next.XXXXXX.out")"
 python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" next \
     --repo "${optimization_tmp}" \
@@ -1833,6 +1900,10 @@ expect_failure "malformed CMakePresets preset entries" "configurePresets[1] must
     --strict-source-layout
 bash -n "${ROOT_DIR}"/scripts/*.sh
 bash -n "${SKILL_DIR}"/scripts/*.sh
+if grep -R "realpath -m" "${ROOT_DIR}/scripts/sync_to_codex.sh" "${ROOT_DIR}/scripts/rollout_to_codex.sh"; then
+    echo "sync/rollout scripts must not depend on GNU-only realpath -m" >&2
+    exit 1
+fi
 compute_fake_dir="$(mktemp -d "${VALIDATE_TMP}/compute_fake.XXXXXX")"
 cat >"${compute_fake_dir}/compute-sanitizer" <<'EOF'
 #!/usr/bin/env bash

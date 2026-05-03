@@ -40,6 +40,15 @@ if sys.version_info < (3, 10):
 PY
 }
 
+resolve_path() {
+    python3 - "$1" <<'PY'
+import sys
+from pathlib import Path
+
+print(Path(sys.argv[1]).expanduser().resolve(strict=False))
+PY
+}
+
 write_cppstudio_audit() {
     local action="$1"
     local success="$2"
@@ -169,13 +178,13 @@ if [[ ! -x "${PACKAGE_VALIDATOR}" && ! -f "${PACKAGE_VALIDATOR}" ]]; then
     exit 1
 fi
 
-target_resolved="$(realpath -m "${TARGET_DIR}")"
-expected_resolved="$(realpath -m "${EXPECTED_TARGET_DIR}")"
-root_resolved="$(realpath -m "${ROOT_DIR}")"
-source_resolved="$(realpath -m "${SOURCE_DIR}")"
-home_resolved="$(realpath -m "${HOME}")"
-codex_home_resolved="$(realpath -m "${CODEX_HOME_DIR}")"
-codex_skills_resolved="$(realpath -m "${CODEX_HOME_DIR}/skills")"
+target_resolved="$(resolve_path "${TARGET_DIR}")"
+expected_resolved="$(resolve_path "${EXPECTED_TARGET_DIR}")"
+root_resolved="$(resolve_path "${ROOT_DIR}")"
+source_resolved="$(resolve_path "${SOURCE_DIR}")"
+home_resolved="$(resolve_path "${HOME}")"
+codex_home_resolved="$(resolve_path "${CODEX_HOME_DIR}")"
+codex_skills_resolved="$(resolve_path "${CODEX_HOME_DIR}/skills")"
 
 if [[ -L "${CODEX_HOME_DIR}/skills" ]]; then
     echo "Refusing symlinked Codex skills root: ${CODEX_HOME_DIR}/skills" >&2

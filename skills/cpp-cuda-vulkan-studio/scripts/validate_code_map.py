@@ -104,6 +104,29 @@ def collect_index_links(repo: Path, index_path: Path) -> tuple[set[str], list[st
     return links, failures
 
 
+def primary_paths_from_router_doc(path: Path) -> list[str] | None:
+    if not path.is_file():
+        return None
+    paths: list[str] = []
+    in_section = False
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("## "):
+            if in_section:
+                break
+            in_section = line.strip() == "## Primary Paths"
+            continue
+        if not in_section:
+            continue
+        match = re.match(r"^-\s+`([^`]+)`\s*$", line.strip())
+        if match:
+            paths.append(match.group(1))
+    return paths if in_section or paths else None
+
+
+def comparable_path_list(paths: list[str]) -> list[str]:
+    return sorted(path.rstrip("/") for path in paths)
+
+
 def validate_manifest_path(repo: Path, path_text: str, context: str) -> str | None:
     error = local_path_error(path_text)
     if error:
@@ -194,6 +217,14 @@ def validate_manifest(repo: Path, manifest_path: Path, index_links: set[str] | N
                     failures.append(path_failure)
                 elif not path_exists(repo, value):
                     failures.append(f"{context}: {field_name} entry does not exist: {value}")
+
+        primary_paths = subsystem.get("primary_paths", [])
+        if isinstance(primary_paths, list) and all(isinstance(value, str) for value in primary_paths):
+            doc_primary_paths = primary_paths_from_router_doc(repo / router_doc)
+            if doc_primary_paths is not None and comparable_path_list(doc_primary_paths) != comparable_path_list(primary_paths):
+                failures.append(
+                    f"{context}: router_doc Primary Paths differ from manifest primary_paths: {router_doc}"
+                )
 
     if manifest.get("skill_root") == GENERATED_SKILL_ROOT and seen_ids != GENERATED_SUBSYSTEM_IDS:
         failures.append(

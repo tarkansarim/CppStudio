@@ -69,7 +69,8 @@
         "scripts/validate_skill_package.py",
         "scripts/bootstrap_code_map.py",
         "scripts/validate_code_map.py",
-        "skills/cpp-cuda-vulkan-studio/package-manifest.json"
+        "skills/cpp-cuda-vulkan-studio/package-manifest.json",
+        "skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py"
       ]
     },
     {

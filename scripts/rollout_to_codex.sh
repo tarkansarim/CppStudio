@@ -48,6 +48,15 @@ if sys.version_info < (3, 10):
 PY
 }
 
+resolve_path() {
+    python3 - "$1" <<'PY'
+import sys
+from pathlib import Path
+
+print(Path(sys.argv[1]).expanduser().resolve(strict=False))
+PY
+}
+
 write_cppstudio_audit() {
     local action="$1"
     local success="$2"
@@ -203,8 +212,8 @@ fi
 
 require_python310
 
-target_resolved="$(realpath -m "${TARGET_DIR}")"
-expected_resolved="$(realpath -m "${EXPECTED_TARGET_DIR}")"
+target_resolved="$(resolve_path "${TARGET_DIR}")"
+expected_resolved="$(resolve_path "${EXPECTED_TARGET_DIR}")"
 
 if [[ -L "${CODEX_HOME_DIR}/skills" ]]; then
     echo "Refusing symlinked Codex skills root: ${CODEX_HOME_DIR}/skills" >&2
@@ -305,11 +314,11 @@ backup_rollout_path "${target_resolved}"
 for companion in cuda-kernel-authoring vulkan-compute-sync modern-cpp-cmake; do
     companion_skill="${CODEX_HOME_DIR}/skills/${companion}/SKILL.md"
     if [[ -e "${companion_skill}" ]]; then
-        backup_rollout_path "$(realpath -m "${companion_skill}")"
+        backup_rollout_path "$(resolve_path "${companion_skill}")"
     fi
 done
 if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
-    backup_rollout_path "$(realpath -m "${USER_AGENTS_RELAY_TARGET}")"
+    backup_rollout_path "$(resolve_path "${USER_AGENTS_RELAY_TARGET}")"
 fi
 trap restore_rollout_backups ERR INT TERM
 

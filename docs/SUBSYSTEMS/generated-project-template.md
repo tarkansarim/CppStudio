@@ -42,4 +42,5 @@ validation.
   per-round worker artifacts for agents, branches, or worktrees.
 - Optimization attempts treat malformed benchmark evidence as a measured failure: with
   `--auto-revert`, missing or invalid primary metrics are recorded in `results.tsv` and the captured
-  patch is reversed. Profiler/counter gaps should be recorded with `profile --tool-gap`.
+  patch is reversed. Intent-to-add new files are reset from the index after reversal so the next
+  attempt starts clean. Profiler/counter gaps should be recorded with `profile --tool-gap`.

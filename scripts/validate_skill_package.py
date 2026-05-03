@@ -20,6 +20,8 @@ from typing import Any
 MANIFEST_NAME = "package-manifest.json"
 SCHEMA_VERSION = 1
 HASH_ALGORITHM = "sha256"
+MANIFEST_KEYS = {"schema_version", "package", "hash_algorithm", "files"}
+FILE_ENTRY_KEYS = {"path", "role", "disclosure_group", "size", "sha256"}
 ALLOWED_TOP_LEVEL = {
     "SKILL.md",
     "agents",
@@ -216,10 +218,12 @@ def load_manifest(manifest_path: Path) -> dict[str, Any]:
 
 
 def validate_manifest_shape(data: dict[str, Any], skill_dir: Path) -> list[dict[str, Any]]:
-    required = {"schema_version", "package", "hash_algorithm", "files"}
-    missing = sorted(required - set(data))
+    missing = sorted(MANIFEST_KEYS - set(data))
     if missing:
         raise ValueError(f"package manifest missing fields: {', '.join(missing)}")
+    unexpected = sorted(set(data) - MANIFEST_KEYS)
+    if unexpected:
+        raise ValueError(f"package manifest has unexpected fields: {', '.join(unexpected)}")
     if data["schema_version"] != SCHEMA_VERSION:
         raise ValueError(f"unsupported package manifest schema_version: {data['schema_version']!r}")
     if data["package"] != skill_dir.name:
@@ -234,11 +238,15 @@ def validate_manifest_shape(data: dict[str, Any], skill_dir: Path) -> list[dict[
     for index, entry in enumerate(files):
         if not isinstance(entry, dict):
             raise ValueError(f"package manifest files[{index}] must be an object")
-        entry_required = {"path", "role", "disclosure_group", "size", "sha256"}
-        entry_missing = sorted(entry_required - set(entry))
+        entry_missing = sorted(FILE_ENTRY_KEYS - set(entry))
         if entry_missing:
             raise ValueError(
                 f"package manifest files[{index}] missing fields: {', '.join(entry_missing)}"
+            )
+        entry_unexpected = sorted(set(entry) - FILE_ENTRY_KEYS)
+        if entry_unexpected:
+            raise ValueError(
+                f"package manifest files[{index}] has unexpected fields: {', '.join(entry_unexpected)}"
             )
         path_text = entry["path"]
         if not isinstance(path_text, str):

@@ -60,6 +60,7 @@ The validator rejects:
 - missing manifested files
 - unmanifested package files
 - hash or size mismatches
+- unknown top-level manifest fields or unknown per-file entry fields
 - symlinks inside the package
 - unsupported top-level package entries outside the known skill layout
 - absolute paths, escaping paths, and NUL bytes

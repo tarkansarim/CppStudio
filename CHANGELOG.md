@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Fixed fresh-review hardening issues around GPU optimization new-file auto-reverts, portable
+  sync/rollout path resolution, code-map doc/manifest parity, and closed package-manifest schemas.
 - Hardened generated GPU optimization loops so benchmark parse/evaluation failures auto-revert when
   requested, profiler tool gaps are recorded as artifacts, target-table numerics fail cleanly, and
   package-manifest writes reject local/secrets/temp artifacts.
