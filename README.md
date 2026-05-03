@@ -20,6 +20,8 @@ turning every new repo into a one-off build-system and donor-research exercise.
 As a harness, CppStudio focuses on:
 
 - A Vulkan-first native C++ GPU project backbone with optional CUDA and combined CUDA/Vulkan lanes.
+- A dedicated project-planning skill that researches current best approaches before large stack,
+  GUI, input, donor, and validation choices are locked in.
 - A nested donor-reference library that routes agents to relevant 3D, AI, simulation, rendering,
   CUDA, Vulkan, and infrastructure references without loading the whole library into context.
 - Validation, profiling, package integrity checks, rollout safety, and optional project-memory
@@ -30,6 +32,8 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `ae711f6` - Made project planning prefer current best approaches, state-of-the-art web ceiling
+  checks, and current-vs-legacy separation before stack choices.
 - `57e7a2a` - Added README acknowledgements for the public reference repos that informed the GPU
   optimization and package-integrity workflows.
 - `5f1902f` - Required donor-grounded native GPU brainstorming plus web ceiling checks for broad
@@ -114,6 +118,18 @@ Create a Vulkan-first C++ application called RayLab.
 Expected result: Codex loads `cpp-cuda-vulkan-studio`, keeps the project Vulkan-first unless CUDA is
 explicitly needed, scaffolds or upgrades the native C++ project, and opens only the donor references
 that match the task.
+
+## Project Planning Skill
+
+CppStudio installs a companion `cppstudio-project-planner` skill for substantial new apps or major
+architecture decisions. When a request has unresolved choices such as template, GUI/HUD, tablet or
+stylus input, Vulkan/CUDA lane, donor routes, dependencies, or validation strategy, the planner should
+research first, then ask for Plan mode before implementation.
+
+The planner is meant to prevent agents from grabbing whatever is easiest or most familiar. It opens
+the local donor library, checks current upstream sources, looks for state-of-the-art or actively used
+approaches, separates those from legacy or low-effort options, and presents the best available route
+unless you explicitly ask for something lightweight.
 
 For larger apps where template, GUI, input devices, donors, or validation choices matter, ask for
 planning first:

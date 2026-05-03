@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Documented the bundled `cppstudio-project-planner` skill in the README, including its role in
+  researching current best approaches before major project choices.
 - Changed initial CppStudio planning flow so agents gather a pre-plan research brief first, including
   local donor routing and targeted upstream web checks, then ask the user to switch to Plan mode for
   decisions.
