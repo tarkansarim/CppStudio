@@ -18,6 +18,7 @@ RUNTIME_SCRIPTS = [
     "run_vulkan_validation.sh",
     "dump_vulkan_capabilities.sh",
     "run_nsys_smoke.sh",
+    "run_gpu_optimization_loop.py",
     "format_check.sh",
     "tidy_check.sh",
     "bootstrap_code_map.py",
@@ -230,6 +231,8 @@ def main() -> int:
     print("  cmake --preset cuda-debug && cmake --build --preset cuda-debug && ctest --preset cuda --output-on-failure")
     print("Optional combined CUDA plus Vulkan lane:")
     print("  cmake --preset cuda-vulkan-combined && cmake --build --preset cuda-vulkan-combined")
+    print("Optional GPU optimization loop:")
+    print("  read docs/GPU_OPTIMIZATION_LOOP.md and run scripts/run_gpu_optimization_loop.py --help")
     return 0
 
 

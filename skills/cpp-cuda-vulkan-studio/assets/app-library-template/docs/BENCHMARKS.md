@@ -41,6 +41,12 @@ Debugger for frame contents, pipeline state, descriptors, and event order. Use N
 Trace or `nsys` for frame timing and queue overlap. Use Nsight Systems first for CUDA launch/overlap
 questions. Use `ncu` only after a hot CUDA kernel has been identified.
 
+## Optimization Sessions
+
+Use [GPU_OPTIMIZATION_LOOP.md](GPU_OPTIMIZATION_LOOP.md) for agent-run performance work. Its script
+keeps baselines, attempt logs, patch snapshots, target state, and final reports under
+`artifacts/optimization/<session>/`. Copy only durable summaries into tracked docs or PR notes.
+
 ## CI Policy
 
 Do not enforce timing thresholds in CI until stable baselines are intentionally recorded for the target

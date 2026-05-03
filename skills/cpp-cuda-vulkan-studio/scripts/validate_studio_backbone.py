@@ -25,6 +25,7 @@ REQUIRED_FILES = [
     "docs/DEVELOPMENT_ENVIRONMENT.md",
     "docs/VALIDATION_PIPELINE.md",
     "docs/BENCHMARKS.md",
+    "docs/GPU_OPTIMIZATION_LOOP.md",
     "docs/GPU_RUNNER_CI.md",
     "scripts/check_dev_tools.sh",
     "scripts/select_idle_gpu.sh",
@@ -32,6 +33,7 @@ REQUIRED_FILES = [
     "scripts/run_vulkan_validation.sh",
     "scripts/dump_vulkan_capabilities.sh",
     "scripts/run_nsys_smoke.sh",
+    "scripts/run_gpu_optimization_loop.py",
     "scripts/format_check.sh",
     "scripts/tidy_check.sh",
     "shaders/compute.comp",
@@ -201,6 +203,7 @@ def main() -> int:
         "scripts/run_vulkan_validation.sh",
         "scripts/dump_vulkan_capabilities.sh",
         "scripts/run_nsys_smoke.sh",
+        "scripts/run_gpu_optimization_loop.py",
         "scripts/format_check.sh",
         "scripts/tidy_check.sh",
     ]:

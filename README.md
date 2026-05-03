@@ -25,6 +25,30 @@ As a harness, CppStudio focuses on:
 - Validation, profiling, rollout, install safety, and optional project-memory workflows that keep
   agent output auditable.
 
+## Recent Commit Highlights
+
+The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
+commit-level changes readable for people scanning the repo.
+
+- `13501a2` - Added `docs/BACKLOG.md` to collect future harness, donor, code-map, and tooling ideas.
+- `e53a3b1` - Made README positioning agent-agnostic so Codex-specific wording stays in install and
+  package sections.
+- `c5a0f47` - Clarified that CppStudio is a native C++ GPU development harness delivered as a skill
+  package.
+- `fa8a289` - Hardened validator, sync, and code-map edge cases around quoted metadata, rollback,
+  and local path validation.
+- `02a5b29` - Tightened final review items across rollout rollback, donor validation, trigger-lane
+  notes, and generated-project docs.
+- `4a00635` - Fixed validation coverage so fresh-home checks prove the target Codex home instead of
+  inheriting parent validator overrides.
+- `d1f60c8` - Hardened rollout, manual install safety, code-map enablement, and donor/library
+  validation behavior.
+- `138d2fb` - Made hosted CI discover the installed Lavapipe Vulkan CPU ICD path before Vulkan
+  runtime smoke tests.
+
+Maintainers should add one concise line here for commits that change setup, routing, generated
+projects, validation, donor-library behavior, public docs, install, release, or sync behavior.
+
 ## Sample Projects Built With This Workflow
 
 These are examples of native GPU projects built with this kind of CppStudio agent workflow: scoped
@@ -176,6 +200,8 @@ not trigger.
   deliberate combined CUDA/Vulkan or real interop lane is needed.
 - Scaffold or upgrade C++ app+library repos with CMake presets, CTest labels, shader tooling,
   optional CUDA lanes, validation scripts, and self-hosted GPU CI hooks.
+- Guide CUDA kernel, Vulkan compute, render-pass, simulation, and frame-time optimization through an
+  evidence-gated baseline/attempt/keep-or-revert loop with final reports.
 - Route agents through nested donor references for graphics, glTF/runtime assets, WebGPU/WebGL,
   renderer backbones, path tracing, engine architecture, mesh pipelines, asset IO, NURBS, materials,
   CAD, BIM/IFC, terrain/geospatial data, AI runtimes, neural 3D, Gaussian splatting, grooming/fur,
@@ -390,6 +416,9 @@ source of truth. Edit this repo, then have an agent publish with the repo script
 - [Manual install reference](docs/manual-install.md): copy steps for agents that cannot run rollout
 - [Host toolchain setup](docs/host-toolchain-setup.md): Linux, macOS, and Windows C++/Vulkan/CUDA
   setup notes
+- [Generated GPU optimization loop](skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md):
+  baseline, attempt, keep/revert, target orchestration, and final-report protocol for generated or
+  upgraded projects
 - [Optional code maps](#optional-code-maps): opt-in architecture context for larger generated or
   upgraded native C++ GPU projects
 - [Maintainer guide](docs/maintainer-guide.md): validation, sync, rollout, generated-project, donor,

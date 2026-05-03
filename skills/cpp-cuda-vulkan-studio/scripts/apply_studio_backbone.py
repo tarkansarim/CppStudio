@@ -27,6 +27,7 @@ BACKBONE_PATHS = [
     "docs/DEVELOPMENT_ENVIRONMENT.md",
     "docs/VALIDATION_PIPELINE.md",
     "docs/BENCHMARKS.md",
+    "docs/GPU_OPTIMIZATION_LOOP.md",
     "docs/GPU_RUNNER_CI.md",
     "shaders/compute.comp",
     "shaders/offscreen_triangle.vert",
@@ -48,6 +49,7 @@ RUNTIME_SCRIPTS = [
     "run_vulkan_validation.sh",
     "dump_vulkan_capabilities.sh",
     "run_nsys_smoke.sh",
+    "run_gpu_optimization_loop.py",
     "format_check.sh",
     "tidy_check.sh",
 ]

@@ -29,6 +29,7 @@ workflow, and repo banner/sample assets.
 - public backlog or future roadmap notes change
 - public code-map positioning, readiness protocol, or user-facing workflow changes
 - contribution, release, or change-history policy changes
+- README Recent Commit Highlights policy or entries change
 - host setup commands or GPU toolchain notes change
 - root CI behavior, badge targets, or public assets change
 

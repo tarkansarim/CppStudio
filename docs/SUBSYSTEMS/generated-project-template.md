@@ -15,6 +15,7 @@ validation.
 - `skills/cpp-cuda-vulkan-studio/scripts/scaffold_gpu_cpp_project.py`
 - `skills/cpp-cuda-vulkan-studio/scripts/apply_studio_backbone.py`
 - `skills/cpp-cuda-vulkan-studio/scripts/validate_studio_backbone.py`
+- `skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py`
 - `skills/cpp-cuda-vulkan-studio/scripts/bootstrap_code_map.py`
 - `skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py`
 

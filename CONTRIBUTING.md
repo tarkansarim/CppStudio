@@ -14,6 +14,9 @@ project templates.
 - Keep the maintained code map current when subsystem ownership, routing, validation, sync/rollout,
   template, donor-library, public docs, CI, or changelog policy changes.
 - Add a concise `CHANGELOG.md` entry before pushing tracked changes to remote.
+- Add a concise README Recent Commit Highlights line for pushed commits that affect setup, routing,
+  generated projects, validation, donor-library behavior, public docs, install, release, or sync
+  behavior.
 - Classify donor entries with the validated tier values: `safe-donor`, `dependency-candidate`, or
   `study-only`.
 - Use caveat wording such as `reference-only` or `mixed-native` in profile/native-use notes when a

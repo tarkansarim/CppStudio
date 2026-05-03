@@ -46,6 +46,7 @@
         "skills/cpp-cuda-vulkan-studio/scripts/scaffold_gpu_cpp_project.py",
         "skills/cpp-cuda-vulkan-studio/scripts/apply_studio_backbone.py",
         "skills/cpp-cuda-vulkan-studio/scripts/validate_studio_backbone.py",
+        "skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py",
         "skills/cpp-cuda-vulkan-studio/scripts/bootstrap_code_map.py",
         "skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py"
       ]
@@ -90,14 +91,16 @@
         "research/vulkan-lane/README.md",
         "research/cuda-lane/README.md",
         "research/donor-library/README.md",
-        "research/code-map-trigger-lane.md"
+        "research/code-map-trigger-lane.md",
+        "research/gpu-optimization-autokernel-mapping.md"
       ],
       "primary_paths": [
         "research/vulkan-lane",
         "research/cuda-lane",
         "research/donor-library",
         "research/maintainer-donor-ingest.md",
-        "research/code-map-trigger-lane.md"
+        "research/code-map-trigger-lane.md",
+        "research/gpu-optimization-autokernel-mapping.md"
       ]
     },
     {

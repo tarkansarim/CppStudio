@@ -113,6 +113,8 @@ C++/CUDA/Vulkan development.
 - Before pushing to remote, update `CHANGELOG.md` with a concise entry for tracked user-visible
   changes, validation/CI changes, generated-template changes, donor-library changes, or install/sync
   behavior changes.
+- Also update README Recent Commit Highlights when a pushed commit changes setup, routing, generated
+  projects, validation, donor-library behavior, public docs, install, release, or sync behavior.
 
 ## Close-Out
 
@@ -123,4 +125,5 @@ When finishing work here, report:
 - whether `./scripts/sync_to_codex.sh` was run
 - whether the sub-agent trigger lane was run when skill/donor routing changed
 - whether `CHANGELOG.md` was updated before any push to remote
+- whether README Recent Commit Highlights was updated before any qualifying push to remote
 - any installed-tool gaps, such as missing `clang-format` or `clang-tidy`

@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a front-page README commit highlights section and maintainer guidance so important pushed
+  commit changes stay visible without replacing the full changelog.
+- Added an AutoKernel-adapted generated-project GPU optimization loop with target tables, baselines,
+  `run.log`, `results.tsv`, keep/revert attempts, move-on state, and final reports.
 - Added `docs/BACKLOG.md` for future CppStudio ideas, including optimization loops, artist-tool
   recipes, engine/DCC bridge guidance, project profiles, packaging, and donor refresh work.
 - Made the README opening description agent-agnostic so Codex-specific wording is kept to install

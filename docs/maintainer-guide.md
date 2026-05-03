@@ -104,8 +104,10 @@ SKIP_USER_AGENTS_RELAY=1 ./scripts/rollout_to_codex.sh
 ```
 
 Before pushing CppStudio to remote, update `CHANGELOG.md` with a concise entry for the tracked
-change. The final response should also mention the pushed commit(s), but the changelog is the durable
-history.
+change. Also update the README Recent Commit Highlights list when a commit affects setup, routing,
+generated projects, validation, donor-library behavior, public docs, install, release, or sync
+behavior. The final response should mention the pushed commit(s), but the changelog remains the
+durable history.
 
 ## Watch Mode
 

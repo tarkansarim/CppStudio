@@ -98,6 +98,9 @@ For previewing installed changes:
 - Do not add generated build outputs, temp scaffold projects, profiler traces, or `__pycache__`.
 - If sync or validation fails, fix the repo copy first, then rerun sync.
 - Before pushing to remote, add a concise `CHANGELOG.md` entry for the tracked change.
+- Also update README Recent Commit Highlights when the pushed commit changes setup, routing,
+  generated projects, validation, donor-library behavior, public docs, install, release, or sync
+  behavior.
 
 ## Close-Out Checklist
 

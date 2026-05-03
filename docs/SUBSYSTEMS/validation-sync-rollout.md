@@ -17,6 +17,7 @@ skills, and watch-mode publishing behavior.
 - `scripts/quick_validate_skill.py`
 - `scripts/bootstrap_code_map.py`
 - `scripts/validate_code_map.py`
+- `skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py`
 
 ## Update When
 

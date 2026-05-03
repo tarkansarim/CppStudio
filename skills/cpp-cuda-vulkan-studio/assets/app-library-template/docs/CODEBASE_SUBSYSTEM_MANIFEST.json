@@ -63,7 +63,8 @@
       "canonical_docs": [
         "docs/VALIDATION_PIPELINE.md",
         "docs/GPU_RUNNER_CI.md",
-        "docs/BENCHMARKS.md"
+        "docs/BENCHMARKS.md",
+        "docs/GPU_OPTIMIZATION_LOOP.md"
       ],
       "primary_paths": [
         "tests",

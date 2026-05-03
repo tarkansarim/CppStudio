@@ -129,6 +129,20 @@
       ]
     },
     {
+      "name": "native-gpu-performance-optimization-loop",
+      "tags": ["positive", "cuda", "vulkan", "rendering", "simulation"],
+      "prompt_shape": "CUDA kernel, Vulkan compute, render pass, simulation, or realtime frame-time work asks the agent to optimize performance safely without chasing isolated microbenchmarks.",
+      "expected_behavior": "Use cpp-cuda-vulkan-studio plus the active lane skill, load the generated GPU optimization loop docs/script, choose a representative workload target, record a baseline, make one focused change per attempt, keep only correct improvements, revert rejected attempts, use move-on criteria, and generate a final report before claiming speedups.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md",
+        "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/BENCHMARKS.md",
+        "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/VALIDATION_PIPELINE.md",
+        "skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/profiling-observability.md"
+      ]
+    },
+    {
       "name": "webgpu-native-dawn-donors",
       "tags": ["positive", "webgpu", "vulkan"],
       "prompt_shape": "C++ or native tooling task explicitly asks for WebGPU, webgpu.h, Dawn, WGSL, Tint, or WebGPU portability across Vulkan, D3D, Metal, and browser-adjacent targets.",

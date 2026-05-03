@@ -84,6 +84,19 @@ cmake --build --preset benchmark
 ctest --preset benchmark --output-on-failure
 ```
 
+GPU optimization loop:
+
+```bash
+scripts/run_gpu_optimization_loop.py init --session opt-session --targets docs/GPU_OPTIMIZATION_TARGETS.tsv
+scripts/run_gpu_optimization_loop.py baseline --session opt-session --target-id <target>
+scripts/run_gpu_optimization_loop.py attempt --session opt-session --target-id <target> --tag <tag> --description "<hypothesis>" --auto-revert
+scripts/run_gpu_optimization_loop.py report --session opt-session
+```
+
+The loop is for deliberate performance sessions, not the default CI gate. It writes ignored
+artifacts under `artifacts/optimization/`; use [GPU_OPTIMIZATION_LOOP.md](GPU_OPTIMIZATION_LOOP.md)
+for the target-table schema, benchmark contract, and keep/revert rules.
+
 Use `scripts/dump_vulkan_capabilities.sh` when a Vulkan runtime lane fails before changing code. The
 failure class matters: missing SDK tools, missing loader, missing ICD, no physical devices,
 unsupported API version, unavailable features, shader validation failure, and validation-layer

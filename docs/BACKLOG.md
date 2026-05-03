@@ -14,16 +14,17 @@ Before implementation, turn an item into a focused plan with scope, validation, 
 
 ## Near-Term Candidates
 
-### Agentic GPU Optimization Loops
+### Advanced Agentic GPU Optimization Loops
 
 Source inspiration: AutoKernel, KernelAgent, CUDA-Agent.
 
-- Add a keep/revert optimization loop for CUDA kernels, Vulkan compute shaders, and render passes.
-- Start from a fixed benchmark or CTest label, let agents try bounded improvements, keep only faster
-  correct variants, and log every attempt.
-- Track correctness, performance, command line, hardware, driver/toolchain, and final diff.
+- Extend the generated-project AutoKernel-adapted optimization loop with hardware-guided diagnosis.
+- Add Nsight Compute / roofline-style summaries, parallel candidate workers, stronger target-table
+  lifecycle guidance, and optional project profile integration for stable performance baselines.
+- Keep correctness, performance, command line, hardware, driver/toolchain, and final diff evidence.
 - Validation idea: temporary generated project with one CUDA or Vulkan compute target, fake and real
-  benchmark modes, and regression tests that reject incorrect or slower results.
+  benchmark modes, profiler-summary fixtures, and regression tests that reject incorrect or slower
+  results.
 
 ### Native Artist-Tool Recipe Layer
 

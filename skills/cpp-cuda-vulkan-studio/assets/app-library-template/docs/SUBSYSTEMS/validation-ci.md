@@ -8,6 +8,7 @@ analysis.
 - `docs/VALIDATION_PIPELINE.md`
 - `docs/GPU_RUNNER_CI.md`
 - `docs/BENCHMARKS.md`
+- `docs/GPU_OPTIMIZATION_LOOP.md`
 
 ## Primary Paths
 
@@ -19,6 +20,6 @@ analysis.
 ## Update When
 
 - test labels, presets, CI runner labels, validation scripts, profiling artifacts, format/tidy policy,
-  or benchmark recording requirements change
+  optimization-loop behavior, or benchmark recording requirements change
 - a new subsystem requires a distinct validation lane
 - CI starts requiring new host tools or environment variables
