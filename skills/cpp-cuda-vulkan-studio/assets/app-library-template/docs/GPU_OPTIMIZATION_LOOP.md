@@ -9,13 +9,15 @@ hypothesis, verify, benchmark, keep or revert, then report.
 Create a project-owned TSV such as `docs/GPU_OPTIMIZATION_TARGETS.tsv`:
 
 ```text
-target_id	lane	workload	share_pct	benchmark_cmd	verify_cmd	scope_paths	metric_name	direction	notes
-cuda_vector_add	cuda	CUDA vector add benchmark	12	ctest --preset benchmark --output-on-failure	ctest --preset cuda --output-on-failure	src/cuda;include	elapsed_us	lower	replace share with profiler evidence
-vulkan_compute	vulkan	Vulkan compute dispatch	18	ctest --preset benchmark --output-on-failure	ctest --preset vulkan-compute --output-on-failure	src/render;shaders	frame_ms	lower	representative dispatch or frame workload
+target_id	lane	workload	share_pct	benchmark_cmd	verify_cmd	profile_cmd	scope_paths	metric_name	direction	notes
+cuda_vector_add	cuda	CUDA vector add benchmark	12	ctest --preset benchmark --output-on-failure	ctest --preset cuda --output-on-failure	ncu --csv --page=raw --metrics sm__throughput.avg.pct_of_peak_sustained_elapsed,gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed ./build/dev/tests/cuda_vector_add_bench	src/cuda;include	elapsed_us	lower	replace share with profiler evidence
+vulkan_compute	vulkan	Vulkan compute dispatch	18	ctest --preset benchmark --output-on-failure	ctest --preset vulkan-compute --output-on-failure	<project-owned Vulkan profile command that prints pct_peak_compute/pct_peak_bandwidth/bottleneck>	src/render;shaders	frame_ms	lower	representative dispatch or frame workload
 ```
 
 Required columns are `target_id`, `lane`, `workload`, `share_pct`, `benchmark_cmd`, `verify_cmd`,
-and `scope_paths`. Use semicolons in `scope_paths` when one target owns more than one directory.
+and `scope_paths`. `profile_cmd` is optional but recommended for CUDA, Vulkan compute, render-pass,
+or frame-time work where hardware counters are available. Use semicolons in `scope_paths` when one
+target owns more than one directory.
 
 ## Workflow
 
@@ -35,12 +37,38 @@ scripts/run_gpu_optimization_loop.py baseline \
   --target-id cuda_vector_add
 ```
 
+Record hardware counters and a roofline/SOL diagnosis before editing:
+
+```bash
+scripts/run_gpu_optimization_loop.py profile \
+  --session opt-session \
+  --target-id cuda_vector_add \
+  --profile-id baseline-ncu
+```
+
+When multiple directions are worth trying, create beam-style worker artifacts for parallel agents:
+
+```bash
+scripts/run_gpu_optimization_loop.py plan-round \
+  --session opt-session \
+  --target-id cuda_vector_add \
+  --beam-width 2 \
+  --bottlenecks memory,compute,underutilized
+```
+
+Each worker gets `targets/<target>/rounds/<round>/workers/<worker>/worker.json` describing the
+parent attempt, bottleneck direction, scope paths, and commands. Run each worker in its own branch or
+worktree when agents are editing in parallel.
+
 Make one focused edit under the target's declared `scope_paths`, then measure it:
 
 ```bash
 scripts/run_gpu_optimization_loop.py attempt \
   --session opt-session \
   --target-id cuda_vector_add \
+  --round-id round001 \
+  --worker-id worker001 \
+  --parent-attempt-id baseline \
   --attempt-id tile-128 \
   --tag tile-128 \
   --description "Test 128-thread tile layout." \
@@ -84,6 +112,23 @@ Default metric names include `elapsed_us`, `latency_us`, `duration_us`, `frame_m
 `fps`, `throughput`, `throughput_tflops`, `items_per_s`, `samples_per_s`, `gbps`, and `gib_per_s`.
 Pass `metric_name` and `direction` in the target table when the output contains multiple metrics.
 
+For Nsight Compute-backed CUDA diagnosis, the script also understands KernelAgent-style SOL metric
+names:
+
+```text
+sm__throughput.avg.pct_of_peak_sustained_elapsed=72.4
+gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed=38.1
+sm__pipe_tensor_cycles_active.avg.pct_of_peak_sustained_active=0.0
+```
+
+`profile` can parse these from stdout/stderr or from a CSV passed with `--ncu-csv`. The roofline
+classifier uses the higher of compute SOL and memory SOL as efficiency, classifies low compute plus
+low memory as `underutilized`, and marks the target near-roofline at the configured SOL threshold.
+For Vulkan work, make the project-owned `profile_cmd` emit the generic `pct_peak_compute`,
+`pct_peak_bandwidth`, and `bottleneck` lines from the profiler available to that project, such as
+Nsight Graphics GPU Trace, vendor tools, timestamp-query summaries, or engine counters. If hardware
+counters are unavailable, record that tool gap and continue with fixed baseline/benchmark evidence.
+
 Correctness always gates performance. A failed correctness command, failed benchmark command, or
 benchmark line such as `correctness=FAIL` rejects the attempt.
 
@@ -92,6 +137,8 @@ benchmark line such as `correctness=FAIL` rejects the attempt.
 - Correctness fails: reject the attempt, or revert the patch when `--auto-revert` is set.
 - Correctness passes and the primary metric improves by at least the target threshold: keep.
 - Correctness passes but the primary metric is unchanged or slower: reject or revert.
+- Correctness passes but regresses far beyond the best-so-far value: revert when `--auto-revert` is
+  set and record the divergence reason.
 - Equivalent simpler code may be kept only with `--allow-simpler-equivalent`.
 
 The default improvement threshold is 1 percent. Override it with `min_improvement_pct` in the target
@@ -105,6 +152,8 @@ Artifacts live under `artifacts/optimization/<session>/`:
 - `run.log`: session-level JSONL event log.
 - `results.tsv`: greppable baseline and attempt table.
 - `targets/<target>/baseline/`: baseline logs.
+- `targets/<target>/profiles/<profile>/`: profiler logs and parsed roofline/SOL metrics.
+- `targets/<target>/rounds/<round>/workers/<worker>/`: beam-style worker plans and attempt logs.
 - `targets/<target>/attempts/<attempt>/`: attempt logs.
 - `patches/`: patch snapshots for measured attempts.
 - `final_report.md`: close-out report.
@@ -117,7 +166,8 @@ project-owned docs only after the report is generated.
 The `next` command moves to another target when one of these thresholds is reached:
 
 - too many consecutive reverts
-- near theoretical peak utilization from `pct_peak_compute` or `pct_peak_bandwidth`
+- near roofline/SOL utilization from `pct_peak_compute`, `pct_peak_bandwidth`, or NCU SOL metrics
+- convergence over the configured recent attempt window
 - per-target time budget exhausted
 - target speedup threshold reached
 

@@ -41,3 +41,6 @@ skills, and watch-mode publishing behavior.
 - `rollout_to_codex.sh` installs the minimal user-level `AGENTS.md` relay by default and preserves
   user-owned content outside the marked CppStudio relay block.
 - Set `SKIP_USER_AGENTS_RELAY=1` only for deliberate relay opt-out installs.
+- `validate.sh` includes a synthetic GPU optimization fixture that exercises baseline recording,
+  hardware profile/SOL parsing, beam-style round planning, keep/revert attempts, final reporting, and
+  scaffold installation of `scripts/run_gpu_optimization_loop.py`.

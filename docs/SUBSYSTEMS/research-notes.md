@@ -10,6 +10,7 @@ the reusable skill and donor library.
 - `research/donor-library/README.md`
 - `research/code-map-trigger-lane.md`
 - `research/gpu-optimization-autokernel-mapping.md`
+- `research/gpu-optimization-kernelagent-mapping.md`
 
 ## Primary Paths
 
@@ -19,6 +20,7 @@ the reusable skill and donor library.
 - `research/maintainer-donor-ingest.md`
 - `research/code-map-trigger-lane.md`
 - `research/gpu-optimization-autokernel-mapping.md`
+- `research/gpu-optimization-kernelagent-mapping.md`
 
 ## Update When
 

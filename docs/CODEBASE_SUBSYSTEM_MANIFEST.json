@@ -92,7 +92,8 @@
         "research/cuda-lane/README.md",
         "research/donor-library/README.md",
         "research/code-map-trigger-lane.md",
-        "research/gpu-optimization-autokernel-mapping.md"
+        "research/gpu-optimization-autokernel-mapping.md",
+        "research/gpu-optimization-kernelagent-mapping.md"
       ],
       "primary_paths": [
         "research/vulkan-lane",
@@ -100,7 +101,8 @@
         "research/donor-library",
         "research/maintainer-donor-ingest.md",
         "research/code-map-trigger-lane.md",
-        "research/gpu-optimization-autokernel-mapping.md"
+        "research/gpu-optimization-autokernel-mapping.md",
+        "research/gpu-optimization-kernelagent-mapping.md"
       ]
     },
     {

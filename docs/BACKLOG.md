@@ -18,9 +18,10 @@ Before implementation, turn an item into a focused plan with scope, validation, 
 
 Source inspiration: AutoKernel, KernelAgent, CUDA-Agent.
 
-- Extend the generated-project AutoKernel-adapted optimization loop with hardware-guided diagnosis.
-- Add Nsight Compute / roofline-style summaries, parallel candidate workers, stronger target-table
-  lifecycle guidance, and optional project profile integration for stable performance baselines.
+- Extend the generated-project optimization loop beyond the current AutoKernel/KernelAgent-inspired
+  baseline, profile, beam-round planning, and report protocol.
+- Add richer profiler integrations, optional visual summaries, stronger target-table lifecycle
+  guidance, and optional project profile integration for stable performance baselines.
 - Keep correctness, performance, command line, hardware, driver/toolchain, and final diff evidence.
 - Validation idea: temporary generated project with one CUDA or Vulkan compute target, fake and real
   benchmark modes, profiler-summary fixtures, and regression tests that reject incorrect or slower

@@ -99,6 +99,7 @@ required_repo_files=(
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md"
     "skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py"
     "research/gpu-optimization-autokernel-mapping.md"
+    "research/gpu-optimization-kernelagent-mapping.md"
 )
 for rel_path in "${required_repo_files[@]}"; do
     if [[ ! -e "${ROOT_DIR}/${rel_path}" ]]; then
@@ -1369,10 +1370,18 @@ echo "pct_peak_bandwidth=18.0%"
 echo "bottleneck=compute"
 echo "peak_vram_mb=16.0"
 EOF
-chmod +x "${optimization_tmp}/verify.sh" "${optimization_tmp}/benchmark.sh"
+cat >"${optimization_tmp}/profile.sh" <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+echo "sm__throughput.avg.pct_of_peak_sustained_elapsed=44.0"
+echo "gpu__compute_memory_throughput.avg.pct_of_peak_sustained_elapsed=19.0"
+echo "sm__pipe_tensor_cycles_active.avg.pct_of_peak_sustained_active=0.0"
+echo "bottleneck=compute"
+EOF
+chmod +x "${optimization_tmp}/verify.sh" "${optimization_tmp}/benchmark.sh" "${optimization_tmp}/profile.sh"
 cat >"${optimization_tmp}/docs/GPU_OPTIMIZATION_TARGETS.tsv" <<'EOF'
-target_id	lane	workload	share_pct	benchmark_cmd	verify_cmd	scope_paths	metric_name	direction	notes
-cuda_kernel	cuda	synthetic CUDA kernel	50	./benchmark.sh	./verify.sh	src/cuda	elapsed_us	lower	validation fixture
+target_id	lane	workload	share_pct	benchmark_cmd	verify_cmd	profile_cmd	scope_paths	metric_name	direction	notes
+cuda_kernel	cuda	synthetic CUDA kernel	50	./benchmark.sh	./verify.sh	./profile.sh	src/cuda	elapsed_us	lower	validation fixture
 EOF
 git -C "${optimization_tmp}" init -q
 git -C "${optimization_tmp}" config user.email "cppstudio@example.invalid"
@@ -1390,11 +1399,29 @@ python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" baseline \
     --target-id cuda_kernel
 grep -q "BASELINE" "${optimization_tmp}/artifacts/optimization/opt-test/results.tsv"
 grep -q "elapsed_us" "${optimization_tmp}/artifacts/optimization/opt-test/targets/cuda_kernel/baseline/run.log"
+python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" profile \
+    --repo "${optimization_tmp}" \
+    --session opt-test \
+    --target-id cuda_kernel \
+    --profile-id baseline-ncu
+grep -q "compute_sol_pct" \
+    "${optimization_tmp}/artifacts/optimization/opt-test/targets/cuda_kernel/profiles/baseline-ncu/profile_metrics.json"
+python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" plan-round \
+    --repo "${optimization_tmp}" \
+    --session opt-test \
+    --target-id cuda_kernel \
+    --beam-width 1 \
+    --bottlenecks compute,memory
+test -f "${optimization_tmp}/artifacts/optimization/opt-test/targets/cuda_kernel/rounds/round001/round_plan.json"
+test -f "${optimization_tmp}/artifacts/optimization/opt-test/targets/cuda_kernel/rounds/round001/workers/worker001/worker.json"
 printf "metric=80\n" >"${optimization_tmp}/src/cuda/kernel.cu"
 python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" attempt \
     --repo "${optimization_tmp}" \
     --session opt-test \
     --target-id cuda_kernel \
+    --round-id round001 \
+    --worker-id worker001 \
+    --parent-attempt-id baseline \
     --attempt-id faster \
     --tag faster \
     --description "Faster synthetic kernel metric." \

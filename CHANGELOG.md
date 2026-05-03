@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Extended the generated GPU optimization loop with KernelAgent-inspired NCU/SOL profiling,
+  roofline classification, bottleneck-first round planning, beam-style worker artifacts,
+  convergence stops, and divergence-aware reject/revert handling.
 - Added a front-page README commit highlights section and maintainer guidance so important pushed
   commit changes stay visible without replacing the full changelog.
 - Added an AutoKernel-adapted generated-project GPU optimization loop with target tables, baselines,
