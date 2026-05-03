@@ -4,18 +4,18 @@
 
 [![Validate](https://github.com/tarkansarim/CppStudio/actions/workflows/validate.yml/badge.svg)](https://github.com/tarkansarim/CppStudio/actions/workflows/validate.yml)
 
-CppStudio is an agentic native C++ GPU development harness for ChatGPT Codex, delivered as a reusable
-skill package. It gives Codex a Vulkan-first C++/CUDA project backbone, lane discipline, validation
-hooks, rollout scripts, optional code maps, and a curated donor-reference library for 3D, rendering,
-simulation, AI runtimes, CUDA, and Vulkan work.
+CppStudio is an agentic native C++ GPU development harness for AI coding agents, delivered as a
+reusable skill package. It gives agents a Vulkan-first C++/CUDA project backbone, lane discipline,
+validation hooks, rollout scripts, optional code maps, and a curated donor-reference library for 3D,
+rendering, simulation, AI runtimes, CUDA, and Vulkan work.
 
-The goal is to make Codex less dependent on broad model memory when it enters specialized native GPU
-work. Instead of filling gaps from stale or incomplete training examples, agents get maintained
+The goal is to make agents less dependent on broad model memory when they enter specialized native
+GPU work. Instead of filling gaps from stale or incomplete training examples, agents get maintained
 repo-local guidance, known-good project structure, donor references, caveats, and validation lanes so
 their plans and code are more precise, reproducible, and easier to audit.
 
-Use it when you want Codex to create, audit, or upgrade native C++ GPU projects without turning every
-new repo into a one-off build-system and donor-research exercise.
+Use it when you want an AI coding agent to create, audit, or upgrade native C++ GPU projects without
+turning every new repo into a one-off build-system and donor-research exercise.
 
 As a harness, CppStudio focuses on:
 
