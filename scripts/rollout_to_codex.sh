@@ -8,6 +8,7 @@ SOURCE_DIR="${ROOT_DIR}/skills/${SKILL_NAME}"
 TARGET_DIR="${TARGET_DIR:-${CODEX_HOME_DIR}/skills/${SKILL_NAME}}"
 SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
 REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
+PACKAGE_VALIDATOR="${ROOT_DIR}/scripts/validate_skill_package.py"
 if [[ -z "${VALIDATOR:-}" ]]; then
     if [[ -f "${SYSTEM_VALIDATOR}" || -x "${SYSTEM_VALIDATOR}" ]]; then
         VALIDATOR="${SYSTEM_VALIDATOR}"
@@ -18,6 +19,7 @@ fi
 DONOR_ROOT="${TARGET_DIR}/references/donor-library"
 SNIPPET_ROOT="${ROOT_DIR}/companion-skill-snippets"
 EXPECTED_TARGET_DIR="${CODEX_HOME_DIR}/skills/${SKILL_NAME}"
+AUDIT_LOG="${CPPSTUDIO_AUDIT_LOG:-${CODEX_HOME_DIR}/cppstudio-install-audit.jsonl}"
 DONOR_VALIDATOR="${ROOT_DIR}/scripts/validate_donor_library.py"
 COMPANION_INSTALLER="${ROOT_DIR}/scripts/install_companion_donor_links.py"
 USER_AGENTS_RELAY_INSTALLER="${ROOT_DIR}/scripts/install_user_agents_relay.py"
@@ -32,6 +34,7 @@ rollback_paths=()
 rollback_backups=()
 rollback_existed=()
 rollout_transaction_complete=0
+rollout_audit_logged=0
 
 require_python310() {
     python3 - <<'PY'
@@ -43,6 +46,70 @@ if sys.version_info < (3, 10):
         f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
     )
 PY
+}
+
+write_cppstudio_audit() {
+    local action="$1"
+    local success="$2"
+    local target="$3"
+    local message="${4:-}"
+    python3 - "${AUDIT_LOG}" "${action}" "${SKILL_NAME}" "${ROOT_DIR}" "${SOURCE_DIR}" "${target}" "${success}" "${message}" <<'PY' || true
+import hashlib
+import json
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+log_path = Path(sys.argv[1]).expanduser()
+action = sys.argv[2]
+skill_name = sys.argv[3]
+repo_root = Path(sys.argv[4])
+source_dir = Path(sys.argv[5])
+target = sys.argv[6]
+success = sys.argv[7].lower() in {"1", "true", "yes"}
+message = sys.argv[8]
+
+try:
+    source_commit = subprocess.check_output(
+        ["git", "-C", str(repo_root), "rev-parse", "--short=12", "HEAD"],
+        text=True,
+        stderr=subprocess.DEVNULL,
+    ).strip()
+except Exception:
+    source_commit = None
+
+manifest_path = source_dir / "package-manifest.json"
+try:
+    manifest_sha256 = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+except OSError:
+    manifest_sha256 = None
+
+entry = {
+    "schema_version": 1,
+    "tool": "cppstudio",
+    "action": action,
+    "skill": skill_name,
+    "success": success,
+    "target": target,
+    "source_commit": source_commit,
+    "package_manifest_sha256": manifest_sha256,
+    "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+}
+if message:
+    entry["message"] = message
+
+log_path.parent.mkdir(parents=True, exist_ok=True)
+with log_path.open("a", encoding="utf-8") as handle:
+    handle.write(json.dumps(entry, sort_keys=True) + "\n")
+PY
+}
+
+audit_rollout_on_exit() {
+    local exit_code=$?
+    if (( exit_code != 0 && ! rollout_audit_logged )); then
+        write_cppstudio_audit "rollout" "false" "${TARGET_DIR}" "exit_code=${exit_code}"
+    fi
 }
 
 backup_rollout_path() {
@@ -92,6 +159,9 @@ Environment:
   TARGET_DIR       Override exact installed CppStudio skill directory
   VALIDATOR        Override quick_validate.py path. By default, use the target Codex system
                   validator when present, then the repo-local validator fallback.
+  CPPSTUDIO_AUDIT_LOG
+                  Optional JSONL audit log path. Defaults to
+                  ${CODEX_HOME_DIR}/cppstudio-install-audit.jsonl.
   ALLOW_ROLLOUT_TARGET_OVERRIDE=1
                   Allow TARGET_DIR outside ${EXPECTED_TARGET_DIR}. Companion-skill donor links will
                   point at TARGET_DIR, so use this only for deliberate staging.
@@ -123,6 +193,8 @@ if (($# > 0)); then
             ;;
     esac
 fi
+
+trap audit_rollout_on_exit EXIT
 
 if [[ ! -d "${SOURCE_DIR}" ]]; then
     echo "Missing source skill directory: ${SOURCE_DIR}" >&2
@@ -165,6 +237,11 @@ fi
 
 if [[ ! -f "${DONOR_VALIDATOR}" ]]; then
     echo "Missing donor library validator: ${DONOR_VALIDATOR}" >&2
+    exit 1
+fi
+
+if [[ ! -x "${PACKAGE_VALIDATOR}" && ! -f "${PACKAGE_VALIDATOR}" ]]; then
+    echo "Missing package validator: ${PACKAGE_VALIDATOR}" >&2
     exit 1
 fi
 
@@ -256,6 +333,7 @@ if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
 fi
 
 python3 "${VALIDATOR}" "${TARGET_DIR}"
+python3 "${PACKAGE_VALIDATOR}" "${TARGET_DIR}"
 for companion in cuda-kernel-authoring vulkan-compute-sync modern-cpp-cmake; do
     companion_dir="${CODEX_HOME_DIR}/skills/${companion}"
     if [[ -d "${companion_dir}" ]]; then
@@ -276,6 +354,8 @@ diff -qr \
 rollout_transaction_complete=1
 trap - ERR INT TERM
 rm -rf "${ROLLBACK_TMP}"
+write_cppstudio_audit "rollout" "true" "${TARGET_DIR}" "rolled out"
+rollout_audit_logged=1
 
 echo "Rolled out ${SOURCE_DIR} -> ${TARGET_DIR}"
 echo "Verified donor library at ${DONOR_ROOT}"

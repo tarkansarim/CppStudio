@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added deterministic skill package integrity metadata, validation, and sync/rollout audit logging:
+  `package-manifest.json`, `validate_skill_package.py`, staged/installed package checks, and
+  progressive-disclosure file roles.
 - Added AgentSys-inspired performance investigation discipline to generated GPU optimization loops:
   success criteria, hypothesis logs, breaking-point search, repeated validation passes, and
   consolidation reports.

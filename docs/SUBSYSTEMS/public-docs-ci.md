@@ -10,6 +10,7 @@ workflow, and repo banner/sample assets.
 - `CHANGELOG.md`
 - `docs/BACKLOG.md`
 - `docs/host-toolchain-setup.md`
+- `docs/package-integrity.md`
 
 ## Primary Paths
 
@@ -26,6 +27,7 @@ workflow, and repo banner/sample assets.
 ## Update When
 
 - public install/use instructions change
+- public package integrity, audit log, or progressive disclosure docs change
 - public backlog or future roadmap notes change
 - public code-map positioning, readiness protocol, or user-facing workflow changes
 - contribution, release, or change-history policy changes

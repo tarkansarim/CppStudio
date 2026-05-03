@@ -272,6 +272,21 @@ and finally the repo-local `scripts/quick_validate_skill.py` fallback. The fallb
 package metadata, `agents/openai.yaml`, duplicate frontmatter fields, and bundled local references.
 Fresh staging homes can use the scripts without preinstalling the system `skill-creator` validator.
 
+Package integrity uses `skills/cpp-cuda-vulkan-studio/package-manifest.json` and
+`scripts/validate_skill_package.py`. The manifest records every shipped skill file except itself,
+with file role, progressive disclosure group, size, and SHA-256. Regenerate it only after package
+contents change:
+
+```bash
+python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio --write-manifest
+```
+
+Then validate normally:
+
+```bash
+python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio
+```
+
 Use a custom Codex home:
 
 ```bash
@@ -289,8 +304,14 @@ refuses broad directories such as home, `/tmp`, a repo root, or a generic `skill
 when override mode is enabled.
 
 Non-dry-run sync is transactional: the script copies into a staged directory, validates the staged
-skill, swaps it into place, validates the final target, and restores the previous installed skill on
-failure.
+skill, validates its package manifest, swaps it into place, validates the final target and package,
+and restores the previous installed skill on failure.
+
+Sync and rollout append best-effort JSONL audit records to
+`${SYNC_CODEX_HOME:-$HOME/.codex}/cppstudio-install-audit.jsonl`. Set `CPPSTUDIO_AUDIT_LOG` for a
+staging path. Audit entries include action, skill name, success flag, target path, source commit when
+available, package manifest hash, and timestamp. Audit logging should never be treated as the source
+of truth; validation output is authoritative.
 
 `rollout_to_codex.sh` rejects non-standard `TARGET_DIR` values unless explicitly allowed, because it
 renders absolute donor-library links into companion skills:
@@ -308,6 +329,8 @@ By default, companion donor-link rollout skips absent optional companion skills.
 Rollout snapshots the main skill, matching companion `SKILL.md` files, and the optional user-level
 `AGENTS.md` relay target before mutation, then restores those paths if any post-sync validation or
 install step fails.
+
+Rollout also verifies the installed main skill against the package manifest before reporting success.
 
 `rollout_to_codex.sh` installs the tiny user-level `AGENTS.md` relay by default. It merges only
 `companion-skill-snippets/user-agents/cppstudio-relay.md` into

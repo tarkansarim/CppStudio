@@ -37,6 +37,7 @@ skills_root="${codex_home}/skills"
 skill_target="${skills_root}/cpp-cuda-vulkan-studio"
 system_validator="${skills_root}/.system/skill-creator/scripts/quick_validate.py"
 repo_validator="${PWD}/scripts/quick_validate_skill.py"
+package_validator="${PWD}/scripts/validate_skill_package.py"
 if [[ -f "${system_validator}" ]]; then
   validator="${system_validator}"
 elif [[ -f "${repo_validator}" ]]; then
@@ -45,11 +46,16 @@ else
   echo "Missing skill validator: ${system_validator} or ${repo_validator}" >&2
   exit 1
 fi
+if [[ ! -f "${package_validator}" ]]; then
+  echo "Missing package validator: ${package_validator}" >&2
+  exit 1
+fi
 
 staging_root="$(mktemp -d)"
 staged_skill="${staging_root}/cpp-cuda-vulkan-studio"
 cp -a skills/cpp-cuda-vulkan-studio "${staged_skill}"
 python3 "${validator}" "${staged_skill}"
+python3 "${package_validator}" "${staged_skill}"
 
 mkdir -p "${skills_root}"
 if [[ -L "${skills_root}" ]]; then
@@ -77,6 +83,7 @@ fi
 mv "${staged_skill}" "${skill_target}"
 rmdir "${staging_root}" 2>/dev/null || true
 python3 "${validator}" "${skill_target}"
+python3 "${package_validator}" "${skill_target}"
 trap - ERR
 ```
 
@@ -89,6 +96,7 @@ $SkillsRoot = Join-Path $CodexHome "skills"
 $SkillTarget = Join-Path $SkillsRoot "cpp-cuda-vulkan-studio"
 $SystemValidator = Join-Path $SkillsRoot ".system\skill-creator\scripts\quick_validate.py"
 $RepoValidator = Join-Path (Get-Location) "scripts\quick_validate_skill.py"
+$PackageValidator = Join-Path (Get-Location) "scripts\validate_skill_package.py"
 if (Test-Path $SystemValidator) {
   $Validator = $SystemValidator
 } elseif (Test-Path $RepoValidator) {
@@ -96,12 +104,16 @@ if (Test-Path $SystemValidator) {
 } else {
   throw "Missing skill validator: $SystemValidator or $RepoValidator"
 }
+if (-not (Test-Path $PackageValidator)) {
+  throw "Missing package validator: $PackageValidator"
+}
 $StagingRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("cppstudio-skill-" + [System.Guid]::NewGuid())
 $StagedSkill = Join-Path $StagingRoot "cpp-cuda-vulkan-studio"
 
 New-Item -ItemType Directory -Force $StagingRoot | Out-Null
 Copy-Item -Recurse ".\skills\cpp-cuda-vulkan-studio" $StagedSkill
 python $Validator $StagedSkill
+python $PackageValidator $StagedSkill
 
 New-Item -ItemType Directory -Force $SkillsRoot | Out-Null
 if ((Get-Item $SkillsRoot).LinkType) {
@@ -123,6 +135,7 @@ if (Test-Path $SkillTarget) {
 Move-Item $StagedSkill $SkillTarget
 Remove-Item -Force $StagingRoot
 python $Validator $SkillTarget
+python $PackageValidator $SkillTarget
 } catch {
   if ($BackupTarget -and (Test-Path $BackupTarget)) {
     if (Test-Path $SkillTarget) {

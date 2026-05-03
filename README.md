@@ -22,8 +22,8 @@ As a harness, CppStudio focuses on:
 - A Vulkan-first native C++ GPU project backbone with optional CUDA and combined CUDA/Vulkan lanes.
 - A nested donor-reference library that routes agents to relevant 3D, AI, simulation, rendering,
   CUDA, Vulkan, and infrastructure references without loading the whole library into context.
-- Validation, profiling, rollout, install safety, and optional project-memory workflows that keep
-  agent output auditable.
+- Validation, profiling, package integrity checks, rollout safety, and optional project-memory
+  workflows that keep agent output auditable.
 
 ## Recent Commit Highlights
 
@@ -152,6 +152,10 @@ The install path is rollback-aware: the main skill is staged and validated befor
 rollout restores the previous main skill, companion edits, and optional `AGENTS.md` relay target if a
 later validation or install step fails.
 
+The installed skill is also checked against a deterministic package manifest. Sync and rollout
+validate file hashes, sizes, package hygiene, and lazy-loading groups before they report success.
+They also append best-effort install audit records under the target Codex home.
+
 You do not need CUDA, Vulkan, CMake, or a compiler just to install CppStudio into Codex. Install GPU
 toolchains only when you want this machine to build or validate generated C++ GPU projects.
 
@@ -173,6 +177,17 @@ blocks:
   `<!-- cppstudio-user-agents-relay:end -->`
 - `<!-- cppstudio-donor-library:begin -->` through
   `<!-- cppstudio-donor-library:end -->`
+
+## Package Integrity
+
+CppStudio includes `skills/cpp-cuda-vulkan-studio/package-manifest.json`, a deterministic inventory
+of the shipped skill files. It records each file's role, progressive disclosure group, byte size, and
+SHA-256 hash so agents can validate source, staged, and installed copies without fetching a remote
+registry.
+
+The disclosure groups are intentionally practical: entrypoints and donor routers stay small, while
+category files, production overlays, deep donor profiles, scripts, and template assets remain
+lazy-loaded until the task needs them.
 
 ## Use It
 
@@ -407,6 +422,8 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
 - `skills/cpp-cuda-vulkan-studio/`: source of truth for the user-level Codex skill
 - `skills/cpp-cuda-vulkan-studio/assets/app-library-template/`: generated-project template
 - `skills/cpp-cuda-vulkan-studio/references/`: project archetypes and donor-reference guidance
+- `skills/cpp-cuda-vulkan-studio/package-manifest.json`: deterministic skill package inventory and
+  integrity metadata
 - `.cppstudio/` and `docs/CODEBASE_*`: maintained code map for this CppStudio repo
 - `companion-skill-snippets/`: managed donor-link snippets for companion skills and user-level relay
 - `research/`: source research and trigger-test notes
@@ -422,6 +439,8 @@ source of truth. Edit this repo, then have an agent publish with the repo script
 - [Manual install reference](docs/manual-install.md): copy steps for agents that cannot run rollout
 - [Host toolchain setup](docs/host-toolchain-setup.md): Linux, macOS, and Windows C++/Vulkan/CUDA
   setup notes
+- [Package integrity](docs/package-integrity.md): manifest validation, progressive disclosure groups,
+  sync/rollout audit records, and future distribution notes
 - [Generated GPU optimization loop](skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md):
   success criteria, baseline, hardware profile, roofline/SOL diagnosis, hypothesis logs,
   breaking-point search, beam round planning, keep/revert, target orchestration, and consolidation

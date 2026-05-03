@@ -57,7 +57,8 @@
       "router_doc": "docs/SUBSYSTEMS/validation-sync-rollout.md",
       "canonical_docs": [
         "docs/maintainer-guide.md",
-        "docs/manual-install.md"
+        "docs/manual-install.md",
+        "docs/package-integrity.md"
       ],
       "primary_paths": [
         "scripts/validate.sh",
@@ -65,8 +66,10 @@
         "scripts/rollout_to_codex.sh",
         "scripts/watch_to_codex.sh",
         "scripts/quick_validate_skill.py",
+        "scripts/validate_skill_package.py",
         "scripts/bootstrap_code_map.py",
-        "scripts/validate_code_map.py"
+        "scripts/validate_code_map.py",
+        "skills/cpp-cuda-vulkan-studio/package-manifest.json"
       ]
     },
     {
@@ -94,7 +97,8 @@
         "research/code-map-trigger-lane.md",
         "research/gpu-optimization-autokernel-mapping.md",
         "research/gpu-optimization-kernelagent-mapping.md",
-        "research/gpu-optimization-agentsys-mapping.md"
+        "research/gpu-optimization-agentsys-mapping.md",
+        "research/skill-packaging-agent-skills-mapping.md"
       ],
       "primary_paths": [
         "research/vulkan-lane",
@@ -104,7 +108,8 @@
         "research/code-map-trigger-lane.md",
         "research/gpu-optimization-autokernel-mapping.md",
         "research/gpu-optimization-kernelagent-mapping.md",
-        "research/gpu-optimization-agentsys-mapping.md"
+        "research/gpu-optimization-agentsys-mapping.md",
+        "research/skill-packaging-agent-skills-mapping.md"
       ]
     },
     {
@@ -116,7 +121,8 @@
         "CONTRIBUTING.md",
         "CHANGELOG.md",
         "docs/BACKLOG.md",
-        "docs/host-toolchain-setup.md"
+        "docs/host-toolchain-setup.md",
+        "docs/package-integrity.md"
       ],
       "primary_paths": [
         "README.md",

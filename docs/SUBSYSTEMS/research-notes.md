@@ -12,6 +12,7 @@ the reusable skill and donor library.
 - `research/gpu-optimization-autokernel-mapping.md`
 - `research/gpu-optimization-kernelagent-mapping.md`
 - `research/gpu-optimization-agentsys-mapping.md`
+- `research/skill-packaging-agent-skills-mapping.md`
 
 ## Primary Paths
 
@@ -23,10 +24,12 @@ the reusable skill and donor library.
 - `research/gpu-optimization-autokernel-mapping.md`
 - `research/gpu-optimization-kernelagent-mapping.md`
 - `research/gpu-optimization-agentsys-mapping.md`
+- `research/skill-packaging-agent-skills-mapping.md`
 
 ## Update When
 
 - web research is added or refreshed
+- external skill-packaging, update, cache, audit, or integrity patterns are evaluated
 - donor candidates are gathered for later ingestion
 - Vulkan or CUDA lane assumptions change
 - trigger-test findings or donor-source maps change

@@ -8,6 +8,7 @@ CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 TARGET_DIR="${TARGET_DIR:-${CODEX_HOME_DIR}/skills/${SKILL_NAME}}"
 SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
 REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
+PACKAGE_VALIDATOR="${ROOT_DIR}/scripts/validate_skill_package.py"
 if [[ -z "${VALIDATOR:-}" ]]; then
     if [[ -f "${SYSTEM_VALIDATOR}" || -x "${SYSTEM_VALIDATOR}" ]]; then
         VALIDATOR="${SYSTEM_VALIDATOR}"
@@ -16,6 +17,7 @@ if [[ -z "${VALIDATOR:-}" ]]; then
     fi
 fi
 EXPECTED_TARGET_DIR="${CODEX_HOME_DIR}/skills/${SKILL_NAME}"
+AUDIT_LOG="${CPPSTUDIO_AUDIT_LOG:-${CODEX_HOME_DIR}/cppstudio-install-audit.jsonl}"
 
 dry_run=0
 delete_args=(--delete)
@@ -24,6 +26,7 @@ sync_backup_path=""
 sync_target_existed=0
 sync_backup_created=0
 sync_transaction_complete=0
+sync_audit_logged=0
 
 require_python310() {
     python3 - <<'PY'
@@ -37,6 +40,70 @@ if sys.version_info < (3, 10):
 PY
 }
 
+write_cppstudio_audit() {
+    local action="$1"
+    local success="$2"
+    local target="$3"
+    local message="${4:-}"
+    python3 - "${AUDIT_LOG}" "${action}" "${SKILL_NAME}" "${ROOT_DIR}" "${SOURCE_DIR}" "${target}" "${success}" "${message}" <<'PY' || true
+import hashlib
+import json
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+log_path = Path(sys.argv[1]).expanduser()
+action = sys.argv[2]
+skill_name = sys.argv[3]
+repo_root = Path(sys.argv[4])
+source_dir = Path(sys.argv[5])
+target = sys.argv[6]
+success = sys.argv[7].lower() in {"1", "true", "yes"}
+message = sys.argv[8]
+
+try:
+    source_commit = subprocess.check_output(
+        ["git", "-C", str(repo_root), "rev-parse", "--short=12", "HEAD"],
+        text=True,
+        stderr=subprocess.DEVNULL,
+    ).strip()
+except Exception:
+    source_commit = None
+
+manifest_path = source_dir / "package-manifest.json"
+try:
+    manifest_sha256 = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+except OSError:
+    manifest_sha256 = None
+
+entry = {
+    "schema_version": 1,
+    "tool": "cppstudio",
+    "action": action,
+    "skill": skill_name,
+    "success": success,
+    "target": target,
+    "source_commit": source_commit,
+    "package_manifest_sha256": manifest_sha256,
+    "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+}
+if message:
+    entry["message"] = message
+
+log_path.parent.mkdir(parents=True, exist_ok=True)
+with log_path.open("a", encoding="utf-8") as handle:
+    handle.write(json.dumps(entry, sort_keys=True) + "\n")
+PY
+}
+
+audit_sync_on_exit() {
+    local exit_code=$?
+    if (( exit_code != 0 && ! dry_run && ! sync_audit_logged )); then
+        write_cppstudio_audit "sync" "false" "${TARGET_DIR}" "exit_code=${exit_code}"
+    fi
+}
+
 usage() {
     cat <<EOF
 Usage: $0 [--dry-run] [--no-delete]
@@ -48,6 +115,9 @@ Environment:
   TARGET_DIR       Override the exact installed skill directory
   VALIDATOR        Override quick_validate.py path. By default, use the target Codex system
                   validator when present, then the repo-local validator fallback.
+  CPPSTUDIO_AUDIT_LOG
+                  Optional JSONL audit log path. Defaults to
+                  ${CODEX_HOME_DIR}/cppstudio-install-audit.jsonl for non-dry-run sync.
   ALLOW_SYNC_TARGET_OVERRIDE=1
                   Allow TARGET_DIR outside ${EXPECTED_TARGET_DIR}. Refuses dangerous paths even
                   with this override.
@@ -80,6 +150,8 @@ while (($# > 0)); do
     shift
 done
 
+trap audit_sync_on_exit EXIT
+
 if [[ ! -f "${SOURCE_DIR}/SKILL.md" ]]; then
     echo "Missing source skill: ${SOURCE_DIR}/SKILL.md" >&2
     exit 1
@@ -89,6 +161,11 @@ require_python310
 
 if [[ ! -x "${VALIDATOR}" && ! -f "${VALIDATOR}" ]]; then
     echo "Missing skill validator: ${VALIDATOR}" >&2
+    exit 1
+fi
+
+if [[ ! -x "${PACKAGE_VALIDATOR}" && ! -f "${PACKAGE_VALIDATOR}" ]]; then
+    echo "Missing package validator: ${PACKAGE_VALIDATOR}" >&2
     exit 1
 fi
 
@@ -154,6 +231,7 @@ if [[ -d "${target_resolved}" ]]; then
 fi
 
 python3 "${VALIDATOR}" "${SOURCE_DIR}"
+python3 "${PACKAGE_VALIDATOR}" "${SOURCE_DIR}"
 
 if (( ! dry_run )); then
     mkdir -p "$(dirname "${TARGET_DIR}")"
@@ -201,6 +279,7 @@ else
     rsync "${rsync_args[@]}" "${SOURCE_DIR}/" "${staged_target}/"
     find "${staged_target}/scripts" -type f \( -name "*.sh" -o -name "*.py" \) -exec chmod +x {} + 2>/dev/null || true
     python3 "${VALIDATOR}" "${staged_target}"
+    python3 "${PACKAGE_VALIDATOR}" "${staged_target}"
 
     if [[ -e "${target_resolved}" ]]; then
         sync_target_existed=1
@@ -211,8 +290,11 @@ else
     mv "${staged_target}" "${target_resolved}"
     find "${TARGET_DIR}/scripts" -type f \( -name "*.sh" -o -name "*.py" \) -exec chmod +x {} + 2>/dev/null || true
     python3 "${VALIDATOR}" "${TARGET_DIR}"
+    python3 "${PACKAGE_VALIDATOR}" "${TARGET_DIR}"
     sync_transaction_complete=1
     trap - ERR INT TERM
     rm -rf "${sync_backup_path}" "${sync_tmp_parent}"
+    write_cppstudio_audit "sync" "true" "${TARGET_DIR}" "synced"
+    sync_audit_logged=1
     echo "Synced ${SOURCE_DIR} -> ${TARGET_DIR}"
 fi

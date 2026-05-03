@@ -7,6 +7,7 @@ skills, and watch-mode publishing behavior.
 
 - `docs/maintainer-guide.md`
 - `docs/manual-install.md`
+- `docs/package-integrity.md`
 
 ## Primary Paths
 
@@ -15,6 +16,7 @@ skills, and watch-mode publishing behavior.
 - `scripts/rollout_to_codex.sh`
 - `scripts/watch_to_codex.sh`
 - `scripts/quick_validate_skill.py`
+- `scripts/validate_skill_package.py`
 - `scripts/bootstrap_code_map.py`
 - `scripts/validate_code_map.py`
 - `skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py`
@@ -22,6 +24,7 @@ skills, and watch-mode publishing behavior.
 ## Update When
 
 - validation coverage, required package files, CI-safe validator behavior, or full validation changes
+- skill package manifest, package integrity validation, or sync/rollout audit metadata changes
 - CppStudio code-map validation or bootstrap wrapper behavior changes
 - sync or rollout target safety rules change
 - installed skill parity or companion validation behavior changes
@@ -32,8 +35,16 @@ skills, and watch-mode publishing behavior.
 - Validation, sync, and rollout prefer an explicit `VALIDATOR`, then the target Codex system
   validator, then the repo-local `scripts/quick_validate_skill.py` fallback. The fallback validates
   frontmatter, `agents/openai.yaml`, and bundled local references.
+- Package validation uses `scripts/validate_skill_package.py` and
+  `skills/cpp-cuda-vulkan-studio/package-manifest.json` to verify shipped file hashes, sizes,
+  disclosure groups, and package hygiene.
 - Non-dry-run sync stages and validates the skill before replacing the installed target, then restores
   the previous target if final validation fails.
+- Sync validates the source skill, staged skill, and final installed skill against the package
+  manifest. Rollout validates the installed main skill before completion.
+- Sync and rollout append best-effort JSONL audit records to
+  `${SYNC_CODEX_HOME:-$HOME/.codex}/cppstudio-install-audit.jsonl` unless `CPPSTUDIO_AUDIT_LOG`
+  overrides the path.
 - Sync rollback tracks whether the previous target existed and whether backup creation completed, so
   a failed backup move leaves the existing installed skill in place.
 - Rollout snapshots the main skill, matching companion skill files, and the optional user-level

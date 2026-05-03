@@ -6,6 +6,7 @@ SKILL_DIR="${ROOT_DIR}/skills/cpp-cuda-vulkan-studio"
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
 REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
+PACKAGE_VALIDATOR="${ROOT_DIR}/scripts/validate_skill_package.py"
 if [[ -z "${VALIDATOR:-}" ]]; then
     if [[ -f "${SYSTEM_VALIDATOR}" || -x "${SYSTEM_VALIDATOR}" ]]; then
         VALIDATOR="${SYSTEM_VALIDATOR}"
@@ -87,11 +88,14 @@ required_repo_files=(
     "scripts/bootstrap_code_map.py"
     "scripts/validate_code_map.py"
     "scripts/quick_validate_skill.py"
+    "scripts/validate_skill_package.py"
     ".cppstudio/code-map-state.json"
     "CHANGELOG.md"
     "docs/CODEBASE_ARCHITECTURE_INDEX.md"
     "docs/CODEBASE_SUBSYSTEM_MANIFEST.json"
+    "research/skill-packaging-agent-skills-mapping.md"
     "companion-skill-snippets/user-agents/cppstudio-relay.md"
+    "skills/cpp-cuda-vulkan-studio/package-manifest.json"
     "research/donor-library/trigger-regression-checklist.md"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/.gitignore"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md"
@@ -261,6 +265,7 @@ write_code_map_project_fixture() {
 }
 
 python3 "${VALIDATOR}" "${SKILL_DIR}"
+python3 "${PACKAGE_VALIDATOR}" "${SKILL_DIR}"
 if [[ -d "${ROOT_DIR}/.codex/skills" ]]; then
     while IFS= read -r -d '' project_skill; do
         python3 "${VALIDATOR}" "${project_skill}"
@@ -309,6 +314,7 @@ python3 - "${ROOT_DIR}/scripts/quick_validate_skill.py" <<'PY'
 import importlib.util
 import sys
 
+sys.dont_write_bytecode = True
 spec = importlib.util.spec_from_file_location("quick_validate_skill", sys.argv[1])
 module = importlib.util.module_from_spec(spec)
 assert spec.loader is not None
@@ -323,6 +329,39 @@ if unquoted != "plain value":
     raise SystemExit(f"unquoted hash comment was parsed incorrectly: {unquoted!r}")
 PY
 rm -rf "${quick_validator_tmp}"
+package_validator_write_tmp="$(mktemp -d "${VALIDATE_TMP}/package_validator_write.XXXXXX")"
+cp -a "${SKILL_DIR}" "${package_validator_write_tmp}/cpp-cuda-vulkan-studio"
+rm -f "${package_validator_write_tmp}/cpp-cuda-vulkan-studio/package-manifest.json"
+python3 "${PACKAGE_VALIDATOR}" \
+    "${package_validator_write_tmp}/cpp-cuda-vulkan-studio" \
+    --write-manifest
+python3 "${PACKAGE_VALIDATOR}" "${package_validator_write_tmp}/cpp-cuda-vulkan-studio"
+rm -rf "${package_validator_write_tmp}"
+package_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/package_validator.XXXXXX")"
+cp -a "${SKILL_DIR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+printf "\n# tamper\n" >>"${package_validator_tmp}/cpp-cuda-vulkan-studio/SKILL.md"
+expect_failure "package validator detects tampering" "mismatch for SKILL.md" \
+    python3 "${PACKAGE_VALIDATOR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+rm -rf "${package_validator_tmp}"
+package_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/package_validator_extra.XXXXXX")"
+cp -a "${SKILL_DIR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+touch "${package_validator_tmp}/cpp-cuda-vulkan-studio/references/extra-reference.md"
+expect_failure "package validator detects unmanifested file" "unmanifested package file" \
+    python3 "${PACKAGE_VALIDATOR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+rm -rf "${package_validator_tmp}"
+package_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/package_validator_missing.XXXXXX")"
+cp -a "${SKILL_DIR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+rm -f "${package_validator_tmp}/cpp-cuda-vulkan-studio/agents/openai.yaml"
+expect_failure "package validator detects missing file" "missing manifested file" \
+    python3 "${PACKAGE_VALIDATOR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+rm -rf "${package_validator_tmp}"
+package_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/package_validator_symlink.XXXXXX")"
+cp -a "${SKILL_DIR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+ln -s "../project-archetypes.md" \
+    "${package_validator_tmp}/cpp-cuda-vulkan-studio/references/donor-library/symlink.md"
+expect_failure "package validator rejects symlink" "symlink inside skill package is not allowed" \
+    python3 "${PACKAGE_VALIDATOR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+rm -rf "${package_validator_tmp}"
 python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${ROOT_DIR}" --require-enabled
 code_map_enable_tmp="$(mktemp -d "${VALIDATE_TMP}/code_map_enable.XXXXXX")"
 write_code_map_project_fixture "${code_map_enable_tmp}"
@@ -600,6 +639,32 @@ if [[ -e "${sync_fresh_home}" ]]; then
     exit 1
 fi
 rm -rf "${sync_fresh_home_tmp}"
+sync_audit_tmp="$(mktemp -d "${VALIDATE_TMP}/sync_audit.XXXXXX")"
+sync_audit_home="${sync_audit_tmp}/codex"
+sync_audit_log="${sync_audit_tmp}/audit.jsonl"
+sync_audit_out="$(mktemp "${VALIDATE_TMP}/sync_audit.XXXXXX.out")"
+env SYNC_CODEX_HOME="${sync_audit_home}" \
+    CPPSTUDIO_AUDIT_LOG="${sync_audit_log}" \
+    VALIDATOR="${VALIDATOR}" \
+    "${ROOT_DIR}/scripts/sync_to_codex.sh" >"${sync_audit_out}"
+grep -q "Synced" "${sync_audit_out}"
+python3 - "${sync_audit_log}" "${sync_audit_home}/skills/cpp-cuda-vulkan-studio" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+entries = [json.loads(line) for line in Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()]
+if len(entries) != 1:
+    raise SystemExit(f"expected one sync audit entry, found {len(entries)}")
+entry = entries[0]
+if entry.get("action") != "sync" or entry.get("success") is not True:
+    raise SystemExit(f"unexpected sync audit entry: {entry}")
+if entry.get("target") != sys.argv[2]:
+    raise SystemExit(f"sync audit target mismatch: {entry.get('target')} != {sys.argv[2]}")
+if not entry.get("package_manifest_sha256"):
+    raise SystemExit("sync audit entry missing package manifest hash")
+PY
+rm -rf "${sync_audit_tmp}"
 sync_rollback_tmp="$(mktemp -d "${VALIDATE_TMP}/sync_rollback.XXXXXX")"
 sync_rollback_home="${sync_rollback_tmp}/codex"
 sync_rollback_target="${sync_rollback_home}/skills/cpp-cuda-vulkan-studio"
@@ -672,6 +737,7 @@ if [[ "${CPPSTUDIO_SKIP_ROLLOUT_VALIDATOR_REGRESSION:-0}" != "1" ]]; then
     rollout_codex_home="${rollout_validator_tmp}/codex"
     rollout_validator_dir="${rollout_codex_home}/skills/.system/skill-creator/scripts"
     rollout_marker="${rollout_validator_tmp}/validator-used.txt"
+    rollout_audit_log="${rollout_validator_tmp}/audit.jsonl"
     mkdir -p "${rollout_validator_dir}"
     cat >"${rollout_validator_dir}/quick_validate.py" <<'PY'
 #!/usr/bin/env python3
@@ -690,11 +756,26 @@ PY
     env -u VALIDATOR \
         HOME="${rollout_validator_tmp}/empty-home" \
         SYNC_CODEX_HOME="${rollout_codex_home}" \
+        CPPSTUDIO_AUDIT_LOG="${rollout_audit_log}" \
         VALIDATOR_MARKER="${rollout_marker}" \
         REPO_VALIDATOR_PATH="${ROOT_DIR}/scripts/quick_validate_skill.py" \
         "${ROOT_DIR}/scripts/rollout_to_codex.sh" >"${rollout_validator_tmp}/rollout.out"
     grep -q "used" "${rollout_marker}"
     grep -q "Rolled out" "${rollout_validator_tmp}/rollout.out"
+    python3 - "${rollout_audit_log}" "${rollout_codex_home}/skills/cpp-cuda-vulkan-studio" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+entries = [json.loads(line) for line in Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()]
+actions = [(entry.get("action"), entry.get("success"), entry.get("target")) for entry in entries]
+if ("sync", True, sys.argv[2]) not in actions:
+    raise SystemExit(f"sync success audit missing from rollout: {actions}")
+if ("rollout", True, sys.argv[2]) not in actions:
+    raise SystemExit(f"rollout success audit missing: {actions}")
+if not all(entry.get("package_manifest_sha256") for entry in entries):
+    raise SystemExit("rollout audit entry missing package manifest hash")
+PY
     rm -rf "${rollout_validator_tmp}"
 
     rollout_rollback_tmp="$(mktemp -d "${VALIDATE_TMP}/rollout_rollback.XXXXXX")"
@@ -1594,6 +1675,7 @@ import importlib.util
 import sys
 from pathlib import Path
 
+sys.dont_write_bytecode = True
 path = Path(sys.argv[1])
 spec = importlib.util.spec_from_file_location("validate_studio_backbone", path)
 module = importlib.util.module_from_spec(spec)

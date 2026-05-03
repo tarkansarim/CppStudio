@@ -1,0 +1,1379 @@
+{
+  "schema_version": 1,
+  "package": "cpp-cuda-vulkan-studio",
+  "hash_algorithm": "sha256",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "role": "main",
+      "disclosure_group": "entrypoint",
+      "size": 17695,
+      "sha256": "9032317b68dc2a481a1491f52ae668056fe16e44a30403941bb6dcaaf37d2e50"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "role": "metadata",
+      "disclosure_group": "entrypoint",
+      "size": 247,
+      "sha256": "33df678f528cef31d27ee0a15e13010c334145674a0cbc90e534d130e6336d50"
+    },
+    {
+      "path": "assets/app-library-template/.clang-format",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 308,
+      "sha256": "a981c8206c7e3f6558216e9c51a34d28fe9d1380b96ce1691e64bc7439c9bace"
+    },
+    {
+      "path": "assets/app-library-template/.clang-tidy",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 424,
+      "sha256": "72f9b847b65f83eba6370fc852ee44dcd8088caed2b5e20b7f58b342b9c15292"
+    },
+    {
+      "path": "assets/app-library-template/.github/workflows/gpu-cpp.yml",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 4687,
+      "sha256": "bead05a0e2458d65682b35b05bdc03347cfa2a470cdc8f151e2ef7b9d5530991"
+    },
+    {
+      "path": "assets/app-library-template/.gitignore",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 339,
+      "sha256": "d31dc884e1f96a86117056a4855810be0fbcbbcdb1c9c977b59b0197917bd26b"
+    },
+    {
+      "path": "assets/app-library-template/CMakeLists.txt",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 7139,
+      "sha256": "ead098cc6fdc5f636d4f3177cfc6b5d2068df21be9528b706703798e77c60293"
+    },
+    {
+      "path": "assets/app-library-template/CMakePresets.json",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 7616,
+      "sha256": "9f3eb9318551574a22308ec5496c65e53e96aba9ea4e9931b554ac29d00ff596"
+    },
+    {
+      "path": "assets/app-library-template/README.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 2470,
+      "sha256": "cd867b50db067ea2bb3877862fc97b8c0805afca81f4b6aa3cbbf8c59f0a1463"
+    },
+    {
+      "path": "assets/app-library-template/benchmarks/benchmark_smoke.cpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 651,
+      "sha256": "828bf9b26e88496166e9233bf3066e35ddd7c9884583d57085887bf1be4d9f5b"
+    },
+    {
+      "path": "assets/app-library-template/cmake/CudaArchitectures.cmake",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 2808,
+      "sha256": "e8855f8918e0b6301fb55268b8dc617ee6098514f850aff45a500fe6c3e4d40a"
+    },
+    {
+      "path": "assets/app-library-template/cmake/ProjectOptions.cmake",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 1197,
+      "sha256": "0214421de15574f6d8ee118f0dbd055433986f194cee75ab02b6d3757d100535"
+    },
+    {
+      "path": "assets/app-library-template/cmake/ProjectVulkan.cmake",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 2339,
+      "sha256": "3a512ec3ad5d6339ef9e872200a93bc3a90a576499950dc464d4510643d82556"
+    },
+    {
+      "path": "assets/app-library-template/cmake/Sanitizers.cmake",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 1045,
+      "sha256": "fdea60436a1c80318519dd1a1918169479dd75fd00fdc7dd5ba6adafbff030b5"
+    },
+    {
+      "path": "assets/app-library-template/cmake/Testing.cmake",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 230,
+      "sha256": "c8816099110d401e8b903437d3a98fa2fc7e441e0035e3316bbc8e12ee1d8229"
+    },
+    {
+      "path": "assets/app-library-template/cmake/Warnings.cmake",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 681,
+      "sha256": "a89299731e585fb58ede3ec03bb115499791ebdfa99d6e0ff99646c59b55179d"
+    },
+    {
+      "path": "assets/app-library-template/docs/BENCHMARKS.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 2729,
+      "sha256": "8c86d2b5a66c58321f36bc4aa7355c5987a5b64e6b0ee5801a6792826dde488d"
+    },
+    {
+      "path": "assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 1687,
+      "sha256": "df2e7dc3ebd89bb81e62876311a6a4d696634cb840b78e1e9973219ef82727b6"
+    },
+    {
+      "path": "assets/app-library-template/docs/CODEBASE_SUBSYSTEM_MANIFEST.json",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 1809,
+      "sha256": "950d01892af87aa92687b32a2fda56adbe57158abb771456dc8b87a5aca9741b"
+    },
+    {
+      "path": "assets/app-library-template/docs/DEVELOPMENT_ENVIRONMENT.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 3940,
+      "sha256": "92e4f1c086c8ab1e5efc6ff221a8da162656ebd97cb3f242c6fc112730773dcf"
+    },
+    {
+      "path": "assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 10773,
+      "sha256": "21d8f4f984f576b09dfee90a9d900130a9af90c18737cd437059d6668414e018"
+    },
+    {
+      "path": "assets/app-library-template/docs/GPU_RUNNER_CI.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 4005,
+      "sha256": "b8bfda2a737679367ed93c74b413bbb28f1e124f826e000c2fefe959365ac6b2"
+    },
+    {
+      "path": "assets/app-library-template/docs/SUBSYSTEMS/app-core.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 431,
+      "sha256": "b14030a0ae608d24d07e7b9bd4129ad881c16c1ff9aa21ebfb3abd5e9aa60722"
+    },
+    {
+      "path": "assets/app-library-template/docs/SUBSYSTEMS/build-and-presets.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 541,
+      "sha256": "23878b5cecc6b68bb3aa406287e6adb6f34559282f520c6c15aa5938f740214e"
+    },
+    {
+      "path": "assets/app-library-template/docs/SUBSYSTEMS/cuda-lane.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 536,
+      "sha256": "734828570dc56bfd5a74ee381f836aeeacfd0651575c286e666619f5ad3dfb57"
+    },
+    {
+      "path": "assets/app-library-template/docs/SUBSYSTEMS/validation-ci.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 652,
+      "sha256": "573774d9f094331f0f573da3b5c86ffe5cfa7b2bdbf9291365853aca09ce2374"
+    },
+    {
+      "path": "assets/app-library-template/docs/SUBSYSTEMS/vulkan-lane.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 525,
+      "sha256": "402d73656924284a7c16a4f6ccd3daeba255073b2b2268e1d05fb381763b4eb5"
+    },
+    {
+      "path": "assets/app-library-template/docs/VALIDATION_PIPELINE.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 4950,
+      "sha256": "9aaecb2ba10a6beade8ab5a214b5c61eeec651ab3dbd9f3fd282c3b7f102176f"
+    },
+    {
+      "path": "assets/app-library-template/include/{{PROJECT_NAME}}/cuda_vector_add.hpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 109,
+      "sha256": "eaae4542428c42c72e8ba932ab4b2d22adeb5861f944f2a5899fec009404323b"
+    },
+    {
+      "path": "assets/app-library-template/include/{{PROJECT_NAME}}/version.hpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 163,
+      "sha256": "93c681bcc0c2e709de41bcad8c055cdb29bf14accd412dcbba0349045a9c1c50"
+    },
+    {
+      "path": "assets/app-library-template/include/{{PROJECT_NAME}}/vulkan_probe.hpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 335,
+      "sha256": "ddaf0a65c7be0d8b284c6dfd3be2207df1aeb4b4bd977cb9fd5b1a6d412655e8"
+    },
+    {
+      "path": "assets/app-library-template/shaders/compute.comp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 269,
+      "sha256": "3e27d801d4f487c7cf4b97cf2f08ba16db580a5a768313ee5d4720c4e28b58e6"
+    },
+    {
+      "path": "assets/app-library-template/shaders/offscreen_triangle.frag",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 160,
+      "sha256": "a1bdc6b631b50f5d7c2c9b9df66b51826bd872c6b33a8db20b67d45505e99e30"
+    },
+    {
+      "path": "assets/app-library-template/shaders/offscreen_triangle.vert",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 297,
+      "sha256": "10cd68617ed0b29413a5907fe5e42ad3391fd1cc9cc164b08b2cb638e26e65c6"
+    },
+    {
+      "path": "assets/app-library-template/src/app/main.cpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 2412,
+      "sha256": "24cae1d647043e298af9940529dbcc1b9954b89ab07b4985644c4e7f367a9ecd"
+    },
+    {
+      "path": "assets/app-library-template/src/core/library.cpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 226,
+      "sha256": "c7cc2eec592b9d2094f24bb82e5a5cb3499dead6b2559a68e17d7c09a94c4ff5"
+    },
+    {
+      "path": "assets/app-library-template/src/cuda/vector_add.cu",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 1689,
+      "sha256": "b1e3d73fbaf3c2ec02b2c6cb584189a5f35616460ef640d21784e495f14b62bd"
+    },
+    {
+      "path": "assets/app-library-template/src/render/vulkan_probe.cpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 29797,
+      "sha256": "1b3eed6587c47161ff539553852dbb2d8d887140db0b14c5c66e5a1015b2cc13"
+    },
+    {
+      "path": "assets/app-library-template/tests/unit/core_test.cpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 343,
+      "sha256": "135ae5c16c96ffff16cabe96a914798237d99948f6a3b25db82c25329c93a982"
+    },
+    {
+      "path": "assets/app-library-template/tests/unit/cuda_vector_add_test.cpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 233,
+      "sha256": "ca33bdb43e041cfffcffbb993c0dde020b72ad595578c88f2a4a070d9ff7530f"
+    },
+    {
+      "path": "assets/app-library-template/tests/unit/vulkan_compute_test.cpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 289,
+      "sha256": "e9c12fa595b6250a7c3f74b49cbe4f2747d5e424d79f88762c1d1086708388f2"
+    },
+    {
+      "path": "assets/app-library-template/tests/unit/vulkan_probe_test.cpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 226,
+      "sha256": "98cc7c69b957ebed2c85ab68a442f16e0076dd050675b3eb8031b402bf26be71"
+    },
+    {
+      "path": "assets/app-library-template/tests/unit/vulkan_render_test.cpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 307,
+      "sha256": "3740c9523f810d7123ba01c9924691c43b4cd57f169e15a16e77e5c6fba40110"
+    },
+    {
+      "path": "references/donor-library/README.md",
+      "role": "reference",
+      "disclosure_group": "donor-router",
+      "size": 7344,
+      "sha256": "b0155de4ae09bff56ac44b553f91b6a18d938c41fe0ed349a594fec385127fa6"
+    },
+    {
+      "path": "references/donor-library/agent-lookup.md",
+      "role": "reference",
+      "disclosure_group": "donor-router",
+      "size": 14582,
+      "sha256": "a9e1cb919a24701b88a7b71e85099a92a3de652ad08ee936798cbc740210c6d4"
+    },
+    {
+      "path": "references/donor-library/ai-runtimes-kernels.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 5355,
+      "sha256": "7817c451ef0ce0f814d64f587256916fac7d0e806b13bd7b21ca3f8a3a9360bc"
+    },
+    {
+      "path": "references/donor-library/animation-rigging.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 4981,
+      "sha256": "431e2b222043009c315fcfc2b31e68e3fda45a2ccc8b564b13dde2c879df7b1c"
+    },
+    {
+      "path": "references/donor-library/assets-meshes-materials.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 3973,
+      "sha256": "e736d08b22f66dfdd6b75aec654f22338bb33cfcdecef813a149a6e35d630a85"
+    },
+    {
+      "path": "references/donor-library/bim-aec-ifc.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 3603,
+      "sha256": "9b71a64b0119b8516d52ab282040fd4341ed1b27014dbd124010f594a5aad86b"
+    },
+    {
+      "path": "references/donor-library/cad-precision-geometry.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 2263,
+      "sha256": "9fb65654ea042facbcbb1e47ec5bdb6dd2fca756838d7841958de938976fab84"
+    },
+    {
+      "path": "references/donor-library/dcc-scene-pipeline.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 3403,
+      "sha256": "9bf6530aa486e0ebb996176235ff2960e642aad7b550b39ace5da60e3a37cc00"
+    },
+    {
+      "path": "references/donor-library/geometry-simulation.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 4737,
+      "sha256": "5157efbc193bfd5279f5a12216be1d57d0929cfbb0ac65a469b29f49b462854b"
+    },
+    {
+      "path": "references/donor-library/gltf-runtime-assets.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 3295,
+      "sha256": "2a8cab0214bd0bb75e6443d7dad3f820244a2953c121fa64566780f11df9b4d5"
+    },
+    {
+      "path": "references/donor-library/graphics-rendering.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 11958,
+      "sha256": "a32aaf0ee9abe8259edd69a3158457055f743626dc8d57869bbd1da7aa4f8c13"
+    },
+    {
+      "path": "references/donor-library/hair-grooming-fur.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 6551,
+      "sha256": "f48c6f57b0b63c40c956a58b8f4c2ff4e489de0e3bd9435452d2472bce1e7cce"
+    },
+    {
+      "path": "references/donor-library/medical-scientific-volumes.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 7176,
+      "sha256": "e1dc2cdd0525298b51dae25ba9c4d1fbe649cb4cf51fe8f8eda9f11b400bebd5"
+    },
+    {
+      "path": "references/donor-library/muscle-flesh-biomechanics.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 4201,
+      "sha256": "ab41b7eb20ea5386c33ad810940a2a40d0f3d84e2bb99cdf9258a131bdedfc56"
+    },
+    {
+      "path": "references/donor-library/native-engineering-infrastructure.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 5308,
+      "sha256": "38a7967776218b7cf698274dd7d102ce1d2336f8eace28a3838e442cba95bf08"
+    },
+    {
+      "path": "references/donor-library/neural-3d.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 4337,
+      "sha256": "f53c2d8bb3de314e15bbfe4393c0a830904e2d7a84a898d295c33797a04370ce"
+    },
+    {
+      "path": "references/donor-library/production/README.md",
+      "role": "reference",
+      "disclosure_group": "production-overlay",
+      "size": 1270,
+      "sha256": "9538159c400a9c98a2a1ddb88f3451bb1332b14528272601e4489f06874e2548"
+    },
+    {
+      "path": "references/donor-library/production/games.md",
+      "role": "reference",
+      "disclosure_group": "production-overlay",
+      "size": 4440,
+      "sha256": "2bcbdf89a6b13723fa13fa27073645243d6c726715a7660ae9d274c77125ec2f"
+    },
+    {
+      "path": "references/donor-library/production/native-engineering-infrastructure.md",
+      "role": "reference",
+      "disclosure_group": "production-overlay",
+      "size": 2747,
+      "sha256": "99cc38278449db52824418412c1237f17c8ac3df26eafa28711edb04901cdf8f"
+    },
+    {
+      "path": "references/donor-library/production/vfx-studio.md",
+      "role": "reference",
+      "disclosure_group": "production-overlay",
+      "size": 3251,
+      "sha256": "855d6098dcdb91f41464fc760dd6cb12a41b6d596f34d729d4e69ab664a6039f"
+    },
+    {
+      "path": "references/donor-library/profiles/README.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 4764,
+      "sha256": "3e6e1d8cf6e9a9a32de8c69a88876678c3981fdac25f2681f44bfea916eae9de"
+    },
+    {
+      "path": "references/donor-library/profiles/acl.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2243,
+      "sha256": "8ea9e235275990dd2f0f9208c5d9cfa1155c255f2284e192bcb286e314f4b182"
+    },
+    {
+      "path": "references/donor-library/profiles/alembic.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2403,
+      "sha256": "8cfebbecee62800d4f1a47de540d827fc6adaba23ee03064830a9fe1225f75f5"
+    },
+    {
+      "path": "references/donor-library/profiles/animation-retargeting-crowds.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1338,
+      "sha256": "2d21f960a456c0caa5c3e98cb8adbce413cec8f6b8fa4e6ed9220824ee626621"
+    },
+    {
+      "path": "references/donor-library/profiles/asset-pipeline-nurbs-textures.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1845,
+      "sha256": "084df79a576d15cb9579c6760972578cb6c7445249e2018619455d820c7ad2d4"
+    },
+    {
+      "path": "references/donor-library/profiles/assimp.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2080,
+      "sha256": "c0ee97279656bba451aaaa7b620aa25fedea763887a10ff120ec6b8e8bd94c28"
+    },
+    {
+      "path": "references/donor-library/profiles/babylonjs.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2144,
+      "sha256": "498fa83cc7a46c7485ccf9a7aff8c815aceef40fb5134e4600388b9fe57057fc"
+    },
+    {
+      "path": "references/donor-library/profiles/bgfx.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2181,
+      "sha256": "76fd27470ea99f6811164413c95ca5152a2311ea44723716fb655c45e36bce88"
+    },
+    {
+      "path": "references/donor-library/profiles/bim-ifc-aec.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1477,
+      "sha256": "ad832dacb67834ec3e9949a0db137101562e7e7c3b00818db600b934de1ec73d"
+    },
+    {
+      "path": "references/donor-library/profiles/blender-study-only.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2330,
+      "sha256": "3789921879f7882384b08f753f87b115bbe242befa4476327375e20611fbe44f"
+    },
+    {
+      "path": "references/donor-library/profiles/bullet-physics.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2199,
+      "sha256": "575edcfcd613a745462dc694caa188fc4e4e53790cab6d4c9079da10d6a2b62d"
+    },
+    {
+      "path": "references/donor-library/profiles/cgal.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2110,
+      "sha256": "89bf6cb64e9bdb42ca75419711dff5b1f5ab5293c3749a76e1f19bc874101417"
+    },
+    {
+      "path": "references/donor-library/profiles/ci-gpu-runners.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1935,
+      "sha256": "83719bfec450fabb155a94a3a9aeb048238eb77c959969d1ae87697272a44499"
+    },
+    {
+      "path": "references/donor-library/profiles/cmake-project-templates.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2086,
+      "sha256": "7d79825dcc342bac1ed527b124bd5959cd27d3ce74338833193c54b5d591d316"
+    },
+    {
+      "path": "references/donor-library/profiles/cutlass.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2042,
+      "sha256": "8ad823d00fd2160245dd3910db4c7a5bdb03384a13027a9d7f3cfadef1f1708b"
+    },
+    {
+      "path": "references/donor-library/profiles/dawn.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2144,
+      "sha256": "17779a6b98ab44458a0e0ac0b7f6420724380bb4cbf3a9cb3926ed5ff2dc3f6d"
+    },
+    {
+      "path": "references/donor-library/profiles/dependency-management.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1915,
+      "sha256": "90b91eca1ed4395e2d2bfe2e671dfbda7fe0aeb26af5d21aaf24acdcd3911154"
+    },
+    {
+      "path": "references/donor-library/profiles/diligent-engine.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2335,
+      "sha256": "8cbdd4cd5878050031c1e32ae37f3d95c62d9c1dac543bbda78ae66898a1a103"
+    },
+    {
+      "path": "references/donor-library/profiles/embree.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2063,
+      "sha256": "db02de115cb9a6b924b4abf677cad059fce4397f2a8d467324a062af810efdd5"
+    },
+    {
+      "path": "references/donor-library/profiles/falcor.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2205,
+      "sha256": "40109b3e05140d48b78eccb34c969e49e1d03e28f3a2f159c31f63679a9b82ed"
+    },
+    {
+      "path": "references/donor-library/profiles/fastgltf-cgltf-tinygltf.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2278,
+      "sha256": "b74a315ee12d885836ab614c9d43f1d40f09023619daca7d1bc5668b416fd276"
+    },
+    {
+      "path": "references/donor-library/profiles/filament.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2298,
+      "sha256": "6333ca9a0e63e0bd22a3b9e3172c323b4b62e92bf8d5ae7c4dcff791103f9d29"
+    },
+    {
+      "path": "references/donor-library/profiles/flashattention.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2177,
+      "sha256": "d2eea56fa7de96ecc500b1eafa3f5628a655d12de926c084f0685cde0be4f8ee"
+    },
+    {
+      "path": "references/donor-library/profiles/fluids-smoke-fire.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1979,
+      "sha256": "a46eaa2f2c9421a88f6082f72c71d67ec45d582c83c3f58ef243a7b9f4e3a143"
+    },
+    {
+      "path": "references/donor-library/profiles/freecad-study-only.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2097,
+      "sha256": "4b1227f96a99b1710af25fb19b727e2a73e0c0d57dd3391a13a6f8dce4deb9d3"
+    },
+    {
+      "path": "references/donor-library/profiles/fvdb.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2343,
+      "sha256": "822a47b40c2e1d32897f935996f767d4d55fbb4b19aabff476b3ecbdc648e5e5"
+    },
+    {
+      "path": "references/donor-library/profiles/godot-engine.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2136,
+      "sha256": "2cea2bbb40b9ad8312fd91567906bca8efc58f244444588e90d45a691d8b5876"
+    },
+    {
+      "path": "references/donor-library/profiles/godot-openxr-vendors.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2027,
+      "sha256": "5dfd848b1f273dee98cec88bdcc2c5cc0117f0d7ca43994b60979fdbed6038cf"
+    },
+    {
+      "path": "references/donor-library/profiles/gpu-shader-validation.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1778,
+      "sha256": "8a3154966e1622205eac461350dcbb1dfb80da4dd6d46c20127c36987064a221"
+    },
+    {
+      "path": "references/donor-library/profiles/gsplat.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2284,
+      "sha256": "89a623c7b1982e92c92e2ffbfc5b9578a42c776b8b34e2a34e704b8de367d72e"
+    },
+    {
+      "path": "references/donor-library/profiles/hairworks-study-only.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2077,
+      "sha256": "9c00b9048d8a4781e385a0d940e1edcf9aaeda29c1206efd46e4c49887f13db2"
+    },
+    {
+      "path": "references/donor-library/profiles/jolt-physics.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2076,
+      "sha256": "def6d19d9f7932da3790de39a657830bdb6c1dfbe404bc2f7bb09ae81dba3234"
+    },
+    {
+      "path": "references/donor-library/profiles/kaolin.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2158,
+      "sha256": "bdd6c8d864ce6319836b9152c627e01ae7a0a2392b16ab9810d21ea9d393478b"
+    },
+    {
+      "path": "references/donor-library/profiles/khronos-vulkan-samples.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2026,
+      "sha256": "4cf47600e8c3cf3512fb8703a774fb21d809ebaa16b69173eeb6a2de3e81f63f"
+    },
+    {
+      "path": "references/donor-library/profiles/ktx-basis.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2657,
+      "sha256": "f43b92fa64ce2ff6f689e1162a11a502be10d2c0afa97d9b69fa46997c9e60bc"
+    },
+    {
+      "path": "references/donor-library/profiles/libigl.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2085,
+      "sha256": "3da28a56e9408c9506f947cf3e7d22b4202d20cfe5088ea8f2fb2f93726b1c04"
+    },
+    {
+      "path": "references/donor-library/profiles/llama-ggml.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2436,
+      "sha256": "0a6ff08adc7e9d5e62179e5a827159739ed52775d5b01b32e61c1342f565ed23"
+    },
+    {
+      "path": "references/donor-library/profiles/madmann91-bvh.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1867,
+      "sha256": "8a955bb138e3fbf57003015ec4e428708da11a94fc5fca9d1336a7cbca540393"
+    },
+    {
+      "path": "references/donor-library/profiles/magnum.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2176,
+      "sha256": "746ce185a1aaf8c9f68908c87bdcc33389641032059bc5cba150b4664aad2c58"
+    },
+    {
+      "path": "references/donor-library/profiles/materialx.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2262,
+      "sha256": "ef0528dc1d40215ee5637dbf45daf41445659df9706e5dc08def4350fb7ac01f"
+    },
+    {
+      "path": "references/donor-library/profiles/medical-scientific-volume-io.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2371,
+      "sha256": "58a200c603cb1005b390121f9684627e83b13399501966d8ed6496597dcef9d5"
+    },
+    {
+      "path": "references/donor-library/profiles/meshoptimizer.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2143,
+      "sha256": "aa3cda86cc9a9e2ac79313571330651b74c81d17292b0c19a5ff1ea8bed054e1"
+    },
+    {
+      "path": "references/donor-library/profiles/mitsuba3.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2141,
+      "sha256": "9390811698620965392e036a7dd3c3ebe0b2fb71f8822ba9f9497284a274e049"
+    },
+    {
+      "path": "references/donor-library/profiles/mlc-llm.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2102,
+      "sha256": "b585c6eaf23b85aaeb82e4db9665696b1a23f87b0f1a1cf8ce4d932a9bd3df72"
+    },
+    {
+      "path": "references/donor-library/profiles/monado.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2169,
+      "sha256": "ab2a18433935d019a76db3ac68cbfd3db14ef3a6eb1b0c3314f801dcf88dd06a"
+    },
+    {
+      "path": "references/donor-library/profiles/muscle-flesh-biomechanics.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1614,
+      "sha256": "324d65709b5788cc3792094c94461a87f6c471bed8f8bf7dee72c3b55a984f28"
+    },
+    {
+      "path": "references/donor-library/profiles/nerfstudio.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2212,
+      "sha256": "5f16ed7b1273a62bab30d11bff37edd02ddc82af78638a4393e1a275b3925458"
+    },
+    {
+      "path": "references/donor-library/profiles/neural-graphics-study-only.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2438,
+      "sha256": "76c2c070e0b818fb64b750d78b05588f914bb6bd26d11acbed1ef9914f6b26a2"
+    },
+    {
+      "path": "references/donor-library/profiles/nrd-sample.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2018,
+      "sha256": "fbdb64ba869116b77be4510308c869d23d20f231c6490e0a5fd1b28ec0561567"
+    },
+    {
+      "path": "references/donor-library/profiles/nrd.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2014,
+      "sha256": "2ebf6c69fbf03fd829b97447e9c3cf0090176c6d17a4b86e75d9e4100f40dcd1"
+    },
+    {
+      "path": "references/donor-library/profiles/nri.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1941,
+      "sha256": "28cbbd7b1094b1ded0127838b8c4c6f2709ef256fc4e47bdcb3276de7522375c"
+    },
+    {
+      "path": "references/donor-library/profiles/nvidia-dlss-sdk.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2053,
+      "sha256": "c07d317f608a2e4bd0e21652db17cbd6c6115b143f6a44247c8d0acd06de40f3"
+    },
+    {
+      "path": "references/donor-library/profiles/nvidia-streamline-sample.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2279,
+      "sha256": "b04ec49d20266eb526968bd8853275426a7c87acdcc00e5062b2fc9a5c97db33"
+    },
+    {
+      "path": "references/donor-library/profiles/nvidia-streamline.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2077,
+      "sha256": "4b14466a2ee99535a6704a5fae84731916eeb2973fb084314073ee76a04bf7b8"
+    },
+    {
+      "path": "references/donor-library/profiles/nvidia-vk-mini-samples.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1896,
+      "sha256": "294c1f35822a57650c222760df00712ac215e36d23035afe7a501a548b5704fd"
+    },
+    {
+      "path": "references/donor-library/profiles/nvpro-vk-denoise-dlssrr.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2108,
+      "sha256": "38307efab4f719b8777338e27474e73ce5c14901611b46bb3002c54e9c7f9b70"
+    },
+    {
+      "path": "references/donor-library/profiles/nvpro-vk-gltf-renderer.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2328,
+      "sha256": "e3dc77d30fd9d081dfd0ae997e6481388db658600950c1c0976a1be99acf0963"
+    },
+    {
+      "path": "references/donor-library/profiles/nvpro-vk-raytracing-tutorial-khr.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2355,
+      "sha256": "2679d5b9738b870fcb44fc00e35907ba23b7affb4e00ea6cf132d31f74b5f6da"
+    },
+    {
+      "path": "references/donor-library/profiles/nvrhi.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2130,
+      "sha256": "2857a935ec193b5e303ae22f9ab36f60423ee31275a37e9c1f60e886e43b1129"
+    },
+    {
+      "path": "references/donor-library/profiles/onnx-runtime.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2225,
+      "sha256": "b10006b0f19a97327ebf65cd577be362602c052fa06b3972a7a9ee39380c20e4"
+    },
+    {
+      "path": "references/donor-library/profiles/open-3d-engine.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2207,
+      "sha256": "571bfea613e38bb751b06e34370078406124ea3d2246666aeac69efe011c1b42"
+    },
+    {
+      "path": "references/donor-library/profiles/open-cascade.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2301,
+      "sha256": "74d8737a2175e987781659b6f7b81014b8553e247524151f058a9bd09c3698c7"
+    },
+    {
+      "path": "references/donor-library/profiles/open3d.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2029,
+      "sha256": "d5a2679232f744a3a2d358f180ba42f271574a4fb394c3eb79f74c5d0e2d12a7"
+    },
+    {
+      "path": "references/donor-library/profiles/opencolorio-openimageio.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2453,
+      "sha256": "ec5d0ca4d9267d200bd9a285a7036cb2da48ab2813f4a5f3d8e8c8420ba22fcf"
+    },
+    {
+      "path": "references/donor-library/profiles/opensubdiv.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2307,
+      "sha256": "8a8b4c3bb9ef14a51413ce9b9a5577fc8abebd5e87d1b9d9694883c2676a10ea"
+    },
+    {
+      "path": "references/donor-library/profiles/opentimelineio.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2193,
+      "sha256": "765bd1abbacec1260b5212eb3088815959cf129267c4ed18e9c74b49174810fb"
+    },
+    {
+      "path": "references/donor-library/profiles/openusd.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2624,
+      "sha256": "408e4de4ab881266361493267a7494c1b87ef7cfdd6f13efd50acc608a1bc974"
+    },
+    {
+      "path": "references/donor-library/profiles/openvdb-nanovdb.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2499,
+      "sha256": "52843e5386b3db7f378dcf2281b6943003a71cecd14056bd6c058648ae5be322"
+    },
+    {
+      "path": "references/donor-library/profiles/openxr-hpp.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1956,
+      "sha256": "4f742be2c67bfffc6a7e758528f528a5385a5044625dc90a531bfb2e7a0fc59e"
+    },
+    {
+      "path": "references/donor-library/profiles/openxr-sdk.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2558,
+      "sha256": "39f545fff7f256eb171d9bd12edbdc809b35d1c82b2caccc006bbf2c30314d2d"
+    },
+    {
+      "path": "references/donor-library/profiles/ospray.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2138,
+      "sha256": "f3d6f81a9b681a78c576daa9fcb70cd414914fac48d63c1e6b23287a517231c9"
+    },
+    {
+      "path": "references/donor-library/profiles/ozz-animation.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2059,
+      "sha256": "c33fb51bab08e9aac84bafcfa934beda719cb1000335479ae285d8820a5f7ff6"
+    },
+    {
+      "path": "references/donor-library/profiles/pbrt-v4.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2117,
+      "sha256": "8c23e1c942a9dc0b09834bd5f15f7938440fab637aa8dd1d527de11483f03bcd"
+    },
+    {
+      "path": "references/donor-library/profiles/physx.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2275,
+      "sha256": "454db4787a07018e8cb41cf127036c4068d6a9cb9b1e1074c14f4cadd98252da"
+    },
+    {
+      "path": "references/donor-library/profiles/positionbaseddynamics.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2014,
+      "sha256": "e127cd742adefee2002e2b0dd03d43c5baf35d6bc609e400570d3d3027479bcb"
+    },
+    {
+      "path": "references/donor-library/profiles/profiling-observability.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1687,
+      "sha256": "6c59f8bc05f30df1a86b3c052cf07359a38441fc8567acc1504368c85b80aea2"
+    },
+    {
+      "path": "references/donor-library/profiles/project-chrono.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2155,
+      "sha256": "4f8655db6c5d2e4fcf8028cc8a1c2919d39d06719fd8c7761fcfccedfce46569"
+    },
+    {
+      "path": "references/donor-library/profiles/pytorch.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2388,
+      "sha256": "88db39967abe4c343eb712ceda8321ecc88cda300b4fc98d1752caa5c1875cd1"
+    },
+    {
+      "path": "references/donor-library/profiles/pytorch3d.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2144,
+      "sha256": "1f3e66247bdc6a3b5d37712cf8b31cb846e4773df79ee1d953a235171c209ed6"
+    },
+    {
+      "path": "references/donor-library/profiles/rtxcr-geometry-library.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1987,
+      "sha256": "c32979a91e0eba7b2274b8031e1e03d757af947d9ec1e6b3846ed74616b4bf89"
+    },
+    {
+      "path": "references/donor-library/profiles/rtxcr-material-library.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2243,
+      "sha256": "f43daf6940914c53fcdfddc8846ccd6813ba0c634d1ed940728ecd7e0b6d4f14"
+    },
+    {
+      "path": "references/donor-library/profiles/rtxcr.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2700,
+      "sha256": "a28d5faf5b968c07f71575e14b4de3b03dd4427f1952c5050d1cc1f108fff7ff"
+    },
+    {
+      "path": "references/donor-library/profiles/sanitizer-validation-lanes.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1806,
+      "sha256": "de4fdb8dee72afc2f33dfe07974f1eb62acfe1f7135854b3ba4e67e21a2de095"
+    },
+    {
+      "path": "references/donor-library/profiles/slang.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1879,
+      "sha256": "fc3c56b6a2e39d224665147737c554fbae5fe0fc9880b2c72299c771da90cfa2"
+    },
+    {
+      "path": "references/donor-library/profiles/sofa.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2153,
+      "sha256": "21c5dfbeea908bec93ee7685502995990e14bdf879578fc3aa3d9cc2aa46b077"
+    },
+    {
+      "path": "references/donor-library/profiles/spirv-toolchain.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2512,
+      "sha256": "a217433bdc3653f10e7a4f2d547555c1163dcc7b3cc6aff3a7fbce54ce1f5c4e"
+    },
+    {
+      "path": "references/donor-library/profiles/static-analysis-formatting.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1641,
+      "sha256": "2eb2f291535616587d85d1edbc6e84803d13101537a61977ff5690bf25a9405e"
+    },
+    {
+      "path": "references/donor-library/profiles/taichi.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2301,
+      "sha256": "6bd5c3bc912fea628d690c71cbe5623fa9df67889c286d215d00cf31fe88c046"
+    },
+    {
+      "path": "references/donor-library/profiles/template-update-systems.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1732,
+      "sha256": "33f1e4b0473536d75c919ce5c9e1eaa9f94631a964d7e7030f79b2355d84d1c8"
+    },
+    {
+      "path": "references/donor-library/profiles/tensorrt-llm.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2174,
+      "sha256": "78d15de374a258b912814c479e1ce9e54b1aae52ddc5ee01085406a82a268c03"
+    },
+    {
+      "path": "references/donor-library/profiles/terrain-geospatial-3dtiles.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1789,
+      "sha256": "47e2bc6d0a2a81a63bf10b6951f4c40b5bf7aadc04f32f64bad62ed305cfa6b2"
+    },
+    {
+      "path": "references/donor-library/profiles/testing-infrastructure.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1790,
+      "sha256": "ecb418f111ac0e46b16c2f101d967986331477d51f27b512088730935ff451be"
+    },
+    {
+      "path": "references/donor-library/profiles/threejs-pathtracing.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2036,
+      "sha256": "7af70779963db26b7811886726d76166dd70fb818e39f86951cb274aac4fa6ba"
+    },
+    {
+      "path": "references/donor-library/profiles/threejs.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2255,
+      "sha256": "1d6575a3730f233546c411580f544356e92573c7e95f2dc2fc077d6154fae917"
+    },
+    {
+      "path": "references/donor-library/profiles/tiny-cuda-nn.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1991,
+      "sha256": "136fc14f9d884c5b746d52f22d4ef8bd31275ac1924e44f4e14195b29d8c7070"
+    },
+    {
+      "path": "references/donor-library/profiles/tinyexr.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1877,
+      "sha256": "18fa3fd71f8acecdf1e322d4c24c68cb5236c4e20c18090e1db816075bf6f569"
+    },
+    {
+      "path": "references/donor-library/profiles/tressfx.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2436,
+      "sha256": "442aacc4bfdd5813d00945a02ab95ae926a03d699274f4aa3fc16fa43e6ec9a6"
+    },
+    {
+      "path": "references/donor-library/profiles/triton.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2102,
+      "sha256": "999552a29103e1820e8b98506fae679273fe97a584b7239663dee6cd411ab030"
+    },
+    {
+      "path": "references/donor-library/profiles/tvm.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2115,
+      "sha256": "1ec7a06fe35fc0969b6c9d0a722fa9939a975be9433db5ce457162d2935383bc"
+    },
+    {
+      "path": "references/donor-library/profiles/unity-hdrp-hair-study-only.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2069,
+      "sha256": "0fdf53bb82b0d5b75044ba044d4d7678647e3b0cc5cd68b51729f00a68d581a2"
+    },
+    {
+      "path": "references/donor-library/profiles/unreal-hairstrands-study-only.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2454,
+      "sha256": "db00f8387be8fed412db28d650e0c65972dfdd91a98a17b7d8d4e363ef716d84"
+    },
+    {
+      "path": "references/donor-library/profiles/vfx-particles-gpu-driven.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1524,
+      "sha256": "3303becd1628e448b602dc10f744fb2558f464889ddd8579b48e89c4210b4b85"
+    },
+    {
+      "path": "references/donor-library/profiles/vk-bootstrap.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1533,
+      "sha256": "974a39ab78425eeea1f2968da5b9c7afa314a9f36bdfa034c6bd0ed67ad8b3fa"
+    },
+    {
+      "path": "references/donor-library/profiles/vllm.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2296,
+      "sha256": "650dcc356e1156fd417ccfc37d14cb99c127919ed851fa59b93361216c04023a"
+    },
+    {
+      "path": "references/donor-library/profiles/volk.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1508,
+      "sha256": "5795717a5337019f20b479dcb057306bb6f8da227a2064bf24e39292cc7c5e9b"
+    },
+    {
+      "path": "references/donor-library/profiles/vtk.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2248,
+      "sha256": "bfece4a8ddf439d1ed344354729895542e742650a139ce58da0026b234819918"
+    },
+    {
+      "path": "references/donor-library/profiles/vulkan-memory-allocator.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1968,
+      "sha256": "8eadab7c5886c000e912338df633494aab4f81b4af586a61e9fdeef6a32f24d0"
+    },
+    {
+      "path": "references/donor-library/profiles/warp.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2516,
+      "sha256": "a64940a86f26bf3a18fcd8e03087a245043c7d2210a513f22b65b6ea66852a73"
+    },
+    {
+      "path": "references/donor-library/profiles/xr-interaction-spatial-input.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 1820,
+      "sha256": "aa4e9780576fa36515246ce4e16cc8aa6159a3bb4c796f37764da88c319c40af"
+    },
+    {
+      "path": "references/donor-library/selection-policy.md",
+      "role": "reference",
+      "disclosure_group": "donor-router",
+      "size": 5865,
+      "sha256": "1d921cae2905f5651d1be187102e811afe22b4b7bd59dc35c43b7fcfdf201496"
+    },
+    {
+      "path": "references/donor-library/simulation-gpu.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 6473,
+      "sha256": "28ad92ed4596971547e5685db0cac9a0f79ba3cdb08ded4bc82776cc7b559f1c"
+    },
+    {
+      "path": "references/donor-library/surfaces-subdivision.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 2214,
+      "sha256": "9d53c38084920f6f35c61062223e4045f13e54c6a0034ad47388f9a018f1eae1"
+    },
+    {
+      "path": "references/donor-library/terrain-geospatial.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 4350,
+      "sha256": "7154d893a62c1615808d7db28e05289515975cd43f1101da7980e426fa6cbf50"
+    },
+    {
+      "path": "references/donor-library/texture-material-color.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 2833,
+      "sha256": "ef8aeea8e5bad1e3e81041b50c61bc5259238bb3efd1e54aa1a836180e7c7b1d"
+    },
+    {
+      "path": "references/donor-library/vfx-particles.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 3910,
+      "sha256": "8b3145167fc4c5478f9d054587d3ae27003cae6d02407e83bab0bb7665492222"
+    },
+    {
+      "path": "references/donor-library/volumes-voxels.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 2351,
+      "sha256": "60bdc65392c33ab85274f7e92e47fc01bc2475ae6e6ce3d99ce4d333156e9740"
+    },
+    {
+      "path": "references/donor-library/vulkan-foundation-tooling.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 3792,
+      "sha256": "51bff682fb9c4557b1aa4fe06427fd41bdf6d8e64d489eef62091e733713a10c"
+    },
+    {
+      "path": "references/donor-library/xr-spatial.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 5701,
+      "sha256": "6f987b2630017ab92165587de73f1b615f447875e50c02edc49a28bc1a4217e0"
+    },
+    {
+      "path": "references/project-archetypes.md",
+      "role": "reference",
+      "disclosure_group": "entrypoint",
+      "size": 16804,
+      "sha256": "32ba620b17577e3a86e85af57695cf91bf84d13a11c3a750585df0319a7e1a6f"
+    },
+    {
+      "path": "scripts/apply_studio_backbone.py",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 6754,
+      "sha256": "e5e6eefcc4c79a281dd7c75266ef61e9bc034d6c632e562ff45f7326bd96d316"
+    },
+    {
+      "path": "scripts/bootstrap_code_map.py",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 22087,
+      "sha256": "8c47948be761abbab682791f9187802cecda94e00508aa64793fa813bec9ba51"
+    },
+    {
+      "path": "scripts/check_dev_tools.sh",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 1896,
+      "sha256": "7e3ffcf0dd7d5e9008f34d47423c1367ce49cbdaa3498b5f303c44b60baa168c"
+    },
+    {
+      "path": "scripts/dump_vulkan_capabilities.sh",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 508,
+      "sha256": "e67825eedf1dce7ca854585df42159e8ff55672b0d3afe98ce78ac86719c47f2"
+    },
+    {
+      "path": "scripts/format_check.sh",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 598,
+      "sha256": "b236b6f220ace957fbcc17a23a1b7023e75d5336a785bf7a13efb3a3589406c5"
+    },
+    {
+      "path": "scripts/run_compute_sanitizer.sh",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 906,
+      "sha256": "0e09f3d88911040acaef9e4f9f9996195b46599175b4152dbdb146386621b394"
+    },
+    {
+      "path": "scripts/run_gpu_optimization_loop.py",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 81543,
+      "sha256": "ab42fc9e2cbc78dea76ea2ba825618356551cd1d377e99d4085c57f0caa5269c"
+    },
+    {
+      "path": "scripts/run_nsys_smoke.sh",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 2553,
+      "sha256": "61acdf0dbe244f37b7f7264dd80f617db479e243260cdacfa5096b5f9c969bee"
+    },
+    {
+      "path": "scripts/run_vulkan_validation.sh",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 737,
+      "sha256": "5c983566871be838e1ec92196d8adc9510c03538e3e568e28c765572e7494861"
+    },
+    {
+      "path": "scripts/scaffold_gpu_cpp_project.py",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 7190,
+      "sha256": "a9f7cdfb3be6febb516f72c5fe2eea8478f89d89e772423cf8383e5ecd9e0ff5"
+    },
+    {
+      "path": "scripts/select_idle_gpu.sh",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 2289,
+      "sha256": "d3622ef06b4fa15dd2cf4870a79bafed85fef2a6761b25635a5f84dcfb597046"
+    },
+    {
+      "path": "scripts/tidy_check.sh",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 988,
+      "sha256": "c82d4e184db75900e293cc34f115d4664b1209a016e0647240a15530c84a8772"
+    },
+    {
+      "path": "scripts/validate_code_map.py",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 10390,
+      "sha256": "8b7bbfe6664ee0bccf4a18dd93fc577eadbcfbf6cd9addcc1774bcbd8c4bad2a"
+    },
+    {
+      "path": "scripts/validate_studio_backbone.py",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 9595,
+      "sha256": "80076b82d7ba3e8c358b150e6132f1159536cc5dd0e3eb283c46d23cbd455cce"
+    }
+  ]
+}
