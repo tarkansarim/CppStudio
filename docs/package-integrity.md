@@ -61,7 +61,12 @@ The validator rejects:
 - unmanifested package files
 - hash or size mismatches
 - symlinks inside the package
-- absolute paths, escaping paths, NUL bytes, bytecode, `__pycache__`, and `.DS_Store`
+- unsupported top-level package entries outside the known skill layout
+- absolute paths, escaping paths, and NUL bytes
+- VCS, editor, cache, virtualenv, and dependency directories such as `.git`, `.vscode`,
+  `__pycache__`, `.pytest_cache`, `.venv`, and `node_modules`
+- local env files, secret-like key/certificate files, bytecode, archives, logs, swap files, and temp
+  artifacts such as `.env`, `*.pem`, `*.key`, `*.zip`, `*.log`, `*.swp`, and `.DS_Store`
 
 ## Audit Log
 

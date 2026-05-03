@@ -147,8 +147,8 @@
       "path": "assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 10773,
-      "sha256": "21d8f4f984f576b09dfee90a9d900130a9af90c18737cd437059d6668414e018"
+      "size": 11511,
+      "sha256": "c18c2575f2a83b1a7c69978d937acd2d433d9d775413d57f62344e5bf856c910"
     },
     {
       "path": "assets/app-library-template/docs/GPU_RUNNER_CI.md",
@@ -1323,8 +1323,8 @@
       "path": "scripts/run_gpu_optimization_loop.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 81543,
-      "sha256": "ab42fc9e2cbc78dea76ea2ba825618356551cd1d377e99d4085c57f0caa5269c"
+      "size": 88295,
+      "sha256": "c7940eee3c5ec72ab79783887550946a02065fdc108797b57069416b6de11462"
     },
     {
       "path": "scripts/run_nsys_smoke.sh",

@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened generated GPU optimization loops so benchmark parse/evaluation failures auto-revert when
+  requested, profiler tool gaps are recorded as artifacts, target-table numerics fail cleanly, and
+  package-manifest writes reject local/secrets/temp artifacts.
 - Added deterministic skill package integrity metadata, validation, and sync/rollout audit logging:
   `package-manifest.json`, `validate_skill_package.py`, staged/installed package checks, and
   progressive-disclosure file roles.

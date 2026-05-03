@@ -296,6 +296,108 @@ def command_log(repo: Path, log_path: Path, command: str, extra_env: dict[str, s
     }
 
 
+def _value_text(value: object) -> str:
+    return "" if value is None else str(value).strip()
+
+
+def parse_finite_float(
+    value: object,
+    *,
+    label: str,
+    min_value: float | None = None,
+    max_value: float | None = None,
+) -> float:
+    text = _value_text(value)
+    if not text:
+        raise ToolError(f"{label} must be provided")
+    try:
+        parsed = float(text)
+    except ValueError as error:
+        raise ToolError(f"{label} must be numeric") from error
+    if not math.isfinite(parsed):
+        raise ToolError(f"{label} must be finite")
+    if min_value is not None and parsed < min_value:
+        raise ToolError(f"{label} must be >= {min_value:g}")
+    if max_value is not None and parsed > max_value:
+        raise ToolError(f"{label} must be <= {max_value:g}")
+    return parsed
+
+
+def parse_optional_finite_float(
+    value: object,
+    *,
+    label: str,
+    min_value: float | None = None,
+    max_value: float | None = None,
+) -> float | None:
+    if not _value_text(value):
+        return None
+    return parse_finite_float(value, label=label, min_value=min_value, max_value=max_value)
+
+
+def parse_int_value(
+    value: object,
+    *,
+    label: str,
+    min_value: int | None = None,
+    max_value: int | None = None,
+) -> int:
+    text = _value_text(value)
+    if not text:
+        raise ToolError(f"{label} must be provided")
+    try:
+        parsed = int(text)
+    except ValueError as error:
+        raise ToolError(f"{label} must be an integer") from error
+    if min_value is not None and parsed < min_value:
+        raise ToolError(f"{label} must be >= {min_value}")
+    if max_value is not None and parsed > max_value:
+        raise ToolError(f"{label} must be <= {max_value}")
+    return parsed
+
+
+def parse_optional_int_value(
+    value: object,
+    *,
+    label: str,
+    min_value: int | None = None,
+    max_value: int | None = None,
+) -> int | None:
+    if not _value_text(value):
+        return None
+    return parse_int_value(value, label=label, min_value=min_value, max_value=max_value)
+
+
+def argparse_finite_float(
+    label: str,
+    *,
+    min_value: float | None = None,
+    max_value: float | None = None,
+):
+    def parse(value: str) -> float:
+        try:
+            return parse_finite_float(value, label=label, min_value=min_value, max_value=max_value)
+        except ToolError as error:
+            raise argparse.ArgumentTypeError(str(error)) from error
+
+    return parse
+
+
+def argparse_int_value(
+    label: str,
+    *,
+    min_value: int | None = None,
+    max_value: int | None = None,
+):
+    def parse(value: str) -> int:
+        try:
+            return parse_int_value(value, label=label, min_value=min_value, max_value=max_value)
+        except ToolError as error:
+            raise argparse.ArgumentTypeError(str(error)) from error
+
+    return parse
+
+
 def parse_targets(path: Path) -> list[dict[str, Any]]:
     if not path.exists():
         raise ToolError(f"target table does not exist: {path}")
@@ -329,15 +431,15 @@ def parse_targets(path: Path) -> list[dict[str, Any]]:
         if target_id in seen:
             raise ToolError(f"duplicate target_id in target table: {target_id}")
         seen.add(target_id)
-        try:
-            share_pct = float(row["share_pct"])
-        except ValueError as error:
-            raise ToolError(f"target {target_id} has non-numeric share_pct") from error
-        if share_pct < 0 or share_pct > 100 or not math.isfinite(share_pct):
-            raise ToolError(f"target {target_id} share_pct must be between 0 and 100")
+        share_pct = parse_finite_float(
+            row.get("share_pct"),
+            label=f"target {target_id} share_pct",
+            min_value=0.0,
+            max_value=100.0,
+        )
         rank_text = (row.get("rank") or "").strip()
         has_explicit_rank = has_explicit_rank or bool(rank_text)
-        rank = int(rank_text) if rank_text else None
+        rank = parse_optional_int_value(rank_text, label=f"target {target_id} rank", min_value=1)
         scope_paths = [part.strip() for part in re.split(r"[;,]", row["scope_paths"]) if part.strip()]
         if not scope_paths:
             raise ToolError(f"target {target_id} must declare at least one scope path")
@@ -349,6 +451,11 @@ def parse_targets(path: Path) -> list[dict[str, Any]]:
             raise ToolError(f"target {target_id} direction must be 'lower' or 'higher'")
         min_improvement = (row.get("min_improvement_pct") or "").strip()
         validation_passes = parse_validation_passes(row.get("validation_passes"), label=f"target {target_id}")
+        min_improvement_pct = parse_optional_finite_float(
+            min_improvement,
+            label=f"target {target_id} min_improvement_pct",
+            min_value=0.0,
+        )
         targets.append(
             {
                 "target_id": target_id,
@@ -364,7 +471,7 @@ def parse_targets(path: Path) -> list[dict[str, Any]]:
                 "validation_passes": validation_passes,
                 "metric_name": (row.get("metric_name") or "").strip(),
                 "direction": direction,
-                "min_improvement_pct": float(min_improvement) if min_improvement else None,
+                "min_improvement_pct": min_improvement_pct,
                 "notes": (row.get("notes") or "").strip(),
                 "status": "pending",
                 "started_at": "",
@@ -468,6 +575,8 @@ def parse_metric(output: str, metric_name: str | None) -> tuple[str, float]:
     value = float(selected.group("value"))
     if not math.isfinite(value):
         raise ToolError("metric value must be finite")
+    if value <= 0:
+        raise ToolError("metric value must be positive")
     return name, value
 
 
@@ -482,13 +591,9 @@ def parse_correctness(output: str) -> str | None:
 
 
 def parse_validation_passes(value: object, *, label: str) -> int | None:
-    text = str(value or "").strip()
-    if not text:
+    if not _value_text(value):
         return None
-    try:
-        passes = int(text)
-    except ValueError as error:
-        raise ToolError(f"{label} validation_passes must be an integer") from error
+    passes = parse_int_value(value, label=f"{label} validation_passes")
     if passes < 2:
         raise ToolError(f"{label} validation_passes must be at least 2")
     return passes
@@ -693,7 +798,10 @@ def changed_files_for_attempt(repo: Path, scopes: list[str]) -> list[str]:
     ]
     untracked_inside = [path for path in untracked if path_allowed(path, scopes)]
     if untracked_inside:
-        raise ToolError("attempt has untracked files under target scope; add them intentionally or remove them first: " + ", ".join(untracked_inside))
+        raise ToolError(
+            "attempt has untracked files under target scope; run git add -N <path> to include new files "
+            "in the measured patch without staging content, or remove them first: " + ", ".join(untracked_inside)
+        )
     return sorted(set(changed))
 
 
@@ -867,11 +975,67 @@ def profile_command(args: argparse.Namespace) -> int:
     root = artifact_root(repo, args.session)
     state = load_state(root)
     target = target_lookup(state, args.target_id or state.get("current_target_id", ""))
+    profile_id = sanitize_id(args.profile_id or f"profile-{int(time.time())}")
+    profile_dir = root / "targets" / target["target_id"] / "profiles" / profile_id
+    tool_gap = (args.tool_gap or "").strip()
+    if tool_gap:
+        fields: dict[str, float] = {}
+        roofline = {
+            "bottleneck": "tool_gap",
+            "at_roofline": False,
+            "near_roofline": False,
+            "underutilized": False,
+            "tensor_core_underused": False,
+            "warnings": [f"tool gap: {tool_gap}"],
+        }
+        metrics_record = {
+            "profile_id": profile_id,
+            "target_id": target["target_id"],
+            "command": "",
+            "returncode": 0,
+            "tool_gap": tool_gap,
+            "hardware_metrics": fields,
+            "roofline": roofline,
+            "log_path": "",
+            "notes": args.notes,
+        }
+        profile_dir.mkdir(parents=True, exist_ok=True)
+        write_json(profile_dir / "profile_metrics.json", metrics_record)
+        row = {
+            "timestamp": utc_now(),
+            "session": args.session,
+            "target_id": target["target_id"],
+            "kind": "profile",
+            "attempt_id": profile_id,
+            "tag": args.tag or "profile-gap",
+            "decision": "PROFILE_GAP",
+            "correctness": "",
+            "metric_name": target.get("metric_name", ""),
+            "metric_value": "",
+            "direction": target.get("direction", ""),
+            "baseline_value": "" if target.get("baseline_value") is None else f"{float(target['baseline_value']):.12g}",
+            "reference_value": "" if target.get("best_value") is None else f"{float(target['best_value']):.12g}",
+            "share_pct": f"{float(target['share_pct']):.12g}",
+            "pct_peak_compute": "",
+            "pct_peak_bandwidth": "",
+            "bottleneck": "tool_gap",
+            "peak_vram_mb": "",
+            "profile_status": "tool_gap",
+            "log_dir": str(profile_dir.relative_to(repo)),
+            "success_criteria": target.get("success_criteria", ""),
+            "notes": args.notes or tool_gap,
+        }
+        merge_roofline_fields(row, roofline)
+        append_result(root, row)
+        append_event(root, "profile_gap", **row, tool_gap=tool_gap)
+        print(
+            f"cppstudio_opt_profile_gap session={args.session} target_id={target['target_id']} "
+            f"profile_id={profile_id} reason={tool_gap}"
+        )
+        return 0
     command = args.profile_cmd or target.get("profile_cmd") or ""
     if not command:
         raise ToolError("no profile command configured; add profile_cmd to the target table or pass --profile-cmd")
-    profile_id = sanitize_id(args.profile_id or f"profile-{int(time.time())}")
-    profile_dir = root / "targets" / target["target_id"] / "profiles" / profile_id
     append_event(root, "profile_start", target_id=target["target_id"], profile_id=profile_id)
     result = command_log(repo, profile_dir / "profile.log", command)
     output = str(result["stdout"]) + "\n" + str(result["stderr"])
@@ -1290,44 +1454,49 @@ def attempt_command(args: argparse.Namespace) -> int:
             decision = "REVERT" if args.auto_revert else "FAIL"
             notes = "benchmark failed"
         else:
-            correctness = parse_correctness(output) or "PASS"
-            if correctness != "PASS":
-                decision = "REVERT" if args.auto_revert else "FAIL"
-                notes = "benchmark reported correctness failure"
-            else:
-                metric_name, metric_value = parse_metric(output, args.metric_name or target.get("metric_name") or None)
-                direction = infer_direction(metric_name, args.direction or target.get("direction") or None)
-                local_speedup, improvement_pct = improvement(reference_value, metric_value, direction)
-                end_to_end = amdahl_speedup(local_speedup, float(target["share_pct"]))
-                fields = parse_profile_metrics(output)
-                bottleneck = parse_bottleneck(output)
-                roofline = classify_roofline(fields, state["settings"])
-                if bottleneck:
-                    roofline["bottleneck"] = bottleneck
-                pct_peak = select_pct_peak(fields, str(roofline.get("bottleneck") or bottleneck))
-                if pct_peak is not None:
-                    target["pct_peak"] = pct_peak
-                required = (
-                    args.min_improvement_pct
-                    if args.min_improvement_pct is not None
-                    else target.get("min_improvement_pct")
-                    if target.get("min_improvement_pct") is not None
-                    else state["settings"]["default_min_improvement_pct"]
-                )
-                if improvement_pct >= float(required):
-                    decision = "KEEP"
-                elif regression_pct(reference_value, metric_value, direction) > float(state["settings"]["divergence_threshold_pct"]):
-                    decision = "REVERT" if args.auto_revert else "REJECT"
-                    notes = (
-                        f"diverged {regression_pct(reference_value, metric_value, direction):.6g}% from best, "
-                        f"above {float(state['settings']['divergence_threshold_pct']):.6g}% threshold"
-                    )
-                elif args.allow_simpler_equivalent and improvement_pct >= -float(args.equivalent_tolerance_pct):
-                    decision = "KEEP"
-                    notes = args.description + " (kept as simpler equivalent)"
+            try:
+                correctness = parse_correctness(output) or "PASS"
+                if correctness != "PASS":
+                    decision = "REVERT" if args.auto_revert else "FAIL"
+                    notes = "benchmark reported correctness failure"
                 else:
-                    decision = "REVERT" if args.auto_revert else "REJECT"
-                    notes = f"improvement {improvement_pct:.6g}% below required {float(required):.6g}%"
+                    metric_name, metric_value = parse_metric(output, args.metric_name or target.get("metric_name") or None)
+                    direction = infer_direction(metric_name, args.direction or target.get("direction") or None)
+                    local_speedup, improvement_pct = improvement(reference_value, metric_value, direction)
+                    end_to_end = amdahl_speedup(local_speedup, float(target["share_pct"]))
+                    fields = parse_profile_metrics(output)
+                    bottleneck = parse_bottleneck(output)
+                    roofline = classify_roofline(fields, state["settings"])
+                    if bottleneck:
+                        roofline["bottleneck"] = bottleneck
+                    pct_peak = select_pct_peak(fields, str(roofline.get("bottleneck") or bottleneck))
+                    if pct_peak is not None:
+                        target["pct_peak"] = pct_peak
+                    required = (
+                        args.min_improvement_pct
+                        if args.min_improvement_pct is not None
+                        else target.get("min_improvement_pct")
+                        if target.get("min_improvement_pct") is not None
+                        else state["settings"]["default_min_improvement_pct"]
+                    )
+                    if improvement_pct >= float(required):
+                        decision = "KEEP"
+                    elif regression_pct(reference_value, metric_value, direction) > float(state["settings"]["divergence_threshold_pct"]):
+                        decision = "REVERT" if args.auto_revert else "REJECT"
+                        notes = (
+                            f"diverged {regression_pct(reference_value, metric_value, direction):.6g}% from best, "
+                            f"above {float(state['settings']['divergence_threshold_pct']):.6g}% threshold"
+                        )
+                    elif args.allow_simpler_equivalent and improvement_pct >= -float(args.equivalent_tolerance_pct):
+                        decision = "KEEP"
+                        notes = args.description + " (kept as simpler equivalent)"
+                    else:
+                        decision = "REVERT" if args.auto_revert else "REJECT"
+                        notes = f"improvement {improvement_pct:.6g}% below required {float(required):.6g}%"
+            except ToolError as error:
+                correctness = "FAIL"
+                decision = "REVERT" if args.auto_revert else "FAIL"
+                notes = str(error)
 
     commit_sha = ""
     if decision == "REVERT":
@@ -1685,19 +1854,19 @@ def build_parser() -> argparse.ArgumentParser:
     add_common(init)
     init.add_argument("--targets", required=True, help="TSV/CSV target table")
     init.add_argument("--force", action="store_true", help="Replace existing session state")
-    init.add_argument("--consecutive-reverts", type=int, default=DEFAULT_CONSECUTIVE_REVERTS)
-    init.add_argument("--pct-peak-threshold", type=float, default=DEFAULT_PCT_PEAK_THRESHOLD)
-    init.add_argument("--max-minutes-per-target", type=float, default=DEFAULT_MAX_MINUTES_PER_TARGET)
-    init.add_argument("--speedup-threshold", type=float, default=DEFAULT_SPEEDUP_THRESHOLD)
-    init.add_argument("--default-min-improvement-pct", type=float, default=DEFAULT_MIN_IMPROVEMENT_PCT)
-    init.add_argument("--divergence-threshold-pct", type=float, default=DEFAULT_DIVERGENCE_THRESHOLD_PCT)
-    init.add_argument("--convergence-rounds", type=int, default=DEFAULT_CONVERGENCE_ROUNDS)
-    init.add_argument("--convergence-min-improvement-pct", type=float, default=DEFAULT_CONVERGENCE_MIN_IMPROVEMENT_PCT)
-    init.add_argument("--underutilized-threshold-pct", type=float, default=DEFAULT_UNDERUTILIZED_THRESHOLD_PCT)
-    init.add_argument("--tensor-core-threshold-pct", type=float, default=DEFAULT_TENSOR_CORE_THRESHOLD_PCT)
-    init.add_argument("--beam-width", type=int, default=DEFAULT_BEAM_WIDTH)
+    init.add_argument("--consecutive-reverts", type=argparse_int_value("--consecutive-reverts", min_value=1), default=DEFAULT_CONSECUTIVE_REVERTS)
+    init.add_argument("--pct-peak-threshold", type=argparse_finite_float("--pct-peak-threshold", min_value=0.0), default=DEFAULT_PCT_PEAK_THRESHOLD)
+    init.add_argument("--max-minutes-per-target", type=argparse_finite_float("--max-minutes-per-target", min_value=0.0), default=DEFAULT_MAX_MINUTES_PER_TARGET)
+    init.add_argument("--speedup-threshold", type=argparse_finite_float("--speedup-threshold", min_value=0.0), default=DEFAULT_SPEEDUP_THRESHOLD)
+    init.add_argument("--default-min-improvement-pct", type=argparse_finite_float("--default-min-improvement-pct", min_value=0.0), default=DEFAULT_MIN_IMPROVEMENT_PCT)
+    init.add_argument("--divergence-threshold-pct", type=argparse_finite_float("--divergence-threshold-pct", min_value=0.0), default=DEFAULT_DIVERGENCE_THRESHOLD_PCT)
+    init.add_argument("--convergence-rounds", type=argparse_int_value("--convergence-rounds", min_value=0), default=DEFAULT_CONVERGENCE_ROUNDS)
+    init.add_argument("--convergence-min-improvement-pct", type=argparse_finite_float("--convergence-min-improvement-pct", min_value=0.0), default=DEFAULT_CONVERGENCE_MIN_IMPROVEMENT_PCT)
+    init.add_argument("--underutilized-threshold-pct", type=argparse_finite_float("--underutilized-threshold-pct", min_value=0.0), default=DEFAULT_UNDERUTILIZED_THRESHOLD_PCT)
+    init.add_argument("--tensor-core-threshold-pct", type=argparse_finite_float("--tensor-core-threshold-pct", min_value=0.0), default=DEFAULT_TENSOR_CORE_THRESHOLD_PCT)
+    init.add_argument("--beam-width", type=argparse_int_value("--beam-width", min_value=1), default=DEFAULT_BEAM_WIDTH)
     init.add_argument("--bottlenecks", default=DEFAULT_BOTTLENECK_DIRECTIONS, help="Comma-separated beam-search bottleneck directions")
-    init.add_argument("--validation-passes", type=int, default=DEFAULT_VALIDATION_PASSES, help="Sequential verification passes required before an attempt benchmark")
+    init.add_argument("--validation-passes", type=argparse_int_value("--validation-passes", min_value=2), default=DEFAULT_VALIDATION_PASSES, help="Sequential verification passes required before an attempt benchmark")
     init.set_defaults(func=init_command)
 
     baseline = subcommands.add_parser("baseline", help="Record a target baseline")
@@ -1711,6 +1880,7 @@ def build_parser() -> argparse.ArgumentParser:
     profile.add_argument("--profile-id", help="Stable profile id; defaults to timestamp")
     profile.add_argument("--profile-cmd", help="Override target profile command")
     profile.add_argument("--ncu-csv", help="Optional Nsight Compute CSV file to parse after profile command")
+    profile.add_argument("--tool-gap", help="Record why hardware counters or profiler tooling are unavailable and continue")
     profile.add_argument("--tag", help="Short profile tag")
     profile.add_argument("--notes", default="", help="Profile notes")
     profile.set_defaults(func=profile_command)
@@ -1718,8 +1888,8 @@ def build_parser() -> argparse.ArgumentParser:
     plan_round = subcommands.add_parser("plan-round", help="Create beam-style per-round worker artifacts")
     add_common(plan_round)
     plan_round.add_argument("--target-id", help="Target id; defaults to current target")
-    plan_round.add_argument("--round-num", type=int, help="Explicit round number")
-    plan_round.add_argument("--beam-width", type=int, help="Number of top parent attempts to explore")
+    plan_round.add_argument("--round-num", type=argparse_int_value("--round-num", min_value=1), help="Explicit round number")
+    plan_round.add_argument("--beam-width", type=argparse_int_value("--beam-width", min_value=1), help="Number of top parent attempts to explore")
     plan_round.add_argument("--bottlenecks", help="Comma-separated bottleneck directions to explore")
     plan_round.set_defaults(func=plan_round_command)
 
@@ -1741,9 +1911,9 @@ def build_parser() -> argparse.ArgumentParser:
     breaking_point.add_argument("--target-id", help="Target id; defaults to current target")
     breaking_point.add_argument("--param-name", required=True, help="Human-readable parameter name")
     breaking_point.add_argument("--param-env", default="PERF_PARAM_VALUE", help="Environment variable passed to the command")
-    breaking_point.add_argument("--min", dest="min_value", type=int, required=True, help="Minimum integer parameter value")
-    breaking_point.add_argument("--max", dest="max_value", type=int, required=True, help="Maximum integer parameter value")
-    breaking_point.add_argument("--threshold", type=float, required=True, help="Metric threshold that separates pass from degradation")
+    breaking_point.add_argument("--min", dest="min_value", type=argparse_int_value("--min"), required=True, help="Minimum integer parameter value")
+    breaking_point.add_argument("--max", dest="max_value", type=argparse_int_value("--max"), required=True, help="Maximum integer parameter value")
+    breaking_point.add_argument("--threshold", type=argparse_finite_float("--threshold"), required=True, help="Metric threshold that separates pass from degradation")
     breaking_point.add_argument("--direction", required=True, choices=["lower", "higher"], help="Whether lower or higher metric values pass")
     breaking_point.add_argument("--metric-name", help="Metric to parse; defaults to target metric")
     breaking_point.add_argument("--cmd", required=True, help="Benchmark command; {value} is replaced with the trial value")
@@ -1765,10 +1935,10 @@ def build_parser() -> argparse.ArgumentParser:
     attempt.add_argument("--benchmark-cmd", help="Override target benchmark command")
     attempt.add_argument("--metric-name", help="Override target metric name")
     attempt.add_argument("--direction", choices=["lower", "higher"], help="Override target metric direction")
-    attempt.add_argument("--min-improvement-pct", type=float, help="Override required improvement percentage")
+    attempt.add_argument("--min-improvement-pct", type=argparse_finite_float("--min-improvement-pct", min_value=0.0), help="Override required improvement percentage")
     attempt.add_argument("--allow-simpler-equivalent", action="store_true", help="Keep equivalent simpler code")
-    attempt.add_argument("--equivalent-tolerance-pct", type=float, default=0.0, help="Allowed regression for simpler equivalent code")
-    attempt.add_argument("--validation-passes", type=int, help="Override sequential verification passes for this attempt")
+    attempt.add_argument("--equivalent-tolerance-pct", type=argparse_finite_float("--equivalent-tolerance-pct", min_value=0.0), default=0.0, help="Allowed regression for simpler equivalent code")
+    attempt.add_argument("--validation-passes", type=argparse_int_value("--validation-passes", min_value=2), help="Override sequential verification passes for this attempt")
     attempt.add_argument("--auto-revert", action="store_true", help="Reverse rejected attempt patches")
     attempt.add_argument("--commit-keep", action="store_true", help="Commit kept attempt changes")
     attempt.set_defaults(func=attempt_command)

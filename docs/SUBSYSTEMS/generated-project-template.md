@@ -40,3 +40,6 @@ validation.
   profiling should emit greppable NCU/SOL or project counter lines that `profile` can parse, while
   `hypothesis`, `breaking-point`, and `plan-round` record evidence-backed investigation state and
   per-round worker artifacts for agents, branches, or worktrees.
+- Optimization attempts treat malformed benchmark evidence as a measured failure: with
+  `--auto-revert`, missing or invalid primary metrics are recorded in `results.tsv` and the captured
+  patch is reversed. Profiler/counter gaps should be recorded with `profile --tool-gap`.

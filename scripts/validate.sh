@@ -362,6 +362,24 @@ ln -s "../project-archetypes.md" \
 expect_failure "package validator rejects symlink" "symlink inside skill package is not allowed" \
     python3 "${PACKAGE_VALIDATOR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
 rm -rf "${package_validator_tmp}"
+package_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/package_validator_forbidden_env.XXXXXX")"
+cp -a "${SKILL_DIR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+touch "${package_validator_tmp}/cpp-cuda-vulkan-studio/references/.env"
+expect_failure "package validator refuses env files during manifest writes" "forbidden package file" \
+    python3 "${PACKAGE_VALIDATOR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio" --write-manifest
+rm -rf "${package_validator_tmp}"
+package_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/package_validator_forbidden_secret.XXXXXX")"
+cp -a "${SKILL_DIR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+touch "${package_validator_tmp}/cpp-cuda-vulkan-studio/references/private.pem"
+expect_failure "package validator refuses secret-like files during manifest writes" "forbidden package artifact file" \
+    python3 "${PACKAGE_VALIDATOR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio" --write-manifest
+rm -rf "${package_validator_tmp}"
+package_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/package_validator_forbidden_top.XXXXXX")"
+cp -a "${SKILL_DIR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio"
+touch "${package_validator_tmp}/cpp-cuda-vulkan-studio/README.md"
+expect_failure "package validator refuses unsupported top-level files during manifest writes" "unsupported top-level package entry" \
+    python3 "${PACKAGE_VALIDATOR}" "${package_validator_tmp}/cpp-cuda-vulkan-studio" --write-manifest
+rm -rf "${package_validator_tmp}"
 python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${ROOT_DIR}" --require-enabled
 code_map_enable_tmp="$(mktemp -d "${VALIDATE_TMP}/code_map_enable.XXXXXX")"
 write_code_map_project_fixture "${code_map_enable_tmp}"
@@ -1472,6 +1490,14 @@ cat >"${optimization_tmp}/docs/GPU_OPTIMIZATION_TARGETS_BAD.tsv" <<'EOF'
 target_id	lane	workload	share_pct	benchmark_cmd	verify_cmd	profile_cmd	scope_paths	metric_name	direction	notes
 cuda_kernel	cuda	synthetic CUDA kernel	50	./benchmark.sh	./verify.sh	./profile.sh	src/cuda	elapsed_us	lower	missing success criteria fixture
 EOF
+cat >"${optimization_tmp}/docs/GPU_OPTIMIZATION_TARGETS_BAD_RANK.tsv" <<'EOF'
+target_id	rank	lane	workload	share_pct	benchmark_cmd	verify_cmd	profile_cmd	scope_paths	success_criteria	validation_passes	metric_name	direction	notes
+cuda_kernel	not-a-rank	cuda	synthetic CUDA kernel	50	./benchmark.sh	./verify.sh	./profile.sh	src/cuda	elapsed_us must improve while correctness stays PASS	2	elapsed_us	lower	bad rank fixture
+EOF
+cat >"${optimization_tmp}/docs/GPU_OPTIMIZATION_TARGETS_BAD_MIN_IMPROVEMENT.tsv" <<'EOF'
+target_id	lane	workload	share_pct	benchmark_cmd	verify_cmd	profile_cmd	scope_paths	success_criteria	validation_passes	metric_name	direction	min_improvement_pct	notes
+cuda_kernel	cuda	synthetic CUDA kernel	50	./benchmark.sh	./verify.sh	./profile.sh	src/cuda	elapsed_us must improve while correctness stays PASS	2	elapsed_us	lower	-1	bad min improvement fixture
+EOF
 cat >"${optimization_tmp}/docs/GPU_OPTIMIZATION_TARGETS.tsv" <<'EOF'
 target_id	lane	workload	share_pct	benchmark_cmd	verify_cmd	profile_cmd	scope_paths	success_criteria	validation_passes	metric_name	direction	notes
 cuda_kernel	cuda	synthetic CUDA kernel	50	./benchmark.sh	./verify.sh	./profile.sh	src/cuda	elapsed_us must improve while correctness stays PASS	2	elapsed_us	lower	validation fixture
@@ -1486,6 +1512,16 @@ expect_failure "GPU optimization target table requires success criteria" "missin
         --repo "${optimization_tmp}" \
         --session opt-bad \
         --targets docs/GPU_OPTIMIZATION_TARGETS_BAD.tsv
+expect_failure "GPU optimization target rank is validated" "rank must be an integer" \
+    python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" init \
+        --repo "${optimization_tmp}" \
+        --session opt-bad-rank \
+        --targets docs/GPU_OPTIMIZATION_TARGETS_BAD_RANK.tsv
+expect_failure "GPU optimization min improvement is validated" "min_improvement_pct must be >= 0" \
+    python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" init \
+        --repo "${optimization_tmp}" \
+        --session opt-bad-min-improvement \
+        --targets docs/GPU_OPTIMIZATION_TARGETS_BAD_MIN_IMPROVEMENT.tsv
 python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" init \
     --repo "${optimization_tmp}" \
     --session opt-test \
@@ -1504,6 +1540,15 @@ python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" profile \
     --profile-id baseline-ncu
 grep -q "compute_sol_pct" \
     "${optimization_tmp}/artifacts/optimization/opt-test/targets/cuda_kernel/profiles/baseline-ncu/profile_metrics.json"
+python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" profile \
+    --repo "${optimization_tmp}" \
+    --session opt-test \
+    --target-id cuda_kernel \
+    --profile-id unavailable-profiler \
+    --tool-gap "Nsight unavailable in fixture CI"
+grep -q "PROFILE_GAP" "${optimization_tmp}/artifacts/optimization/opt-test/results.tsv"
+grep -q "Nsight unavailable in fixture CI" \
+    "${optimization_tmp}/artifacts/optimization/opt-test/targets/cuda_kernel/profiles/unavailable-profiler/profile_metrics.json"
 python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" breaking-point \
     --repo "${optimization_tmp}" \
     --session opt-test \
@@ -1596,6 +1641,75 @@ expect_failure "failed GPU optimization verification reverts" "decision=REVERT" 
         --verify-cmd false \
         --auto-revert
 grep -q "metric=80" "${optimization_tmp}/src/cuda/kernel.cu"
+python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" hypothesis \
+    --repo "${optimization_tmp}" \
+    --session opt-test \
+    --target-id cuda_kernel \
+    --hypothesis-id H4 \
+    --confidence low \
+    --summary "Malformed benchmark output should revert instead of leaving the patch applied." \
+    --evidence "validation fixture omits elapsed_us from benchmark output" \
+    --expected-effect "attempt records REVERT and restores file"
+printf "metric=60\n" >"${optimization_tmp}/src/cuda/kernel.cu"
+expect_failure "missing requested GPU optimization metric reverts" "decision=REVERT" \
+    python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" attempt \
+        --repo "${optimization_tmp}" \
+        --session opt-test \
+        --target-id cuda_kernel \
+        --attempt-id missingmetric \
+        --tag missingmetric \
+        --hypothesis-id H4 \
+        --description "Missing metric synthetic attempt." \
+        --benchmark-cmd "printf 'correctness=PASS\n'" \
+        --auto-revert
+grep -q "metric=80" "${optimization_tmp}/src/cuda/kernel.cu"
+grep -q "benchmark output did not contain" "${optimization_tmp}/artifacts/optimization/opt-test/results.tsv"
+python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" hypothesis \
+    --repo "${optimization_tmp}" \
+    --session opt-test \
+    --target-id cuda_kernel \
+    --hypothesis-id H5 \
+    --confidence low \
+    --summary "Nonpositive benchmark metrics should revert instead of leaving the patch applied." \
+    --evidence "validation fixture reports elapsed_us=0" \
+    --expected-effect "attempt records REVERT and restores file"
+printf "metric=50\n" >"${optimization_tmp}/src/cuda/kernel.cu"
+expect_failure "nonpositive GPU optimization metric reverts" "decision=REVERT" \
+    python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" attempt \
+        --repo "${optimization_tmp}" \
+        --session opt-test \
+        --target-id cuda_kernel \
+        --attempt-id zerometric \
+        --tag zerometric \
+        --hypothesis-id H5 \
+        --description "Zero metric synthetic attempt." \
+        --benchmark-cmd "printf 'correctness=PASS\nelapsed_us=0\n'" \
+        --auto-revert
+grep -q "metric=80" "${optimization_tmp}/src/cuda/kernel.cu"
+grep -q "metric value must be positive" "${optimization_tmp}/artifacts/optimization/opt-test/results.tsv"
+python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" hypothesis \
+    --repo "${optimization_tmp}" \
+    --session opt-test \
+    --target-id cuda_kernel \
+    --hypothesis-id H6 \
+    --confidence low \
+    --summary "Intent-to-add new files should be captured as measured patches." \
+    --evidence "validation fixture uses git add -N for a new in-scope file" \
+    --expected-effect "attempt evaluates and auto-reverts the new file patch"
+printf "// synthetic new file\n" >"${optimization_tmp}/src/cuda/new_file.cu"
+git -C "${optimization_tmp}" add -N src/cuda/new_file.cu
+expect_failure "intent-to-add GPU optimization new file diff is measured" "decision=REVERT" \
+    python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" attempt \
+        --repo "${optimization_tmp}" \
+        --session opt-test \
+        --target-id cuda_kernel \
+        --attempt-id newfile \
+        --tag newfile \
+        --hypothesis-id H6 \
+        --description "New in-scope file synthetic attempt." \
+        --auto-revert
+test ! -e "${optimization_tmp}/src/cuda/new_file.cu"
+git -C "${optimization_tmp}" reset -q -- src/cuda/new_file.cu || true
 optimization_next_out="$(mktemp "${VALIDATE_TMP}/gpu_optimization_next.XXXXXX.out")"
 python3 "${optimization_tmp}/scripts/run_gpu_optimization_loop.py" next \
     --repo "${optimization_tmp}" \

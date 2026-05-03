@@ -48,6 +48,17 @@ scripts/run_gpu_optimization_loop.py profile \
   --profile-id baseline-ncu
 ```
 
+If the target machine cannot expose the required profiler or hardware counters, record the gap as an
+artifact instead of skipping the profiling phase silently:
+
+```bash
+scripts/run_gpu_optimization_loop.py profile \
+  --session opt-session \
+  --target-id cuda_vector_add \
+  --profile-id profiler-unavailable \
+  --tool-gap "Nsight Compute counters are unavailable on this runner"
+```
+
 Optional breaking-point search can map the workload size where the target first fails or degrades
 beyond the declared threshold:
 
@@ -110,6 +121,10 @@ scripts/run_gpu_optimization_loop.py attempt \
 `attempt` runs the target verification command sequentially for the configured validation-pass count
 before benchmarking. A failed validation pass rejects or reverts the attempt before performance is
 considered.
+
+When a focused edit adds a new file under `scope_paths`, run `git add -N <path>` first so the new
+file is included in the measured patch without staging its content. Keep normal staged changes out
+of optimization attempts.
 
 If an attempt is kept and more experiments will follow, create a normal git commit before making the
 next edit, or pass `--commit-keep` when the user has approved autonomous optimization commits. This
@@ -178,7 +193,8 @@ low memory as `underutilized`, and marks the target near-roofline at the configu
 For Vulkan work, make the project-owned `profile_cmd` emit the generic `pct_peak_compute`,
 `pct_peak_bandwidth`, and `bottleneck` lines from the profiler available to that project, such as
 Nsight Graphics GPU Trace, vendor tools, timestamp-query summaries, or engine counters. If hardware
-counters are unavailable, record that tool gap and continue with fixed baseline/benchmark evidence.
+counters are unavailable, use `profile --tool-gap "<reason>"` and continue with fixed
+baseline/benchmark evidence.
 
 Correctness always gates performance. A failed correctness command, failed benchmark command, or
 benchmark line such as `correctness=FAIL` rejects the attempt.
@@ -186,6 +202,8 @@ benchmark line such as `correctness=FAIL` rejects the attempt.
 ## Decisions
 
 - Correctness fails: reject the attempt, or revert the patch when `--auto-revert` is set.
+- Benchmark parsing or metric evaluation fails: record the diagnostic and revert when
+  `--auto-revert` is set.
 - Correctness passes and the primary metric improves by at least the target threshold: keep.
 - Correctness passes but the primary metric is unchanged or slower: reject or revert.
 - Correctness passes but regresses far beyond the best-so-far value: revert when `--auto-revert` is

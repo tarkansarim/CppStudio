@@ -20,9 +20,72 @@ from typing import Any
 MANIFEST_NAME = "package-manifest.json"
 SCHEMA_VERSION = 1
 HASH_ALGORITHM = "sha256"
-FORBIDDEN_FILE_NAMES = {".DS_Store"}
-FORBIDDEN_DIR_NAMES = {"__pycache__"}
-FORBIDDEN_SUFFIXES = {".pyc", ".pyo"}
+ALLOWED_TOP_LEVEL = {
+    "SKILL.md",
+    "agents",
+    "assets",
+    "package-manifest.json",
+    "references",
+    "scripts",
+}
+FORBIDDEN_FILE_NAMES = {
+    ".ds_store",
+    ".env",
+    ".envrc",
+    "desktop.ini",
+    "id_dsa",
+    "id_ecdsa",
+    "id_ed25519",
+    "id_rsa",
+    "thumbs.db",
+}
+FORBIDDEN_DIR_NAMES = {
+    ".cache",
+    ".git",
+    ".hg",
+    ".idea",
+    ".jj",
+    ".mypy_cache",
+    ".nox",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pycache__",
+    "node_modules",
+    "venv",
+}
+FORBIDDEN_SUFFIXES = (
+    ".7z",
+    ".bak",
+    ".bz2",
+    ".cer",
+    ".crt",
+    ".der",
+    ".gz",
+    ".key",
+    ".log",
+    ".orig",
+    ".p12",
+    ".pem",
+    ".pfx",
+    ".pyc",
+    ".pyo",
+    ".rar",
+    ".rej",
+    ".swo",
+    ".swp",
+    ".tar",
+    ".tar.gz",
+    ".temp",
+    ".tgz",
+    ".tmp",
+    ".xz",
+    ".zip",
+    "~",
+)
 
 
 def normalize_relative_path(path: Path, root: Path) -> str:
@@ -45,12 +108,17 @@ def validate_manifest_path(path_text: str) -> None:
 
 def is_forbidden_package_path(rel_path: str) -> str | None:
     pure = PurePosixPath(rel_path)
-    if any(part in FORBIDDEN_DIR_NAMES for part in pure.parts):
+    if pure.parts and pure.parts[0] not in ALLOWED_TOP_LEVEL:
+        return f"unsupported top-level package entry: {rel_path}"
+    lowered_parts = [part.lower() for part in pure.parts]
+    if any(part in FORBIDDEN_DIR_NAMES for part in lowered_parts):
         return f"forbidden package directory in path: {rel_path}"
-    if pure.name in FORBIDDEN_FILE_NAMES:
+    name = pure.name.lower()
+    if name in FORBIDDEN_FILE_NAMES or name.startswith(".env.") or name.startswith(".env-"):
         return f"forbidden package file: {rel_path}"
-    if pure.suffix in FORBIDDEN_SUFFIXES:
-        return f"forbidden package bytecode file: {rel_path}"
+    rel_lower = rel_path.lower()
+    if any(rel_lower.endswith(suffix) for suffix in FORBIDDEN_SUFFIXES):
+        return f"forbidden package artifact file: {rel_path}"
     return None
 
 

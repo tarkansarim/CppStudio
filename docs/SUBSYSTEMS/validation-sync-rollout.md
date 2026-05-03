@@ -37,7 +37,8 @@ skills, and watch-mode publishing behavior.
   frontmatter, `agents/openai.yaml`, and bundled local references.
 - Package validation uses `scripts/validate_skill_package.py` and
   `skills/cpp-cuda-vulkan-studio/package-manifest.json` to verify shipped file hashes, sizes,
-  disclosure groups, and package hygiene.
+  disclosure groups, package layout, and package hygiene. Manifest writes reject unsupported
+  top-level files plus VCS, editor, cache, env, secret-like, archive, log, swap, and temp artifacts.
 - Non-dry-run sync stages and validates the skill before replacing the installed target, then restores
   the previous target if final validation fails.
 - Sync validates the source skill, staged skill, and final installed skill against the package
@@ -53,6 +54,7 @@ skills, and watch-mode publishing behavior.
   user-owned content outside the marked CppStudio relay block.
 - Set `SKIP_USER_AGENTS_RELAY=1` only for deliberate relay opt-out installs.
 - `validate.sh` includes a synthetic GPU optimization fixture that exercises success-criteria
-  enforcement, baseline recording, hardware profile/SOL parsing, hypothesis logging, breaking-point
-  search, repeated validation passes, beam-style round planning, keep/revert attempts, final
+  enforcement, target numeric validation, baseline recording, hardware profile/SOL parsing,
+  profiler tool-gap artifacts, hypothesis logging, breaking-point search, repeated validation
+  passes, beam-style round planning, keep/revert attempts, malformed benchmark revert behavior, final
   reporting, and scaffold installation of `scripts/run_gpu_optimization_loop.py`.
