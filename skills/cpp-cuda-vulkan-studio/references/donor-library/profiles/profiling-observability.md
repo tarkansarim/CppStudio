@@ -24,6 +24,9 @@ capture redistribution rules, and CI artifact policy.
 - Pick the profiler based on the question: frame correctness, CPU stalls, GPU kernels, present stalls,
   memory bandwidth, or system scheduling.
 - Keep profiling scripts opt-in and artifact-producing.
+- For Nsight Systems CLI stats, discover supported reports and formats from the installed tool before
+  scripting readback. Prefer explicit report names, `--force-export=true`, and a supported format such
+  as `column`; do not assume generic `summary` reports or `text` output exist across Nsight versions.
 - Do not commit profiler captures unless a repo explicitly stores small fixtures.
 
 ## Validation Ideas

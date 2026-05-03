@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened Nsight Systems profiling guidance so agents use explicit supported reports/formats and do
+  not fall back to stale `nsys stats --report summary --format text` commands.
 - Tightened `run_nsys_smoke.sh` stats readback to use one explicit `nsys stats --force-export=true`
   command with lane-specific column reports such as `vulkan_api_sum,osrt_sum,nvtx_sum`, avoiding
   stale SQLite reuse warnings and marker-report defaults on Nsight versions without `summary`/`text`.

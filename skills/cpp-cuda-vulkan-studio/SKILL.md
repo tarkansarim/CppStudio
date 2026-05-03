@@ -168,6 +168,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
     use `plan-round` for beam-style parallel worker slots when exploring multiple bottlenecks, use
     `next` for move-on decisions, and generate a consolidation report before claiming speedups.
 13. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
+    For Nsight Systems stats readback, prefer the bundled `scripts/run_nsys_smoke.sh` because it
+    probes the installed report and format surface. If writing a manual `nsys stats` command, inspect
+    `nsys stats --help-reports` and `nsys stats --help` first, use explicit reports such as
+    `vulkan_api_sum,osrt_sum,nvtx_sum` or `cuda_api_gpu_sum,cuda_gpu_kern_sum,osrt_sum,nvtx_sum`,
+    include `--force-export=true`, and do not use legacy `--report summary` or unsupported
+    `--format text` assumptions.
 14. Before greenfield scaffolding, major backbone edits, or native GPU architecture brainstorming,
     read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library,
     CUDA+Vulkan combined/interop app, native GUI/HUD/editor UI, AI runtime, neural 3D viewer, grooming/fur tool,

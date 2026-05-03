@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 23985,
-      "sha256": "08b28724c28ebca7fa75f5c294328d48ba0b7bda3096c612d2fc11212f2ecf49"
+      "size": 24498,
+      "sha256": "6890dc9415a1371379753e3189cf09f28a1c2209c21b10b3b3cab2d50e73030b"
     },
     {
       "path": "agents/openai.yaml",
@@ -1001,8 +1001,8 @@
       "path": "references/donor-library/profiles/profiling-observability.md",
       "role": "reference",
       "disclosure_group": "donor-profile",
-      "size": 1687,
-      "sha256": "6c59f8bc05f30df1a86b3c052cf07359a38441fc8567acc1504368c85b80aea2"
+      "size": 1994,
+      "sha256": "0227430261aaba17313b977e3850279a59734a4e1acddba161000bdbb7135d64"
     },
     {
       "path": "references/donor-library/profiles/project-chrono.md",
