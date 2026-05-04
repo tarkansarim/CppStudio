@@ -34,6 +34,8 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `46586d2` - Required exact desktop launch-command verification for user-facing
+  GUI launch paths instead of relying on offscreen smoke alone.
 - `8a64709` - Hardened offscreen GUI verification routing so manager-submitted
   smoke scripts use absolute paths or explicit working directories.
 - `6633fc2` - Fixed the hosted ShellCheck directive for the Vulkan validation wrapper fixture.
