@@ -96,6 +96,16 @@ When this skill is active, work like a native C++ GPU systems engineer:
   the exact command starts the intended process, the control harness responds, and a desktop window
   or captured screenshot is visible. Do not treat an offscreen smoke run alone as proof that the
   user's launch command works.
+- Verify long-running desktop launch commands without blocking the agent on a foreground GUI
+  process. Use a bounded non-blocking verification shape: start the exact launcher while capturing
+  stdout/stderr, keep that launch alive while polling the control harness, confirm process and
+  window/screenshot evidence, test duplicate-launch behavior when the launcher owns a fixed control
+  port, then stop the app through its harness. Avoid transient-shell artifacts where a backgrounded
+  GUI receives SIGHUP when the verification shell exits before probes finish.
+- In shell launch wrappers that probe localhost control ports under `set -e`, explicitly capture and
+  classify failed probe statuses. A normal connection-refused result for "no existing instance yet"
+  must not terminate the launcher before it reaches the app binary, while a healthy existing instance
+  should focus/reuse the window when that is the intended duplicate-launch contract.
 - For GUI/windowed verification through offscreen or background managers, prefer the target repo's
   canonical smoke script or launch wrapper over ad hoc commands. Invoke manager-submitted scripts
   with absolute paths, or an explicit working directory when the manager supports it, even when the

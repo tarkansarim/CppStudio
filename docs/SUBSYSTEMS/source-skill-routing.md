@@ -44,4 +44,5 @@ generated-project workflow instructions.
 - GUI/windowed verification routing changes, including when agents should use target smoke scripts,
   launch wrappers, absolute script paths, or explicit working directories with offscreen/background
   managers
-- user-facing desktop launch-command verification requirements change
+- user-facing desktop launch-command verification requirements change, including non-blocking
+  long-running GUI launch verification, launcher probe behavior, and duplicate-launch contracts

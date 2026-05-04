@@ -57,3 +57,7 @@ validation.
   regressions.
 - Generated app guidance requires agents to verify the exact user-facing launch command when they
   provide or change it; offscreen smoke alone is not enough launch evidence.
+- Long-running desktop launch verification should keep the app alive only for a bounded probe window:
+  capture launcher logs, poll the control harness, confirm process/window evidence, test duplicate
+  launch behavior for fixed control ports, and cleanly stop through the harness instead of blocking a
+  terminal agent on a foreground GUI or letting a transient shell kill the app before probes complete.

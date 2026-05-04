@@ -14,6 +14,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
   paths for offscreen-manager invocations.
 - Required exact desktop launch-command verification when agents provide or change user-facing GUI
   launch commands, so offscreen smoke alone is not treated as launch proof.
+- Tightened desktop launch verification guidance so agents use bounded non-blocking GUI launch
+  probes, avoid transient-shell SIGHUP artifacts, classify localhost control-port probe failures
+  under `set -e`, and verify duplicate-launch/focus behavior when a fixed control port is used.
 - Tightened target-repo hygiene rules so agents use the bundled code-map bootstrap/validator instead
   of hand-writing `.cppstudio` schema, and remove top-level CMake probe artifacts before validation,
   review, or commit status.
