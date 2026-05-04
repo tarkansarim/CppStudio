@@ -36,7 +36,7 @@ commit-level changes readable for people scanning the repo.
 
 - `46586d2` - Required exact desktop launch-command verification for user-facing
   GUI launch paths instead of relying on offscreen smoke alone.
-- `18f2493` - Tightens desktop launch verification so long-running GUI apps are checked through
+- `5e5dbc1` - Tightens desktop launch verification so long-running GUI apps are checked through
   bounded non-blocking harness probes instead of foreground-blocking terminal runs.
 - `8a64709` - Hardened offscreen GUI verification routing so manager-submitted
   smoke scripts use absolute paths or explicit working directories.
