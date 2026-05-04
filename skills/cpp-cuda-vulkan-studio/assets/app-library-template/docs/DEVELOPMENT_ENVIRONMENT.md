@@ -73,6 +73,11 @@ stats` commands, check `nsys stats --help-reports` and `nsys stats --help`; pref
 `scripts/run_nsys_smoke.sh` because it discovers compatible reports for the active `PROFILE_LANE`
 and uses explicit column stats with `--force-export=true` when the local Nsight version supports it.
 
+For Vulkan validation-layer runs, prefer `scripts/run_vulkan_validation.sh` over invoking the
+validation CTest preset directly. The wrapper keeps validation explicit and, when `VULKAN_SDK` is
+set, exposes the SDK layer manifest and `libVkLayer_khronos_validation.so` directory to the wrapped
+command. This avoids confusing a validation-layer load failure with a project renderer failure.
+
 Shader sources live in `shaders/`. Generated `.spv` files are build artifacts under the CMake binary
 directory and should not be edited or committed unless a project intentionally vendors binary
 assets. The default shader path is GLSL through `glslc`, followed by `spirv-val`.

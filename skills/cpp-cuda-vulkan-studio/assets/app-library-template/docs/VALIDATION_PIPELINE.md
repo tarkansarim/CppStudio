@@ -71,6 +71,13 @@ cmake --build --preset vulkan-validation
 scripts/run_vulkan_validation.sh
 ```
 
+Use `scripts/run_vulkan_validation.sh` as the entrypoint for validation-layer runs. When
+`VULKAN_SDK` points at a LunarG SDK, the wrapper also exposes the SDK validation-layer manifest and
+library directory to the wrapped command so a visible `VK_LAYER_KHRONOS_validation` manifest does
+not fail later as an instance-creation `ErrorLayerNotPresent` load error. If validation still fails
+before any project Vulkan code runs, classify SDK, loader, ICD, layer-manifest, layer-library, and
+physical-device failures separately before changing renderer code.
+
 Run `ctest --preset vulkan-compute` for compute dispatch coverage and
 `ctest --preset vulkan-render` for the headless offscreen dynamic-rendering smoke test. These lanes
 require a usable Vulkan ICD with a Vulkan 1.3 physical device, synchronization2, dynamic rendering,
@@ -145,4 +152,7 @@ Vulkan debugging order:
 4. Use Nsight Systems only for whole-frame CPU/GPU scheduling and overlap questions.
 
 GUI or windowed tests must go through the project-approved offscreen/background launcher when the
-repo defines one. Do not add foreground GUI automation to CI by default.
+repo defines one. Prefer the repo's smoke script or launcher wrapper for these runs. If an ad hoc
+offscreen-manager command is necessary, run it from the repo root or pass absolute script paths so a
+manager working-directory mismatch cannot be mistaken for an application failure. Do not add
+foreground GUI automation to CI by default.

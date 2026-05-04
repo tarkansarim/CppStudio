@@ -11,6 +11,12 @@ HUDs, gizmos, timeline controls, graph/plot panels, and runtime game UI.
 
 ## Core Rule
 
+Hard rule: before touching GUI, HUD, editor, timeline, viewport, inspector, gizmo, or tool-surface
+code, do not rely on training data or intuition as the source of truth. Open this skill, the
+CppStudio donor category `cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md`, and any
+domain donor routes for the target tool first. State the donors or peer-tool references that ground
+the layout before implementation.
+
 When comparing GUI options for the user, always include links where they can inspect the visual style
 or example output. Do not present a GUI choice as abstract library trivia; show what it looks like and
 state what kind of app it fits.
@@ -19,6 +25,13 @@ If using interactive question UI such as `request_user_input`, do not ask the GU
 until a visible link table has been shown in the conversation immediately before the question. Also
 include compact source or visual URLs in the option descriptions when the question UI allows it. The
 choice UI alone is not enough if it only shows short labels and prose.
+
+For native GPU artist tools, DCC-style tools, game tools, simulation editors, and viewport-heavy
+applications, product-surface conventions are not optional. Verify viewport dimensionality,
+transport/timeline placement, editor shell layout, inspector location, graph/layer/scene-tree
+expectations, and debug-vs-product UI boundaries against donors or peer tools before writing code.
+Do not present a 2D diagnostic projection as the main viewport for a 3D tool unless the user
+explicitly accepts it as a temporary diagnostic milestone.
 
 ## Default Selection
 
@@ -36,22 +49,24 @@ choice UI alone is not enough if it only shows short labels and prose.
 
 1. Identify the UI class: debug HUD, internal artist tool, editor shell, desktop product UI, runtime
    game UI, small utility, embedded web UI, or mixed.
-2. Keep renderer/simulation logic separate from UI logic. The UI layer may inspect and command the
+2. Open the relevant GUI/HUD donor category and any domain donor categories before layout or
+   dependency decisions. Training data is not enough for product-surface shape.
+3. Keep renderer/simulation logic separate from UI logic. The UI layer may inspect and command the
    engine, but should not own GPU resource lifetime, simulation state, or asset truth.
-3. For Vulkan targets, define the UI render pass or dynamic-rendering hook, descriptor lifetime, font
+4. For Vulkan targets, define the UI render pass or dynamic-rendering hook, descriptor lifetime, font
    atlas upload, input routing, DPI scaling, and swapchain resize behavior explicitly.
-4. For CUDA targets, keep the GUI thread and CUDA work queue boundaries explicit; avoid hiding CUDA
+5. For CUDA targets, keep the GUI thread and CUDA work queue boundaries explicit; avoid hiding CUDA
    synchronization in widget callbacks.
-5. Present a compact option table with:
+6. Present a compact option table with:
    - recommended use
    - source/docs link
    - visual/gallery/examples link
    - license/dependency caveat
-6. Only after that link table is visible, ask the user to choose among the researched options.
-7. Before adding a dependency, check the target repo's package policy and exact upstream license.
-8. If CppStudio is available, read its donor category first:
+7. Only after that link table is visible, ask the user to choose among the researched options.
+8. Before adding a dependency, check the target repo's package policy and exact upstream license.
+9. If CppStudio is available, read its donor category first:
    `cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md`.
-9. For current best-choice or version-sensitive questions, web-check official project docs/repos before
+10. For current best-choice or version-sensitive questions, web-check official project docs/repos before
    ranking options.
 
 ## Bundled Reference

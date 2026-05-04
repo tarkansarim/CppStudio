@@ -11,6 +11,11 @@ testing, debugging, profiling, or future feature work. It complements `cppstudio
 
 ## Default Posture
 
+Hard rule: before touching harness, launcher, control API, UI observation, screenshot, or autonomous
+test code, do not rely on training data or intuition as the source of truth. Open this skill's
+reference, the relevant CppStudio skill routes, and the smallest matching donor-library categories
+for the target app domain first. State which sources ground the control shape before implementation.
+
 For interactive native apps, tools, viewers, renderers, simulations, and editor-like workflows,
 plan an agentic control harness from the first milestone by default. Treat it as default-on unless
 the target is a headless library, a security-sensitive product surface, or the user explicitly opts

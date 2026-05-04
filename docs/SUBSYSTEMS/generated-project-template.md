@@ -48,3 +48,9 @@ validation.
   probes the installed `nsys stats` reports/formats before reading stats with explicit reports,
   `--format column` when supported, and `--force-export=true`, so generated projects do not rely on
   stale report names such as `summary` or unsupported formats such as `text`.
+- The generated Vulkan validation wrapper owns validation-layer environment setup. When `VULKAN_SDK`
+  is set, it exposes the SDK manifest and layer-library directories before running the wrapped
+  command so a discovered layer manifest cannot later fail as an instance-creation layer-load error.
+- Generated GUI/windowed validation docs tell agents to prefer project smoke scripts or launcher
+  wrappers with offscreen/background managers, and to use explicit cwd or absolute script paths for
+  ad hoc manager probes so invocation-context failures are not confused with app regressions.

@@ -59,6 +59,11 @@ question UI allows it.
 
 When this skill is active, work like a native C++ GPU systems engineer:
 
+- Hard rule: before touching code, do not rely on training data or intuition as the source of truth.
+  First open the relevant local skills, the target repo's maintained code map when enabled, and the
+  smallest matching donor-library route/category/profile. State the skill and donor sources used
+  before implementation. If no donor route fits, stop and do focused donor or upstream research
+  before designing the code.
 - Treat Vulkan as an explicit-lifetime API. Resource ownership, synchronization, image layouts, queue
   ownership, descriptor lifetime, command-buffer reuse, and frames-in-flight must be designed
   deliberately.
@@ -86,9 +91,20 @@ When this skill is active, work like a native C++ GPU systems engineer:
   feature driving, state/log readback, screenshots, and visual/UI troubleshooting before asking the
   user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
   the harness instead of repeatedly handing small verification chores to the user.
+- For GUI/windowed verification through offscreen or background managers, prefer the target repo's
+  canonical smoke script or launch wrapper over ad hoc commands. If an ad hoc manager command is
+  needed, make the working directory explicit or use absolute script paths, and classify
+  "script not found" manager-context failures as invocation issues rather than app failures.
+- Stop verification once the agreed evidence threshold is met. Do not keep adding optional probes
+  after build/test/map/harness/screenshot evidence already answers the user-facing question, unless a
+  new failure or unresolved risk justifies the extra run.
 - Be donor-first. Use the donor library for architecture, edge cases, tests, algorithms, and
   dependency choices before inventing a new subsystem; when no suitable donor exists, add donor
   research before designing the implementation.
+- Do not treat "MVP", "scaffold", or "prototype" as permission to skip donor grounding for product
+  shape. For native GPU tools, viewport type, editor layout, timeline/transport placement, graph or
+  scene source of truth, solver architecture, render path, and validation surface must be checked
+  against the relevant skills and donor/peer-tool references before code is written.
 - Treat native C++ GPU brainstorming and architecture proposals as donor-grounded work, not just
   conceptual chat. Before making concrete solver, renderer, dependency, subsystem, or MVP-order
   recommendations, open the smallest relevant donor categories/profiles and state which guidance is
@@ -116,6 +132,14 @@ When this skill is active, work like a native C++ GPU systems engineer:
   manifest as the first navigation step before code changes: choose the subsystem route, read the
   matching subsystem doc, then inspect the files named by that route. Do not keep prompting when
   state says `declined`.
+- Do not hand-author CppStudio code-map state or manifest schema in target repos. Use the bundled
+  `scripts/bootstrap_code_map.py` flow to enable, decline, or audit maps, then run
+  `scripts/validate_code_map.py --require-enabled .` when the map is expected to be active.
+- Treat generated tool-probe artifacts as cleanup debt, not just ignore-file entries. If CMake
+  probing or package discovery creates top-level `CMakeFiles/`, `CMakeCache.txt`,
+  `cmake_install.cmake`, or similar generated files outside the chosen build directory, remove them
+  before validation, review, or commit status. Build and artifact directories may be ignored, but
+  probe junk should not sit in the source root.
 - When working in a target repo other than CppStudio itself, treat that repo's `AGENTS.md`,
   codebase map, manifest, and repo-local skills as the subsystem routing authority. CppStudio supplies
   the native C++/GPU lane policy, backbone, validation, and donor routing around the target repo's map.
@@ -143,18 +167,22 @@ When this skill is active, work like a native C++ GPU systems engineer:
 
 ## Workflow
 
-1. Inspect the target repo first: `AGENTS.md`, `CMakeLists.txt`, `CMakePresets.json`, package manifests, `.github/workflows`, `cmake/`, `tests/`, `scripts/`, docs, `docs/CODEBASE_ARCHITECTURE_INDEX.md`, `docs/CODEBASE_SUBSYSTEM_MANIFEST.json`, and `.cppstudio/code-map-state.json` when present.
-2. For a greenfield repo, run `scripts/scaffold_gpu_cpp_project.py` from this skill and then adapt only project names and required dependency switches.
-3. For an existing repo, run `scripts/apply_studio_backbone.py` against a temporary copy first unless the user explicitly wants direct modification.
-4. For a greenfield scaffold with no `.cppstudio/code-map-state.json`, ask once whether to create a maintained codebase architecture map. State the benefits: faster cold starts, cleaner multi-agent routing, explicit subsystem ownership, and less repeated code reading. If the user already explicitly asked for a code map, architecture map, or future-agent map during project creation, treat that as acceptance and run `scripts/bootstrap_code_map.py --enable --force` after scaffolding because the template includes starter generated map files. If they decline, run `scripts/bootstrap_code_map.py --decline` and do not prompt again unless asked.
-5. For an existing project with no `.cppstudio/code-map-state.json`, treat code-map enablement as a readiness protocol. Run `scripts/bootstrap_code_map.py --audit-existing` first and summarize its stdout: structure findings, nonstandard layout risks, and the estimated cleanup cost. Do not write `docs/CODEMAP_BOOTSTRAP_AUDIT.md` unless the user wants a saved audit; then rerun with `--write-audit`. Ask whether the user wants to restructure first, preserve the current layout and document exceptions, or decline the map. Do not run `--enable` until the user chooses either restructure-complete or preserve-as-is. If generated map files already exist, use `--enable --force` only after the user accepts replacing those generated map files.
-6. When `.cppstudio/code-map-state.json` says `enabled`, or when repo-local instructions declare a maintained codebase map required, read the target repo's `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before code changes. Use that map to select the subsystem doc and primary paths for the change, then keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, or public runtime behavior changes. If the user asks about a code map mid-project, explain it, run the existing-project readiness protocol, and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; if generated map files already exist, use `--force` only after the user accepts replacing them. For large existing repos, use parallel subsystem audits when delegation is explicitly available.
-7. Preserve any existing package manager or project-specific dependency policy. Do not introduce vcpkg, Conan, containers, FetchContent, or submodules unless there is a concrete reason.
-8. Keep CUDA and Vulkan optional through CMake cache options. For unspecified new GPU/3D/realtime/XR/cross-platform C++ projects, recommend and scaffold Vulkan-first: the normal `dev` preset is Vulkan-only, CUDA stays off unless the user explicitly chooses the CUDA lane or the requirements force CUDA.
-9. Do not mix CUDA into a Vulkan-chosen or Vulkan-assumed project by default. Use CUDA only for explicit CUDA/Vulkan interop, CUDA-specific compute, NVIDIA-only libraries, CUDA graphs, or custom CUDA kernels. When the user explicitly chooses CUDA, Vulkan may be added for presentation, realtime visualization, XR, swapchain/display work, or interop if the boundary is documented.
-10. For new Vulkan template work, target Vulkan 1.3 with Vulkan-Hpp RAII, synchronization2, dynamic rendering, GLSL compiled by `glslc`, SPIR-V validation by `spirv-val`, and optional portability-enumeration support for MoltenVK-style platforms.
-11. Register tests with CTest labels so quick, GPU, GUI, Vulkan, CUDA, shader, compute, render, validation, perf, and nightly lanes can be selected independently.
-12. For GPU performance work, use the generated optimization loop when available. Start from
+1. Before touching code, open the relevant skills and donor routes. Training data is not authority
+   for CppStudio implementation decisions. Use `references/donor-library/agent-lookup.md` for broad
+   or overlapping prompts, production overlays for VFX/game/native-infrastructure vocabulary, and
+   category/profile files for the smallest concrete donor set. Record the sources used.
+2. Inspect the target repo: `AGENTS.md`, `CMakeLists.txt`, `CMakePresets.json`, package manifests, `.github/workflows`, `cmake/`, `tests/`, `scripts/`, docs, `docs/CODEBASE_ARCHITECTURE_INDEX.md`, `docs/CODEBASE_SUBSYSTEM_MANIFEST.json`, and `.cppstudio/code-map-state.json` when present.
+3. For a greenfield repo, run `scripts/scaffold_gpu_cpp_project.py` from this skill and then adapt only project names and required dependency switches.
+4. For an existing repo, run `scripts/apply_studio_backbone.py` against a temporary copy first unless the user explicitly wants direct modification.
+5. For a greenfield scaffold with no `.cppstudio/code-map-state.json`, ask once whether to create a maintained codebase architecture map. State the benefits: faster cold starts, cleaner multi-agent routing, explicit subsystem ownership, and less repeated code reading. If the user already explicitly asked for a code map, architecture map, or future-agent map during project creation, treat that as acceptance and run `scripts/bootstrap_code_map.py --enable --force` after scaffolding because the template includes starter generated map files. If they decline, run `scripts/bootstrap_code_map.py --decline` and do not prompt again unless asked. Do not create `.cppstudio/code-map-state.json`, `docs/CODEBASE_ARCHITECTURE_INDEX.md`, or `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` by guessing the schema; use the bootstrap script and validator.
+6. For an existing project with no `.cppstudio/code-map-state.json`, treat code-map enablement as a readiness protocol. Run `scripts/bootstrap_code_map.py --audit-existing` first and summarize its stdout: structure findings, nonstandard layout risks, and the estimated cleanup cost. Do not write `docs/CODEMAP_BOOTSTRAP_AUDIT.md` unless the user wants a saved audit; then rerun with `--write-audit`. Ask whether the user wants to restructure first, preserve the current layout and document exceptions, or decline the map. Do not run `--enable` until the user chooses either restructure-complete or preserve-as-is. If generated map files already exist, use `--enable --force` only after the user accepts replacing those generated map files.
+7. When `.cppstudio/code-map-state.json` says `enabled`, or when repo-local instructions declare a maintained codebase map required, read the target repo's `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before code changes. Use that map to select the subsystem doc and primary paths for the change, then keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, or public runtime behavior changes. If the user asks about a code map mid-project, explain it, run the existing-project readiness protocol, and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; if generated map files already exist, use `--force` only after the user accepts replacing them. For large existing repos, use parallel subsystem audits when delegation is explicitly available.
+8. Preserve any existing package manager or project-specific dependency policy. Do not introduce vcpkg, Conan, containers, FetchContent, or submodules unless there is a concrete reason.
+9. Keep CUDA and Vulkan optional through CMake cache options. For unspecified new GPU/3D/realtime/XR/cross-platform C++ projects, recommend and scaffold Vulkan-first: the normal `dev` preset is Vulkan-only, CUDA stays off unless the user explicitly chooses the CUDA lane or the requirements force CUDA.
+10. Do not mix CUDA into a Vulkan-chosen or Vulkan-assumed project by default. Use CUDA only for explicit CUDA/Vulkan interop, CUDA-specific compute, NVIDIA-only libraries, CUDA graphs, or custom CUDA kernels. When the user explicitly chooses CUDA, Vulkan may be added for presentation, realtime visualization, XR, swapchain/display work, or interop if the boundary is documented.
+11. For new Vulkan template work, target Vulkan 1.3 with Vulkan-Hpp RAII, synchronization2, dynamic rendering, GLSL compiled by `glslc`, SPIR-V validation by `spirv-val`, and optional portability-enumeration support for MoltenVK-style platforms.
+12. Register tests with CTest labels so quick, GPU, GUI, Vulkan, CUDA, shader, compute, render, validation, perf, and nightly lanes can be selected independently.
+13. For GPU performance work, use the generated optimization loop when available. Start from
     the target project's `docs/GPU_OPTIMIZATION_LOOP.md`; when working in this source package before
     that doc has been copied, use the bundled template copy at
     `assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md`. Create a representative target table
@@ -167,20 +195,20 @@ When this skill is active, work like a native C++ GPU systems engineer:
     benchmarking an attempt, keep only correct improvements, revert rejected or divergent attempts,
     use `plan-round` for beam-style parallel worker slots when exploring multiple bottlenecks, use
     `next` for move-on decisions, and generate a consolidation report before claiming speedups.
-13. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
+14. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
     For Nsight Systems stats readback, prefer the bundled `scripts/run_nsys_smoke.sh` because it
     probes the installed report and format surface. If writing a manual `nsys stats` command, inspect
     `nsys stats --help-reports` and `nsys stats --help` first, use explicit reports such as
     `vulkan_api_sum,osrt_sum,nvtx_sum` or `cuda_api_gpu_sum,cuda_gpu_kern_sum,osrt_sum,nvtx_sum`,
     include `--force-export=true`, and do not use legacy `--report summary` or unsupported
     `--format text` assumptions.
-14. Before greenfield scaffolding, major backbone edits, or native GPU architecture brainstorming,
+15. Before greenfield scaffolding, major backbone edits, or native GPU architecture brainstorming,
     read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library,
     CUDA+Vulkan combined/interop app, native GUI/HUD/editor UI, AI runtime, neural 3D viewer, grooming/fur tool,
     glTF/runtime asset viewer, renderer backbone/runtime mesh pipeline, DCC scene pipeline,
     volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool,
     3D/physics/GPU simulation tool, or XR app.
-15. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects,
+16. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects,
     or when brainstorming native GPU architecture that will recommend solvers, rendering paths,
     dependencies, subsystem boundaries, or MVP order, use the nested donor router before giving the
     recommendation. Read `references/donor-library/README.md` for policy; when the prompt uses VFX
@@ -197,7 +225,7 @@ When this skill is active, work like a native C++ GPU systems engineer:
     brainstorms that mention fluid, fire, smoke, water, destruction, shatter, neural 3D,
     upscaling/reconstruction, XR, or renderer architecture, do the web ceiling check even if the user
     did not use "current" or "best."
-16. Do not route design-only, frontend-only, storyboarding, generic image/video, generic product-AI UI, plain text rendering, or ordinary data import requests through this skill unless the user explicitly asks for native C++ GPU implementation, C++/CUDA/Vulkan infrastructure, or donor-reference selection.
+17. Do not route design-only, frontend-only, storyboarding, generic image/video, generic product-AI UI, plain text rendering, or ordinary data import requests through this skill unless the user explicitly asks for native C++ GPU implementation, C++/CUDA/Vulkan infrastructure, or donor-reference selection.
 
 ## Existing Project Code Map Readiness Protocol
 

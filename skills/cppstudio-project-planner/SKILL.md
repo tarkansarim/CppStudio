@@ -14,6 +14,12 @@ implementation to the specific CppStudio, GUI, Vulkan, CUDA, CMake, and donor ro
 Do not scaffold or make broad architecture commitments while major project-shaping choices are still
 unresolved.
 
+Hard rule: before touching code or locking a project-shaping recommendation, do not rely on training
+data or intuition as the source of truth. Open the relevant local skills and the smallest matching
+donor-library route/category/profile first. The pre-plan brief must name the skills, donor routes,
+and current upstream sources that grounded the recommendation. If no donor route fits, state that
+gap and do focused research before designing or scaffolding.
+
 For a substantial initial project request, gather a pre-plan research brief before asking the user to
 switch to Plan mode or presenting decision questions. Do not jump straight into question UI.
 
@@ -93,10 +99,14 @@ facade over the same API, and which state/log/visual observation surfaces are ne
    proposing a source-of-truth model.
 4. Open the smallest matching donor categories and profiles before recommending solvers, renderer
    backbones, GUI stacks, asset/runtime formats, AI runtimes, or simulation architecture.
-5. Separate current leading approaches from legacy/outdated approaches, state the freshness evidence,
+5. Treat product-surface choices as donor-gated decisions, not implementation conveniences. Before
+   recommending or scaffolding viewport dimensionality, timeline/transport placement, editor layout,
+   node graph/layer stack/source of truth, solver architecture, or render path, cite the donor or
+   peer-tool evidence that supports it.
+6. Separate current leading approaches from legacy/outdated approaches, state the freshness evidence,
    and call out when a local donor is still useful only as reference because the current best approach
    has moved on.
-6. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
+7. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
    routes, peer-tool authoring-model findings, web sources checked, current-vs-legacy notes, and the
    reasoning for the best available option, then ask for Plan mode and only then ask decision
    questions.

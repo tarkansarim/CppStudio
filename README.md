@@ -34,6 +34,8 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `23c5af7` - Hardened donor-first implementation gates, GUI/windowed verification, code-map hygiene,
+  and Vulkan validation-layer environment setup.
 - `ae711f6` - Made project planning prefer current best approaches, state-of-the-art web ceiling
   checks, and current-vs-legacy separation before stack choices.
 - `57e7a2a` - Added README acknowledgements for the public reference repos that informed the GPU

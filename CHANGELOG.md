@@ -4,6 +4,19 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened the generated Vulkan validation wrapper so SDK validation-layer manifests and layer
+  library paths are exported together, preventing `ErrorLayerNotPresent` load failures from being
+  mistaken for renderer regressions.
+- Tightened GUI/windowed verification guidance so agents stop after sufficient evidence, prefer
+  project smoke scripts/launch wrappers, and use explicit cwd or absolute script paths for ad hoc
+  offscreen-manager probes.
+- Tightened target-repo hygiene rules so agents use the bundled code-map bootstrap/validator instead
+  of hand-writing `.cppstudio` schema, and remove top-level CMake probe artifacts before validation,
+  review, or commit status.
+- Added a hard donor-first implementation gate across CppStudio skills: before touching native GPU,
+  GUI/editor, planning, or control-harness code, agents must open the relevant local skills,
+  maintained map routes, and smallest matching donor-library references instead of relying on
+  training data or intuition.
 - Strengthened project-planner research gates so agents must investigate comparable current tools and
   common authoring models/source-of-truth patterns before asking Plan mode questions or scaffolding.
 - Hardened Nsight Systems profiling guidance so agents use explicit supported reports/formats and do

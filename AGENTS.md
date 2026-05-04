@@ -24,6 +24,19 @@ C++/CUDA/Vulkan development.
 - Do not move private app, local workstation, or other project-specific skills back into user-level
   Codex from this repo.
 
+## Donor-First Code Rule
+
+- For CppStudio skill, planning, GUI/HUD, project-template, or donor-routing work, training data is
+  never enough before touching code. First read the relevant repo skill, maintained code map route,
+  and the smallest matching donor-library route/category/profile. Then state which sources are
+  grounding the change.
+- If no matching donor route exists, record that gap and do focused research before designing or
+  implementing the missing behavior. Do not fill the gap from memory and proceed as if it were
+  donor-backed.
+- Product-shape decisions for native GPU tools, especially viewport type, timeline/transport
+  placement, editor layout, authoring model, solver architecture, and GUI stack, require donor or
+  peer-tool evidence before implementation.
+
 ## Vulkan-Leaning Defaults
 
 - If the user asks for a new GPU, 3D, rendering, realtime, simulation-visualization, XR, or

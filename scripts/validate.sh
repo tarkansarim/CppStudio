@@ -1964,6 +1964,21 @@ if grep -R "realpath -m" "${ROOT_DIR}/scripts/sync_to_codex.sh" "${ROOT_DIR}/scr
     echo "sync/rollout scripts must not depend on GNU-only realpath -m" >&2
     exit 1
 fi
+vulkan_fake_sdk="$(mktemp -d "${VALIDATE_TMP}/vulkan_sdk.XXXXXX")"
+mkdir -p "${vulkan_fake_sdk}/lib" "${vulkan_fake_sdk}/share/vulkan/explicit_layer.d"
+touch "${vulkan_fake_sdk}/lib/libVkLayer_khronos_validation.so"
+touch "${vulkan_fake_sdk}/share/vulkan/explicit_layer.d/VkLayer_khronos_validation.json"
+vulkan_validation_env_capture="$(mktemp "${VALIDATE_TMP}/vulkan_validation_env.XXXXXX")"
+env -u LD_LIBRARY_PATH -u VK_ADD_LAYER_PATH \
+    VULKAN_SDK="${vulkan_fake_sdk}" \
+    VULKAN_VALIDATION_OUTPUT_DIR="${VALIDATE_TMP}/vulkan_validation_artifacts" \
+    "${SKILL_DIR}/scripts/run_vulkan_validation.sh" \
+    bash -c 'printf "LD=%s\nVK_ADD=%s\nLAYERS=%s\n" "${LD_LIBRARY_PATH-}" "${VK_ADD_LAYER_PATH-}" "${VK_INSTANCE_LAYERS-}" >"$1"' \
+    -- \
+    "${vulkan_validation_env_capture}"
+grep -Fx "LD=${vulkan_fake_sdk}/lib" "${vulkan_validation_env_capture}"
+grep -Fx "VK_ADD=${vulkan_fake_sdk}/share/vulkan/explicit_layer.d" "${vulkan_validation_env_capture}"
+grep -Fx "LAYERS=VK_LAYER_KHRONOS_validation" "${vulkan_validation_env_capture}"
 compute_fake_dir="$(mktemp -d "${VALIDATE_TMP}/compute_fake.XXXXXX")"
 cat >"${compute_fake_dir}/compute-sanitizer" <<'EOF'
 #!/usr/bin/env bash

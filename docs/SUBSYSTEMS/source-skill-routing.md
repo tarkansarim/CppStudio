@@ -37,3 +37,9 @@ generated-project workflow instructions.
 - project authoring-model/source-of-truth research expectations or decision gates change
 - agentic control harness routing, autonomous app testing expectations, launch/control registry, or
   visual/UI observation behavior changes
+- hard gates that require agents to open local skills, maintained code-map routes, and donor-library
+  categories before code changes or product-shape decisions
+- code-map bootstrap script authority, code-map schema validation, or generated CMake probe cleanup
+  requirements change
+- GUI/windowed verification routing changes, including when agents should use target smoke scripts,
+  launch wrappers, or absolute paths with offscreen/background managers

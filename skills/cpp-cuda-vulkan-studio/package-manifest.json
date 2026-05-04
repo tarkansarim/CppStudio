@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 24531,
-      "sha256": "4fc359a4bd00ce40c4e5dbec1e704dda39fc6a03b38c157f4ee7c96e6363bb4c"
+      "size": 27242,
+      "sha256": "2d6aa835d01308f9dfc70c43a4debb113b7f8bcdff8d32d002e618ad7a284471"
     },
     {
       "path": "agents/openai.yaml",
@@ -140,8 +140,8 @@
       "path": "assets/app-library-template/docs/DEVELOPMENT_ENVIRONMENT.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 4319,
-      "sha256": "3752407a98e5210f02b6517087020569bdc5cd58a35123cdb473747db363057f"
+      "size": 4708,
+      "sha256": "14525a2031febb46191eb7919c420d79afa301ea01dac0bd4f03c03ccce0ba65"
     },
     {
       "path": "assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md",
@@ -196,8 +196,8 @@
       "path": "assets/app-library-template/docs/VALIDATION_PIPELINE.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 5753,
-      "sha256": "68e6a66225ada933ae8e47268d8ebae2ef2453d324474f32ea3300f838fae0ca"
+      "size": 6570,
+      "sha256": "3b61b9666adbfbcd4c25e6f237177ea5465a9dc3d3537c6441327a6d3dd76a77"
     },
     {
       "path": "assets/app-library-template/include/{{PROJECT_NAME}}/cuda_vector_add.hpp",
@@ -1372,8 +1372,8 @@
       "path": "scripts/run_vulkan_validation.sh",
       "role": "script",
       "disclosure_group": "script",
-      "size": 737,
-      "sha256": "5c983566871be838e1ec92196d8adc9510c03538e3e568e28c765572e7494861"
+      "size": 1660,
+      "sha256": "d975c4c9f93da35a7fe7fc9bfd9082fea26c53f6e9f0bbb7bae280f9c014c9f9"
     },
     {
       "path": "scripts/scaffold_gpu_cpp_project.py",
