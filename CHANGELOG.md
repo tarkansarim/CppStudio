@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Fixed the validation script's ShellCheck directive for the Vulkan validation wrapper fixture so
+  hosted CI accepts the intentionally single-quoted child-shell capture command.
 - Hardened the generated Vulkan validation wrapper so SDK validation-layer manifests and layer
   library paths are exported together, preventing `ErrorLayerNotPresent` load failures from being
   mistaken for renderer regressions.

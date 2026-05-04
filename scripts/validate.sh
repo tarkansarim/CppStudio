@@ -1969,6 +1969,7 @@ mkdir -p "${vulkan_fake_sdk}/lib" "${vulkan_fake_sdk}/share/vulkan/explicit_laye
 touch "${vulkan_fake_sdk}/lib/libVkLayer_khronos_validation.so"
 touch "${vulkan_fake_sdk}/share/vulkan/explicit_layer.d/VkLayer_khronos_validation.json"
 vulkan_validation_env_capture="$(mktemp "${VALIDATE_TMP}/vulkan_validation_env.XXXXXX")"
+# shellcheck disable=SC2016
 env -u LD_LIBRARY_PATH -u VK_ADD_LAYER_PATH \
     VULKAN_SDK="${vulkan_fake_sdk}" \
     VULKAN_VALIDATION_OUTPUT_DIR="${VALIDATE_TMP}/vulkan_validation_artifacts" \
