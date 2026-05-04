@@ -12,6 +12,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 - Tightened GUI/windowed verification guidance so agents stop after sufficient evidence, prefer
   project smoke scripts/launch wrappers, and use explicit working directories or absolute script
   paths for offscreen-manager invocations.
+- Required exact desktop launch-command verification when agents provide or change user-facing GUI
+  launch commands, so offscreen smoke alone is not treated as launch proof.
 - Tightened target-repo hygiene rules so agents use the bundled code-map bootstrap/validator instead
   of hand-writing `.cppstudio` schema, and remove top-level CMake probe artifacts before validation,
   review, or commit status.

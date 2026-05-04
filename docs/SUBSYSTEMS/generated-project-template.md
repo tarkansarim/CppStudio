@@ -55,3 +55,5 @@ validation.
   wrappers with offscreen/background managers, and to use absolute script paths or explicit working
   directories for manager-submitted scripts so invocation-context failures are not confused with app
   regressions.
+- Generated app guidance requires agents to verify the exact user-facing launch command when they
+  provide or change it; offscreen smoke alone is not enough launch evidence.

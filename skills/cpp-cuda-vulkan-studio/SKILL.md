@@ -91,6 +91,11 @@ When this skill is active, work like a native C++ GPU systems engineer:
   feature driving, state/log readback, screenshots, and visual/UI troubleshooting before asking the
   user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
   the harness instead of repeatedly handing small verification chores to the user.
+- When you give, change, or rely on a user-facing desktop launch command, verify that exact command
+  path in addition to offscreen smoke tests. For long-running GUI apps, acceptable evidence is that
+  the exact command starts the intended process, the control harness responds, and a desktop window
+  or captured screenshot is visible. Do not treat an offscreen smoke run alone as proof that the
+  user's launch command works.
 - For GUI/windowed verification through offscreen or background managers, prefer the target repo's
   canonical smoke script or launch wrapper over ad hoc commands. Invoke manager-submitted scripts
   with absolute paths, or an explicit working directory when the manager supports it, even when the
