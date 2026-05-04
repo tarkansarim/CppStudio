@@ -10,8 +10,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
   library paths are exported together, preventing `ErrorLayerNotPresent` load failures from being
   mistaken for renderer regressions.
 - Tightened GUI/windowed verification guidance so agents stop after sufficient evidence, prefer
-  project smoke scripts/launch wrappers, and use explicit cwd or absolute script paths for ad hoc
-  offscreen-manager probes.
+  project smoke scripts/launch wrappers, and use explicit working directories or absolute script
+  paths for offscreen-manager invocations.
 - Tightened target-repo hygiene rules so agents use the bundled code-map bootstrap/validator instead
   of hand-writing `.cppstudio` schema, and remove top-level CMake probe artifacts before validation,
   review, or commit status.

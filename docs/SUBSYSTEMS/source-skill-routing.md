@@ -42,4 +42,5 @@ generated-project workflow instructions.
 - code-map bootstrap script authority, code-map schema validation, or generated CMake probe cleanup
   requirements change
 - GUI/windowed verification routing changes, including when agents should use target smoke scripts,
-  launch wrappers, or absolute paths with offscreen/background managers
+  launch wrappers, absolute script paths, or explicit working directories with offscreen/background
+  managers

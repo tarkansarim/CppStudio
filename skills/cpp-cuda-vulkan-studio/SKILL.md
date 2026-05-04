@@ -92,9 +92,11 @@ When this skill is active, work like a native C++ GPU systems engineer:
   user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
   the harness instead of repeatedly handing small verification chores to the user.
 - For GUI/windowed verification through offscreen or background managers, prefer the target repo's
-  canonical smoke script or launch wrapper over ad hoc commands. If an ad hoc manager command is
-  needed, make the working directory explicit or use absolute script paths, and classify
-  "script not found" manager-context failures as invocation issues rather than app failures.
+  canonical smoke script or launch wrapper over ad hoc commands. Invoke manager-submitted scripts
+  with absolute paths, or an explicit working directory when the manager supports it, even when the
+  script is the canonical smoke; offscreen managers may not preserve the caller shell's current
+  directory. Classify "script not found" manager-context failures as invocation issues rather than
+  app failures.
 - Stop verification once the agreed evidence threshold is met. Do not keep adding optional probes
   after build/test/map/harness/screenshot evidence already answers the user-facing question, unless a
   new failure or unresolved risk justifies the extra run.

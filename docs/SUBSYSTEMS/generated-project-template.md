@@ -52,5 +52,6 @@ validation.
   is set, it exposes the SDK manifest and layer-library directories before running the wrapped
   command so a discovered layer manifest cannot later fail as an instance-creation layer-load error.
 - Generated GUI/windowed validation docs tell agents to prefer project smoke scripts or launcher
-  wrappers with offscreen/background managers, and to use explicit cwd or absolute script paths for
-  ad hoc manager probes so invocation-context failures are not confused with app regressions.
+  wrappers with offscreen/background managers, and to use absolute script paths or explicit working
+  directories for manager-submitted scripts so invocation-context failures are not confused with app
+  regressions.
