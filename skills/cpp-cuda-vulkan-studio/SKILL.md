@@ -90,7 +90,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
   artifacts, and generated junk unless the repo intentionally tracks them, and run a whitespace or
   staged-diff hygiene check such as `git diff --check` or `git diff --cached --check`. If the repo
   has no git history, no git identity, ambiguous dirty state, or approval is required for the git
-  write, surface that clearly instead of silently skipping the commit.
+  write, surface that clearly instead of silently skipping the commit. Add a commit trailer that
+  identifies why the commit happened: use `Commit-Origin: agent-slice` for commits the agent creates
+  as part of the verified-slice workflow, and `Commit-Origin: user-requested` when the user
+  explicitly asked for that commit.
 - Use evidence before claims. Builds, CTest labels, shader compilation, Vulkan validation,
   Compute Sanitizer, RenderDoc/Nsight captures, screenshots, image comparisons, and profiler output
   matter more than plausible explanations.
@@ -260,7 +263,8 @@ For long-running target-project implementation, repeat this rhythm between slice
 3. Verify with the target repo's build, tests, harness, screenshot, or profile evidence appropriate
    to the change.
 4. Clean generated probe junk from the source root, review `git status`, keep unrelated user changes
-   out, check diff hygiene, and commit the verified slice.
+   out, check diff hygiene, and commit the verified slice with the appropriate `Commit-Origin`
+   trailer.
 5. Continue to the next slice only after the commit is in place, or after clearly reporting why a
    commit was intentionally skipped.
 

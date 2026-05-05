@@ -66,3 +66,5 @@ validation.
 - Template docs tell agents to commit each coherent verified implementation slice before moving to
   the next milestone while keeping generated build outputs, screenshots, profiler captures, logs, and
   temporary verification artifacts out of git unless the project intentionally tracks them.
+- Generated-project commit guidance uses `Commit-Origin` trailers so autonomous agent slice commits
+  and explicit user-requested commits stay distinguishable in git history.

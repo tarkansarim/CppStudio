@@ -48,3 +48,5 @@ generated-project workflow instructions.
   long-running GUI launch verification, launcher probe behavior, and duplicate-launch contracts
 - target-project commit rhythm changes, including when verified implementation slices should be
   committed before agents continue into the next milestone
+- target-project commit-origin marker policy changes, including how autonomous agent commits are
+  distinguished from user-requested commits

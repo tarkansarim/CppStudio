@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added commit-origin trailer guidance so autonomous verified-slice commits and explicit
+  user-requested commits are distinguishable in target project history.
 - Added verified-slice git commit discipline to the CppStudio workflow so agents commit clean
   source/docs/harness/code-map updates before continuing into the next implementation milestone.
 - Fixed the validation script's ShellCheck directive for the Vulkan validation wrapper fixture so
