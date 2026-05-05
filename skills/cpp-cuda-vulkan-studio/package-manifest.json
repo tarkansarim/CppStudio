@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 33044,
-      "sha256": "9a78363a4fae4f9e2f5bb6b48a307a802e5cdbebae2a07c858f1df00a14609d1"
+      "size": 33694,
+      "sha256": "31770c6056d2863fdb230ab54af6c796b3b34a6e4546833a80e24424df539925"
     },
     {
       "path": "agents/openai.yaml",
@@ -1309,8 +1309,8 @@
       "path": "references/project-archetypes.md",
       "role": "reference",
       "disclosure_group": "entrypoint",
-      "size": 19757,
-      "sha256": "bb8d32f1ce89d2805acb398b9c3f32bae018e3b5f96ef75a9ad9dffd1901f835"
+      "size": 20017,
+      "sha256": "8fc1fe81cfb3f51c8b6455c34e99f41ec9e2e7bf37b47d114f8039beb573bfde"
     },
     {
       "path": "scripts/apply_studio_backbone.py",

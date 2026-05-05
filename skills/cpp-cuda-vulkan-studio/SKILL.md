@@ -127,6 +127,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   Some toolkit grabs render during the capture call, so the correct proof is a post-capture rendered
   revision; others copy the last presented frame and need pre-capture scheduling. Classify the issue
   as render scheduling, capture timing, or test-script order before applying the next fix.
+- If two focused visual-capture, render-scheduling, or harness-command fixes fail, stop
+  micro-patching. Write a short evidence ledger with the failing job/scenario ids, exact failed
+  assertion or response fields, frame/revision/fence progress, whether artifacts are current or stale
+  leftovers, validation-layer/profiler errors, and which recent patches are proven versus
+  speculative. Revert or quarantine unproven speculative patches before the next attempt unless the
+  evidence clearly shows they are still required. The next attempt needs either a smaller targeted
+  repro/probe or a source-level root cause in the app/toolkit/render flow.
 - When you give, change, or rely on a user-facing desktop launch command, verify that exact command
   path in addition to offscreen smoke tests. For long-running GUI apps, acceptable evidence is that
   the exact command starts the intended process, the control harness responds, and a desktop window

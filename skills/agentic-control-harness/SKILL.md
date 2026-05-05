@@ -66,6 +66,11 @@ control harness itself.
   contract, then place freshness checks on the correct side of the capture call. After repeated
   stale-capture failures, stop patching and classify the cause as render scheduling, capture timing,
   or smoke-script order before making the next edit.
+- After two failed visual-capture, render-scheduling, or command-routing fixes in the same slice,
+  require a hard-reset evidence ledger before more edits: failing scenario ids, exact response fields
+  or assertions, frame/revision/fence progress, artifact freshness, validation/profiler errors, and
+  a keep/revert decision for each recent speculative patch. Continue only with a smaller targeted
+  repro/probe or a source-level root cause in the app/toolkit/render flow.
 - For GUI/editor command surfaces, do not rely only on capability metadata that says an action
   exists. When practical, expose readback for the actual UI action/menu/shortcut/context objects,
   enabled state, attachment point, and command target. Claim a menu, shortcut, context action, or

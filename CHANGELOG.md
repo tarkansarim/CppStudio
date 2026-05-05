@@ -9,6 +9,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 - Tightened agentic control-harness thread-boundary guidance so UI/renderer readback, toolkit action
   state, and visual capture run through the safe GUI/render thread instead of direct server-thread
   calls.
+- Added hard-reset guidance for repeated visual-capture/render-scheduling failures so agents must
+  write an evidence ledger and keep/revert decision before stacking more patches.
 - Tightened agentic control-harness guidance so viewport, canvas, render-target, and screenshot
   capture endpoints must settle on the requested rendered state and expose frame/revision evidence
   when practical, preventing stale pixels from passing visual checks.

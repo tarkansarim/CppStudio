@@ -67,3 +67,5 @@ generated-project workflow instructions.
   render scheduling, and smoke-script order after repeated stale-frame failures
 - control-harness thread-boundary rules change, including when visual capture, toolkit readback, and
   UI/renderer state must run on the app GUI/render thread rather than an HTTP/server worker
+- repeated visual-capture or render-scheduling failure policy changes, including hard-reset evidence
+  ledgers and keep/revert decisions before additional patches

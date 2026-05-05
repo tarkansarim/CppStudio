@@ -93,6 +93,9 @@ the UI manually.
   practical so capture endpoints prove they grabbed the requested state instead of a stale frame.
 - Before adding capture waits or continuous render scheduling, verify whether the chosen GUI or
   graphics capture API renders a fresh frame during capture or only reads the last presented frame.
+- When visual-capture or render-scheduling fixes fail repeatedly, pause and write an evidence ledger
+  before adding another wait, alternate capture route, or requestUpdate-style patch. Keep only the
+  recent patches that the evidence proves are still needed.
 - Read `agentic-control-harness` before designing endpoint shape, launch/control registry,
   observation surfaces, or feature-control maintenance rules.
 - Verification priority: launch through the harness, health ping, one real feature command,

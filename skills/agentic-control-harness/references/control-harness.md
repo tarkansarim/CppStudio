@@ -67,6 +67,12 @@ cases, the harness should mutate state, call capture, then assert the rendered r
 Other APIs only copy the last presented frame; those need pre-capture scheduling and settling. If a
 capture freshness fix fails repeatedly, pause and classify whether the fault is render scheduling,
 capture timing, or test-script order before applying another patch.
+After two failed capture, render-scheduling, or command-routing fixes in the same slice, write an
+evidence ledger before more edits: failed scenario ids, exact response fields or assertions,
+frame/revision/fence progress, artifact freshness, validation/profiler errors, and which recent
+patches are proven versus speculative. Revert or isolate speculative edits before the next attempt
+unless the evidence shows they are necessary. Continue with either a smaller targeted probe or a
+source-level root cause in the app/toolkit/render flow.
 
 ## Observation, Or Sonar
 
