@@ -84,6 +84,9 @@ the UI manually.
   execution unless the user explicitly asks for a secure productized remote-control design.
 - Route app, UI, scene, renderer, and GPU mutations through the safe main/render thread or serialized
   command queue.
+- Route UI/renderer readback and visual capture through that same safe thread boundary when the
+  toolkit or graphics API requires it; HTTP/server worker threads should not call window, widget,
+  swapchain, or capture APIs directly.
 - Include state readback, recent warnings/logs, and screenshot/offscreen-frame/render-target evidence
   for UI or viewport-heavy tools so agents can see what the user would see.
 - For mutable viewport or canvas state, include rendered-frame/revision/sequence evidence where

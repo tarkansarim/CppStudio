@@ -47,7 +47,8 @@ what state changed, what warnings appeared, and what is visible in the UI or vie
 
 ## Threading And App Integration
 
-Network or socket request handling should not run UI, renderer, scene, or GPU mutations directly.
+Network or socket request handling should not run UI, renderer, scene, GPU mutations, visual
+capture, or toolkit state readback directly.
 Use one of these patterns:
 
 - direct main-thread helper when the app already provides one

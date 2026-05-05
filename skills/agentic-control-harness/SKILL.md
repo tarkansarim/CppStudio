@@ -48,7 +48,9 @@ control harness itself.
 - Prefer one stable, generic command/scenario surface plus typed readback endpoints over a large
   pile of narrow one-off routes.
 - Route UI, renderer, scene, and GPU mutations onto the app's safe main/render thread or serialized
-  command queue. Keep networking and request parsing off that thread.
+  command queue. Keep networking and request parsing off that thread. Treat visual capture and
+  toolkit state readback as UI/renderer operations too: do not call window, widget, swapchain,
+  `grab()`, `requestUpdate()`, or toolkit action APIs directly from an HTTP/server worker thread.
 - Separate mutation from observation. Every meaningful command needs a way to read back state,
   recent output/warnings, and visual evidence when the result is visible.
 - Make visual/UI awareness first-class. For viewers, tools, editors, and sandboxes, the harness

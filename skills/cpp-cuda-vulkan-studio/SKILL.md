@@ -113,6 +113,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
   feature driving, state/log readback, screenshots, and visual/UI troubleshooting before asking the
   user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
   the harness instead of repeatedly handing small verification chores to the user.
+- Harness endpoints that touch UI, renderer, swapchain, toolkit action state, screenshot/grab APIs,
+  or visual-capture state must run on the app's safe GUI/render thread or an app-owned command queue.
+  Do not call `requestUpdate()`, `grab()`, widget/window APIs, or action mutations directly from an
+  HTTP/server worker thread.
 - For viewport, canvas, render-target, or screenshot capture endpoints, do not assume "set state,
   request update, grab immediately" proves the visible result. The harness should expose enough
   frame/revision/sequence/fence evidence to show the requested UI or renderer state was rendered

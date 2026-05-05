@@ -65,3 +65,5 @@ generated-project workflow instructions.
   a capture reflects the requested rendered state instead of a stale frame
 - visual-capture debugging rules change, including when agents should audit capture API timing,
   render scheduling, and smoke-script order after repeated stale-frame failures
+- control-harness thread-boundary rules change, including when visual capture, toolkit readback, and
+  UI/renderer state must run on the app GUI/render thread rather than an HTTP/server worker
