@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Collapsed older README Recent Commit Highlights behind a GitHub details expander so only the
+  latest 10 entries are visible by default.
 - Clarified that maintained code-map setup verification includes a read-only subagent or
   fresh-session routing smoke when available, not only schema validation.
 - Tightened code-map completion criteria so agents distinguish structural validation from fresh-agent

@@ -37,6 +37,8 @@ workflow, and repo banner/sample assets.
 
 ## Current Public Docs Posture
 
+- README Recent Commit Highlights shows the latest 10 highlight entries by default and keeps older
+  entries under a GitHub `<details>` expander so the front page remains scannable.
 - The README positions optional code maps as practical project memory plus section-level onboarding:
   enabled maps route agents to the relevant subsystem doc and source paths, then explain what that
   code section owns before edits.

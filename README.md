@@ -31,8 +31,9 @@ As a harness, CppStudio focuses on:
 
 ## Recent Commit Highlights
 
-The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
-commit-level changes readable for people scanning the repo.
+The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list shows the
+latest 10 commit-level highlights for people scanning the repo, with older highlights collapsed
+below.
 
 - `535d266` - Required maintained code-map setup to include read-only subagent or fresh-session
   routing smoke evidence when available, not only schema validation.
@@ -57,6 +58,10 @@ commit-level changes readable for people scanning the repo.
   render during grab from APIs that copy the last presented frame before adding waits or loops.
 - `a18b91c` - Required settled visual-capture evidence so viewport, canvas, render-target, and
   screenshot checks prove they captured the requested rendered state instead of stale pixels.
+
+<details>
+<summary>Show older commit highlights</summary>
+
 - `709e8a6` - Tightened validation-audit shell guidance so agents quote
   markdown/code-span searches safely instead of letting backticks in docs run as
   shell command substitutions.
@@ -117,6 +122,8 @@ commit-level changes readable for people scanning the repo.
   validation behavior.
 - `138d2fb` - Made hosted CI discover the installed Lavapipe Vulkan CPU ICD path before Vulkan
   runtime smoke tests.
+
+</details>
 
 Maintainers should add one concise line here for commits that change setup, routing, generated
 projects, validation, donor-library behavior, public docs, install, release, or sync behavior.
