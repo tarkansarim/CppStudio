@@ -36,6 +36,8 @@ commit-level changes readable for people scanning the repo.
 
 - `e0a29f5` - Broadened shell-search quoting guidance so validation audits quote script fragments,
   regex text, `$`, embedded quotes, and other shell metacharacters safely.
+- `3aa60ff` - Tightened harness thread-boundary guidance so UI/renderer readback, toolkit action
+  state, and visual capture run through the safe GUI/render thread.
 - `40f1b08` - Added visual-capture timing audit guidance so agents distinguish capture APIs that
   render during grab from APIs that copy the last presented frame before adding waits or loops.
 - `a18b91c` - Required settled visual-capture evidence so viewport, canvas, render-target, and
