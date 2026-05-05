@@ -34,6 +34,8 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `40f1b08` - Added visual-capture timing audit guidance so agents distinguish capture APIs that
+  render during grab from APIs that copy the last presented frame before adding waits or loops.
 - `a18b91c` - Required settled visual-capture evidence so viewport, canvas, render-target, and
   screenshot checks prove they captured the requested rendered state instead of stale pixels.
 - `709e8a6` - Tightened validation-audit shell guidance so agents quote
