@@ -118,6 +118,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
   before capture, and the capture response should include that evidence when practical. If the
   capture cannot settle on the requested state, report a harness failure instead of accepting stale
   pixels. Run visual-difference or screenshot checks only against settled frames.
+- When visual freshness checks fail repeatedly, pause code edits and audit the capture API timing.
+  Some toolkit grabs render during the capture call, so the correct proof is a post-capture rendered
+  revision; others copy the last presented frame and need pre-capture scheduling. Classify the issue
+  as render scheduling, capture timing, or test-script order before applying the next fix.
 - When you give, change, or rely on a user-facing desktop launch command, verify that exact command
   path in addition to offscreen smoke tests. For long-running GUI apps, acceptable evidence is that
   the exact command starts the intended process, the control harness responds, and a desktop window

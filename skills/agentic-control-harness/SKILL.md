@@ -59,6 +59,11 @@ control harness itself.
   wait until the requested UI or renderer state has been rendered. If the capture cannot settle on
   the requested state, return a harness error instead of stale pixels. Save and assert capture
   responses in smoke scripts so leftover files cannot masquerade as current visual evidence.
+- Audit capture timing before stacking fixes. Some toolkit capture APIs render during the capture
+  call rather than before it, while others only grab the last presented frame. Verify the toolkit
+  contract, then place freshness checks on the correct side of the capture call. After repeated
+  stale-capture failures, stop patching and classify the cause as render scheduling, capture timing,
+  or smoke-script order before making the next edit.
 - For GUI/editor command surfaces, do not rely only on capability metadata that says an action
   exists. When practical, expose readback for the actual UI action/menu/shortcut/context objects,
   enabled state, attachment point, and command target. Claim a menu, shortcut, context action, or

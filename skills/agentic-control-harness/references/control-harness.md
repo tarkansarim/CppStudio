@@ -60,6 +60,12 @@ frame state. For visual capture endpoints, prefer explicit frame, revision, sequ
 fields that let agents prove a screenshot or render-target dump reflects the requested state. A
 capture endpoint that cannot wait for the requested rendered state should return an error with the
 target and observed revisions instead of silently returning an older frame.
+Before adding waits or render-loop changes, inspect the capture API's timing contract. Some GUI or
+graphics capture calls render a fresh offscreen frame as part of the capture operation; in those
+cases, the harness should mutate state, call capture, then assert the rendered revision advanced.
+Other APIs only copy the last presented frame; those need pre-capture scheduling and settling. If a
+capture freshness fix fails repeatedly, pause and classify whether the fault is render scheduling,
+capture timing, or test-script order before applying another patch.
 
 ## Observation, Or Sonar
 

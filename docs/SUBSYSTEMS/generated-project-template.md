@@ -66,6 +66,9 @@ validation.
 - Generated app harnesses should make viewport/canvas/render-target captures settle on requested
   state before screenshot comparison. Prefer frame, revision, sequence, or fence readback evidence in
   capture responses so agents can distinguish fresh visible output from stale pixels.
+- Generated app guidance should make agents inspect capture API timing before adding render waits:
+  some captures render a fresh offscreen frame during the grab, while others copy the last presented
+  frame and require pre-capture scheduling.
 - Template docs tell agents to commit each coherent verified implementation slice before moving to
   the next milestone while keeping generated build outputs, screenshots, profiler captures, logs, and
   temporary verification artifacts out of git unless the project intentionally tracks them.

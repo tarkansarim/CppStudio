@@ -62,3 +62,5 @@ generated-project workflow instructions.
   search patterns so documentation backticks are not executed by the shell during validation audits
 - control-harness screenshot or render-target capture rules change, including when agents must prove
   a capture reflects the requested rendered state instead of a stale frame
+- visual-capture debugging rules change, including when agents should audit capture API timing,
+  render scheduling, and smoke-script order after repeated stale-frame failures

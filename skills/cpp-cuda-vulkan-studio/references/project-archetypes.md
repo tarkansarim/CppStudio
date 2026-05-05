@@ -88,6 +88,8 @@ the UI manually.
   for UI or viewport-heavy tools so agents can see what the user would see.
 - For mutable viewport or canvas state, include rendered-frame/revision/sequence evidence where
   practical so capture endpoints prove they grabbed the requested state instead of a stale frame.
+- Before adding capture waits or continuous render scheduling, verify whether the chosen GUI or
+  graphics capture API renders a fresh frame during capture or only reads the last presented frame.
 - Read `agentic-control-harness` before designing endpoint shape, launch/control registry,
   observation surfaces, or feature-control maintenance rules.
 - Verification priority: launch through the harness, health ping, one real feature command,
