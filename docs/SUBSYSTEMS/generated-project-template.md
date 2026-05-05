@@ -18,6 +18,7 @@ validation.
 - `skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py`
 - `skills/cpp-cuda-vulkan-studio/scripts/bootstrap_code_map.py`
 - `skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py`
+- `skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py`
 
 ## Update When
 
@@ -27,6 +28,7 @@ validation.
 - code-map template files, readiness audit behavior, or generated-project code-map behavior changes
 - generated-project development rhythm changes, including verified-slice commit expectations or
   artifact exclusion guidance
+- generated-project code-map drift-check behavior changes
 
 ## Current Portability Notes
 
@@ -45,6 +47,10 @@ validation.
 - After code-map enablement or major routing edits, agents need a read-only fresh-agent routing smoke
   when such testing is available; otherwise routing proof remains pending even if the validator
   passes.
+- Enabled-map generated projects include `scripts/check_code_map_drift.py` as a pre-commit helper.
+  It fails when changed source/header/shader/script/docs paths are not covered by a manifest route,
+  forcing new routable files to be added to `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` and the matching
+  `docs/SUBSYSTEMS/*.md` route before the verified slice is committed.
 - Code-map validation accepts repo-relative files and globs only; absolute paths, `..` segments,
   escaping links, and glob matches that resolve outside the repo are rejected.
 - Code-map validation also treats manifest root `state` and `router_doc` as strict routing API fields:

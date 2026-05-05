@@ -101,12 +101,17 @@ When this skill is active, work like a native C++ GPU systems engineer:
   policy explicitly says not to commit. Before committing, inspect `git status`, keep user-owned
   unrelated changes out of the commit, exclude build outputs, profiler traces, screenshots, temp
   artifacts, and generated junk unless the repo intentionally tracks them, and run a whitespace or
-  staged-diff hygiene check such as `git diff --check` or `git diff --cached --check`. If the repo
-  has no git history, no git identity, ambiguous dirty state, or approval is required for the git
-  write, surface that clearly instead of silently skipping the commit. Add a commit trailer that
-  identifies why the commit happened: use `Commit-Origin: agent-slice` for commits the agent creates
-  as part of the verified-slice workflow, and `Commit-Origin: user-requested` when the user
-  explicitly asked for that commit.
+  staged-diff hygiene check such as `git diff --check` or `git diff --cached --check`. If a
+  CppStudio code map is enabled, run the target repo's `scripts/check_code_map_drift.py
+  --require-enabled` before committing when that script exists; otherwise manually compare the
+  changed source/header/shader/script/docs paths against `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` and
+  the matching `docs/SUBSYSTEMS/*.md` route. Do not commit a new or moved routable path that is not
+  covered by a subsystem route; update the manifest and subsystem doc in the same slice or explain
+  why the map update is intentionally deferred. If the repo has no git history, no git identity,
+  ambiguous dirty state, or approval is required for the git write, surface that clearly instead of
+  silently skipping the commit. Add a commit trailer that identifies why the commit happened: use
+  `Commit-Origin: agent-slice` for commits the agent creates as part of the verified-slice workflow,
+  and `Commit-Origin: user-requested` when the user explicitly asked for that commit.
 - Use evidence before claims. Builds, CTest labels, shader compilation, Vulkan validation,
   Compute Sanitizer, RenderDoc/Nsight captures, screenshots, image comparisons, and profiler output
   matter more than plausible explanations.
@@ -125,6 +130,11 @@ When this skill is active, work like a native C++ GPU systems engineer:
   manifest, starts implementation, expands into broad unrelated source reading, fails to produce a
   final routing report in the bounded probe, or leaves any file changes. If subagent or fresh-session
   testing is not available, report that as pending evidence, not as a passed trigger lane.
+- Treat code-map maintenance as an ordinary source-edit closeout gate, not only a setup task. When
+  an enabled-map repo changes source ownership, data flow, backend boundaries, validation lanes,
+  public runtime behavior, or adds/moves files under routable source areas, update the matching
+  subsystem doc and manifest before commit. The drift checker catches unmapped paths; the agent still
+  must make the semantic call on whether an already-covered route needs clearer notes.
 - For realtime rendering, viewport, simulation, XR, or GPU-performance work, measure frame time/FPS
   or profiler timings while implementing and verify the actual visual output.
 - When a target app has an agentic control harness, use it as the first route for routine launch,
@@ -287,7 +297,7 @@ When this skill is active, work like a native C++ GPU systems engineer:
 4. For an existing repo, run `scripts/apply_studio_backbone.py` against a temporary copy first unless the user explicitly wants direct modification.
 5. For a greenfield scaffold with no `.cppstudio/code-map-state.json`, ask once whether to create a maintained codebase architecture map. State the benefits: faster cold starts, cleaner multi-agent routing, explicit subsystem ownership, and less repeated code reading. If the user already explicitly asked for a code map, architecture map, or future-agent map during project creation, treat that as acceptance and run `scripts/bootstrap_code_map.py --enable --force` after scaffolding because the template includes starter generated map files. If they decline, run `scripts/bootstrap_code_map.py --decline` and do not prompt again unless asked. Do not create `.cppstudio/code-map-state.json`, `docs/CODEBASE_ARCHITECTURE_INDEX.md`, or `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` by guessing the schema; use the bootstrap script and validator.
 6. For an existing project with no `.cppstudio/code-map-state.json`, treat code-map enablement as a readiness protocol, not as an immediate choice prompt. If the user says they want to opt in to a code map, first say that you will run a non-destructive audit and that no restructure decision is needed yet. Then run `scripts/bootstrap_code_map.py --audit-existing` before asking any restructure/preserve/decline question. Summarize the actual stdout with concrete findings, evidence paths, nonstandard layout risks, estimated cleanup cost, and any specific restructuring that would be needed. If the audit did not run or you have not read its output, do not claim an audit happened and do not ask the user to choose a restructuring route. Do not write `docs/CODEMAP_BOOTSTRAP_AUDIT.md` unless the user wants a saved audit; then rerun with `--write-audit`. Only after presenting audit evidence ask whether the user wants to restructure first, preserve the current layout and document exceptions, or decline the map. Do not run `--enable` until the user chooses either restructure-complete or preserve-as-is. If generated map files already exist, use `--enable --force` only after the user accepts replacing those generated map files.
-7. When `.cppstudio/code-map-state.json` says `enabled`, or when repo-local instructions declare a maintained codebase map required, read the target repo's `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before code changes. Use that map to select the subsystem doc and primary paths for the change, then keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, or public runtime behavior changes. If the user asks about a code map mid-project, explain it, run the existing-project readiness protocol, and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; if generated map files already exist, use `--force` only after the user accepts replacing them. For large existing repos, use parallel-lens subsystem audits only when delegation is explicitly authorized.
+7. When `.cppstudio/code-map-state.json` says `enabled`, or when repo-local instructions declare a maintained codebase map required, read the target repo's `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before code changes. Use that map to select the subsystem doc and primary paths for the change, then keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, public runtime behavior, or routable file ownership changes. Before every verified-slice commit in an enabled-map repo, run `scripts/check_code_map_drift.py --require-enabled` when present plus `scripts/validate_code_map.py --require-enabled`; if the drift check reports an unmapped path, update the manifest and matching subsystem doc before committing. If the user asks about a code map mid-project, explain it, run the existing-project readiness protocol, and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; if generated map files already exist, use `--force` only after the user accepts replacing them. For large existing repos, use parallel-lens subsystem audits only when delegation is explicitly authorized.
 8. If the readiness audit leads to pre-map infrastructure work such as `CMakePresets.json`,
    canonical `scripts/`, validation wrappers, CI files, or build-entrypoint cleanup, label that work
    as an audit-backed infrastructure slice before map enablement. Get the user's route acceptance
@@ -352,8 +362,8 @@ For long-running target-project implementation, repeat this rhythm between slice
 3. Verify with the target repo's build, tests, harness, screenshot, or profile evidence appropriate
    to the change.
 4. Clean generated probe junk from the source root, review `git status`, keep unrelated user changes
-   out, check diff hygiene, and commit the verified slice with the appropriate `Commit-Origin`
-   trailer.
+   out, run code-map drift validation when the map is enabled, check diff hygiene, and commit the
+   verified slice with the appropriate `Commit-Origin` trailer.
 5. Continue to the next slice only after the commit is in place, or after clearly reporting why a
    commit was intentionally skipped.
 
@@ -401,6 +411,7 @@ Before enabling a maintained code map for an existing repo, confirm the repo can
 - `scripts/tidy_check.sh`: run clang-tidy against a compile database in check-only mode.
 - `scripts/bootstrap_code_map.py`: audit existing repo readiness, enable, or decline the opt-in CppStudio codebase map for a target repo.
 - `scripts/validate_code_map.py`: validate enabled or declined CppStudio code-map state and manifest links.
+- `scripts/check_code_map_drift.py`: pre-commit helper that checks changed routable paths against an enabled code-map manifest.
 
 ## Acceptance
 

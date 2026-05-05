@@ -56,6 +56,7 @@ RUNTIME_SCRIPTS = [
 CODE_MAP_RUNTIME_SCRIPTS = [
     "bootstrap_code_map.py",
     "validate_code_map.py",
+    "check_code_map_drift.py",
 ]
 
 

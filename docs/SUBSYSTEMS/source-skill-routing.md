@@ -39,6 +39,11 @@ generated-project workflow instructions.
   stop after the first confident subsystem route and exact source/test paths, not expand into a full
   source audit. A smoke that skips manifest/state reads, over-reads broadly, edits files, or never
   produces a final routing report is partial or failed evidence.
+- Enabled code maps have an ordinary pre-commit maintenance gate. Agents must run
+  `scripts/check_code_map_drift.py --require-enabled` when available before committing a verified
+  source slice, then update the manifest and matching subsystem doc for any changed routable path
+  that is not covered. The checker catches path coverage; semantic ownership/data-flow changes still
+  require agent judgment even when the path is already routed.
 - Target-repo instruction files are sensitive. `AGENTS.md`, `CLAUDE.md`, repo-local skills, and
   agent metadata must be named separately in status reports when dirty or changed; they must not be
   hidden under generic "unrelated dirty files" wording.
@@ -63,6 +68,7 @@ generated-project workflow instructions.
   categories before code changes or product-shape decisions
 - code-map bootstrap script authority, code-map schema validation, or generated CMake probe cleanup
   requirements change
+- code-map drift-check or pre-commit map-maintenance requirements change
 - GUI/windowed verification routing changes, including when agents should use target smoke scripts,
   launch wrappers, absolute script paths, or explicit working directories with offscreen/background
   managers

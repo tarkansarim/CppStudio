@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a code-map drift checker and pre-commit maintenance gate so enabled-map projects surface
+  changed source/header/shader/script/docs paths that are not covered by subsystem routes before an
+  agent commits a verified slice.
 - Hardened code-map validation so manifest root `state` and `router_doc` fields are enforced as
   strict repo-relative routing API fields.
 - Cleaned up negative trigger-matrix controls so they use only forbidden paths, plus added

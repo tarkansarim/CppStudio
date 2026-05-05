@@ -41,6 +41,17 @@ Record a decline so agents stop prompting:
 scripts/bootstrap_code_map.py --decline
 ```
 
+Before committing a verified source slice with the map enabled, run:
+
+```bash
+scripts/check_code_map_drift.py --require-enabled
+scripts/validate_code_map.py --require-enabled
+```
+
+If the drift check reports a changed path that is not routed by the manifest, update
+`docs/CODEBASE_SUBSYSTEM_MANIFEST.json` and the matching `docs/SUBSYSTEMS/*.md` file in the same
+slice before committing.
+
 ## Validate
 
 ```bash

@@ -218,9 +218,12 @@ def main() -> int:
             "docs/CODEBASE_SUBSYSTEM_MANIFEST.json",
             "scripts/bootstrap_code_map.py",
             "scripts/validate_code_map.py",
+            "scripts/check_code_map_drift.py",
         ]:
             if not (repo / relative).exists():
                 failures.append(f"missing code map file {relative}")
+            elif relative.startswith("scripts/") and (repo / relative).stat().st_mode & 0o111 == 0:
+                failures.append(f"script is not executable: {relative}")
         validator = repo / "scripts/validate_code_map.py"
         if validator.exists() and not failures:
             result = subprocess.run(

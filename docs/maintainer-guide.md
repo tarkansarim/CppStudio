@@ -159,6 +159,7 @@ code-map behavior for the generated project, run:
 cd /tmp/RayLab
 scripts/bootstrap_code_map.py --enable --force
 scripts/validate_code_map.py --require-enabled
+scripts/check_code_map_drift.py --require-enabled
 ```
 
 Validate the generated project:
@@ -207,7 +208,9 @@ Useful options:
   restructure or preserve the layout, then run `scripts/bootstrap_code_map.py --enable` only after
   the user accepts maintained map behavior. Use `--write-audit` only when the user wants the audit
   saved. Use `--enable --force` only when replacing existing generated map files was explicitly
-  accepted.
+  accepted. After source changes in an enabled-map target repo, run
+  `scripts/check_code_map_drift.py --require-enabled` before committing so new routable files are
+  added to the manifest and subsystem docs instead of becoming invisible to future agents.
 
 After applying, validate the target repo:
 

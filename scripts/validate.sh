@@ -88,6 +88,7 @@ required_repo_files=(
     "scripts/install_user_agents_relay.py"
     "scripts/bootstrap_code_map.py"
     "scripts/validate_code_map.py"
+    "scripts/check_code_map_drift.py"
     "scripts/quick_validate_skill.py"
     "scripts/validate_skill_package.py"
     "scripts/audit_donor_freshness.py"
@@ -459,6 +460,52 @@ code_map_enable_tmp="$(mktemp -d "${VALIDATE_TMP}/code_map_enable.XXXXXX")"
 write_code_map_project_fixture "${code_map_enable_tmp}"
 python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_enable_tmp}" --enable
 python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_enable_tmp}" --require-enabled
+git -C "${code_map_enable_tmp}" init -q
+git -C "${code_map_enable_tmp}" config user.email "cppstudio@example.invalid"
+git -C "${code_map_enable_tmp}" config user.name "CppStudio Validation"
+git -C "${code_map_enable_tmp}" add .
+git -C "${code_map_enable_tmp}" commit -q -m "baseline"
+mkdir -p "${code_map_enable_tmp}/tools"
+printf "int cppstudio_unrouted_tool() { return 7; }\n" >"${code_map_enable_tmp}/tools/new_tool.cpp"
+expect_failure "code map drift detects unrouted source path" "tools/new_tool.cpp" \
+    python3 "${ROOT_DIR}/scripts/check_code_map_drift.py" "${code_map_enable_tmp}" --require-enabled
+python3 - "${code_map_enable_tmp}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+manifest = json.loads(path.read_text(encoding="utf-8"))
+for subsystem in manifest["subsystems"]:
+    if subsystem["id"] == "app_core":
+        subsystem["primary_paths"].append("tools")
+        break
+else:
+    raise SystemExit("missing app_core subsystem")
+path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+PY
+python3 - "${code_map_enable_tmp}/docs/SUBSYSTEMS/app-core.md" <<'PY'
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+lines = path.read_text(encoding="utf-8").splitlines()
+out = []
+inserted = False
+in_primary = False
+for line in lines:
+    if line.startswith("## "):
+        if in_primary and not inserted:
+            out.append("- `tools`")
+            inserted = True
+        in_primary = line.strip() == "## Primary Paths"
+    out.append(line)
+if in_primary and not inserted:
+    out.append("- `tools`")
+path.write_text("\n".join(out) + "\n", encoding="utf-8")
+PY
+python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_enable_tmp}" --require-enabled
+python3 "${ROOT_DIR}/scripts/check_code_map_drift.py" "${code_map_enable_tmp}" --require-enabled
 code_map_stale_tmp="$(mktemp -d "${VALIDATE_TMP}/code_map_stale.XXXXXX")"
 write_code_map_project_fixture "${code_map_stale_tmp}"
 printf "# stale architecture index\n" >"${code_map_stale_tmp}/docs/CODEBASE_ARCHITECTURE_INDEX.md"

@@ -58,7 +58,8 @@
         "skills/cpp-cuda-vulkan-studio/scripts/validate_studio_backbone.py",
         "skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py",
         "skills/cpp-cuda-vulkan-studio/scripts/bootstrap_code_map.py",
-        "skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py"
+        "skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py",
+        "skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py"
       ]
     },
     {
@@ -79,6 +80,7 @@
         "scripts/validate_skill_package.py",
         "scripts/bootstrap_code_map.py",
         "scripts/validate_code_map.py",
+        "scripts/check_code_map_drift.py",
         "skills/cpp-cuda-vulkan-studio/package-manifest.json",
         "skills/native-cpp-gui-hud/package-manifest.json",
         "skills/cppstudio-project-planner/package-manifest.json",

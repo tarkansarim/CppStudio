@@ -23,6 +23,7 @@ RUNTIME_SCRIPTS = [
     "tidy_check.sh",
     "bootstrap_code_map.py",
     "validate_code_map.py",
+    "check_code_map_drift.py",
 ]
 CPP_KEYWORDS = {
     "alignas",

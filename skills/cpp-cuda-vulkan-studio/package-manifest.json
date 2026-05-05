@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 40552,
-      "sha256": "ed00b6e1fe5a3a32c13e562607807dc17bc36b22859ac56ad7b17942dcaac38a"
+      "size": 42069,
+      "sha256": "8b2621fb5b9ce4ed3d9049f7bfcc0a51d2250914fe5020e210ef65566d5fac64"
     },
     {
       "path": "agents/openai.yaml",
@@ -63,8 +63,8 @@
       "path": "assets/app-library-template/README.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 3273,
-      "sha256": "ba3f438f9721b5beedcce54595b0ffe75335f38c620ad253de6eb3392d66b619"
+      "size": 3661,
+      "sha256": "fd54b671939ea66565f0865510d57f7b426f20b6fc093f38ed26b98e849063d1"
     },
     {
       "path": "assets/app-library-template/benchmarks/benchmark_smoke.cpp",
@@ -1316,8 +1316,8 @@
       "path": "scripts/apply_studio_backbone.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 6754,
-      "sha256": "e5e6eefcc4c79a281dd7c75266ef61e9bc034d6c632e562ff45f7326bd96d316"
+      "size": 6785,
+      "sha256": "2ce0c523c2aed05564df375f26a17e1ed44fa135989657973001c8fbe40aa94a"
     },
     {
       "path": "scripts/bootstrap_code_map.py",
@@ -1325,6 +1325,13 @@
       "disclosure_group": "script",
       "size": 22408,
       "sha256": "e2f8622553cf2d66e5670fd9de457b16b580b4263e69dafa3f3ef851d04fe358"
+    },
+    {
+      "path": "scripts/check_code_map_drift.py",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 8237,
+      "sha256": "d7d803f553076076f826289b0eeee34bd3f6b877c8bc2290f0ed6bee1bca201b"
     },
     {
       "path": "scripts/check_dev_tools.sh",
@@ -1379,8 +1386,8 @@
       "path": "scripts/scaffold_gpu_cpp_project.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 7190,
-      "sha256": "a9f7cdfb3be6febb516f72c5fe2eea8478f89d89e772423cf8383e5ecd9e0ff5"
+      "size": 7221,
+      "sha256": "a54968788cadb563166dfebdbd84ac5a4062d996ca8ccc0d246de36978e00eed"
     },
     {
       "path": "scripts/select_idle_gpu.sh",
@@ -1407,8 +1414,8 @@
       "path": "scripts/validate_studio_backbone.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 9595,
-      "sha256": "80076b82d7ba3e8c358b150e6132f1159536cc5dd0e3eb283c46d23cbd455cce"
+      "size": 9815,
+      "sha256": "cf5d6be5573f348a9cf20641a48d7a3683298b765e071e459295a59787574823"
     }
   ]
 }

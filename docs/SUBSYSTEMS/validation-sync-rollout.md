@@ -19,6 +19,7 @@ skills, and watch-mode publishing behavior.
 - `scripts/validate_skill_package.py`
 - `scripts/bootstrap_code_map.py`
 - `scripts/validate_code_map.py`
+- `scripts/check_code_map_drift.py`
 - `skills/cpp-cuda-vulkan-studio/package-manifest.json`
 - `skills/native-cpp-gui-hud/package-manifest.json`
 - `skills/cppstudio-project-planner/package-manifest.json`
@@ -31,6 +32,7 @@ skills, and watch-mode publishing behavior.
 - skill package manifest, package integrity validation, or sync/rollout audit metadata changes
 - auxiliary user-level skill installation or validation behavior changes
 - CppStudio code-map validation or bootstrap wrapper behavior changes
+- CppStudio code-map drift wrapper behavior changes
 - sync or rollout target safety rules change
 - installed skill parity, auxiliary bundled skill rollout, or companion validation behavior changes
 - public install/manual install commands change
