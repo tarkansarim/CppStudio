@@ -34,6 +34,9 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `8d096c2` - Required GUI/editor harness verification to prove real menu,
+  action, shortcut, and enabled-state evidence where practical instead of
+  treating metadata claims as proof.
 - `d4ffdb6` - Added `Commit-Origin` trailers so autonomous agent slice commits
   and explicit user-requested commits are distinguishable in git history.
 - `b73aa55` - Tightened native GUI/editor guidance so structural graph and scene
