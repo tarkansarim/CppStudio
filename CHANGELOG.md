@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Tightened validation-audit shell guidance so agents quote markdown/code-span search patterns safely
+  and do not let backticks in docs become shell command substitutions during `rg`/`grep` checks.
 - Tightened native C++ GPU validation guidance so agents must use repo-declared CMake presets,
   validation docs, scripts, or code-map build routes before guessing build directories.
 - Required GUI/editor harness verification to prove real action/menu/shortcut state where practical,
