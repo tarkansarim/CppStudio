@@ -58,8 +58,9 @@ generated-project workflow instructions.
 - target-project build/validation command selection rules change, including when agents must use
   repo-declared CMake presets, validation docs, scripts, or code-map build routes instead of guessed
   build directories
-- target-project shell-search discipline changes, including how agents must quote markdown/code-span
-  search patterns so documentation backticks are not executed by the shell during validation audits
+- target-project shell-search discipline changes, including how agents must quote markdown/code-span,
+  script-fragment, or regex patterns so documentation syntax and shell metacharacters are not
+  executed or reinterpreted during validation audits
 - control-harness screenshot or render-target capture rules change, including when agents must prove
   a capture reflects the requested rendered state instead of a stale frame
 - visual-capture debugging rules change, including when agents should audit capture API timing,

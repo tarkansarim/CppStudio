@@ -80,10 +80,11 @@ When this skill is active, work like a native C++ GPU systems engineer:
   directories such as `build_linux` or `build/Release` unless the repo explicitly declares them. If a
   guessed command fails, treat that as a process miss, reopen the repo build docs/presets, and rerun
   the documented command before continuing.
-- When auditing docs, validation logs, or markdown with shell search tools, quote patterns so the
-  shell cannot reinterpret documentation syntax. In particular, do not put markdown backticks inside
-  double-quoted `rg`/`grep` patterns; use single quotes, `rg -e`, or fixed-string searches so code
-  spans such as `` `4320` `` are matched as text instead of executed by the shell.
+- When auditing docs, validation logs, scripts, or markdown with shell search tools, quote patterns
+  so the shell cannot reinterpret documentation or regex syntax. Do not put markdown backticks,
+  embedded double quotes, `$`/`${...}`, command substitutions, or other shell metacharacters inside
+  double-quoted `rg`/`grep` patterns. Use single quotes, `rg -e`, fixed-string searches, or separate
+  pattern arguments so code spans such as `` `4320` `` and script fragments are matched as text.
 - Before major C++/GPU edits, name the likely failure modes: synchronization or lifetime bugs, wrong
   device/backend lane, missing validation/profiling evidence, portability breaks, and
   dependency/license mistakes.
