@@ -34,6 +34,8 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `a18b91c` - Required settled visual-capture evidence so viewport, canvas, render-target, and
+  screenshot checks prove they captured the requested rendered state instead of stale pixels.
 - `709e8a6` - Tightened validation-audit shell guidance so agents quote
   markdown/code-span searches safely instead of letting backticks in docs run as
   shell command substitutions.
