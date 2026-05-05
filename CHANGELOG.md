@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Tightened existing-project code-map opt-in so agents must run the non-destructive readiness audit,
+  present concrete findings, evidence paths, actual restructuring needs, and cleanup cost, and only
+  then ask the user whether to restructure, preserve layout, or decline.
 - Added a Sortie assistant-pack adoption audit covering 22 audited skills, classifying direct
   doctrine, partial cherry-picks, and redundant Sortie-specific mechanics without importing Sortie
   runtime behavior.

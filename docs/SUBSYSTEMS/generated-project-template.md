@@ -36,6 +36,9 @@ validation.
   state only after generated map files are replaced.
 - Existing-project code-map audits print to stdout by default. Use `--write-audit` only when the user
   wants `docs/CODEMAP_BOOTSTRAP_AUDIT.md` saved.
+- Existing-project code-map opt-in must be audit-evidence-first: agents run the non-destructive audit
+  before asking restructure/preserve/decline questions, and they present concrete findings and cleanup
+  cost before any route choice.
 - Code-map validation accepts repo-relative files and globs only; absolute paths, `..` segments,
   escaping links, and glob matches that resolve outside the repo are rejected.
 - The generated GPU optimization loop is command-driven rather than Triton/PyTorch-specific. Hardware

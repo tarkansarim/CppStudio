@@ -42,6 +42,9 @@ workflow, and repo banner/sample assets.
   code section owns before edits.
 - Code maps are described as the first navigation step before code changes, not a replacement for
   source inspection or a hard gate around normal engineering work.
+- Existing-project code-map setup is described as audit-first: agents should show concrete findings,
+  evidence paths, cleanup cost, and actual restructuring needs before asking the user to choose a
+  route.
 
 ## Current CI Posture
 

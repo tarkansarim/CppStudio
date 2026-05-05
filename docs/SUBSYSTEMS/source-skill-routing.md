@@ -28,6 +28,12 @@ generated-project workflow instructions.
   call sequences, L0/L1/L2 Harness roles, checkpoint/rewind/gauntlet machinery, workflow graph
   execution, agent resource defaults, or `.sortie` artifact contracts.
 
+## Current Code-Map Bootstrap Posture
+
+- Existing-project code-map opt-in is evidence-first: agents must run the non-destructive readiness
+  audit, present concrete findings and cleanup cost, and only then ask whether to restructure,
+  preserve the current layout with documented exceptions, or decline the map.
+
 ## Update When
 
 - skill trigger description, workflow, acceptance, or bundled script list changes

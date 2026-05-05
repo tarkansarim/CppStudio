@@ -73,3 +73,6 @@ skills, and watch-mode publishing behavior.
   lane-appropriate explicit Vulkan/CUDA report sets from the installed `nsys` surface.
 - Code-map validation checks that each subsystem router doc's `## Primary Paths` section matches the
   machine-readable manifest `primary_paths`, so future routing changes stay discoverable to agents.
+- The bundled code-map bootstrap audit text tells agents to present actual findings and cleanup cost
+  before asking restructure/preserve/decline questions, so existing-project opt-in cannot become a
+  pre-audit choice prompt.

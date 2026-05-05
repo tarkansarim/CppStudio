@@ -29,9 +29,11 @@ For an existing project, run the readiness audit before enabling:
 scripts/bootstrap_code_map.py --audit-existing
 ```
 
-Review the audit output, then ask whether to restructure first, preserve the current layout with
-documented exceptions, or decline the map. If the user wants the audit saved, rerun with
-`--write-audit` to write `docs/CODEMAP_BOOTSTRAP_AUDIT.md`.
+Review the audit output before asking the user to choose. Present concrete findings, evidence paths,
+nonstandard layout risks, and the estimated cleanup cost first; do not ask whether to restructure
+until the audit has actually run and its output has been summarized. If no concrete restructuring
+need is found, say so. If the user wants the audit saved, rerun with `--write-audit` to write
+`docs/CODEMAP_BOOTSTRAP_AUDIT.md`.
 
 Record a decline so agents stop prompting:
 

@@ -400,8 +400,8 @@ does not modify source layout and it does not decide for the user.
 - Findings: {len(findings)}
 - Estimated restructuring cost: {cost}
 - Cost note: {cost_note}
-- Required decision: restructure first, preserve the current layout with documented exceptions, or
-  decline the map for now.
+- Decision timing: present the concrete audit findings first; ask for a route only after the user can
+  see what, if anything, would need restructuring.
 
 ## Standard Layout Signals
 
@@ -413,8 +413,10 @@ does not modify source layout and it does not decide for the user.
 
 ## Agent Protocol
 
-Present this audit before enabling the map. Include the estimated cleanup cost and ask which route the
-user wants:
+Present this audit before enabling the map and before asking the user to pick a route. Include the
+actual findings, evidence paths, and estimated cleanup cost. If the audit found no concrete
+restructuring need, say that clearly instead of manufacturing one. After that evidence summary, ask
+which route the user wants:
 
 1. Restructure first, validate the new layout, then run `scripts/bootstrap_code_map.py --enable`
    or `scripts/bootstrap_code_map.py --enable --force` if replacing generated map files was accepted.
@@ -435,9 +437,9 @@ def audit_existing(repo: Path, force: bool, write_audit: bool) -> None:
     print(f"Code map readiness findings: {len(findings)}", file=sys.stderr)
     print(f"Estimated restructuring cost: {cost}", file=sys.stderr)
     if findings:
-        print("Ask the user whether to restructure first or preserve the current layout before enabling the map.", file=sys.stderr)
+        print("Present these findings first; only then ask whether to restructure first or preserve the current layout before enabling the map.", file=sys.stderr)
     else:
-        print("No obvious restructuring blockers found before enabling the map.", file=sys.stderr)
+        print("No obvious restructuring blockers found; tell the user that before asking how to proceed.", file=sys.stderr)
 
 
 def state_payload(status: str) -> dict[str, Any]:

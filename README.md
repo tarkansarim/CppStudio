@@ -346,9 +346,11 @@ For an existing project, ask for a maintained CppStudio code map in the same nat
 Create a maintained CppStudio code map for this existing C++/Vulkan renderer repo.
 ```
 
-The agent should audit the existing layout first without writing audit files by default, then ask
-whether to restructure first, preserve the current layout and document it, or decline code-map
-enablement. Existing generated map files are not replaced unless the user explicitly accepts that.
+The agent should audit the existing layout first without writing audit files by default. It should
+then show concrete findings, evidence paths, nonstandard layout risks, estimated cleanup cost, and
+what restructuring would actually be needed before asking whether to restructure first, preserve the
+current layout and document it, or decline code-map enablement. Existing generated map files are not
+replaced unless the user explicitly accepts that.
 For a new project, an explicit code-map request counts as acceptance after scaffolding:
 
 ```text
