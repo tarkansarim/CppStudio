@@ -61,9 +61,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
 
 - Hard rule: before touching code, do not rely on training data or intuition as the source of truth.
   First open the relevant local skills, the target repo's maintained code map when enabled, and the
-  smallest matching donor-library route/category/profile. State the skill and donor sources used
-  before implementation. If no donor route fits, stop and do focused donor or upstream research
-  before designing the code.
+  smallest matching donor-library route/category/profile. Then run a compact before-implementation
+  gate: discover the actual project/toolkit APIs and command surfaces, map constraints such as state
+  ownership, enabled states, selected object, snapping/clamping, coordinate spaces, socket/type
+  compatibility, and validation affordances, and decide how the change will be verified before
+  wiring it into production paths. State the skill and donor sources used before implementation. If
+  no donor route fits, stop and do focused donor or upstream research before designing the code.
 - Treat Vulkan as an explicit-lifetime API. Resource ownership, synchronization, image layouts, queue
   ownership, descriptor lifetime, command-buffer reuse, and frames-in-flight must be designed
   deliberately.
@@ -113,6 +116,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   feature driving, state/log readback, screenshots, and visual/UI troubleshooting before asking the
   user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
   the harness instead of repeatedly handing small verification chores to the user.
+- When worker, subagent, reviewer, or background validation work is gated by the current task, keep
+  supervision active until it reports done, idle, or blocked. Do not give final status while delegated
+  work is still running; report the active worker state and remaining blocker instead.
+- When delegation is explicitly authorized and a bug, product-shape decision, or broad subsystem
+  audit resists one perspective, escalate to parallel lenses. Assign independent hypotheses such as
+  state flow, command/API routing, rendering/capture timing, build/toolchain contracts, or UI/product
+  convention fit, then synthesize the evidence before implementing or closing.
 - Treat bad product-shape decisions, skipped skill/donor routing, weak harness semantics, and
   evidence-free success claims as blockers, not merely style issues. Stop the target slice, repair
   the process miss, and update reusable project skills when the failure is generic.
@@ -125,12 +135,19 @@ When this skill is active, work like a native C++ GPU systems engineer:
   state and return `ok=true` only when the invariant is satisfied, or explicitly report a deliberate
   no-op. If the command snaps, clamps, quantizes, or validates input, tests and docs assert the
   post-validation committed values, not raw deltas.
+- For GUI/editor command wiring, use verify-before-wiring for menus, shortcuts, context actions,
+  timelines, and viewports. Discover or introspect the real toolkit/API objects, enabled-state rules,
+  selected-object requirements, snapped or committed coordinates, and socket/type compatibility
+  before connecting production commands; metadata or planned wiring is not proof.
 - For viewport, canvas, render-target, or screenshot capture endpoints, do not assume "set state,
   request update, grab immediately" proves the visible result. The harness should expose enough
   frame/revision/sequence/fence evidence to show the requested UI or renderer state was rendered
   before capture, and the capture response should include that evidence when practical. If the
   capture cannot settle on the requested state, report a harness failure instead of accepting stale
   pixels. Run visual-difference or screenshot checks only against settled frames.
+- Judge screenshots against donor or peer-tool product conventions, not just non-empty pixels. Reject
+  captures that prove a command fired but show crowded, clipped, debug-looking, dimensionally wrong,
+  or convention-breaking UI for the target product class.
 - When visual freshness checks fail repeatedly, pause code edits and audit the capture API timing.
   Some toolkit grabs render during the capture call, so the correct proof is a post-capture rendered
   revision; others copy the last presented frame and need pre-capture scheduling. Classify the issue
@@ -248,7 +265,7 @@ When this skill is active, work like a native C++ GPU systems engineer:
 4. For an existing repo, run `scripts/apply_studio_backbone.py` against a temporary copy first unless the user explicitly wants direct modification.
 5. For a greenfield scaffold with no `.cppstudio/code-map-state.json`, ask once whether to create a maintained codebase architecture map. State the benefits: faster cold starts, cleaner multi-agent routing, explicit subsystem ownership, and less repeated code reading. If the user already explicitly asked for a code map, architecture map, or future-agent map during project creation, treat that as acceptance and run `scripts/bootstrap_code_map.py --enable --force` after scaffolding because the template includes starter generated map files. If they decline, run `scripts/bootstrap_code_map.py --decline` and do not prompt again unless asked. Do not create `.cppstudio/code-map-state.json`, `docs/CODEBASE_ARCHITECTURE_INDEX.md`, or `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` by guessing the schema; use the bootstrap script and validator.
 6. For an existing project with no `.cppstudio/code-map-state.json`, treat code-map enablement as a readiness protocol. Run `scripts/bootstrap_code_map.py --audit-existing` first and summarize its stdout: structure findings, nonstandard layout risks, and the estimated cleanup cost. Do not write `docs/CODEMAP_BOOTSTRAP_AUDIT.md` unless the user wants a saved audit; then rerun with `--write-audit`. Ask whether the user wants to restructure first, preserve the current layout and document exceptions, or decline the map. Do not run `--enable` until the user chooses either restructure-complete or preserve-as-is. If generated map files already exist, use `--enable --force` only after the user accepts replacing those generated map files.
-7. When `.cppstudio/code-map-state.json` says `enabled`, or when repo-local instructions declare a maintained codebase map required, read the target repo's `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before code changes. Use that map to select the subsystem doc and primary paths for the change, then keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, or public runtime behavior changes. If the user asks about a code map mid-project, explain it, run the existing-project readiness protocol, and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; if generated map files already exist, use `--force` only after the user accepts replacing them. For large existing repos, use parallel subsystem audits when delegation is explicitly available.
+7. When `.cppstudio/code-map-state.json` says `enabled`, or when repo-local instructions declare a maintained codebase map required, read the target repo's `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before code changes. Use that map to select the subsystem doc and primary paths for the change, then keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, or public runtime behavior changes. If the user asks about a code map mid-project, explain it, run the existing-project readiness protocol, and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; if generated map files already exist, use `--force` only after the user accepts replacing them. For large existing repos, use parallel-lens subsystem audits only when delegation is explicitly authorized.
 8. Preserve any existing package manager or project-specific dependency policy. Do not introduce vcpkg, Conan, containers, FetchContent, or submodules unless there is a concrete reason.
 9. Keep CUDA and Vulkan optional through CMake cache options. For unspecified new GPU/3D/realtime/XR/cross-platform C++ projects, recommend and scaffold Vulkan-first: the normal `dev` preset is Vulkan-only, CUDA stays off unless the user explicitly chooses the CUDA lane or the requirements force CUDA.
 10. Do not mix CUDA into a Vulkan-chosen or Vulkan-assumed project by default. Use CUDA only for explicit CUDA/Vulkan interop, CUDA-specific compute, NVIDIA-only libraries, CUDA graphs, or custom CUDA kernels. When the user explicitly chooses CUDA, Vulkan may be added for presentation, realtime visualization, XR, swapchain/display work, or interop if the boundary is documented.

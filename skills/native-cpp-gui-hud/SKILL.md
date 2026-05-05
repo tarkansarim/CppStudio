@@ -14,8 +14,12 @@ HUDs, gizmos, timeline controls, graph/plot panels, and runtime game UI.
 Hard rule: before touching GUI, HUD, editor, timeline, viewport, inspector, gizmo, or tool-surface
 code, do not rely on training data or intuition as the source of truth. Open this skill, the
 CppStudio donor category `cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md`, and any
-domain donor routes for the target tool first. State the donors or peer-tool references that ground
-the layout before implementation.
+domain donor routes for the target tool first. Then run a compact before-implementation gate:
+discover the actual toolkit APIs, action registries, menu/shortcut/context/timeline/viewport
+surfaces, map constraints such as enabled states, selected object, snapping/clamping, coordinate
+spaces, socket/type compatibility, focus/modal state, and validation affordances, and decide how the
+change will be verified before wiring commands into production UI. State the donors or peer-tool
+references that ground the layout before implementation.
 
 When comparing GUI options for the user, always include links where they can inspect the visual style
 or example output. Do not present a GUI choice as abstract library trivia; show what it looks like and
@@ -37,15 +41,18 @@ For editor and DCC-style command surfaces, choose the interaction surface that m
 domain. Destructive or structural graph/scene edits should be owned by editor actions, menus,
 context/shortcut paths, or graph-local interaction patterns before adding extra toolbar buttons. If a
 toolbar affordance is useful, it must not crowd labels, selection readouts, timeline controls, or
-other primary authoring controls. Screenshot inspection must reject crowded, clipped, or debug-looking
+other primary authoring controls. Screenshot inspection must judge the result against donor or
+peer-tool product conventions and reject crowded, clipped, debug-looking, or convention-breaking
 controls even when functional tests pass.
 
 For GUI/editor action work, verification must prove the real command surface, not only an advertised
-metadata string. When the app has an agentic harness, expose or extend readback for the actual
-action/menu/shortcut/context objects, their enabled state, attachment point, and command target when
-the toolkit allows it. Do not claim a menu, context action, shortcut, or toolbar path was tested
-unless it was actually exercised or introspected; otherwise report it as screenshot-checked or
-metadata-only evidence.
+metadata string. Use verify-before-wiring for menus, shortcuts, context actions, timelines, and
+viewports: discover or introspect the actual action/menu/shortcut/context objects, timeline or
+viewport command APIs, enabled-state rules, attachment point, command target, selected-object
+requirements, snapped or committed coordinates, and socket/type compatibility before connecting
+production paths. Do not claim a menu, context action, shortcut, timeline, viewport, or toolbar path
+was tested unless it was actually exercised or introspected; otherwise report it as screenshot-checked
+or metadata-only evidence.
 
 When changing broad GUI interaction code such as mouse/keyboard event handlers, node graph widgets,
 timeline widgets, viewport controls, docking shells, or command dispatch, add a source-structure
@@ -53,6 +60,15 @@ checkpoint before layering more behavior. Inspect the edited file for stale cont
 duplicate helper functions, mismatched braces/namespaces, unreachable paths, and old interaction
 branches that survived the rewrite. Build that checkpoint before updating docs, screenshots, or
 additional harness routes.
+
+When GUI work is delegated to a worker, subagent, reviewer, or background validation lane, monitor it
+until it reports done, idle, or blocked. Do not give final status while delegated work is still
+running; report the active worker state and remaining blocker instead.
+
+When delegation is explicitly authorized and GUI behavior remains uncertain, use parallel lenses
+before another broad patch. Assign separate hypotheses such as action routing, selection/constraint
+state, timeline/viewport state, screenshot freshness, and peer-tool convention fit, then synthesize
+the evidence before wiring or closing.
 
 ## Default Selection
 
@@ -78,11 +94,13 @@ additional harness routes.
    atlas upload, input routing, DPI scaling, and swapchain resize behavior explicitly.
 5. For CUDA targets, keep the GUI thread and CUDA work queue boundaries explicit; avoid hiding CUDA
    synchronization in widget callbacks.
-6. For editor commands, map structural edits to action/menu/shortcut/context surfaces first, then
-   decide whether a toolbar button is still necessary after checking the resulting screenshot.
+6. For editor commands, map structural edits to action/menu/shortcut/context surfaces first, verify
+   those surfaces before production wiring, then decide whether a toolbar button is still necessary
+   after checking the resulting screenshot against peer-tool/product conventions.
 7. For implemented GUI commands, add harness readback or scenario coverage that proves the real UI
-   actions and enabled states when practical. Keep advertised capability metadata separate from
-   proof.
+   actions, enabled states, selected-object requirements, attachment points, timeline/viewport
+   command state, and socket/type compatibility when practical. Keep advertised capability metadata
+   separate from proof.
 8. For drag/move/resize/graph-coordinate interactions, verify the committed UI/model state after any
    snapping, clamping, or validation and make the screenshot match that committed state.
 9. Present a compact option table with:

@@ -34,6 +34,9 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `pending` - Adopted generic doctrine from a 22-skill Sortie assistant-pack audit: API discovery,
+  constraint mapping, harness observation, planning research gates, GUI proof rules, and supervised
+  agent monitoring without importing Sortie runtime mechanics.
 - `e0a29f5` - Broadened shell-search quoting guidance so validation audits quote script fragments,
   regex text, `$`, embedded quotes, and other shell metacharacters safely.
 - `3f78dc7` - Tightened GUI and control-harness verification so broad interaction rewrites build
@@ -549,6 +552,9 @@ source of truth. Edit this repo, then have an agent publish with the repo script
   setup notes
 - [Package integrity](docs/package-integrity.md): manifest validation, progressive disclosure groups,
   sync/rollout audit records, and future distribution notes
+- [Sortie assistant-pack adoption audit](research/sortie-assistant-pack-adoption.md): classification
+  of 22 audited Sortie skills; CppStudio cherry-picks generic doctrine without importing Sortie
+  runtime mechanics
 - [Generated GPU optimization loop](skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md):
   success criteria, baseline, hardware profile, roofline/SOL diagnosis, hypothesis logs,
   breaking-point search, beam round planning, keep/revert, target orchestration, and consolidation

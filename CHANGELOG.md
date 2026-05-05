@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a Sortie assistant-pack adoption audit covering 22 audited skills, classifying direct
+  doctrine, partial cherry-picks, and redundant Sortie-specific mechanics without importing Sortie
+  runtime behavior.
 - Tightened GUI and control-harness guidance so broad interaction rewrites require a source/build
   checkpoint, mutation endpoints must prove committed state before returning `ok=true`, and
   snapped/clamped command tests assert post-validation values.

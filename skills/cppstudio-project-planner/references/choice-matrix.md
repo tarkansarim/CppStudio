@@ -3,6 +3,37 @@
 Use this matrix to choose what the agent should inspect before implementation. Load only the rows
 that match the project.
 
+## Target Bootstrap Before Questions
+
+Before asking the user for choices, inspect what the local target already reveals. Ask only for facts
+that cannot be discovered from the workspace or for explicit preferences/product decisions.
+
+| Target Shape | Auto-Discover First | Ask User Only For |
+| --- | --- | --- |
+| Existing repo | `AGENTS.md`, enabled code-map state/index/manifest, README/build docs, presets, manifests, scripts, validation entrypoints, existing launch/control docs, app/library boundaries | Missing product constraints, permission to change structure, unresolved lane or dependency choices |
+| Greenfield in current workspace | Requested name, directory collisions, nearby repo rules, available CppStudio templates, likely platform/toolchain assumptions | Product scope, target platforms not inferable locally, code-map acceptance, dependency/license preferences |
+| Existing generated CppStudio project | Code-map state, generated template version clues, validation scripts, CMake presets, control-harness docs, local deviations from template shape | Whether to preserve deviations, update template-era conventions, or restructure before new work |
+
+## Research-To-Plan Gates
+
+For each major subsystem that shapes architecture, add a compact decision record before locking the
+plan. Keep the gate lightweight: local facts, sources checked, selected default, rejected
+alternatives, user decision if any, and milestone-1 validation.
+
+| Subsystem | Minimum Evidence Before Recommendation | Decision Record Must Name |
+| --- | --- | --- |
+| Renderer or render path | Project archetype, Vulkan/CUDA lane, renderer donors, current upstream/vendor guidance when version-sensitive | Chosen render architecture, rejected render paths, validation capture or screenshot plan |
+| Simulation or solver | Domain donor route, current papers/samples/vendor docs when ceiling matters, coupling to renderer and assets | Solver family, data ownership, rejected solvers, deterministic tests and visual proof |
+| Authoring/source of truth | Current comparable tools from the same workflow domain and their common authoring practices | Graph/stack/timeline/scene/scripting/direct/hybrid choice, source-of-truth owner, rejected models |
+| GUI/HUD/editor shell | GUI skill, native GUI donor category, visual inspection links, peer product-surface conventions | Toolkit/shell, layout rationale, command-surface expectations, UI smoke/screenshot validation |
+| Asset or scene pipeline | File/interchange donors, source asset ownership, import/export or runtime handoff constraints | Formats, identity/versioning, generated caches, round-trip or validator fixtures |
+| Input and interaction | Target users, devices, toolkit/windowing constraints, peer interaction patterns | Input devices, sampling/latency needs, undo/redo or replay tests |
+| Agentic control harness | App interactivity, launch path, required command/readback/visual surfaces | Transport shape, discoverability docs, first scenario endpoints, state/log/visual proof |
+| Persistence/serialization | Authoring model, stable IDs, migration/versioning, fixtures | Project file shape, migration policy, round-trip validation |
+| Build/dependency policy | Existing presets/manifests, repo dependency policy, native infrastructure donors | Dependency source, license/deployment caveats, build/CTest validation |
+| Validation/profiling | Project risk, target platform, available toolchain, required evidence threshold | First milestone acceptance tests, profiler/sanitizer/tool-gap notes |
+| AI/runtime integration | AI/runtime donor category, model/data boundaries, CUDA/Vulkan lane constraints | Runtime/dependency choice, model artifact policy, numerical/performance tests |
+
 ## Template And Archetype Choices
 
 | Project Shape | Start With | Required Routing |
@@ -17,11 +48,26 @@ that match the project.
 | AI runtime or neural 3D tool | AI runtime category plus graphics/runtime viewer categories | AI runtimes, neural 3D, CUDA or Vulkan lane depending on actual implementation |
 | Existing project upgrade | Read repo map if present, then code-map readiness audit if requested | existing layout audit, dependency policy, validation gaps, staged backbone application |
 
+## Software Orientation For Large Artist/Game/VFX Tools
+
+For large artist, game technical-art, VFX, DCC, simulation-editor, or asset-pipeline tools, identify
+the closest current software family before choosing architecture. Product shape should come from
+current peer practice plus local donor routing, not from whichever panel or data structure is easiest
+to scaffold.
+
+| Orientation | Inspect Current Peer Practice For | Common Planning Risk |
+| --- | --- | --- |
+| DCC/editor-style tool | Scene hierarchy, graph/stack/timeline split, inspectors, command surfaces, asset packages, undo/redo | Mistaking a parameter panel for the source of truth |
+| Game technical-art or runtime tool | Iteration loop, asset cooking, runtime/editor boundary, debug vs shipped UI, platform budgets | Shipping debug-tool shape as product UI |
+| VFX or pipeline tool | USD/Alembic/MaterialX/OpenVDB or department handoff, review/editorial needs, cache ownership | Hiding interchange/source-of-truth choices inside importer code |
+| Simulation workbench | Scenario authoring, solver settings, playback, baking/cache, visual diagnostics, reproducibility | Coupling solver state directly to UI widgets |
+| Brush, sculpt, paint, groom, or terrain tool | Tablet/stylus behavior, stroke model, layers/masks, viewport feedback, replay and undo | Treating input as ordinary mouse events only |
+
 ## Authoring Model Choices
 
-For tools with user-authored state, research comparable current tools before choosing. This choice
-often controls data ownership, serialization, undo/redo, validation, agentic controls, UI structure,
-and whether docks/panels inspect a model or own the model.
+For tools with user-authored state, comparable current-tool research is mandatory before choosing.
+This choice often controls data ownership, serialization, undo/redo, validation, agentic controls, UI
+structure, and whether docks/panels inspect a model or own the model.
 
 | Option | Use When Peer Research Supports | Required Planning |
 | --- | --- | --- |

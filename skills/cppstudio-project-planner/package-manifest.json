@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 10555,
-      "sha256": "3536e7048283c1f623fc429524fe9a3710323f4bcdecb2f1337d6815a6f7431b"
+      "size": 13836,
+      "sha256": "a7c57bd6fa526504ed1a31ee8711c8ae72c79542a4273ede213e8162f8a167f6"
     },
     {
       "path": "agents/openai.yaml",
@@ -21,15 +21,15 @@
       "path": "references/choice-matrix.md",
       "role": "reference",
       "disclosure_group": "reference",
-      "size": 9790,
-      "sha256": "6022369a026a8ab2644debb595bf4ce0f1b37111c15e0d8dce7242ef8782d29e"
+      "size": 14902,
+      "sha256": "65d43951ad62b3bdc7fd181bee43794456628a80e74ce064d664cacf53bf3cc0"
     },
     {
       "path": "references/project-intake.md",
       "role": "reference",
       "disclosure_group": "reference",
-      "size": 9379,
-      "sha256": "72896fb60f1e151763147915785c8a502661a433673c49d38217186861abc73e"
+      "size": 11987,
+      "sha256": "7407c5161fdbcdc9889b94678d5f6db540dc0a935bf00c2535b034561861a7c2"
     }
   ]
 }

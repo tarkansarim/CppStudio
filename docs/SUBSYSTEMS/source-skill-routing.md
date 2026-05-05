@@ -21,6 +21,13 @@ generated-project workflow instructions.
 - `skills/agentic-control-harness/SKILL.md`
 - `.codex/skills/cppstudio-repo-onboarding/SKILL.md`
 
+## Current External Doctrine Posture
+
+- Sortie assistant-pack adoption research is provenance only. CppStudio may cherry-pick generic
+  doctrine into reusable skills, but must not import Sortie runtime mechanics such as Sortie MCP
+  call sequences, L0/L1/L2 Harness roles, checkpoint/rewind/gauntlet machinery, workflow graph
+  execution, agent resource defaults, or `.sortie` artifact contracts.
+
 ## Update When
 
 - skill trigger description, workflow, acceptance, or bundled script list changes

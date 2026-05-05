@@ -23,11 +23,26 @@ gap and do focused research before designing or scaffolding.
 For a substantial initial project request, gather a pre-plan research brief before asking the user to
 switch to Plan mode or presenting decision questions. Do not jump straight into question UI.
 
+Before asking the user for target facts, auto-discover what the local workspace can already answer.
+For an existing repo, inspect repo instructions, enabled code maps, README/build docs, presets,
+package manifests, scripts, validation entrypoints, existing launch/control docs, and obvious app or
+library boundaries. For a greenfield target, inspect the requested name, current directory, nearby
+repo constraints, available templates, and likely toolchain assumptions. Ask the user only for
+preferences, missing constraints, or decisions that cannot be discovered locally.
+
 The pre-plan research brief must open the relevant local skill/donor references and run an extensive
 state-of-the-art web ceiling check against upstream/primary sources for current GUI, SDK, simulation,
 renderer, dependency, authoring-model, or hardware choices. Keep the user-facing brief concise, but
 the research must be deep enough that the user is choosing between current, competitive options
 rather than unsupported guesses.
+
+For each major subsystem that would shape architecture, run a lightweight research-to-plan gate
+before locking the recommendation. Major subsystems include renderer, simulation/solver, asset or
+scene pipeline, authoring/source-of-truth model, GUI/HUD/editor shell, input, agentic control
+harness, persistence/serialization, build/dependency policy, validation/profiling, and AI/runtime
+integration. Each gate needs only enough evidence to decide responsibly: local facts discovered,
+skills/donor routes opened, current upstream or peer-tool sources checked when relevant, the chosen
+default, rejected alternatives, and the validation evidence required for milestone 1.
 
 For any project with an interactive tool, editor, procedural workflow, scene/content pipeline,
 simulation setup, material/shader workflow, timeline, graph, layer stack, scripting surface, or other
@@ -38,6 +53,14 @@ or dataflow graph, layer/stack, timeline/sequencer, scene tree/component model, 
 inspector, scripting API, or hybrids. Do not assume a dock-panel or direct-parameter workflow just
 because it is easier to scaffold; recommend the authoring model that peer research supports and ask
 the user to confirm or choose an alternative before files are created.
+
+For ambitious artist, game, VFX, DCC, simulation-editor, or technical-art tools, first identify the
+software orientation: the closest current peer-tool family, target user workflow, primary authoring
+surface, runtime/editor split, asset handoff, and validation style. Use current peer practice from
+official docs, active tools, engines, SDKs, samples, papers, or vendor guidance before recommending
+viewport shape, timeline/transport placement, editor layout, command surfaces, authoring model,
+solver architecture, or source-of-truth ownership. The plan must separate peer-backed decisions from
+local donor guidance and inference.
 
 Default to the best available approach for the target project, not the easiest implementation. Do not
 recommend a simpler, older, or lower-ceiling route just because it is quick to scaffold unless the
@@ -87,26 +110,33 @@ facade over the same API, and which state/log/visual observation surfaces are ne
 1. Classify the project: renderer, simulation, artist tool, game technical-art tool, DCC/asset
    pipeline, AI runtime, CUDA library, Vulkan app, explicit CUDA/Vulkan interop app, XR app, or
    existing-repo upgrade.
-2. Run a pre-plan research pass before asking for choices: target platform implications, likely
+2. Auto-discover local target facts before asking the user for choices: repo instructions, code-map
+   state, build docs, presets, manifests, scripts, validation entrypoints, existing control or launch
+   surfaces, app/library boundaries, name collisions, and template/toolchain constraints.
+3. Run a pre-plan research pass before asking for choices: target platform implications, likely
    template/archetype, authoring model/source of truth, GPU lane, GUI/HUD stack, agentic control
    harness, input devices, donor categories, dependency policy, validation budget, and code-map
    preference.
-3. Run an extensive state-of-the-art web ceiling check for current dependencies, SDKs, GUI/toolkit
+4. Run an extensive state-of-the-art web ceiling check for current dependencies, SDKs, GUI/toolkit
    choices, authoring workflows, papers, samples, engines, or vendor guidance that could affect
    architecture. Prefer upstream docs, official repos, standards bodies, recent papers, vendor
    documentation, active samples, release notes, and adoption signals. Include current comparable
    tools from the same user/workflow domain, and extract their common authoring practices before
    proposing a source-of-truth model.
-4. Open the smallest matching donor categories and profiles before recommending solvers, renderer
+5. For large artist, game, VFX, DCC, simulation-editor, or technical-art tools, state the software
+   orientation and current peer-tool family before ranking product-shape decisions.
+6. Open the smallest matching donor categories and profiles before recommending solvers, renderer
    backbones, GUI stacks, asset/runtime formats, AI runtimes, or simulation architecture.
-5. Treat product-surface choices as donor-gated decisions, not implementation conveniences. Before
+7. Treat product-surface choices as donor-gated decisions, not implementation conveniences. Before
    recommending or scaffolding viewport dimensionality, timeline/transport placement, editor layout,
    node graph/layer stack/source of truth, solver architecture, or render path, cite the donor or
    peer-tool evidence that supports it.
-6. Separate current leading approaches from legacy/outdated approaches, state the freshness evidence,
+8. Add a short decision record for each major subsystem: local facts, peer/upstream/donor evidence,
+   selected default, rejected alternatives, open user decision if any, and milestone-1 validation.
+9. Separate current leading approaches from legacy/outdated approaches, state the freshness evidence,
    and call out when a local donor is still useful only as reference because the current best approach
    has moved on.
-7. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
+10. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
    routes, peer-tool authoring-model findings, web sources checked, current-vs-legacy notes, and the
    reasoning for the best available option, then ask for Plan mode and only then ask decision
    questions.
@@ -116,6 +146,8 @@ facade over the same API, and which state/log/visual observation surfaces are ne
 Every substantial plan should include:
 
 - project intent and target users
+- local target facts discovered before asking the user
+- software orientation and current peer-tool family for large artist/game/VFX/DCC tools
 - recommended CppStudio archetype/template
 - authoring model/source of truth options and recommendation, with peer-practice evidence
 - GPU lane: Vulkan-first, CUDA, or explicit interop, with why
@@ -128,6 +160,8 @@ Every substantial plan should include:
 - web sources checked and what changed because of them
 - current state-of-the-art or actively popular approaches, separated from legacy approaches
 - comparable current tools checked and what their common authoring practices imply
+- per-subsystem decision records for major renderer, solver, authoring, GUI, asset, control,
+  persistence, build/dependency, validation, or runtime choices
 - unresolved user decisions, grouped into no more than three questions at a time
 - code-map recommendation and whether it is accepted, declined, or pending
 - validation/profiling plan for the first implementation milestone
@@ -148,5 +182,10 @@ Every substantial plan should include:
   current tools cluster around a graph, stack, timeline, scene tree, scripting surface, or hybrid,
   present that as the leading option and ask the user to confirm or choose another model before
   implementation.
+- For substantial tools, do not ask the user for facts the workspace can reveal. Bootstrap target
+  facts first, then ask only for unavailable preferences or explicit product choices.
+- For large artist, game, VFX, DCC, simulation-editor, or technical-art tools, orient the plan around
+  current software practice before choosing product shape. Record when a recommendation is peer-backed
+  versus donor-backed versus inference.
 - Prefer the highest-quality current approach that fits the target project. Offer simpler legacy or
   low-effort approaches only as explicit tradeoffs, not as the default, unless the user asks for that.

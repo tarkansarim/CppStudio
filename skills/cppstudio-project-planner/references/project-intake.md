@@ -11,8 +11,15 @@ research brief before asking the user to switch to Plan mode or presenting decis
 brief should use local CppStudio skill/donor routing plus an extensive state-of-the-art web ceiling
 check against upstream or primary sources, so the user is choosing from researched options.
 
+Start with a target bootstrap pass. Auto-discover facts the workspace can answer before asking the
+user: repo instructions, enabled code maps, README/build docs, presets, manifests, scripts, validation
+entrypoints, app/library boundaries, existing launch or control docs, requested project name, nearby
+repo constraints, available templates, and likely toolchain assumptions. Ask the user only for
+preferences, missing constraints, or product decisions that cannot be discovered locally.
+
 The pre-plan research brief should include:
 
+- local target facts discovered before questions
 - likely project archetype/template
 - likely authoring model/source-of-truth options and comparable-tool evidence
 - likely GPU lane and alternatives
@@ -21,7 +28,16 @@ The pre-plan research brief should include:
 - relevant donor categories/profiles opened
 - web/current sources checked, with freshness/adoption signals where available
 - current state-of-the-art or actively popular approaches, separated from legacy approaches
+- software orientation and current peer-tool family for large artist/game/VFX/DCC tools
 - recommended best-available default and why
+
+For major subsystems, add a lightweight research-to-plan gate before locking the plan. Major
+subsystems include renderer, simulation/solver, asset or scene pipeline, authoring/source-of-truth
+model, GUI/HUD/editor shell, input, agentic control harness, persistence/serialization,
+build/dependency policy, validation/profiling, and AI/runtime integration. The gate should record
+local facts, skills/donor routes, current upstream or peer-tool sources when relevant, selected
+default, rejected alternatives, and milestone-1 validation evidence. Keep it compact and proportional
+to project risk.
 
 Do not default to the easiest route if a better current approach exists. Recommend simpler, older, or
 lower-ceiling options only as tradeoffs when the user asks for a lightweight solution, conservative
@@ -55,10 +71,16 @@ link table is mandatory.
 
 Collect these facts before committing to architecture:
 
+- Target bootstrap: repo instructions, code-map state, README/build docs, presets, manifests, scripts,
+  validation entrypoints, app/library boundaries, existing launch/control docs, requested name,
+  workspace collisions, and visible template/toolchain constraints.
 - Project type: renderer, simulation, artist tool, game technical-art tool, DCC tool, asset pipeline,
   AI runtime, CUDA library, Vulkan app, explicit interop app, XR app, or existing-repo upgrade.
 - Target users: artist, technical artist, gameplay/tools programmer, graphics engineer, VFX pipeline
   TD, researcher, or product user.
+- Software orientation for large tools: closest current peer-tool family, primary workflow, editor vs
+  runtime split, asset handoff, command surfaces, validation style, and where current peer practice
+  differs from simpler scaffold-friendly approaches.
 - Platforms: Linux, Windows, macOS, WSL, Steam Deck, studio workstation, or CI-only headless lane.
 - GPU lane: Vulkan-first, CUDA, or explicit CUDA/Vulkan interop. If unspecified, recommend Vulkan
   first for cross-vendor realtime work.
@@ -106,8 +128,9 @@ For artist-facing tools, explicitly plan the input model:
 
 ## Authoring Model Checklist
 
-For tools with user-authored state, do not treat panels, sliders, or direct structs as the default
-source of truth until peer research supports that choice. Identify:
+For tools with user-authored state, peer-tool/source-of-truth checks are mandatory. Do not treat
+panels, sliders, direct structs, or the fastest scaffold path as the default source of truth until
+current comparable-tool research supports that choice. Identify:
 
 - primary authoring surface: node/dataflow graph, stack/layers, timeline, scene tree, parameter
   inspector, scripting, or hybrid
@@ -124,6 +147,25 @@ source of truth until peer research supports that choice. Identify:
 
 If comparable current tools converge on one authoring model, present that as the recommended default
 with evidence and ask the user to confirm or pick an alternative before creating files.
+
+## Subsystem Decision Records
+
+For each major subsystem that changes architecture, add a compact decision record to the plan:
+
+```text
+Subsystem:
+Local facts discovered:
+Peer/upstream/donor evidence:
+Selected default:
+Rejected alternatives:
+User decision needed:
+Milestone-1 validation:
+```
+
+Use this for renderer, solver/simulation, authoring/source of truth, GUI/editor shell, asset or scene
+pipeline, input, agentic controls, persistence, build/dependency policy, validation/profiling, and
+AI/runtime decisions when they are in scope. Keep records brief; their purpose is to prevent hidden
+architecture commitments, not to write a design document before the user chooses.
 
 ## Agentic Control Harness Checklist
 
@@ -155,6 +197,8 @@ Use this shape for the response:
 
 ```text
 Project intent:
+Target bootstrap facts:
+Software orientation/current peer practice:
 Recommended archetype/template:
 Authoring model/source of truth:
 GPU lane:
@@ -166,6 +210,7 @@ Donors opened:
 Web sources checked:
 Current vs legacy:
 Recommended default:
+Subsystem decision records:
 Questions before implementation:
 Code-map choice:
 Validation plan:
