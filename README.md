@@ -35,6 +35,10 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 selected recent commit-level highlights for people scanning the repo, with older highlights
 collapsed below.
 
+- `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map
+  projects catch changed source paths that are not routed by the manifest.
+- `c68ae77` - Hardened code-map and trigger validation, made manual managed-skill install
+  transactional, and added report-only donor freshness auditing.
 - `f072f2d` - Collapsed older README Recent Commit Highlights behind a GitHub details expander.
 - `826a1f7` - Added a front-page highlight for maintained code-map routing-smoke requirements.
 - `535d266` - Required maintained code-map setup to include read-only subagent or fresh-session
@@ -52,14 +56,14 @@ collapsed below.
 - `3f78dc7` - Tightened GUI and control-harness verification so broad interaction rewrites build
   before more layers, mutation endpoints prove committed state, and snapped/clamped values are
   asserted after validation.
-- `0b82acb` - Required hard-reset evidence ledgers and keep/revert decisions after repeated
-  visual-capture or render-scheduling failures.
-- `3aa60ff` - Tightened harness thread-boundary guidance so UI/renderer readback, toolkit action
-  state, and visual capture run through the safe GUI/render thread.
 
 <details>
 <summary>Show older commit highlights</summary>
 
+- `0b82acb` - Required hard-reset evidence ledgers and keep/revert decisions after repeated
+  visual-capture or render-scheduling failures.
+- `3aa60ff` - Tightened harness thread-boundary guidance so UI/renderer readback, toolkit action
+  state, and visual capture run through the safe GUI/render thread.
 - `40f1b08` - Added visual-capture timing audit guidance so agents distinguish capture APIs that
   render during grab from APIs that copy the last presented frame before adding waits or loops.
 - `a18b91c` - Required settled visual-capture evidence so viewport, canvas, render-target, and
