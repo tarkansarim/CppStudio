@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Required GUI/editor harness verification to prove real action/menu/shortcut state where practical,
+  instead of treating advertised metadata as proof that a command surface works.
 - Tightened native GUI/editor guidance so structural DCC graph/scene edits use editor actions,
   menus, shortcuts, or context surfaces before toolbar affordances, with screenshot review rejecting
   crowded or clipped controls.

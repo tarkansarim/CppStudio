@@ -46,6 +46,9 @@ generated-project workflow instructions.
   managers
 - DCC/editor command-surface rules change, including when structural graph, scene, timeline, or
   layer edits should use editor actions, menus, shortcuts, context actions, or toolbar affordances
+- GUI/action verification rules change, including when harnesses should introspect actual toolkit
+  actions, menu entries, shortcuts, context surfaces, enabled states, or distinguish metadata claims
+  from proof
 - user-facing desktop launch-command verification requirements change, including non-blocking
   long-running GUI launch verification, launcher probe behavior, and duplicate-launch contracts
 - target-project commit rhythm changes, including when verified implementation slices should be

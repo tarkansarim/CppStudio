@@ -57,6 +57,10 @@ can judge the look and interaction style before choosing.
   editor action system first: menus, shortcuts, context actions, graph-canvas interactions, or
   command palettes. Add toolbar buttons only when the screenshot proves they do not crowd primary
   labels, selection readouts, transport controls, or other authoring affordances.
+- When an agentic harness exists, verify implemented GUI command surfaces against real toolkit state
+  where practical: action/menu/shortcut/context objects, enabled state, attachment point, and command
+  target. Do not treat graph metadata that advertises a command path as proof that the UI action
+  exists or works.
 
 ## Deep Profiles
 

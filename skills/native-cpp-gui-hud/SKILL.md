@@ -40,6 +40,13 @@ toolbar affordance is useful, it must not crowd labels, selection readouts, time
 other primary authoring controls. Screenshot inspection must reject crowded, clipped, or debug-looking
 controls even when functional tests pass.
 
+For GUI/editor action work, verification must prove the real command surface, not only an advertised
+metadata string. When the app has an agentic harness, expose or extend readback for the actual
+action/menu/shortcut/context objects, their enabled state, attachment point, and command target when
+the toolkit allows it. Do not claim a menu, context action, shortcut, or toolbar path was tested
+unless it was actually exercised or introspected; otherwise report it as screenshot-checked or
+metadata-only evidence.
+
 ## Default Selection
 
 - For Vulkan/CUDA/realtime tools, default to **Dear ImGui + ImGuizmo + ImPlot** unless the user wants
@@ -66,16 +73,19 @@ controls even when functional tests pass.
    synchronization in widget callbacks.
 6. For editor commands, map structural edits to action/menu/shortcut/context surfaces first, then
    decide whether a toolbar button is still necessary after checking the resulting screenshot.
-7. Present a compact option table with:
+7. For implemented GUI commands, add harness readback or scenario coverage that proves the real UI
+   actions and enabled states when practical. Keep advertised capability metadata separate from
+   proof.
+8. Present a compact option table with:
    - recommended use
    - source/docs link
    - visual/gallery/examples link
    - license/dependency caveat
-8. Only after that link table is visible, ask the user to choose among the researched options.
-9. Before adding a dependency, check the target repo's package policy and exact upstream license.
-10. If CppStudio is available, read its donor category first:
+9. Only after that link table is visible, ask the user to choose among the researched options.
+10. Before adding a dependency, check the target repo's package policy and exact upstream license.
+11. If CppStudio is available, read its donor category first:
    `cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md`.
-11. For current best-choice or version-sensitive questions, web-check official project docs/repos before
+12. For current best-choice or version-sensitive questions, web-check official project docs/repos before
    ranking options.
 
 ## Bundled Reference

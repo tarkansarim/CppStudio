@@ -54,6 +54,10 @@ control harness itself.
 - Make visual/UI awareness first-class. For viewers, tools, editors, and sandboxes, the harness
   should expose screenshots, offscreen frames, render-target dumps, UI state, or another reliable
   surrogate for what the user is seeing.
+- For GUI/editor command surfaces, do not rely only on capability metadata that says an action
+  exists. When practical, expose readback for the actual UI action/menu/shortcut/context objects,
+  enabled state, attachment point, and command target. Claim a menu, shortcut, context action, or
+  toolbar path was tested only when it was exercised or introspected by the harness.
 - Maintain a control registry such as `docs/AGENTIC_CONTROL.md` plus optional
   `docs/AGENTIC_CONTROL.json` or `TARGET_CONTROL.json` so future agents can discover controls
   without reverse-engineering the app.
@@ -70,6 +74,8 @@ A first harness slice is only provisionally successful when these are verified:
 - one real feature command mutates the app and has state readback
 - recent logs or warnings are queryable
 - visual state can be captured or otherwise inspected for viewport/UI-heavy apps
+- user-visible GUI actions added in the slice have either scenario coverage or action/readback
+  evidence from the real toolkit objects; metadata-only assertions are labeled as such
 - failures distinguish transport errors from app-side command errors
 
 After first proof, add stress lanes for partial failures, invalid values, repeated commands, startup
