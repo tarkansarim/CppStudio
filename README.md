@@ -34,6 +34,8 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `535d266` - Required maintained code-map setup to include read-only subagent or fresh-session
+  routing smoke evidence when available, not only schema validation.
 - `d9024a6` - Hardened code-map completion so validation is not treated as routing proof,
   fresh-agent smokes are graded pass/partial/fail, instruction-file drift is reported separately,
   and audit-backed presets/scripts are labeled as pre-map infrastructure.
