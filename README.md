@@ -34,6 +34,10 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `d4ffdb6` - Added `Commit-Origin` trailers so autonomous agent slice commits
+  and explicit user-requested commits are distinguishable in git history.
+- `36320ba` - Required agents to commit each verified implementation slice before
+  continuing into the next production milestone.
 - `46586d2` - Required exact desktop launch-command verification for user-facing
   GUI launch paths instead of relying on offscreen smoke alone.
 - `5e5dbc1` - Tightens desktop launch verification so long-running GUI apps are checked through
