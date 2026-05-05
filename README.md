@@ -36,6 +36,9 @@ commit-level changes readable for people scanning the repo.
 
 - `d4ffdb6` - Added `Commit-Origin` trailers so autonomous agent slice commits
   and explicit user-requested commits are distinguishable in git history.
+- `b73aa55` - Tightened native GUI/editor guidance so structural graph and scene
+  edits prefer editor actions, menus, shortcuts, or context surfaces before
+  toolbar affordances.
 - `36320ba` - Required agents to commit each verified implementation slice before
   continuing into the next production milestone.
 - `46586d2` - Required exact desktop launch-command verification for user-facing
