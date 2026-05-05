@@ -47,6 +47,14 @@ cmake --build --preset dev
 ctest --preset quick --output-on-failure
 ```
 
+## Development Rhythm
+
+For agent-led implementation, treat git commits as part of the workflow. After each coherent
+verified slice, commit the source, docs, tests, harness, and code-map updates before moving to the
+next slice unless the user or repo policy says not to commit. Keep generated build outputs,
+screenshots, profiler captures, logs, and temporary verification artifacts out of commits unless the
+project intentionally tracks them.
+
 Optional CUDA lane:
 
 ```bash

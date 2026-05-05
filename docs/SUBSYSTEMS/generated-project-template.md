@@ -25,6 +25,8 @@ validation.
 - scaffold or existing-repo apply behavior changes
 - generated-project validation expectations change
 - code-map template files, readiness audit behavior, or generated-project code-map behavior changes
+- generated-project development rhythm changes, including verified-slice commit expectations or
+  artifact exclusion guidance
 
 ## Current Portability Notes
 
@@ -61,3 +63,6 @@ validation.
   capture launcher logs, poll the control harness, confirm process/window evidence, test duplicate
   launch behavior for fixed control ports, and cleanly stop through the harness instead of blocking a
   terminal agent on a foreground GUI or letting a transient shell kill the app before probes complete.
+- Template docs tell agents to commit each coherent verified implementation slice before moving to
+  the next milestone while keeping generated build outputs, screenshots, profiler captures, logs, and
+  temporary verification artifacts out of git unless the project intentionally tracks them.

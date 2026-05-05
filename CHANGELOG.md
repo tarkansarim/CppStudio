@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added verified-slice git commit discipline to the CppStudio workflow so agents commit clean
+  source/docs/harness/code-map updates before continuing into the next implementation milestone.
 - Fixed the validation script's ShellCheck directive for the Vulkan validation wrapper fixture so
   hosted CI accepts the intentionally single-quoted child-shell capture command.
 - Hardened the generated Vulkan validation wrapper so SDK validation-layer manifests and layer

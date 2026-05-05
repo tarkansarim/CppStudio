@@ -46,3 +46,5 @@ generated-project workflow instructions.
   managers
 - user-facing desktop launch-command verification requirements change, including non-blocking
   long-running GUI launch verification, launcher probe behavior, and duplicate-launch contracts
+- target-project commit rhythm changes, including when verified implementation slices should be
+  committed before agents continue into the next milestone

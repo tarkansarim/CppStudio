@@ -82,6 +82,15 @@ When this skill is active, work like a native C++ GPU systems engineer:
   changes, or target-project deployment/install script edits, create or confirm a recent git commit
   so rollback is exact and cheap. If the target repo has no suitable recent commit, ask before
   proceeding with high-risk edits.
+- Treat git commits as part of the normal production workflow, not only as end-of-project cleanup.
+  After each coherent implementation slice or milestone is verified, commit the source, docs,
+  harness, test, and code-map updates before continuing into the next slice, unless the user or repo
+  policy explicitly says not to commit. Before committing, inspect `git status`, keep user-owned
+  unrelated changes out of the commit, exclude build outputs, profiler traces, screenshots, temp
+  artifacts, and generated junk unless the repo intentionally tracks them, and run a whitespace or
+  staged-diff hygiene check such as `git diff --check` or `git diff --cached --check`. If the repo
+  has no git history, no git identity, ambiguous dirty state, or approval is required for the git
+  write, surface that clearly instead of silently skipping the commit.
 - Use evidence before claims. Builds, CTest labels, shader compilation, Vulkan validation,
   Compute Sanitizer, RenderDoc/Nsight captures, screenshots, image comparisons, and profiler output
   matter more than plausible explanations.
@@ -243,6 +252,17 @@ When this skill is active, work like a native C++ GPU systems engineer:
     upscaling/reconstruction, XR, or renderer architecture, do the web ceiling check even if the user
     did not use "current" or "best."
 17. Do not route design-only, frontend-only, storyboarding, generic image/video, generic product-AI UI, plain text rendering, or ordinary data import requests through this skill unless the user explicitly asks for native C++ GPU implementation, C++/CUDA/Vulkan infrastructure, or donor-reference selection.
+
+For long-running target-project implementation, repeat this rhythm between slices:
+
+1. Ground the slice in skills, code map, donors, and any needed current-source research.
+2. Implement the smallest coherent production slice.
+3. Verify with the target repo's build, tests, harness, screenshot, or profile evidence appropriate
+   to the change.
+4. Clean generated probe junk from the source root, review `git status`, keep unrelated user changes
+   out, check diff hygiene, and commit the verified slice.
+5. Continue to the next slice only after the commit is in place, or after clearly reporting why a
+   commit was intentionally skipped.
 
 ## Existing Project Code Map Readiness Protocol
 
