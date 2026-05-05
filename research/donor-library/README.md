@@ -16,6 +16,8 @@ for discussion, expansion, and source provenance before future skill updates.
 - [trigger-matrix.json](trigger-matrix.json): routing regression cases for skill and donor discovery.
 - [trigger-regression-checklist.md](trigger-regression-checklist.md): manual/subagent trigger-lane
   expectations.
+- `scripts/audit_donor_freshness.py`: optional report-only source URL and `Last checked` metadata
+  audit for donor profiles.
 
 ## Policy Summary
 

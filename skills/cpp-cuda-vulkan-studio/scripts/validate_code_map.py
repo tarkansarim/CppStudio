@@ -13,6 +13,8 @@ from typing import Any
 
 
 STATE_PATH = Path(".cppstudio/code-map-state.json")
+INDEX_PATH = Path("docs/CODEBASE_ARCHITECTURE_INDEX.md")
+MANIFEST_PATH = Path("docs/CODEBASE_SUBSYSTEM_MANIFEST.json")
 VALID_STATES = {"enabled", "declined"}
 GENERATED_SKILL_ROOT = "skills"
 GENERATED_SUBSYSTEM_IDS = {
@@ -151,6 +153,31 @@ def validate_manifest_path(repo: Path, path_text: str, context: str) -> str | No
     return None
 
 
+def validate_exact_root_path(
+    repo: Path,
+    manifest_path: Path,
+    manifest: dict[str, Any],
+    field_name: str,
+    expected: Path,
+) -> list[str]:
+    failures: list[str] = []
+    context = f"{manifest_path}: {field_name}"
+    try:
+        path_text = require_string(manifest, field_name, str(manifest_path))
+    except ValueError as error:
+        return [str(error)]
+
+    expected_text = expected.as_posix()
+    if path_text != expected_text:
+        failures.append(f"{context} must be {expected_text!r}, found {path_text!r}")
+    path_failure = validate_manifest_path(repo, path_text, context)
+    if path_failure:
+        failures.append(path_failure)
+    elif not path_exists(repo, path_text):
+        failures.append(f"{context} does not exist: {path_text}")
+    return failures
+
+
 def validate_manifest(repo: Path, manifest_path: Path, index_links: set[str] | None = None) -> list[str]:
     failures: list[str] = []
     manifest = load_json(manifest_path)
@@ -160,6 +187,8 @@ def validate_manifest(repo: Path, manifest_path: Path, index_links: set[str] | N
     version = manifest.get("version")
     if version != 1:
         failures.append(f"{manifest_path}: version must be 1")
+    failures.extend(validate_exact_root_path(repo, manifest_path, manifest, "state", STATE_PATH))
+    failures.extend(validate_exact_root_path(repo, manifest_path, manifest, "router_doc", INDEX_PATH))
 
     subsystems = manifest.get("subsystems")
     if not isinstance(subsystems, list) or not subsystems:

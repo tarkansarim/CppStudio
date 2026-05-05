@@ -233,6 +233,14 @@ python3 scripts/validate_donor_library.py \
 `./scripts/validate.sh` and `./scripts/rollout_to_codex.sh` run this donor validator automatically.
 Trigger-matrix validation checks schema, controlled tags, and path integrity; use
 `research/donor-library/trigger-regression-checklist.md` for manual or subagent trigger reruns.
+Optional donor freshness audits are report-only by default so validation does not depend on network
+or upstream availability:
+
+```bash
+python3 scripts/audit_donor_freshness.py \
+  skills/cpp-cuda-vulkan-studio/references/donor-library \
+  --summary-only
+```
 
 Render a repeatable trigger-evaluation prompt pack for a fresh agent or reviewer:
 
@@ -257,7 +265,8 @@ python3 scripts/render_trigger_eval_prompt.py \
 ```
 
 The renderer only prepares prompts and report blanks. It does not call agents or prove trigger
-behavior by itself.
+behavior by itself. Add `--write-result-template trigger-results.json` when you want a structured
+machine-readable report skeleton for the selected cases.
 
 ## Sync And Rollout Details
 

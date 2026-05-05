@@ -1,6 +1,7 @@
 {
   "version": 1,
   "skill_root": "skills",
+  "state": ".cppstudio/code-map-state.json",
   "router_doc": "docs/CODEBASE_ARCHITECTURE_INDEX.md",
   "subsystems": [
     {

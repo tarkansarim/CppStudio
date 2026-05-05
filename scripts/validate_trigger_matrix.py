@@ -129,11 +129,17 @@ def main() -> int:
         polarity = seen_tags & POLARITY_TAGS
         if len(polarity) != 1:
             errors.append(f"{name}: tags must contain exactly one polarity tag: positive or negative")
+        is_positive = "positive" in seen_tags
+        is_negative = "negative" in seen_tags
 
         expected_paths = case.get("expected_paths", [])
-        if not isinstance(expected_paths, list) or not expected_paths:
-            errors.append(f"{name}: expected_paths must not be empty")
+        if not isinstance(expected_paths, list):
+            errors.append(f"{name}: expected_paths must be a list when present")
             expected_paths = []
+        elif is_positive and not expected_paths:
+            errors.append(f"{name}: positive cases must have non-empty expected_paths")
+        elif is_negative and expected_paths:
+            errors.append(f"{name}: negative cases must leave expected_paths empty and use must_not_trigger_paths")
         expected_resolved: set[Path] = set()
         for relative in expected_paths:
             resolved = validate_relative_path(repo_root, name, "expected", relative, errors)

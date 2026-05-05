@@ -28,6 +28,12 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Codex home for --installed-paths; defaults to SYNC_CODEX_HOME or ~/.codex.",
     )
+    parser.add_argument(
+        "--write-result-template",
+        type=Path,
+        default=None,
+        help="Write a structured JSON result template for the selected cases.",
+    )
     return parser.parse_args()
 
 
@@ -101,10 +107,9 @@ def display_path(relative: str, repo_root: Path, codex_home: Path | None) -> str
 
 
 def render_paths(label: str, paths: list[Any], repo_root: Path, codex_home: Path | None) -> list[str]:
-    lines = [f"**{label}:**"]
     if not paths:
-        lines.append("- None")
-        return lines
+        return [f"**{label}:** none"]
+    lines = [f"**{label}:**"]
     for path in paths:
         rendered = display_path(str(path), repo_root, codex_home)
         lines.append(f"- `{rendered}`")
@@ -128,7 +133,7 @@ def render_case(index: int, case: dict[str, Any], repo_root: Path, codex_home: P
         f"**Expected behavior:** {case['expected_behavior']}",
         "",
     ]
-    lines.extend(render_paths("Expected paths or files", case.get("expected_paths", []), repo_root, codex_home))
+    lines.extend(render_paths("Expected paths", case.get("expected_paths", []), repo_root, codex_home))
     lines.append("")
     lines.extend(render_paths("Forbidden paths or files", case.get("must_not_trigger_paths", []), repo_root, codex_home))
     lines.extend(
@@ -167,6 +172,38 @@ def render_prompt(matrix: dict[str, Any], cases: list[dict[str, Any]], repo_root
     return "\n".join(lines).rstrip() + "\n"
 
 
+def result_template(matrix: dict[str, Any], cases: list[dict[str, Any]], repo_root: Path, codex_home: Path | None) -> dict[str, Any]:
+    mode = "installed" if codex_home is not None else "repo"
+    rendered_cases: list[dict[str, Any]] = []
+    for case in cases:
+        expected_paths = [display_path(str(path), repo_root, codex_home) for path in case.get("expected_paths", [])]
+        forbidden_paths = [display_path(str(path), repo_root, codex_home) for path in case.get("must_not_trigger_paths", [])]
+        rendered_cases.append(
+            {
+                "name": case.get("name"),
+                "tags": case_tags(case),
+                "prompt_shape": case.get("prompt_shape"),
+                "expected_behavior": case.get("expected_behavior"),
+                "expected_paths": expected_paths,
+                "forbidden_paths": forbidden_paths,
+                "result": {
+                    "selected_skills": [],
+                    "opened_files": [],
+                    "forbidden_paths_used": None,
+                    "verdict": "pending",
+                    "notes": "",
+                },
+            }
+        )
+    return {
+        "schema_version": 1,
+        "matrix_description": matrix.get("description", ""),
+        "path_mode": mode,
+        "case_count": len(rendered_cases),
+        "cases": rendered_cases,
+    }
+
+
 def main() -> int:
     args = parse_args()
     repo_root = args.repo_root.resolve()
@@ -182,6 +219,13 @@ def main() -> int:
         print("no trigger cases matched the requested filters", file=sys.stderr)
         return 1
     codex_home = installed_codex_home(args.codex_home) if args.installed_paths else None
+    if args.write_result_template is not None:
+        output_path = args.write_result_template
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(
+            json.dumps(result_template(matrix, selected, repo_root, codex_home), indent=2) + "\n",
+            encoding="utf-8",
+        )
     sys.stdout.write(render_prompt(matrix, selected, repo_root, codex_home))
     return 0
 

@@ -3,7 +3,11 @@
   "cases": [
     {
       "name": "vulkan-default-greenfield",
-      "tags": ["smoke", "positive", "vulkan"],
+      "tags": [
+        "smoke",
+        "positive",
+        "vulkan"
+      ],
       "prompt_shape": "New realtime 3D or GPU C++ project where the user does not specify CUDA or Vulkan.",
       "expected_behavior": "Recommend Vulkan first, proceed Vulkan-only by default, and avoid CUDA donor/runtime routing unless the user chooses CUDA or requirements force it.",
       "expected_paths": [
@@ -19,7 +23,11 @@
     },
     {
       "name": "explicit-cuda-kernel",
-      "tags": ["smoke", "positive", "cuda"],
+      "tags": [
+        "smoke",
+        "positive",
+        "cuda"
+      ],
       "prompt_shape": "Custom CUDA C++ kernel, CUTLASS-like GEMM, FlashAttention-style attention, or CUDA graph work.",
       "expected_behavior": "Use the CUDA lane and CUDA donor profiles first; Vulkan is optional only for explicit presentation or interop needs.",
       "expected_paths": [
@@ -31,7 +39,11 @@
     },
     {
       "name": "explicit-cuda-vulkan-interop",
-      "tags": ["positive", "cuda", "vulkan"],
+      "tags": [
+        "positive",
+        "cuda",
+        "vulkan"
+      ],
       "prompt_shape": "CUDA produces data consumed by Vulkan, or Vulkan resources are shared with CUDA.",
       "expected_behavior": "Use the mixed lane deliberately and keep build options, tests, and docs explicit about the CUDA/Vulkan boundary.",
       "expected_paths": [
@@ -42,7 +54,12 @@
     },
     {
       "name": "vulkan-target-cuda-donor-reference",
-      "tags": ["positive", "vulkan", "cuda", "neural-3d"],
+      "tags": [
+        "positive",
+        "vulkan",
+        "cuda",
+        "neural-3d"
+      ],
       "prompt_shape": "Vulkan-first C++ Gaussian splatting, neural 3D, grooming, or simulation work where the strongest donor implementation is CUDA-heavy.",
       "expected_behavior": "Stay in the Vulkan lane, use CUDA-heavy donors as algorithm/data-layout/test references, and do not add CUDA runtime, CUDA tests, or CUDA/Vulkan interop unless explicitly requested.",
       "expected_paths": [
@@ -55,7 +72,11 @@
     },
     {
       "name": "cuda-target-non-cuda-donor-reference",
-      "tags": ["positive", "cuda", "simulation"],
+      "tags": [
+        "positive",
+        "cuda",
+        "simulation"
+      ],
       "prompt_shape": "CUDA C++ simulation or geometry kernel work that wants to reuse solver, layout, or validation ideas from Vulkan, OpenCL, DirectX, CPU, or DCC donors.",
       "expected_behavior": "Stay in the CUDA lane, use non-CUDA donors as domain references, and translate implementation details through CUDA kernel-authoring guidance without adding Vulkan or other runtime dependencies.",
       "expected_paths": [
@@ -68,7 +89,10 @@
     },
     {
       "name": "vulkan-memory-resource-lifetime",
-      "tags": ["positive", "vulkan"],
+      "tags": [
+        "positive",
+        "vulkan"
+      ],
       "prompt_shape": "Vulkan C++ renderer or compute app needs buffer/image allocation, memory budgets, mapped staging buffers, resource lifetime, or allocation pools.",
       "expected_behavior": "Route to Vulkan foundation tooling before renderer samples; use VMA as the first allocation donor and keep Vulkan memory/lifetime policy separate from CUDA.",
       "expected_paths": [
@@ -83,7 +107,10 @@
     },
     {
       "name": "vulkan-shader-reflection-toolchain",
-      "tags": ["positive", "vulkan"],
+      "tags": [
+        "positive",
+        "vulkan"
+      ],
       "prompt_shape": "Vulkan C++ project needs GLSL to SPIR-V compilation, SPIR-V validation, descriptor reflection, push constant reflection, shader cross-compilation, or Slang evaluation.",
       "expected_behavior": "Route to Vulkan foundation tooling and SPIR-V/Slang profiles; keep compile, validation, reflection, and runtime pipeline creation as separate concerns.",
       "expected_paths": [
@@ -95,7 +122,12 @@
     },
     {
       "name": "vulkan-gltf-runtime-viewer",
-      "tags": ["smoke", "positive", "vulkan", "assets"],
+      "tags": [
+        "smoke",
+        "positive",
+        "vulkan",
+        "assets"
+      ],
       "prompt_shape": "Vulkan-first C++ app loads GLB/glTF assets, uploads buffers/textures, previews PBR materials, or needs a runtime 3D asset viewer.",
       "expected_behavior": "Route to glTF runtime assets plus Vulkan foundation tooling; keep CPU import, GPU upload, texture/material handling, and render pipeline policy separate.",
       "expected_paths": [
@@ -112,7 +144,12 @@
     },
     {
       "name": "vulkan-renderer-architecture-donors",
-      "tags": ["positive", "vulkan", "graphics", "rendering"],
+      "tags": [
+        "positive",
+        "vulkan",
+        "graphics",
+        "rendering"
+      ],
       "prompt_shape": "Vulkan-first C++ renderer needs donor guidance for renderer backbone, render graph, PBR materials, frame architecture, or graphics middleware.",
       "expected_behavior": "Route to graphics-rendering and renderer-backbone profiles; keep Vulkan foundation tooling available for API correctness without switching to CUDA or forcing a multi-backend dependency.",
       "expected_paths": [
@@ -130,7 +167,12 @@
     },
     {
       "name": "native-cpp-gui-hud-options",
-      "tags": ["positive", "gui", "hud", "vulkan"],
+      "tags": [
+        "positive",
+        "gui",
+        "hud",
+        "vulkan"
+      ],
       "prompt_shape": "Native C++ Vulkan/CUDA/realtime tool asks what GUI, HUD, editor panel, docking, inspector, gizmo, plotting, runtime UI, or desktop UI options are available.",
       "expected_behavior": "Trigger native-cpp-gui-hud and cpp-cuda-vulkan-studio, route to native-gui-hud, present Dear ImGui/ImGuizmo/ImPlot, Qt, wxWidgets, RmlUi, NoesisGUI, Nuklear, FLTK, libui-ng, and CEF with source/docs and visual inspection links so the user can inspect how each GUI looks. If an interactive question UI asks the user to choose, a visible link table must appear immediately before the question and compact URLs should appear in option descriptions when possible.",
       "expected_paths": [
@@ -150,7 +192,13 @@
     },
     {
       "name": "initial-native-gpu-project-planning",
-      "tags": ["positive", "planning", "vulkan", "gui", "simulation"],
+      "tags": [
+        "positive",
+        "planning",
+        "vulkan",
+        "gui",
+        "simulation"
+      ],
       "prompt_shape": "User wants to plan or brainstorm a substantial new native C++ Vulkan/CUDA/realtime app with unresolved template, GUI, donor, web research, input-device, code-map, and validation choices.",
       "expected_behavior": "Trigger cppstudio-project-planner before implementation; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; open project intake, choice matrix, CppStudio project archetypes, GUI/HUD option links, agentic-control-harness, donor routing, and run an extensive state-of-the-art upstream web ceiling check before recommending architecture. Include comparable current tools and their common authoring practices so the plan chooses and asks about the project source of truth, such as graph, stack, timeline, scene tree, scripting, direct parameter workflow, or hybrid. For interactive apps, include a default local agentic control harness so agents can launch, drive, inspect, screenshot, and troubleshoot the app before asking the user for routine manual testing. Separate current leading approaches from legacy or low-effort options and prefer the best available option unless the user asks for a lighter route.",
       "expected_paths": [
@@ -169,7 +217,13 @@
     },
     {
       "name": "artist-tool-planning-with-stylus",
-      "tags": ["positive", "planning", "games", "gui", "hud"],
+      "tags": [
+        "positive",
+        "planning",
+        "games",
+        "gui",
+        "hud"
+      ],
       "prompt_shape": "User wants to plan a native C++ realtime artist or game technical-art tool with Wacom/stylus pressure, brush input, viewport HUD, gizmos, and donor-backed architecture choices.",
       "expected_behavior": "Trigger cppstudio-project-planner, native-cpp-gui-hud, and agentic-control-harness; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; research comparable current tools and ask about the authoring model/source of truth when it affects architecture; treat tablet/stylus pressure, tilt, hover, stroke sampling, undo/redo, viewport picking, and input capture as first-class planning decisions; present GUI choices with source and visual links immediately before any GUI choice question; default the control harness for the artist tool so agents can inspect UI/viewport output and test brush/tool behavior through local controls before asking the user for routine manual checks; run an extensive state-of-the-art web ceiling check, separate current leading approaches from legacy or low-effort options, and route through games/native GUI/rendering donor categories before implementation.",
       "expected_paths": [
@@ -188,7 +242,13 @@
     },
     {
       "name": "agentic-control-harness-default",
-      "tags": ["positive", "planning", "harness", "gui", "vulkan"],
+      "tags": [
+        "positive",
+        "planning",
+        "harness",
+        "gui",
+        "vulkan"
+      ],
       "prompt_shape": "User plans or builds an interactive native C++ realtime app, viewer, renderer, simulator, artist tool, or game tool that an agent should be able to test, inspect, troubleshoot, or control.",
       "expected_behavior": "Trigger agentic-control-harness with cppstudio-project-planner or cpp-cuda-vulkan-studio; treat the harness as default-on for interactive apps unless the user opts out or the target is headless/security-sensitive; plan local-only HTTP/curl or CLI controls with optional MCP facade over the same API; include state readback, recent logs/warnings, visual/UI or viewport evidence, launch/control registry docs, feature-control maintenance, and stress lanes so agents test routine changes before asking the user for manual verification.",
       "expected_paths": [
@@ -200,7 +260,12 @@
     },
     {
       "name": "game-technical-art-native-ui-overlay",
-      "tags": ["positive", "games", "gui", "hud"],
+      "tags": [
+        "positive",
+        "games",
+        "gui",
+        "hud"
+      ],
       "prompt_shape": "Game technical art tool request asks for native C++ artist panels, viewport controls, debug HUDs, inspectors, gizmos, performance graphs, or editor UI around a realtime renderer.",
       "expected_behavior": "Open the games production overlay and route tools/technical art through native GUI/HUD plus native infrastructure and rendering donors; include visual inspection links when presenting GUI options.",
       "expected_paths": [
@@ -216,7 +281,13 @@
     },
     {
       "name": "native-gpu-performance-optimization-loop",
-      "tags": ["positive", "cuda", "vulkan", "rendering", "simulation"],
+      "tags": [
+        "positive",
+        "cuda",
+        "vulkan",
+        "rendering",
+        "simulation"
+      ],
       "prompt_shape": "CUDA kernel, Vulkan compute, render pass, simulation, or realtime frame-time work asks the agent to optimize performance safely without chasing isolated microbenchmarks.",
       "expected_behavior": "Use cpp-cuda-vulkan-studio plus the active lane skill, load the generated GPU optimization loop docs/script, choose a representative workload target, record a baseline, run hardware profile/roofline diagnosis when counters are available, create beam-style worker plans for multiple bottleneck directions, make one focused change per attempt, keep only correct improvements, revert rejected or divergent attempts, use convergence and other move-on criteria, and generate a final report before claiming speedups.",
       "expected_paths": [
@@ -230,7 +301,11 @@
     },
     {
       "name": "webgpu-native-dawn-donors",
-      "tags": ["positive", "webgpu", "vulkan"],
+      "tags": [
+        "positive",
+        "webgpu",
+        "vulkan"
+      ],
       "prompt_shape": "C++ or native tooling task explicitly asks for WebGPU, webgpu.h, Dawn, WGSL, Tint, or WebGPU portability across Vulkan, D3D, Metal, and browser-adjacent targets.",
       "expected_behavior": "Route to graphics-rendering and the Dawn profile; keep Vulkan-first policy intact unless the user explicitly chooses WebGPU as the implementation lane.",
       "expected_paths": [
@@ -244,7 +319,12 @@
     },
     {
       "name": "browser-3d-webxr-donors",
-      "tags": ["positive", "browser", "webgpu", "xr"],
+      "tags": [
+        "positive",
+        "browser",
+        "webgpu",
+        "xr"
+      ],
       "prompt_shape": "Browser 3D, WebGL/WebGPU, WebXR, controls, loaders, or interactive 3D viewer work needs donor references before translating behavior into native C++ or a web target.",
       "expected_behavior": "Route to graphics-rendering and the three.js/Babylon.js profiles; treat browser engine behavior as a donor surface, not a reason to add CUDA or native Vulkan requirements.",
       "expected_paths": [
@@ -259,7 +339,12 @@
     },
     {
       "name": "physical-path-tracing-donors",
-      "tags": ["positive", "graphics", "rendering", "path-tracing"],
+      "tags": [
+        "positive",
+        "graphics",
+        "rendering",
+        "path-tracing"
+      ],
       "prompt_shape": "Renderer work needs physically based rendering, offline reference images, path tracing, sampling, material/light transport behavior, differentiable rendering, or inverse rendering references.",
       "expected_behavior": "Route to graphics-rendering and pbrt-v4/Mitsuba/THREE.js PathTracing Renderer profiles; use CUDA or OptiX paths only as references unless the target lane explicitly requires them.",
       "expected_paths": [
@@ -275,7 +360,12 @@
     },
     {
       "name": "realtime-raytracing-framework-donors",
-      "tags": ["positive", "vulkan", "graphics", "rendering"],
+      "tags": [
+        "positive",
+        "vulkan",
+        "graphics",
+        "rendering"
+      ],
       "prompt_shape": "Realtime rendering framework work needs render graphs, ray tracing, path tracing, RTX SDK boundaries, shader/model loading, or prototype renderer architecture references.",
       "expected_behavior": "Route to graphics-rendering and Falcor plus Vulkan sample profiles; keep NVIDIA SDK and vendor-specific dependencies explicit rather than silently adding them to a portable Vulkan target.",
       "expected_paths": [
@@ -291,7 +381,12 @@
     },
     {
       "name": "cpu-visualization-rendering-donors",
-      "tags": ["positive", "graphics", "rendering", "simulation"],
+      "tags": [
+        "positive",
+        "graphics",
+        "rendering",
+        "simulation"
+      ],
       "prompt_shape": "C++ visualization tool needs CPU rendering, scientific visualization renderer architecture, volume renderer APIs, RenderKit, OSPRay, or a CPU reference path for GPU output.",
       "expected_behavior": "Route to geometry-simulation and OSPRay/Embree profiles; use CPU visualization as reference or dependency surface without disabling Vulkan or CUDA validation for the selected target lane.",
       "expected_paths": [
@@ -303,7 +398,13 @@
     },
     {
       "name": "engine-architecture-donors",
-      "tags": ["positive", "engine", "graphics", "simulation", "assets"],
+      "tags": [
+        "positive",
+        "engine",
+        "graphics",
+        "simulation",
+        "assets"
+      ],
       "prompt_shape": "C++ 3D tool or engine work needs engine/editor architecture, scene trees, component systems, asset processor design, editor/runtime split, or large-scale rendering/physics integration references.",
       "expected_behavior": "Route to project archetypes, geometry-simulation, and Godot/O3DE profiles; treat engine-scale donors as architecture references unless the project explicitly adopts an engine.",
       "expected_paths": [
@@ -319,7 +420,11 @@
     },
     {
       "name": "dcc-editorial-pipeline-donors",
-      "tags": ["positive", "assets", "dcc"],
+      "tags": [
+        "positive",
+        "assets",
+        "dcc"
+      ],
       "prompt_shape": "C++ DCC pipeline or virtual-production tool needs scene interchange, USD/Alembic caches, MaterialX look data, editorial timelines, OTIO, review handoff, or Blender workflow references.",
       "expected_behavior": "Route to dcc-scene-pipeline and the matching OpenUSD, Alembic, MaterialX, OpenTimelineIO, OpenSubdiv, or Blender study-only profile; keep DCC plugins and assets license-separated.",
       "expected_paths": [
@@ -335,7 +440,11 @@
     },
     {
       "name": "volume-voxel-rendering-donors",
-      "tags": ["positive", "assets", "volumes"],
+      "tags": [
+        "positive",
+        "assets",
+        "volumes"
+      ],
       "prompt_shape": "C++ or GPU volume tool needs sparse VDB/NanoVDB IO, voxel grids, GPU volume traversal, fVDB sparse-volume ML, VTK scientific visualization, or volume-rendering references.",
       "expected_behavior": "Route to volumes-voxels and the OpenVDB/NanoVDB, fVDB, and VTK profiles; keep volume IO, ML tensors, renderer upload, and visualization toolkit choices separate.",
       "expected_paths": [
@@ -349,7 +458,11 @@
     },
     {
       "name": "material-texture-color-pipeline-donors",
-      "tags": ["positive", "assets", "materials"],
+      "tags": [
+        "positive",
+        "assets",
+        "materials"
+      ],
       "prompt_shape": "C++ asset or renderer pipeline needs KTX/KTX2, Basis transcoding, EXR/HDR image IO, TinyEXR, OpenImageIO, OpenColorIO, color management, ACES/OCIO, or MaterialX references.",
       "expected_behavior": "Route to texture-material-color and the matching KTX/Basis, OpenColorIO/OpenImageIO, TinyEXR, or MaterialX profile; keep assets, configs, textures, and color data license-separated.",
       "expected_paths": [
@@ -364,7 +477,11 @@
     },
     {
       "name": "cad-precision-geometry-donors",
-      "tags": ["positive", "cad", "geometry"],
+      "tags": [
+        "positive",
+        "cad",
+        "geometry"
+      ],
       "prompt_shape": "C++ CAD or precision geometry tool needs B-reps, NURBS, STEP/IGES, exact geometry, tessellation, Booleans, CGAL, Open CASCADE, or FreeCAD workflow references.",
       "expected_behavior": "Route to cad-precision-geometry and the Open CASCADE, CGAL, libigl, or FreeCAD study-only profile; keep CAD kernel data, render meshes, tolerances, and license boundaries explicit.",
       "expected_paths": [
@@ -379,7 +496,11 @@
     },
     {
       "name": "geometry-processing-donors",
-      "tags": ["positive", "geometry", "assets"],
+      "tags": [
+        "positive",
+        "geometry",
+        "assets"
+      ],
       "prompt_shape": "C++ geometry-processing task needs subdivision surfaces, remeshing, deformation, parameterization, robust triangulation, exact predicates, mesh repair, libigl, CGAL, OpenSubdiv, or meshoptimizer references.",
       "expected_behavior": "Route to surfaces-subdivision and the matching OpenSubdiv, libigl, CGAL, or meshoptimizer profile; keep robust geometry and runtime mesh conditioning as separate choices.",
       "expected_paths": [
@@ -393,7 +514,12 @@
     },
     {
       "name": "xr-openxr-runtime-donors",
-      "tags": ["smoke", "positive", "vulkan", "xr"],
+      "tags": [
+        "smoke",
+        "positive",
+        "vulkan",
+        "xr"
+      ],
       "prompt_shape": "C++ XR app needs OpenXR loader/runtime guidance, OpenXR-Hpp C++ bindings, Monado runtime diagnostics, vendor-specific OpenXR extensions, Godot OpenXR Vendors, stereo swapchains, actions, or frame timing.",
       "expected_behavior": "Route to xr-spatial, graphics-rendering, OpenXR SDK, OpenXR-Hpp, Monado, and Godot OpenXR Vendors profiles; keep portable OpenXR baseline separate from vendor-specific extensions.",
       "expected_paths": [
@@ -412,7 +538,11 @@
     },
     {
       "name": "nurbs-asset-pipeline-donors",
-      "tags": ["positive", "assets", "cad"],
+      "tags": [
+        "positive",
+        "assets",
+        "cad"
+      ],
       "prompt_shape": "C++/Vulkan asset tool needs Rhino .3dm import, lightweight NURBS curves or surfaces, UV atlas generation, Draco compressed geometry, ASTC/DDS conversion, OpenPBR semantics, or production asset identity.",
       "expected_behavior": "Route to assets-meshes-materials and its deep profile; use CAD kernel routing only when the task needs B-rep/STEP/IGES topology rather than asset-transfer NURBS.",
       "expected_paths": [
@@ -424,7 +554,11 @@
     },
     {
       "name": "terrain-geospatial-3dtiles-donors",
-      "tags": ["positive", "assets", "geometry"],
+      "tags": [
+        "positive",
+        "assets",
+        "geometry"
+      ],
       "prompt_shape": "C++ terrain or geospatial viewer needs 3D Tiles, quantized terrain, Cesium Native, GeoTIFF/elevation conversion, CRS transforms, point-cloud processing, LAS/LAZ, osgEarth, or vector tile map rendering.",
       "expected_behavior": "Route to terrain-geospatial and the terrain deep profile; keep geodata conversion, CRS correctness, tile streaming, and renderer upload as separate concerns.",
       "expected_paths": [
@@ -436,7 +570,12 @@
     },
     {
       "name": "realtime-vfx-particles-donors",
-      "tags": ["positive", "vulkan", "cuda", "graphics"],
+      "tags": [
+        "positive",
+        "vulkan",
+        "cuda",
+        "graphics"
+      ],
       "prompt_shape": "Realtime C++ GPU effects task needs particles, effect authoring, GPU-driven indirect drawing, particle sorting, smoke particles, Vulkan samples, CUDA samples, or FidelityFX Parallel Sort references.",
       "expected_behavior": "Route to vfx-particles and its deep profile; use simulation-gpu only when solver physics or smoke/fire simulation is the hard part.",
       "expected_paths": [
@@ -448,7 +587,12 @@
     },
     {
       "name": "fluids-smoke-fire-donors",
-      "tags": ["positive", "simulation", "vulkan", "cuda"],
+      "tags": [
+        "positive",
+        "simulation",
+        "vulkan",
+        "cuda"
+      ],
       "prompt_shape": "C++ fluid, smoke, fire, SPH, FLIP/PIC, CUDA particles, Vulkan compute fluids, MantaFlow, Vortex2D, or engineering CFD donor request.",
       "expected_behavior": "Route to simulation-gpu and the fluids deep profile; keep CUDA/Vulkan backend translation separate from solver behavior.",
       "expected_paths": [
@@ -460,7 +604,15 @@
     },
     {
       "name": "realtime-vulkan-fluid-fire-shatter-brainstorm",
-      "tags": ["smoke", "positive", "lookup", "vulkan", "simulation", "vfx", "volumes"],
+      "tags": [
+        "smoke",
+        "positive",
+        "lookup",
+        "vulkan",
+        "simulation",
+        "vfx",
+        "volumes"
+      ],
       "prompt_shape": "Brainstorm a realtime Vulkan C++ fluids simulation that can do fire, smoke, water, and shatter.",
       "expected_behavior": "Do not answer from general model knowledge alone. Route through project archetypes, selection policy, agent lookup, simulation-gpu, and the fluids deep profile; add vfx-particles for realtime effect presentation, volumes-voxels for smoke/fire representation, and geometry-simulation for rigid fragments/collision/destruction. Perform an extensive state-of-the-art web ceiling check against upstream or primary sources before ranking architecture options, even if the user only says brainstorm. Separate current leading approaches from legacy or low-effort options and prefer the best available option unless the user asks for a lighter route.",
       "expected_paths": [
@@ -477,7 +629,11 @@
     },
     {
       "name": "bim-ifc-aec-donors",
-      "tags": ["positive", "assets", "cad"],
+      "tags": [
+        "positive",
+        "assets",
+        "cad"
+      ],
       "prompt_shape": "C++ BIM/AEC tool needs IFC parsing, IfcOpenShell, IFC++, web-ifc behavior, buildingSMART validation, IDS, BCF, or building geometry conversion into a renderer.",
       "expected_behavior": "Route to bim-aec-ifc and its deep profile; keep BIM semantics, CAD geometry conversion, and renderer upload separate.",
       "expected_paths": [
@@ -489,7 +645,11 @@
     },
     {
       "name": "animation-retargeting-crowds-donors",
-      "tags": ["positive", "assets", "simulation"],
+      "tags": [
+        "positive",
+        "assets",
+        "simulation"
+      ],
       "prompt_shape": "C++ animation task needs retargeting, skinning decomposition, Dem Bones, glTF skinning samples, crowds, local avoidance, steering, Recast/DetourCrowd, RVO2, Menge, or fairmotion references.",
       "expected_behavior": "Route to animation-rigging and the retargeting/crowds deep profile; keep fixtures/assets license-separated.",
       "expected_paths": [
@@ -501,7 +661,11 @@
     },
     {
       "name": "muscle-flesh-biomechanics-donors",
-      "tags": ["positive", "simulation", "volumes"],
+      "tags": [
+        "positive",
+        "simulation",
+        "volumes"
+      ],
       "prompt_shape": "C++ muscle, flesh, soft tissue, biomechanics, OpenSim, FEBio, MuJoCo, tendon path, activation, anatomical model, or realtime flesh deformation request.",
       "expected_behavior": "Route to muscle-flesh-biomechanics and its deep profile; distinguish scientific biomechanics from visual deformation before selecting dependencies.",
       "expected_paths": [
@@ -513,7 +677,11 @@
     },
     {
       "name": "medical-scientific-volume-io-donors",
-      "tags": ["positive", "volumes", "assets"],
+      "tags": [
+        "positive",
+        "volumes",
+        "assets"
+      ],
       "prompt_shape": "C++ medical or scientific volume tool needs DICOM, NIfTI, ITK, DCMTK, dcm2niix, transfer functions, tomography, HDF5, netCDF, ADIOS2, TensorStore, Zarr, or OME NGFF donors.",
       "expected_behavior": "Route to medical-scientific-volumes and its deep profile; keep patient data, labels/segmentations, transfer functions, and renderer upload as separate surfaces.",
       "expected_paths": [
@@ -525,7 +693,11 @@
     },
     {
       "name": "xr-interaction-spatial-input-donors",
-      "tags": ["positive", "vulkan", "xr"],
+      "tags": [
+        "positive",
+        "vulkan",
+        "xr"
+      ],
       "prompt_shape": "C++ OpenXR app needs hand tracking, eye gaze, body/face tracking, passthrough, scene understanding, spatial anchors, colocation, OpenXR API layers, runtime diagnostics, or Vulkan/OpenXR multi-GPU references.",
       "expected_behavior": "Route to xr-spatial and the XR interaction deep profile; keep vendor extensions optional and feature-gated.",
       "expected_paths": [
@@ -540,7 +712,13 @@
     },
     {
       "name": "ambiguous-3d-viewer-lookup-routing",
-      "tags": ["smoke", "lookup", "positive", "vulkan", "assets"],
+      "tags": [
+        "smoke",
+        "lookup",
+        "positive",
+        "vulkan",
+        "assets"
+      ],
       "prompt_shape": "C++ 3D viewer or realtime asset preview tool needs donors, but the prompt does not yet specify whether the hard part is Vulkan setup, renderer architecture, glTF import, mesh conditioning, textures, CAD, or XR.",
       "expected_behavior": "Open agent-lookup first, then narrow to the smallest category set; prefer Vulkan-first implementation unless requirements force CUDA or another backend.",
       "expected_paths": [
@@ -553,7 +731,13 @@
     },
     {
       "name": "ambiguous-gpu-simulation-lookup-routing",
-      "tags": ["lookup", "positive", "cuda", "vulkan", "simulation"],
+      "tags": [
+        "lookup",
+        "positive",
+        "cuda",
+        "vulkan",
+        "simulation"
+      ],
       "prompt_shape": "GPU simulation request mentions particles, cloth, physics, CUDA, Vulkan, and visualization without saying whether the main need is solver donors, CUDA kernels, Vulkan rendering, or physics SDK selection.",
       "expected_behavior": "Open agent-lookup first, then route solver/reference donors through simulation-gpu while keeping CUDA kernels and Vulkan visualization as separate lane-specific choices.",
       "expected_paths": [
@@ -565,7 +749,11 @@
     },
     {
       "name": "asset-pipeline-lookup-routing",
-      "tags": ["lookup", "positive", "assets"],
+      "tags": [
+        "lookup",
+        "positive",
+        "assets"
+      ],
       "prompt_shape": "C++ asset pipeline or viewer request mentions USD, glTF, textures, materials, mesh optimization, importer fixtures, and renderer upload in one broad prompt.",
       "expected_behavior": "Open agent-lookup first, then split DCC interchange, glTF runtime loading, texture/material/color, and mesh conditioning instead of treating the whole request as one dependency.",
       "expected_paths": [
@@ -579,7 +767,12 @@
     },
     {
       "name": "scientific-volume-viewer-lookup-routing",
-      "tags": ["lookup", "positive", "vulkan", "assets"],
+      "tags": [
+        "lookup",
+        "positive",
+        "vulkan",
+        "assets"
+      ],
       "prompt_shape": "Scientific C++ volume viewer request mentions VTK data, VDB/NanoVDB volumes, Vulkan visualization, and optional sparse-volume ML references.",
       "expected_behavior": "Open agent-lookup first, then route volume data through volumes-voxels, visualization through Vulkan/graphics only when rendering is in scope, and ML sparse tensors through fVDB only when needed.",
       "expected_paths": [
@@ -592,7 +785,12 @@
     },
     {
       "name": "ai-runtime-visualization-lookup-routing",
-      "tags": ["lookup", "positive", "ai-runtime", "vulkan"],
+      "tags": [
+        "lookup",
+        "positive",
+        "ai-runtime",
+        "vulkan"
+      ],
       "prompt_shape": "C++ tool combines local model inference or AI runtime output with Vulkan visualization, 3D viewer UX, or neural 3D assets.",
       "expected_behavior": "Open agent-lookup first, then keep AI runtime, neural 3D, renderer, and Vulkan synchronization decisions separate instead of routing everything through CUDA kernel donors.",
       "expected_paths": [
@@ -605,7 +803,10 @@
     },
     {
       "name": "gltf-meshoptimizer-runtime-pipeline",
-      "tags": ["positive", "assets"],
+      "tags": [
+        "positive",
+        "assets"
+      ],
       "prompt_shape": "C++ runtime asset pipeline loads glTF/GLB, validates fixtures, optimizes vertex/index buffers, handles meshopt compression, and uploads renderer-ready buffers.",
       "expected_behavior": "Route to glTF runtime assets first, then geometry-simulation and meshoptimizer for mesh conditioning; keep CPU import, optimization, and GPU upload as separate stages.",
       "expected_paths": [
@@ -621,7 +822,11 @@
     },
     {
       "name": "assimp-vulkan-asset-import",
-      "tags": ["positive", "vulkan", "assets"],
+      "tags": [
+        "positive",
+        "vulkan",
+        "assets"
+      ],
       "prompt_shape": "Vulkan C++ viewer needs to import several non-glTF 3D asset formats, normalize meshes/materials, and hand them to a Vulkan renderer.",
       "expected_behavior": "Route to geometry-simulation and assimp for broad import, then graphics/Vulkan guidance for renderer handoff; do not treat assimp as a reason to abandon Vulkan-first implementation.",
       "expected_paths": [
@@ -637,7 +842,12 @@
     },
     {
       "name": "bvh-geometry-acceleration",
-      "tags": ["positive", "bvh", "geometry", "rendering"],
+      "tags": [
+        "positive",
+        "bvh",
+        "geometry",
+        "rendering"
+      ],
       "prompt_shape": "C++ renderer or geometry tool needs BVH, ray queries, CPU reference intersections, Embree comparison, or lightweight acceleration structures.",
       "expected_behavior": "Route to geometry-simulation and BVH/Embree profiles; use CPU donors as reference or dependency candidates without forcing Vulkan ray tracing or CUDA kernels unless requested.",
       "expected_paths": [
@@ -649,7 +859,10 @@
     },
     {
       "name": "physics-collision-donor-selection",
-      "tags": ["positive", "simulation"],
+      "tags": [
+        "positive",
+        "simulation"
+      ],
       "prompt_shape": "C++ realtime 3D app needs rigid-body physics, collision queries, broadphase/narrowphase, constraints, or debug-render handoff.",
       "expected_behavior": "Route to geometry-simulation and Jolt/Bullet profiles; keep physics dependency choice separate from Vulkan renderer and CUDA kernel lanes.",
       "expected_paths": [
@@ -664,7 +877,10 @@
     },
     {
       "name": "local-llm-runtime-donors",
-      "tags": ["positive", "ai-runtime"],
+      "tags": [
+        "positive",
+        "ai-runtime"
+      ],
       "prompt_shape": "C++ app needs local LLM inference, GGUF model loading, quantization, tokenizer/model conversion, or a small OpenAI-compatible local server.",
       "expected_behavior": "Route to AI runtime donors and llama.cpp/ggml first; keep model weights, tokenizer files, and backend selection separate from reusable C++ infrastructure.",
       "expected_paths": [
@@ -678,7 +894,11 @@
     },
     {
       "name": "production-llm-serving-donors",
-      "tags": ["positive", "ai-runtime", "cuda"],
+      "tags": [
+        "positive",
+        "ai-runtime",
+        "cuda"
+      ],
       "prompt_shape": "Production LLM serving with batching, paged KV cache, OpenAI-compatible APIs, TensorRT engines, vLLM comparison, or NVIDIA GPU deployment.",
       "expected_behavior": "Route to TensorRT-LLM and vLLM profiles; keep TensorRT-LLM CUDA/NVIDIA-specific and do not imply portability when the user needs cross-platform inference.",
       "expected_paths": [
@@ -690,7 +910,10 @@
     },
     {
       "name": "portable-inference-compiler-runtime",
-      "tags": ["positive", "ai-runtime"],
+      "tags": [
+        "positive",
+        "ai-runtime"
+      ],
       "prompt_shape": "C++ model runtime needs ONNX execution providers, portable model inference, compiled LLM deployment, TVM code generation, Vulkan/WebGPU/mobile targets, or runtime artifact packaging.",
       "expected_behavior": "Route to ONNX Runtime, MLC-LLM, and TVM profiles; keep compiler/runtime artifacts and target backend validation separate from model source assets.",
       "expected_paths": [
@@ -703,7 +926,11 @@
     },
     {
       "name": "tiny-cuda-nn-neural-kernels",
-      "tags": ["positive", "cuda", "ai-runtime"],
+      "tags": [
+        "positive",
+        "cuda",
+        "ai-runtime"
+      ],
       "prompt_shape": "CUDA C++ neural graphics kernel needs fused MLPs, multiresolution hash grids, compact encodings, tiny neural network kernels, or instant-ngp-style CUDA components.",
       "expected_behavior": "Route to CUDA lane plus tiny-cuda-nn; use study-only instant-ngp only for concepts and do not add it as reusable source.",
       "expected_paths": [
@@ -715,7 +942,12 @@
     },
     {
       "name": "neural-3d-workflow-donors",
-      "tags": ["positive", "neural-3d", "ai-runtime", "assets"],
+      "tags": [
+        "positive",
+        "neural-3d",
+        "ai-runtime",
+        "assets"
+      ],
       "prompt_shape": "Neural 3D or Gaussian splatting workflow needs training/data processing, camera conventions, differentiable 3D ops, point-cloud reconstruction, viewer/export flows, or PyTorch reference outputs.",
       "expected_behavior": "Route to neural-3d and the relevant Nerfstudio, gsplat, Kaolin, PyTorch3D, Open3D, and PyTorch profiles while keeping datasets and weights license-separated.",
       "expected_paths": [
@@ -731,7 +963,13 @@
     },
     {
       "name": "vulkan-neural-3d-cuda-donor-reference",
-      "tags": ["positive", "vulkan", "cuda", "neural-3d", "ai-runtime"],
+      "tags": [
+        "positive",
+        "vulkan",
+        "cuda",
+        "neural-3d",
+        "ai-runtime"
+      ],
       "prompt_shape": "Vulkan-first neural 3D viewer or Gaussian splatting runtime wants to use gsplat, tiny-cuda-nn, PyTorch3D, or CUDA-heavy papers as references without adding CUDA.",
       "expected_behavior": "Stay Vulkan-first, use CUDA-heavy neural donors for algorithms/layouts/tests, and do not add CUDA runtime, CUDA tests, or interop unless explicitly requested.",
       "expected_paths": [
@@ -746,7 +984,11 @@
     },
     {
       "name": "neural-graphics-study-only-routing",
-      "tags": ["positive", "neural-3d", "study-only"],
+      "tags": [
+        "positive",
+        "neural-3d",
+        "study-only"
+      ],
       "prompt_shape": "Task asks about original GraphDeco Gaussian Splatting, instant-ngp, Kaolin Wisp, non-commercial neural graphics references, or paper behavior checks.",
       "expected_behavior": "Route to the study-only neural graphics profile and keep restricted sources as concepts/behavior checks only; prefer permissive donors for implementation patterns.",
       "expected_paths": [
@@ -757,12 +999,14 @@
     },
     {
       "name": "generic-ai-assistant-negative-control",
-      "tags": ["smoke", "negative", "ai-runtime"],
+      "tags": [
+        "smoke",
+        "negative",
+        "ai-runtime"
+      ],
       "prompt_shape": "Build an AI assistant UI, prompt helper, chatbot workflow, or SaaS app with no C++, GPU, local model runtime, CUDA, Vulkan, ML compiler, or neural 3D scope.",
       "expected_behavior": "Do not route to CppStudio AI-runtime donors just because the product uses AI.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
@@ -770,12 +1014,12 @@
     },
     {
       "name": "generic-web-ui-negative-control",
-      "tags": ["negative"],
+      "tags": [
+        "negative"
+      ],
       "prompt_shape": "Build a normal web dashboard, landing page, form, or frontend UI with no 3D scene, WebGPU, WebGL, WebXR, renderer, native C++, CUDA, Vulkan, or GPU runtime scope.",
       "expected_behavior": "Do not route to browser 3D, WebGPU, renderer, or CppStudio donor guidance for ordinary frontend work.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/dawn.md",
@@ -785,12 +1029,12 @@
     },
     {
       "name": "game-story-design-negative-control",
-      "tags": ["negative"],
+      "tags": [
+        "negative"
+      ],
       "prompt_shape": "Brainstorm game story, level theme, character descriptions, UI copy, or design notes with no implementation, engine architecture, C++, Vulkan, CUDA, renderer, asset pipeline, or 3D runtime request.",
       "expected_behavior": "Do not route to Godot, O3DE, renderer, or donor-library guidance for non-implementation game-design writing.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md",
@@ -800,12 +1044,12 @@
     },
     {
       "name": "generic-video-editing-negative-control",
-      "tags": ["negative"],
+      "tags": [
+        "negative"
+      ],
       "prompt_shape": "Edit, trim, caption, transcode, or export an ordinary video timeline with no C++, DCC interchange, OpenTimelineIO, media pipeline architecture, virtual production, or coding-agent donor request.",
       "expected_behavior": "Do not route to DCC or OpenTimelineIO donors for ordinary video editing instructions.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/dcc-scene-pipeline.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/opentimelineio.md"
@@ -813,12 +1057,12 @@
     },
     {
       "name": "ordinary-image-upload-negative-control",
-      "tags": ["negative"],
+      "tags": [
+        "negative"
+      ],
       "prompt_shape": "Add ordinary image upload, thumbnail resize, PNG/JPEG preview, CSS color picker, or web form image handling with no C++, renderer, GPU texture pipeline, EXR/HDR, OCIO, KTX, or MaterialX scope.",
       "expected_behavior": "Do not route to texture/material/color donors for ordinary web or app image handling.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/texture-material-color.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tinyexr.md"
@@ -826,12 +1070,12 @@
     },
     {
       "name": "cad-ui-mockup-negative-control",
-      "tags": ["negative"],
+      "tags": [
+        "negative"
+      ],
       "prompt_shape": "Design a CAD-looking dashboard, landing page, icon, or UI mockup with no CAD kernel, B-rep, NURBS, STEP/IGES, exact geometry, tessellation, C++, Vulkan, or implementation scope.",
       "expected_behavior": "Do not route to CAD, CGAL, Open CASCADE, libigl, or FreeCAD donor guidance for visual mockups.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/cad-precision-geometry.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/open-cascade.md",
@@ -841,12 +1085,13 @@
     },
     {
       "name": "vr-storyboarding-negative-control",
-      "tags": ["negative", "xr"],
+      "tags": [
+        "negative",
+        "xr"
+      ],
       "prompt_shape": "Brainstorm VR game story, headset marketing copy, immersive scene concept art, or non-implementation spatial experience ideas with no OpenXR, C++, Vulkan, runtime, device, swapchain, or extension work.",
       "expected_behavior": "Do not route to XR/OpenXR donor guidance for non-implementation ideation.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/xr-spatial.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openxr-sdk.md",
@@ -856,7 +1101,11 @@
     },
     {
       "name": "vfx-creature-fx-production-overlay",
-      "tags": ["positive", "vfx", "simulation"],
+      "tags": [
+        "positive",
+        "vfx",
+        "simulation"
+      ],
       "prompt_shape": "VFX pipeline request for creature FX: groom, fur, feathers, skin sliding, muscles, flesh, and secondary motion for a native C++/Vulkan tool.",
       "expected_behavior": "Open the VFX studio production overlay, then route creature FX to hair/grooming, muscle/flesh, and simulation categories without treating the overlay as a donor silo.",
       "expected_paths": [
@@ -868,7 +1117,12 @@
     },
     {
       "name": "vfx-lookdev-lighting-production-overlay",
-      "tags": ["positive", "vfx", "materials", "rendering"],
+      "tags": [
+        "positive",
+        "vfx",
+        "materials",
+        "rendering"
+      ],
       "prompt_shape": "VFX look development and lighting request for shader/material response, hair or skin appearance, HDRI lighting, shadows, and render debug views in a native renderer.",
       "expected_behavior": "Open the VFX studio production overlay, then route lookdev and lighting to texture/material/color, graphics-rendering, volume/hair categories as needed.",
       "expected_paths": [
@@ -883,7 +1137,12 @@
     },
     {
       "name": "games-technical-art-tools-production-overlay",
-      "tags": ["positive", "games", "infrastructure", "assets"],
+      "tags": [
+        "positive",
+        "games",
+        "infrastructure",
+        "assets"
+      ],
       "prompt_shape": "Game technical art or tools request for artist-facing exporters, asset cooking, shader/material validation, DCC handoff, and repeated build/cook workflow in C++.",
       "expected_behavior": "Open the games production overlay, then route technical art/tools work through native engineering infrastructure plus asset and rendering categories.",
       "expected_paths": [
@@ -895,7 +1154,12 @@
     },
     {
       "name": "games-realtime-vfx-production-overlay",
-      "tags": ["positive", "games", "vfx", "simulation"],
+      "tags": [
+        "positive",
+        "games",
+        "vfx",
+        "simulation"
+      ],
       "prompt_shape": "Game renderer request for realtime VFX: particles, impacts, magic, explosions, decals, weather, GPU sorting, and frame-budgeted visual effects.",
       "expected_behavior": "Open the games production overlay, then route realtime visual effects to vfx-particles first and simulation-gpu only when solver physics is needed.",
       "expected_paths": [
@@ -909,7 +1173,11 @@
     },
     {
       "name": "native-project-scaffolding-infrastructure",
-      "tags": ["smoke", "positive", "infrastructure"],
+      "tags": [
+        "smoke",
+        "positive",
+        "infrastructure"
+      ],
       "prompt_shape": "Create or upgrade native C++/Vulkan project infrastructure with app/library layout, CMake presets, dependency policy, CTest labels, validation scripts, and update-safe template behavior.",
       "expected_behavior": "Route to Native Engineering Infrastructure, project archetypes, and the CMake/template update profiles before choosing domain donors.",
       "expected_paths": [
@@ -922,7 +1190,12 @@
     },
     {
       "name": "gpu-validation-profiling-infrastructure",
-      "tags": ["positive", "infrastructure", "vulkan", "cuda"],
+      "tags": [
+        "positive",
+        "infrastructure",
+        "vulkan",
+        "cuda"
+      ],
       "prompt_shape": "Add native GPU validation and profiling infrastructure: Vulkan validation layers, SPIR-V validation, Compute Sanitizer, ASan/UBSan, RenderDoc, Nsight, Tracy, Perfetto, and CI artifacts.",
       "expected_behavior": "Route to Native Engineering Infrastructure and the validation/profiling profiles; use Vulkan or CUDA domain donors only for backend-specific implementation details.",
       "expected_paths": [
@@ -935,12 +1208,13 @@
     },
     {
       "name": "generic-project-management-negative-control",
-      "tags": ["negative", "infrastructure"],
+      "tags": [
+        "negative",
+        "infrastructure"
+      ],
       "prompt_shape": "Create a project management board, roadmap, ticket workflow, status dashboard, or frontend admin view with no native C++, CMake, GPU validation, build system, profiling, CI runner, Vulkan, CUDA, or generated project infrastructure scope.",
       "expected_behavior": "Do not route to Native Engineering Infrastructure for ordinary planning, admin, or frontend project-management work.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/production/native-engineering-infrastructure.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md"
@@ -948,12 +1222,13 @@
     },
     {
       "name": "python-ml-script-negative-control",
-      "tags": ["negative", "ai-runtime"],
+      "tags": [
+        "negative",
+        "ai-runtime"
+      ],
       "prompt_shape": "Ordinary Python scikit-learn, pandas, notebook, or training script work with no C++ extension, GPU kernel, model runtime integration, CUDA, Vulkan, or 3D scope.",
       "expected_behavior": "Do not trigger CppStudio donor routing for ordinary Python ML work.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md",
@@ -962,24 +1237,25 @@
     },
     {
       "name": "generic-render-text-negative-control",
-      "tags": ["negative"],
+      "tags": [
+        "negative"
+      ],
       "prompt_shape": "Render a markdown document, text template, HTML string, or report with no C++, GPU, graphics API, 3D scene, mesh, renderer, or realtime visualization scope.",
       "expected_behavior": "Do not route to graphics-rendering donors just because the word render appears.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md"
       ]
     },
     {
       "name": "generic-import-negative-control",
-      "tags": ["negative", "assets"],
+      "tags": [
+        "negative",
+        "assets"
+      ],
       "prompt_shape": "Import CSV, JSON, contacts, invoices, or business records with no C++, 3D asset, mesh, renderer, Vulkan, CUDA, glTF, or DCC scope.",
       "expected_behavior": "Do not route to assimp, glTF, meshoptimizer, or geometry-simulation donors for ordinary data import work.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/gltf-runtime-assets.md"
@@ -987,36 +1263,39 @@
     },
     {
       "name": "generic-json-negative-control",
-      "tags": ["negative", "assets"],
+      "tags": [
+        "negative",
+        "assets"
+      ],
       "prompt_shape": "Generic JSON parser, schema validation, or business-data import task with no C++, GPU, Vulkan, rendering, 3D asset, glTF, or runtime viewer scope.",
       "expected_behavior": "Do not route to glTF runtime asset donors just because glTF uses JSON internally.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/gltf-runtime-assets.md"
       ]
     },
     {
       "name": "generic-shader-text-negative-control",
-      "tags": ["negative", "vulkan"],
+      "tags": [
+        "negative",
+        "vulkan"
+      ],
       "prompt_shape": "Generic text templating, syntax highlighting, or non-GPU shader-like string processing without Vulkan, SPIR-V, GLSL, HLSL, Slang, or graphics runtime scope.",
       "expected_behavior": "Do not route to Vulkan shader tooling donors unless the task names Vulkan, SPIR-V, shader compilation, reflection, or a graphics/compute runtime.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md"
       ]
     },
     {
       "name": "python-negative-control",
-      "tags": ["smoke", "negative"],
+      "tags": [
+        "smoke",
+        "negative"
+      ],
       "prompt_shape": "Python CLI, virtualenv, parser, or business simulation with no C++, GPU, rendering, CUDA, Vulkan, 3D, physics, or AI-runtime scope.",
       "expected_behavior": "Do not trigger CppStudio donor-library routing.",
-      "expected_paths": [
-        "research/donor-library/trigger-test-lane.md"
-      ],
+      "expected_paths": [],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/README.md"

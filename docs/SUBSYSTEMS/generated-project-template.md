@@ -47,6 +47,8 @@ validation.
   passes.
 - Code-map validation accepts repo-relative files and globs only; absolute paths, `..` segments,
   escaping links, and glob matches that resolve outside the repo are rejected.
+- Code-map validation also treats manifest root `state` and `router_doc` as strict routing API fields:
+  they must point to `.cppstudio/code-map-state.json` and `docs/CODEBASE_ARCHITECTURE_INDEX.md`.
 - The generated GPU optimization loop is command-driven rather than Triton/PyTorch-specific. Hardware
   profiling should emit greppable NCU/SOL or project counter lines that `profile` can parse, while
   `hypothesis`, `breaking-point`, and `plan-round` record evidence-backed investigation state and

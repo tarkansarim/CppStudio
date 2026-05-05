@@ -463,6 +463,7 @@ def manifest_payload() -> dict[str, Any]:
     return {
         "version": 1,
         "skill_root": "skills",
+        "state": str(STATE_PATH),
         "router_doc": str(INDEX_PATH),
         "subsystems": [
             {

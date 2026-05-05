@@ -36,7 +36,11 @@
       "primary_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles",
-        "research/donor-library/trigger-matrix.json"
+        "research/donor-library/trigger-matrix.json",
+        "scripts/validate_donor_library.py",
+        "scripts/validate_trigger_matrix.py",
+        "scripts/render_trigger_eval_prompt.py",
+        "scripts/audit_donor_freshness.py"
       ]
     },
     {

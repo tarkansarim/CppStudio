@@ -133,8 +133,8 @@
       "path": "assets/app-library-template/docs/CODEBASE_SUBSYSTEM_MANIFEST.json",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 1809,
-      "sha256": "950d01892af87aa92687b32a2fda56adbe57158abb771456dc8b87a5aca9741b"
+      "size": 1854,
+      "sha256": "94ab6c64b98a5b07f64dbd4e0ce79b947027fc646765bcd54731ad7023874631"
     },
     {
       "path": "assets/app-library-template/docs/DEVELOPMENT_ENVIRONMENT.md",
@@ -1323,8 +1323,8 @@
       "path": "scripts/bootstrap_code_map.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 22374,
-      "sha256": "b99965e0c98c3c606ff57dfd220cff0850fc97765ebbd8f64b5e744f17b22763"
+      "size": 22408,
+      "sha256": "e2f8622553cf2d66e5670fd9de457b16b580b4263e69dafa3f3ef851d04fe358"
     },
     {
       "path": "scripts/check_dev_tools.sh",
@@ -1400,8 +1400,8 @@
       "path": "scripts/validate_code_map.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 11647,
-      "sha256": "35ed0099ec33097ebd5828c2f14207505182aba4e4f5ce76c64310656828c2a8"
+      "size": 12766,
+      "sha256": "94614c11bd4a73b001f78ab4938d2d7c005982071fb99297bc03a73c05d9816c"
     },
     {
       "path": "scripts/validate_studio_backbone.py",

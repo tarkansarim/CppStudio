@@ -90,6 +90,9 @@ required_repo_files=(
     "scripts/validate_code_map.py"
     "scripts/quick_validate_skill.py"
     "scripts/validate_skill_package.py"
+    "scripts/audit_donor_freshness.py"
+    "scripts/render_trigger_eval_prompt.py"
+    "scripts/validate_trigger_matrix.py"
     ".cppstudio/code-map-state.json"
     "CHANGELOG.md"
     "docs/CODEBASE_ARCHITECTURE_INDEX.md"
@@ -515,6 +518,32 @@ from pathlib import Path
 
 path = Path(sys.argv[1])
 manifest = json.loads(path.read_text(encoding="utf-8"))
+manifest["state"] = "docs/not-code-map-state.json"
+path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "code map manifest validates root state path" "state must be" \
+    python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
+python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_stale_tmp}" --enable --force
+python3 - "${code_map_stale_tmp}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+manifest = json.loads(path.read_text(encoding="utf-8"))
+manifest["router_doc"] = "docs/not-the-architecture-index.md"
+path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "code map manifest validates root router doc" "router_doc must be" \
+    python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
+python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_stale_tmp}" --enable --force
+python3 - "${code_map_stale_tmp}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+manifest = json.loads(path.read_text(encoding="utf-8"))
 manifest["subsystems"][0]["router_doc"] = "../outside.md"
 path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 PY
@@ -593,6 +622,9 @@ expect_failure "code map manifest rejects escaping globs" "path must not contain
 python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
     "${SKILL_DIR}/references/donor-library" \
     --reference-root "${SKILL_DIR}/references"
+python3 "${ROOT_DIR}/scripts/audit_donor_freshness.py" \
+    "${SKILL_DIR}/references/donor-library" \
+    --summary-only
 python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
     --repo-root "${ROOT_DIR}"
@@ -673,6 +705,29 @@ python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     --installed-paths \
     --codex-home "${ROOT_DIR}/.codex-eval" >"${trigger_negative_md}"
 grep -q "${ROOT_DIR}/.codex-eval/skills/cpp-cuda-vulkan-studio" "${trigger_negative_md}"
+grep -q "Expected paths:\\*\\* none" "${trigger_negative_md}"
+trigger_result_template="$(mktemp "${VALIDATE_TMP}/trigger_eval_result.XXXXXX.json")"
+python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
+    "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+    --repo-root "${ROOT_DIR}" \
+    --case python-negative-control \
+    --write-result-template "${trigger_result_template}" >/dev/null
+python3 - "${trigger_result_template}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+data = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+case = data["cases"][0]
+if data["schema_version"] != 1 or data["case_count"] != 1:
+    raise SystemExit("bad trigger result template header")
+if case["name"] != "python-negative-control":
+    raise SystemExit("bad trigger result template case name")
+if case["expected_paths"]:
+    raise SystemExit("negative trigger result template should have no expected paths")
+if case["result"]["verdict"] != "pending":
+    raise SystemExit("trigger result template should start pending")
+PY
 expect_failure "unknown trigger eval tag" "unknown trigger tag" \
     python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
@@ -1398,6 +1453,46 @@ data["cases"][0]["must_not_trigger_paths"] = ["missing/path/that/should/fail.md"
 target.write_text(json.dumps(data), encoding="utf-8")
 PY
 expect_failure "missing trigger matrix must-not-trigger path" "missing must-not-trigger path" \
+    python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
+    "${matrix_tmp}" \
+    --repo-root "${ROOT_DIR}"
+rm -f "${matrix_tmp}"
+matrix_tmp="$(mktemp "${VALIDATE_TMP}/trigger_matrix_positive_missing_expected.XXXXXX.json")"
+python3 - "${ROOT_DIR}/research/donor-library/trigger-matrix.json" "${matrix_tmp}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+source = Path(sys.argv[1])
+target = Path(sys.argv[2])
+data = json.loads(source.read_text(encoding="utf-8"))
+for case in data["cases"]:
+    if "positive" in case["tags"]:
+        case["expected_paths"] = []
+        break
+target.write_text(json.dumps(data), encoding="utf-8")
+PY
+expect_failure "positive trigger matrix requires expected paths" "positive cases must have non-empty expected_paths" \
+    python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
+    "${matrix_tmp}" \
+    --repo-root "${ROOT_DIR}"
+rm -f "${matrix_tmp}"
+matrix_tmp="$(mktemp "${VALIDATE_TMP}/trigger_matrix_negative_expected.XXXXXX.json")"
+python3 - "${ROOT_DIR}/research/donor-library/trigger-matrix.json" "${matrix_tmp}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+source = Path(sys.argv[1])
+target = Path(sys.argv[2])
+data = json.loads(source.read_text(encoding="utf-8"))
+for case in data["cases"]:
+    if "negative" in case["tags"]:
+        case["expected_paths"] = ["research/donor-library/trigger-test-lane.md"]
+        break
+target.write_text(json.dumps(data), encoding="utf-8")
+PY
+expect_failure "negative trigger matrix rejects expected paths" "negative cases must leave expected_paths empty" \
     python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
     "${matrix_tmp}" \
     --repo-root "${ROOT_DIR}"

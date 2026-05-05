@@ -4,8 +4,16 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
-- Collapsed older README Recent Commit Highlights behind a GitHub details expander so only the
-  latest 10 entries are visible by default.
+- Hardened code-map validation so manifest root `state` and `router_doc` fields are enforced as
+  strict repo-relative routing API fields.
+- Cleaned up negative trigger-matrix controls so they use only forbidden paths, plus added
+  structured trigger-eval result templates.
+- Made manual managed-skill install snippets transactional across all bundled skills and added an
+  optional report-only donor freshness audit.
+- Updated README highlights and sample-project media links so the front page remains scannable and
+  tracked local video fallbacks are visible.
+- Collapsed older README Recent Commit Highlights behind a GitHub details expander so selected
+  recent entries are visible by default.
 - Clarified that maintained code-map setup verification includes a read-only subagent or
   fresh-session routing smoke when available, not only schema validation.
 - Tightened code-map completion criteria so agents distinguish structural validation from fresh-agent

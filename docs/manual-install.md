@@ -68,33 +68,53 @@ for skill_name in "${skill_names[@]}"; do
     echo "Refusing symlinked skill target: ${skill_target}" >&2
     exit 1
   fi
+done
 
-  staging_root="$(mktemp -d)"
+staging_root="$(mktemp -d)"
+backup_root="$(mktemp -d "${codex_home}/cppstudio-skill-backup.XXXXXX")"
+changes_started=0
+
+restore_all() {
+  if [[ "${changes_started}" == "1" ]]; then
+    for skill_name in "${skill_names[@]}"; do
+      skill_target="${skills_root}/${skill_name}"
+      backup_target="${backup_root}/${skill_name}"
+      rm -rf "${skill_target}"
+      if [[ -e "${backup_target}" ]]; then
+        mv "${backup_target}" "${skill_target}"
+        echo "Restored previous skill ${skill_name}" >&2
+      fi
+    done
+  fi
+  rm -rf "${staging_root}"
+}
+trap restore_all ERR
+
+for skill_name in "${skill_names[@]}"; do
   staged_skill="${staging_root}/${skill_name}"
-  cp -a "${skill_source}" "${staged_skill}"
+  cp -a "skills/${skill_name}" "${staged_skill}"
   python3 "${validator}" "${staged_skill}"
   python3 "${package_validator}" "${staged_skill}"
+done
 
-  backup_target=""
-  restore_on_error() {
-    if [[ -n "${backup_target}" && -e "${backup_target}" ]]; then
-      rm -rf "${skill_target}"
-      mv "${backup_target}" "${skill_target}"
-      echo "Restored previous skill from ${backup_target}" >&2
-    fi
-  }
-  trap restore_on_error ERR
+changes_started=1
+for skill_name in "${skill_names[@]}"; do
+  skill_target="${skills_root}/${skill_name}"
   if [[ -e "${skill_target}" ]]; then
-    backup_target="${skill_target}.backup.$(date +%Y%m%d%H%M%S)"
-    mv "${skill_target}" "${backup_target}"
-    echo "Backed up existing skill to ${backup_target}"
+    mv "${skill_target}" "${backup_root}/${skill_name}"
   fi
-  mv "${staged_skill}" "${skill_target}"
-  rmdir "${staging_root}" 2>/dev/null || true
+done
+
+for skill_name in "${skill_names[@]}"; do
+  skill_target="${skills_root}/${skill_name}"
+  mv "${staging_root}/${skill_name}" "${skill_target}"
   python3 "${validator}" "${skill_target}"
   python3 "${package_validator}" "${skill_target}"
-  trap - ERR
 done
+
+trap - ERR
+rm -rf "${staging_root}"
+echo "Installed managed CppStudio skills. Backup root: ${backup_root}"
 ```
 
 Windows PowerShell:
@@ -128,39 +148,66 @@ if ((Get-Item $SkillsRoot).LinkType) {
 foreach ($SkillName in $SkillNames) {
   $SkillSource = Join-Path ".\skills" $SkillName
   $SkillTarget = Join-Path $SkillsRoot $SkillName
-  $StagedSkill = Join-Path $StagingRoot $SkillName
-  Copy-Item -Recurse $SkillSource $StagedSkill
-  python $Validator $StagedSkill
-  python $PackageValidator $StagedSkill
-
   if (Test-Path $SkillTarget) {
     $TargetItem = Get-Item $SkillTarget
     if ($TargetItem.LinkType) {
       throw "Refusing symlinked skill target: $SkillTarget"
     }
   }
-  $BackupTarget = $null
-  try {
+  if (-not (Test-Path (Join-Path $SkillSource "SKILL.md"))) {
+    throw "Missing managed skill source: $SkillSource"
+  }
+}
+
+try {
+  foreach ($SkillName in $SkillNames) {
+    $SkillSource = Join-Path ".\skills" $SkillName
+    $StagedSkill = Join-Path $StagingRoot $SkillName
+    Copy-Item -Recurse $SkillSource $StagedSkill
+    python $Validator $StagedSkill
+    python $PackageValidator $StagedSkill
+  }
+
+  $BackupRoot = Join-Path $CodexHome ("cppstudio-skill-backup." + [System.Guid]::NewGuid())
+  New-Item -ItemType Directory -Force $BackupRoot | Out-Null
+  $ChangesStarted = $true
+
+  foreach ($SkillName in $SkillNames) {
+    $SkillTarget = Join-Path $SkillsRoot $SkillName
     if (Test-Path $SkillTarget) {
-      $BackupTarget = "$SkillTarget.backup.$(Get-Date -Format 'yyyyMMddHHmmss')"
-      Rename-Item -Path $SkillTarget -NewName (Split-Path $BackupTarget -Leaf)
-      Write-Host "Backed up existing skill to $BackupTarget"
+      Move-Item $SkillTarget (Join-Path $BackupRoot $SkillName)
     }
+  }
+
+  foreach ($SkillName in $SkillNames) {
+    $SkillTarget = Join-Path $SkillsRoot $SkillName
+    $StagedSkill = Join-Path $StagingRoot $SkillName
     Move-Item $StagedSkill $SkillTarget
     python $Validator $SkillTarget
     python $PackageValidator $SkillTarget
-  } catch {
-    if ($BackupTarget -and (Test-Path $BackupTarget)) {
+  }
+
+  Write-Host "Installed managed CppStudio skills. Backup root: $BackupRoot"
+} catch {
+  if ($ChangesStarted) {
+    foreach ($SkillName in $SkillNames) {
+      $SkillTarget = Join-Path $SkillsRoot $SkillName
+      $BackupTarget = Join-Path $BackupRoot $SkillName
       if (Test-Path $SkillTarget) {
         Remove-Item -Recurse -Force $SkillTarget
       }
-      Rename-Item -Path $BackupTarget -NewName (Split-Path $SkillTarget -Leaf)
-      Write-Error "Restored previous skill from $BackupTarget"
+      if (Test-Path $BackupTarget) {
+        Move-Item $BackupTarget $SkillTarget
+        Write-Error "Restored previous skill $SkillName"
+      }
     }
-    throw
+  }
+  throw
+} finally {
+  if (Test-Path $StagingRoot) {
+    Remove-Item -Recurse -Force $StagingRoot
   }
 }
-Remove-Item -Recurse -Force $StagingRoot
 ```
 
 Restart Codex after manual installation so changed skill metadata is rediscovered.

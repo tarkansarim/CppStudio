@@ -12,6 +12,9 @@ python3 scripts/render_trigger_eval_prompt.py \
   --tag smoke
 ```
 
+Add `--write-result-template trigger-results.json` to produce a structured result skeleton with
+pending verdicts for each selected case.
+
 Use `--installed-paths` after rollout when the evaluator should inspect `${SYNC_CODEX_HOME:-$HOME/.codex}`
 paths. Useful tags include `smoke`, `lookup`, `negative`, `cuda`, `vulkan`, `assets`, `geometry`,
 `materials`, `volumes`, `simulation`, `ai-runtime`, `vfx`, `games`, `gui`, `hud`, `infrastructure`,

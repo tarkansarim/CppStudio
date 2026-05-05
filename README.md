@@ -31,10 +31,12 @@ As a harness, CppStudio focuses on:
 
 ## Recent Commit Highlights
 
-The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list shows the
-latest 10 commit-level highlights for people scanning the repo, with older highlights collapsed
-below.
+The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list shows 10
+selected recent commit-level highlights for people scanning the repo, with older highlights
+collapsed below.
 
+- `f072f2d` - Collapsed older README Recent Commit Highlights behind a GitHub details expander.
+- `826a1f7` - Added a front-page highlight for maintained code-map routing-smoke requirements.
 - `535d266` - Required maintained code-map setup to include read-only subagent or fresh-session
   routing smoke evidence when available, not only schema validation.
 - `d9024a6` - Hardened code-map completion so validation is not treated as routing proof,
@@ -54,13 +56,14 @@ below.
   visual-capture or render-scheduling failures.
 - `3aa60ff` - Tightened harness thread-boundary guidance so UI/renderer readback, toolkit action
   state, and visual capture run through the safe GUI/render thread.
+
+<details>
+<summary>Show older commit highlights</summary>
+
 - `40f1b08` - Added visual-capture timing audit guidance so agents distinguish capture APIs that
   render during grab from APIs that copy the last presented frame before adding waits or loops.
 - `a18b91c` - Required settled visual-capture evidence so viewport, canvas, render-target, and
   screenshot checks prove they captured the requested rendered state instead of stale pixels.
-
-<details>
-<summary>Show older commit highlights</summary>
 
 - `709e8a6` - Tightened validation-audit shell guidance so agents quote
   markdown/code-span searches safely instead of letting backticks in docs run as
@@ -137,6 +140,8 @@ skills, maintained project maps, donor-guided implementation, and validation-hea
 
 https://github.com/user-attachments/assets/5db98b21-8bee-4360-8d28-5bcdb64b0cb5
 
+Local fallback: [sample gallery](samples/index.html), [MP4](assets/videos/cuda-groom-tool.mp4)
+
 Realtime C++/CUDA hair grooming with CUDA strand editing kernels, a live 3D viewport, Maya-style
 camera controls, and a production-shaped brush set for combing, screen-space grooming, puffing,
 pinching, smoothing, length work, selection masking, parting, clumping, frizz, randomization, and
@@ -149,6 +154,8 @@ shading, DLSS/RR-style reconstruction lanes, and lookdev/debug controls.
 ### Wetbrush Paint Simulation
 
 https://github.com/user-attachments/assets/cb83fda1-098e-45bc-87d4-407df3974465
+
+Local fallback: [sample gallery](samples/index.html), [MP4](assets/videos/wetbrush-paint-simulation.mp4)
 
 A C++ GPU painting simulation based on the Wetbrush paper, with bristle-level brush dynamics,
 grid-based liquid, particle-based liquid, bristle-particle transfer, grid-particle transfer, and a
