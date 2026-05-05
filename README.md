@@ -359,8 +359,8 @@ replaced unless the user explicitly accepts that. If the audit leads to small se
 CMake presets or canonical scripts, that should be reported as a separate audit-backed
 infrastructure slice, not hidden inside the code-map step.
 
-After a map is enabled, validation proves the map schema and links. A fresh-agent routing smoke is
-the stronger proof that the workflow actually works: a new agent should be able to load
+After a map is enabled, validation proves the map schema and links. A read-only subagent or
+fresh-agent routing smoke is the stronger proof that the workflow actually works: a new agent should be able to load
 `cpp-cuda-vulkan-studio`, read the architecture index and manifest, choose the right subsystem doc,
 and only then trace the first exact files and tests for a read-only task. The smoke should stop after
 that routing proof instead of becoming a full source audit; if it never reports, skips the manifest,

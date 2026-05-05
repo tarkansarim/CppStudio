@@ -111,18 +111,19 @@ When this skill is active, work like a native C++ GPU systems engineer:
   Compute Sanitizer, RenderDoc/Nsight captures, screenshots, image comparisons, and profiler output
   matter more than plausible explanations.
 - Treat code-map completion claims as routing claims, not just schema claims. After enabling or
-  materially changing a maintained code map, do not say future agents can use it or that setup is
-  done until the map validates and a fresh-agent routing smoke has proven the intended path when
-  subagent or fresh-session testing is available. The smoke should be read-only and task-shaped, for
-  example "find where <feature> should be changed, do not edit," and the expected evidence is that
-  the fresh agent loads `cpp-cuda-vulkan-studio`, reads the architecture index and manifest, selects
-  the relevant subsystem doc, and then traces exact files/tests. Keep this smoke bounded: once the
-  first confident subsystem route plus exact source/test paths are found, report and stop; do not turn
-  it into a full source audit or implementation analysis. Grade the smoke explicitly: pass only when
-  the fresh agent names the skill, reads the state/index/manifest, chooses a subsystem doc, reports
-  exact source and test/validation paths, and makes no edits. Treat it as failed or partial if the
-  agent skips the manifest, starts implementation, expands into broad unrelated source reading, fails
-  to produce a final routing report in the bounded probe, or leaves any file changes. If fresh-agent
+  materially changing a maintained code map, run the validator and a read-only subagent or
+  fresh-session routing smoke before saying future agents can use it or that setup is done, whenever
+  that testing route is available. This is part of code-map setup verification, not optional polish.
+  The smoke should be task-shaped, for example "find where <feature> should be changed, do not edit,"
+  and the expected evidence is that the fresh agent loads `cpp-cuda-vulkan-studio`, reads the
+  code-map state, architecture index, and manifest, selects the relevant subsystem doc, and then
+  traces exact files/tests. Keep this smoke bounded: once the first confident subsystem route plus
+  exact source/test paths are found, report and stop; do not turn it into a full source audit or
+  implementation analysis. Grade the smoke explicitly: pass only when the fresh agent names the
+  skill, reads the state/index/manifest, chooses a subsystem doc, reports exact source and
+  test/validation paths, and makes no edits. Treat it as failed or partial if the agent skips the
+  manifest, starts implementation, expands into broad unrelated source reading, fails to produce a
+  final routing report in the bounded probe, or leaves any file changes. If subagent or fresh-session
   testing is not available, report that as pending evidence, not as a passed trigger lane.
 - For realtime rendering, viewport, simulation, XR, or GPU-performance work, measure frame time/FPS
   or profiler timings while implementing and verify the actual visual output.
@@ -370,7 +371,7 @@ Before enabling a maintained code map for an existing repo, confirm the repo can
 8. If the user chooses an audit-backed small infrastructure slice first, keep it scoped, call it out
    as pre-map infrastructure, verify it, and avoid burying it in the code-map completion claim.
 9. If the user chooses preserve-as-is, enable the map and record the nonstandard layout explicitly in the relevant subsystem docs. If generated map files already exist, rerun enablement with `--force` only after the user accepts replacing them.
-10. After enabling or materially changing the map, run a read-only fresh-agent routing smoke when possible. If the smoke is unavailable or not run, say the map is structurally valid but routing evidence is pending.
+10. After enabling or materially changing the map, run a read-only subagent or fresh-agent routing smoke when possible. If the smoke is unavailable or not run, say the map is structurally valid but routing evidence is pending.
 11. If the user declines, run `scripts/bootstrap_code_map.py --decline` and do not prompt again unless asked.
 
 ## Bundled Assets

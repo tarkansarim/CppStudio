@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Clarified that maintained code-map setup verification includes a read-only subagent or
+  fresh-session routing smoke when available, not only schema validation.
 - Tightened code-map completion criteria so agents distinguish structural validation from fresh-agent
   routing proof, grade routing smokes as pass/partial/fail, report instruction-file drift separately,
   and label audit-backed presets/scripts as pre-map infrastructure rather than hiding them inside

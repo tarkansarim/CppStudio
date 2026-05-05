@@ -46,7 +46,8 @@ workflow, and repo banner/sample assets.
   evidence paths, cleanup cost, and actual restructuring needs before asking the user to choose a
   route.
 - Code-map validation is described as structural evidence, not proof that a cold future agent will
-  follow the intended route. Fresh-agent routing smoke is the expected proof when available.
+  follow the intended route. A read-only subagent or fresh-agent routing smoke is the expected proof
+  when available.
 
 ## Current CI Posture
 
