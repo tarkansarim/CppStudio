@@ -34,7 +34,7 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
-- `pending` - Adopted generic doctrine from a 22-skill Sortie assistant-pack audit: API discovery,
+- `37f3fb7` - Adopted generic doctrine from a 22-skill Sortie assistant-pack audit: API discovery,
   constraint mapping, harness observation, planning research gates, GUI proof rules, and supervised
   agent monitoring without importing Sortie runtime mechanics.
 - `e0a29f5` - Broadened shell-search quoting guidance so validation audits quote script fragments,
