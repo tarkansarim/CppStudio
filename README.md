@@ -36,6 +36,8 @@ commit-level changes readable for people scanning the repo.
 
 - `e0a29f5` - Broadened shell-search quoting guidance so validation audits quote script fragments,
   regex text, `$`, embedded quotes, and other shell metacharacters safely.
+- `0b82acb` - Required hard-reset evidence ledgers and keep/revert decisions after repeated
+  visual-capture or render-scheduling failures.
 - `3aa60ff` - Tightened harness thread-boundary guidance so UI/renderer readback, toolkit action
   state, and visual capture run through the safe GUI/render thread.
 - `40f1b08` - Added visual-capture timing audit guidance so agents distinguish capture APIs that
