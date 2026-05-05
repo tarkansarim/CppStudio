@@ -56,7 +56,10 @@ Use one of these patterns:
 - explicit command buffer or scenario queue for deterministic frame-step tests
 
 Readback should be clear about whether it returns committed state, queued state, or last completed
-frame state.
+frame state. For visual capture endpoints, prefer explicit frame, revision, sequence, or fence
+fields that let agents prove a screenshot or render-target dump reflects the requested state. A
+capture endpoint that cannot wait for the requested rendered state should return an error with the
+target and observed revisions instead of silently returning an older frame.
 
 ## Observation, Or Sonar
 
@@ -71,6 +74,9 @@ Agents need direct evidence instead of guessing from success strings. Plan these
 
 Prefer text-queryable observation where possible. If visual capture reveals an important state, add
 a text-readable surrogate later so ordinary automation does not depend on manual image inspection.
+When visual output changes after a command, smoke scripts should save the capture response, assert
+freshness fields such as `rendered_in_sync`, and then compare screenshots or render targets. A
+leftover file or immediate grab after `requestUpdate()` is not enough evidence for realtime apps.
 
 For UI-heavy tools, visual awareness is not optional. The harness should expose enough viewport,
 panel, focus, modal, screenshot, and frame-output evidence that an agent can understand what the user

@@ -60,3 +60,5 @@ generated-project workflow instructions.
   build directories
 - target-project shell-search discipline changes, including how agents must quote markdown/code-span
   search patterns so documentation backticks are not executed by the shell during validation audits
+- control-harness screenshot or render-target capture rules change, including when agents must prove
+  a capture reflects the requested rendered state instead of a stale frame

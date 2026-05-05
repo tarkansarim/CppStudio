@@ -54,6 +54,11 @@ control harness itself.
 - Make visual/UI awareness first-class. For viewers, tools, editors, and sandboxes, the harness
   should expose screenshots, offscreen frames, render-target dumps, UI state, or another reliable
   surrogate for what the user is seeing.
+- Visual capture must be fresh, not just available. For viewport, canvas, render-target, or
+  screenshot endpoints, add frame/revision/sequence/fence readback when practical and make capture
+  wait until the requested UI or renderer state has been rendered. If the capture cannot settle on
+  the requested state, return a harness error instead of stale pixels. Save and assert capture
+  responses in smoke scripts so leftover files cannot masquerade as current visual evidence.
 - For GUI/editor command surfaces, do not rely only on capability metadata that says an action
   exists. When practical, expose readback for the actual UI action/menu/shortcut/context objects,
   enabled state, attachment point, and command target. Claim a menu, shortcut, context action, or
@@ -73,7 +78,8 @@ A first harness slice is only provisionally successful when these are verified:
 - a trivial round-trip works
 - one real feature command mutates the app and has state readback
 - recent logs or warnings are queryable
-- visual state can be captured or otherwise inspected for viewport/UI-heavy apps
+- visual state can be captured or otherwise inspected for viewport/UI-heavy apps, with settled-state
+  evidence for mutable viewport/canvas/render output when practical
 - user-visible GUI actions added in the slice have either scenario coverage or action/readback
   evidence from the real toolkit objects; metadata-only assertions are labeled as such
 - failures distinguish transport errors from app-side command errors

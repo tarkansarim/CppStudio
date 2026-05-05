@@ -63,6 +63,9 @@ validation.
   capture launcher logs, poll the control harness, confirm process/window evidence, test duplicate
   launch behavior for fixed control ports, and cleanly stop through the harness instead of blocking a
   terminal agent on a foreground GUI or letting a transient shell kill the app before probes complete.
+- Generated app harnesses should make viewport/canvas/render-target captures settle on requested
+  state before screenshot comparison. Prefer frame, revision, sequence, or fence readback evidence in
+  capture responses so agents can distinguish fresh visible output from stale pixels.
 - Template docs tell agents to commit each coherent verified implementation slice before moving to
   the next milestone while keeping generated build outputs, screenshots, profiler captures, logs, and
   temporary verification artifacts out of git unless the project intentionally tracks them.

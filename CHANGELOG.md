@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Tightened agentic control-harness guidance so viewport, canvas, render-target, and screenshot
+  capture endpoints must settle on the requested rendered state and expose frame/revision evidence
+  when practical, preventing stale pixels from passing visual checks.
 - Tightened validation-audit shell guidance so agents quote markdown/code-span search patterns safely
   and do not let backticks in docs become shell command substitutions during `rg`/`grep` checks.
 - Tightened native C++ GPU validation guidance so agents must use repo-declared CMake presets,

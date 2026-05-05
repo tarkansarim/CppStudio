@@ -112,6 +112,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
   feature driving, state/log readback, screenshots, and visual/UI troubleshooting before asking the
   user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
   the harness instead of repeatedly handing small verification chores to the user.
+- For viewport, canvas, render-target, or screenshot capture endpoints, do not assume "set state,
+  request update, grab immediately" proves the visible result. The harness should expose enough
+  frame/revision/sequence/fence evidence to show the requested UI or renderer state was rendered
+  before capture, and the capture response should include that evidence when practical. If the
+  capture cannot settle on the requested state, report a harness failure instead of accepting stale
+  pixels. Run visual-difference or screenshot checks only against settled frames.
 - When you give, change, or rely on a user-facing desktop launch command, verify that exact command
   path in addition to offscreen smoke tests. For long-running GUI apps, acceptable evidence is that
   the exact command starts the intended process, the control harness responds, and a desktop window
