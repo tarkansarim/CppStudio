@@ -34,6 +34,9 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `709e8a6` - Tightened validation-audit shell guidance so agents quote
+  markdown/code-span searches safely instead of letting backticks in docs run as
+  shell command substitutions.
 - `04a276f` - Tightened native C++ GPU validation guidance so agents use
   repo-declared CMake presets, validation docs, scripts, or code-map build routes
   instead of guessed build directories.
