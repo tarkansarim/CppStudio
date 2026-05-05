@@ -33,6 +33,15 @@ generated-project workflow instructions.
 - Existing-project code-map opt-in is evidence-first: agents must run the non-destructive readiness
   audit, present concrete findings and cleanup cost, and only then ask whether to restructure,
   preserve the current layout with documented exceptions, or decline the map.
+- Code-map completion is evidence-gated: validation proves schema/state only. After enablement or
+  major map edits, agents should run a read-only fresh-agent routing smoke when available before
+  saying future agents can use the map reliably. The smoke should stop after the first confident
+  subsystem route and exact source/test paths, not expand into a full source audit. A smoke that
+  skips manifest/state reads, over-reads broadly, edits files, or never produces a final routing
+  report is partial or failed evidence.
+- Target-repo instruction files are sensitive. `AGENTS.md`, `CLAUDE.md`, repo-local skills, and
+  agent metadata must be named separately in status reports when dirty or changed; they must not be
+  hidden under generic "unrelated dirty files" wording.
 
 ## Update When
 

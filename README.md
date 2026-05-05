@@ -34,6 +34,9 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `9b8f3ca` - Hardened code-map completion so validation is not treated as routing proof,
+  fresh-agent smokes are graded pass/partial/fail, instruction-file drift is reported separately,
+  and audit-backed presets/scripts are labeled as pre-map infrastructure.
 - `3195bb8` - Required existing-project code-map opt-in to run and summarize the non-destructive
   readiness audit before asking whether to restructure, preserve layout, or decline.
 - `37f3fb7` - Adopted generic doctrine from a 22-skill Sortie assistant-pack audit: API discovery,
@@ -352,7 +355,17 @@ The agent should audit the existing layout first without writing audit files by 
 then show concrete findings, evidence paths, nonstandard layout risks, estimated cleanup cost, and
 what restructuring would actually be needed before asking whether to restructure first, preserve the
 current layout and document it, or decline code-map enablement. Existing generated map files are not
-replaced unless the user explicitly accepts that.
+replaced unless the user explicitly accepts that. If the audit leads to small setup work such as
+CMake presets or canonical scripts, that should be reported as a separate audit-backed
+infrastructure slice, not hidden inside the code-map step.
+
+After a map is enabled, validation proves the map schema and links. A fresh-agent routing smoke is
+the stronger proof that the workflow actually works: a new agent should be able to load
+`cpp-cuda-vulkan-studio`, read the architecture index and manifest, choose the right subsystem doc,
+and only then trace the first exact files and tests for a read-only task. The smoke should stop after
+that routing proof instead of becoming a full source audit; if it never reports, skips the manifest,
+or starts implementing, the routing proof is partial or failed.
+
 For a new project, an explicit code-map request counts as acceptance after scaffolding:
 
 ```text

@@ -39,6 +39,12 @@ validation.
 - Existing-project code-map opt-in must be audit-evidence-first: agents run the non-destructive audit
   before asking restructure/preserve/decline questions, and they present concrete findings and cleanup
   cost before any route choice.
+- Audit-backed CMake presets, canonical scripts, validation wrappers, or CI additions are pre-map
+  infrastructure slices, not the code map itself. Agents should label them that way, verify them, and
+  avoid bundling them into a code-map completion claim.
+- After code-map enablement or major routing edits, agents need a read-only fresh-agent routing smoke
+  when such testing is available; otherwise routing proof remains pending even if the validator
+  passes.
 - Code-map validation accepts repo-relative files and globs only; absolute paths, `..` segments,
   escaping links, and glob matches that resolve outside the repo are rejected.
 - The generated GPU optimization loop is command-driven rather than Triton/PyTorch-specific. Hardware

@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Tightened code-map completion criteria so agents distinguish structural validation from fresh-agent
+  routing proof, grade routing smokes as pass/partial/fail, report instruction-file drift separately,
+  and label audit-backed presets/scripts as pre-map infrastructure rather than hiding them inside
+  code-map setup.
 - Tightened existing-project code-map opt-in so agents must run the non-destructive readiness audit,
   present concrete findings, evidence paths, actual restructuring needs, and cleanup cost, and only
   then ask the user whether to restructure, preserve layout, or decline.

@@ -45,6 +45,8 @@ workflow, and repo banner/sample assets.
 - Existing-project code-map setup is described as audit-first: agents should show concrete findings,
   evidence paths, cleanup cost, and actual restructuring needs before asking the user to choose a
   route.
+- Code-map validation is described as structural evidence, not proof that a cold future agent will
+  follow the intended route. Fresh-agent routing smoke is the expected proof when available.
 
 ## Current CI Posture
 
