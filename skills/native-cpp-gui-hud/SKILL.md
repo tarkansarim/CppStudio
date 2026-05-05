@@ -33,6 +33,13 @@ expectations, and debug-vs-product UI boundaries against donors or peer tools be
 Do not present a 2D diagnostic projection as the main viewport for a 3D tool unless the user
 explicitly accepts it as a temporary diagnostic milestone.
 
+For editor and DCC-style command surfaces, choose the interaction surface that matches the command's
+domain. Destructive or structural graph/scene edits should be owned by editor actions, menus,
+context/shortcut paths, or graph-local interaction patterns before adding extra toolbar buttons. If a
+toolbar affordance is useful, it must not crowd labels, selection readouts, timeline controls, or
+other primary authoring controls. Screenshot inspection must reject crowded, clipped, or debug-looking
+controls even when functional tests pass.
+
 ## Default Selection
 
 - For Vulkan/CUDA/realtime tools, default to **Dear ImGui + ImGuizmo + ImPlot** unless the user wants
@@ -57,16 +64,18 @@ explicitly accepts it as a temporary diagnostic milestone.
    atlas upload, input routing, DPI scaling, and swapchain resize behavior explicitly.
 5. For CUDA targets, keep the GUI thread and CUDA work queue boundaries explicit; avoid hiding CUDA
    synchronization in widget callbacks.
-6. Present a compact option table with:
+6. For editor commands, map structural edits to action/menu/shortcut/context surfaces first, then
+   decide whether a toolbar button is still necessary after checking the resulting screenshot.
+7. Present a compact option table with:
    - recommended use
    - source/docs link
    - visual/gallery/examples link
    - license/dependency caveat
-7. Only after that link table is visible, ask the user to choose among the researched options.
-8. Before adding a dependency, check the target repo's package policy and exact upstream license.
-9. If CppStudio is available, read its donor category first:
+8. Only after that link table is visible, ask the user to choose among the researched options.
+9. Before adding a dependency, check the target repo's package policy and exact upstream license.
+10. If CppStudio is available, read its donor category first:
    `cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md`.
-10. For current best-choice or version-sensitive questions, web-check official project docs/repos before
+11. For current best-choice or version-sensitive questions, web-check official project docs/repos before
    ranking options.
 
 ## Bundled Reference

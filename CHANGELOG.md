@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Tightened native GUI/editor guidance so structural DCC graph/scene edits use editor actions,
+  menus, shortcuts, or context surfaces before toolbar affordances, with screenshot review rejecting
+  crowded or clipped controls.
 - Added commit-origin trailer guidance so autonomous verified-slice commits and explicit
   user-requested commits are distinguishable in target project history.
 - Added verified-slice git commit discipline to the CppStudio workflow so agents commit clean

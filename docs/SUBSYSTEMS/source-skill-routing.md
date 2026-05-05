@@ -44,6 +44,8 @@ generated-project workflow instructions.
 - GUI/windowed verification routing changes, including when agents should use target smoke scripts,
   launch wrappers, absolute script paths, or explicit working directories with offscreen/background
   managers
+- DCC/editor command-surface rules change, including when structural graph, scene, timeline, or
+  layer edits should use editor actions, menus, shortcuts, context actions, or toolbar affordances
 - user-facing desktop launch-command verification requirements change, including non-blocking
   long-running GUI launch verification, launcher probe behavior, and duplicate-launch contracts
 - target-project commit rhythm changes, including when verified implementation slices should be

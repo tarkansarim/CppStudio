@@ -53,6 +53,10 @@ can judge the look and interaction style before choosing.
   explicit command queues, jobs, or frame tasks.
 - CEF is powerful but heavy. Choose it for web UI reuse or embedded browser content, not because a
   native UI decision was avoided.
+- For DCC/editor command surfaces, place destructive or structural graph/scene edits in the matching
+  editor action system first: menus, shortcuts, context actions, graph-canvas interactions, or
+  command palettes. Add toolbar buttons only when the screenshot proves they do not crowd primary
+  labels, selection readouts, transport controls, or other authoring affordances.
 
 ## Deep Profiles
 
