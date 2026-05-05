@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Tightened GUI and control-harness guidance so broad interaction rewrites require a source/build
+  checkpoint, mutation endpoints must prove committed state before returning `ok=true`, and
+  snapped/clamped command tests assert post-validation values.
 - Broadened validation-audit shell guidance so agents quote script-fragment and regex searches with
   embedded quotes, `$`, or other shell metacharacters, not only markdown backticks.
 - Tightened agentic control-harness thread-boundary guidance so UI/renderer readback, toolkit action

@@ -113,10 +113,18 @@ When this skill is active, work like a native C++ GPU systems engineer:
   feature driving, state/log readback, screenshots, and visual/UI troubleshooting before asking the
   user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
   the harness instead of repeatedly handing small verification chores to the user.
+- Treat bad product-shape decisions, skipped skill/donor routing, weak harness semantics, and
+  evidence-free success claims as blockers, not merely style issues. Stop the target slice, repair
+  the process miss, and update reusable project skills when the failure is generic.
 - Harness endpoints that touch UI, renderer, swapchain, toolkit action state, screenshot/grab APIs,
   or visual-capture state must run on the app's safe GUI/render thread or an app-owned command queue.
   Do not call `requestUpdate()`, `grab()`, widget/window APIs, or action mutations directly from an
   HTTP/server worker thread.
+- Harness mutation endpoints must define success by the committed state they claim to change. A
+  move, drag, edit, connect, delete, timeline, scene, or viewport command must read back the affected
+  state and return `ok=true` only when the invariant is satisfied, or explicitly report a deliberate
+  no-op. If the command snaps, clamps, quantizes, or validates input, tests and docs assert the
+  post-validation committed values, not raw deltas.
 - For viewport, canvas, render-target, or screenshot capture endpoints, do not assume "set state,
   request update, grab immediately" proves the visible result. The harness should expose enough
   frame/revision/sequence/fence evidence to show the requested UI or renderer state was rendered
@@ -155,6 +163,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
   script is the canonical smoke; offscreen managers may not preserve the caller shell's current
   directory. Classify "script not found" manager-context failures as invocation issues rather than
   app failures.
+- After broad GUI/editor event-handler rewrites, inspect the edited source for stale control-flow
+  fragments, duplicate helpers, mismatched braces/namespaces, and surviving obsolete paths, then
+  build before adding more harness routes or documentation. Do not stack docs on top of a malformed
+  interaction patch.
 - Stop verification once the agreed evidence threshold is met. Do not keep adding optional probes
   after build/test/map/harness/screenshot evidence already answers the user-facing question, unless a
   new failure or unresolved risk justifies the extra run.

@@ -53,6 +53,13 @@ control harness itself.
   `grab()`, `requestUpdate()`, or toolkit action APIs directly from an HTTP/server worker thread.
 - Separate mutation from observation. Every meaningful command needs a way to read back state,
   recent output/warnings, and visual evidence when the result is visible.
+- For mutation endpoints, define `ok` from the state invariant the endpoint claims to enforce.
+  A drag, move, edit, connect, delete, timeline, or scene command that is rejected or does not
+  actually change the claimed state must not return `ok=true` unless the endpoint explicitly
+  reports a deliberate no-op. Include before/after readback for user-visible mutations.
+- When the app snaps, quantizes, clamps, validates, or otherwise normalizes command input, smoke
+  tests and docs must assert the post-validation state instead of raw input arithmetic. Report both
+  requested input and committed state when that difference matters.
 - Make visual/UI awareness first-class. For viewers, tools, editors, and sandboxes, the harness
   should expose screenshots, offscreen frames, render-target dumps, UI state, or another reliable
   surrogate for what the user is seeing.
@@ -89,6 +96,8 @@ A first harness slice is only provisionally successful when these are verified:
 - the control surface is reachable
 - a trivial round-trip works
 - one real feature command mutates the app and has state readback
+- mutation success requires readback of the committed state, including snapped/clamped values when
+  applicable, not only a boolean response field
 - recent logs or warnings are queryable
 - visual state can be captured or otherwise inspected for viewport/UI-heavy apps, with settled-state
   evidence for mutable viewport/canvas/render output when practical

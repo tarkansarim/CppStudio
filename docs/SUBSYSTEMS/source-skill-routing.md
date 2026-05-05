@@ -69,3 +69,7 @@ generated-project workflow instructions.
   UI/renderer state must run on the app GUI/render thread rather than an HTTP/server worker
 - repeated visual-capture or render-scheduling failure policy changes, including hard-reset evidence
   ledgers and keep/revert decisions before additional patches
+- control-harness mutation-success semantics change, including when endpoint `ok` must prove actual
+  committed state and post-snap/post-clamp values instead of raw command input
+- GUI/editor event-handler rewrite discipline changes, including source-structure inspection before
+  stacking harness routes, docs, or screenshots on broad interaction rewrites

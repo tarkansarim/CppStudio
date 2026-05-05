@@ -47,6 +47,13 @@ the toolkit allows it. Do not claim a menu, context action, shortcut, or toolbar
 unless it was actually exercised or introspected; otherwise report it as screenshot-checked or
 metadata-only evidence.
 
+When changing broad GUI interaction code such as mouse/keyboard event handlers, node graph widgets,
+timeline widgets, viewport controls, docking shells, or command dispatch, add a source-structure
+checkpoint before layering more behavior. Inspect the edited file for stale control-flow fragments,
+duplicate helper functions, mismatched braces/namespaces, unreachable paths, and old interaction
+branches that survived the rewrite. Build that checkpoint before updating docs, screenshots, or
+additional harness routes.
+
 ## Default Selection
 
 - For Vulkan/CUDA/realtime tools, default to **Dear ImGui + ImGuizmo + ImPlot** unless the user wants
@@ -76,16 +83,18 @@ metadata-only evidence.
 7. For implemented GUI commands, add harness readback or scenario coverage that proves the real UI
    actions and enabled states when practical. Keep advertised capability metadata separate from
    proof.
-8. Present a compact option table with:
+8. For drag/move/resize/graph-coordinate interactions, verify the committed UI/model state after any
+   snapping, clamping, or validation and make the screenshot match that committed state.
+9. Present a compact option table with:
    - recommended use
    - source/docs link
    - visual/gallery/examples link
    - license/dependency caveat
-9. Only after that link table is visible, ask the user to choose among the researched options.
-10. Before adding a dependency, check the target repo's package policy and exact upstream license.
-11. If CppStudio is available, read its donor category first:
+10. Only after that link table is visible, ask the user to choose among the researched options.
+11. Before adding a dependency, check the target repo's package policy and exact upstream license.
+12. If CppStudio is available, read its donor category first:
    `cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md`.
-12. For current best-choice or version-sensitive questions, web-check official project docs/repos before
+13. For current best-choice or version-sensitive questions, web-check official project docs/repos before
    ranking options.
 
 ## Bundled Reference
