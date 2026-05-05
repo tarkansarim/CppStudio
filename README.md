@@ -34,6 +34,9 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list keeps recent
 commit-level changes readable for people scanning the repo.
 
+- `04a276f` - Tightened native C++ GPU validation guidance so agents use
+  repo-declared CMake presets, validation docs, scripts, or code-map build routes
+  instead of guessed build directories.
 - `8d096c2` - Required GUI/editor harness verification to prove real menu,
   action, shortcut, and enabled-state evidence where practical instead of
   treating metadata claims as proof.

@@ -75,6 +75,11 @@ When this skill is active, work like a native C++ GPU systems engineer:
   the root cause when it is in scope.
 - Inspect before editing. Read the build graph, presets, target ownership, shader or kernel paths,
   dispatch/render loop, and direct callers before changing native GPU infrastructure.
+- When building or validating an existing repo, use the repo-declared commands first: CMake presets,
+  project scripts, maintained validation docs, or code-map build/preset routes. Do not invent build
+  directories such as `build_linux` or `build/Release` unless the repo explicitly declares them. If a
+  guessed command fails, treat that as a process miss, reopen the repo build docs/presets, and rerun
+  the documented command before continuing.
 - Before major C++/GPU edits, name the likely failure modes: synchronization or lifetime bugs, wrong
   device/backend lane, missing validation/profiling evidence, portability breaks, and
   dependency/license mistakes.
@@ -317,6 +322,10 @@ cmake --preset dev
 cmake --build --preset dev
 ctest --preset quick --output-on-failure
 ```
+
+For an existing target repo, prefer the repo's own documented validation path and preset names over
+the scaffold defaults above. Check `CMakePresets.json`, validation docs, target scripts, and the
+maintained code-map build subsystem before choosing commands.
 
 For this skill itself, verify:
 

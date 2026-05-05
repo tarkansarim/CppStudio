@@ -55,3 +55,6 @@ generated-project workflow instructions.
   committed before agents continue into the next milestone
 - target-project commit-origin marker policy changes, including how autonomous agent commits are
   distinguished from user-requested commits
+- target-project build/validation command selection rules change, including when agents must use
+  repo-declared CMake presets, validation docs, scripts, or code-map build routes instead of guessed
+  build directories
