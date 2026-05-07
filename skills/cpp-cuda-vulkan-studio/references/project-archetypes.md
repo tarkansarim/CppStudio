@@ -148,15 +148,18 @@ Use when the project renders, trains, or inspects NeRF, Gaussian splatting, diff
 
 ## Hair, Grooming, Or Fur Tool
 
-Use when the project simulates, renders, imports, exports, or authors hair/fur strand data.
+Use when the project simulates, renders, imports, exports, or authors hair/fur strand data, including
+artist-facing grooming brush tools.
 
 - Enable Vulkan when realtime rendering is in scope; enable CUDA only when the user chooses CUDA or the
   project explicitly requires project-owned CUDA kernels.
-- Read [donor-library/hair-grooming-fur.md](donor-library/hair-grooming-fur.md), then the TressFX and
-  OpenUSD profiles when runtime hair or USD curves are involved.
+- Read [donor-library/hair-grooming-fur.md](donor-library/hair-grooming-fur.md). For brush authoring,
+  open Blender Curves Groom Brushes before runtime/rendering donors; for runtime hair, open TressFX;
+  for interchange, open OpenUSD or Alembic.
 - Keep groom assets, DCC exporters, simulation buffers, render materials, and collision fields separated.
-- Verification priority: tiny groom fixture, skinning/collision tests, Vulkan validation, offscreen
-  strand-render frames, then frame profiling.
+- Verification priority: tiny groom fixture, deterministic brush strokes, selection/mask and
+  pressure/falloff tests, skinning/collision tests, Vulkan validation, offscreen strand-render frames,
+  then frame profiling.
 
 ## DCC Scene Pipeline Tool
 

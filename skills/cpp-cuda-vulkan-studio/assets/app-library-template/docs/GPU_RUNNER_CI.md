@@ -76,6 +76,9 @@ scripts/dump_vulkan_capabilities.sh
 
 - Missing SDK/tool: fix the runner image or environment.
 - Missing driver/ICD/device: fix machine provisioning or runner labels.
+- CPU/software Vulkan selected for a realtime viewport lane: treat it as diagnostic-only unless the
+  project explicitly opts in; fix hardware ICD/device visibility or runner labels before claiming
+  hardware-backed viewport readiness.
 - Wrong GPU selected for realtime CUDA: set `CUDA_VISIBLE_DEVICES` or `GPU_ALLOWED_INDICES` in the
   runner/job environment.
 - Unsupported CUDA architecture: update `PROJECT_CUDA_ARCHITECTURES` or runner/toolkit policy.

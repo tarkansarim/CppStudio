@@ -68,6 +68,13 @@ availability. A build-only Vulkan lane can pass without proving a usable hardwar
 CUDA lanes, `REQUIRE_PROFILING=1` when validating Nsight Systems profiling, and
 `REQUIRE_CUDA_PROFILING=1` only when validating Nsight Compute/CUDA profiling.
 
+Realtime Vulkan viewport work needs a hardware-backed graphics device. CPU/software ICDs such as
+llvmpipe or Lavapipe are acceptable for diagnostic-only checks when explicitly enabled, but they
+should not satisfy default viewport-readiness gates. If a runtime preflight sees only CPU/software
+Vulkan, classify the environment first: SDK/tool availability, loader paths, ICD visibility,
+physical-device selection, queue/swapchain support, and surface/present support are separate failure
+classes.
+
 Nsight Systems report names and stats formats are version-specific. Before writing manual `nsys
 stats` commands, check `nsys stats --help-reports` and `nsys stats --help`; prefer
 `scripts/run_nsys_smoke.sh` because it discovers compatible reports for the active `PROFILE_LANE`

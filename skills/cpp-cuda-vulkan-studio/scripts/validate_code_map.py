@@ -245,6 +245,8 @@ def validate_manifest(repo: Path, manifest_path: Path, index_links: set[str] | N
                 if path_failure:
                     failures.append(path_failure)
                 elif not path_exists(repo, value):
+                    if field_name == "primary_paths" and path_has_glob(value):
+                        continue
                     failures.append(f"{context}: {field_name} entry does not exist: {value}")
 
         primary_paths = subsystem.get("primary_paths", [])

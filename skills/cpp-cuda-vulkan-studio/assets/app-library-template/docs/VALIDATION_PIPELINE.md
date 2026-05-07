@@ -83,6 +83,14 @@ Run `ctest --preset vulkan-compute` for compute dispatch coverage and
 require a usable Vulkan ICD with a Vulkan 1.3 physical device, synchronization2, dynamic rendering,
 and a graphics+compute queue.
 
+For realtime viewport readiness, do not treat CPU/software Vulkan as a green hardware result.
+llvmpipe, Lavapipe, virtual GPUs, and CPU physical devices are useful diagnostic paths, but default
+viewport-readiness tests should prefer discrete GPUs, then integrated GPUs, and should fail or report
+a blocker when only CPU/software Vulkan is visible. If a diagnostic-only CPU run is intentionally
+allowed, make that option explicit and print the selected device name/type, ICD/driver evidence,
+queue support, and missing hardware requirement so the result cannot be confused with a production
+realtime backend.
+
 Benchmark smoke gate:
 
 ```bash

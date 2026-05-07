@@ -301,7 +301,10 @@ write_code_map_project_fixture() {
         "${repo}/docs/DEVELOPMENT_ENVIRONMENT.md" \
         "${repo}/docs/GPU_RUNNER_CI.md" \
         "${repo}/docs/VALIDATION_PIPELINE.md" \
-        "${repo}/include/studio_validate/cuda_vector_add.hpp"
+        "${repo}/include/studio_validate/cuda_vector_add.hpp" \
+        "${repo}/src/app.cpp" \
+        "${repo}/src/flat_app_state.hpp" \
+        "${repo}/src/ui_panel_brush_slider_value_controller.h"
 }
 
 python3 "${VALIDATOR}" "${SKILL_DIR}"
@@ -459,6 +462,8 @@ python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${ROOT_DIR}" --require-enabl
 code_map_enable_tmp="$(mktemp -d "${VALIDATE_TMP}/code_map_enable.XXXXXX")"
 write_code_map_project_fixture "${code_map_enable_tmp}"
 python3 "${ROOT_DIR}/scripts/bootstrap_code_map.py" "${code_map_enable_tmp}" --enable
+test -x "${code_map_enable_tmp}/scripts/validate_code_map.py"
+test -x "${code_map_enable_tmp}/scripts/check_code_map_drift.py"
 python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_enable_tmp}" --require-enabled
 git -C "${code_map_enable_tmp}" init -q
 git -C "${code_map_enable_tmp}" config user.email "cppstudio@example.invalid"

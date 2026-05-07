@@ -116,12 +116,17 @@ targets, then implement through the active lane skill.
   [Kaolin](profiles/kaolin.md), [Open3D](profiles/open3d.md), and
   [Neural Graphics Study-Only References](profiles/neural-graphics-study-only.md). CUDA-heavy donors
   can guide Vulkan implementations without adding CUDA.
-- **Hair, fur, strands, grooming, guide curves**: open
-  [hair-grooming-fur.md](hair-grooming-fur.md). Start with [AMD TressFX](profiles/tressfx.md),
-  [NVIDIA RTXCR](profiles/rtxcr.md), [RTXCR Material Library](profiles/rtxcr-material-library.md),
-  [RTXCR Geometry Library](profiles/rtxcr-geometry-library.md),
-  [OpenUSD](profiles/openusd.md), [Alembic](profiles/alembic.md),
-  [Blender Study-Only](profiles/blender-study-only.md), or
+- **Hair, fur, strands, grooming, grooming brushes, guide curves**: open
+  [hair-grooming-fur.md](hair-grooming-fur.md). If the prompt includes artist-facing groom brush
+  verbs, comb/clump/part/cut/trim/length/grow-shrink/pinch/puff/smooth/slide/density/add-delete,
+  stylus pressure, soft selection, masks, screen-space strokes, or surface-bound strokes, open
+  [Blender Curves Groom Brushes Study-Only](profiles/blender-curves-groom-brushes-study-only.md)
+  before runtime/rendering donors. For permissive runtime simulation/rendering structure, use
+  [AMD TressFX](profiles/tressfx.md). For ray-traced hair, use [NVIDIA RTXCR](profiles/rtxcr.md),
+  [RTXCR Material Library](profiles/rtxcr-material-library.md), or
+  [RTXCR Geometry Library](profiles/rtxcr-geometry-library.md). For interchange, use
+  [OpenUSD](profiles/openusd.md) or [Alembic](profiles/alembic.md). For broader DCC workflow, use
+  [Blender Study-Only](profiles/blender-study-only.md) or
   [NVIDIA HairWorks Study-Only](profiles/hairworks-study-only.md). For full groom runtime,
   interpolation, voxelization, visibility, or deep-shadow architecture, use
   [Unreal HairStrands Study-Only](profiles/unreal-hairstrands-study-only.md). For hair material,

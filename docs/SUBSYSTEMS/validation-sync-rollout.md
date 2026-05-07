@@ -77,6 +77,12 @@ skills, and watch-mode publishing behavior.
   lane-appropriate explicit Vulkan/CUDA report sets from the installed `nsys` surface.
 - Code-map validation checks that each subsystem router doc's `## Primary Paths` section matches the
   machine-readable manifest `primary_paths`, so future routing changes stay discoverable to agents.
+- Code-map validation permits unmatched `primary_paths` globs while still validating that any matched
+  paths remain inside the repo. This keeps optional ownership patterns valid without placeholder
+  files.
+- Existing-project code-map enablement can add missing repo-local validation/drift wrappers under
+  `scripts/` so agents do not need to remember the installed skill path after a map is enabled.
+  Existing target-owned scripts are preserved.
 - The bundled code-map bootstrap audit text tells agents to present actual findings and cleanup cost
   before asking restructure/preserve/decline questions, so existing-project opt-in cannot become a
   pre-audit choice prompt.

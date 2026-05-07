@@ -51,8 +51,18 @@ validation.
   It fails when changed source/header/shader/script/docs paths are not covered by a manifest route,
   forcing new routable files to be added to `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` and the matching
   `docs/SUBSYSTEMS/*.md` route before the verified slice is committed.
+- Existing-project code-map enablement installs missing repo-local `scripts/validate_code_map.py`
+  and `scripts/check_code_map_drift.py` wrappers that forward to the installed CppStudio skill. It
+  does not overwrite target-owned scripts with the same names; older maps without wrappers should
+  use the installed skill script path and record the wrapper gap.
+- Generated app-core routes include flat `src/*.cpp`, `src/*.h`, and `src/*.hpp` ownership in
+  addition to `src/app`, `src/core`, and `include` so app-owned panel/controller/helper files at the
+  source root are discoverable without one-file manifest entries.
 - Code-map validation accepts repo-relative files and globs only; absolute paths, `..` segments,
   escaping links, and glob matches that resolve outside the repo are rejected.
+- Code-map validation permits unmatched `primary_paths` globs so a route can declare ownership of
+  optional future files such as flat UI panel headers without forcing placeholder files into a fresh
+  scaffold.
 - Code-map validation also treats manifest root `state` and `router_doc` as strict routing API fields:
   they must point to `.cppstudio/code-map-state.json` and `docs/CODEBASE_ARCHITECTURE_INDEX.md`.
 - The generated GPU optimization loop is command-driven rather than Triton/PyTorch-specific. Hardware
@@ -76,6 +86,10 @@ validation.
   regressions.
 - Generated app guidance requires agents to verify the exact user-facing launch command when they
   provide or change it; offscreen smoke alone is not enough launch evidence.
+- Generated Vulkan validation docs distinguish loader/SDK availability from hardware-backed
+  realtime viewport readiness. CPU/software Vulkan implementations such as llvmpipe or Lavapipe are
+  diagnostic-only by default; realtime viewport preflights should prefer discrete then integrated
+  GPUs and report a blocker when only CPU/software devices are visible.
 - Long-running desktop launch verification should keep the app alive only for a bounded probe window:
   capture launcher logs, poll the control harness, confirm process/window evidence, test duplicate
   launch behavior for fixed control ports, and cleanly stop through the harness instead of blocking a

@@ -109,7 +109,10 @@ def git_available(repo: Path) -> bool:
 
 
 def normalize_path(raw: str) -> str:
-    return raw.strip().replace("\\", "/").lstrip("./")
+    path = raw.strip().replace("\\", "/")
+    while path.startswith("./"):
+        path = path[2:]
+    return path
 
 
 def collect_git_paths(repo: Path, mode: str, include_untracked: bool) -> list[str]:

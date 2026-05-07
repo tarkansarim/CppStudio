@@ -59,8 +59,8 @@ engineering discipline terms:
   biomechanical solvers, and realtime deformation references.
 - [neural-3d.md](neural-3d.md): NeRFs, Gaussian splatting, differentiable rendering, and neural 3D
   workflows.
-- [hair-grooming-fur.md](hair-grooming-fur.md): realtime hair/fur, strand data, grooming, groom
-  interchange, and hair materials.
+- [hair-grooming-fur.md](hair-grooming-fur.md): realtime hair/fur, strand data, grooming brush
+  authoring, groom interchange, and hair materials.
 - [dcc-scene-pipeline.md](dcc-scene-pipeline.md): USD, Alembic, MaterialX, DCC interchange,
   editorial pipelines, and virtual production.
 - [volumes-voxels.md](volumes-voxels.md): sparse volumes, VDB/NanoVDB, voxel grids, GPU volume

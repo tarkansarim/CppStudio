@@ -48,6 +48,43 @@ generated-project workflow instructions.
   agent metadata must be named separately in status reports when dirty or changed; they must not be
   hidden under generic "unrelated dirty files" wording.
 
+## Current Donor-First Research Posture
+
+- Donor-first means local donor-library routes are opened before code or product-shape decisions.
+  If no suitable donor exists, or the local donor route is stale or too generic for a new subsystem,
+  agents must run web/upstream research against current primary sources before designing the
+  implementation. "Upstream research" means public current-source research such as official repos,
+  docs, samples, standards docs, vendor docs, papers, release notes, and peer-tool references; it is
+  not permission to fill gaps from model memory.
+
+## Current Native UI Product-Fit Posture
+
+- Native tool UI labels must expose critical semantic scope in visible text, not only in tooltips,
+  docs, or harness readback. Preview, baked, destructive, local/published, approximate/final, and
+  diagnostic/product distinctions need visible wording that screenshots and harness assertions can
+  prove.
+
+## Current Vulkan Runtime Readiness Posture
+
+- Realtime Vulkan viewport readiness is hardware-backed by default. CPU/software Vulkan paths such as
+  llvmpipe or Lavapipe are diagnostic-only unless explicitly opted into by the target project.
+  Agents must not convert a CPU-selected Vulkan preflight into a green realtime viewport claim; they
+  should classify SDK/tooling, loader, ICD visibility, physical-device selection, queue/swapchain,
+  and surface/present support separately before changing renderer code.
+
+## Current Target-Slice Execution Posture
+
+- After agents name a bounded target-project slice with code-map route, donor/reference grounding,
+  expected files, and verification gates, they must move to the smallest implementation/probe action
+  or report a concrete blocker. Broad re-orientation after that point is a process miss.
+- If a target-project slice is interrupted, stopped, or rejected after partial unverified edits,
+  agents must either revert only the incomplete slice edits or explicitly report the dirty files and
+  ask whether to preserve them. They must not leave ambiguous partial state while claiming the slice
+  is ready.
+- In enabled-code-map repos, agents must run both the drift checker and the validator before staging
+  or committing a verified source slice. `validate_code_map.py` proves schema/state only; it is not a
+  substitute for `check_code_map_drift.py`.
+
 ## Update When
 
 - skill trigger description, workflow, acceptance, or bundled script list changes
@@ -79,16 +116,22 @@ generated-project workflow instructions.
   from proof
 - user-facing desktop launch-command verification requirements change, including non-blocking
   long-running GUI launch verification, launcher probe behavior, and duplicate-launch contracts
+- Vulkan runtime/readiness policy changes, including how realtime viewport preflights classify
+  CPU/software Vulkan, hardware ICD/device visibility, queue/swapchain support, and surface/present
+  support
 - target-project commit rhythm changes, including when verified implementation slices should be
   committed before agents continue into the next milestone
 - target-project commit-origin marker policy changes, including how autonomous agent commits are
   distinguished from user-requested commits
+- target-project slice-execution discipline changes, including when agents must stop broad
+  orientation after route selection or clean interrupted partial edits
 - target-project build/validation command selection rules change, including when agents must use
   repo-declared CMake presets, validation docs, scripts, or code-map build routes instead of guessed
   build directories
 - target-project shell-search discipline changes, including how agents must quote markdown/code-span,
   script-fragment, or regex patterns so documentation syntax and shell metacharacters are not
-  executed or reinterpreted during validation audits
+  executed or reinterpreted during validation audits, and how agents must recover when an audit
+  command proves the shell interpreted documentation text
 - control-harness screenshot or render-target capture rules change, including when agents must prove
   a capture reflects the requested rendered state instead of a stale frame
 - visual-capture debugging rules change, including when agents should audit capture API timing,

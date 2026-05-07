@@ -19,6 +19,11 @@ INDEX_PATH = Path("docs/CODEBASE_ARCHITECTURE_INDEX.md")
 MANIFEST_PATH = Path("docs/CODEBASE_SUBSYSTEM_MANIFEST.json")
 AUDIT_PATH = Path("docs/CODEMAP_BOOTSTRAP_AUDIT.md")
 
+WRAPPER_SCRIPTS = {
+    Path("scripts/validate_code_map.py"): "validate_code_map.py",
+    Path("scripts/check_code_map_drift.py"): "check_code_map_drift.py",
+}
+
 IGNORED_DIRS = {
     ".git",
     ".hg",
@@ -99,7 +104,7 @@ BASE_SUBSYSTEMS: list[dict[str, Any]] = [
         "name": "App Core",
         "router_doc": "docs/SUBSYSTEMS/app-core.md",
         "canonical_docs": ["README.md"],
-        "primary_paths": ["src/app", "src/core", "include"],
+        "primary_paths": ["src/app", "src/core", "src/*.cpp", "src/*.h", "src/*.hpp", "include"],
         "summary": "Application entrypoint, reusable library code, public headers, and project-owned runtime behavior.",
     },
     {
@@ -533,7 +538,54 @@ def subsystem_text(item: dict[str, Any]) -> str:
 - ownership or data flow in this subsystem changes
 - build, test, validation, or backend requirements change
 - a new neighboring subsystem becomes part of the workflow
+- flat app-owned controller/panel/helper files are added under `src/`; prefer an owning glob route
+  such as `src/ui_panel_*.h` or an existing flat-source route over one-file map entries
 """
+
+
+def wrapper_script_text(target_script: str) -> str:
+    return f"""#!/usr/bin/env python3
+\"\"\"Repo-local wrapper for CppStudio's {target_script}.\"\"\"
+
+from __future__ import annotations
+
+import os
+import runpy
+import sys
+from pathlib import Path
+
+
+SCRIPT_NAME = {target_script!r}
+
+
+def candidate_skill_roots() -> list[Path]:
+    roots: list[Path] = []
+    explicit = os.environ.get("CPPSTUDIO_SKILL_ROOT")
+    if explicit:
+        roots.append(Path(explicit).expanduser())
+    codex_home = os.environ.get("CODEX_HOME")
+    if codex_home:
+        roots.append(Path(codex_home).expanduser() / "skills" / "cpp-cuda-vulkan-studio")
+    roots.append(Path.home() / ".codex" / "skills" / "cpp-cuda-vulkan-studio")
+    return roots
+
+
+for root in candidate_skill_roots():
+    script = root / "scripts" / SCRIPT_NAME
+    if script.is_file():
+        runpy.run_path(str(script), run_name="__main__")
+        raise SystemExit(0)
+
+searched = "\\n".join(f"  - {{root / 'scripts' / SCRIPT_NAME}}" for root in candidate_skill_roots())
+raise SystemExit(
+    f"Could not find CppStudio {{SCRIPT_NAME}}. Set CPPSTUDIO_SKILL_ROOT or install "
+    f"cpp-cuda-vulkan-studio into CODEX_HOME/skills. Searched:\\n{{searched}}"
+)
+"""
+
+
+def wrapper_writes(repo: Path) -> list[tuple[Path, str]]:
+    return [(repo / path, wrapper_script_text(script_name)) for path, script_name in WRAPPER_SCRIPTS.items()]
 
 
 def generated_map_writes(repo: Path, project_title: str) -> list[tuple[Path, str]]:
@@ -565,6 +617,12 @@ def enable_map(repo: Path, force: bool) -> None:
 
     state_wrote = atomic_write_text(repo / STATE_PATH, json.dumps(state_payload("enabled"), indent=2) + "\n", True)
     print(("wrote" if state_wrote else "exists") + f": {repo / STATE_PATH}")
+
+    for path, text in wrapper_writes(repo):
+        wrote = atomic_write_text(path, text, False)
+        if wrote:
+            os.chmod(path, 0o755)
+        print(("wrote" if wrote else "exists") + f": {path}")
 
 
 def decline_map(repo: Path, force: bool) -> None:

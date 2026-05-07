@@ -45,6 +45,13 @@ other primary authoring controls. Screenshot inspection must judge the result ag
 peer-tool product conventions and reject crowded, clipped, debug-looking, or convention-breaking
 controls even when functional tests pass.
 
+Critical state labels must be semantically clear in the visible UI text itself. Do not rely on a
+tooltip, hidden readback, docs, or internal endpoint metadata as the only distinction between states
+that affect user trust, such as preview versus baked output, local versus published state, destructive
+versus non-destructive actions, approximate versus final results, or diagnostic versus product
+surfaces. If the visible wording could mislead an artist or developer about what has actually
+happened, change the visible label and update harness assertions to check that wording.
+
 For GUI/editor action work, verification must prove the real command surface, not only an advertised
 metadata string. Use verify-before-wiring for menus, shortcuts, context actions, timelines, and
 viewports: discover or introspect the actual action/menu/shortcut/context objects, timeline or

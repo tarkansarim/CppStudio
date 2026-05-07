@@ -35,6 +35,9 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 selected recent commit-level highlights for people scanning the repo, with older highlights
 collapsed below.
 
+- `current` - Hardened the production feedback loop with hardware-backed Vulkan readiness checks,
+  donor-first web/upstream research for missing routes, stricter enabled-code-map drift/schema
+  closeout, generated repo-local map wrappers, and a GPL-safe Blender curves groom-brush study donor.
 - `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map
   projects catch changed source paths that are not routed by the manifest.
 - `c68ae77` - Hardened code-map and trigger validation, made manual managed-skill install
@@ -53,13 +56,13 @@ collapsed below.
   agent monitoring without importing Sortie runtime mechanics.
 - `e0a29f5` - Broadened shell-search quoting guidance so validation audits quote script fragments,
   regex text, `$`, embedded quotes, and other shell metacharacters safely.
-- `3f78dc7` - Tightened GUI and control-harness verification so broad interaction rewrites build
-  before more layers, mutation endpoints prove committed state, and snapped/clamped values are
-  asserted after validation.
 
 <details>
 <summary>Show older commit highlights</summary>
 
+- `3f78dc7` - Tightened GUI and control-harness verification so broad interaction rewrites build
+  before more layers, mutation endpoints prove committed state, and snapped/clamped values are
+  asserted after validation.
 - `0b82acb` - Required hard-reset evidence ledgers and keep/revert decisions after repeated
   visual-capture or render-scheduling failures.
 - `3aa60ff` - Tightened harness thread-boundary guidance so UI/renderer readback, toolkit action

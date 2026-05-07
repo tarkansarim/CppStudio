@@ -4,6 +4,23 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Clarified Vulkan runtime readiness so realtime viewport preflights reject CPU/software Vulkan such
+  as llvmpipe/Lavapipe by default, keep those paths diagnostic-only unless explicitly opted in, and
+  classify loader/ICD/device/queue/surface failures before renderer edits.
+- Tightened target-slice execution discipline so agents stop broad orientation after a bounded
+  code-map/donor-routed slice is named, and clean or explicitly report interrupted partial edits
+  before continuing.
+- Made enabled-code-map closeout more explicit: agents must run both drift and schema validation
+  before staging or committing, and must not treat schema validation as a substitute for drift checks.
+- Clarified donor-first routing so missing, stale, or too-generic donor coverage requires explicit
+  web/upstream primary-source research before designing new components, subsystems, or broad
+  product-shape changes.
+- Hardened existing-project code-map enablement so it installs missing repo-local validation/drift
+  wrappers, routes flat app-owned source files such as UI panel/controller headers through app-core
+  globs, permits optional unmatched primary-path globs, and preserves leading-dot paths during drift
+  checks.
+- Added a GPL-safe Blender curves groom-brush study-only donor profile and routed grooming-brush
+  prompts to it before runtime/rendering hair donors.
 - Added a code-map drift checker and pre-commit maintenance gate so enabled-map projects surface
   changed source/header/shader/script/docs paths that are not covered by subsystem routes before an
   agent commits a verified slice.

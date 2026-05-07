@@ -121,6 +121,7 @@ inventory. Category files are the normal second layer; these profiles are the th
 - [NVIDIA RTXCR](rtxcr.md)
 - [RTXCR Material Library](rtxcr-material-library.md)
 - [RTXCR Geometry Library](rtxcr-geometry-library.md)
+- [Blender Curves Groom Brushes Study-Only](blender-curves-groom-brushes-study-only.md)
 - [NVIDIA HairWorks Study-Only](hairworks-study-only.md)
 - [Unreal HairStrands Study-Only](unreal-hairstrands-study-only.md)
 - [Unity HDRP Hair Study-Only](unity-hdrp-hair-study-only.md)

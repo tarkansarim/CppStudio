@@ -98,6 +98,7 @@ targets; implement native code through the active C++/CUDA/Vulkan lane.
 | [AMD TressFX](https://github.com/GPUOpen-Effects/TressFX) | Hair/fur runtime | safe-donor | MIT GPU hair/fur simulation and rendering with Vulkan/DX12 sample paths. |
 | [O3DE Atom TressFX Gem](https://docs.o3de.org/docs/user-guide/gems/reference/rendering/amd/atom-tressfx/) | Engine integration | dependency-candidate | O3DE license defaults plus component notices; useful for TressFX-style engine integration. |
 | [NVIDIA HairWorks docs](https://docs.nvidia.com/gameworks/content/artisttools/hairworks/) | Hair authoring/runtime concepts | study-only | GameWorks terms; use for concepts only unless project has an explicit license path. |
+| [Blender Curves Groom Brushes](https://github.com/blender/blender/tree/main/source/blender/editors/sculpt_paint/curves) | Groom brush source study | study-only | GPL-family source; extract behavior contracts for curve sculpt brushes, pressure/falloff, masks, surface binding, and validation only. |
 | [Blender Hair Curves](https://docs.blender.org/manual/en/latest/modeling/geometry_nodes/hair/index.html) | Groom authoring UX | study-only | Blender code is GPL; study guide/follow, clump, trim, attach, and grooming workflows. |
 
 ## DCC Scene Pipelines

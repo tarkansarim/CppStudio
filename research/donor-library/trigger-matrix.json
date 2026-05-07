@@ -1100,6 +1100,27 @@
       ]
     },
     {
+      "name": "grooming-brush-authoring-donors",
+      "tags": [
+        "positive",
+        "vfx",
+        "games",
+        "study-only"
+      ],
+      "prompt_shape": "Native C++/Vulkan or C++/CUDA groom tool needs artist-facing grooming brushes such as comb, clump, part, cut, trim, length, grow/shrink, pinch, puff, smooth, slide, density, add/delete, masks, soft selection, or Wacom/stylus pressure.",
+      "expected_behavior": "Route to hair-grooming-fur and the Blender Curves Groom Brushes study-only profile before runtime hair/rendering donors; keep Blender GPL source as behavior/reference only, then pair with TressFX/OpenUSD/Alembic/Unreal HairStrands only when runtime, interchange, or full groom architecture is in scope.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/hair-grooming-fur.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/blender-curves-groom-brushes-study-only.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tressfx.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openusd.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/alembic.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
       "name": "vfx-creature-fx-production-overlay",
       "tags": [
         "positive",

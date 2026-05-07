@@ -1,7 +1,29 @@
 # Hair, Grooming, And Fur Donors
 
 Use these donors for strand data, guide/follow interpolation, hair/fur simulation, feather-like
-strand/card systems, curve grooming, hair rendering, and DCC groom interchange.
+strand/card systems, curve grooming, grooming brush authoring, hair rendering, and DCC groom
+interchange.
+
+## Brush-First Routing
+
+When the request mentions artist-facing grooming brushes, brush verbs, stylus pressure, selection
+masks, screen-space grooming, surface-bound strokes, or live groom sculpting, start with
+[Blender Curves Groom Brushes](profiles/blender-curves-groom-brushes-study-only.md) before runtime,
+rendering, or interchange donors. Blender remains study-only: extract behavior contracts and tests,
+then implement independently in the selected C++/Vulkan/CUDA lane.
+
+Brush trigger terms include comb, clump, part, cut, trim, length, grow/shrink, pinch, puff, smooth,
+slide, density, add/delete, soft selection, mask/freeze, guide brush, strand brush, and Wacom/stylus
+pressure.
+
+## Groom Authoring And Interchange
+
+| Donor | Tier | License Signal | Best Use |
+| --- | --- | --- | --- |
+| [Blender Curves Groom Brushes](profiles/blender-curves-groom-brushes-study-only.md) | study-only | Blender source is GPL-family; do not copy code/assets | Source-backed brush behavior contracts for add/delete/density/comb/snake hook/grow-shrink/pinch/puff/smooth/slide/selection paint, pressure, falloff, masks, surface binding, and undoable strokes. |
+| [Blender Hair Curves](https://docs.blender.org/manual/en/latest/modeling/geometry_nodes/hair/index.html) | study-only | Blender code is GPL; docs/assets vary | Grooming UX, guide curves, hair nodes, attach/deform/interpolate/trim/clump workflows. |
+| [OpenUSD BasisCurves](https://openusd.org/dev/api/class_usd_geom_basis_curves.html) | dependency-candidate | Modified Apache-2.0 style; inspect exact repo license | Curve/strand interchange, widths, basis/wrap, scene composition around groom data. |
+| [Alembic](https://github.com/alembic/alembic) | dependency-candidate | BSD-style/license file; inspect plugins and third-party deps | Animated curve and geometry interchange between DCC tools. |
 
 ## Runtime Hair And Fur
 
@@ -15,14 +37,6 @@ strand/card systems, curve grooming, hair rendering, and DCC groom interchange.
 | [NVIDIA HairWorks docs](https://docs.nvidia.com/gameworks/content/artisttools/hairworks/) | study-only | GameWorks SDK/source terms; verify before reuse | Hair asset concepts, artist controls, frame-rate-independent rendering, DX11/DX12 sample behavior. |
 | [Unreal HairStrands](profiles/unreal-hairstrands-study-only.md) | study-only | Unreal Engine source/EULA terms | Groom runtime architecture, interpolation, binding, voxelization, deep shadows, transmittance, visibility, and cards concepts. |
 | [Unity HDRP Hair](profiles/unity-hdrp-hair-study-only.md) | study-only | Unity package and sample terms; inspect exact package | HDRP hair shading, Shader Graph controls, multiple-scattering LUTs, card/strand material options, and line-rendering references. |
-
-## Groom Authoring And Interchange
-
-| Donor | Tier | License Signal | Best Use |
-| --- | --- | --- | --- |
-| [Blender Hair Curves](https://docs.blender.org/manual/en/latest/modeling/geometry_nodes/hair/index.html) | study-only | Blender code is GPL; docs/assets vary | Grooming UX, guide curves, hair nodes, attach/deform/interpolate/trim/clump workflows. |
-| [OpenUSD BasisCurves](https://openusd.org/dev/api/class_usd_geom_basis_curves.html) | dependency-candidate | Modified Apache-2.0 style; inspect exact repo license | Curve/strand interchange, widths, basis/wrap, scene composition around groom data. |
-| [Alembic](https://github.com/alembic/alembic) | dependency-candidate | BSD-style/license file; inspect plugins and third-party deps | Animated curve and geometry interchange between DCC tools. |
 
 ## Selection Notes
 
@@ -39,8 +53,12 @@ strand/card systems, curve grooming, hair rendering, and DCC groom interchange.
 - Treat TressFX, HairWorks, Blender hair, USD curves, and Alembic as domain references even when their
   runtime/API lane differs from the target. Port simulation, strand layout, and render behavior through
   the selected Vulkan or CUDA lane instead of changing lanes because of the donor backend.
-- For grooming UI and artist workflow ideas, study Blender hair curves but do not copy GPL code into
-  permissive templates.
+- For grooming brush tools, open Blender Curves Groom Brushes first. Use it to extract behavior
+  contracts for comb, density, puff, pinch, smooth, grow/shrink, slide, add/delete, selection paint,
+  pressure, falloff, masks, surface binding, undo, and dirty-buffer propagation. Do not copy GPL code
+  into permissive templates.
+- For broader grooming UI and artist workflow ideas, study Blender hair curves but do not copy GPL
+  code into permissive templates.
 - Use Unreal HairStrands as the strongest study-only runtime groom reference for interpolation, binding,
   voxelization, visibility, deep shadows, and transmittance. Use Unity HDRP Hair mostly for material,
   Shader Graph, multiple-scattering, and line-rendering comparisons.
@@ -59,6 +77,7 @@ strand/card systems, curve grooming, hair rendering, and DCC groom interchange.
 - [nvpro Vulkan Ray Tracing Tutorial KHR](profiles/nvpro-vk-raytracing-tutorial-khr.md): read alongside RTXCR when the target implementation needs direct Vulkan RT fundamentals before hair-specific shading.
 - [OpenUSD](profiles/openusd.md): read before choosing USD curves or scene composition for grooms.
 - [Alembic](profiles/alembic.md): read before using baked animated curve or groom caches.
+- [Blender Curves Groom Brushes Study-Only](profiles/blender-curves-groom-brushes-study-only.md): read before designing or implementing artist-facing grooming brushes, stroke behavior, pressure/falloff, masks, surface-bound editing, or brush validation.
 - [Blender Study-Only](profiles/blender-study-only.md): read for grooming UX, hair curves, geometry-node, and artist workflow concepts without code reuse.
 - [NVIDIA HairWorks Study-Only](profiles/hairworks-study-only.md): read for GameWorks hair authoring/runtime concepts without code reuse.
 - [Unreal HairStrands Study-Only](profiles/unreal-hairstrands-study-only.md): read for full groom runtime, interpolation, voxelization, deep shadow, and visibility architecture concepts without code reuse.
