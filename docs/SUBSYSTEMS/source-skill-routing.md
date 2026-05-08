@@ -84,6 +84,11 @@ generated-project workflow instructions.
 - In enabled-code-map repos, agents must run both the drift checker and the validator before staging
   or committing a verified source slice. `validate_code_map.py` proves schema/state only; it is not a
   substitute for `check_code_map_drift.py`.
+- Agentic control harness roadmap/readiness fields are part of the verified slice contract. If a
+  slice proves one prerequisite named by `next_required_slice`, `blockers`, `prerequisites`,
+  readiness booleans, feature eligibility, or backend-selection gates, agents must update the
+  machine-readable readback before commit or expose completed-versus-remaining prerequisite fields
+  when a broad gate name intentionally remains.
 
 ## Update When
 

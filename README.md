@@ -35,7 +35,8 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 selected recent commit-level highlights for people scanning the repo, with older highlights
 collapsed below.
 
-- `current` - Hardened the production feedback loop with hardware-backed Vulkan readiness checks,
+- `current` - Hardened the production feedback loop with control-harness roadmap/readiness readback
+  that advances after verified prerequisite slices, hardware-backed Vulkan readiness checks,
   donor-first web/upstream research for missing routes, stricter enabled-code-map drift/schema
   closeout, generated repo-local map wrappers, and a GPL-safe Blender curves groom-brush study donor.
 - `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map

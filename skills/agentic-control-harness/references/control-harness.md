@@ -246,6 +246,10 @@ profiling, update the harness in the same work stream:
 - add a curl example
 - add a smoke or scenario test when practical
 - update the control registry and code map if the target project has one enabled
+- update machine-readable roadmap/readiness fields when the slice satisfies a prerequisite. If
+  `next_required_slice`, `blockers`, `prerequisites`, readiness booleans, feature eligibility, or
+  backend-selection gates are exposed, remove or mark completed items and keep remaining work
+  separate from proven work.
 
 If the feature cannot be controlled yet, document the reason and the smallest follow-up needed.
 

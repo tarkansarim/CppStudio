@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Required agentic control-harness roadmap/readiness readback to advance when verified slices
+  satisfy prerequisites, so machine-readable `next_required_slice`, blocker, and eligibility fields
+  do not keep sending future agents back to already-proven work.
 - Clarified Vulkan runtime readiness so realtime viewport preflights reject CPU/software Vulkan such
   as llvmpipe/Lavapipe by default, keep those paths diagnostic-only unless explicitly opted in, and
   classify loader/ICD/device/queue/surface failures before renderer edits.

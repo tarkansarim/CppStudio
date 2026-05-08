@@ -153,6 +153,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
   feature driving, state/log readback, screenshots, and visual/UI troubleshooting before asking the
   user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
   the harness instead of repeatedly handing small verification chores to the user.
+- Keep harness roadmap/readiness readback current. If a target app exposes machine-readable fields
+  such as `next_required_slice`, `blockers`, `prerequisites`, readiness booleans, or backend/feature
+  eligibility, a verified slice that satisfies one prerequisite must update that readback before
+  commit. Do not leave a completed prerequisite listed as the next missing item unless the field is
+  intentionally naming a broader gate; in that case expose completed-versus-remaining prerequisites
+  and document why the broad gate name still applies.
 - When worker, subagent, reviewer, or background validation work is gated by the current task, keep
   supervision active until it reports done, idle, or blocked. Do not give final status while delegated
   work is still running; report the active worker state and remaining blocker instead.

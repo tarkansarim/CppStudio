@@ -106,6 +106,11 @@ control harness itself.
   `docs/AGENTIC_CONTROL.json` or `TARGET_CONTROL.json` so future agents can discover controls
   without reverse-engineering the app. Include discovered commands, transports, constraints,
   observation surfaces, state invariants, and known unsupported or intentionally hidden controls.
+- Keep machine-readable roadmap and readiness fields honest. When a control endpoint or registry
+  exposes `next_required_slice`, `blockers`, `prerequisites`, readiness flags, feature eligibility,
+  or backend-selection gates, every verified slice that satisfies one item must update the readback
+  before commit. If a broad gate name remains, also expose completed and remaining prerequisites so
+  future agents do not rework an already-proven slice.
 - Every new user-visible feature should update the control surface, curl examples, scenario tests,
   and code-map docs when the project has an enabled code map.
 
