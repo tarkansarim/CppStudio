@@ -299,6 +299,7 @@ write_code_map_project_fixture() {
         "${repo}/README.md" \
         "${repo}/docs/BENCHMARKS.md" \
         "${repo}/docs/DEVELOPMENT_ENVIRONMENT.md" \
+        "${repo}/docs/GPU_OPTIMIZATION_LOOP.md" \
         "${repo}/docs/GPU_RUNNER_CI.md" \
         "${repo}/docs/VALIDATION_PIPELINE.md" \
         "${repo}/include/studio_validate/cuda_vector_add.hpp" \
@@ -468,6 +469,7 @@ python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_enable_tmp}" --re
 git -C "${code_map_enable_tmp}" init -q
 git -C "${code_map_enable_tmp}" config user.email "cppstudio@example.invalid"
 git -C "${code_map_enable_tmp}" config user.name "CppStudio Validation"
+python3 "${ROOT_DIR}/scripts/check_code_map_drift.py" "${code_map_enable_tmp}" --require-enabled
 git -C "${code_map_enable_tmp}" add .
 git -C "${code_map_enable_tmp}" commit -q -m "baseline"
 mkdir -p "${code_map_enable_tmp}/tools"

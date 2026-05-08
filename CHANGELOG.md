@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Fixed generated-project code-map bootstrap so GPU optimization docs are routed before the first
+  baseline commit, and added validation coverage for drift-checking a fresh git-initialized scaffold.
 - Required the three dedicated code-map trigger-regression cases by name and made validation render
   each case individually, preventing aggregate `code-map` checks from hiding deleted scenarios.
 - Added checked-in installed-path fresh-agent evidence for the new code-map trigger cases.

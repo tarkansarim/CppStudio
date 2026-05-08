@@ -1330,8 +1330,8 @@
       "path": "scripts/bootstrap_code_map.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 24389,
-      "sha256": "5d24c0cf8ea0e3457fa3366c8a0209688c8bba01e2f5f5e0054cc8032c698a6d"
+      "size": 24481,
+      "sha256": "c6279b8142ee5619582c45c1ae3689b11e90d813eaee09faf442783a7f1f6a41"
     },
     {
       "path": "scripts/check_code_map_drift.py",

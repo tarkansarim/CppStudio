@@ -127,7 +127,12 @@ BASE_SUBSYSTEMS: list[dict[str, Any]] = [
         "id": "validation_ci",
         "name": "Validation And CI",
         "router_doc": "docs/SUBSYSTEMS/validation-ci.md",
-        "canonical_docs": ["docs/VALIDATION_PIPELINE.md", "docs/GPU_RUNNER_CI.md", "docs/BENCHMARKS.md"],
+        "canonical_docs": [
+            "docs/VALIDATION_PIPELINE.md",
+            "docs/GPU_RUNNER_CI.md",
+            "docs/BENCHMARKS.md",
+            "docs/GPU_OPTIMIZATION_LOOP.md",
+        ],
         "primary_paths": ["tests", "benchmarks", "scripts", ".github/workflows"],
         "summary": "CTest labels, smoke tests, GPU runner expectations, profiling evidence, formatting, and static analysis.",
     },

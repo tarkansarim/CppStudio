@@ -51,6 +51,8 @@ validation.
   It fails when changed source/header/shader/script/docs paths are not covered by a manifest route,
   forcing new routable files to be added to `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` and the matching
   `docs/SUBSYSTEMS/*.md` route before the verified slice is committed.
+- Generated and bootstrapped code maps route GPU optimization docs through validation/CI canonical
+  docs so a brand-new git repo can pass the drift checker before the first baseline commit.
 - Existing-project code-map enablement installs missing repo-local `scripts/validate_code_map.py`
   and `scripts/check_code_map_drift.py` wrappers that forward to the installed CppStudio skill. It
   does not overwrite target-owned scripts with the same names; older maps without wrappers should
