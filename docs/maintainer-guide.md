@@ -254,7 +254,7 @@ python3 scripts/render_trigger_eval_prompt.py \
   --tag smoke
 ```
 
-Useful tags include `positive`, `negative`, `smoke`, `lookup`, `cuda`, `vulkan`, `assets`,
+Useful tags include `positive`, `negative`, `smoke`, `lookup`, `code-map`, `cuda`, `vulkan`, `assets`,
 `graphics`, `rendering`, `simulation`, `ai-runtime`, `neural-3d`, `webgpu`, `browser`, `xr`,
 `gui`, `hud`, `cad`, `geometry`, `engine`, and `study-only`. Use installed-path mode after rollout when the
 evaluator should inspect the user-level Codex install instead of repo-relative source paths:
@@ -372,6 +372,10 @@ By default, companion donor-link rollout skips absent optional companion skills.
 Rollout snapshots the main skill, bundled auxiliary skills, matching companion `SKILL.md` files, and
 the optional user-level `AGENTS.md` relay target before mutation, then restores those paths if any
 post-sync validation or install step fails.
+
+Before taking those snapshots, rollout refuses symlinked installed auxiliary skill targets,
+companion skill directories/files, and user `AGENTS.md` relay targets. This keeps rollback pointed at
+the intended Codex install paths instead of symlink-resolved outside locations.
 
 Rollout also verifies installed packaged skills against their package manifests before reporting
 success.

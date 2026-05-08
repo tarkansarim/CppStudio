@@ -4,6 +4,14 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened rollout rollback safety so bundled auxiliary skill targets, companion skill
+  directories/files, and the user `AGENTS.md` relay target are rejected when symlinked before
+  rollback snapshots are created.
+- Added dedicated code-map trigger-regression cases for existing-project bootstrap,
+  enabled-map maintenance closeout, and routing-smoke proof, plus static validation for the new
+  `code-map` tag.
+- Clarified README Recent Commit Highlights so the `current` entry is explicitly an aggregate
+  high-churn summary while older entries use stable commit ids.
 - Made rollout guidance unambiguous for bundled skill changes: normal installed updates now point to
   `rollout_to_codex.sh`, while `sync_to_codex.sh` is documented as a single-skill diagnostic path.
 - Expanded GUI and harness trigger-regression expectations so static validation now guards UI

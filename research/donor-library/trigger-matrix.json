@@ -216,6 +216,60 @@
       ]
     },
     {
+      "name": "code-map-existing-project-bootstrap",
+      "tags": [
+        "positive",
+        "code-map",
+        "infrastructure"
+      ],
+      "prompt_shape": "User asks to create or opt into a maintained CppStudio code map for an existing C++/CUDA/Vulkan/realtime repo.",
+      "expected_behavior": "Trigger cpp-cuda-vulkan-studio and treat code-map setup as an audit-first workflow. Run the non-destructive existing-project readiness audit before asking for restructure/preserve/decline choices, present concrete findings, evidence paths, and estimated cleanup cost, then only enable the map after the user chooses a route. Use bootstrap_code_map.py, install or preserve repo-local validate_code_map.py and check_code_map_drift.py wrappers when enabling, validate the enabled map, and run a read-only fresh-agent or subagent routing smoke when available before claiming future-agent routing is reliable.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/scripts/bootstrap_code_map.py",
+        "skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py",
+        "skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py",
+        "research/code-map-trigger-lane.md"
+      ]
+    },
+    {
+      "name": "enabled-code-map-maintenance-closeout",
+      "tags": [
+        "smoke",
+        "positive",
+        "code-map",
+        "infrastructure"
+      ],
+      "prompt_shape": "Agent is about to edit or commit source in a repo with an enabled CppStudio code map.",
+      "expected_behavior": "Trigger cpp-cuda-vulkan-studio, use the target repo architecture index and subsystem manifest before choosing source paths, then run check_code_map_drift.py and validate_code_map.py before staging or committing. Update the manifest and matching subsystem doc when changed source/header/shader/script/docs paths are uncovered or semantic ownership/data-flow changed. Report AGENTS.md, CLAUDE.md, repo-local skills, and agent metadata separately when dirty; do not hide them under generic unrelated-file wording.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py",
+        "skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py",
+        "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md",
+        "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/CODEBASE_SUBSYSTEM_MANIFEST.json",
+        "docs/CODEBASE_ARCHITECTURE_INDEX.md",
+        "docs/CODEBASE_SUBSYSTEM_MANIFEST.json"
+      ]
+    },
+    {
+      "name": "code-map-routing-smoke-proof",
+      "tags": [
+        "smoke",
+        "positive",
+        "code-map"
+      ],
+      "prompt_shape": "User asks whether the code map triggers properly or whether future agents can use a newly enabled code map reliably.",
+      "expected_behavior": "Do not treat schema validation alone as proof. Trigger cpp-cuda-vulkan-studio, validate the map, then use a read-only fresh-agent or subagent routing smoke when available. The smoke should read the target map state/index/manifest, pick the first confident subsystem route for a concrete user-style task, name exact source/test paths, and stop without editing or broad source auditing. Grade the smoke pass/partial/fail and fix skill or map ambiguity before claiming reliable routing.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py",
+        "research/code-map-trigger-lane.md",
+        "docs/CODEBASE_ARCHITECTURE_INDEX.md",
+        "docs/CODEBASE_SUBSYSTEM_MANIFEST.json"
+      ]
+    },
+    {
       "name": "artist-tool-planning-with-stylus",
       "tags": [
         "positive",

@@ -58,6 +58,15 @@ print(Path(sys.argv[1]).expanduser().resolve(strict=False))
 PY
 }
 
+reject_symlink_rollout_path() {
+    local path="$1"
+    local label="$2"
+    if [[ -L "${path}" ]]; then
+        echo "Refusing symlinked ${label}: ${path}" >&2
+        exit 1
+    fi
+}
+
 write_cppstudio_audit() {
     local action="$1"
     local success="$2"
@@ -125,6 +134,7 @@ audit_rollout_on_exit() {
 backup_rollout_path() {
     local path="$1"
     local backup_path="${ROLLBACK_TMP}/item_${#rollback_paths[@]}"
+    reject_symlink_rollout_path "${path}" "rollout rollback target"
     rollback_paths+=("${path}")
     rollback_backups+=("${backup_path}")
     if [[ -e "${path}" ]]; then
@@ -248,6 +258,23 @@ if [[ "${target_resolved}" != */skills/"${SKILL_NAME}" ]]; then
     exit 1
 fi
 
+for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
+    reject_symlink_rollout_path \
+        "${target_skills_dir}/${auxiliary_skill_name}" \
+        "auxiliary skill target"
+done
+for companion in cuda-kernel-authoring vulkan-compute-sync modern-cpp-cmake; do
+    reject_symlink_rollout_path \
+        "${CODEX_HOME_DIR}/skills/${companion}" \
+        "companion skill directory"
+    reject_symlink_rollout_path \
+        "${CODEX_HOME_DIR}/skills/${companion}/SKILL.md" \
+        "companion skill file"
+done
+if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
+    reject_symlink_rollout_path "${USER_AGENTS_RELAY_TARGET}" "user AGENTS relay target"
+fi
+
 if [[ ! -f "${VALIDATOR}" && ! -x "${VALIDATOR}" ]]; then
     echo "Missing skill validator: ${VALIDATOR}" >&2
     exit 1
@@ -321,16 +348,16 @@ fi
 ROLLBACK_TMP="$(mktemp -d "${TMPDIR:-/tmp}/cppstudio_rollout_rollback.XXXXXX")"
 backup_rollout_path "${target_resolved}"
 for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
-    backup_rollout_path "$(resolve_path "${target_skills_dir}/${auxiliary_skill_name}")"
+    backup_rollout_path "${target_skills_dir}/${auxiliary_skill_name}"
 done
 for companion in cuda-kernel-authoring vulkan-compute-sync modern-cpp-cmake; do
     companion_skill="${CODEX_HOME_DIR}/skills/${companion}/SKILL.md"
     if [[ -e "${companion_skill}" ]]; then
-        backup_rollout_path "$(resolve_path "${companion_skill}")"
+        backup_rollout_path "${companion_skill}"
     fi
 done
 if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
-    backup_rollout_path "$(resolve_path "${USER_AGENTS_RELAY_TARGET}")"
+    backup_rollout_path "${USER_AGENTS_RELAY_TARGET}"
 fi
 trap restore_rollout_backups ERR INT TERM
 

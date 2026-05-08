@@ -63,6 +63,9 @@ skills, and watch-mode publishing behavior.
   documented Linux, macOS, and WSL install path does not require GNU `realpath -m`.
 - Rollout snapshots the main skill, auxiliary bundled skills, matching companion skill files, and the optional user-level
   `AGENTS.md` relay target before mutation, then restores them if a later step fails.
+- Rollout rejects symlinked auxiliary skill targets, companion skill directories/files, and user
+  `AGENTS.md` relay targets before rollback snapshots are created, so rollback never records a
+  symlink-resolved path outside the intended install surface.
 - Manual install fallback snippets stage and validate all bundled skills before mutating the target
   Codex home, then restore the full managed-skill set if any later copy or validation step fails.
 - `rollout_to_codex.sh` installs bundled auxiliary skills such as `native-cpp-gui-hud`,

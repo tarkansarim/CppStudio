@@ -39,6 +39,9 @@ generated-project workflow instructions.
   stop after the first confident subsystem route and exact source/test paths, not expand into a full
   source audit. A smoke that skips manifest/state reads, over-reads broadly, edits files, or never
   produces a final routing report is partial or failed evidence.
+- Trigger-regression coverage includes dedicated code-map cases for existing-project bootstrap,
+  enabled-map maintenance closeout, and routing-smoke proof. Keep those cases aligned with the
+  code-map bootstrap scripts and source-skill rules whenever the protocol changes.
 - Enabled code maps have an ordinary pre-commit maintenance gate. Agents must run
   `scripts/check_code_map_drift.py --require-enabled` when available before committing a verified
   source slice, then update the manifest and matching subsystem doc for any changed routable path

@@ -711,7 +711,7 @@ python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
 grep -q "agent-lookup.md" "${trigger_lookup_md}"
 grep -q "Treat forbidden paths as no-touch paths" "${trigger_lookup_md}"
 grep -q "existence-check them" "${trigger_lookup_md}"
-for trigger_tag in dcc materials volumes vfx games infrastructure gui planning harness; do
+for trigger_tag in dcc materials volumes vfx games infrastructure gui planning harness code-map; do
     trigger_tag_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_${trigger_tag}.XXXXXX.md")"
     python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
         "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
@@ -751,6 +751,13 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning h
             grep -q "route registry/docs reconciliation" "${trigger_tag_md}"
             grep -q "UI action/affordance inventory" "${trigger_tag_md}"
             grep -q "before asking the user for manual verification" "${trigger_tag_md}"
+            ;;
+        code-map)
+            grep -q "bootstrap_code_map.py" "${trigger_tag_md}"
+            grep -q "check_code_map_drift.py" "${trigger_tag_md}"
+            grep -q "validate_code_map.py" "${trigger_tag_md}"
+            grep -q "read-only fresh-agent or subagent routing smoke" "${trigger_tag_md}"
+            grep -q "non-destructive existing-project readiness audit" "${trigger_tag_md}"
             ;;
         *)
             grep -q "${trigger_tag}" "${trigger_tag_md}"
@@ -868,6 +875,20 @@ expect_failure "rollout symlinked target dir" "Refusing symlinked rollout TARGET
     VALIDATOR="${VALIDATOR}" \
     "${ROOT_DIR}/scripts/rollout_to_codex.sh"
 rm -rf "${sync_symlink_target_tmp}"
+rollout_aux_symlink_tmp="$(mktemp -d "${VALIDATE_TMP}/rollout_aux_symlink.XXXXXX")"
+mkdir -p \
+    "${rollout_aux_symlink_tmp}/codex/skills" \
+    "${rollout_aux_symlink_tmp}/external-aux-target"
+touch "${rollout_aux_symlink_tmp}/external-aux-target/EXTERNAL_MARKER"
+ln -s "${rollout_aux_symlink_tmp}/external-aux-target" \
+    "${rollout_aux_symlink_tmp}/codex/skills/native-cpp-gui-hud"
+expect_failure "rollout symlinked auxiliary skill target" "Refusing symlinked auxiliary skill target" \
+    env SYNC_CODEX_HOME="${rollout_aux_symlink_tmp}/codex" \
+    VALIDATOR="${VALIDATOR}" \
+    "${ROOT_DIR}/scripts/rollout_to_codex.sh"
+test -L "${rollout_aux_symlink_tmp}/codex/skills/native-cpp-gui-hud"
+test -f "${rollout_aux_symlink_tmp}/external-aux-target/EXTERNAL_MARKER"
+rm -rf "${rollout_aux_symlink_tmp}"
 sync_dry_run_tmp="$(mktemp -d "${VALIDATE_TMP}/sync_dry_run_nowrite.XXXXXX")"
 sync_dry_run_home="${sync_dry_run_tmp}/missing-codex-home"
 sync_dry_run_out="$(mktemp "${VALIDATE_TMP}/sync_dry_run_nowrite.XXXXXX.out")"

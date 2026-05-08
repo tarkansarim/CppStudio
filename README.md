@@ -32,13 +32,14 @@ As a harness, CppStudio focuses on:
 ## Recent Commit Highlights
 
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list shows 10
-selected recent commit-level highlights for people scanning the repo, with older highlights
-collapsed below.
+selected recent highlights for people scanning the repo. The top `current` item summarizes the
+latest unreleased/high-churn changes, while stable older entries use commit ids.
 
-- `current` - Hardened the production feedback loop with control-harness roadmap/readiness readback
-  that advances after verified prerequisite slices, exact readiness invariants, route-inventory drift
-  checks, GUI convention tables with icon/text affordance review, trigger-regression coverage for
-  those expectations, no-touch forbidden-path trigger probes, canonical bundled-skill rollout
+- `current` - Hardened rollout and trigger-regression safety with symlink-safe bundled auxiliary
+  rollback handling, dedicated code-map bootstrap/maintenance/routing-smoke trigger cases,
+  control-harness roadmap/readiness readback that advances after verified prerequisite slices, exact
+  readiness invariants, route-inventory drift checks, GUI convention tables with icon/text
+  affordance review, no-touch forbidden-path trigger probes, canonical bundled-skill rollout
   guidance, hardware-backed Vulkan readiness, donor-first web/upstream research for missing routes,
   stricter enabled-code-map drift/schema closeout, generated repo-local map wrappers,
   donor/provenance closeout, and a GPL-safe Blender curves groom-brush study donor.

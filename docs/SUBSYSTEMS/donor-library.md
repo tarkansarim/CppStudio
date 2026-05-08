@@ -33,3 +33,5 @@ selection policy, and trigger-regression metadata.
   scorecards, harness readiness invariants, route inventory reconciliation, or action inventories
   change
 - trigger-evaluation prompt wording or forbidden-path probe rules change
+- trigger-matrix expectations for code-map bootstrap, enabled-map maintenance, or routing-smoke
+  proof change

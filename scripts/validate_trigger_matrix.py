@@ -20,6 +20,7 @@ ALLOWED_TAGS = {
     "browser",
     "bvh",
     "cad",
+    "code-map",
     "cuda",
     "dcc",
     "engine",
