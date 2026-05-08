@@ -9,13 +9,12 @@ import subprocess
 from pathlib import Path
 
 
-REQUIRED_FILES = [
+COMMON_REQUIRED_FILES = [
     "CMakeLists.txt",
     "CMakePresets.json",
     "cmake/ProjectOptions.cmake",
     "cmake/Warnings.cmake",
     "cmake/Sanitizers.cmake",
-    "cmake/CudaArchitectures.cmake",
     "cmake/ProjectVulkan.cmake",
     "cmake/Testing.cmake",
     ".clang-format",
@@ -28,8 +27,6 @@ REQUIRED_FILES = [
     "docs/GPU_OPTIMIZATION_LOOP.md",
     "docs/GPU_RUNNER_CI.md",
     "scripts/check_dev_tools.sh",
-    "scripts/select_idle_gpu.sh",
-    "scripts/run_compute_sanitizer.sh",
     "scripts/run_vulkan_validation.sh",
     "scripts/dump_vulkan_capabilities.sh",
     "scripts/run_nsys_smoke.sh",
@@ -40,24 +37,30 @@ REQUIRED_FILES = [
     "shaders/offscreen_triangle.vert",
     "shaders/offscreen_triangle.frag",
 ]
-REQUIRED_CONFIGURE_PRESETS = {
+CUDA_REQUIRED_FILES = [
+    "cmake/CudaArchitectures.cmake",
+    "scripts/select_idle_gpu.sh",
+    "scripts/run_compute_sanitizer.sh",
+    "src/cuda/vector_add.cu",
+]
+COMMON_CONFIGURE_PRESETS = {
     "dev",
     "release",
     "profile",
     "asan-ubsan",
-    "cuda-debug",
-    "cuda-vulkan-combined",
     "vulkan-debug",
     "vulkan-portability",
     "vulkan-validation",
     "benchmark",
     "ci-gpu",
 }
-REQUIRED_BUILD_PRESETS = REQUIRED_CONFIGURE_PRESETS
-REQUIRED_TEST_PRESETS = {
+CUDA_CONFIGURE_PRESETS = {
+    "cuda-debug",
+    "cuda-vulkan-combined",
+}
+COMMON_TEST_PRESETS = {
     "quick",
     "gpu",
-    "cuda",
     "vulkan-shader",
     "vulkan",
     "vulkan-compute",
@@ -66,6 +69,7 @@ REQUIRED_TEST_PRESETS = {
     "asan-ubsan-quick",
     "benchmark",
 }
+CUDA_TEST_PRESETS = {"cuda"}
 
 
 def named_presets(presets: object, key: str) -> tuple[set[str], list[str]]:
@@ -135,9 +139,24 @@ def validate_ctest_json(output: str, required_labels: set[str]) -> list[str]:
     return failures
 
 
+def detected_gpu_lane(repo: Path) -> str:
+    if (repo / "src/cuda").exists() or (repo / "cmake/CudaArchitectures.cmake").exists():
+        return "cuda-vulkan"
+    presets_path = repo / "CMakePresets.json"
+    if presets_path.exists() and "PROJECT_ENABLE_CUDA" in presets_path.read_text(encoding="utf-8"):
+        return "cuda-vulkan"
+    return "vulkan"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("repo", help="Repository root to validate")
+    parser.add_argument(
+        "--gpu-lane",
+        choices=("auto", "vulkan", "cuda", "cuda-vulkan"),
+        default="auto",
+        help="Expected generated GPU lane. Auto-detects from CUDA files/options by default.",
+    )
     parser.add_argument("--strict-source-layout", action="store_true")
     parser.add_argument("--code-map", action="store_true", help="Also require and validate an enabled CppStudio code map")
     parser.add_argument("--integration", action="store_true", help="Also configure, build, and inspect CTest registration")
@@ -154,8 +173,14 @@ def main() -> int:
 
     repo = Path(args.repo).expanduser().resolve()
     failures: list[str] = []
+    gpu_lane = detected_gpu_lane(repo) if args.gpu_lane == "auto" else args.gpu_lane
+    expects_cuda = gpu_lane in {"cuda", "cuda-vulkan"}
 
-    for relative in REQUIRED_FILES:
+    required_files = list(COMMON_REQUIRED_FILES)
+    if expects_cuda:
+        required_files.extend(CUDA_REQUIRED_FILES)
+
+    for relative in required_files:
         if not (repo / relative).exists():
             failures.append(f"missing {relative}")
 
@@ -172,9 +197,14 @@ def main() -> int:
             failures.extend(configure_errors)
             failures.extend(build_errors)
             failures.extend(test_errors)
-            missing_configure = REQUIRED_CONFIGURE_PRESETS - configure
-            missing_builds = REQUIRED_BUILD_PRESETS - builds
-            missing_tests = REQUIRED_TEST_PRESETS - tests
+            required_configure = set(COMMON_CONFIGURE_PRESETS)
+            required_tests = set(COMMON_TEST_PRESETS)
+            if expects_cuda:
+                required_configure.update(CUDA_CONFIGURE_PRESETS)
+                required_tests.update(CUDA_TEST_PRESETS)
+            missing_configure = required_configure - configure
+            missing_builds = required_configure - builds
+            missing_tests = required_tests - tests
             if missing_configure:
                 failures.append("missing configure presets: " + ", ".join(sorted(missing_configure)))
             if missing_builds:
@@ -187,7 +217,6 @@ def main() -> int:
             "include",
             "src/core",
             "src/app",
-            "src/cuda",
             "src/render",
             "tests/unit",
             "benchmarks",
@@ -195,18 +224,22 @@ def main() -> int:
         ]:
             if not (repo / relative).is_dir():
                 failures.append(f"missing directory {relative}")
+        if expects_cuda and not (repo / "src/cuda").is_dir():
+            failures.append("missing directory src/cuda")
 
-    for relative in [
+    executable_scripts = [
         "scripts/check_dev_tools.sh",
-        "scripts/select_idle_gpu.sh",
-        "scripts/run_compute_sanitizer.sh",
         "scripts/run_vulkan_validation.sh",
         "scripts/dump_vulkan_capabilities.sh",
         "scripts/run_nsys_smoke.sh",
         "scripts/run_gpu_optimization_loop.py",
         "scripts/format_check.sh",
         "scripts/tidy_check.sh",
-    ]:
+    ]
+    if expects_cuda:
+        executable_scripts.extend(["scripts/select_idle_gpu.sh", "scripts/run_compute_sanitizer.sh"])
+
+    for relative in executable_scripts:
         path = repo / relative
         if path.exists() and (path.stat().st_mode & 0o111) == 0:
             failures.append(f"script is not executable: {relative}")

@@ -48,10 +48,11 @@ Usage: $0 [--full]
 Validate the canonical CppStudio skill.
 
   default  Skill metadata, Python syntax, and shell syntax.
-  --full   Also scaffold a temporary sample project and run CMake/CTest CPU, Vulkan, CUDA,
-           mixed CUDA/Vulkan, and sanitizer quick lanes. Set CPPSTUDIO_FULL_CUDA_ARCHITECTURES
-           on CI hosts without a discoverable NVIDIA GPU; set CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS=1
-           only when CUDA can be compiled but no CUDA runtime device is available.
+  --full   Also scaffold a default Vulkan-only sample and an explicit CUDA-capable sample, then run
+           CMake/CTest CPU, Vulkan, CUDA, mixed CUDA/Vulkan, and sanitizer quick lanes. Set
+           CPPSTUDIO_FULL_CUDA_ARCHITECTURES on CI hosts without a discoverable NVIDIA GPU; set
+           CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS=1 only when CUDA can be compiled but no CUDA runtime
+           device is available.
 
 Validator resolution:
   VALIDATOR override, target Codex system validator, then repo-local quick_validate_skill.py.
@@ -1734,6 +1735,17 @@ python3 "${SKILL_DIR}/scripts/scaffold_gpu_cpp_project.py" \
     --output "${description_tmp}" \
     --description "Custom CppStudio description smoke"
 grep -q "Custom CppStudio description smoke" "${description_tmp}/README.md"
+test ! -e "${description_tmp}/src/cuda"
+test ! -f "${description_tmp}/cmake/CudaArchitectures.cmake"
+test ! -x "${description_tmp}/scripts/run_compute_sanitizer.sh"
+test ! -x "${description_tmp}/scripts/select_idle_gpu.sh"
+if grep -q "PROJECT_ENABLE_CUDA\|PROJECT_CUDA\|cuda-debug\|cuda-vulkan-combined\|cuda_lane" \
+    "${description_tmp}/CMakeLists.txt" \
+    "${description_tmp}/CMakePresets.json" \
+    "${description_tmp}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json"; then
+    echo "Default scaffold leaked CUDA lane configuration" >&2
+    exit 1
+fi
 test -f "${description_tmp}/docs/CODEBASE_ARCHITECTURE_INDEX.md"
 test -f "${description_tmp}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json"
 test -x "${description_tmp}/scripts/bootstrap_code_map.py"
@@ -2379,8 +2391,8 @@ if (( full )); then
         scripts/bootstrap_code_map.py --enable --force
         scripts/validate_code_map.py --require-enabled
     )
-    "${SKILL_DIR}/scripts/validate_studio_backbone.py" "${sample_dir}" --strict-source-layout --code-map
-    "${SKILL_DIR}/scripts/validate_studio_backbone.py" "${sample_dir}" --strict-source-layout --integration
+    "${SKILL_DIR}/scripts/validate_studio_backbone.py" "${sample_dir}" --gpu-lane vulkan --strict-source-layout --code-map
+    "${SKILL_DIR}/scripts/validate_studio_backbone.py" "${sample_dir}" --gpu-lane vulkan --strict-source-layout --integration
     (
         cd "${sample_dir}"
         scripts/format_check.sh
@@ -2394,6 +2406,22 @@ if (( full )); then
         cmake --build --preset vulkan-portability
         ctest --test-dir build/vulkan-portability --output-on-failure --no-tests=error -L vulkan
         scripts/run_vulkan_validation.sh
+        cmake --preset benchmark
+        cmake --build --preset benchmark
+        ctest --preset benchmark --output-on-failure --no-tests=error
+        cmake --preset asan-ubsan
+        cmake --build --preset asan-ubsan
+        ctest --preset asan-ubsan-quick --output-on-failure --no-tests=error
+    )
+
+    cuda_sample_dir="$(mktemp -d "${VALIDATE_TMP}/generated_cuda_project.XXXXXX")"
+    "${SKILL_DIR}/scripts/scaffold_gpu_cpp_project.py" \
+        --name StudioValidateCuda \
+        --gpu-lane cuda-vulkan \
+        --output "${cuda_sample_dir}"
+    "${SKILL_DIR}/scripts/validate_studio_backbone.py" "${cuda_sample_dir}" --gpu-lane cuda-vulkan --strict-source-layout
+    (
+        cd "${cuda_sample_dir}"
         cmake --preset cuda-debug -DPROJECT_CUDA_ARCHITECTURES="${full_cuda_architectures}"
         cmake --build --preset cuda-debug
         if [[ "${skip_cuda_runtime_tests}" == "1" ]]; then
@@ -2411,12 +2439,6 @@ if (( full )); then
         grep -Fx "cuda" "${compute_generated_capture}"
         cmake --preset cuda-vulkan-combined -DPROJECT_CUDA_ARCHITECTURES="${full_cuda_architectures}"
         cmake --build --preset cuda-vulkan-combined
-        cmake --preset benchmark
-        cmake --build --preset benchmark
-        ctest --preset benchmark --output-on-failure --no-tests=error
-        cmake --preset asan-ubsan
-        cmake --build --preset asan-ubsan
-        ctest --preset asan-ubsan-quick --output-on-failure --no-tests=error
     )
 fi
 

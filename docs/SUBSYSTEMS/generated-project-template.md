@@ -107,3 +107,9 @@ validation.
   temporary verification artifacts out of git unless the project intentionally tracks them.
 - Generated-project commit guidance uses `Commit-Origin` trailers so autonomous agent slice commits
   and explicit user-requested commits stay distinguishable in git history.
+- New-project scaffolding is Vulkan-only by default. `scaffold_gpu_cpp_project.py --gpu-lane vulkan`
+  omits CUDA files, CMake presets, validation docs, runtime helper scripts, and code-map routes.
+  CUDA-capable scaffolds require the explicit `--gpu-lane cuda` or `--gpu-lane cuda-vulkan` choice so
+  agents do not mix CUDA into a Vulkan project by accident.
+- `validate_studio_backbone.py` is lane-aware. It auto-detects CUDA-capable scaffolds from CUDA
+  files/options, accepts clean Vulkan-only scaffolds, and can be pinned with `--gpu-lane` in tests.

@@ -1358,8 +1358,8 @@
       "path": "scripts/format_check.sh",
       "role": "script",
       "disclosure_group": "script",
-      "size": 598,
-      "sha256": "b236b6f220ace957fbcc17a23a1b7023e75d5336a785bf7a13efb3a3589406c5"
+      "size": 635,
+      "sha256": "53591dbce43927bd5f47262969537d9971da534695b4b14ad541cce4d31fdb76"
     },
     {
       "path": "scripts/run_compute_sanitizer.sh",
@@ -1393,8 +1393,8 @@
       "path": "scripts/scaffold_gpu_cpp_project.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 7221,
-      "sha256": "a54968788cadb563166dfebdbd84ac5a4062d996ca8ccc0d246de36978e00eed"
+      "size": 27262,
+      "sha256": "f6203499d4d2f7c80e9fe81886db127ac3a901edadadfd207bb58ccba3eb853d"
     },
     {
       "path": "scripts/select_idle_gpu.sh",
@@ -1421,8 +1421,8 @@
       "path": "scripts/validate_studio_backbone.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 9815,
-      "sha256": "cf5d6be5573f348a9cf20641a48d7a3683298b765e071e459295a59787574823"
+      "size": 11150,
+      "sha256": "566c3af4bc6b69cefeeadb0ddc1da235f9a17ea7cc7a2a95b89791a5d466846f"
     }
   ]
 }

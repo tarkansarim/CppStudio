@@ -7,7 +7,7 @@ if ! command -v clang-format >/dev/null 2>&1; then
 fi
 
 if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    mapfile -t files < <(git ls-files '*.cpp' '*.hpp' '*.h' '*.cu' '*.cuh')
+    mapfile -t files < <(git ls-files --cached --others --exclude-standard '*.cpp' '*.hpp' '*.h' '*.cu' '*.cuh')
 else
     mapfile -t files < <(find include src tests benchmarks tools -type f \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' -o -name '*.cu' -o -name '*.cuh' \) 2>/dev/null | sort)
 fi

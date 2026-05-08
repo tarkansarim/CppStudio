@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Made generated-project scaffolding Vulkan-only by default: CUDA files, presets, docs, code-map
+  routes, and helper scripts are omitted unless the agent explicitly asks
+  `scaffold_gpu_cpp_project.py --gpu-lane cuda` or `--gpu-lane cuda-vulkan`; validation now checks
+  both the default Vulkan-only lane and the explicit CUDA-capable lane.
 - Fixed generated-project code-map bootstrap so GPU optimization docs are routed before the first
   baseline commit, and added validation coverage for drift-checking a fresh git-initialized scaffold.
 - Required the three dedicated code-map trigger-regression cases by name and made validation render
