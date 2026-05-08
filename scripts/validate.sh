@@ -709,6 +709,8 @@ python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     --repo-root "${ROOT_DIR}" \
     --tag lookup >"${trigger_lookup_md}"
 grep -q "agent-lookup.md" "${trigger_lookup_md}"
+grep -q "Treat forbidden paths as no-touch paths" "${trigger_lookup_md}"
+grep -q "existence-check them" "${trigger_lookup_md}"
 for trigger_tag in dcc materials volumes vfx games infrastructure gui planning harness; do
     trigger_tag_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_${trigger_tag}.XXXXXX.md")"
     python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
@@ -729,6 +731,9 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning h
             grep -q "native-gui-hud.md" "${trigger_tag_md}"
             grep -q "native-cpp-gui-hud" "${trigger_tag_md}"
             grep -q "visible link table" "${trigger_tag_md}"
+            grep -q "UI convention table" "${trigger_tag_md}"
+            grep -q "icon/text affordance checks" "${trigger_tag_md}"
+            grep -q "screenshot product-fit scorecard" "${trigger_tag_md}"
             ;;
         planning)
             grep -q "cppstudio-project-planner" "${trigger_tag_md}"
@@ -742,6 +747,9 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning h
         harness)
             grep -q "agentic-control-harness" "${trigger_tag_md}"
             grep -q "visual/UI or viewport evidence" "${trigger_tag_md}"
+            grep -q "exact readiness invariants" "${trigger_tag_md}"
+            grep -q "route registry/docs reconciliation" "${trigger_tag_md}"
+            grep -q "UI action/affordance inventory" "${trigger_tag_md}"
             grep -q "before asking the user for manual verification" "${trigger_tag_md}"
             ;;
         *)

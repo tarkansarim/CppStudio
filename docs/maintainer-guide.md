@@ -269,11 +269,20 @@ python3 scripts/render_trigger_eval_prompt.py \
 
 The renderer only prepares prompts and report blanks. It does not call agents or prove trigger
 behavior by itself. Add `--write-result-template trigger-results.json` when you want a structured
-machine-readable report skeleton for the selected cases.
+machine-readable report skeleton for the selected cases. Rendered packs define forbidden paths as
+no-touch paths: evaluators must not open, read, search, stat, list, or existence-check them.
 
 ## Sync And Rollout Details
 
-`sync_to_codex.sh` copies the selected skill. By default this is:
+`rollout_to_codex.sh` is the normal installed update path for this repo. It validates and installs
+the main `cpp-cuda-vulkan-studio` skill, bundled auxiliary skills, companion donor links, and the
+managed user-level relay together. Use it after any change that must affect future Codex sessions:
+
+```bash
+./scripts/rollout_to_codex.sh
+```
+
+`sync_to_codex.sh` copies one selected skill only. By default this is:
 
 ```bash
 skills/cpp-cuda-vulkan-studio/
@@ -286,9 +295,8 @@ ${SYNC_CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio
 ```
 
 Set `SKILL_NAME=native-cpp-gui-hud`, `SKILL_NAME=cppstudio-project-planner`, or
-`SKILL_NAME=agentic-control-harness` to sync a bundled auxiliary skill instead. Normal public
-installation should use `rollout_to_codex.sh`, which installs the main skill and bundled auxiliary
-skills together.
+`SKILL_NAME=agentic-control-harness` only for an intentional single-skill diagnostic sync. Do not use
+the default sync command as proof that auxiliary skill edits were installed.
 
 It intentionally ignores `CODEX_HOME` unless `SYNC_CODEX_HOME` or `TARGET_DIR` is provided, because
 nested Codex sessions may set isolated homes.
@@ -322,8 +330,11 @@ python3 scripts/validate_skill_package.py skills/agentic-control-harness
 Use a custom Codex home:
 
 ```bash
-SYNC_CODEX_HOME=/path/to/.codex ./scripts/sync_to_codex.sh
+SYNC_CODEX_HOME=/path/to/.codex ./scripts/rollout_to_codex.sh
 ```
+
+For a single-skill diagnostic sync to a custom home, use `SYNC_CODEX_HOME=/path/to/.codex
+./scripts/sync_to_codex.sh`.
 
 Use an exact target directory for diagnostics:
 

@@ -29,12 +29,12 @@ Use this skill before editing anything in the CppStudio repo.
 
 ## Standard Workflows
 
-For skill text, metadata, or script changes:
+For bundled skill text, metadata, trigger routing, validation, sync, rollout, or script changes:
 
 ```bash
 python3 scripts/validate_code_map.py . --require-enabled
 ./scripts/validate.sh
-./scripts/sync_to_codex.sh
+./scripts/rollout_to_codex.sh
 ```
 
 For template, scaffold, CMake, generated-project, or validation-behavior changes:
@@ -42,7 +42,7 @@ For template, scaffold, CMake, generated-project, or validation-behavior changes
 ```bash
 python3 scripts/validate_code_map.py . --require-enabled
 ./scripts/validate.sh --full
-./scripts/sync_to_codex.sh
+./scripts/rollout_to_codex.sh
 ```
 
 For live editing with automatic publishing:
@@ -67,11 +67,16 @@ By default this updates matching installed companion skills and skips missing op
 Use `STRICT_COMPANION_SKILLS=1 ./scripts/rollout_to_codex.sh` only for maintainer checks that should
 require every known companion skill.
 
-For previewing installed changes:
+For previewing or diagnosing a single selected skill sync:
 
 ```bash
 ./scripts/sync_to_codex.sh --dry-run
 ```
+
+`sync_to_codex.sh` syncs only one selected skill, defaulting to `cpp-cuda-vulkan-studio`. Use it for
+diagnostics or an intentionally single-skill sync. Use `rollout_to_codex.sh` for normal public
+installs and for any change that must update bundled auxiliary skills such as `native-cpp-gui-hud`,
+`cppstudio-project-planner`, or `agentic-control-harness`.
 
 ## Rules
 
@@ -106,7 +111,8 @@ For previewing installed changes:
 
 - State whether validation was default or full.
 - State whether `python3 scripts/validate_code_map.py . --require-enabled` passed.
-- State whether sync to `${HOME}/.codex/skills/cpp-cuda-vulkan-studio` was run.
+- State whether `./scripts/rollout_to_codex.sh` was run for bundled installed skills. If only
+  `sync_to_codex.sh` was run, state the selected skill and why a single-skill sync was sufficient.
 - State whether `CHANGELOG.md` was updated before any push to remote.
 - If skills, skill descriptions, donor profiles, donor categories, donor routing, or README donor
   inventory changed, run a sub-agent trigger lane first and report whether the expected skill and donor

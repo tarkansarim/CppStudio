@@ -4,6 +4,13 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Made rollout guidance unambiguous for bundled skill changes: normal installed updates now point to
+  `rollout_to_codex.sh`, while `sync_to_codex.sh` is documented as a single-skill diagnostic path.
+- Expanded GUI and harness trigger-regression expectations so static validation now guards UI
+  convention tables, icon/text affordance checks, screenshot scorecards, exact readiness invariants,
+  route inventory reconciliation, and action inventories.
+- Clarified trigger-evaluation packs so forbidden paths are no-touch paths, including reads,
+  searches, stats, listings, and existence checks.
 - Added a native GUI product-surface gate requiring UI convention tables, icon/text affordance checks,
   and screenshot scorecards against donor or peer-tool conventions before agents call artist-tool UI
   product-ready.

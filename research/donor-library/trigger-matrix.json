@@ -174,7 +174,7 @@
         "vulkan"
       ],
       "prompt_shape": "Native C++ Vulkan/CUDA/realtime tool asks what GUI, HUD, editor panel, docking, inspector, gizmo, plotting, runtime UI, or desktop UI options are available.",
-      "expected_behavior": "Trigger native-cpp-gui-hud and cpp-cuda-vulkan-studio, route to native-gui-hud, present Dear ImGui/ImGuizmo/ImPlot, Qt, wxWidgets, RmlUi, NoesisGUI, Nuklear, FLTK, libui-ng, and CEF with source/docs and visual inspection links so the user can inspect how each GUI looks. If an interactive question UI asks the user to choose, a visible link table must appear immediately before the question and compact URLs should appear in option descriptions when possible.",
+      "expected_behavior": "Trigger native-cpp-gui-hud and cpp-cuda-vulkan-studio, route to native-gui-hud, present Dear ImGui/ImGuizmo/ImPlot, Qt, wxWidgets, RmlUi, NoesisGUI, Nuklear, FLTK, libui-ng, and CEF with source/docs and visual inspection links so the user can inspect how each GUI looks. If an interactive question UI asks the user to choose, a visible link table must appear immediately before the question and compact URLs should appear in option descriptions when possible. For implementation or UI review prompts, require a UI convention table before layout/control changes, icon/text affordance checks for common tool commands, and a screenshot product-fit scorecard against donor or peer-tool conventions.",
       "expected_paths": [
         "skills/native-cpp-gui-hud/SKILL.md",
         "skills/native-cpp-gui-hud/references/gui-options.md",
@@ -225,7 +225,7 @@
         "hud"
       ],
       "prompt_shape": "User wants to plan a native C++ realtime artist or game technical-art tool with Wacom/stylus pressure, brush input, viewport HUD, gizmos, and donor-backed architecture choices.",
-      "expected_behavior": "Trigger cppstudio-project-planner, native-cpp-gui-hud, and agentic-control-harness; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; research comparable current tools and ask about the authoring model/source of truth when it affects architecture; treat tablet/stylus pressure, tilt, hover, stroke sampling, undo/redo, viewport picking, and input capture as first-class planning decisions; present GUI choices with source and visual links immediately before any GUI choice question; default the control harness for the artist tool so agents can inspect UI/viewport output and test brush/tool behavior through local controls before asking the user for routine manual checks; run an extensive state-of-the-art web ceiling check, separate current leading approaches from legacy or low-effort options, and route through games/native GUI/rendering donor categories before implementation.",
+      "expected_behavior": "Trigger cppstudio-project-planner, native-cpp-gui-hud, and agentic-control-harness; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; research comparable current tools and ask about the authoring model/source of truth when it affects architecture; treat tablet/stylus pressure, tilt, hover, stroke sampling, undo/redo, viewport picking, and input capture as first-class planning decisions; present GUI choices with source and visual links immediately before any GUI choice question; default the control harness for the artist tool so agents can inspect UI/viewport output and test brush/tool behavior through local controls before asking the user for routine manual checks; plan UI convention table, icon/text affordance checks, screenshot product-fit scorecard, and action/affordance inventory coverage for UI-heavy implementation slices; run an extensive state-of-the-art web ceiling check, separate current leading approaches from legacy or low-effort options, and route through games/native GUI/rendering donor categories before implementation.",
       "expected_paths": [
         "skills/cppstudio-project-planner/SKILL.md",
         "skills/cppstudio-project-planner/references/project-intake.md",
@@ -250,7 +250,7 @@
         "vulkan"
       ],
       "prompt_shape": "User plans or builds an interactive native C++ realtime app, viewer, renderer, simulator, artist tool, or game tool that an agent should be able to test, inspect, troubleshoot, or control.",
-      "expected_behavior": "Trigger agentic-control-harness with cppstudio-project-planner or cpp-cuda-vulkan-studio; treat the harness as default-on for interactive apps unless the user opts out or the target is headless/security-sensitive; plan local-only HTTP/curl or CLI controls with optional MCP facade over the same API; include state readback, recent logs/warnings, visual/UI or viewport evidence, launch/control registry docs, feature-control maintenance, and stress lanes so agents test routine changes before asking the user for manual verification.",
+      "expected_behavior": "Trigger agentic-control-harness with cppstudio-project-planner or cpp-cuda-vulkan-studio; treat the harness as default-on for interactive apps unless the user opts out or the target is headless/security-sensitive; plan local-only HTTP/curl or CLI controls with optional MCP facade over the same API; include state readback, recent logs/warnings, visual/UI or viewport evidence, launch/control registry docs, feature-control maintenance, exact readiness invariants, route registry/docs reconciliation, UI action/affordance inventory, and stress lanes so agents test routine changes before asking the user for manual verification.",
       "expected_paths": [
         "skills/agentic-control-harness/SKILL.md",
         "skills/agentic-control-harness/references/control-harness.md",
@@ -267,7 +267,7 @@
         "hud"
       ],
       "prompt_shape": "Game technical art tool request asks for native C++ artist panels, viewport controls, debug HUDs, inspectors, gizmos, performance graphs, or editor UI around a realtime renderer.",
-      "expected_behavior": "Open the games production overlay and route tools/technical art through native GUI/HUD plus native infrastructure and rendering donors; include visual inspection links when presenting GUI options.",
+      "expected_behavior": "Open the games production overlay and route tools/technical art through native GUI/HUD plus native infrastructure and rendering donors; include visual inspection links when presenting GUI options; for implementation or UI review prompts, require a UI convention table, icon/text affordance checks for common tool commands, screenshot product-fit scorecard, and action/affordance inventory coverage when practical.",
       "expected_paths": [
         "skills/native-cpp-gui-hud/SKILL.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/production/games.md",

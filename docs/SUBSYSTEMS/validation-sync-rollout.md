@@ -51,6 +51,9 @@ skills, and watch-mode publishing behavior.
 - Sync validates the selected source skill, staged skill, and final installed skill against that
   package manifest. Rollout validates the installed main skill and auxiliary bundled skills before
   completion.
+- Normal installed updates for bundled CppStudio skill changes use `rollout_to_codex.sh`, not a
+  default `sync_to_codex.sh` run. `sync_to_codex.sh` publishes one selected skill only and is
+  appropriate for dry runs, diagnostics, or an explicitly scoped single-skill sync.
 - Sync and rollout append best-effort JSONL audit records to
   `${SYNC_CODEX_HOME:-$HOME/.codex}/cppstudio-install-audit.jsonl` unless `CPPSTUDIO_AUDIT_LOG`
   overrides the path.

@@ -29,3 +29,7 @@ selection policy, and trigger-regression metadata.
 - donor freshness audit behavior or source URL metadata expectations change
 - donor-grounding or web-ceiling-check expectations for broad native GPU design prompts change
 - native C++ GUI/HUD/editor UI donor categories or visual inspection link rules change
+- trigger-matrix expectations for GUI convention tables, icon/text affordance checks, screenshot
+  scorecards, harness readiness invariants, route inventory reconciliation, or action inventories
+  change
+- trigger-evaluation prompt wording or forbidden-path probe rules change

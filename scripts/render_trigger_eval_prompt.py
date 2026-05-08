@@ -164,6 +164,7 @@ def render_prompt(matrix: dict[str, Any], cases: list[dict[str, Any]], repo_root
         "Instructions for the evaluator:",
         "- Use a fresh agent/subagent or reviewer context when possible.",
         "- For each case, respond with selected skills, files opened, forbidden paths used, verdict, and notes.",
+        "- Treat forbidden paths as no-touch paths: do not open, read, search, stat, list, or existence-check them.",
         "- Do not infer success from this pack alone; it is a prompt/report template for a real trigger run.",
         "",
     ]
