@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Required the three dedicated code-map trigger-regression cases by name and made validation render
+  each case individually, preventing aggregate `code-map` checks from hiding deleted scenarios.
+- Added checked-in installed-path fresh-agent evidence for the new code-map trigger cases.
 - Hardened rollout rollback safety so bundled auxiliary skill targets, companion skill
   directories/files, and the user `AGENTS.md` relay target are rejected when symlinked before
   rollback snapshots are created.

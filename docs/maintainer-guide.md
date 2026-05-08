@@ -272,6 +272,11 @@ behavior by itself. Add `--write-result-template trigger-results.json` when you 
 machine-readable report skeleton for the selected cases. Rendered packs define forbidden paths as
 no-touch paths: evaluators must not open, read, search, stat, list, or existence-check them.
 
+`validate_trigger_matrix.py` requires the dedicated code-map cases
+`code-map-existing-project-bootstrap`, `enabled-code-map-maintenance-closeout`, and
+`code-map-routing-smoke-proof` to remain present. `validate.sh` also renders those cases by name so a
+single aggregate `code-map` case cannot accidentally stand in for the whole workflow.
+
 ## Sync And Rollout Details
 
 `rollout_to_codex.sh` is the normal installed update path for this repo. It validates and installs

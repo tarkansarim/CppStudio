@@ -35,3 +35,4 @@ selection policy, and trigger-regression metadata.
 - trigger-evaluation prompt wording or forbidden-path probe rules change
 - trigger-matrix expectations for code-map bootstrap, enabled-map maintenance, or routing-smoke
   proof change
+- required trigger case-name validation changes

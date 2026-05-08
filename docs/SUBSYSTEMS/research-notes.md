@@ -37,3 +37,4 @@ the reusable skill and donor library.
 - Vulkan or CUDA lane assumptions change
 - trigger-test findings or donor-source maps change
 - code-map trigger-lane findings change
+- installed-path trigger evidence for code-map or donor-routing cases changes

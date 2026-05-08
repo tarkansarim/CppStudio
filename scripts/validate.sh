@@ -764,6 +764,24 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning h
             ;;
     esac
 done
+code_map_case_checks=(
+    "code-map-existing-project-bootstrap|non-destructive existing-project readiness audit|bootstrap_code_map.py|check_code_map_drift.py|read-only fresh-agent or subagent routing smoke"
+    "enabled-code-map-maintenance-closeout|check_code_map_drift.py|validate_code_map.py|CODEBASE_ARCHITECTURE_INDEX.md|AGENTS.md"
+    "code-map-routing-smoke-proof|schema validation alone|read-only fresh-agent or subagent routing smoke|first confident subsystem route|pass/partial/fail"
+)
+for case_check in "${code_map_case_checks[@]}"; do
+    IFS="|" read -r case_name first_pattern second_pattern third_pattern fourth_pattern <<<"${case_check}"
+    trigger_case_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_${case_name}.XXXXXX.md")"
+    python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
+        "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+        --repo-root "${ROOT_DIR}" \
+        --case "${case_name}" >"${trigger_case_md}"
+    grep -q "## 1. ${case_name}" "${trigger_case_md}"
+    grep -q "${first_pattern}" "${trigger_case_md}"
+    grep -q "${second_pattern}" "${trigger_case_md}"
+    grep -q "${third_pattern}" "${trigger_case_md}"
+    grep -q "${fourth_pattern}" "${trigger_case_md}"
+done
 trigger_negative_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_negative.XXXXXX.md")"
 python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \

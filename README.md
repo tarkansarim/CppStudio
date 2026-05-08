@@ -36,13 +36,14 @@ selected recent highlights for people scanning the repo. The top `current` item 
 latest unreleased/high-churn changes, while stable older entries use commit ids.
 
 - `current` - Hardened rollout and trigger-regression safety with symlink-safe bundled auxiliary
-  rollback handling, dedicated code-map bootstrap/maintenance/routing-smoke trigger cases,
-  control-harness roadmap/readiness readback that advances after verified prerequisite slices, exact
-  readiness invariants, route-inventory drift checks, GUI convention tables with icon/text
-  affordance review, no-touch forbidden-path trigger probes, canonical bundled-skill rollout
-  guidance, hardware-backed Vulkan readiness, donor-first web/upstream research for missing routes,
-  stricter enabled-code-map drift/schema closeout, generated repo-local map wrappers,
-  donor/provenance closeout, and a GPL-safe Blender curves groom-brush study donor.
+  rollback handling, required code-map bootstrap/maintenance/routing-smoke trigger cases with
+  installed-path fresh-agent evidence, control-harness roadmap/readiness readback that advances after
+  verified prerequisite slices, exact readiness invariants, route-inventory drift checks, GUI
+  convention tables with icon/text affordance review, no-touch forbidden-path trigger probes,
+  canonical bundled-skill rollout guidance, hardware-backed Vulkan readiness, donor-first
+  web/upstream research for missing routes, stricter enabled-code-map drift/schema closeout,
+  generated repo-local map wrappers, donor/provenance closeout, and a GPL-safe Blender curves
+  groom-brush study donor.
 - `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map
   projects catch changed source paths that are not routed by the manifest.
 - `c68ae77` - Hardened code-map and trigger validation, made manual managed-skill install

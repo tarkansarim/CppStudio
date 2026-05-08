@@ -14,6 +14,11 @@ from pathlib import Path
 
 
 POLARITY_TAGS = {"positive", "negative"}
+REQUIRED_CASES = {
+    "code-map-existing-project-bootstrap",
+    "enabled-code-map-maintenance-closeout",
+    "code-map-routing-smoke-proof",
+}
 ALLOWED_TAGS = {
     "ai-runtime",
     "assets",
@@ -163,6 +168,9 @@ def main() -> int:
 
     if not case_names:
         errors.append("trigger matrix has no cases")
+    missing_required_cases = REQUIRED_CASES - case_names
+    for name in sorted(missing_required_cases):
+        errors.append(f"missing required trigger case: {name}")
 
     if errors:
         for error in errors:

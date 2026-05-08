@@ -86,6 +86,9 @@ skills, and watch-mode publishing behavior.
 - Code-map validation permits unmatched `primary_paths` globs while still validating that any matched
   paths remain inside the repo. This keeps optional ownership patterns valid without placeholder
   files.
+- Trigger-matrix validation requires the dedicated code-map bootstrap, enabled-map maintenance, and
+  routing-smoke proof cases to remain present. `validate.sh` renders each case by name so aggregate
+  `code-map` coverage cannot hide missing scenarios.
 - Existing-project code-map enablement can add missing repo-local validation/drift wrappers under
   `scripts/` so agents do not need to remember the installed skill path after a map is enabled.
   Existing target-owned scripts are preserved.
