@@ -96,6 +96,12 @@ generated-project workflow instructions.
 - After agents name a bounded target-project slice with code-map route, donor/reference grounding,
   expected files, and verification gates, they must move to the smallest implementation/probe action
   or report a concrete blocker. Broad re-orientation after that point is a process miss.
+- Greenfield target projects that are expected to use verified-slice commits need usable Git before
+  the first source slice. A Codex worker that sees `.git` as an empty read-only mountpoint in a
+  brand-new directory is reporting sandbox/mount-namespace state, not an ordinary project fact.
+  Agents must not chmod, delete, or unmount that placeholder; they should ask for host/supervisor Git
+  initialization or relaunch the worker with a configuration that permits repository creation, then
+  retry from a clean checkpoint.
 - If a target-project slice is interrupted, stopped, or rejected after partial unverified edits,
   agents must either revert only the incomplete slice edits or explicitly report the dirty files and
   ask whether to preserve them. They must not leave ambiguous partial state while claiming the slice
@@ -155,6 +161,8 @@ generated-project workflow instructions.
   support
 - target-project commit rhythm changes, including when verified implementation slices should be
   committed before agents continue into the next milestone
+- greenfield target-project Git initialization and Codex worker read-only `.git` sandbox blocker
+  handling changes
 - target-project commit-origin marker policy changes, including how autonomous agent commits are
   distinguished from user-requested commits
 - target-project slice-execution discipline changes, including when agents must stop broad

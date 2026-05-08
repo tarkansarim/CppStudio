@@ -108,6 +108,19 @@ When this skill is active, work like a native C++ GPU systems engineer:
   so rollback is exact and cheap. If the target repo has no suitable recent commit, ask before
   proceeding with high-risk edits.
 - Treat git commits as part of the normal production workflow, not only as end-of-project cleanup.
+  For a greenfield project that is expected to use git commits, establish usable source control
+  before the first source slice whenever the session can do so safely. If a Codex worker in a
+  brand-new directory sees `.git` as an empty read-only mountpoint or `git init` fails with a
+  read-only filesystem inside `.git`, treat that as a worker sandbox/mount-namespace blocker, not as
+  ordinary project state. Do not `chmod`, delete, unmount, or otherwise bypass that `.git` placeholder
+  from inside the worker. Report that Git must be initialized from the host/supervisor environment
+  or the worker must be relaunched with a configuration that permits repository initialization; then
+  retry from a clean checkpoint. If documenting the blocker, say "inside this Codex worker" rather
+  than recording it as a stable fact about the project directory.
+  When supervising a greenfield tmux/Codex worker and commits are part of the test or workflow,
+  create the empty project directory and initialize Git from the host/supervisor shell before
+  launching the worker, unless the user explicitly wants to test non-git startup behavior.
+  Once Git is usable, continue with the normal verified-slice workflow.
   After each coherent implementation slice or milestone is verified, commit the source, docs,
   harness, test, and code-map updates before continuing into the next slice, unless the user or repo
   policy explicitly says not to commit. Before committing, inspect `git status`, keep user-owned

@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened greenfield CppStudio project startup guidance so Codex workers initialize usable Git
+  before verified-slice commits and treat read-only `.git` mountpoints as sandbox/tooling blockers
+  rather than project state to chmod or unmount.
 - Made generated-project scaffolding Vulkan-only by default: CUDA files, presets, docs, code-map
   routes, and helper scripts are omitted unless the agent explicitly asks
   `scaffold_gpu_cpp_project.py --gpu-lane cuda` or `--gpu-lane cuda-vulkan`; validation now checks

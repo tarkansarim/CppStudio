@@ -27,8 +27,13 @@ Before asking the user for target facts, auto-discover what the local workspace 
 For an existing repo, inspect repo instructions, enabled code maps, README/build docs, presets,
 package manifests, scripts, validation entrypoints, existing launch/control docs, and obvious app or
 library boundaries. For a greenfield target, inspect the requested name, current directory, nearby
-repo constraints, available templates, and likely toolchain assumptions. Ask the user only for
-preferences, missing constraints, or decisions that cannot be discovered locally.
+repo constraints, source-control state, available templates, and likely toolchain assumptions. When
+commits are expected for a greenfield target, initialize or require a usable Git repo before the first
+source slice. If a Codex worker reports an empty read-only `.git` mountpoint or read-only `.git`
+filesystem in a brand-new directory, classify it as worker sandbox/tooling state and stop for a host
+Git initialization or worker relaunch; do not treat unmounting/chmodding that placeholder as normal
+project setup. Ask the user only for preferences, missing constraints, or decisions that cannot be
+discovered locally.
 
 The pre-plan research brief must open the relevant local skill/donor references and run an extensive
 state-of-the-art web ceiling check against upstream/primary sources for current GUI, SDK, simulation,
