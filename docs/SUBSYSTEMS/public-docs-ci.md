@@ -18,6 +18,7 @@ workflow, and repo banner/sample assets.
 - `CONTRIBUTING.md`
 - `CHANGELOG.md`
 - `docs/BACKLOG.md`
+- `.gitignore`
 - `.github/workflows/validate.yml`
 - `.nojekyll`
 - `assets/cppstudio-banner.png`
@@ -33,6 +34,7 @@ workflow, and repo banner/sample assets.
 - contribution, release, or change-history policy changes
 - README Recent Commit Highlights policy or entries change
 - host setup commands or GPU toolchain notes change
+- root ignore policy for local/generated tool metadata changes
 - root CI behavior, badge targets, or public assets change
 
 ## Current Public Docs Posture

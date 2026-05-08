@@ -56,6 +56,10 @@ generated-project workflow instructions.
   implementation. "Upstream research" means public current-source research such as official repos,
   docs, samples, standards docs, vendor docs, papers, release notes, and peer-tool references; it is
   not permission to fill gaps from model memory.
+- Risky backend, renderer, GUI/editor, solver, harness, or authoring-model migration slices must
+  close out donor provenance. If a target repo owns a source/provenance doc, agents update it with the
+  local donor routes, current upstream links, study-only/license caveats, and any inferred decisions;
+  otherwise they record that evidence in the validation or status docs for the slice.
 
 ## Current Native UI Product-Fit Posture
 
@@ -63,6 +67,18 @@ generated-project workflow instructions.
   docs, or harness readback. Preview, baked, destructive, local/published, approximate/final, and
   diagnostic/product distinctions need visible wording that screenshots and harness assertions can
   prove.
+- GUI/editor/timeline/viewport/tool-surface work must create a compact UI convention table before
+  changing layout or command widgets. The table records donor or peer-tool evidence, expected control
+  location, icon/text convention, tooltip/accessibility text, enabled states, and proof method for the
+  affected surfaces.
+- Universal tool commands such as play, stop, step, save, undo, redo, select, transform, visibility,
+  lock, zoom, and delete should use recognizable icon affordances when the toolkit supports them.
+  Prominent text controls for those commands require donor evidence or an explicit accessibility,
+  localization, or toolkit constraint.
+- GUI closeout needs a visual product-fit review against the convention table, not just a nonblank
+  screenshot. The review checks placement, icon/text fit, visual hierarchy, clipping/overlap,
+  debug-vs-product feel, and domain conventions such as timeline, viewport, inspector, and node graph
+  placement.
 
 ## Current Vulkan Runtime Readiness Posture
 
@@ -89,6 +105,14 @@ generated-project workflow instructions.
   readiness booleans, feature eligibility, or backend-selection gates, agents must update the
   machine-readable readback before commit or expose completed-versus-remaining prerequisite fields
   when a broad gate name intentionally remains.
+- Harness readiness and success fields must prove their exact documented invariant. Weaker nearby
+  conditions need separate field names instead of setting a broad readiness field true.
+- Harness route changes require route-inventory reconciliation before commit: registered public
+  routes, the top discovery list, detailed endpoint docs, examples, and optional JSON inventory must
+  match unless a route is explicitly internal-only.
+- UI-heavy harnesses should expose an action/affordance inventory when practical, including action id,
+  visible text, icon presence/name, tooltip, shortcut, surface location, enabled state, command target,
+  selected-object requirement, and proof status.
 
 ## Update When
 
@@ -106,6 +130,8 @@ generated-project workflow instructions.
 - project authoring-model/source-of-truth research expectations or decision gates change
 - agentic control harness routing, autonomous app testing expectations, launch/control registry, or
   visual/UI observation behavior changes
+- control-harness route inventory, readiness field exactness, or UI affordance inventory behavior
+  changes
 - hard gates that require agents to open local skills, maintained code-map routes, and donor-library
   categories before code changes or product-shape decisions
 - code-map bootstrap script authority, code-map schema validation, or generated CMake probe cleanup

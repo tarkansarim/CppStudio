@@ -147,6 +147,7 @@
         "CONTRIBUTING.md",
         "CHANGELOG.md",
         "docs/BACKLOG.md",
+        ".gitignore",
         ".github/workflows/validate.yml",
         ".nojekyll",
         "assets/cppstudio-banner.png",

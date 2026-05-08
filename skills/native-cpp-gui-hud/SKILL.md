@@ -37,6 +37,28 @@ expectations, and debug-vs-product UI boundaries against donors or peer tools be
 Do not present a 2D diagnostic projection as the main viewport for a 3D tool unless the user
 explicitly accepts it as a temporary diagnostic milestone.
 
+For user-facing tool surfaces, build a compact UI convention table before changing layout or command
+widgets. Cover the affected surfaces such as viewport, timeline, transport, toolbar, menu, context
+menu, node graph, inspector, status bar, and overlay. For each surface, record the donor or peer-tool
+evidence, expected control location, icon/text convention, tooltip/accessibility text, enabled or
+disabled states, and the harness or screenshot proof that will verify it. Do not start from convenient
+widgets and then judge after the fact; the convention table is the implementation constraint.
+
+Use familiar icon affordances for universal tool commands when the chosen toolkit supports them:
+play, pause, stop, step, loop, record, save, load, undo, redo, select, move, rotate, scale, pan, zoom,
+lock, visibility, frame, pin, search, delete, add, and remove. Put the human-readable name in tooltip,
+accessibility text, menu text, shortcut labels, or harness metadata. Text buttons are acceptable for
+commands whose meaning is not represented by a common symbol, for confirmation dialogs, for primary
+workflow actions where the peer tools use text, or when accessibility/localization constraints require
+visible text. If a common transport or viewport command is implemented as a prominent text button,
+state the donor evidence or constraint that justified it before claiming the UI is product-ready.
+
+Before closeout, run a visual product-fit review against the convention table. The minimum review is a
+fresh screenshot or captured frame plus a short scorecard for control placement, icon/text fit,
+visual hierarchy, clipping/overlap, debug-vs-product feel, viewport/timeline/inspector conventions,
+and whether the visible state would make sense to a target artist or tool user. A screenshot that is
+nonblank is not enough evidence.
+
 For editor and DCC-style command surfaces, choose the interaction surface that matches the command's
 domain. Destructive or structural graph/scene edits should be owned by editor actions, menus,
 context/shortcut paths, or graph-local interaction patterns before adding extra toolbar buttons. If a
@@ -60,6 +82,13 @@ requirements, snapped or committed coordinates, and socket/type compatibility be
 production paths. Do not claim a menu, context action, shortcut, timeline, viewport, or toolbar path
 was tested unless it was actually exercised or introspected; otherwise report it as screenshot-checked
 or metadata-only evidence.
+
+When the target app has or should have an agentic control harness, expose an action or affordance
+inventory for UI-heavy slices when practical. A useful inventory includes action id, visible text,
+icon presence/name, tooltip, shortcut, surface location, enabled state, command target, selected-object
+requirement, and whether the action was exercised or only introspected. Use that inventory to catch
+debug-looking or convention-breaking command placement, such as transport controls living in a top
+debug toolbar when peer tools put them in the timeline strip.
 
 When changing broad GUI interaction code such as mouse/keyboard event handlers, node graph widgets,
 timeline widgets, viewport controls, docking shells, or command dispatch, add a source-structure
@@ -101,25 +130,28 @@ the evidence before wiring or closing.
    atlas upload, input routing, DPI scaling, and swapchain resize behavior explicitly.
 5. For CUDA targets, keep the GUI thread and CUDA work queue boundaries explicit; avoid hiding CUDA
    synchronization in widget callbacks.
-6. For editor commands, map structural edits to action/menu/shortcut/context surfaces first, verify
+6. Before layout or command-widget edits, write the UI convention table for the affected surfaces and
+   lock down which controls should be icons, text, menus, context actions, timeline controls, or
+   viewport overlays.
+7. For editor commands, map structural edits to action/menu/shortcut/context surfaces first, verify
    those surfaces before production wiring, then decide whether a toolbar button is still necessary
    after checking the resulting screenshot against peer-tool/product conventions.
-7. For implemented GUI commands, add harness readback or scenario coverage that proves the real UI
+8. For implemented GUI commands, add harness readback or scenario coverage that proves the real UI
    actions, enabled states, selected-object requirements, attachment points, timeline/viewport
    command state, and socket/type compatibility when practical. Keep advertised capability metadata
    separate from proof.
-8. For drag/move/resize/graph-coordinate interactions, verify the committed UI/model state after any
+9. For drag/move/resize/graph-coordinate interactions, verify the committed UI/model state after any
    snapping, clamping, or validation and make the screenshot match that committed state.
-9. Present a compact option table with:
+10. Present a compact option table with:
    - recommended use
    - source/docs link
    - visual/gallery/examples link
    - license/dependency caveat
-10. Only after that link table is visible, ask the user to choose among the researched options.
-11. Before adding a dependency, check the target repo's package policy and exact upstream license.
-12. If CppStudio is available, read its donor category first:
+11. Only after that link table is visible, ask the user to choose among the researched options.
+12. Before adding a dependency, check the target repo's package policy and exact upstream license.
+13. If CppStudio is available, read its donor category first:
    `cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md`.
-13. For current best-choice or version-sensitive questions, web-check official project docs/repos before
+14. For current best-choice or version-sensitive questions, web-check official project docs/repos before
    ranking options.
 
 ## Bundled Reference

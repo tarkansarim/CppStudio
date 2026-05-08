@@ -159,6 +159,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
   commit. Do not leave a completed prerequisite listed as the next missing item unless the field is
   intentionally naming a broader gate; in that case expose completed-versus-remaining prerequisites
   and document why the broad gate name still applies.
+- Name harness readiness and success fields after the exact invariant they prove. Do not set a broad
+  field true from a weaker nearby condition, such as reporting a live composed capture as ready when
+  only a widget exists or a backend initialized. If weaker facts are useful, expose them as separate
+  readback fields and keep the broad gate false until its documented invariant is satisfied.
 - When worker, subagent, reviewer, or background validation work is gated by the current task, keep
   supervision active until it reports done, idle, or blocked. Do not give final status while delegated
   work is still running; report the active worker state and remaining blocker instead.
@@ -194,6 +198,11 @@ When this skill is active, work like a native C++ GPU systems engineer:
   state and return `ok=true` only when the invariant is satisfied, or explicitly report a deliberate
   no-op. If the command snaps, clamps, quantizes, or validates input, tests and docs assert the
   post-validation committed values, not raw deltas.
+- When adding, removing, or renaming harness routes, reconcile the runtime route-registration table
+  against `docs/AGENTIC_CONTROL.md` and any machine-readable control inventory before commit. The top
+  discovery list, detailed endpoint docs, examples, and optional JSON must match registered public
+  routes. A registered route missing from docs, or a documented route absent from code, is harness
+  drift unless intentionally hidden as an internal-only route.
 - For GUI/editor command wiring, use verify-before-wiring for menus, shortcuts, context actions,
   timelines, and viewports. Discover or introspect the real toolkit/API objects, enabled-state rules,
   selected-object requirements, snapped or committed coordinates, and socket/type compatibility
@@ -207,6 +216,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
 - Judge screenshots against donor or peer-tool product conventions, not just non-empty pixels. Reject
   captures that prove a command fired but show crowded, clipped, debug-looking, dimensionally wrong,
   or convention-breaking UI for the target product class.
+- For GUI/HUD/editor/timeline/viewport/tool-surface slices, use `native-cpp-gui-hud` to create a
+  compact UI convention table before code changes. Record the peer-tool or donor evidence, expected
+  surface placement, icon/text convention, tooltip/accessibility text, enabled-state rules, and proof
+  method for affected controls. Universal actions such as play, stop, step, save, undo, redo, select,
+  transform, visibility, lock, zoom, and delete should use recognizable icon affordances when the
+  toolkit supports them, with readable names in tooltip/menu/accessibility/harness metadata, unless
+  donor evidence or accessibility/localization constraints justify prominent text controls.
 - For native tool UI, visible labels must carry critical semantic scope themselves. Do not rely on
   tooltips, hidden harness readback, or docs as the only distinction between states that affect user
   trust, such as preview versus baked output, destructive versus non-destructive actions, local versus
@@ -258,6 +274,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
   suitable donor exists or the available donors are too stale/generic for the decision, run
   web/upstream donor research against current primary sources before designing the implementation.
   Do not substitute training data for missing donors.
+- For risky backend, renderer, GUI/editor, solver, harness, or authoring-model migration slices,
+  close out donor provenance as part of the slice, not as optional documentation. Update the target
+  repo's provenance/source notes when present, such as `docs/DONORS_AND_SOURCES.md`, or record the
+  slice-specific sources in the validation/status docs when no provenance file exists. Include the
+  local donor categories/profiles used, current upstream links checked, study-only or license caveats,
+  and which decisions came from inference rather than donor evidence.
 - Do not treat "MVP", "scaffold", or "prototype" as permission to skip donor grounding for product
   shape. For native GPU tools, viewport type, editor layout, timeline/transport placement, graph or
   scene source of truth, solver architecture, render path, and validation surface must be checked
@@ -415,12 +437,14 @@ For long-running target-project implementation, repeat this rhythm between slice
 3. Implement the smallest coherent production slice.
 4. Verify with the target repo's build, tests, harness, screenshot, or profile evidence appropriate
    to the change.
-5. Clean generated probe junk from the source root, review `git status`, keep unrelated user changes
+5. Update code-map, control-harness registry, and donor/provenance docs when the slice changed their
+   routed behavior, route inventory, product-shape evidence, or risky backend/UI/solver decisions.
+6. Clean generated probe junk from the source root, review `git status`, keep unrelated user changes
    out, run both `scripts/check_code_map_drift.py --require-enabled` and
    `scripts/validate_code_map.py --require-enabled` before staging/committing when the map is
    enabled, check diff hygiene, and commit the verified slice with the appropriate `Commit-Origin`
    trailer.
-6. Continue to the next slice only after the commit is in place, or after clearly reporting why a
+7. Continue to the next slice only after the commit is in place, or after clearly reporting why a
    commit was intentionally skipped.
 
 ## Existing Project Code Map Readiness Protocol

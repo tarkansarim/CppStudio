@@ -4,6 +4,16 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a native GUI product-surface gate requiring UI convention tables, icon/text affordance checks,
+  and screenshot scorecards against donor or peer-tool conventions before agents call artist-tool UI
+  product-ready.
+- Tightened agentic control-harness closeout so readiness booleans must prove their exact documented
+  invariant, public route registrations must match control docs/inventories, and UI-heavy apps should
+  expose action/affordance inventories when practical.
+- Required donor/provenance closeout for risky backend, renderer, GUI/editor, solver, harness, or
+  authoring-model migration slices.
+- Routed root ignore policy through the public docs/CI code-map subsystem and ignored local Rewind
+  metadata so generated checkpoint config does not pollute package commits.
 - Required agentic control-harness roadmap/readiness readback to advance when verified slices
   satisfy prerequisites, so machine-readable `next_required_slice`, blocker, and eligibility fields
   do not keep sending future agents back to already-proven work.

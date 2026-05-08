@@ -2,6 +2,7 @@
 __pycache__/
 *.pyc
 .DS_Store
+.rewind/
 
 # Generated project/build artifacts
 build/
@@ -17,4 +18,3 @@ tmp/
 *.sqlite-wal
 perf.data
 perf.data.old
-

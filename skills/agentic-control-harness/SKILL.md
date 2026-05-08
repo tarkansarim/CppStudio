@@ -73,6 +73,11 @@ control harness itself.
   A drag, move, edit, connect, delete, timeline, or scene command that is rejected or does not
   actually change the claimed state must not return `ok=true` unless the endpoint explicitly
   reports a deliberate no-op. Include before/after readback for user-visible mutations.
+- Name readiness and success fields after the exact invariant they prove. Do not let a broad
+  readiness boolean stand in for a weaker nearby condition. If the app has a widget, a backend, and a
+  live composed capture as separate facts, expose separate fields such as `has_widget`,
+  `backend_available`, and `live_capture_composed`; do not return the broad field as true until the
+  documented broad invariant is actually satisfied.
 - When the app snaps, quantizes, clamps, validates, or otherwise normalizes command input, smoke
   tests and docs must assert the post-validation state instead of raw input arithmetic. Report both
   requested input and committed state when that difference matters.
@@ -102,10 +107,20 @@ control harness itself.
   exists. When practical, expose readback for the actual UI action/menu/shortcut/context objects,
   enabled state, attachment point, and command target. Claim a menu, shortcut, context action, or
   toolbar path was tested only when it was exercised or introspected by the harness.
+- For UI-heavy apps, expose an action/affordance inventory when practical. Include action id, visible
+  text, icon presence/name, tooltip, shortcut, surface location, enabled state, command target,
+  selected-object requirement, and proof status. Use it to verify that tool controls follow peer-tool
+  conventions, especially transport, timeline, viewport, selection, transform, visibility, and
+  destructive actions.
 - Maintain a control registry such as `docs/AGENTIC_CONTROL.md` plus optional
   `docs/AGENTIC_CONTROL.json` or `TARGET_CONTROL.json` so future agents can discover controls
   without reverse-engineering the app. Include discovered commands, transports, constraints,
   observation surfaces, state invariants, and known unsupported or intentionally hidden controls.
+- Reconcile the control registry with the registered runtime routes before committing route changes.
+  When adding, removing, or renaming endpoints, compare the code's route registration table or router
+  setup against the top discovery list, detailed endpoint docs, examples, and optional JSON inventory.
+  A documented endpoint that is not registered, or a registered endpoint that is absent from the
+  registry, is a harness drift bug unless it is explicitly internal and hidden by policy.
 - Keep machine-readable roadmap and readiness fields honest. When a control endpoint or registry
   exposes `next_required_slice`, `blockers`, `prerequisites`, readiness flags, feature eligibility,
   or backend-selection gates, every verified slice that satisfies one item must update the readback
@@ -126,11 +141,17 @@ A first harness slice is only provisionally successful when these are verified:
   applicable, not only a boolean response field
 - the command's discovered constraint map is documented or queryable, and tests assert at least one
   representative valid path plus one controlled rejection when practical
+- readiness/success fields are named and tested against their exact documented invariants, not weaker
+  nearby conditions
+- registered routes match the documented control registry or any intentional internal-only routes are
+  explicitly named as hidden
 - recent logs or warnings are queryable
 - visual state can be captured or otherwise inspected for viewport/UI-heavy apps, with settled-state
   evidence for mutable viewport/canvas/render output when practical
 - UI-heavy state has text-queryable readback or a documented surrogate for active mode, focus,
   selection, action availability, and relevant panel/dialog state
+- UI-heavy command surfaces expose action/affordance inventory when practical, including icon/text,
+  tooltip, shortcut, location, enabled-state, and proof status
 - user-visible GUI actions added in the slice have either scenario coverage or action/readback
   evidence from the real toolkit objects; metadata-only assertions are labeled as such
 - failures distinguish transport errors from app-side command errors
