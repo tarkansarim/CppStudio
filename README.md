@@ -52,7 +52,14 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   stricter enabled-code-map drift/schema closeout, generated repo-local map wrappers,
   donor/provenance closeout, and a GPL-safe Blender curves groom-brush study donor.
   It also lets implementation task lists realign when new evidence invalidates stale assumptions,
-  while preserving user-facing product and stack decisions.
+  while preserving user-facing product and stack decisions, and forces midstream major feature
+  requests back through planning artifacts instead of chat-only research. Missing-donor discoveries
+  are now captured project-locally first and promoted into the CppStudio source donor library when
+  reusable/global promotion is requested; installed user-level donor files stay generated rollout
+  targets. Local candidate capture is required evidence even when reusable promotion happens
+  immediately. The donor inventory also now includes a sculpting-brush/high-poly mesh route for
+  ZBrush-like tools, with Blender sculpt brushes as GPL-safe study material and meshoptimizer,
+  OpenSubdiv, and VMA as performance implementation donors.
 - `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map
   projects catch changed source paths that are not routed by the manifest.
 - `c68ae77` - Hardened code-map and trigger validation, made manual managed-skill install
@@ -229,11 +236,22 @@ signal. This is where agents should capture practical lessons such as "use a rea
 diagnostic panel" or "treat stylus pressure as replayable input data," grounded in current tools and
 references rather than memory.
 
+If research finds a strong reusable donor that is missing from the library, agents should save it in
+the target project's donor-candidate notes first. When you want that donor to become part of
+CppStudio for future projects, the agent should patch the CppStudio source repo donor library and
+run rollout. It should not edit the installed `~/.codex/skills` donor files directly, because those
+are generated deployment copies.
+
 Implementation plans are allowed to adapt when evidence changes. If research, API contracts,
 toolchain behavior, validation, or a focused probe proves a task is stale or aimed at the wrong
 subsystem, agents should revise the task list and validation gate instead of forcing the old list.
 They should pause for you only when that shift changes product direction, selected stack, scope,
 dependency/license posture, or an explicit constraint.
+
+The same applies when you add a major requirement mid-project. A request such as adding realtime ray
+tracing, a node editor, a new solver, or a different viewport backend should make the agent reopen
+the research/planning gate, update the project planning artifacts, and record any new dos/don'ts or
+decision records before coding or giving a final architecture recommendation.
 
 For larger apps where template, GUI, input devices, donors, or validation choices matter, ask for
 planning first:
@@ -507,6 +525,7 @@ Start from these files:
 - [Native GUI, HUD, and editor UI](skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md)
 - [Neural 3D](skills/cpp-cuda-vulkan-studio/references/donor-library/neural-3d.md)
 - [GPU simulation](skills/cpp-cuda-vulkan-studio/references/donor-library/simulation-gpu.md)
+- [Sculpting brushes and high-poly mesh tools](skills/cpp-cuda-vulkan-studio/references/donor-library/sculpting-brushes.md)
 - [Surfaces and subdivision](skills/cpp-cuda-vulkan-studio/references/donor-library/surfaces-subdivision.md)
 - [Terrain, geospatial, and 3D Tiles](skills/cpp-cuda-vulkan-studio/references/donor-library/terrain-geospatial.md)
 - [Texture, material, and color](skills/cpp-cuda-vulkan-studio/references/donor-library/texture-material-color.md)

@@ -7,6 +7,15 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 - Added adaptive task-list realignment guidance so agents can revise stale implementation plans when
   evidence changes the trajectory, while still pausing for product, stack, scope, dependency/license,
   or explicit user-constraint changes.
+- Hardened midstream major feature requests so agents reopen the research/planning gate and update
+  planning artifacts, donor notes, dos/don'ts, and decision records instead of answering from
+  chat-only research or coding from memory.
+- Clarified missing-donor promotion so agents must capture strong web-discovered donors locally, then
+  promote them into the CppStudio source donor library when reusable/global promotion is requested;
+  installed user-level donor files remain rollout targets, not hand-edited sources.
+- Added a sculpting-brush donor route and Blender Sculpt Brushes study-only profile so ZBrush-like
+  high-poly artist tools start from source-backed brush behavior, Paint BVH-style acceleration,
+  topology-mode caveats, and performance donors before implementation.
 - Documented the mandatory planning research artifact in the README, including project-specific
   app/domain and GUI/product-surface dos and don'ts before implementation starts.
 - Added a mandatory `Project Dos And Don'ts` section for substantial greenfield planning artifacts,

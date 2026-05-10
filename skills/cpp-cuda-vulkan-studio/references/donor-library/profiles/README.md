@@ -83,6 +83,7 @@ inventory. Category files are the normal second layer; these profiles are the th
 - [MaterialX](materialx.md)
 - [OpenTimelineIO](opentimelineio.md)
 - [Blender Study-Only](blender-study-only.md)
+- [Blender Sculpt Brushes Study-Only](blender-sculpt-brushes-study-only.md)
 - [OpenSubdiv](opensubdiv.md)
 - [libigl](libigl.md)
 - [CGAL](cgal.md)

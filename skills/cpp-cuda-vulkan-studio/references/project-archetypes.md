@@ -161,6 +161,26 @@ artist-facing grooming brush tools.
   pressure/falloff tests, skinning/collision tests, Vulkan validation, offscreen strand-render frames,
   then frame profiling.
 
+## Sculpting Brush Or High-Poly Mesh Tool
+
+Use when the project is a ZBrush-like, Mudbox-like, or Blender-sculpt-like tool for mesh sculpting,
+artist brush workflows, high-poly editing, dynamic topology, multiresolution sculpting, or dense mesh
+viewport performance.
+
+- Enable Vulkan when realtime rendering or viewport interaction is in scope; enable CUDA only when
+  the user chooses CUDA or the project explicitly requires project-owned CUDA kernels.
+- Read [donor-library/sculpting-brushes.md](donor-library/sculpting-brushes.md) first. Open Blender
+  Sculpt Brushes before generic geometry, renderer, or GUI donors; keep Blender study-only and
+  implement brush behavior independently.
+- Pair the sculpt donor route with [donor-library/native-gui-hud.md](donor-library/native-gui-hud.md)
+  for brush palette/product UI, [donor-library/vulkan-foundation-tooling.md](donor-library/vulkan-foundation-tooling.md)
+  for GPU buffer and synchronization correctness, and meshoptimizer/OpenSubdiv/VMA profiles for
+  high-poly performance architecture.
+- Verification priority: tiny fixtures for Draw, Smooth, Clay, Inflate, Grab, Pinch/Crease,
+  Flatten/Scrape, and Mask; pressure/falloff/mask/undo/replay tests; code-map and harness state for
+  active brush; then numeric polygon/frame-time/stroke-latency/dirty-upload evidence before claiming
+  high-poly readiness.
+
 ## DCC Scene Pipeline Tool
 
 Use when the project imports, exports, validates, or transforms scenes between DCC tools and runtime

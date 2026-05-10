@@ -1,6 +1,6 @@
 ---
 name: cpp-cuda-vulkan-studio
-description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, agentic control harnesses, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, local HTTP/curl/MCP app controls, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. For big initial planning or 'what stack should we use' questions, use cppstudio-project-planner first, research first, then ask for Plan mode."
+description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, agentic control harnesses, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, local HTTP/curl/MCP app controls, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, sculpting/brush tools, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. For big initial planning or 'what stack should we use' questions, use cppstudio-project-planner first, research first, then ask for Plan mode."
 ---
 
 # C++ CUDA Vulkan Studio
@@ -31,8 +31,13 @@ Minimum pre-plan research pass:
   sources, with a short description and project benefit for each kept link. Use
   `docs/planning/DONOR_CANDIDATES.md` or a donor-candidates section when web research finds reusable
   donor material that is not already in the CppStudio donor library. Promote candidates into the
-  CppStudio source donor library only during explicit donor-library maintenance; user-level installed
-  skills are rollout targets, not source files to edit by hand.
+  CppStudio source donor library during explicit donor-library maintenance or when the user asks to
+  extend the reusable/global donor library; user-level installed skills are rollout targets, not
+  source files to edit by hand. If the CppStudio source repo is not the current repo and cannot be
+  located through `CPPSTUDIO_SOURCE_ROOT` or a user-provided path, keep the target-project candidate
+  and report that reusable promotion is pending. Do not treat the local candidate artifact as
+  optional because source promotion is possible; source promotion should consume the candidate as
+  its evidence trail.
 - In that research brief, include `Project Dos And Don'ts`: app/domain rules and GUI/product-surface
   rules distilled from local donors, peer tools, and web/upstream sources. Each item needs evidence,
   the subsystem or UI surface it applies to, and the first validation signal. GUI rules must be based
@@ -225,6 +230,15 @@ When this skill is active, work like a native C++ GPU systems engineer:
   an internal correction that preserves the user's intent, chosen stack, and quality bar. Pause for
   user alignment when the change affects product direction, selected GUI/backend/authoring model,
   scope, dependency/license posture, or any explicit user constraint.
+- Treat midstream major feature requests as new planning evidence. A vague request such as "can we
+  also include realtime ray tracing" or "add a node editor" is not permission to code from memory or
+  to answer from chat-only research. Before implementation or a final recommendation, reopen the
+  bounded planning gate for that subsystem: read the target code map and current planning docs, open
+  local donor routes, check current upstream/primary sources and local capability facts, update the
+  research brief, implementation slice plan, donor-candidate notes when relevant, and the applicable
+  dos/don'ts or decision record. If the feature is blocked by architecture, toolkit, hardware,
+  dependency, license, or validation constraints, record the prerequisite slice and ask the user only
+  when choosing a different stack, backend, product scope, or explicit constraint is required.
 - If a target-project slice is interrupted, stopped, or rejected after partial unverified edits, do
   not leave the repo in an ambiguous dirty state. Either revert only the incomplete edits for that
   slice, or explicitly report the exact dirty files and ask whether to preserve them. Do not commit,
@@ -319,7 +333,14 @@ When this skill is active, work like a native C++ GPU systems engineer:
   product-shape decision, or major architecture choice, first open the local donor routes; when no
   suitable donor exists or the available donors are too stale/generic for the decision, run
   web/upstream donor research against current primary sources before designing the implementation.
-  Do not substitute training data for missing donors.
+  Do not substitute training data for missing donors. When that research finds reusable donors that
+  should help future projects, record them as target-project donor candidates immediately before
+  promotion, including URL, tier, backend/language signal, license/freshness notes, reuse caveat, and
+  promotion rationale. Promote them into the CppStudio source donor library when the user requested
+  reusable/global promotion or the current task is CppStudio donor-library maintenance. Never patch
+  the installed
+  `~/.codex/skills/cpp-cuda-vulkan-studio/references/donor-library` copy directly; update source and
+  roll out.
 - For risky backend, renderer, GUI/editor, solver, harness, or authoring-model migration slices,
   close out donor provenance as part of the slice, not as optional documentation. Update the target
   repo's provenance/source notes when present, such as `docs/DONORS_AND_SOURCES.md`, or record the
@@ -465,7 +486,7 @@ When this skill is active, work like a native C++ GPU systems engineer:
 17. Before greenfield scaffolding, major backbone edits, or native GPU architecture brainstorming,
     read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library,
     CUDA+Vulkan combined/interop app, native GUI/HUD/editor UI, AI runtime, neural 3D viewer,
-    grooming/brush/fur tool, glTF/runtime asset viewer, renderer backbone/runtime mesh pipeline,
+    sculpting/brush tool, grooming/brush/fur tool, glTF/runtime asset viewer, renderer backbone/runtime mesh pipeline,
     DCC scene pipeline,
     volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool,
     3D/physics/GPU simulation tool, or XR app.
@@ -530,7 +551,7 @@ Before enabling a maintained code map for an existing repo, confirm the repo can
 
 ## Bundled References
 
-- `references/donor-library/`: curated donor-source library for Vulkan foundation tooling, glTF/runtime assets, WebGPU/WebGL, native GUI/HUD/editor UI, renderer backbones, path tracing, engine architecture, runtime mesh pipelines, graphics, rendering, geometry, 3D/physics/GPU simulation, AI runtimes, ML compilers, CUDA kernels, neural 3D, grooming/fur, DCC scene pipelines, volumes, animation, materials, CAD, XR, and native engineering infrastructure. Donor backend signals describe the upstream implementation, not a restriction on target lanes. Start with `references/donor-library/README.md`; for VFX studio, games, or native infrastructure vocabulary use `references/donor-library/production/`; for broad or ambiguous donor requests use `references/donor-library/agent-lookup.md`, then load the smallest category set needed for the active task.
+- `references/donor-library/`: curated donor-source library for Vulkan foundation tooling, glTF/runtime assets, WebGPU/WebGL, native GUI/HUD/editor UI, renderer backbones, path tracing, engine architecture, runtime mesh pipelines, graphics, rendering, geometry, 3D/physics/GPU simulation, AI runtimes, ML compilers, CUDA kernels, neural 3D, sculpting/brush tools, grooming/fur, DCC scene pipelines, volumes, animation, materials, CAD, XR, and native engineering infrastructure. Donor backend signals describe the upstream implementation, not a restriction on target lanes. Start with `references/donor-library/README.md`; for VFX studio, games, or native infrastructure vocabulary use `references/donor-library/production/`; for broad or ambiguous donor requests use `references/donor-library/agent-lookup.md`, then load the smallest category set needed for the active task.
 - `references/project-archetypes.md`: lane-selection guide for CUDA-only, Vulkan-only, CUDA+Vulkan interop, native GUI/HUD/editor UI, AI runtime, neural 3D, grooming, glTF/runtime assets, renderer backbone/runtime mesh pipeline, DCC, volume, animation, material, CAD, 3D/physics/GPU simulation, and XR projects.
 
 ## Bundled Scripts

@@ -6,7 +6,7 @@ categories.
 
 | Department | Includes | Open First |
 | --- | --- | --- |
-| Modeling | Mesh creation, topology, sculpt-to-runtime conversion, hard surface, organic forms, retopo, LODs, mesh cleanup, NURBS/CAD-to-render display handoff. | [assets-meshes-materials.md](../assets-meshes-materials.md), [surfaces-subdivision.md](../surfaces-subdivision.md), [cad-precision-geometry.md](../cad-precision-geometry.md) |
+| Modeling | Mesh creation, topology, sculpt-to-runtime conversion, high-poly sculpting, hard surface, organic forms, retopo, LODs, mesh cleanup, NURBS/CAD-to-render display handoff. | [sculpting-brushes.md](../sculpting-brushes.md), [assets-meshes-materials.md](../assets-meshes-materials.md), [surfaces-subdivision.md](../surfaces-subdivision.md), [cad-precision-geometry.md](../cad-precision-geometry.md) |
 | Texturing | UVs, UDIM-style layout decisions, texture baking, PBR maps, image/texture IO, compression, procedural texture inputs, material input maps. | [texture-material-color.md](../texture-material-color.md), [assets-meshes-materials.md](../assets-meshes-materials.md), [gltf-runtime-assets.md](../gltf-runtime-assets.md) |
 | Rigging | Skeletons, controls, skinning, deformation systems, blend shapes, facial rigs, animation-ready asset preparation. | [animation-rigging.md](../animation-rigging.md), [muscle-flesh-biomechanics.md](../muscle-flesh-biomechanics.md), [geometry-simulation.md](../geometry-simulation.md) |
 | Creature FX | Hair, fur, feathers, cloth-on-creatures, skin sliding, muscles, flesh, secondary motion, creature simulation, groom workflows. | [hair-grooming-fur.md](../hair-grooming-fur.md), [muscle-flesh-biomechanics.md](../muscle-flesh-biomechanics.md), [simulation-gpu.md](../simulation-gpu.md) |

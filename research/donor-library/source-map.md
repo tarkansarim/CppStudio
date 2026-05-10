@@ -62,6 +62,16 @@ targets; implement native code through the active C++/CUDA/Vulkan lane.
 | [Godot Engine](https://github.com/godotengine/godot) | Engine architecture | dependency-candidate | MIT engine/editor architecture; large enough to use primarily as design reference. |
 | [Open 3D Engine](https://github.com/o3de/o3de) | Engine architecture | dependency-candidate | Apache-2.0/MIT dual-license default, with third-party component caveats; large engine architecture, asset pipeline, component systems. |
 
+## Sculpting Brushes And High-Poly Mesh Editing
+
+| Source | Category | Tier | Signal |
+| --- | --- | --- | --- |
+| [Blender Sculpt Brushes](https://docs.blender.org/manual/en/latest/sculpt_paint/sculpting/brushes/index.html) | Sculpt brush behavior | study-only | GPL-family source and separate documentation notices; primary behavior donor for Draw, Smooth, Clay, Inflate, Grab, Pinch, Flatten, Mask, pressure/falloff, Paint BVH-style queries, and Mesh/BMesh/Grid sculpt modes. |
+| [Blender Mesh Painting & Sculpting Developer Docs](https://developer.blender.org/docs/features/sculpt_paint/mesh_paint/) | Sculpt architecture | study-only | GPL-family source context; study storage backends, Paint BVH, selective GPU updates, SculptSession, StrokeCache, and per-stroke data boundaries. |
+| [Nomad Sculpt Topology](https://nomadsculpt.com/manual/topology) | Sculpt topology workflow | study-only | Product documentation reference for polygon stats, multiresolution, voxel remesh, dynamic topology, decimation, and topology warnings. |
+| [ZBrush Sculpting Brushes](https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/sculpting/sculpting-brushes/sculpting-brushes.html) | Sculpt brush expectations | study-only | Proprietary product documentation reference for Standard, Smooth, Move, Inflate, Pinch, Flatten, Clay, and artist brush behavior expectations. |
+| [Mudbox BrushOperation](https://help.autodesk.com/view/MBXPRO/ENU/?guid=GUID_2D5459EC_E29C_4073_929D_17DF5664F9AD_htm) | Brush operation contracts | study-only | Autodesk SDK/product documentation reference for brush size, strength, direction, falloff, stamps, pressure, and local mesh enumeration. |
+
 ## AI Runtimes, Kernels, And Compilers
 
 | Source | Category | Tier | Signal |

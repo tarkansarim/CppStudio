@@ -74,9 +74,12 @@ generated-project workflow instructions.
   debug-vs-product boundaries, and visual proof.
 - New reusable references discovered during web research are first saved as target-project donor
   candidates, normally `docs/planning/DONOR_CANDIDATES.md` or a donor-candidates section in the
-  research brief. They are promoted into CppStudio's source donor library only during explicit
-  donor-library maintenance and then rolled out to user-level; installed user-level skills are not
-  hand-edited as donor-library source.
+  research brief. That candidate capture is required evidence even when global promotion happens
+  immediately afterward. They are promoted into CppStudio's source donor library only during explicit
+  donor-library maintenance or when the user explicitly asks to extend the reusable/global donor
+  library, and then rolled out to user-level; installed user-level skills are not hand-edited as
+  donor-library source. If the source repo path is unavailable from a target project, agents keep the
+  project-local candidate and ask for the CppStudio source path instead of patching `~/.codex/skills`.
 - Risky backend, renderer, GUI/editor, solver, harness, or authoring-model migration slices must
   close out donor provenance. If a target repo owns a source/provenance doc, agents update it with the
   local donor routes, current upstream links, study-only/license caveats, and any inferred decisions;
@@ -130,6 +133,11 @@ generated-project workflow instructions.
   place with the new fact, invalidated assumption, bounded replacement task, and validation change.
   They should continue on internal realignments that preserve intent and pause only for user-facing
   product, stack, scope, dependency/license, or explicit-constraint changes.
+- Midstream major feature requests reopen the planning gate. Agents should update the target
+  research brief, implementation slice plan, donor-candidate notes when relevant, and dos/don'ts or
+  decision records after checking code-map routes, donor routes, current upstream sources, and local
+  capability facts. A chat-only answer is not enough when the feature affects renderer, GUI,
+  authoring model, solver, dependency, hardware, or validation architecture.
 - Greenfield target projects that are expected to use verified-slice commits need usable Git before
   the first source slice. A Codex worker that sees `.git` as an empty read-only mountpoint in a
   brand-new directory is reporting sandbox/mount-namespace state, not an ordinary project fact.
@@ -169,6 +177,8 @@ generated-project workflow instructions.
 - donor-grounding or web-ceiling-check expectations for native GPU brainstorming/design proposals
   change
 - durable project-local research artifact or donor-candidate capture requirements change
+- missing-donor promotion rules change, including when agents promote discovered web/upstream donors
+  into the CppStudio source repo instead of leaving only target-project candidates
 - project-specific dos and don'ts research-artifact requirements change, including GUI/product-surface
   best-practice capture
 - artist-input or tablet/stylus planning defaults change, including when mouse-first window/input
@@ -208,8 +218,8 @@ generated-project workflow instructions.
 - target-project commit-origin marker policy changes, including how autonomous agent commits are
   distinguished from user-requested commits
 - target-project slice-execution discipline changes, including when agents must stop broad
-  orientation after route selection, adapt stale task lists to new evidence, or clean interrupted
-  partial edits
+  orientation after route selection, adapt stale task lists to new evidence, handle midstream major
+  feature requests through planning artifacts, or clean interrupted partial edits
 - target-project build/validation command selection rules change, including when agents must use
   repo-declared CMake presets, validation docs, scripts, or code-map build routes instead of guessed
   build directories

@@ -313,6 +313,25 @@
       ]
     },
     {
+      "name": "missing-donor-promotion-boundary",
+      "tags": [
+        "positive",
+        "planning",
+        "infrastructure",
+        "lookup"
+      ],
+      "prompt_shape": "A target-project agent researching a native C++ GPU feature discovers that the best current donor is missing from the installed CppStudio donor library, and the user asks to add it to the reusable library for future agents.",
+      "expected_behavior": "Record the vetted donor in the target project first as required evidence and never skip that candidate artifact because source promotion is possible. Then promote into the CppStudio source repo donor library when the source root is available or provided. Do not patch ~/.codex/skills installed donor files directly. If the source repo path is unknown, report the project-local candidate and ask for CPPSTUDIO_SOURCE_ROOT or the source repo path.",
+      "expected_paths": [
+        "skills/cppstudio-project-planner/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/README.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md",
+        "docs/SUBSYSTEMS/source-skill-routing.md",
+        "docs/SUBSYSTEMS/donor-library.md"
+      ]
+    },
+    {
       "name": "agentic-control-harness-default",
       "tags": [
         "positive",
@@ -1187,6 +1206,30 @@
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tressfx.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openusd.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/alembic.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "sculpting-brush-high-poly-donors",
+      "tags": [
+        "positive",
+        "vfx",
+        "games",
+        "study-only",
+        "geometry"
+      ],
+      "prompt_shape": "Native C++/Vulkan ZBrush-like or Mudbox-like sculpting tool needs high-poly performance, Draw/Smooth/Clay/Inflate/Grab/Pinch/Flatten/Mask brushes, dynamic topology, multiresolution, Paint BVH/PBVH-style queries, or Wacom/stylus pressure.",
+      "expected_behavior": "Route to sculpting-brushes and the Blender Sculpt Brushes study-only profile before generic geometry/rendering donors; keep Blender GPL-family source as behavior/reference only, then pair with meshoptimizer, OpenSubdiv, VMA, native GUI/HUD, and Vulkan foundation donors when high-poly performance, product brush UI, or GPU buffer ownership is in scope.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/sculpting-brushes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/blender-sculpt-brushes-study-only.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/meshoptimizer.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/opensubdiv.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vulkan-memory-allocator.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md"
       ],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"

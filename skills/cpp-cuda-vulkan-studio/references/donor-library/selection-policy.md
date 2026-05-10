@@ -19,8 +19,32 @@ curated donor and web-research set in `docs/planning/RESEARCH_BRIEF.md` before i
 short notes for what each source is, how it benefits the target project, and whether it is direct
 donor, dependency-candidate, or reference-only. If a strong reusable source is not already represented
 in this donor library, save it as a project-local donor candidate first. Promote candidates into the
-CppStudio source donor library only during explicit donor-library maintenance and roll them out from
-source; the installed user-level copy is not the source of truth.
+CppStudio source donor library during explicit donor-library maintenance or when the user asks to
+extend the reusable/global donor library, then roll them out from source; the installed user-level
+copy is not the source of truth.
+
+## Promotion Source Boundary
+
+The installed donor library under `~/.codex/skills` is a generated deployment target. Do not promote
+new donors by editing installed user-level files directly; those edits are unreviewed, unversioned,
+and can be overwritten by the next rollout.
+
+Promotion path:
+
+1. Capture the candidate in the target project first, normally
+   `docs/planning/DONOR_CANDIDATES.md`, including URL, proposed category, tier, backend/language
+   signal, license/freshness notes, direct-reuse/reference-only caveat, and promotion rationale.
+   This capture is required even when promotion into CppStudio source happens immediately afterward.
+   Do not skip this artifact because the source repo is available; reusable promotion must remain
+   traceable to the target-project discovery that justified it.
+2. If the user asks for reusable/global promotion or the task is CppStudio donor-library
+   maintenance, patch the CppStudio source repo under
+   `skills/cpp-cuda-vulkan-studio/references/donor-library/`.
+3. Update the smallest matching category/router/profile files, profile index, trigger-regression
+   cases, research provenance, README/changelog, and code-map subsystem docs that changed.
+4. Validate the source repo and run rollout so `~/.codex/skills` is regenerated from the source.
+5. If the CppStudio source repo is unavailable, do not patch installed files. Report the project-local
+   candidate artifact and ask for the source repo path or `CPPSTUDIO_SOURCE_ROOT`.
 
 ## Language And Runtime Boundary
 

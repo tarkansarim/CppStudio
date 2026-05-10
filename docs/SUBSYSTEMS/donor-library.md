@@ -28,11 +28,15 @@ selection policy, and trigger-regression metadata.
 - donor refresh dates or source research notes change
 - donor-candidate capture, project-local research artifact expectations, or promotion rules between
   target-project research and the CppStudio source donor library change
+- source-versus-installed donor-library promotion boundaries change, including when target-project
+  agents may promote a web-discovered donor into the reusable CppStudio source library
 - donor freshness audit behavior or source URL metadata expectations change
 - donor-grounding or web-ceiling-check expectations for broad native GPU design prompts change
 - native C++ GUI/HUD/editor UI donor categories or visual inspection link rules change
 - platform/window/input donor categories change, including SDL3, GLFW, Qt tablet events, native
   tablet APIs, or other artist-input routes for pressure-sensitive tools
+- sculpting, brush, high-poly mesh editing, Paint BVH/PBVH, or dense-mesh performance donor
+  categories/profiles change
 - trigger-matrix expectations for GUI convention tables, icon/text affordance checks, screenshot
   scorecards, harness readiness invariants, route inventory reconciliation, or action inventories
   change

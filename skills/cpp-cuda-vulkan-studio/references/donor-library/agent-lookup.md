@@ -102,6 +102,14 @@ targets, then implement through the active lane skill.
   [madmann91/bvh](profiles/madmann91-bvh.md), [Jolt Physics](profiles/jolt-physics.md), or
   [Bullet Physics](profiles/bullet-physics.md). Use engine donors only when editor/runtime scale is
   explicit.
+- **ZBrush-like or Mudbox-like sculpting, high-poly mesh brushes, dense mesh editing, dynamic
+  topology, multiresolution sculpting, Paint BVH/PBVH, or sculpt brush performance**: open
+  [sculpting-brushes.md](sculpting-brushes.md). Start with
+  [Blender Sculpt Brushes Study-Only](profiles/blender-sculpt-brushes-study-only.md) for brush
+  behavior and high-poly sculpt architecture. Pair with [meshoptimizer](profiles/meshoptimizer.md),
+  [OpenSubdiv](profiles/opensubdiv.md), and
+  [Vulkan Memory Allocator](profiles/vulkan-memory-allocator.md) when performance, LOD, subdivision,
+  or GPU buffer ownership is in scope. Keep Blender GPL-family source as behavior/reference only.
 - **AI runtime, model serving, inference, ML compilers, custom CUDA kernels**: open
   [ai-runtimes-kernels.md](ai-runtimes-kernels.md). Start with
   [llama.cpp and ggml](profiles/llama-ggml.md), [ONNX Runtime](profiles/onnx-runtime.md),

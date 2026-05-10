@@ -65,13 +65,21 @@ debug-vs-product boundaries, and visual proof expectations. Do not let generic a
 the UI polished" satisfy this section.
 
 When web research finds a strong reusable source that is missing from the CppStudio donor library,
-do not leave that discovery only in chat. In ordinary target projects, add it to
-`docs/planning/DONOR_CANDIDATES.md` or a "Donor candidates" section in the research brief with the
-source URL, category, likely tier, backend/language signal, license/freshness status when known,
-direct-reuse versus reference-only caveat, and why it should be considered for CppStudio. If the
-current task is explicitly maintaining the CppStudio source repo, promote the vetted donor into the
-source donor library under `skills/cpp-cuda-vulkan-studio/references/donor-library/` and then roll
-out; never hand-edit the installed user-level donor library as the source of truth.
+do not leave that discovery only in chat. First capture it in the target project's durable research,
+normally `docs/planning/DONOR_CANDIDATES.md` or a "Donor candidates" section in the research brief,
+with the source URL, category, likely tier, backend/language signal, license/freshness status when
+known, direct-reuse versus reference-only caveat, and why it should be considered for CppStudio. This
+candidate capture is required evidence even when the next step is immediate reusable promotion. If
+the current task is explicitly maintaining the CppStudio source repo, or the user explicitly asks to
+add the missing donor to the reusable/global CppStudio donor library, promote the vetted donor into
+the CppStudio **source** donor library under
+`skills/cpp-cuda-vulkan-studio/references/donor-library/` and then run the repo rollout. Do not
+hand-edit the installed user-level donor library as the source of truth. If working from a target
+project and the CppStudio source repo path is not known, use `CPPSTUDIO_SOURCE_ROOT` when set or ask
+for the source repo path; otherwise keep the candidate project-local and state that reusable
+promotion is pending. Never skip the target-project candidate artifact because the CppStudio source
+repo is available; reusable promotion should be traceable back to the candidate evidence that
+justified it.
 
 For substantial greenfield planning artifacts, include an explicit donor-candidate disposition. If
 the research found reusable sources not already covered by the local donor library, write a separate
@@ -95,6 +103,16 @@ gates, and any assumptions that now need evidence. Do not ask the user for permi
 internal realignments that preserve the project intent and quality bar. Pause and ask only when the
 realignment changes a user-facing product decision, selected stack, scope, schedule, data ownership,
 license/dependency posture, or an explicitly agreed constraint.
+
+Midstream feature requests are planning inputs, not shortcuts around planning. If the user asks to
+add, include, swap, or "already support" a major subsystem after planning or implementation has
+started, reopen the same research-to-plan gate for that subsystem before coding or giving a final
+go/no-go recommendation. Read the enabled code map and current planning artifacts, open the smallest
+matching donor routes, check current upstream/primary sources and local capability facts, then update
+`docs/planning/RESEARCH_BRIEF.md`, `docs/planning/IMPLEMENTATION_SLICE_PLAN.md`, donor-candidate
+notes when relevant, and the applicable `Project Dos And Don'ts` or decision-record section. If the
+answer is "not yet" or "only after an architecture choice," record the rejected direct path, the
+required decision or prerequisite slice, and the validation gate that would make it safe later.
 
 For any project with an interactive tool, editor, procedural workflow, scene/content pipeline,
 simulation setup, material/shader workflow, timeline, graph, layer stack, scripting surface, or other
@@ -227,7 +245,8 @@ Every substantial plan should include:
 - web sources checked and what changed because of them, with durable project-local research artifact
   path when one was written
 - donor candidates discovered outside the current library, with whether they were saved in the
-  target project or promoted into the CppStudio source donor library
+  target project or promoted into the CppStudio source donor library; installed user-level donor
+  files must be regenerated from source rollout, not patched directly
 - project-specific dos and don'ts derived from donor, upstream, and peer-tool evidence, including
   GUI/product-surface rules and their validation signals
 - current state-of-the-art or actively popular approaches, separated from legacy approaches

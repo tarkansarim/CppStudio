@@ -47,6 +47,8 @@ engineering discipline terms:
   geometry, texture tooling, OpenPBR, and production asset management.
 - [geometry-simulation.md](geometry-simulation.md): asset import, mesh conditioning, BVH, point
   clouds, physics, and engine/runtime architecture.
+- [sculpting-brushes.md](sculpting-brushes.md): ZBrush-like sculpting tools, mesh sculpt brushes,
+  high-poly edit architecture, Paint BVH-style queries, multires/dyntopo, and dense-mesh performance.
 - [terrain-geospatial.md](terrain-geospatial.md): geospatial runtimes, terrain, 3D Tiles, CRS,
   point clouds, and map/vector-tile rendering.
 - [vfx-particles.md](vfx-particles.md): realtime VFX, GPU particles, indirect rendering, sorting,
@@ -119,11 +121,22 @@ target-lane restrictions.
   research and persist the curated result in the target repo, normally
   `docs/planning/RESEARCH_BRIEF.md`. Each kept web or donor link should say what it is and why it is
   useful for the target project.
-- If web research finds a strong reusable donor that is missing here, record it as a project-local
+- If web research finds a strong reusable donor that is missing here, first record it as a project-local
   donor candidate with URL, proposed category, tier, backend/language signal, license/freshness
-  status when known, direct-reuse or reference-only caveat, and promotion rationale. Only promote it
-  into this source donor library when the task is explicitly maintaining CppStudio; do not hand-edit
-  the installed user-level copy as the source of truth.
+  status when known, direct-reuse or reference-only caveat, and promotion rationale. This
+  project-local candidate is required evidence even when the user also asked for immediate reusable
+  promotion. Promote it into this source donor library when the task is explicitly maintaining
+  CppStudio or the user explicitly asks to extend the reusable/global donor library. Do not hand-edit
+  the installed user-level copy as the source of truth. Do not skip the target-project donor
+  candidate because reusable promotion can happen immediately; that candidate is the evidence trail
+  for why the source donor library changed.
+- Reusable donor promotion targets the CppStudio source repo, not `~/.codex/skills`. If an agent is
+  working in another target project, use `CPPSTUDIO_SOURCE_ROOT` or a user-provided CppStudio source
+  path for promotion; if neither is available, leave the vetted donor in the target project's
+  `docs/planning/DONOR_CANDIDATES.md` and state that global promotion is pending.
+- A donor-library promotion should update the smallest matching category/router/profile set, the
+  deep profile index when a profile is added, trigger-regression expectations when routing changes,
+  and CppStudio source docs/changelog as needed, then run validation and rollout.
 - Before vendoring code, inspect the repo license file and any third-party notice files at the exact
   revision used.
 - Prefer linking or package-manager integration over copying whole donor trees.

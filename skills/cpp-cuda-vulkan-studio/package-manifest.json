@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 54591,
-      "sha256": "af61469c214ff7f673ec97e6511f475bdd8dbebdbfe4f480cc8e3172a4542b29"
+      "size": 56569,
+      "sha256": "ca042bf784c8b611de400d1a6812275aa258834efe226cb939c2c28cabd65de9"
     },
     {
       "path": "agents/openai.yaml",
@@ -308,15 +308,15 @@
       "path": "references/donor-library/README.md",
       "role": "reference",
       "disclosure_group": "donor-router",
-      "size": 8304,
-      "sha256": "278b977a2d93565c1cdf7926a8a9d1f84fc1b8aa6bc4114f02eb0a1ca2c6eba0"
+      "size": 9532,
+      "sha256": "850cdcdd605bf813dac2db377093636b6e17822cee9ddc755119ab2b39405b52"
     },
     {
       "path": "references/donor-library/agent-lookup.md",
       "role": "reference",
       "disclosure_group": "donor-router",
-      "size": 16955,
-      "sha256": "ab35fe6f0093406ced48aa32d13fc1b6a6a746153175503e3a22a246bbd6becf"
+      "size": 17637,
+      "sha256": "a01c87d1e296e40aa6286bc564034d2d0d3059ad204f0a3184aa3bcd5bbe04a1"
     },
     {
       "path": "references/donor-library/ai-runtimes-kernels.md",
@@ -434,8 +434,8 @@
       "path": "references/donor-library/production/games.md",
       "role": "reference",
       "disclosure_group": "production-overlay",
-      "size": 4722,
-      "sha256": "59138188bae18da4e598aa205c04059a3b24b0912d8c6d32d7b29013df2f5794"
+      "size": 4880,
+      "sha256": "c89c821e2c505be83ebd913e8e467f539a20a5f2581089cd91156888e97aea65"
     },
     {
       "path": "references/donor-library/production/native-engineering-infrastructure.md",
@@ -448,15 +448,15 @@
       "path": "references/donor-library/production/vfx-studio.md",
       "role": "reference",
       "disclosure_group": "production-overlay",
-      "size": 3443,
-      "sha256": "da2036d57c74a94afbe935faac28080f7ab09c7aa90ef12da588053f74e1c637"
+      "size": 3513,
+      "sha256": "4ed47eb7faab8e52c137feeca19f86f9c2d2a79618ab6b86c7f31a04d073e13a"
     },
     {
       "path": "references/donor-library/profiles/README.md",
       "role": "reference",
       "disclosure_group": "donor-profile",
-      "size": 5067,
-      "sha256": "d3f44a2af6b517966c026789275b8f1d70cfb376ee11391e0dc5e122e2c13ba7"
+      "size": 5143,
+      "sha256": "ebe0d29af463393b928f99548e803c3a885b172acf576d89603a9aa61d95d0cc"
     },
     {
       "path": "references/donor-library/profiles/acl.md",
@@ -520,6 +520,13 @@
       "disclosure_group": "donor-profile",
       "size": 7644,
       "sha256": "17328125b775881abd9e80f5a2a252579162969c533b697fae104decec5e3c98"
+    },
+    {
+      "path": "references/donor-library/profiles/blender-sculpt-brushes-study-only.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 6977,
+      "sha256": "1b08bb4ef0ef2beb930f36f154a6d1cff8367993c62d56a86e4a3aa01926521b"
     },
     {
       "path": "references/donor-library/profiles/blender-study-only.md",
@@ -1257,11 +1264,18 @@
       "sha256": "aa4e9780576fa36515246ce4e16cc8aa6159a3bb4c796f37764da88c319c40af"
     },
     {
+      "path": "references/donor-library/sculpting-brushes.md",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 5883,
+      "sha256": "b22939f6f13b278c70afd18410f1d93b44fdd2b31a8752ba47c77cbf15acda55"
+    },
+    {
       "path": "references/donor-library/selection-policy.md",
       "role": "reference",
       "disclosure_group": "donor-router",
-      "size": 6536,
-      "sha256": "7d2c08c794e4f239aa5a5c8bf17cb91569e10372e8fe713f3f9f8cbc2cd0e6a0"
+      "size": 8089,
+      "sha256": "26c3decf39702d030767ccd8e1b490a013e364326e0a5d209668603191a2afcb"
     },
     {
       "path": "references/donor-library/simulation-gpu.md",
@@ -1323,8 +1337,8 @@
       "path": "references/project-archetypes.md",
       "role": "reference",
       "disclosure_group": "entrypoint",
-      "size": 20217,
-      "sha256": "c75d1c3986c7e99027b7d7a7d7aa60226ba98db21e0034e5322c099f680bc37d"
+      "size": 21582,
+      "sha256": "d087f06b1f86d3dbec7086dda48faea9ba2e5bf82a6fbc091a8eb1700d326119"
     },
     {
       "path": "scripts/apply_studio_backbone.py",
