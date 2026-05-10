@@ -53,6 +53,15 @@ to lock down the template, GUI/input stack, GPU lane, agentic control harness, d
 checks, code-map choice, and validation plan before files are created.
 ```
 
+For greenfield target repos, the code-map choice is a hard pre-source gate, not a footnote in the
+plan. Before the first implementation slice writes source, build, app, renderer, test, or docs
+scaffold files, the agent must establish one of these states: maintained code map accepted and
+bootstrapped, code map declined and recorded with the bootstrap script, or the user explicitly
+instructed the agent to defer the code-map decision for this project. Merely mentioning "code-map
+choice" in a plan is not acceptance. If the user gave an implementation command but the greenfield
+code-map state is still missing, pause after the research brief and ask the code-map question before
+coding.
+
 This rule applies even if `cppstudio-project-planner` is not listed in the current session. If the
 current turn explicitly says the session is already in Plan mode, still do the pre-plan research
 brief before calling any question UI. If Plan mode is unavailable or the user says to continue without
@@ -384,7 +393,21 @@ When this skill is active, work like a native C++ GPU systems engineer:
 2. Inspect the target repo: `AGENTS.md`, `CMakeLists.txt`, `CMakePresets.json`, package manifests, `.github/workflows`, `cmake/`, `tests/`, `scripts/`, docs, `docs/CODEBASE_ARCHITECTURE_INDEX.md`, `docs/CODEBASE_SUBSYSTEM_MANIFEST.json`, and `.cppstudio/code-map-state.json` when present.
 3. For a greenfield repo, run `scripts/scaffold_gpu_cpp_project.py` from this skill and then adapt only project names and required dependency switches.
 4. For an existing repo, run `scripts/apply_studio_backbone.py` against a temporary copy first unless the user explicitly wants direct modification.
-5. For a greenfield scaffold with no `.cppstudio/code-map-state.json`, ask once whether to create a maintained codebase architecture map. State the benefits: faster cold starts, cleaner multi-agent routing, explicit subsystem ownership, and less repeated code reading. If the user already explicitly asked for a code map, architecture map, or future-agent map during project creation, treat that as acceptance and run `scripts/bootstrap_code_map.py --enable --force` after scaffolding because the template includes starter generated map files. If they decline, run `scripts/bootstrap_code_map.py --decline` and do not prompt again unless asked. Do not create `.cppstudio/code-map-state.json`, `docs/CODEBASE_ARCHITECTURE_INDEX.md`, or `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` by guessing the schema; use the bootstrap script and validator.
+5. For a greenfield scaffold with no `.cppstudio/code-map-state.json`, treat the code-map decision as
+   a hard pre-source gate. Ask once whether to create a maintained codebase architecture map before
+   the first implementation slice writes source, build, app, renderer, test, or docs scaffold files.
+   State the benefits: faster cold starts, cleaner multi-agent routing, explicit subsystem ownership,
+   and less repeated code reading. If the user already explicitly asked for a code map, architecture
+   map, or future-agent map during project creation, treat that as acceptance and run
+   `scripts/bootstrap_code_map.py --enable --force` after scaffold/template material exists because
+   the template includes starter generated map files. If they decline, run
+   `scripts/bootstrap_code_map.py --decline` and do not prompt again unless asked. If the user
+   explicitly says to defer the code-map choice, record that as a deliberate pending decision in the
+   planning notes before coding and ask again only when the user reopens code-map setup. Do not
+   proceed with greenfield implementation while `.cppstudio/code-map-state.json` is missing and the
+   code-map choice is merely "pending." Do not create `.cppstudio/code-map-state.json`,
+   `docs/CODEBASE_ARCHITECTURE_INDEX.md`, or `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` by guessing the
+   schema; use the bootstrap script and validator.
 6. For an existing project with no `.cppstudio/code-map-state.json`, treat code-map enablement as a readiness protocol, not as an immediate choice prompt. If the user says they want to opt in to a code map, first say that you will run a non-destructive audit and that no restructure decision is needed yet. Then run `scripts/bootstrap_code_map.py --audit-existing` before asking any restructure/preserve/decline question. Summarize the actual stdout with concrete findings, evidence paths, nonstandard layout risks, estimated cleanup cost, and any specific restructuring that would be needed. If the audit did not run or you have not read its output, do not claim an audit happened and do not ask the user to choose a restructuring route. Do not write `docs/CODEMAP_BOOTSTRAP_AUDIT.md` unless the user wants a saved audit; then rerun with `--write-audit`. Only after presenting audit evidence ask whether the user wants to restructure first, preserve the current layout and document exceptions, or decline the map. Do not run `--enable` until the user chooses either restructure-complete or preserve-as-is. If generated map files already exist, use `--enable --force` only after the user accepts replacing those generated map files.
 7. When `.cppstudio/code-map-state.json` says `enabled`, or when repo-local instructions declare a maintained codebase map required, read the target repo's `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before code changes. Use that map to select the subsystem doc and primary paths for the change, then keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, public runtime behavior, or routable file ownership changes. Before every verified-slice commit in an enabled-map repo, run `scripts/check_code_map_drift.py --require-enabled` when present plus `scripts/validate_code_map.py --require-enabled`; if repo-local wrappers are absent in an older existing-project map, run the installed skill scripts from `${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/` and report the wrapper gap instead of treating it as a target project failure. If the drift check reports an unmapped path, update the manifest and matching subsystem doc before committing. Prefer adding the owning directory or glob route for related app-owned files, such as flat `src/*.h`, `src/*.cpp`, or `src/ui_panel_*.h`, instead of adding a one-off route for each controller/panel/helper file. If the user asks about a code map mid-project, explain it, run the existing-project readiness protocol, and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; if generated map files already exist, use `--force` only after the user accepts replacing them. For large existing repos, use parallel-lens subsystem audits only when delegation is explicitly authorized.
 8. If the readiness audit leads to pre-map infrastructure work such as `CMakePresets.json`,

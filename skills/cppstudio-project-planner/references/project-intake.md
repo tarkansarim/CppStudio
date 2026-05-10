@@ -133,6 +133,9 @@ Collect these facts before committing to architecture:
 - Dependency policy: system packages, vcpkg, Conan, FetchContent, submodules, vendored source,
   commercial SDKs, license constraints, and offline/air-gapped requirements.
 - Code map: ask whether the project should maintain a CppStudio code map for future agents. For
+  greenfield repos, this is a hard pre-source gate: before the first implementation slice writes
+  source, build, app, renderer, test, or docs scaffold files, the answer must be accepted, declined,
+  or explicitly deferred by the user. A merely pending code-map choice blocks implementation. For
   existing repos, require the code-map readiness audit before enabling it.
 - Validation: build presets, CTest labels, shader compilation, Vulkan validation, Compute Sanitizer,
   offscreen screenshots, profiler lanes, CI, and first milestone acceptance tests.

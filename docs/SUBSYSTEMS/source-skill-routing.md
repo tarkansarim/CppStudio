@@ -30,6 +30,9 @@ generated-project workflow instructions.
 
 ## Current Code-Map Bootstrap Posture
 
+- Greenfield code-map choice is a hard pre-source gate. Before the first source/build/app/test/docs
+  implementation slice, agents must get an accepted, declined, or explicitly deferred code-map
+  decision and must not treat a plan bullet that says "code-map choice" as acceptance.
 - Existing-project code-map opt-in is evidence-first: agents must run the non-destructive readiness
   audit, present concrete findings and cleanup cost, and only then ask whether to restructure,
   preserve the current layout with documented exceptions, or decline the map.

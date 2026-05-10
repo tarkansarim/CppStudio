@@ -15,6 +15,7 @@ from pathlib import Path
 
 POLARITY_TAGS = {"positive", "negative"}
 REQUIRED_CASES = {
+    "greenfield-code-map-pre-source-gate",
     "code-map-existing-project-bootstrap",
     "enabled-code-map-maintenance-closeout",
     "code-map-routing-smoke-proof",

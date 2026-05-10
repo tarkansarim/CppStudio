@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened greenfield code-map startup so substantial new projects must accept, decline, or
+  explicitly defer maintained code-map setup before the first source/build/app/test/docs slice.
 - Added durable greenfield research guidance so substantial native GPU project planning writes
   `docs/planning/RESEARCH_BRIEF.md`, records donor candidates explicitly, and separates existing
   donor routes from new reusable donor material before implementation.

@@ -216,6 +216,24 @@
       ]
     },
     {
+      "name": "greenfield-code-map-pre-source-gate",
+      "tags": [
+        "positive",
+        "code-map",
+        "planning",
+        "infrastructure"
+      ],
+      "prompt_shape": "User asks a Codex worker to create a substantial new native C++/Vulkan/CUDA/realtime project in an empty or greenfield repo.",
+      "expected_behavior": "Trigger cppstudio-project-planner and cpp-cuda-vulkan-studio, research and plan first, then treat the greenfield code-map choice as a hard pre-source gate. Before the first source/build/app/test/docs implementation slice, the agent must get an accepted, declined, or explicitly deferred code-map decision. If accepted, bootstrap through bootstrap_code_map.py and validate; if declined, record the decline through bootstrap_code_map.py; if deferred, record the explicit deferment in planning notes. Do not treat a plan bullet named code-map choice as acceptance and do not proceed while the code-map state is merely pending.",
+      "expected_paths": [
+        "skills/cppstudio-project-planner/SKILL.md",
+        "skills/cppstudio-project-planner/references/project-intake.md",
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/scripts/bootstrap_code_map.py",
+        "skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py"
+      ]
+    },
+    {
       "name": "code-map-existing-project-bootstrap",
       "tags": [
         "positive",

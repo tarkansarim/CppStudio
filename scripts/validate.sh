@@ -768,6 +768,7 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning h
     esac
 done
 code_map_case_checks=(
+    "greenfield-code-map-pre-source-gate|hard pre-source gate|accepted, declined, or explicitly deferred|bootstrap_code_map.py|code-map choice as acceptance"
     "code-map-existing-project-bootstrap|non-destructive existing-project readiness audit|bootstrap_code_map.py|check_code_map_drift.py|read-only fresh-agent or subagent routing smoke"
     "enabled-code-map-maintenance-closeout|check_code_map_drift.py|validate_code_map.py|CODEBASE_ARCHITECTURE_INDEX.md|AGENTS.md"
     "code-map-routing-smoke-proof|schema validation alone|read-only fresh-agent or subagent routing smoke|first confident subsystem route|pass/partial/fail"

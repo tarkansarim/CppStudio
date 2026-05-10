@@ -37,6 +37,7 @@ selection policy, and trigger-regression metadata.
   scorecards, harness readiness invariants, route inventory reconciliation, or action inventories
   change
 - trigger-evaluation prompt wording or forbidden-path probe rules change
-- trigger-matrix expectations for code-map bootstrap, enabled-map maintenance, or routing-smoke
+- trigger-matrix expectations for greenfield code-map pre-source gates, code-map bootstrap,
+  enabled-map maintenance, or routing-smoke
   proof change
 - required trigger case-name validation changes

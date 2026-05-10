@@ -109,6 +109,13 @@ control harness, donor routes, web checks, code-map choice, and validation plan 
 created.
 ```
 
+For greenfield target repos, code-map choice is a hard pre-source gate. Before the first
+implementation slice writes source, build, app, renderer, test, or docs scaffold files, the plan must
+end with one of these states: maintained code map accepted and ready to bootstrap, code map declined
+and ready to record through the bootstrap script, or explicit user instruction to defer the decision.
+"Pending" is not an implementation-ready state. Do not treat a plan bullet that says "code-map
+choice" as user acceptance.
+
 If the current turn explicitly says the session is already in Plan mode, still do the pre-plan
 research brief before calling any question UI. If Plan mode tooling is unavailable or the user
 explicitly says to continue without it, keep the planning conversation to no more than three
@@ -204,7 +211,8 @@ Every substantial plan should include:
 - per-subsystem decision records for major renderer, solver, authoring, GUI, asset, control,
   persistence, build/dependency, validation, or runtime choices
 - unresolved user decisions, grouped into no more than three questions at a time
-- code-map recommendation and whether it is accepted, declined, or pending
+- code-map recommendation and whether it is accepted, declined, or explicitly deferred. For
+  greenfield implementation, `pending` blocks source work.
 - validation/profiling plan for the first implementation milestone
 - implementation handoff checklist for the next agent step
 
