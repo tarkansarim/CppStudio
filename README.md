@@ -26,6 +26,8 @@ As a harness, CppStudio focuses on:
   screenshot, and troubleshoot generated tools before asking users for routine manual testing.
 - A nested donor-reference library that routes agents to relevant 3D, AI, simulation, rendering,
   CUDA, Vulkan, and infrastructure references without loading the whole library into context.
+- Persisted planning research that captures current-source evidence, donor candidates, and
+  project-specific dos and don'ts before implementation starts.
 - Validation, profiling, package integrity checks, rollout safety, and optional project-memory
   workflows that keep agent output auditable.
 
@@ -44,11 +46,11 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   slices, exact readiness invariants, route-inventory drift checks, GUI convention tables with
   icon/text affordance review, no-touch forbidden-path trigger probes, canonical bundled-skill
   rollout guidance, hardware-backed Vulkan readiness, donor-first web/upstream research for missing
-  routes, durable greenfield research artifacts with project dos/don'ts and donor-candidate
-  disposition, SDL3 pen/tablet input routing for stroke-based artist tools, supervised-worker
-  interrogation before inferring CppStudio gaps, stricter enabled-code-map drift/schema closeout,
-  generated repo-local map wrappers, donor/provenance closeout, and a GPL-safe Blender curves
-  groom-brush study donor.
+  routes, durable greenfield research artifacts with mandatory project dos/don'ts, donor-candidate
+  disposition, README planning guidance for those artifacts, SDL3 pen/tablet input routing for
+  stroke-based artist tools, supervised-worker interrogation before inferring CppStudio gaps,
+  stricter enabled-code-map drift/schema closeout, generated repo-local map wrappers,
+  donor/provenance closeout, and a GPL-safe Blender curves groom-brush study donor.
 - `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map
   projects catch changed source paths that are not routed by the manifest.
 - `c68ae77` - Hardened code-map and trigger validation, made manual managed-skill install
@@ -215,6 +217,15 @@ state-of-the-art or actively used approaches, identifies common authoring practi
 stacks, timelines, scene trees, scripting, or direct parameter workflows, separates current patterns
 from legacy or low-effort options, and presents the best available route unless you explicitly ask
 for something lightweight.
+
+For substantial greenfield apps, planning should leave a durable research artifact before source
+files are created. The expected default is `docs/planning/RESEARCH_BRIEF.md`, plus donor-candidate
+notes when new references are found. That brief should include `Project Dos And Don'ts` with at
+least `App / Domain` and `GUI / Product Surface` subsections. Each rule should point to source or
+donor evidence, name the affected subsystem or UI surface, and define a milestone-1 validation
+signal. This is where agents should capture practical lessons such as "use a real 3D viewport, not a
+diagnostic panel" or "treat stylus pressure as replayable input data," grounded in current tools and
+references rather than memory.
 
 For larger apps where template, GUI, input devices, donors, or validation choices matter, ask for
 planning first:

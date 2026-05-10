@@ -47,6 +47,10 @@ workflow, and repo banner/sample assets.
 - The README positions optional code maps as practical project memory plus section-level onboarding:
   enabled maps route agents to the relevant subsystem doc and source paths, then explain what that
   code section owns before edits.
+- The README documents substantial greenfield planning as a persisted research gate: agents should
+  write `docs/planning/RESEARCH_BRIEF.md`, record donor candidates when found, and include
+  project-specific App/Domain and GUI/Product-Surface dos and don'ts with evidence and validation
+  signals before implementation starts.
 - Code maps are described as the first navigation step before code changes, not a replacement for
   source inspection or a hard gate around normal engineering work.
 - Existing-project code-map setup is described as audit-first: agents should show concrete findings,

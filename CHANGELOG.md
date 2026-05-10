@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Documented the mandatory planning research artifact in the README, including project-specific
+  app/domain and GUI/product-surface dos and don'ts before implementation starts.
 - Added a mandatory `Project Dos And Don'ts` section for substantial greenfield planning artifacts,
   covering both app/domain rules and GUI/product-surface best practices with source evidence and
   validation signals.
