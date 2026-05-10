@@ -95,11 +95,13 @@ required_repo_files=(
     "scripts/audit_donor_freshness.py"
     "scripts/render_trigger_eval_prompt.py"
     "scripts/validate_trigger_matrix.py"
+    "scripts/validate_trigger_results.py"
     ".cppstudio/code-map-state.json"
     "CHANGELOG.md"
     "docs/CODEBASE_ARCHITECTURE_INDEX.md"
     "docs/CODEBASE_SUBSYSTEM_MANIFEST.json"
     "research/skill-packaging-agent-skills-mapping.md"
+    "research/donor-library/trigger-results-2026-05-10-installed.json"
     "companion-skill-snippets/user-agents/cppstudio-relay.md"
     "skills/cpp-cuda-vulkan-studio/package-manifest.json"
     "skills/native-cpp-gui-hud/SKILL.md"
@@ -681,12 +683,57 @@ expect_failure "code map manifest rejects escaping globs" "path must not contain
 python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
     "${SKILL_DIR}/references/donor-library" \
     --reference-root "${SKILL_DIR}/references"
+donor_audit_fixture="${VALIDATE_TMP}/donor_audit_fixture"
+mkdir -p "${donor_audit_fixture}/profiles"
+cat > "${donor_audit_fixture}/profiles/singular.md" <<'EOF'
+# Singular Source Fixture
+
+Source: https://example.com/singular
+Last checked: 2026-01-01
+Tier: `study-only`
+EOF
+cat > "${donor_audit_fixture}/profiles/plural.md" <<'EOF'
+# Plural Sources Fixture
+
+Sources: https://example.com/one https://example.com/two and
+https://example.com/three plus
+https://example.com/four
+Last checked: 2026-01-01
+Tier: `study-only`
+EOF
+python3 "${ROOT_DIR}/scripts/audit_donor_freshness.py" \
+    "${donor_audit_fixture}" \
+    --summary-only \
+    --json-output "${VALIDATE_TMP}/donor_audit_fixture.json"
+python3 - "${VALIDATE_TMP}/donor_audit_fixture.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+payload = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+issues = payload["issue_counts"]
+if issues.get("missing_source_url"):
+    raise SystemExit(f"donor freshness audit failed to parse Source/Sources URLs: {issues}")
+plural = next(report for report in payload["reports"] if report["path"] == "profiles/plural.md")
+if len(plural["source_urls"]) != 4:
+    raise SystemExit(f"expected four plural source URLs, got {plural['source_urls']}")
+PY
 python3 "${ROOT_DIR}/scripts/audit_donor_freshness.py" \
     "${SKILL_DIR}/references/donor-library" \
     --summary-only
 python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
     --repo-root "${ROOT_DIR}"
+python3 "${ROOT_DIR}/scripts/validate_trigger_results.py" \
+    "${ROOT_DIR}/research/donor-library/trigger-results-2026-05-10-installed.json" \
+    --matrix "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+    --repo-root "${ROOT_DIR}" \
+    --expected-path-mode portable-installed \
+    --require-case realtime-raytracing-framework-donors \
+    --require-case missing-donor-promotion-boundary \
+    --require-case agentic-control-harness-default \
+    --require-case grooming-brush-authoring-donors \
+    --require-case sculpting-brush-high-poly-donors
 python3 - "${SKILL_DIR}/assets/app-library-template/.github/workflows/gpu-cpp.yml" <<'PY'
 import sys
 from pathlib import Path
@@ -822,6 +869,150 @@ if case["expected_paths"]:
 if case["result"]["verdict"] != "pending":
     raise SystemExit("trigger result template should start pending")
 PY
+python3 "${ROOT_DIR}/scripts/validate_trigger_results.py" "${trigger_result_template}" \
+    --matrix "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+    --repo-root "${ROOT_DIR}" \
+    --expected-path-mode repo \
+    --require-case python-negative-control
+trigger_bad_result="$(mktemp "${VALIDATE_TMP}/trigger_eval_bad_result.XXXXXX.json")"
+python3 - "${trigger_result_template}" "${trigger_bad_result}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+source = Path(sys.argv[1])
+target = Path(sys.argv[2])
+data = json.loads(source.read_text(encoding="utf-8"))
+case = data["cases"][0]
+case["expected_paths"] = ["skills/cpp-cuda-vulkan-studio/SKILL.md"]
+case["result"] = {
+    "selected_skills": ["cpp-cuda-vulkan-studio"],
+    "opened_files": [],
+    "forbidden_paths_used": False,
+    "verdict": "pass",
+    "notes": "Fixture intentionally records a pass without opening the expected file.",
+}
+data["run"] = {
+    "run_date": "2026-05-10",
+    "agent_environment": "validation fixture",
+    "render_command": "validation fixture",
+}
+target.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "trigger result pass requires expected paths" "pass missing expected opened path" \
+    python3 "${ROOT_DIR}/scripts/validate_trigger_results.py" "${trigger_bad_result}" \
+    --matrix "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+    --repo-root "${ROOT_DIR}" \
+    --expected-path-mode repo \
+    --require-case python-negative-control
+trigger_unanchored_result="$(mktemp "${VALIDATE_TMP}/trigger_eval_unanchored_result.XXXXXX.json")"
+python3 - "${trigger_result_template}" "${trigger_unanchored_result}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+source = Path(sys.argv[1])
+target = Path(sys.argv[2])
+data = json.loads(source.read_text(encoding="utf-8"))
+case = data["cases"][0]
+case["result"] = {
+    "selected_skills": ["cpp-cuda-vulkan-studio"],
+    "opened_files": ["skills/cpp-cuda-vulkan-studio/SKILL.md"],
+    "forbidden_paths_used": False,
+    "verdict": "pass",
+    "notes": "Fixture intentionally records an unanchored pass.",
+}
+data["run"] = {
+    "run_date": "2026-05-10",
+    "agent_environment": "validation fixture",
+    "render_command": "validation fixture",
+}
+target.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "trigger result pass requires matrix anchoring" "pass cases require --matrix anchoring" \
+    python3 "${ROOT_DIR}/scripts/validate_trigger_results.py" "${trigger_unanchored_result}"
+trigger_positive_template="$(mktemp "${VALIDATE_TMP}/trigger_eval_positive_result.XXXXXX.json")"
+python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
+    "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+    --repo-root "${ROOT_DIR}" \
+    --case vulkan-default-greenfield \
+    --write-result-template "${trigger_positive_template}" >/dev/null
+trigger_deleted_expected="$(mktemp "${VALIDATE_TMP}/trigger_eval_deleted_expected.XXXXXX.json")"
+python3 - "${trigger_positive_template}" "${trigger_deleted_expected}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+source = Path(sys.argv[1])
+target = Path(sys.argv[2])
+data = json.loads(source.read_text(encoding="utf-8"))
+case = data["cases"][0]
+case["expected_paths"] = []
+case["result"] = {
+    "selected_skills": ["cpp-cuda-vulkan-studio"],
+    "opened_files": ["skills/cpp-cuda-vulkan-studio/SKILL.md"],
+    "forbidden_paths_used": False,
+    "verdict": "pass",
+    "notes": "Fixture intentionally deletes the matrix expected paths.",
+}
+data["run"] = {
+    "run_date": "2026-05-10",
+    "agent_environment": "validation fixture",
+    "render_command": "validation fixture",
+}
+target.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "trigger result cannot delete matrix expected paths" "expected_paths do not match trigger matrix" \
+    python3 "${ROOT_DIR}/scripts/validate_trigger_results.py" "${trigger_deleted_expected}" \
+    --matrix "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+    --repo-root "${ROOT_DIR}" \
+    --expected-path-mode repo \
+    --require-case vulkan-default-greenfield
+trigger_wrong_mode="$(mktemp "${VALIDATE_TMP}/trigger_eval_wrong_mode.XXXXXX.json")"
+python3 - "${ROOT_DIR}/research/donor-library/trigger-results-2026-05-10-installed.json" "${trigger_wrong_mode}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+source = Path(sys.argv[1])
+target = Path(sys.argv[2])
+data = json.loads(source.read_text(encoding="utf-8"))
+data["path_mode"] = "repo"
+target.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "installed trigger result requires portable-installed mode" "does not match required" \
+    python3 "${ROOT_DIR}/scripts/validate_trigger_results.py" "${trigger_wrong_mode}" \
+    --matrix "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+    --repo-root "${ROOT_DIR}" \
+    --expected-path-mode portable-installed \
+    --require-case realtime-raytracing-framework-donors \
+    --require-case missing-donor-promotion-boundary \
+    --require-case agentic-control-harness-default \
+    --require-case grooming-brush-authoring-donors \
+    --require-case sculpting-brush-high-poly-donors
+trigger_missing_case="$(mktemp "${VALIDATE_TMP}/trigger_eval_missing_case.XXXXXX.json")"
+python3 - "${ROOT_DIR}/research/donor-library/trigger-results-2026-05-10-installed.json" "${trigger_missing_case}" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+source = Path(sys.argv[1])
+target = Path(sys.argv[2])
+data = json.loads(source.read_text(encoding="utf-8"))
+data["cases"] = [case for case in data["cases"] if case["name"] != "sculpting-brush-high-poly-donors"]
+data["case_count"] = len(data["cases"])
+target.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+PY
+expect_failure "installed trigger result requires all claimed cases" "missing required result case" \
+    python3 "${ROOT_DIR}/scripts/validate_trigger_results.py" "${trigger_missing_case}" \
+    --matrix "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+    --repo-root "${ROOT_DIR}" \
+    --expected-path-mode portable-installed \
+    --require-case realtime-raytracing-framework-donors \
+    --require-case missing-donor-promotion-boundary \
+    --require-case agentic-control-harness-default \
+    --require-case grooming-brush-authoring-donors \
+    --require-case sculpting-brush-high-poly-donors
 expect_failure "unknown trigger eval tag" "unknown trigger tag" \
     python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
@@ -1516,6 +1707,25 @@ if old not in text:
 path.write_text(text.replace(old, new), encoding="utf-8")
 PY
 expect_failure "category/profile donor tier mismatch" "tier" \
+    python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
+    "${donor_tmp}/donor-library" \
+    --reference-root "${donor_tmp}"
+rm -rf "${donor_tmp}"
+donor_tmp="$(mktemp -d "${VALIDATE_TMP}/donor_validate_wrapped_source_tier.XXXXXX")"
+cp -a "${SKILL_DIR}/references/donor-library" "${donor_tmp}/donor-library"
+python3 - "${donor_tmp}/donor-library/gltf-runtime-assets.md" <<'PY'
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+old = "| [tinygltf](https://github.com/syoyo/tinygltf) | safe-donor |"
+new = "| [tinygltf](https://github.com/syoyo/tinygltf) | study-only |"
+if old not in text:
+    raise SystemExit("tinygltf row fixture not found")
+path.write_text(text.replace(old, new), encoding="utf-8")
+PY
+expect_failure "wrapped Sources donor tier mismatch" "category tier" \
     python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
     "${donor_tmp}/donor-library" \
     --reference-root "${donor_tmp}"

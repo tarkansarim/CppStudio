@@ -28,6 +28,7 @@ workflow, and repo banner/sample assets.
 ## Update When
 
 - public install/use instructions change
+- project-level maintainer instructions for normal rollout versus single-skill sync change
 - public package integrity, audit log, or progressive disclosure docs change
 - public backlog or future roadmap notes change
 - public code-map positioning, readiness protocol, or user-facing workflow changes

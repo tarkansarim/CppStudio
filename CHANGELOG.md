@@ -7,6 +7,20 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 - Added adaptive task-list realignment guidance so agents can revise stale implementation plans when
   evidence changes the trajectory, while still pausing for product, stack, scope, dependency/license,
   or explicit user-constraint changes.
+- Updated project-level maintainer instructions so normal user-level publishing uses
+  `rollout_to_codex.sh`, while `sync_to_codex.sh` is limited to dry-run, diagnostic, or explicitly
+  single-skill sync cases.
+- Added checked-in installed-path trigger evidence for recent planning, missing-donor promotion,
+  agentic-control-harness, grooming, and sculpting routes.
+- Fixed donor validation and freshness auditing so plural or wrapped `Sources:` metadata with
+  multiple URLs is parsed for both route/profile matching and freshness reports, added fixtures for
+  wrapped source-route mismatches, added portable installed-path trigger result templates, and marked
+  the new Blender sculpt profile with `Last checked` metadata.
+- Added matrix-anchored trigger-result artifact validation so recorded fresh-agent `pass` evidence
+  must include every matrix-rendered expected opened path, avoid forbidden paths, include selected
+  skills, carry run metadata, cannot self-edit the expected/forbidden path contract, cannot
+  downgrade checked-in installed evidence out of `portable-installed` mode, and cannot silently drop
+  the claimed case set.
 - Hardened midstream major feature requests so agents reopen the research/planning gate and update
   planning artifacts, donor notes, dos/don'ts, and decision records instead of answering from
   chat-only research or coding from memory.

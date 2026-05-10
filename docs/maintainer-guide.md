@@ -70,27 +70,9 @@ exist, `--enable` refuses to replace them unless `--force` is explicit after use
 
 ## Publish To Codex
 
-Preview sync changes:
-
-```bash
-./scripts/sync_to_codex.sh --dry-run
-```
-
-Publish only one selected skill, defaulting to the main `cpp-cuda-vulkan-studio` skill:
-
-```bash
-./scripts/sync_to_codex.sh
-```
-
-For a bundled auxiliary skill, set `SKILL_NAME` explicitly:
-
-```bash
-SKILL_NAME=native-cpp-gui-hud ./scripts/sync_to_codex.sh
-SKILL_NAME=cppstudio-project-planner ./scripts/sync_to_codex.sh
-SKILL_NAME=agentic-control-harness ./scripts/sync_to_codex.sh
-```
-
-Publish the main skill, bundled auxiliary skills, and companion-skill donor-library links:
+Normal publishing for this repo uses rollout. Rollout validates the repo, syncs the main
+`cpp-cuda-vulkan-studio` skill, syncs bundled auxiliary skills, installs companion donor links, and
+updates the minimal user-level `AGENTS.md` relay:
 
 ```bash
 ./scripts/rollout_to_codex.sh
@@ -109,6 +91,27 @@ deliberate staging or docs-only install, run:
 
 ```bash
 SKIP_USER_AGENTS_RELAY=1 ./scripts/rollout_to_codex.sh
+```
+
+Use `sync_to_codex.sh` only for dry runs, diagnostics, or an intentionally scoped single-skill sync.
+Preview a selected sync with:
+
+```bash
+./scripts/sync_to_codex.sh --dry-run
+```
+
+Sync only one selected skill, defaulting to the main `cpp-cuda-vulkan-studio` skill:
+
+```bash
+./scripts/sync_to_codex.sh
+```
+
+For a bundled auxiliary single-skill diagnostic sync, set `SKILL_NAME` explicitly:
+
+```bash
+SKILL_NAME=native-cpp-gui-hud ./scripts/sync_to_codex.sh
+SKILL_NAME=cppstudio-project-planner ./scripts/sync_to_codex.sh
+SKILL_NAME=agentic-control-harness ./scripts/sync_to_codex.sh
 ```
 
 Before pushing CppStudio to remote, update `CHANGELOG.md` with a concise entry for the tracked
@@ -234,7 +237,8 @@ python3 scripts/validate_donor_library.py \
 ```
 
 `./scripts/validate.sh` and `./scripts/rollout_to_codex.sh` run this donor validator automatically.
-Trigger-matrix validation checks schema, controlled tags, and path integrity; use
+Trigger-matrix validation checks schema, controlled tags, and path integrity; trigger-result
+validation checks that recorded `pass` probes opened every expected path and no forbidden paths. Use
 `research/donor-library/trigger-regression-checklist.md` for manual or subagent trigger reruns.
 Optional donor freshness audits are report-only by default so validation does not depend on network
 or upstream availability:
@@ -271,6 +275,25 @@ The renderer only prepares prompts and report blanks. It does not call agents or
 behavior by itself. Add `--write-result-template trigger-results.json` when you want a structured
 machine-readable report skeleton for the selected cases. Rendered packs define forbidden paths as
 no-touch paths: evaluators must not open, read, search, stat, list, or existence-check them.
+After filling a result artifact, validate it:
+
+```bash
+python3 scripts/validate_trigger_results.py trigger-results.json \
+  --matrix research/donor-library/trigger-matrix.json \
+  --repo-root . \
+  --expected-path-mode portable-installed \
+  --require-case realtime-raytracing-framework-donors \
+  --require-case missing-donor-promotion-boundary \
+  --require-case agentic-control-harness-default \
+  --require-case grooming-brush-authoring-donors \
+  --require-case sculpting-brush-high-poly-donors
+```
+
+Passing cases must list all expected paths in `result.opened_files`, keep forbidden paths untouched,
+include selected skills, carry fresh-run metadata, and match expected/forbidden paths rendered from
+`trigger-matrix.json`. For checked-in installed evidence, also pin `--expected-path-mode
+portable-installed` and require the claimed case names so the artifact cannot silently downgrade to
+repo-relative evidence or shrink the result set.
 
 `validate_trigger_matrix.py` requires the dedicated code-map cases
 `code-map-existing-project-bootstrap`, `enabled-code-map-maintenance-closeout`, and
@@ -461,5 +484,6 @@ When finishing changes in this repo, report:
 
 - repo-level files changed
 - whether `./scripts/validate.sh` or `./scripts/validate.sh --full` passed
-- whether `./scripts/sync_to_codex.sh` or `./scripts/rollout_to_codex.sh` was run
+- whether `./scripts/rollout_to_codex.sh` was run for normal bundled installs, or which explicit
+  single-skill `./scripts/sync_to_codex.sh` run was used and why
 - any installed-tool gaps, such as missing `clang-format`, `clang-tidy`, CUDA tools, or Vulkan tools

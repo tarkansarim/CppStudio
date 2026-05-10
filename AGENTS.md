@@ -19,7 +19,9 @@ C++/CUDA/Vulkan development.
   maintained code map for this repo.
 - Before changing repo files, use the maintained code map to choose the matching subsystem doc and
   primary paths for the work.
-- Publish to user-level Codex with `./scripts/sync_to_codex.sh`.
+- Publish normal user-level Codex installs with `./scripts/rollout_to_codex.sh`.
+- Use `./scripts/sync_to_codex.sh` only for dry runs, diagnostics, or an explicitly scoped
+  single-skill sync.
 - Do not hand-edit `${HOME}/.codex/skills/cpp-cuda-vulkan-studio` as the long-term source.
 - Do not move private app, local workstation, or other project-specific skills back into user-level
   Codex from this repo.
@@ -92,8 +94,10 @@ C++/CUDA/Vulkan development.
   or README donor inventories, run a sub-agent trigger lane before close-out. Use multiple realistic
   prompts that should trigger the changed skill/routing, verify the agents select the expected skill and
   donor profiles, then fix any ambiguity they find before committing.
-- The sync script validates both the repo copy and the installed Codex copy.
-- If validation fails because of a real script/template issue, fix the repo copy first, then sync.
+- The rollout script validates the repo copy, bundled installed skills, companion donor links, and
+  the user-level relay. The sync script validates only the selected single-skill sync path.
+- If validation fails because of a real script/template issue, fix the repo copy first, then rerun
+  rollout or the explicitly selected sync.
 
 ## Sync Behavior
 
@@ -146,7 +150,8 @@ When finishing work here, report:
 
 - files changed at the repo level
 - whether `./scripts/validate.sh` or `./scripts/validate.sh --full` passed
-- whether `./scripts/sync_to_codex.sh` was run
+- whether `./scripts/rollout_to_codex.sh` was run for normal bundled installs, or which explicit
+  single-skill `./scripts/sync_to_codex.sh` run was used and why
 - whether the sub-agent trigger lane was run when skill/donor routing changed
 - whether `CHANGELOG.md` was updated before any push to remote
 - whether README Recent Commit Highlights was updated before any qualifying push to remote

@@ -16,6 +16,13 @@ for discussion, expansion, and source provenance before future skill updates.
 - [trigger-matrix.json](trigger-matrix.json): routing regression cases for skill and donor discovery.
 - [trigger-regression-checklist.md](trigger-regression-checklist.md): manual/subagent trigger-lane
   expectations.
+- [trigger-results-2026-05-10-installed.json](trigger-results-2026-05-10-installed.json): portable
+  installed-path fresh-subagent evidence for the planning, donor-promotion, harness, grooming, and
+  sculpting route probes. Validate filled result artifacts with
+  `scripts/validate_trigger_results.py --matrix research/donor-library/trigger-matrix.json` so
+  `pass` cases cannot omit matrix-rendered expected opened paths, self-edit the expected-path
+  contract, touch forbidden paths, downgrade checked-in installed evidence out of
+  `portable-installed` mode, or silently drop claimed case names.
 - `scripts/audit_donor_freshness.py`: optional report-only source URL and `Last checked` metadata
   audit for donor profiles.
 

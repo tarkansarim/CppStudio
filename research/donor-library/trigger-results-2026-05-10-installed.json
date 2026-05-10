@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "matrix_description": "Manual/subagent trigger-regression matrix for the CppStudio donor and lane-routing skills. Repo validation checks schema, tags, and path integrity; fresh agent behavior still requires a manual or delegated rerun.",
+  "path_mode": "portable-installed",
+  "case_count": 5,
+  "run": {
+    "run_date": "2026-05-10",
+    "agent_environment": "fresh Codex subagents, fork_context=false, read-only probes, installed skill paths under ${CODEX_HOME:-$HOME/.codex}/skills",
+    "render_command": "python3 scripts/render_trigger_eval_prompt.py research/donor-library/trigger-matrix.json --repo-root . --installed-paths --portable-installed-paths --case realtime-raytracing-framework-donors --case missing-donor-promotion-boundary --case agentic-control-harness-default --case grooming-brush-authoring-donors --case sculpting-brush-high-poly-donors --write-result-template research/donor-library/trigger-results-2026-05-10-installed.json"
+  },
+  "cases": [
+    {
+      "name": "missing-donor-promotion-boundary",
+      "tags": [
+        "positive",
+        "planning",
+        "infrastructure",
+        "lookup"
+      ],
+      "prompt_shape": "A target-project agent researching a native C++ GPU feature discovers that the best current donor is missing from the installed CppStudio donor library, and the user asks to add it to the reusable library for future agents.",
+      "expected_behavior": "Record the vetted donor in the target project first as required evidence and never skip that candidate artifact because source promotion is possible. Then promote into the CppStudio source repo donor library when the source root is available or provided. Do not patch ~/.codex/skills installed donor files directly. If the source repo path is unknown, report the project-local candidate and ask for CPPSTUDIO_SOURCE_ROOT or the source repo path.",
+      "expected_paths": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/cppstudio-project-planner/SKILL.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/README.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md",
+        "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/docs/SUBSYSTEMS/source-skill-routing.md",
+        "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/docs/SUBSYSTEMS/donor-library.md"
+      ],
+      "forbidden_paths": [],
+      "result": {
+        "selected_skills": [
+          "cppstudio-repo-onboarding",
+          "cppstudio-project-planner",
+          "cpp-cuda-vulkan-studio",
+          "donor-library-system"
+        ],
+        "opened_files": [
+          "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/.codex/skills/cppstudio-repo-onboarding/SKILL.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cppstudio-project-planner/SKILL.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/SKILL.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/README.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/donor-library-system/SKILL.md",
+          "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/docs/SUBSYSTEMS/source-skill-routing.md",
+          "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/docs/SUBSYSTEMS/donor-library.md"
+        ],
+        "forbidden_paths_used": false,
+        "verdict": "pass",
+        "notes": "Fresh probe 019e13e7-f17a-7e53-b620-af7af100e553 required target-project docs/planning/DONOR_CANDIDATES.md capture before reusable promotion, identified the CppStudio source donor library as source of truth, refused direct edits to installed ${CODEX_HOME:-$HOME/.codex}/skills donor files, and confirmed it would ask for CPPSTUDIO_SOURCE_ROOT or the source path if unavailable."
+      }
+    },
+    {
+      "name": "agentic-control-harness-default",
+      "tags": [
+        "positive",
+        "planning",
+        "harness",
+        "gui",
+        "vulkan"
+      ],
+      "prompt_shape": "User plans or builds an interactive native C++ realtime app, viewer, renderer, simulator, artist tool, or game tool that an agent should be able to test, inspect, troubleshoot, or control.",
+      "expected_behavior": "Trigger agentic-control-harness with cppstudio-project-planner or cpp-cuda-vulkan-studio; treat the harness as default-on for interactive apps unless the user opts out or the target is headless/security-sensitive; plan local-only HTTP/curl or CLI controls with optional MCP facade over the same API; include state readback, recent logs/warnings, visual/UI or viewport evidence, launch/control registry docs, feature-control maintenance, exact readiness invariants, route registry/docs reconciliation, UI action/affordance inventory, and stress lanes so agents test routine changes before asking the user for manual verification.",
+      "expected_paths": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/agentic-control-harness/SKILL.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/agentic-control-harness/references/control-harness.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cppstudio-project-planner/SKILL.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/SKILL.md"
+      ],
+      "forbidden_paths": [],
+      "result": {
+        "selected_skills": [
+          "cppstudio-project-planner",
+          "cpp-cuda-vulkan-studio",
+          "agentic-control-harness",
+          "native-cpp-gui-hud",
+          "offscreen-test-manager",
+          "sonar-design"
+        ],
+        "opened_files": [
+          "${CODEX_HOME:-$HOME/.codex}/skills/agentic-control-harness/SKILL.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/agentic-control-harness/references/control-harness.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cppstudio-project-planner/SKILL.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/SKILL.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/native-cpp-gui-hud/SKILL.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/native-cpp-gui-hud/references/gui-options.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md"
+        ],
+        "forbidden_paths_used": false,
+        "verdict": "pass",
+        "notes": "Probe treated the harness as default-on for interactive native apps, required localhost dev/test control, curlable or CLI route, safe GUI/render-thread command routing, state/log/UI/viewport readback, fresh screenshot evidence, OSTM for GUI tests, and avoided MCP-only or stale-screenshot shortcuts."
+      }
+    },
+    {
+      "name": "realtime-raytracing-framework-donors",
+      "tags": [
+        "positive",
+        "vulkan",
+        "graphics",
+        "rendering"
+      ],
+      "prompt_shape": "Realtime rendering framework work needs render graphs, ray tracing, path tracing, RTX SDK boundaries, shader/model loading, or prototype renderer architecture references.",
+      "expected_behavior": "Route to graphics-rendering and Falcor plus Vulkan sample profiles; keep NVIDIA SDK and vendor-specific dependencies explicit rather than silently adding them to a portable Vulkan target.",
+      "expected_paths": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/falcor.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/khronos-vulkan-samples.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nvidia-vk-mini-samples.md"
+      ],
+      "forbidden_paths": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ],
+      "result": {
+        "selected_skills": [
+          "cpp-cuda-vulkan-studio"
+        ],
+        "opened_files": [
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/SKILL.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/falcor.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/khronos-vulkan-samples.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/nvidia-vk-mini-samples.md",
+          "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/.codex/skills/cppstudio-repo-onboarding/SKILL.md"
+        ],
+        "forbidden_paths_used": false,
+        "verdict": "pass",
+        "notes": "Fresh probe 019e13e7-f1d1-7e90-8d7c-1528824f6d8f routed to graphics-rendering, Falcor, Khronos Vulkan-Samples, and NVIDIA vk_mini_samples, avoided the forbidden AI runtime donor category, and kept NVIDIA SDK/framework dependencies explicit for portable Vulkan targets."
+      }
+    },
+    {
+      "name": "grooming-brush-authoring-donors",
+      "tags": [
+        "positive",
+        "vfx",
+        "games",
+        "study-only"
+      ],
+      "prompt_shape": "Native C++/Vulkan or C++/CUDA groom tool needs artist-facing grooming brushes such as comb, clump, part, cut, trim, length, grow/shrink, pinch, puff, smooth, slide, density, add/delete, masks, soft selection, or Wacom/stylus pressure.",
+      "expected_behavior": "Route to hair-grooming-fur and the Blender Curves Groom Brushes study-only profile before runtime hair/rendering donors; keep Blender GPL source as behavior/reference only, then pair with TressFX/OpenUSD/Alembic/Unreal HairStrands only when runtime, interchange, or full groom architecture is in scope.",
+      "expected_paths": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/hair-grooming-fur.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/blender-curves-groom-brushes-study-only.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tressfx.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openusd.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/alembic.md"
+      ],
+      "forbidden_paths": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ],
+      "result": {
+        "selected_skills": [
+          "cpp-cuda-vulkan-studio",
+          "cppstudio-project-planner",
+          "native-cpp-gui-hud",
+          "agentic-control-harness",
+          "vulkan-compute-sync",
+          "modern-cpp-cmake"
+        ],
+        "opened_files": [
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/hair-grooming-fur.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/production/vfx-studio.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/dcc-scene-pipeline.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/blender-curves-groom-brushes-study-only.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/tressfx.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/openusd.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/alembic.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/imgui-tooling.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/sdl3-platform-input.md"
+        ],
+        "forbidden_paths_used": false,
+        "verdict": "pass",
+        "notes": "Probe routed grooming brushes to the Blender Curves Groom Brushes study-only profile before runtime hair/rendering donors, kept Blender/HairWorks/Unreal/Unity study-only where applicable, used TressFX/OpenUSD/Alembic as scoped runtime/interchange references, and did not add CUDA to a Vulkan lane."
+      }
+    },
+    {
+      "name": "sculpting-brush-high-poly-donors",
+      "tags": [
+        "positive",
+        "vfx",
+        "games",
+        "study-only",
+        "geometry"
+      ],
+      "prompt_shape": "Native C++/Vulkan ZBrush-like or Mudbox-like sculpting tool needs high-poly performance, Draw/Smooth/Clay/Inflate/Grab/Pinch/Flatten/Mask brushes, dynamic topology, multiresolution, Paint BVH/PBVH-style queries, or Wacom/stylus pressure.",
+      "expected_behavior": "Route to sculpting-brushes and the Blender Sculpt Brushes study-only profile before generic geometry/rendering donors; keep Blender GPL-family source as behavior/reference only, then pair with meshoptimizer, OpenSubdiv, VMA, native GUI/HUD, and Vulkan foundation donors when high-poly performance, product brush UI, or GPU buffer ownership is in scope.",
+      "expected_paths": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/sculpting-brushes.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/blender-sculpt-brushes-study-only.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/meshoptimizer.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/opensubdiv.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vulkan-memory-allocator.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md"
+      ],
+      "forbidden_paths": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ],
+      "result": {
+        "selected_skills": [
+          "cpp-cuda-vulkan-studio",
+          "cppstudio-project-planner",
+          "ceiling-research",
+          "native-cpp-gui-hud",
+          "agentic-control-harness",
+          "vulkan-compute-sync",
+          "modern-cpp-cmake",
+          "gpu-profiling-workstation"
+        ],
+        "opened_files": [
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/README.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/sculpting-brushes.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/blender-sculpt-brushes-study-only.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/surfaces-subdivision.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/meshoptimizer.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/opensubdiv.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vulkan-memory-allocator.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/geometry-simulation.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/imgui-tooling.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/sdl3-platform-input.md"
+        ],
+        "forbidden_paths_used": false,
+        "verdict": "pass",
+        "notes": "Probe routed first to sculpting-brushes and Blender Sculpt Brushes study-only, treated Blender GPL-family source as behavior/reference only, required meshoptimizer/OpenSubdiv/VMA and numeric high-poly gates, rejected whole-mesh-per-stroke uploads as production architecture, and did not touch ai-runtimes-kernels."
+      }
+    }
+  ]
+}

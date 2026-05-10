@@ -23,6 +23,11 @@ def parse_args() -> argparse.Namespace:
         help="Render source skill paths as installed user-level Codex paths.",
     )
     parser.add_argument(
+        "--portable-installed-paths",
+        action="store_true",
+        help="With --installed-paths, render portable ${CODEX_HOME} and ${CPPSTUDIO_SOURCE_ROOT} placeholders.",
+    )
+    parser.add_argument(
         "--codex-home",
         type=Path,
         default=None,
@@ -95,10 +100,16 @@ def installed_codex_home(raw: Path | None) -> Path:
     return (Path.home() / ".codex").resolve()
 
 
-def display_path(relative: str, repo_root: Path, codex_home: Path | None) -> str:
+def display_path(relative: str, repo_root: Path, codex_home: Path | None, portable_installed: bool = False) -> str:
     if codex_home is None:
         return relative
     source_prefix = "skills/"
+    if portable_installed:
+        if relative == "AGENTS.md":
+            return "${CODEX_HOME:-$HOME/.codex}/AGENTS.md"
+        if relative.startswith(source_prefix):
+            return f"${{CODEX_HOME:-$HOME/.codex}}/{relative}"
+        return f"${{CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}}/{relative}"
     if relative == "AGENTS.md":
         return str(codex_home / "AGENTS.md")
     if relative.startswith(source_prefix):
@@ -106,17 +117,29 @@ def display_path(relative: str, repo_root: Path, codex_home: Path | None) -> str
     return str(repo_root / relative)
 
 
-def render_paths(label: str, paths: list[Any], repo_root: Path, codex_home: Path | None) -> list[str]:
+def render_paths(
+    label: str,
+    paths: list[Any],
+    repo_root: Path,
+    codex_home: Path | None,
+    portable_installed: bool = False,
+) -> list[str]:
     if not paths:
         return [f"**{label}:** none"]
     lines = [f"**{label}:**"]
     for path in paths:
-        rendered = display_path(str(path), repo_root, codex_home)
+        rendered = display_path(str(path), repo_root, codex_home, portable_installed)
         lines.append(f"- `{rendered}`")
     return lines
 
 
-def render_case(index: int, case: dict[str, Any], repo_root: Path, codex_home: Path | None) -> list[str]:
+def render_case(
+    index: int,
+    case: dict[str, Any],
+    repo_root: Path,
+    codex_home: Path | None,
+    portable_installed: bool = False,
+) -> list[str]:
     name = str(case["name"])
     tags = case_tags(case)
     lines = [
@@ -133,9 +156,17 @@ def render_case(index: int, case: dict[str, Any], repo_root: Path, codex_home: P
         f"**Expected behavior:** {case['expected_behavior']}",
         "",
     ]
-    lines.extend(render_paths("Expected paths", case.get("expected_paths", []), repo_root, codex_home))
+    lines.extend(render_paths("Expected paths", case.get("expected_paths", []), repo_root, codex_home, portable_installed))
     lines.append("")
-    lines.extend(render_paths("Forbidden paths or files", case.get("must_not_trigger_paths", []), repo_root, codex_home))
+    lines.extend(
+        render_paths(
+            "Forbidden paths or files",
+            case.get("must_not_trigger_paths", []),
+            repo_root,
+            codex_home,
+            portable_installed,
+        )
+    )
     lines.extend(
         [
             "",
@@ -151,8 +182,19 @@ def render_case(index: int, case: dict[str, Any], repo_root: Path, codex_home: P
     return lines
 
 
-def render_prompt(matrix: dict[str, Any], cases: list[dict[str, Any]], repo_root: Path, codex_home: Path | None) -> str:
-    mode = "installed Codex paths" if codex_home is not None else "repo-relative source paths"
+def render_prompt(
+    matrix: dict[str, Any],
+    cases: list[dict[str, Any]],
+    repo_root: Path,
+    codex_home: Path | None,
+    portable_installed: bool = False,
+) -> str:
+    if codex_home is None:
+        mode = "repo-relative source paths"
+    elif portable_installed:
+        mode = "portable installed Codex paths"
+    else:
+        mode = "installed Codex paths"
     lines = [
         "# CppStudio Trigger Evaluation Pack",
         "",
@@ -169,16 +211,33 @@ def render_prompt(matrix: dict[str, Any], cases: list[dict[str, Any]], repo_root
         "",
     ]
     for index, case in enumerate(cases, 1):
-        lines.extend(render_case(index, case, repo_root, codex_home))
+        lines.extend(render_case(index, case, repo_root, codex_home, portable_installed))
     return "\n".join(lines).rstrip() + "\n"
 
 
-def result_template(matrix: dict[str, Any], cases: list[dict[str, Any]], repo_root: Path, codex_home: Path | None) -> dict[str, Any]:
-    mode = "installed" if codex_home is not None else "repo"
+def result_template(
+    matrix: dict[str, Any],
+    cases: list[dict[str, Any]],
+    repo_root: Path,
+    codex_home: Path | None,
+    portable_installed: bool = False,
+) -> dict[str, Any]:
+    if codex_home is None:
+        mode = "repo"
+    elif portable_installed:
+        mode = "portable-installed"
+    else:
+        mode = "installed"
     rendered_cases: list[dict[str, Any]] = []
     for case in cases:
-        expected_paths = [display_path(str(path), repo_root, codex_home) for path in case.get("expected_paths", [])]
-        forbidden_paths = [display_path(str(path), repo_root, codex_home) for path in case.get("must_not_trigger_paths", [])]
+        expected_paths = [
+            display_path(str(path), repo_root, codex_home, portable_installed)
+            for path in case.get("expected_paths", [])
+        ]
+        forbidden_paths = [
+            display_path(str(path), repo_root, codex_home, portable_installed)
+            for path in case.get("must_not_trigger_paths", [])
+        ]
         rendered_cases.append(
             {
                 "name": case.get("name"),
@@ -219,15 +278,21 @@ def main() -> int:
     if not selected:
         print("no trigger cases matched the requested filters", file=sys.stderr)
         return 1
+    if args.portable_installed_paths and not args.installed_paths:
+        print("--portable-installed-paths requires --installed-paths", file=sys.stderr)
+        return 1
     codex_home = installed_codex_home(args.codex_home) if args.installed_paths else None
     if args.write_result_template is not None:
         output_path = args.write_result_template
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(
-            json.dumps(result_template(matrix, selected, repo_root, codex_home), indent=2) + "\n",
+            json.dumps(
+                result_template(matrix, selected, repo_root, codex_home, args.portable_installed_paths),
+                indent=2,
+            ) + "\n",
             encoding="utf-8",
         )
-    sys.stdout.write(render_prompt(matrix, selected, repo_root, codex_home))
+    sys.stdout.write(render_prompt(matrix, selected, repo_root, codex_home, args.portable_installed_paths))
     return 0
 
 

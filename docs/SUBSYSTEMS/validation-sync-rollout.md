@@ -17,6 +17,7 @@ skills, and watch-mode publishing behavior.
 - `scripts/watch_to_codex.sh`
 - `scripts/quick_validate_skill.py`
 - `scripts/validate_skill_package.py`
+- `scripts/validate_trigger_results.py`
 - `scripts/bootstrap_code_map.py`
 - `scripts/validate_code_map.py`
 - `scripts/check_code_map_drift.py`
@@ -28,12 +29,14 @@ skills, and watch-mode publishing behavior.
 
 ## Update When
 
-- validation coverage, required package files, CI-safe validator behavior, or full validation changes
+- validation coverage, required package files, CI-safe validator behavior, trigger-result evidence
+  validation, or full validation changes
 - skill package manifest, package integrity validation, or sync/rollout audit metadata changes
 - auxiliary user-level skill installation or validation behavior changes
 - CppStudio code-map validation or bootstrap wrapper behavior changes
 - CppStudio code-map drift wrapper behavior changes
 - sync or rollout target safety rules change
+- project-level agent instructions for normal rollout versus single-skill sync change
 - installed skill parity, auxiliary bundled skill rollout, or companion validation behavior changes
 - public install/manual install commands change
 
@@ -54,6 +57,8 @@ skills, and watch-mode publishing behavior.
 - Normal installed updates for bundled CppStudio skill changes use `rollout_to_codex.sh`, not a
   default `sync_to_codex.sh` run. `sync_to_codex.sh` publishes one selected skill only and is
   appropriate for dry runs, diagnostics, or an explicitly scoped single-skill sync.
+- `AGENTS.md` mirrors that boundary: normal publishing reports `rollout_to_codex.sh`; single-skill
+  `sync_to_codex.sh` runs must be named as scoped diagnostics or intentionally limited syncs.
 - Sync and rollout append best-effort JSONL audit records to
   `${SYNC_CODEX_HOME:-$HOME/.codex}/cppstudio-install-audit.jsonl` unless `CPPSTUDIO_AUDIT_LOG`
   overrides the path.
@@ -81,6 +86,9 @@ skills, and watch-mode publishing behavior.
 - `validate.sh` also fakes Nsight Systems report/format discovery so `run_nsys_smoke.sh` proves it
   avoids unsupported legacy stats options, uses `--force-export=true`, and selects
   lane-appropriate explicit Vulkan/CUDA report sets from the installed `nsys` surface.
+- `validate.sh` includes donor source-parser fixtures so singular, plural, and wrapped `Sources:`
+  metadata is parsed before both donor route validation and the report-only donor freshness audit
+  run against the real library.
 - Code-map validation checks that each subsystem router doc's `## Primary Paths` section matches the
   machine-readable manifest `primary_paths`, so future routing changes stay discoverable to agents.
 - Code-map validation permits unmatched `primary_paths` globs while still validating that any matched
@@ -89,6 +97,15 @@ skills, and watch-mode publishing behavior.
 - Trigger-matrix validation requires the dedicated code-map bootstrap, enabled-map maintenance, and
   routing-smoke proof cases to remain present. `validate.sh` renders each case by name so aggregate
   `code-map` coverage cannot hide missing scenarios.
+- Trigger prompt rendering supports portable installed-path evidence so checked-in trigger result
+  artifacts can use `${CODEX_HOME:-$HOME/.codex}` and `${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}`
+  instead of maintainer-local absolute paths.
+- `validate_trigger_results.py --matrix research/donor-library/trigger-matrix.json` rejects
+  checked-in trigger results that mark a case as `pass` without opening every matrix-rendered
+  expected path, with any forbidden path opened, with self-edited expected/forbidden path lists, or
+  without fresh-run metadata. `validate.sh` pins the checked-in installed-path evidence to
+  `--expected-path-mode portable-installed` and requires the five claimed case names so the artifact
+  cannot downgrade path mode or silently shrink the result set.
 - Existing-project code-map enablement can add missing repo-local validation/drift wrappers under
   `scripts/` so agents do not need to remember the installed skill path after a map is enabled.
   Existing target-owned scripts are preserved.

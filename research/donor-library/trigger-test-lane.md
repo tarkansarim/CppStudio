@@ -207,3 +207,67 @@ This lane split the full 66-case trigger matrix across five read-only subagents:
   instead of Taichi or TressFX. Taichi remains useful as a Python DSL reference/prototype donor, and
   TressFX remains correct for hair, fur, grooming, strand, or TressFX-named prompts, but neither should
   be implied as a direct donor for a generic native C++ simulation/geometry kernel prompt.
+
+## Planning, Harness, Grooming, And Sculpting Installed-Path Lane
+
+Run date: 2026-05-10
+
+This lane re-tested recent high-impact mechanisms through read-only fresh subagents after rollout.
+Each probe inspected installed paths under `${CODEX_HOME:-$HOME/.codex}/skills` and avoided source
+edits or hand-editing installed skill files.
+
+Agent environment: fresh Codex subagents, `fork_context=false`, read-only probes, installed-path
+mode. Portable result artifact:
+[`trigger-results-2026-05-10-installed.json`](trigger-results-2026-05-10-installed.json).
+The artifact is validated by
+`scripts/validate_trigger_results.py --matrix research/donor-library/trigger-matrix.json`, so a
+recorded `pass` must include all matrix-rendered expected opened paths and no forbidden paths.
+`validate.sh` pins this checked-in artifact to `portable-installed` mode and requires all five named
+cases to remain present.
+
+Prompt pack/result-template command:
+
+```bash
+python3 scripts/render_trigger_eval_prompt.py \
+  research/donor-library/trigger-matrix.json \
+  --repo-root . \
+  --installed-paths \
+  --portable-installed-paths \
+  --case realtime-raytracing-framework-donors \
+  --case missing-donor-promotion-boundary \
+  --case agentic-control-harness-default \
+  --case grooming-brush-authoring-donors \
+  --case sculpting-brush-high-poly-donors \
+  --write-result-template research/donor-library/trigger-results-2026-05-10-installed.json
+```
+
+| Case | Prompt Shape | Selected Skills And Files | Verdict |
+| --- | --- | --- | --- |
+| Realtime raytracing framework donors | Realtime rendering framework work needs render graphs, ray tracing, path tracing, RTX SDK boundaries, shader/model loading, or prototype renderer architecture references | Passed. Agent selected `cpp-cuda-vulkan-studio`; opened installed `graphics-rendering.md`, `profiles/falcor.md`, `profiles/khronos-vulkan-samples.md`, and `profiles/nvidia-vk-mini-samples.md`; avoided the forbidden `ai-runtimes-kernels.md` route; kept vendor-specific and NVIDIA SDK dependencies explicit instead of silently adding them to a portable Vulkan target. | Pass |
+| Missing donor promotion | Target-project web research finds a strong reusable donor missing from the installed library and the user asks to add it globally | Passed. Agent selected `cpp-cuda-vulkan-studio`, `cppstudio-project-planner`, and `donor-library-system`; identified target-project `docs/planning/DONOR_CANDIDATES.md` capture as mandatory before promotion; used `${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/skills/cpp-cuda-vulkan-studio/references/donor-library/` as source of truth; refused direct edits to `${CODEX_HOME:-$HOME/.codex}/skills`; required `CPPSTUDIO_SOURCE_ROOT` or a user-provided source path if the source repo is unknown. | Pass |
+| Agentic control harness | Native C++/Vulkan realtime artist tool with GUI/viewport needs autonomous launch, state, screenshot, and troubleshooting controls | Passed. Agent selected `cppstudio-project-planner`, `cpp-cuda-vulkan-studio`, `agentic-control-harness`, `native-cpp-gui-hud`, `offscreen-test-manager`, and `sonar-design`; opened installed `agentic-control-harness/references/control-harness.md`, GUI options, native GUI donors, Vulkan foundation, graphics, and agent lookup; required a localhost dev/test control surface, curlable/CLI route, safe GUI/render-thread command routing, fresh screenshot/readback evidence, and OSTM for GUI tests. | Pass |
+| Realtime grooming/fur artist tool | C++/Vulkan hair grooming/fur strand tool with brush editing, Alembic/USD interchange, realtime shading, and donor references | Passed. Agent selected `cpp-cuda-vulkan-studio`, `cppstudio-project-planner`, `native-cpp-gui-hud`, `agentic-control-harness`, `vulkan-compute-sync`, and `modern-cpp-cmake`; opened `hair-grooming-fur.md`, `selection-policy.md`, `agent-lookup.md`, `production/vfx-studio.md`, `native-gui-hud.md`, `dcc-scene-pipeline.md`, `graphics-rendering.md`, `blender-curves-groom-brushes-study-only.md`, `tressfx.md`, `openusd.md`, `alembic.md`, `imgui-tooling.md`, and `sdl3-platform-input.md`; kept Blender/HairWorks/Unreal/Unity study-only and did not add CUDA to the Vulkan lane. | Pass |
+| High-poly sculpting brush tool | C++/Vulkan ZBrush-like sculpting tool with named brushes, Wacom pressure, dynamic topology, multiresolution, and high-poly performance | Passed. Agent selected `cpp-cuda-vulkan-studio`, `cppstudio-project-planner`, `ceiling-research`, `native-cpp-gui-hud`, `agentic-control-harness`, `vulkan-compute-sync`, `modern-cpp-cmake`, and `gpu-profiling-workstation`; opened `project-archetypes.md`, donor `README.md`, `selection-policy.md`, `agent-lookup.md`, `sculpting-brushes.md`, `blender-sculpt-brushes-study-only.md`, `surfaces-subdivision.md`, `meshoptimizer.md`, `opensubdiv.md`, `vulkan-memory-allocator.md`, `geometry-simulation.md`, `graphics-rendering.md`, `vulkan-foundation-tooling.md`, `native-gui-hud.md`, `imgui-tooling.md`, and `sdl3-platform-input.md`; kept Blender GPL-family material study-only and required numeric high-poly gates. | Pass |
+
+Two follow-up focused fresh probes were run after adding result-artifact validation because the first
+checked-in artifact did not list every expected opened path for two pass cases:
+
+- `missing-donor-promotion-boundary`: fresh subagent `019e13e7-f17a-7e53-b620-af7af100e553`
+  opened the installed planner/main donor policy plus source subsystem docs
+  `docs/SUBSYSTEMS/source-skill-routing.md` and `docs/SUBSYSTEMS/donor-library.md`.
+- `realtime-raytracing-framework-donors`: fresh subagent `019e13e7-f1d1-7e90-8d7c-1528824f6d8f`
+  opened `graphics-rendering.md`, `profiles/falcor.md`, `profiles/khronos-vulkan-samples.md`, and
+  `profiles/nvidia-vk-mini-samples.md`, and avoided the forbidden AI-runtime donor category.
+
+## Planning/Harness Lane Findings
+
+- The installed paths now route recent planning, missing-donor promotion, harness, grooming, and
+  sculpting cases without relying on source-repo context.
+- The missing-donor promotion probe confirmed local donor-candidate capture is mandatory evidence
+  even when reusable/global promotion is requested immediately.
+- The midstream realtime ray-tracing probe confirmed vague major feature requests reopen the planning
+  gate instead of being answered or implemented from memory.
+- The harness probe confirmed interactive native GPU tools default to a local agentic control surface
+  and fresh visual/UI evidence rather than routine user-driven testing.
+- Grooming and sculpting probes confirmed GPL-family Blender material remains study-only and Vulkan
+  lanes do not silently acquire CUDA because of donor backend history.

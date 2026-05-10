@@ -18,7 +18,9 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 
-SOURCE_RE = re.compile(r"^Source:\s+(https?://\S+)\s*$", re.MULTILINE)
+SOURCE_START_RE = re.compile(r"^Sources?:\s*(.*)$")
+METADATA_START_RE = re.compile(r"^[A-Za-z][A-Za-z0-9 _/-]*:\s")
+URL_RE = re.compile(r"https?://[^\s)>]+")
 LAST_CHECKED_RE = re.compile(r"^(?:Last checked|last_checked):\s*([0-9]{4}-[0-9]{2}-[0-9]{2})\s*$", re.MULTILINE)
 
 
@@ -26,9 +28,11 @@ LAST_CHECKED_RE = re.compile(r"^(?:Last checked|last_checked):\s*([0-9]{4}-[0-9]
 class ProfileReport:
     path: str
     source_url: str | None
+    source_urls: list[str]
     last_checked: str | None
     age_days: int | None
     url_status: str | None
+    url_statuses: dict[str, str]
     issues: list[str]
 
 
@@ -61,11 +65,43 @@ def source_url_status(url: str, timeout: float = 8.0) -> str:
     return "unknown"
 
 
+def parse_source_urls(text: str) -> list[str]:
+    lines = text.splitlines()
+    source_blocks: list[str] = []
+    index = 0
+    while index < len(lines):
+        match = SOURCE_START_RE.match(lines[index].strip())
+        if match is None:
+            index += 1
+            continue
+
+        block_parts = [match.group(1)]
+        index += 1
+        while index < len(lines):
+            stripped = lines[index].strip()
+            if not stripped or stripped.startswith("#") or SOURCE_START_RE.match(stripped):
+                break
+            if METADATA_START_RE.match(stripped):
+                break
+            block_parts.append(stripped)
+            index += 1
+        source_blocks.append(" ".join(part for part in block_parts if part))
+        continue
+
+    urls: list[str] = []
+    for source_block in source_blocks:
+        for url_match in URL_RE.finditer(source_block):
+            url = url_match.group(0).rstrip(".,;")
+            if url not in urls:
+                urls.append(url)
+    return urls
+
+
 def parse_profile(path: Path, root: Path, today: date, max_age_days: int, check_urls: bool) -> ProfileReport:
     text = path.read_text(encoding="utf-8")
-    source_match = SOURCE_RE.search(text)
+    source_urls = parse_source_urls(text)
     checked_match = LAST_CHECKED_RE.search(text)
-    source_url = source_match.group(1) if source_match else None
+    source_url = source_urls[0] if source_urls else None
     last_checked = checked_match.group(1) if checked_match else None
     age_days: int | None = None
     issues: list[str] = []
@@ -85,16 +121,22 @@ def parse_profile(path: Path, root: Path, today: date, max_age_days: int, check_
         except ValueError:
             issues.append("invalid_last_checked")
 
-    url_status = source_url_status(source_url) if check_urls and source_url else None
-    if url_status and not (url_status.isdigit() and int(url_status) < 400):
+    url_statuses = {
+        url: source_url_status(url)
+        for url in source_urls
+    } if check_urls else {}
+    url_status = url_statuses.get(source_url) if source_url else None
+    if any(not (status.isdigit() and int(status) < 400) for status in url_statuses.values()):
         issues.append("source_url_probe_failed")
 
     return ProfileReport(
         path=path.relative_to(root).as_posix(),
         source_url=source_url,
+        source_urls=source_urls,
         last_checked=last_checked,
         age_days=age_days,
         url_status=url_status,
+        url_statuses=url_statuses,
         issues=issues,
     )
 

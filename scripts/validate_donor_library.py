@@ -13,6 +13,8 @@ from urllib.parse import unquote
 LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 EXTERNAL_RE = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*:")
 URL_RE = re.compile(r"https?://[^\s,;)]+")
+SOURCE_START_RE = re.compile(r"^Sources?:\s*(.*)$")
+METADATA_START_RE = re.compile(r"^[A-Za-z][A-Za-z0-9 _/-]*:\s")
 ALLOWED_TIERS = {"safe-donor", "dependency-candidate", "study-only"}
 ALLOWED_BACKEND_SIGNALS = {
     "api-agnostic",
@@ -210,14 +212,42 @@ def source_urls(raw: str | None) -> set[str]:
     return {normalize_url(match.group(0)) for match in URL_RE.finditer(raw)}
 
 
+def parse_source_urls(text: str) -> set[str]:
+    lines = text.splitlines()
+    source_blocks: list[str] = []
+    index = 0
+    while index < len(lines):
+        match = SOURCE_START_RE.match(lines[index].strip())
+        if match is None:
+            index += 1
+            continue
+
+        block_parts = [match.group(1)]
+        index += 1
+        while index < len(lines):
+            stripped = lines[index].strip()
+            if not stripped or stripped.startswith("#") or SOURCE_START_RE.match(stripped):
+                break
+            if METADATA_START_RE.match(stripped):
+                break
+            block_parts.append(stripped)
+            index += 1
+        source_blocks.append(" ".join(part for part in block_parts if part))
+        continue
+
+    urls: set[str] = set()
+    for source_block in source_blocks:
+        urls.update(normalize_url(match.group(0).rstrip(".,;")) for match in URL_RE.finditer(source_block))
+    return urls
+
+
 def profile_metadata(donor_root: Path) -> dict[str, dict[str, object]]:
     profiles: dict[str, dict[str, object]] = {}
     for profile in donor_profile_files(donor_root):
         rel = profile.relative_to(donor_root).as_posix()
         text = profile.read_text(encoding="utf-8")
-        source = field_value(text, "Source") or field_value(text, "Sources")
         profiles[rel] = {
-            "sources": source_urls(source),
+            "sources": parse_source_urls(text),
             "tiers": tier_values(field_value(text, "Tier")),
             "backend_signals": set(normalize_backend_signals(field_value(text, "Backend signal"))),
         }
@@ -230,11 +260,11 @@ def validate_profile_schema(donor_root: Path) -> list[str]:
     for profile in donor_profile_files(donor_root):
         rel = profile.relative_to(donor_root).as_posix()
         text = profile.read_text(encoding="utf-8")
-        source = field_value(text, "Source") or field_value(text, "Sources")
+        sources = parse_source_urls(text)
         tier_raw = field_value(text, "Tier")
         backend_signal = field_value(text, "Backend signal")
         license_signal = field_value(text, "License signal")
-        if not source or EXTERNAL_RE.match(source) is None:
+        if not sources:
             errors.append(f"{rel}: missing or invalid Source URL")
         if not valid_tier_field(tier_raw):
             errors.append(f"{rel}: missing or invalid Tier {tier_raw!r}")

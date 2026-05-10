@@ -59,7 +59,14 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   targets. Local candidate capture is required evidence even when reusable promotion happens
   immediately. The donor inventory also now includes a sculpting-brush/high-poly mesh route for
   ZBrush-like tools, with Blender sculpt brushes as GPL-safe study material and meshoptimizer,
-  OpenSubdiv, and VMA as performance implementation donors.
+  OpenSubdiv, and VMA as performance implementation donors. Project maintainer instructions now
+  point normal publishing at `rollout_to_codex.sh`, checked-in fresh-agent trigger evidence covers
+  the recent planning, donor-promotion, harness, grooming, and sculpting routes, and donor freshness
+  auditing now parses plural or wrapped `Sources:` metadata with multiple URLs. Donor route
+  validation uses the same wrapped-source parsing, and trigger-result artifacts now fail
+  matrix-anchored validation if a recorded `pass` omits expected opened paths, touches forbidden
+  paths, self-edits the expected/forbidden path contract, downgrades checked-in installed evidence
+  out of `portable-installed` mode, or drops claimed cases.
 - `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map
   projects catch changed source paths that are not routed by the manifest.
 - `c68ae77` - Hardened code-map and trigger validation, made manual managed-skill install

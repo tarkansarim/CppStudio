@@ -37,8 +37,10 @@
         "skills/cpp-cuda-vulkan-studio/references/donor-library",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles",
         "research/donor-library/trigger-matrix.json",
+        "research/donor-library/trigger-results-2026-05-10-installed.json",
         "scripts/validate_donor_library.py",
         "scripts/validate_trigger_matrix.py",
+        "scripts/validate_trigger_results.py",
         "scripts/render_trigger_eval_prompt.py",
         "scripts/audit_donor_freshness.py"
       ]
@@ -78,6 +80,7 @@
         "scripts/watch_to_codex.sh",
         "scripts/quick_validate_skill.py",
         "scripts/validate_skill_package.py",
+        "scripts/validate_trigger_results.py",
         "scripts/bootstrap_code_map.py",
         "scripts/validate_code_map.py",
         "scripts/check_code_map_drift.py",

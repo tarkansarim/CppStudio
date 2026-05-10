@@ -1,6 +1,7 @@
 # Blender Sculpt Brushes Study-Only Donor Profile
 
 Sources: https://docs.blender.org/manual/en/latest/sculpt_paint/sculpting/brushes/index.html https://docs.blender.org/manual/en/latest/sculpt_paint/sculpting/introduction/adaptive.html https://developer.blender.org/docs/features/sculpt_paint/mesh_paint/ https://projects.blender.org/blender/blender/src/branch/main/source/blender/editors/sculpt_paint/brushes
+Last checked: 2026-05-10
 Tier: `study-only`
 Backend signal: native-cpu, dcc-interchange, mixed-backend
 License signal: Blender source is GPL-family. This profile is for behavior extraction, UX contracts,
