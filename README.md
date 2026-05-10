@@ -51,6 +51,8 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   stroke-based artist tools, supervised-worker interrogation before inferring CppStudio gaps,
   stricter enabled-code-map drift/schema closeout, generated repo-local map wrappers,
   donor/provenance closeout, and a GPL-safe Blender curves groom-brush study donor.
+  It also lets implementation task lists realign when new evidence invalidates stale assumptions,
+  while preserving user-facing product and stack decisions.
 - `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map
   projects catch changed source paths that are not routed by the manifest.
 - `c68ae77` - Hardened code-map and trigger validation, made manual managed-skill install
@@ -226,6 +228,12 @@ donor evidence, name the affected subsystem or UI surface, and define a mileston
 signal. This is where agents should capture practical lessons such as "use a real 3D viewport, not a
 diagnostic panel" or "treat stylus pressure as replayable input data," grounded in current tools and
 references rather than memory.
+
+Implementation plans are allowed to adapt when evidence changes. If research, API contracts,
+toolchain behavior, validation, or a focused probe proves a task is stale or aimed at the wrong
+subsystem, agents should revise the task list and validation gate instead of forcing the old list.
+They should pause for you only when that shift changes product direction, selected stack, scope,
+dependency/license posture, or an explicit constraint.
 
 For larger apps where template, GUI, input devices, donors, or validation choices matter, ask for
 planning first:

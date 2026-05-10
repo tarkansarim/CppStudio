@@ -218,6 +218,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   still missing. Do not spend several more minutes re-reading broadly after the route is already
   sufficient; if the route still feels insufficient, say which missing source, donor, or API contract
   blocks implementation.
+- Treat the slice task list as a live alignment tool. If real evidence during implementation shows
+  that a planned task is stale, impossible, too broad, missing a prerequisite, or aimed at the wrong
+  subsystem, update the task list immediately: name the new fact, the invalidated assumption, the
+  revised bounded task, and the changed validation gate. Continue without asking when the change is
+  an internal correction that preserves the user's intent, chosen stack, and quality bar. Pause for
+  user alignment when the change affects product direction, selected GUI/backend/authoring model,
+  scope, dependency/license posture, or any explicit user constraint.
 - If a target-project slice is interrupted, stopped, or rejected after partial unverified edits, do
   not leave the repo in an ambiguous dirty state. Either revert only the incomplete edits for that
   slice, or explicitly report the exact dirty files and ask whether to preserve them. Do not commit,

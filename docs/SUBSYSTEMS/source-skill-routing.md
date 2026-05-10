@@ -125,6 +125,11 @@ generated-project workflow instructions.
 - After agents name a bounded target-project slice with code-map route, donor/reference grounding,
   expected files, and verification gates, they must move to the smallest implementation/probe action
   or report a concrete blocker. Broad re-orientation after that point is a process miss.
+- Slice task lists are living alignment tools. When local facts, donor/upstream evidence,
+  validation, or probes invalidate a task-list assumption, agents should revise the task list in
+  place with the new fact, invalidated assumption, bounded replacement task, and validation change.
+  They should continue on internal realignments that preserve intent and pause only for user-facing
+  product, stack, scope, dependency/license, or explicit-constraint changes.
 - Greenfield target projects that are expected to use verified-slice commits need usable Git before
   the first source slice. A Codex worker that sees `.git` as an empty read-only mountpoint in a
   brand-new directory is reporting sandbox/mount-namespace state, not an ordinary project fact.
@@ -203,7 +208,8 @@ generated-project workflow instructions.
 - target-project commit-origin marker policy changes, including how autonomous agent commits are
   distinguished from user-requested commits
 - target-project slice-execution discipline changes, including when agents must stop broad
-  orientation after route selection or clean interrupted partial edits
+  orientation after route selection, adapt stale task lists to new evidence, or clean interrupted
+  partial edits
 - target-project build/validation command selection rules change, including when agents must use
   repo-declared CMake presets, validation docs, scripts, or code-map build routes instead of guessed
   build directories

@@ -87,6 +87,15 @@ integration. Each gate needs only enough evidence to decide responsibly: local f
 skills/donor routes opened, current upstream or peer-tool sources checked when relevant, the chosen
 default, rejected alternatives, and the validation evidence required for milestone 1.
 
+Treat task lists as living control documents, not contracts against stale assumptions. If local
+inspection, donor research, upstream docs, toolchain behavior, validation results, or a failed probe
+shows that the original trajectory is wrong or incomplete, update the task list before continuing:
+record the new fact, why the old task no longer fits, the revised bounded slice, changed validation
+gates, and any assumptions that now need evidence. Do not ask the user for permission to make small
+internal realignments that preserve the project intent and quality bar. Pause and ask only when the
+realignment changes a user-facing product decision, selected stack, scope, schedule, data ownership,
+license/dependency posture, or an explicitly agreed constraint.
+
 For any project with an interactive tool, editor, procedural workflow, scene/content pipeline,
 simulation setup, material/shader workflow, timeline, graph, layer stack, scripting surface, or other
 nontrivial user-authored state, the research brief must include a peer-practice scan for the
