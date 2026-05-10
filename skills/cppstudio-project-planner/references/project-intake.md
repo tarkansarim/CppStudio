@@ -26,10 +26,32 @@ The pre-plan research brief should include:
 - GUI/HUD candidates with source/docs and visual inspection links
 - default agentic control harness shape for interactive apps
 - relevant donor categories/profiles opened
-- web/current sources checked, with freshness/adoption signals where available
+- web/current sources checked, with freshness/adoption signals where available and a short
+  description of how each source benefits this project
 - current state-of-the-art or actively popular approaches, separated from legacy approaches
 - software orientation and current peer-tool family for large artist/game/VFX/DCC tools
 - recommended best-available default and why
+
+For substantial greenfield projects or architecture-setting plans, persist the research before
+implementation. Create `docs/planning/RESEARCH_BRIEF.md` in the target project before asking for
+Plan mode or scaffolding source. The artifact should combine local donor-library routes and
+web/upstream sources, not replace one with the other. Cherry-pick sources: keep primary, current,
+domain-relevant, license-understandable, and implementation-useful links; reject duplicates, stale
+tutorials, vague summaries, abandoned projects unless they are deliberately study-only, and sources
+that do not change a decision.
+
+When a strong reusable source is not already covered by the CppStudio donor library, record it in
+`docs/planning/DONOR_CANDIDATES.md` or a donor-candidates section of the research brief. Include the
+source URL, proposed category, likely tier, backend/language signal, license/freshness status when
+known, direct-donor versus reference-only caveat, and why it should be promoted later. If the agent is
+working in the CppStudio source repo with explicit donor-maintenance scope, promote vetted sources to
+the source donor library there and roll out to the installed user-level copy; do not hand-edit
+user-level installed skills as the source of truth.
+
+For substantial greenfield projects, make donor-candidate status explicit. Prefer a separate
+`docs/planning/DONOR_CANDIDATES.md` when new reusable sources are discovered; otherwise include a
+"Donor candidates: none beyond existing donor-library routes" line in the research brief. Missing
+donor-candidate status is a planning artifact gap.
 
 For major subsystems, add a lightweight research-to-plan gate before locking the plan. Major
 subsystems include renderer, simulation/solver, asset or scene pipeline, authoring/source-of-truth
@@ -105,6 +127,9 @@ Collect these facts before committing to architecture:
   notes, vendor pages, standards docs, and adoption/freshness signals that could change the
   recommendation. Include comparable current tools from the same user/workflow domain and identify
   their common authoring practices, not only their rendering, solver, or dependency choices.
+- Durable research artifact: for substantial projects, write `docs/planning/RESEARCH_BRIEF.md`
+  before implementation with curated links, descriptions, benefits, donor routes, current-vs-legacy
+  notes, rejected sources, and donor candidates that should be promoted to CppStudio later.
 - Dependency policy: system packages, vcpkg, Conan, FetchContent, submodules, vendored source,
   commercial SDKs, license constraints, and offline/air-gapped requirements.
 - Code map: ask whether the project should maintain a CppStudio code map for future agents. For
@@ -125,6 +150,12 @@ For artist-facing tools, explicitly plan the input model:
   coordinate mapping
 - whether input is captured through the windowing layer, GUI toolkit, native tablet APIs, or a
   project-specific input abstraction
+
+For active brush, sculpt, paint, groom, terrain, texture, and stroke-based tools, a mouse-only input
+stack is not the quality default. Compare pressure-capable options such as SDL3 pen events,
+Qt/tablet events, or native tablet APIs before choosing GLFW or another mouse/keyboard-first layer.
+If a simpler stack is selected anyway, record the missing tablet behavior and ask the user to accept
+that limitation before implementation.
 
 ## Authoring Model Checklist
 
@@ -208,6 +239,8 @@ Artist/input requirements:
 Skills opened:
 Donors opened:
 Web sources checked:
+Research artifact:
+Donor candidates:
 Current vs legacy:
 Recommended default:
 Subsystem decision records:

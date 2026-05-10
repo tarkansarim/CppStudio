@@ -115,6 +115,15 @@ target-lane restrictions.
 - Do not mix `study-only` code into `safe-donor` outputs.
 - Do not assume a repo-level license covers assets, models, datasets, sample scenes, or submodules.
 - Prefer official repos and docs over summaries.
+- For substantial project planning, combine this local donor routing with current web/upstream
+  research and persist the curated result in the target repo, normally
+  `docs/planning/RESEARCH_BRIEF.md`. Each kept web or donor link should say what it is and why it is
+  useful for the target project.
+- If web research finds a strong reusable donor that is missing here, record it as a project-local
+  donor candidate with URL, proposed category, tier, backend/language signal, license/freshness
+  status when known, direct-reuse or reference-only caveat, and promotion rationale. Only promote it
+  into this source donor library when the task is explicitly maintaining CppStudio; do not hand-edit
+  the installed user-level copy as the source of truth.
 - Before vendoring code, inspect the repo license file and any third-party notice files at the exact
   revision used.
 - Prefer linking or package-manager integration over copying whole donor trees.

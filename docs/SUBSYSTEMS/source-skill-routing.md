@@ -59,10 +59,31 @@ generated-project workflow instructions.
   implementation. "Upstream research" means public current-source research such as official repos,
   docs, samples, standards docs, vendor docs, papers, release notes, and peer-tool references; it is
   not permission to fill gaps from model memory.
+- Substantial greenfield and architecture-setting research must be durable. Agents should write a
+  target-project `docs/planning/RESEARCH_BRIEF.md` before implementation, combining local donor
+  routes and curated web/upstream sources with short descriptions, project benefits, freshness or
+  primary-source notes, and direct-donor/dependency/reference-only caveats. Chat-only research is not
+  enough for these cases.
+- New reusable references discovered during web research are first saved as target-project donor
+  candidates, normally `docs/planning/DONOR_CANDIDATES.md` or a donor-candidates section in the
+  research brief. They are promoted into CppStudio's source donor library only during explicit
+  donor-library maintenance and then rolled out to user-level; installed user-level skills are not
+  hand-edited as donor-library source.
 - Risky backend, renderer, GUI/editor, solver, harness, or authoring-model migration slices must
   close out donor provenance. If a target repo owns a source/provenance doc, agents update it with the
   local donor routes, current upstream links, study-only/license caveats, and any inferred decisions;
   otherwise they record that evidence in the validation or status docs for the slice.
+
+## Current Supervised Worker Posture
+
+- When a supervised tmux worker, subagent, or terminal agent makes, skips, or rejects a decision and
+  the cause is unclear, the supervising agent interrogates the worker before claiming the cause or
+  changing CppStudio rules.
+- The interrogation asks for skill routes, donor routes, web/upstream sources, decision criteria,
+  discovered gaps, and verification commands, then the supervising agent checks that answer against
+  the transcript and files.
+- Worker answers are evidence, not authority. If the worker is unreachable, supervisors inspect the
+  available transcript and project files and state the uncertainty instead of inventing intent.
 
 ## Current Native UI Product-Fit Posture
 
@@ -99,9 +120,10 @@ generated-project workflow instructions.
 - Greenfield target projects that are expected to use verified-slice commits need usable Git before
   the first source slice. A Codex worker that sees `.git` as an empty read-only mountpoint in a
   brand-new directory is reporting sandbox/mount-namespace state, not an ordinary project fact.
-  Agents must not chmod, delete, or unmount that placeholder; they should ask for host/supervisor Git
-  initialization or relaunch the worker with a configuration that permits repository creation, then
-  retry from a clean checkpoint.
+  Agents must not chmod, delete, or unmount that placeholder. If the supervising agent has normal
+  host shell access to the real target path, it should initialize Git there from outside the worker,
+  then relaunch or retry the worker from a clean checkpoint. Ask the user only when that host-side
+  initialization is unavailable or risky.
 - If a target-project slice is interrupted, stopped, or rejected after partial unverified edits,
   agents must either revert only the incomplete slice edits or explicitly report the dirty files and
   ask whether to preserve them. They must not leave ambiguous partial state while claiming the slice
@@ -133,6 +155,9 @@ generated-project workflow instructions.
 - target-repo code-map authority or map-first navigation behavior changes
 - donor-grounding or web-ceiling-check expectations for native GPU brainstorming/design proposals
   change
+- durable project-local research artifact or donor-candidate capture requirements change
+- artist-input or tablet/stylus planning defaults change, including when mouse-first window/input
+  stacks must be demoted for brush, sculpt, paint, groom, terrain, texture, or stroke tools
 - native C++ GUI/HUD/editor UI skill routing or option-presentation behavior changes
 - initial native C++ GPU project planning, Plan mode handoff, template-choice, or artist-input
   planning behavior changes
@@ -143,6 +168,8 @@ generated-project workflow instructions.
   changes
 - hard gates that require agents to open local skills, maintained code-map routes, and donor-library
   categories before code changes or product-shape decisions
+- supervised-worker interrogation rules change, including when agents must question a tmux worker or
+  subagent before drawing conclusions from unclear behavior
 - code-map bootstrap script authority, code-map schema validation, or generated CMake probe cleanup
   requirements change
 - code-map drift-check or pre-commit map-maintenance requirements change

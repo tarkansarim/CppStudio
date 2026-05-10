@@ -30,16 +30,44 @@ library boundaries. For a greenfield target, inspect the requested name, current
 repo constraints, source-control state, available templates, and likely toolchain assumptions. When
 commits are expected for a greenfield target, initialize or require a usable Git repo before the first
 source slice. If a Codex worker reports an empty read-only `.git` mountpoint or read-only `.git`
-filesystem in a brand-new directory, classify it as worker sandbox/tooling state and stop for a host
-Git initialization or worker relaunch; do not treat unmounting/chmodding that placeholder as normal
-project setup. Ask the user only for preferences, missing constraints, or decisions that cannot be
-discovered locally.
+filesystem in a brand-new directory, classify it as worker sandbox/tooling state, not project state.
+Do not unmount, chmod, delete, or write around that placeholder from inside the worker. Preferred
+recovery is host/supervisor initialization: if the supervising agent has normal shell access to the
+real project path, initialize Git there from outside the worker, then relaunch or retry the worker
+from a clean Rewind checkpoint. Ask the user for Git initialization only when the supervising agent
+cannot perform that host-side action. Ask the user only for preferences, missing constraints, or
+decisions that cannot be discovered locally.
 
 The pre-plan research brief must open the relevant local skill/donor references and run an extensive
 state-of-the-art web ceiling check against upstream/primary sources for current GUI, SDK, simulation,
 renderer, dependency, authoring-model, or hardware choices. Keep the user-facing brief concise, but
 the research must be deep enough that the user is choosing between current, competitive options
 rather than unsupported guesses.
+
+For substantial greenfield projects, ambitious artist/game/VFX/DCC tools, or any plan that could be
+lost to context compaction, the research pass must be persisted before implementation. Create a
+target-repo planning artifact such as `docs/planning/RESEARCH_BRIEF.md` before asking for Plan mode
+or scaffolding source. The artifact is not a raw link dump: cherry-pick the strongest sources after
+deduplicating stale, overlapping, weak, unclear-license, or non-primary material. Include local donor
+routes and web/upstream sources together, with a short note for each link explaining what it is, why
+it matters to this project, whether it is current/primary, and whether it is direct-donor,
+dependency-candidate, or reference-only. For large projects, expect a broad curated source set across
+the major subsystems, not a handful of links in chat.
+
+When web research finds a strong reusable source that is missing from the CppStudio donor library,
+do not leave that discovery only in chat. In ordinary target projects, add it to
+`docs/planning/DONOR_CANDIDATES.md` or a "Donor candidates" section in the research brief with the
+source URL, category, likely tier, backend/language signal, license/freshness status when known,
+direct-reuse versus reference-only caveat, and why it should be considered for CppStudio. If the
+current task is explicitly maintaining the CppStudio source repo, promote the vetted donor into the
+source donor library under `skills/cpp-cuda-vulkan-studio/references/donor-library/` and then roll
+out; never hand-edit the installed user-level donor library as the source of truth.
+
+For substantial greenfield planning artifacts, include an explicit donor-candidate disposition. If
+the research found reusable sources not already covered by the local donor library, write a separate
+`docs/planning/DONOR_CANDIDATES.md` unless the user explicitly requested one compact file. If no new
+candidate exists, say that in the research brief. Do not make the user infer whether no donor file
+means "none found" or "the agent forgot."
 
 For each major subsystem that would shape architecture, run a lightweight research-to-plan gate
 before locking the recommendation. Major subsystems include renderer, simulation/solver, asset or
@@ -145,6 +173,11 @@ facade over the same API, and which state/log/visual observation surfaces are ne
    routes, peer-tool authoring-model findings, web sources checked, current-vs-legacy notes, and the
    reasoning for the best available option, then ask for Plan mode and only then ask decision
    questions.
+11. Persist the research brief for substantial projects before implementation. Prefer
+   `docs/planning/RESEARCH_BRIEF.md`; include `docs/planning/DONOR_CANDIDATES.md` when strong
+   reusable sources were found that are not already covered by the donor library. If the user only
+   asked for a tiny exploratory answer and no project repo exists, state that no durable artifact was
+   written.
 
 ## Planning Packet
 
@@ -162,7 +195,10 @@ Every substantial plan should include:
 - artist-input needs such as Wacom/stylus pressure, tilt, eraser, hover, smoothing, sampling,
   undo/redo stroke recording, multi-touch, SpaceMouse, XR controllers, or viewport picking
 - skill routes opened and donor categories/profiles selected
-- web sources checked and what changed because of them
+- web sources checked and what changed because of them, with durable project-local research artifact
+  path when one was written
+- donor candidates discovered outside the current library, with whether they were saved in the
+  target project or promoted into the CppStudio source donor library
 - current state-of-the-art or actively popular approaches, separated from legacy approaches
 - comparable current tools checked and what their common authoring practices imply
 - per-subsystem decision records for major renderer, solver, authoring, GUI, asset, control,
@@ -183,6 +219,12 @@ Every substantial plan should include:
   optional MCP layered over the same API after the basic command/readback surface is proven.
 - For brush, sculpt, paint, grooming, terrain, rigging, animation, or other artist-facing tools,
   treat tablet/stylus input as a first-class planning decision.
+- For active brush, sculpt, paint, groom, terrain, texture, or stroke-based artist tools, do not
+  choose a mouse-first window/input stack only because it is locally installed or simpler. Evaluate a
+  pressure-capable path such as SDL3 pen events, Qt/tablet events, or native tablet APIs. If the
+  recommended stack cannot carry stylus pressure, tilt, hover, eraser, barrel buttons, and tablet
+  mapping without a separate integration path, mark it as a lower-ceiling or mouse-only tradeoff and
+  ask the user to accept that limitation before implementation.
 - For tools with user-authored state, derive the authoring model from peer research. If comparable
   current tools cluster around a graph, stack, timeline, scene tree, scripting surface, or hybrid,
   present that as the leading option and ask the user to confirm or choose another model before

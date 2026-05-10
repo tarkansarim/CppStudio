@@ -27,7 +27,7 @@ alternatives, user decision if any, and milestone-1 validation.
 | Authoring/source of truth | Current comparable tools from the same workflow domain and their common authoring practices | Graph/stack/timeline/scene/scripting/direct/hybrid choice, source-of-truth owner, rejected models |
 | GUI/HUD/editor shell | GUI skill, native GUI donor category, visual inspection links, peer product-surface conventions | Toolkit/shell, layout rationale, command-surface expectations, UI smoke/screenshot validation |
 | Asset or scene pipeline | File/interchange donors, source asset ownership, import/export or runtime handoff constraints | Formats, identity/versioning, generated caches, round-trip or validator fixtures |
-| Input and interaction | Target users, devices, toolkit/windowing constraints, peer interaction patterns | Input devices, sampling/latency needs, undo/redo or replay tests |
+| Input and interaction | Target users, devices, toolkit/windowing constraints, peer interaction patterns | Input devices, pressure-capable route, sampling/latency needs, undo/redo or replay tests |
 | Agentic control harness | App interactivity, launch path, required command/readback/visual surfaces | Transport shape, discoverability docs, first scenario endpoints, state/log/visual proof |
 | Persistence/serialization | Authoring model, stable IDs, migration/versioning, fixtures | Project file shape, migration policy, round-trip validation |
 | Build/dependency policy | Existing presets/manifests, repo dependency policy, native infrastructure donors | Dependency source, license/deployment caveats, build/CTest validation |
@@ -61,7 +61,7 @@ to scaffold.
 | Game technical-art or runtime tool | Iteration loop, asset cooking, runtime/editor boundary, debug vs shipped UI, platform budgets | Shipping debug-tool shape as product UI |
 | VFX or pipeline tool | USD/Alembic/MaterialX/OpenVDB or department handoff, review/editorial needs, cache ownership | Hiding interchange/source-of-truth choices inside importer code |
 | Simulation workbench | Scenario authoring, solver settings, playback, baking/cache, visual diagnostics, reproducibility | Coupling solver state directly to UI widgets |
-| Brush, sculpt, paint, groom, or terrain tool | Tablet/stylus behavior, stroke model, layers/masks, viewport feedback, replay and undo | Treating input as ordinary mouse events only |
+| Brush, sculpt, paint, groom, or terrain tool | Tablet/stylus behavior, pressure-capable window/toolkit/native input path, stroke model, layers/masks, viewport feedback, replay and undo | Treating input as ordinary mouse events only or choosing installed GLFW before evaluating tablet-capable paths |
 
 ## Authoring Model Choices
 
@@ -131,6 +131,16 @@ substitute for clickable links.
   vendor samples, release notes, active engine/tool samples, and adoption/freshness signals.
 - For authoring-model choices, include comparable current tools from the same user/workflow domain
   and record their common authoring practices before recommending a source of truth.
+- For substantial greenfield or architecture-setting projects, persist the curated research in
+  `docs/planning/RESEARCH_BRIEF.md` before implementation. Include local donor-library routes and
+  web/upstream links together. Each kept link needs a short "what it is" and "why it helps this
+  project" note. Also mention rejected or legacy sources when they explain why an easier option was
+  not chosen.
+- When a web source is strong enough to become reusable CppStudio donor material but is not already
+  covered by the donor library, save it as a donor candidate in `docs/planning/DONOR_CANDIDATES.md`
+  or the research brief. Promote it to the CppStudio source donor library only when the task is
+  explicitly donor-library maintenance; user-level installed skills are rollout targets, not source
+  files to hand-edit.
 - Rank the best available current approach first. Separate it from legacy, simpler, teaching, or
   low-effort approaches; present those only as tradeoffs unless the user asks for a lighter route.
 
@@ -142,6 +152,11 @@ substitute for clickable links.
 | CUDA kernels | CPU reference tests, CTest GPU label, Compute Sanitizer, Nsight Compute only after a hot path exists |
 | GUI/tool shell | input focus, DPI/resize, screenshot or offscreen frame, UI smoke test, validation labels |
 | Artist brush/stylus | input event trace, pressure curve test, stroke replay, undo/redo recording, latency/frame-time measure |
+
+For stroke-based artist tools, GLFW availability is a local fact, not a sufficient recommendation.
+If the selected first window/input stack does not directly provide stylus pressure and tablet-event
+semantics, the plan must name the separate tablet integration path or mark the stack as mouse-only
+and ask the user to accept that tradeoff.
 | Asset pipeline | tiny fixture import/export, metadata tests, material/texture fixtures, round-trip or validator report |
 | Simulation | deterministic tiny case, conservation or bounds checks, visual frame artifact, per-pass timing |
 | Node/stack/timeline authoring | serialization round-trip, invalid graph/stack/timeline diagnostics, undo/redo, create/connect/set/evaluate harness commands, visual or textual graph readback |

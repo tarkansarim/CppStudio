@@ -4,6 +4,14 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added durable greenfield research guidance so substantial native GPU project planning writes
+  `docs/planning/RESEARCH_BRIEF.md`, records donor candidates explicitly, and separates existing
+  donor routes from new reusable donor material before implementation.
+- Added an SDL3 platform/pen-input donor profile and hardened artist-tool planning so brush, sculpt,
+  paint, groom, terrain, texture, and other stroke tools evaluate pressure-capable input routes
+  before accepting mouse-first stacks.
+- Added supervised-worker interrogation guidance so unclear tmux/subagent decisions are questioned
+  and checked against transcripts/files before CppStudio rules or donor gaps are inferred.
 - Hardened greenfield CppStudio project startup guidance so Codex workers initialize usable Git
   before verified-slice commits and treat read-only `.git` mountpoints as sandbox/tooling blockers
   rather than project state to chmod or unmount.

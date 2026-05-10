@@ -26,6 +26,13 @@ Minimum pre-plan research pass:
   asking the user for routine manual testing.
 - For simulation, renderer, SDK, hardware, or "best/current/ceiling" claims, web-check official
   upstream repos, standards docs, vendor docs, papers, or primary project docs.
+- For substantial greenfield or architecture-setting work, persist the research in the target repo
+  before implementation. Use `docs/planning/RESEARCH_BRIEF.md` for curated local-donor and web
+  sources, with a short description and project benefit for each kept link. Use
+  `docs/planning/DONOR_CANDIDATES.md` or a donor-candidates section when web research finds reusable
+  donor material that is not already in the CppStudio donor library. Promote candidates into the
+  CppStudio source donor library only during explicit donor-library maintenance; user-level installed
+  skills are rollout targets, not source files to edit by hand.
 
 The first visible response after that research should be a concise **Pre-Plan Research Brief**:
 
@@ -34,6 +41,8 @@ The first visible response after that research should be a concise **Pre-Plan Re
 - agentic control harness default and any real opt-out reason
 - donor categories/profiles opened
 - web/current sources checked
+- durable research artifact path, when the project is substantial enough to require one
+- donor candidates discovered outside the current library, if any
 - clear recommended default and alternatives
 
 Then ask the user to switch to Plan mode before implementation:
@@ -113,10 +122,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
   brand-new directory sees `.git` as an empty read-only mountpoint or `git init` fails with a
   read-only filesystem inside `.git`, treat that as a worker sandbox/mount-namespace blocker, not as
   ordinary project state. Do not `chmod`, delete, unmount, or otherwise bypass that `.git` placeholder
-  from inside the worker. Report that Git must be initialized from the host/supervisor environment
-  or the worker must be relaunched with a configuration that permits repository initialization; then
-  retry from a clean checkpoint. If documenting the blocker, say "inside this Codex worker" rather
-  than recording it as a stable fact about the project directory.
+  from inside the worker. The preferred recovery is to initialize Git on the real target path from the
+  host/supervisor shell, then relaunch or retry the worker from a clean Rewind checkpoint. If the
+  supervising agent has that host access, do the host-side initialization directly instead of asking
+  the user to do it. Ask only when host-side initialization is unavailable or risky. If documenting
+  the blocker, say "inside this Codex worker" rather than recording it as a stable fact about the
+  project directory.
   When supervising a greenfield tmux/Codex worker and commits are part of the test or workflow,
   create the empty project directory and initialize Git from the host/supervisor shell before
   launching the worker, unless the user explicitly wants to test non-git startup behavior.

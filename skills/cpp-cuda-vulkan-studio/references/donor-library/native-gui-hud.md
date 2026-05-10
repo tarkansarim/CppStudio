@@ -27,6 +27,12 @@ can judge the look and interaction style before choosing.
 | [RmlUi](profiles/runtime-ui-middleware.md) | safe-donor | MIT | HTML/CSS-like styled UI for game HUDs, menus, overlays, and tool/editor interfaces. | [Docs/gallery entry](https://mikke89.github.io/RmlUiDoc/) |
 | [NoesisGUI](profiles/runtime-ui-middleware.md) | dependency-candidate | Commercial SDK; inspect license terms | High-polish commercial runtime UI, XAML workflows, game HUDs, menus, VR/3D UI, and engine integrations. | [Portfolio/features](https://www.noesisengine.com/) |
 
+## Platform, Window, And Artist Input
+
+| Donor | Tier | License Signal | Best Use | Inspect |
+| --- | --- | --- | --- | --- |
+| [SDL3 Platform And Pen Input](profiles/sdl3-platform-input.md) | dependency-candidate | zlib license; inspect exact release and bundled notices | Vulkan window/surface creation plus pressure-capable pen/tablet input for sculpt, paint, groom, terrain, and other stroke-based artist tools. | [SDL3 docs](https://wiki.libsdl.org/SDL3/) |
+
 ## Lightweight And Embedded-Web Options
 
 | Donor | Tier | License Signal | Best Use | Inspect How It Looks |
@@ -40,6 +46,10 @@ can judge the look and interaction style before choosing.
 
 - For Vulkan/CUDA realtime artist tools, choose Dear ImGui first, then add ImGuizmo and ImPlot only
   when transform controls or plotting are actually needed.
+- For brush, sculpt, paint, groom, texture, terrain, or other stroke-based artist tools, pair the UI
+  choice with a pressure-capable input/window route. Prefer SDL3, Qt tablet events, or native tablet
+  APIs over a mouse-first GLFW-only path unless the user explicitly accepts mouse-only input or a
+  separate tablet integration.
 - For a polished standalone desktop product, compare Qt and wxWidgets before defaulting to an
   immediate-mode debug UI.
 - For shipped game/runtime UI, compare RmlUi and NoesisGUI; do not ship a debug HUD as product UI

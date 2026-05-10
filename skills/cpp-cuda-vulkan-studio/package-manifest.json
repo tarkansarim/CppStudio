@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 51129,
-      "sha256": "d4278df4032f9769fa44bd754399c9c387f1227977088fa2c3e73bf5c8a6986d"
+      "size": 52077,
+      "sha256": "a88c779d5997411dde360898c2d4f1ae21bc8b4f9687e47a07253c4987d4ff01"
     },
     {
       "path": "agents/openai.yaml",
@@ -308,8 +308,8 @@
       "path": "references/donor-library/README.md",
       "role": "reference",
       "disclosure_group": "donor-router",
-      "size": 7551,
-      "sha256": "9bc3d2e90584d5bdf4d06adebd213c097660c0f54a376d38c7a87a02e0e6958c"
+      "size": 8304,
+      "sha256": "278b977a2d93565c1cdf7926a8a9d1f84fc1b8aa6bc4114f02eb0a1ca2c6eba0"
     },
     {
       "path": "references/donor-library/agent-lookup.md",
@@ -413,8 +413,8 @@
       "path": "references/donor-library/native-gui-hud.md",
       "role": "reference",
       "disclosure_group": "donor-category",
-      "size": 6139,
-      "sha256": "ea1d5ff4e6d7d347cd08766bed5355b80dad9bbddf599d129b53dcdafe7b973e"
+      "size": 6934,
+      "sha256": "7a082d7ed1b71980d071127f9a0eee36cfce109ce49dd5b79ab2149d619ebf6a"
     },
     {
       "path": "references/donor-library/neural-3d.md",
@@ -1068,6 +1068,13 @@
       "sha256": "de4fdb8dee72afc2f33dfe07974f1eb62acfe1f7135854b3ba4e67e21a2de095"
     },
     {
+      "path": "references/donor-library/profiles/sdl3-platform-input.md",
+      "role": "reference",
+      "disclosure_group": "donor-profile",
+      "size": 2470,
+      "sha256": "ce0f937860cfac24f6f034f25937975272e72d697b7961ef0e2901556ce481e2"
+    },
+    {
       "path": "references/donor-library/profiles/slang.md",
       "role": "reference",
       "disclosure_group": "donor-profile",
@@ -1253,8 +1260,8 @@
       "path": "references/donor-library/selection-policy.md",
       "role": "reference",
       "disclosure_group": "donor-router",
-      "size": 5865,
-      "sha256": "1d921cae2905f5651d1be187102e811afe22b4b7bd59dc35c43b7fcfdf201496"
+      "size": 6536,
+      "sha256": "7d2c08c794e4f239aa5a5c8bf17cb91569e10372e8fe713f3f9f8cbc2cd0e6a0"
     },
     {
       "path": "references/donor-library/simulation-gpu.md",

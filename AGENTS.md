@@ -37,6 +37,17 @@ C++/CUDA/Vulkan development.
   placement, editor layout, authoring model, solver architecture, and GUI stack, require donor or
   peer-tool evidence before implementation.
 
+## Supervised Worker Interrogation
+
+- When supervising a tmux, subagent, or other worker and the worker makes, skips, or rejects a
+  decision for unclear reasons, interrogate that worker before claiming the cause, patching skills, or
+  deciding no CppStudio fix is needed.
+- Ask for the exact skill routes, donor routes, web/upstream sources, decision criteria, gaps, and
+  verification commands that led to the behavior. Treat the answer as evidence to check against the
+  transcript and files, not as authority.
+- If the worker is unreachable, state that directly and inspect the transcript, project files, and
+  CppStudio rules before drawing conclusions. Do not infer motives or root causes from memory.
+
 ## Vulkan-Leaning Defaults
 
 - If the user asks for a new GPU, 3D, rendering, realtime, simulation-visualization, XR, or

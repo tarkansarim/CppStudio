@@ -74,6 +74,29 @@ Source inspiration: CppStudio code maps and project-memory features in adjacent 
 - Validation idea: profile validator that rejects absolute private paths, stale benchmark claims
   without date/toolchain, and oversized first-load content.
 
+### Sculpting And Qt Artist-Tool Donor Profiles
+
+Source inspiration: supervised 3dSculptTool planning run on 2026-05-10.
+
+- Add a Qt Vulkan editor-shell donor profile covering `QVulkanInstance`, `QVulkanWindow`, custom
+  Vulkan `QWindow` surfaces, `QWidget::createWindowContainer()` limitations, and Qt version-sensitive
+  Vulkan 1.3 feature-control caveats.
+- Add a Qt tablet/stylus input profile covering `QTabletEvent`, pressure/tilt/rotation plumbing,
+  embedded viewport event routing, and Wacom/Linux/Windows validation notes.
+- Add reference-only sculpting peer-practice notes for ZBrush, Blender Dyntopo, and similar tools,
+  with explicit direct-donor versus peer-behavior caveats.
+- Add a Maya-style viewport-control profile covering tumble/track/dolly/frame-selected conventions
+  and validation tests for viewport input behavior.
+- Harden planning verification for untracked research docs: greenfield agents should use
+  `git status --short` plus content reads, `git add -N && git diff`, or `git diff --no-index` instead
+  of relying on `git diff <untracked-file>`.
+- Harden Rewind planning-fabric guidance so workers prefer narrow exact-file excludes for locked
+  decisions over broad patterns such as `docs/planning/**`, unless the whole folder is intentionally
+  treated as preserved operating fabric.
+- Validation idea: replay a greenfield sculpt/tool planning lane with Qt selected, verify the worker
+  classifies sources into existing donor routes, new donor candidates, and peer/reference-only
+  sources, then checks untracked docs with a meaningful diff/readback path.
+
 ## Larger Candidates
 
 ### Cross-Agent Packaging And Export

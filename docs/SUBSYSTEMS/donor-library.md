@@ -26,9 +26,13 @@ selection policy, and trigger-regression metadata.
 - a donor caveat such as mixed-native or reference-only changes
 - trigger prompts, expected donor routing, or donor inventory in the README changes
 - donor refresh dates or source research notes change
+- donor-candidate capture, project-local research artifact expectations, or promotion rules between
+  target-project research and the CppStudio source donor library change
 - donor freshness audit behavior or source URL metadata expectations change
 - donor-grounding or web-ceiling-check expectations for broad native GPU design prompts change
 - native C++ GUI/HUD/editor UI donor categories or visual inspection link rules change
+- platform/window/input donor categories change, including SDL3, GLFW, Qt tablet events, native
+  tablet APIs, or other artist-input routes for pressure-sensitive tools
 - trigger-matrix expectations for GUI convention tables, icon/text affordance checks, screenshot
   scorecards, harness readiness invariants, route inventory reconciliation, or action inventories
   change

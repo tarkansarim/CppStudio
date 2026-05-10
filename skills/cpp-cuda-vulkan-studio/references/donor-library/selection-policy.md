@@ -14,6 +14,14 @@ lane still controls implementation: Vulkan targets port donor ideas through Vulk
 synchronization, CUDA targets port donor ideas through CUDA tooling and kernel policy, and mixed
 CUDA/Vulkan lanes require explicit user choice or a real interop need.
 
+For substantial planning, donor selection must leave a durable trace in the target project. Save the
+curated donor and web-research set in `docs/planning/RESEARCH_BRIEF.md` before implementation, with
+short notes for what each source is, how it benefits the target project, and whether it is direct
+donor, dependency-candidate, or reference-only. If a strong reusable source is not already represented
+in this donor library, save it as a project-local donor candidate first. Promote candidates into the
+CppStudio source donor library only during explicit donor-library maintenance and roll them out from
+source; the installed user-level copy is not the source of truth.
+
 ## Language And Runtime Boundary
 
 License tier is not the same thing as direct C++ usability. A permissive Python, JavaScript,
