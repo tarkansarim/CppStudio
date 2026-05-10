@@ -141,6 +141,10 @@ grep -q "Separate current leading approaches from" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "extensive state-of-the-art web ceiling check" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "Project Dos And Don'ts" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "GUI/product-surface" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
 grep -q "authoring model/source of truth" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "comparable current tools" \
@@ -743,6 +747,7 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning h
             grep -q "project-intake.md" "${trigger_tag_md}"
             grep -q "pre-plan research brief before asking the user to switch to Plan mode" "${trigger_tag_md}"
             grep -q "extensive state-of-the-art upstream web ceiling check" "${trigger_tag_md}"
+            grep -q "Project Dos And Don'ts" "${trigger_tag_md}"
             grep -q "prefer the best available option unless the user asks for a lighter route" "${trigger_tag_md}"
             grep -q "agentic-control-harness" "${trigger_tag_md}"
             grep -q "before asking the user for routine manual testing" "${trigger_tag_md}"

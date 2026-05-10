@@ -67,6 +67,11 @@ generated-project workflow instructions.
   routes and curated web/upstream sources with short descriptions, project benefits, freshness or
   primary-source notes, and direct-donor/dependency/reference-only caveats. Chat-only research is not
   enough for these cases.
+- Durable research briefs should include `Project Dos And Don'ts`, split into app/domain and
+  GUI/product-surface rules. Each rule needs source evidence, affected subsystem or UI surface, and a
+  validation signal. GUI rules must cite peer-tool, UI-framework, or donor evidence for layout,
+  control placement, icon/text affordance, viewport/timeline/inspector conventions,
+  debug-vs-product boundaries, and visual proof.
 - New reusable references discovered during web research are first saved as target-project donor
   candidates, normally `docs/planning/DONOR_CANDIDATES.md` or a donor-candidates section in the
   research brief. They are promoted into CppStudio's source donor library only during explicit
@@ -159,6 +164,8 @@ generated-project workflow instructions.
 - donor-grounding or web-ceiling-check expectations for native GPU brainstorming/design proposals
   change
 - durable project-local research artifact or donor-candidate capture requirements change
+- project-specific dos and don'ts research-artifact requirements change, including GUI/product-surface
+  best-practice capture
 - artist-input or tablet/stylus planning defaults change, including when mouse-first window/input
   stacks must be demoted for brush, sculpt, paint, groom, terrain, texture, or stroke tools
 - native C++ GUI/HUD/editor UI skill routing or option-presentation behavior changes

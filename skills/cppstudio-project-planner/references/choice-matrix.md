@@ -20,6 +20,12 @@ For each major subsystem that shapes architecture, add a compact decision record
 plan. Keep the gate lightweight: local facts, sources checked, selected default, rejected
 alternatives, user decision if any, and milestone-1 validation.
 
+For substantial greenfield tools, the same research must also produce `Project Dos And Don'ts` in the
+planning artifact. Treat that section as an implementation-facing rule sheet: what this project
+should emulate, what it should avoid, which source supports each rule, where it applies, and how the
+first milestone will prove it. GUI/product-surface rules are mandatory for interactive tools and must
+cite peer-tool, donor, or UI-framework evidence.
+
 | Subsystem | Minimum Evidence Before Recommendation | Decision Record Must Name |
 | --- | --- | --- |
 | Renderer or render path | Project archetype, Vulkan/CUDA lane, renderer donors, current upstream/vendor guidance when version-sensitive | Chosen render architecture, rejected render paths, validation capture or screenshot plan |
@@ -136,6 +142,10 @@ substitute for clickable links.
   web/upstream links together. Each kept link needs a short "what it is" and "why it helps this
   project" note. Also mention rejected or legacy sources when they explain why an easier option was
   not chosen.
+- In the same research brief, include `Project Dos And Don'ts` with app/domain rules and
+  GUI/product-surface rules. Each item needs source evidence, affected subsystem or surface, and a
+  validation signal; do not accept generic "good UI" or "high quality" statements without peer-tool
+  or donor grounding.
 - When a web source is strong enough to become reusable CppStudio donor material but is not already
   covered by the donor library, save it as a donor candidate in `docs/planning/DONOR_CANDIDATES.md`
   or the research brief. Promote it to the CppStudio source donor library only when the task is

@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a mandatory `Project Dos And Don'ts` section for substantial greenfield planning artifacts,
+  covering both app/domain rules and GUI/product-surface best practices with source evidence and
+  validation signals.
 - Hardened greenfield code-map startup so substantial new projects must accept, decline, or
   explicitly defer maintained code-map setup before the first source/build/app/test/docs slice.
 - Added durable greenfield research guidance so substantial native GPU project planning writes

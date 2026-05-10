@@ -28,6 +28,8 @@ The pre-plan research brief should include:
 - relevant donor categories/profiles opened
 - web/current sources checked, with freshness/adoption signals where available and a short
   description of how each source benefits this project
+- project-specific dos and don'ts derived from the research, including GUI/product-surface best
+  practices when the target has an interface
 - current state-of-the-art or actively popular approaches, separated from legacy approaches
 - software orientation and current peer-tool family for large artist/game/VFX/DCC tools
 - recommended best-available default and why
@@ -39,6 +41,44 @@ web/upstream sources, not replace one with the other. Cherry-pick sources: keep 
 domain-relevant, license-understandable, and implementation-useful links; reject duplicates, stale
 tutorials, vague summaries, abandoned projects unless they are deliberately study-only, and sources
 that do not change a decision.
+
+The persisted research artifact must include a `Project Dos And Don'ts` section for substantial
+projects. This section converts research into implementation rules:
+
+```text
+## Project Dos And Don'ts
+
+### App / Domain
+- Do:
+  - Rule:
+    Evidence:
+    Applies to:
+    Validation signal:
+- Don't:
+  - Rule:
+    Evidence:
+    Applies to:
+    Validation signal:
+
+### GUI / Product Surface
+- Do:
+  - Rule:
+    Evidence:
+    Applies to:
+    Validation signal:
+- Don't:
+  - Rule:
+    Evidence:
+    Applies to:
+    Validation signal:
+```
+
+Use the app/domain section for architecture, source of truth, data flow, simulation/solver, renderer,
+assets, input, persistence, performance, validation, and dependency rules. Use the GUI/product
+surface section for best practices around layout, viewport behavior, timeline/transport placement,
+tool palettes, inspectors, node/layer/scene surfaces, icon-versus-text affordances, status/error
+feedback, debug-vs-product boundaries, and visual proof. Each GUI rule needs peer-tool,
+UI-framework, or donor evidence; generic aesthetic wording is not enough.
 
 When a strong reusable source is not already covered by the CppStudio donor library, record it in
 `docs/planning/DONOR_CANDIDATES.md` or a donor-candidates section of the research brief. Include the
@@ -129,7 +169,8 @@ Collect these facts before committing to architecture:
   their common authoring practices, not only their rendering, solver, or dependency choices.
 - Durable research artifact: for substantial projects, write `docs/planning/RESEARCH_BRIEF.md`
   before implementation with curated links, descriptions, benefits, donor routes, current-vs-legacy
-  notes, rejected sources, and donor candidates that should be promoted to CppStudio later.
+  notes, rejected sources, project-specific dos and don'ts, GUI/product-surface best practices when
+  applicable, and donor candidates that should be promoted to CppStudio later.
 - Dependency policy: system packages, vcpkg, Conan, FetchContent, submodules, vendored source,
   commercial SDKs, license constraints, and offline/air-gapped requirements.
 - Code map: ask whether the project should maintain a CppStudio code map for future agents. For

@@ -33,6 +33,11 @@ Minimum pre-plan research pass:
   donor material that is not already in the CppStudio donor library. Promote candidates into the
   CppStudio source donor library only during explicit donor-library maintenance; user-level installed
   skills are rollout targets, not source files to edit by hand.
+- In that research brief, include `Project Dos And Don'ts`: app/domain rules and GUI/product-surface
+  rules distilled from local donors, peer tools, and web/upstream sources. Each item needs evidence,
+  the subsystem or UI surface it applies to, and the first validation signal. GUI rules must be based
+  on peer-tool, UI-framework, or donor evidence for layout, control placement, icon/text affordance,
+  viewport/timeline/inspector conventions, debug-vs-product boundaries, and visual proof.
 
 The first visible response after that research should be a concise **Pre-Plan Research Brief**:
 
@@ -43,6 +48,7 @@ The first visible response after that research should be a concise **Pre-Plan Re
 - web/current sources checked
 - durable research artifact path, when the project is substantial enough to require one
 - donor candidates discovered outside the current library, if any
+- project dos and don'ts artifact path and the most important app/domain and GUI/product-surface rules
 - clear recommended default and alternatives
 
 Then ask the user to switch to Plan mode before implementation:

@@ -54,6 +54,16 @@ it matters to this project, whether it is current/primary, and whether it is dir
 dependency-candidate, or reference-only. For large projects, expect a broad curated source set across
 the major subsystems, not a handful of links in chat.
 
+For those substantial planning artifacts, include a `Project Dos And Don'ts` section. This is the
+operational distillation of the research, not a style appendix. It must turn local donor routes,
+web/upstream research, and peer-tool evidence into project-specific rules the implementation agent
+can follow without re-reading every link. Cover both the app/domain shape and the GUI/product
+surface. Each item should name the rule, source/evidence, affected subsystem or UI surface, and the
+milestone-1 validation signal. GUI/interface items must include peer-tool or UI-framework evidence
+for layout, control placement, icon/text affordance, viewport/timeline/inspector conventions,
+debug-vs-product boundaries, and visual proof expectations. Do not let generic advice such as "make
+the UI polished" satisfy this section.
+
 When web research finds a strong reusable source that is missing from the CppStudio donor library,
 do not leave that discovery only in chat. In ordinary target projects, add it to
 `docs/planning/DONOR_CANDIDATES.md` or a "Donor candidates" section in the research brief with the
@@ -171,16 +181,19 @@ facade over the same API, and which state/log/visual observation surfaces are ne
    recommending or scaffolding viewport dimensionality, timeline/transport placement, editor layout,
    node graph/layer stack/source of truth, solver architecture, or render path, cite the donor or
    peer-tool evidence that supports it.
-8. Add a short decision record for each major subsystem: local facts, peer/upstream/donor evidence,
+8. Distill the research into project-specific dos and don'ts before implementation. Include app/domain
+   rules and GUI/product-surface rules. Each rule needs source evidence, affected subsystem/surface,
+   and validation signal.
+9. Add a short decision record for each major subsystem: local facts, peer/upstream/donor evidence,
    selected default, rejected alternatives, open user decision if any, and milestone-1 validation.
-9. Separate current leading approaches from legacy/outdated approaches, state the freshness evidence,
+10. Separate current leading approaches from legacy/outdated approaches, state the freshness evidence,
    and call out when a local donor is still useful only as reference because the current best approach
    has moved on.
-10. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
+11. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
    routes, peer-tool authoring-model findings, web sources checked, current-vs-legacy notes, and the
    reasoning for the best available option, then ask for Plan mode and only then ask decision
    questions.
-11. Persist the research brief for substantial projects before implementation. Prefer
+12. Persist the research brief for substantial projects before implementation. Prefer
    `docs/planning/RESEARCH_BRIEF.md`; include `docs/planning/DONOR_CANDIDATES.md` when strong
    reusable sources were found that are not already covered by the donor library. If the user only
    asked for a tiny exploratory answer and no project repo exists, state that no durable artifact was
@@ -206,6 +219,8 @@ Every substantial plan should include:
   path when one was written
 - donor candidates discovered outside the current library, with whether they were saved in the
   target project or promoted into the CppStudio source donor library
+- project-specific dos and don'ts derived from donor, upstream, and peer-tool evidence, including
+  GUI/product-surface rules and their validation signals
 - current state-of-the-art or actively popular approaches, separated from legacy approaches
 - comparable current tools checked and what their common authoring practices imply
 - per-subsystem decision records for major renderer, solver, authoring, GUI, asset, control,
