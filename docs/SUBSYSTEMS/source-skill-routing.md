@@ -215,8 +215,8 @@ generated-project workflow instructions.
   committed before agents continue into the next milestone
 - greenfield target-project Git initialization and Codex worker read-only `.git` sandbox blocker
   handling changes
-- target-project commit-origin marker policy changes, including how autonomous agent commits are
-  distinguished from user-requested commits
+- target-project commit-origin marker policy changes, including the allowed `Commit-Origin` values
+  and how autonomous agent commits are distinguished from user-requested commits
 - target-project slice-execution discipline changes, including when agents must stop broad
   orientation after route selection, adapt stale task lists to new evidence, handle midstream major
   feature requests through planning artifacts, or clean interrupted partial edits

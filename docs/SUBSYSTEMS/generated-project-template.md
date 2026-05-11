@@ -105,8 +105,10 @@ validation.
 - Template docs tell agents to commit each coherent verified implementation slice before moving to
   the next milestone while keeping generated build outputs, screenshots, profiler captures, logs, and
   temporary verification artifacts out of git unless the project intentionally tracks them.
-- Generated-project commit guidance uses `Commit-Origin` trailers so autonomous agent slice commits
-  and explicit user-requested commits stay distinguishable in git history.
+- Generated-project commit guidance allows only `Commit-Origin: agent-slice` and
+  `Commit-Origin: user-requested` so autonomous agent slice commits and explicit user-requested
+  commits stay distinguishable in git history without provider-name values such as `codex` or
+  `claude`.
 - New-project scaffolding is Vulkan-only by default. `scaffold_gpu_cpp_project.py --gpu-lane vulkan`
   omits CUDA files, CMake presets, validation docs, runtime helper scripts, and code-map routes.
   CUDA-capable scaffolds require the explicit `--gpu-lane cuda` or `--gpu-lane cuda-vulkan` choice so

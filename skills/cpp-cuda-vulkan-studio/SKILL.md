@@ -165,9 +165,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
   covered by a subsystem route; update the manifest and subsystem doc in the same slice or explain
   why the map update is intentionally deferred. If the repo has no git history, no git identity,
   ambiguous dirty state, or approval is required for the git write, surface that clearly instead of
-  silently skipping the commit. Add a commit trailer that identifies why the commit happened: use
-  `Commit-Origin: agent-slice` for commits the agent creates as part of the verified-slice workflow,
-  and `Commit-Origin: user-requested` when the user explicitly asked for that commit.
+  silently skipping the commit. Add exactly one `Commit-Origin` trailer that identifies why the
+  commit happened, using only these values: `Commit-Origin: agent-slice` for commits the agent
+  creates as part of the verified-slice workflow, and `Commit-Origin: user-requested` when the user
+  explicitly asked for that commit. Do not use provider names such as `codex`, `claude`, or model
+  names as commit-origin values; the trailer describes the reason for the commit, not which agent
+  wrote it.
 - Use evidence before claims. Builds, CTest labels, shader compilation, Vulkan validation,
   Compute Sanitizer, RenderDoc/Nsight captures, screenshots, image comparisons, and profiler output
   matter more than plausible explanations.
@@ -523,8 +526,8 @@ For long-running target-project implementation, repeat this rhythm between slice
 6. Clean generated probe junk from the source root, review `git status`, keep unrelated user changes
    out, run both `scripts/check_code_map_drift.py --require-enabled` and
    `scripts/validate_code_map.py --require-enabled` before staging/committing when the map is
-   enabled, check diff hygiene, and commit the verified slice with the appropriate `Commit-Origin`
-   trailer.
+   enabled, check diff hygiene, and commit the verified slice with exactly one allowed
+   `Commit-Origin` trailer: `agent-slice` or `user-requested`.
 7. Continue to the next slice only after the commit is in place, or after clearly reporting why a
    commit was intentionally skipped.
 

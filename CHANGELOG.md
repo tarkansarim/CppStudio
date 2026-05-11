@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened target-project commit-origin guidance so verified-slice commits use only
+  `Commit-Origin: agent-slice` or `Commit-Origin: user-requested`, not provider-name values.
 - Added adaptive task-list realignment guidance so agents can revise stale implementation plans when
   evidence changes the trajectory, while still pausing for product, stack, scope, dependency/license,
   or explicit user-constraint changes.
