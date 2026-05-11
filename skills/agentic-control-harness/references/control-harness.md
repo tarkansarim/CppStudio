@@ -172,6 +172,51 @@ For UI-heavy tools, visual awareness is not optional. The harness should expose 
 panel, focus, modal, screenshot, and frame-output evidence that an agent can understand what the user
 would see on screen for ordinary debugging and regression checks.
 
+## GUI Interaction Scenarios
+
+Interactive tools need a second class of tests beyond backend control commands: scenarios that drive
+the same GUI path a user uses. Backend routes can prove the semantic command layer, but they do not
+prove tool buttons, palette clicks, focus, event routing, DPI scaling, widget geometry, or viewport
+hit tests.
+
+Use scenario tests for:
+
+- tool palette, brush, mode, layer, timeline, inspector, and toolbar controls
+- menu, shortcut, context-menu, and dock-panel actions
+- viewport press/drag/release, stylus strokes, picking, gizmo moves, camera controls, and canvas
+  coordinate edits
+- graph/node canvas drags, links, socket hit tests, and snapped placements
+- any user-reported GUI delay, missed click, wrong hit point, wrong focus, or offset interaction
+
+Useful scenario evidence fields:
+
+- `scenario_id` and `input_surface`
+- `input_method`: toolkit action, synthetic click, shortcut, menu dispatch, pointer drag, stylus
+  event, or approved window-event bridge
+- `screen_point`, `widget_geometry`, `viewport_local_point`, `device_pixel_ratio`, and
+  `render_target_point` when coordinates are involved
+- active mode/tool/brush/layer/selection before and after
+- frame, revision, event-loop turn, or fence before and after
+- `latency_ms` from input dispatch to committed UI/app state
+- hit-test data such as ray origin/direction, hit object, primitive id, barycentric or UV
+  coordinate, world/document-space hit point, and committed edit center
+- screenshot or render-target capture path plus freshness fields when a visual result matters
+- controlled rejection reason when the click or drag is intentionally invalid
+
+For palette or button interactions, assert that the real visible/action state changes promptly after
+the click or action dispatch. A backend state that updates seconds later, or only after another
+unrelated event, is a failed UI scenario.
+
+For viewport/canvas interactions, assert the coordinate pipeline explicitly. A sculpt, paint, groom,
+pick, transform, or graph edit should report the path from screen point to widget-local coordinates,
+through device-pixel ratio and render-target coordinates, into ray/canvas transform/hit data, then
+into the committed edit point. Generic state changes such as "mesh revision incremented" or
+"selection changed" are not enough when the bug is pointer offset.
+
+When possible, capture a fresh visual frame with markers or overlays at both the requested pointer
+and the committed hit/edit point. If markers are too invasive for the product UI, expose them only in
+test/dev capture mode and keep the normal product view clean.
+
 ## Control Registry
 
 Keep controls discoverable in project docs and, when useful, a small JSON registry.
@@ -186,6 +231,8 @@ Recommended `docs/AGENTIC_CONTROL.md` sections:
 - curl examples
 - state/readback surfaces
 - UI readback and text-queryable visual surrogates
+- GUI interaction scenarios for real widget/action clicks, viewport/stylus events, latency checks,
+  and pointer-mapping oracles
 - scenario smoke tests
 - warning/log readback
 - known unsupported or intentionally disabled controls

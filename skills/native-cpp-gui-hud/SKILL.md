@@ -83,6 +83,15 @@ production paths. Do not claim a menu, context action, shortcut, timeline, viewp
 was tested unless it was actually exercised or introspected; otherwise report it as screenshot-checked
 or metadata-only evidence.
 
+For user-facing interactive tools, verification must include real GUI interaction evidence for the
+affected surface. Palette clicks, tool buttons, timeline controls, viewport strokes, picks, gizmo
+drags, and graph-canvas edits need scenario coverage or equivalent toolkit-level probes that drive
+the same event path as the user. Record event-to-state latency for click/selection changes, and
+record widget geometry, device-pixel ratio, viewport-local/render-target coordinates, hit rays or
+canvas transforms, committed hit/edit points, and fresh visual evidence for pointer-mapped edits.
+Backend command success or a generic model revision is not enough when the user-visible question is
+"did the click hit the right control or mesh point?"
+
 When the target app has or should have an agentic control harness, expose an action or affordance
 inventory for UI-heavy slices when practical. A useful inventory includes action id, visible text,
 icon presence/name, tooltip, shortcut, surface location, enabled state, command target, selected-object
@@ -142,16 +151,20 @@ the evidence before wiring or closing.
    separate from proof.
 9. For drag/move/resize/graph-coordinate interactions, verify the committed UI/model state after any
    snapping, clamping, or validation and make the screenshot match that committed state.
-10. Present a compact option table with:
+10. For click, palette, viewport, brush/stylus, and canvas interactions, add or run a GUI scenario
+   that proves the real event path, event-to-committed-state latency, pointer coordinate mapping,
+   and fresh visual/result state. Explicitly check device-pixel ratio and widget/viewport offsets
+   before accepting a pointer-hit fix.
+11. Present a compact option table with:
    - recommended use
    - source/docs link
    - visual/gallery/examples link
    - license/dependency caveat
-11. Only after that link table is visible, ask the user to choose among the researched options.
-12. Before adding a dependency, check the target repo's package policy and exact upstream license.
-13. If CppStudio is available, read its donor category first:
+12. Only after that link table is visible, ask the user to choose among the researched options.
+13. Before adding a dependency, check the target repo's package policy and exact upstream license.
+14. If CppStudio is available, read its donor category first:
    `cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md`.
-14. For current best-choice or version-sensitive questions, web-check official project docs/repos before
+15. For current best-choice or version-sensitive questions, web-check official project docs/repos before
    ranking options.
 
 ## Bundled Reference

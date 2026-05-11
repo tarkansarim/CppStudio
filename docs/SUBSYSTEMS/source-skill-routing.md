@@ -165,6 +165,10 @@ generated-project workflow instructions.
 - UI-heavy harnesses should expose an action/affordance inventory when practical, including action id,
   visible text, icon presence/name, tooltip, shortcut, surface location, enabled state, command target,
   selected-object requirement, and proof status.
+- GUI interaction bugs and pointer-driven tool slices now require scenario evidence that exercises
+  the real widget/action or viewport/canvas event path, including click/selection latency and
+  pointer-mapping readback such as widget geometry, device-pixel ratio, render-target coordinates,
+  hit data, committed edit point, and fresh visual proof when practical.
 
 ## Update When
 
@@ -206,6 +210,9 @@ generated-project workflow instructions.
 - GUI/action verification rules change, including when harnesses should introspect actual toolkit
   actions, menu entries, shortcuts, context surfaces, enabled states, or distinguish metadata claims
   from proof
+- GUI interaction scenario rules change, including when agents must test visible control clicks,
+  event-to-state latency, viewport/canvas pointer mapping, stylus strokes, or real user input paths
+  instead of backend commands alone
 - user-facing desktop launch-command verification requirements change, including non-blocking
   long-running GUI launch verification, launcher probe behavior, and duplicate-launch contracts
 - Vulkan runtime/readiness policy changes, including how realtime viewport preflights classify

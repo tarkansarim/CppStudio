@@ -86,6 +86,10 @@ validation.
   wrappers with offscreen/background managers, and to use absolute script paths or explicit working
   directories for manager-submitted scripts so invocation-context failures are not confused with app
   regressions.
+- Generated GUI/windowed validation docs now distinguish launch smoke from interaction proof:
+  UI-heavy tools need scenarios for real control clicks, selection latency, viewport/canvas
+  pointer-mapping, device-pixel-ratio handling, committed hit/edit points, and fresh visual evidence
+  before agents claim GUI fixes work.
 - Generated app guidance requires agents to verify the exact user-facing launch command when they
   provide or change it; offscreen smoke alone is not enough launch evidence.
 - Generated Vulkan validation docs distinguish loader/SDK availability from hardware-backed

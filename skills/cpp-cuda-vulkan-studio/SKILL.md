@@ -200,6 +200,15 @@ When this skill is active, work like a native C++ GPU systems engineer:
   feature driving, state/log readback, screenshots, and visual/UI troubleshooting before asking the
   user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
   the harness instead of repeatedly handing small verification chores to the user.
+- For GUI interaction bugs or user-visible interaction slices, require a real GUI scenario or
+  equivalent toolkit-level probe for the affected path. Brush palette clicks, tool buttons, timeline
+  controls, menu/shortcut/context actions, viewport strokes, picks, gizmo drags, graph edits, and
+  canvas interactions must prove the same event path a user exercises when practical. The evidence
+  should include event-to-committed-state latency for selection/control changes and explicit pointer
+  mapping for viewport/canvas edits: widget geometry, local point, device-pixel ratio,
+  render-target point, ray/canvas transform, hit object or primitive, committed hit/edit point, and a
+  fresh visual marker/capture when practical. Do not call these fixed from backend command success,
+  a generic model revision, or a nonblank screenshot alone.
 - Keep harness roadmap/readiness readback current. If a target app exposes machine-readable fields
   such as `next_required_slice`, `blockers`, `prerequisites`, readiness booleans, or backend/feature
   eligibility, a verified slice that satisfies one prerequisite must update that readback before
@@ -270,6 +279,11 @@ When this skill is active, work like a native C++ GPU systems engineer:
   timelines, and viewports. Discover or introspect the real toolkit/API objects, enabled-state rules,
   selected-object requirements, snapped or committed coordinates, and socket/type compatibility
   before connecting production commands; metadata or planned wiring is not proof.
+- For pointer-driven GUI fixes, treat coordinate transforms as a first-class contract. Audit
+  widget/framebuffer bounds, dock/sidebar/menu/status offsets, scroll positions, device-pixel ratio,
+  viewport origin, camera matrices, ray construction, hit-test space, and snap/brush falloff space
+  before editing. Tests should assert the full screen-to-world or screen-to-document path, not only
+  that an edit occurred.
 - For viewport, canvas, render-target, or screenshot capture endpoints, do not assume "set state,
   request update, grab immediately" proves the visible result. The harness should expose enough
   frame/revision/sequence/fence evidence to show the requested UI or renderer state was rendered

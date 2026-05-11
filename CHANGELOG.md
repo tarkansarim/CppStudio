@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added explicit GUI interaction scenario requirements so UI-heavy tools test real visible control
+  clicks, event-to-state latency, viewport/canvas pointer mapping, device-pixel-ratio handling,
+  committed hit/edit points, and fresh visual proof instead of relying on backend commands or
+  nonblank launch screenshots.
 - Hardened target-project commit-origin guidance so verified-slice commits use only
   `Commit-Origin: agent-slice` or `Commit-Origin: user-requested`, not provider-name values.
 - Added adaptive task-list realignment guidance so agents can revise stale implementation plans when

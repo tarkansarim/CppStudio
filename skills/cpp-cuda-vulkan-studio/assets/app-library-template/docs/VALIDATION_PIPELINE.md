@@ -164,3 +164,18 @@ repo defines one. Prefer the repo's smoke script or launcher wrapper for these r
 offscreen-manager command is necessary, run it from the repo root or pass absolute script paths so a
 manager working-directory mismatch cannot be mistaken for an application failure. Do not add
 foreground GUI automation to CI by default.
+
+For interactive GUI tools, app-smoke and nonblank screenshots are only launch evidence. User-visible
+GUI behavior needs scenario evidence that exercises the real event path when practical:
+
+- palette, toolbar, menu, shortcut, timeline, inspector, or dock controls should report the clicked
+  or triggered action, active UI state before and after, frame/revision or event-loop turn, and
+  event-to-committed-state latency
+- viewport, canvas, sculpt, paint, groom, pick, gizmo, or graph interactions should report widget
+  geometry, viewport-local coordinates, device-pixel ratio, render-target coordinates, hit ray or
+  canvas transform, committed hit/edit point, and resulting selection/edit state
+- visual captures used for GUI proof should be fresh for the requested state and, when practical,
+  include a test-only marker or overlay at the requested pointer and committed hit/edit point
+
+Do not accept a backend command success, generic revision increment, or delayed state update as proof
+that a visible button, palette item, or pointer-mapped viewport interaction works.

@@ -112,6 +112,25 @@ control harness itself.
   selected-object requirement, and proof status. Use it to verify that tool controls follow peer-tool
   conventions, especially transport, timeline, viewport, selection, transform, visibility, and
   destructive actions.
+- For interactive GUI tools, add real GUI interaction scenarios, not only backend commands. A
+  scenario should drive the same input path a user exercises when practical: toolkit action trigger,
+  menu/shortcut dispatch, tool-button click, palette selection, timeline drag, viewport mouse/stylus
+  press/drag/release, or window-system event injection through the app's approved test path. Backend
+  HTTP commands are useful control surfaces, but they do not prove that the visible widget, focus,
+  hit target, event routing, or input coordinate transform works.
+- GUI interaction scenarios need latency and committed-state readback for user-visible controls. For
+  tool palette, brush, mode, layer, timeline, selection, and inspector controls, record input
+  timestamp, dispatch path, event-loop turn or frame/revision before and after, active UI/tool state,
+  and elapsed time. Multi-second delayed selection, delayed visible labels, or state changes that
+  only appear after unrelated input are failing GUI behavior even if the backend command eventually
+  succeeds.
+- Viewport and canvas interactions need a pointer-mapping oracle. For click, drag, stroke, pick,
+  sculpt, paint, groom, transform, gizmo, node-canvas, or graph-coordinate work, read back the target
+  widget geometry, viewport-local point, device-pixel ratio, framebuffer/render-target point,
+  camera/ray or canvas transform, hit object/primitive, committed world or document-space point, and
+  resulting edit center/selection. If practical, capture a fresh screenshot with a marker or overlay
+  at the requested pointer and committed hit/edit position. A stroke that is visibly offset from the
+  pointer is not verified by a generic mesh-revision change.
 - Maintain a control registry such as `docs/AGENTIC_CONTROL.md` plus optional
   `docs/AGENTIC_CONTROL.json` or `TARGET_CONTROL.json` so future agents can discover controls
   without reverse-engineering the app. Include discovered commands, transports, constraints,
@@ -154,12 +173,18 @@ A first harness slice is only provisionally successful when these are verified:
   tooltip, shortcut, location, enabled-state, and proof status
 - user-visible GUI actions added in the slice have either scenario coverage or action/readback
   evidence from the real toolkit objects; metadata-only assertions are labeled as such
+- user-visible GUI fixes for clicks, selections, drags, or viewport strokes include an interaction
+  scenario that exercises the real GUI event path, records event-to-committed-state latency, and
+  proves the visible widget/action state changed without relying on unrelated later input
+- viewport/canvas hit or stroke fixes include a pointer-mapping readback with widget geometry,
+  device-pixel ratio, local/render-target coordinates, picked ray or canvas transform, committed
+  hit/edit point, and fresh visual evidence when practical
 - failures distinguish transport errors from app-side command errors
 
 After first proof, add stress lanes for partial failures, invalid values, out-of-range values,
 unknown enums, snap/clamp boundaries, mode/focus/selection mismatches, repeated commands, rapid
-command sequences, startup race conditions, transport disconnects/timeouts, cleanup after rejected
-commands, and feature interactions.
+command sequences, rapid GUI clicks/drags, startup race conditions, transport disconnects/timeouts,
+cleanup after rejected commands, and feature interactions.
 
 ## Agent Autonomy Contract
 
