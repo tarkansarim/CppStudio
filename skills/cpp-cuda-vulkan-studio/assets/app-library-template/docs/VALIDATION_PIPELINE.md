@@ -165,6 +165,14 @@ offscreen-manager command is necessary, run it from the repo root or pass absolu
 manager working-directory mismatch cannot be mistaken for an application failure. Do not add
 foreground GUI automation to CI by default.
 
+When a user-facing launch command is documented or changed, verify that exact command separately
+from offscreen smoke. Use a bounded nonblocking probe: start the exact command, capture stdout/stderr,
+identify the intended app process and window by pid/class/title, reject terminal-title and stale-window
+matches, record mapped/normal/iconic state, workspace/desktop, geometry, focus/raise result, control
+harness responsiveness, and then stop only the started app instance. A process-alive check, offscreen
+capture, or window object on a hidden/off-desktop workspace is not enough to claim the human launch
+path works.
+
 For interactive GUI tools, app-smoke and nonblank screenshots are only launch evidence. User-visible
 GUI behavior needs scenario evidence that exercises the real event path when practical:
 

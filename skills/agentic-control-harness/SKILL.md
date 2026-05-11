@@ -118,6 +118,12 @@ control harness itself.
   press/drag/release, or window-system event injection through the app's approved test path. Backend
   HTTP commands are useful control surfaces, but they do not prove that the visible widget, focus,
   hit target, event routing, or input coordinate transform works.
+- For desktop GUI apps, include a human-launch scenario for the documented launch command. It should
+  start the exact command nonblocking, capture stdout/stderr, prove the intended app process owns a
+  mapped normal window, reject terminal-title or stale-window matches, focus or raise the window when
+  that is the launch contract, read back geometry/workspace/visibility, poll the control harness, and
+  cleanly stop the specific process or app instance it started. Offscreen smoke and nonblank captures
+  are not enough when the user needs the app window to actually appear.
 - GUI interaction scenarios need latency and committed-state readback for user-visible controls. For
   tool palette, brush, mode, layer, timeline, selection, and inspector controls, record input
   timestamp, dispatch path, event-loop turn or frame/revision before and after, active UI/tool state,

@@ -179,6 +179,16 @@ the same GUI path a user uses. Backend routes can prove the semantic command lay
 prove tool buttons, palette clicks, focus, event routing, DPI scaling, widget geometry, or viewport
 hit tests.
 
+For desktop apps, add a human-launch scenario for the documented launch command. Start the exact
+command nonblocking while capturing stdout and stderr, identify the intended app process and window
+by pid, executable/app id, toolkit class or `WM_CLASS`, and title when available, and reject terminal
+windows, stale windows, or matches based only on a terminal title containing the repo name. Record
+mapped/normal/iconic state, workspace or desktop id, geometry, active/focus result, whether the
+window is on the user's current visible desktop, and control-harness responsiveness while the window
+is alive. Classify device-lost surfaces, unresponsive harness routes, hidden/off-desktop windows, or
+focus failures as launch proof failures unless the scenario explicitly documents them as expected.
+Stop only the specific process or app instance the scenario started, preferably through the harness.
+
 Use scenario tests for:
 
 - tool palette, brush, mode, layer, timeline, inspector, and toolbar controls

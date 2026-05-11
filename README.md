@@ -67,7 +67,9 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   `agent-slice`/`user-requested` taxonomy. GUI-heavy tools now require real interaction scenarios
   for visible control clicks, selection latency, viewport/canvas pointer mapping, device-pixel-ratio
   handling, committed hit/edit points, and fresh visual evidence instead of backend-only or nonblank
-  screenshot proof. Donor route
+  screenshot proof. User-facing launch commands now also need proof that the exact command opens the
+  intended visible app window, not a terminal-title false positive, stale window, hidden workspace
+  window, or offscreen-only smoke. Donor route
   validation uses the same wrapped-source parsing, and trigger-result artifacts now fail
   matrix-anchored validation if a recorded `pass` omits expected opened paths, touches forbidden
   paths, self-edits the expected/forbidden path contract, downgrades checked-in installed evidence

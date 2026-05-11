@@ -92,6 +92,10 @@ validation.
   before agents claim GUI fixes work.
 - Generated app guidance requires agents to verify the exact user-facing launch command when they
   provide or change it; offscreen smoke alone is not enough launch evidence.
+- Exact launch-command verification must prove the human-visible app window, not only a process or
+  offscreen screenshot: agents must match the app window by process/class/title, reject terminal-title
+  false positives, read mapped/focus/workspace/geometry state, poll the control harness, and cleanly
+  stop the launched instance.
 - Generated Vulkan validation docs distinguish loader/SDK availability from hardware-backed
   realtime viewport readiness. CPU/software Vulkan implementations such as llvmpipe or Lavapipe are
   diagnostic-only by default; realtime viewport preflights should prefer discrete then integrated

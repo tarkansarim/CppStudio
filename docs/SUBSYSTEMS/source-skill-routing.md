@@ -169,6 +169,10 @@ generated-project workflow instructions.
   the real widget/action or viewport/canvas event path, including click/selection latency and
   pointer-mapping readback such as widget geometry, device-pixel ratio, render-target coordinates,
   hit data, committed edit point, and fresh visual proof when practical.
+- User-facing desktop launch commands require human-visible launch proof: exact command, intended
+  app process/window identity, terminal-title false-positive rejection, mapped/focusable visibility,
+  workspace/desktop and geometry readback, control-harness responsiveness, and clean shutdown of the
+  specific launched instance.
 
 ## Update When
 

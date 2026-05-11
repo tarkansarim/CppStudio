@@ -320,8 +320,15 @@ When this skill is active, work like a native C++ GPU systems engineer:
 - When you give, change, or rely on a user-facing desktop launch command, verify that exact command
   path in addition to offscreen smoke tests. For long-running GUI apps, acceptable evidence is that
   the exact command starts the intended process, the control harness responds, and a desktop window
-  or captured screenshot is visible. Do not treat an offscreen smoke run alone as proof that the
-  user's launch command works.
+  or captured screenshot is visible to the user. Do not treat an offscreen smoke run alone as proof
+  that the user's launch command works.
+- Desktop launch evidence must prove the intended app window, not a coincidental terminal or stale
+  previous window. Match by process id, exact executable/app id, `WM_CLASS` or toolkit class, and
+  title when available; reject matches that only come from a terminal title containing the repo name.
+  Record mapped/normal/iconic state, workspace/desktop id, geometry, focus/raise result, and whether
+  the window is on the user's current visible desktop. A window object on another workspace, an
+  iconic/hidden window, a device-lost surface, or an unresponsive control harness is not a completed
+  human-launch proof even if the process is still alive.
 - Verify long-running desktop launch commands without blocking the agent on a foreground GUI
   process. Use a bounded non-blocking verification shape: start the exact launcher while capturing
   stdout/stderr, keep that launch alive while polling the control harness, confirm process and

@@ -92,6 +92,12 @@ canvas transforms, committed hit/edit points, and fresh visual evidence for poin
 Backend command success or a generic model revision is not enough when the user-visible question is
 "did the click hit the right control or mesh point?"
 
+For desktop GUI apps, verify the documented human launch command opens the actual app window before
+claiming the app launches. The proof must identify the app window by class/process/title rather than
+matching a terminal title, show that it is mapped, normal, focusable or deliberately raised/reused,
+and visible on the user's desktop or intentionally moved there. Offscreen smoke and hidden window
+objects do not prove the launch experience.
+
 When the target app has or should have an agentic control harness, expose an action or affordance
 inventory for UI-heavy slices when practical. A useful inventory includes action id, visible text,
 icon presence/name, tooltip, shortcut, surface location, enabled state, command target, selected-object

@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Tightened desktop GUI launch verification so agents must prove the exact documented command opens
+  the intended visible, focusable app window, reject terminal-title or stale-window matches, read back
+  workspace/geometry/window state, and confirm harness responsiveness before claiming launch success.
 - Added explicit GUI interaction scenario requirements so UI-heavy tools test real visible control
   clicks, event-to-state latency, viewport/canvas pointer mapping, device-pixel-ratio handling,
   committed hit/edit points, and fresh visual proof instead of relying on backend commands or
