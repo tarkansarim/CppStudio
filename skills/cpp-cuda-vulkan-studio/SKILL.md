@@ -99,6 +99,14 @@ When this skill is active, work like a native C++ GPU systems engineer:
   designing the code. In that case, search current public upstream sources such as official repos,
   docs, samples, papers, standards docs, and vendor docs; record the links/evidence before any
   design or implementation. "Upstream research" is not model-memory reasoning.
+- Hard realignment rule: if a visible bug, interaction bug, product-shape problem, renderer/sim
+  behavior issue, or domain algorithm slice survives two focused attempts or roughly 20 minutes
+  without direct symptom improvement, stop local patching immediately. Reopen the target code map,
+  the matching donor route/profile, and current upstream or peer-tool sources; write a compact donor
+  realignment note naming the donor facts, local mismatch, failed hypotheses, keep/revert decision
+  for speculative patches, and the next smallest proof. Do not continue from training-data guesses,
+  backend-only green checks, or newly expanded harness scripts. If the donor route was skipped,
+  treat that as the root process bug before another code edit.
 - Treat Vulkan as an explicit-lifetime API. Resource ownership, synchronization, image layouts, queue
   ownership, descriptor lifetime, command-buffer reuse, and frames-in-flight must be designed
   deliberately.
@@ -180,9 +188,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   failing test that demonstrates the symptom. After the fix, run the same scenario or an explicitly
   equivalent one and record the "after" evidence. Do not present the work as fixed unless the
   before/after comparison shows a material change in the reported behavior. For visible GUI or
-  windowed bugs, include Sonar text/visual readback when available and run windowed scenario or smoke
-  commands through the project-approved launcher or `ostm`; backend state alone is not user-visible
-  proof. A visible GUI bug also needs an actual visible-surface observation: screenshot, video,
+  windowed bugs, include Sonar text/visual readback when available and run automated windowed
+  scenario, smoke, screenshot, and proof commands through `ostm` when the offscreen-test-manager
+  skill or CLI is available. If OSTM is unavailable, use the target repo's approved nonblocking
+  launch/smoke manager and say that OSTM evidence is unavailable. Direct foreground app launches are
+  only for explicit user/manual inspection or bounded launch-command proof, not for repeated
+  automated GUI debugging loops. Backend state alone is not user-visible proof. A visible GUI bug
+  also needs an actual visible-surface observation: screenshot, video,
   Sonar visual readback, OSTM/window capture, or explicit user-provided visual evidence. If the
   agent cannot currently see or drive that surface, start the status with "I am UI-blind on this
   bug:" and name the missing observation route; do not keep presenting harness-only or JSON-only
@@ -235,6 +247,16 @@ When this skill is active, work like a native C++ GPU systems engineer:
   scenario, or control-route construction is only a means to observe or drive the bug; it is not a
   completed fix for the user-visible symptom unless it produces before/after visible evidence and the
   app behavior actually changes.
+- For sculpting, brush, paint, groom, stroke, or high-poly mesh editing work, donor realignment has
+  an extra gate. Before changing brush behavior, viewport hit tests, palette selection, stroke
+  sampling, falloff, pressure, mask, high-poly storage, or dirty upload code, open the sculpt or
+  grooming donor route first. For mesh sculpting, read `sculpting-brushes.md` and the Blender Sculpt
+  Brushes study-only profile before generic geometry, renderer, or GUI donors. The slice plan must
+  include a donor mapping: upstream/source or manual concept, extracted behavior contract, local
+  architecture translation, exact files/tests to change, and before/after proof. A generic mesh
+  displacement test, nonblank screenshot, or mesh revision increment is never enough for brush-hit
+  or brush-selection bugs; the proof must compare requested pointer/control, committed hit or active
+  brush, latency, and visible result.
 - Keep harness roadmap/readiness readback current. If a target app exposes machine-readable fields
   such as `next_required_slice`, `blockers`, `prerequisites`, readiness booleans, or backend/feature
   eligibility, a verified slice that satisfies one prerequisite must update that readback before

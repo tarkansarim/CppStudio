@@ -82,10 +82,11 @@ validation.
 - The generated Vulkan validation wrapper owns validation-layer environment setup. When `VULKAN_SDK`
   is set, it exposes the SDK manifest and layer-library directories before running the wrapped
   command so a discovered layer manifest cannot later fail as an instance-creation layer-load error.
-- Generated GUI/windowed validation docs tell agents to prefer project smoke scripts or launcher
-  wrappers with offscreen/background managers, and to use absolute script paths or explicit working
-  directories for manager-submitted scripts so invocation-context failures are not confused with app
-  regressions.
+- Generated GUI/windowed validation docs require OSTM-first automated scenario, smoke, screenshot,
+  and proof execution when OSTM is available. If OSTM is unavailable, agents use project smoke
+  scripts or launcher wrappers with offscreen/background managers and state that OSTM evidence is
+  unavailable. Manager-submitted scripts should use absolute paths or explicit working directories so
+  invocation-context failures are not confused with app regressions.
 - Generated GUI/windowed validation docs now distinguish launch smoke from interaction proof:
   UI-heavy tools need scenarios for real control clicks, selection latency, viewport/canvas
   pointer-mapping, device-pixel-ratio handling, committed hit/edit points, and fresh visual evidence
@@ -99,6 +100,11 @@ validation.
   stop converting the report into harness-only work. After a blocked proof-route attempt, the next
   step must be a bounded app-side fix with a visible-proof caveat, one repaired observation route,
   minimal manual visible evidence, or an explicit stuck report.
+- Generated validation docs now require donor realignment after two focused attempts or roughly 20
+  minutes without direct symptom improvement on visible bugs, artist-tool interactions, viewport hit
+  paths, renderer/sim behavior, or domain algorithms. Agents must reopen code-map and donor routes,
+  record failed hypotheses and keep/revert decisions, and define the next smallest proof before
+  another local patch.
 - Generated app guidance requires agents to verify the exact user-facing launch command when they
   provide or change it; offscreen smoke alone is not enough launch evidence.
 - Exact launch-command verification must prove the human-visible app window, not only a process or

@@ -169,6 +169,24 @@ grep -q "not progress on the reported visible bug" \
     "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
 grep -q "JSON state change" \
     "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
+grep -q "Hard realignment rule" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "realignment note" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "Direct foreground app launches are" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "sculpting-brushes.md" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "If GUI or interaction work stalls" \
+    "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
+grep -q "through \`ostm\` when the offscreen-test-manager" \
+    "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
+grep -q "After two focused attempts or roughly 20 minutes" \
+    "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
+grep -q "Pointer-to-stroke contract" \
+    "${SKILL_DIR}/references/donor-library/profiles/blender-sculpt-brushes-study-only.md"
+grep -q "roughly 20" \
+    "${SKILL_DIR}/assets/app-library-template/docs/VALIDATION_PIPELINE.md"
 if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     for rel_path in "${required_repo_files[@]}"; do
         if ! git -C "${ROOT_DIR}" ls-files --error-unmatch "${rel_path}" >/dev/null 2>&1; then

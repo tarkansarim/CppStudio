@@ -4,6 +4,16 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened stalled visible-bug and artist-tool debugging: after two focused attempts or about
+  20 minutes without direct symptom improvement, agents must stop local patching, reopen the target
+  code map and donor routes, record a donor realignment note with failed hypotheses and keep/revert
+  decisions, and only then continue with the next smallest proof.
+- Made automated GUI/windowed proof OSTM-first when the offscreen-test-manager skill or CLI is
+  available, with direct foreground launches limited to explicit manual inspection or bounded
+  launch-command proof instead of repeated automated debugging loops.
+- Strengthened the sculpting-brush route so stalled brush selection, viewport hit offsets, stroke
+  behavior, pressure/falloff, masks, high-poly dirty uploads, and palette bugs must realign with the
+  Blender Sculpt Brushes study-only profile and prove pointer/control-to-committed-result behavior.
 - Hardened visible GUI bug proof so agents must state when they are UI-blind, require actual
   visible-surface evidence for UI fixes, and stop presenting harness-only/JSON-only work as progress
   on a user-visible symptom after a blocked proof-route attempt.

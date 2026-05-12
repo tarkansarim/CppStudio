@@ -159,11 +159,13 @@ Vulkan debugging order:
    inspection.
 4. Use Nsight Systems only for whole-frame CPU/GPU scheduling and overlap questions.
 
-GUI or windowed tests must go through the project-approved offscreen/background launcher when the
-repo defines one. Prefer the repo's smoke script or launcher wrapper for these runs. If an ad hoc
-offscreen-manager command is necessary, run it from the repo root or pass absolute script paths so a
-manager working-directory mismatch cannot be mistaken for an application failure. Do not add
-foreground GUI automation to CI by default.
+GUI or windowed tests must go through `ostm` when the offscreen-test-manager skill or CLI is
+available. If OSTM is unavailable, use the project-approved offscreen/background launcher when the
+repo defines one and state that OSTM evidence is unavailable. Prefer the repo's smoke script or
+launcher wrapper for these runs. If an ad hoc offscreen-manager command is necessary, run it from
+the repo root or pass absolute script paths so a manager working-directory mismatch cannot be
+mistaken for an application failure. Do not add foreground GUI automation to CI by default, and do
+not use repeated direct foreground app launches as an automated proof loop.
 
 When a user-facing launch command is documented or changed, verify that exact command separately
 from offscreen smoke. Use a bounded nonblocking probe: start the exact command, capture stdout/stderr,
@@ -201,8 +203,9 @@ For user-reported bugs, add a before/after proof before presenting the fix:
 4. Save the after evidence with the same fields and compare it to the before evidence.
 5. Claim the bug is fixed only when the comparison shows a material change in the reported behavior.
 
-For visible GUI/windowed bugs, run scenario or smoke execution through the project-approved launcher
-or `ostm`, and verify the target window with Sonar text/visual readback when those tools are
+For visible GUI/windowed bugs, run automated scenario, smoke, screenshot, and proof execution through
+`ostm` when available, or through the project-approved nonblocking launcher/smoke manager when OSTM
+is unavailable. Verify the target window with Sonar text/visual readback when those tools are
 available. When Rewind is available, identify a pre-fix checkpoint before speculative GUI probes so
 failed attempts can roll back cleanly; if no pre-change checkpoint exists, report that exact replay
 was missed. If one attempt to add or use a proof route still cannot drive the real widget/window or
@@ -214,3 +217,11 @@ If before and after are identical, if the proof is self-confirming, if it covers
 than the user's report, or if it tests backend state for a visible GUI bug, keep debugging. After the
 repo's repeated-attempt threshold, start the status with "I am stuck on this bug:" and name the
 missing proof and next diagnostic path.
+
+If a visible bug, artist-tool interaction, viewport hit path, renderer/sim behavior, or domain
+algorithm slice survives two focused attempts or roughly 20 minutes without direct symptom
+improvement, stop local patching and realign with donors before another edit. Reopen the target code
+map, matching donor route/profile, GUI/product-surface evidence, and current upstream or peer-tool
+sources; record donor facts, local mismatch, failed hypotheses, keep/revert decisions for
+speculative patches, and the next smallest proof. Do not keep relying on model memory, backend-only
+success, or additional harness scripts to justify more patches.

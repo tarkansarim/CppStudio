@@ -1221,7 +1221,7 @@
         "geometry"
       ],
       "prompt_shape": "Native C++/Vulkan ZBrush-like or Mudbox-like sculpting tool needs high-poly performance, Draw/Smooth/Clay/Inflate/Grab/Pinch/Flatten/Mask brushes, dynamic topology, multiresolution, Paint BVH/PBVH-style queries, or Wacom/stylus pressure.",
-      "expected_behavior": "Route to sculpting-brushes and the Blender Sculpt Brushes study-only profile before generic geometry/rendering donors; keep Blender GPL-family source as behavior/reference only, then pair with meshoptimizer, OpenSubdiv, VMA, native GUI/HUD, and Vulkan foundation donors when high-poly performance, product brush UI, or GPU buffer ownership is in scope.",
+      "expected_behavior": "Route to sculpting-brushes and the Blender Sculpt Brushes study-only profile before generic geometry/rendering donors; keep Blender GPL-family source as behavior/reference only, then pair with meshoptimizer, OpenSubdiv, VMA, native GUI/HUD, and Vulkan foundation donors when high-poly performance, product brush UI, or GPU buffer ownership is in scope. If brush behavior or pointer mapping stalls, stop local patching and create a donor mapping before another edit.",
       "expected_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/sculpting-brushes.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/blender-sculpt-brushes-study-only.md",
@@ -1230,6 +1230,30 @@
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/vulkan-memory-allocator.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md"
+      ],
+      "must_not_trigger_paths": [
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"
+      ]
+    },
+    {
+      "name": "stalled-sculpt-gui-bug-donor-realignment",
+      "tags": [
+        "positive",
+        "gui",
+        "geometry",
+        "study-only",
+        "vulkan"
+      ],
+      "prompt_shape": "A Vulkan C++ sculpt tool has repeated failed attempts where brush palette entries cannot be selected promptly and viewport strokes sculpt offset from the mouse pointer.",
+      "expected_behavior": "Treat the stalled visible brush bug as a process blocker, not as permission for another local guess. Reopen cpp-cuda-vulkan-studio, native GUI/HUD, agentic-control-harness, offscreen-test-manager, sculpting-brushes, and the Blender Sculpt Brushes profile; require OSTM or an approved nonblocking launcher for automated GUI proof; write a donor mapping for active-brush selection and pointer-to-stroke hit testing before another code edit.",
+      "expected_paths": [
+        "skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "skills/native-cpp-gui-hud/SKILL.md",
+        "skills/agentic-control-harness/SKILL.md",
+        "skills/agentic-control-harness/references/control-harness.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/sculpting-brushes.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/blender-sculpt-brushes-study-only.md",
+        "skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md"
       ],
       "must_not_trigger_paths": [
         "skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md"

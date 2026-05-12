@@ -172,6 +172,10 @@ viewport performance.
 - Read [donor-library/sculpting-brushes.md](donor-library/sculpting-brushes.md) first. Open Blender
   Sculpt Brushes before generic geometry, renderer, or GUI donors; keep Blender study-only and
   implement brush behavior independently.
+- If brush selection, viewport hit mapping, stroke behavior, or high-poly performance stalls, return
+  to the sculpt donor route before another patch. The next slice should map the failing behavior to
+  Blender or peer-tool evidence, then prove the requested pointer/control, committed hit or active
+  brush, latency, and visible result.
 - Pair the sculpt donor route with [donor-library/native-gui-hud.md](donor-library/native-gui-hud.md)
   for brush palette/product UI, [donor-library/vulkan-foundation-tooling.md](donor-library/vulkan-foundation-tooling.md)
   for GPU buffer and synchronization correctness, and meshoptimizer/OpenSubdiv/VMA profiles for

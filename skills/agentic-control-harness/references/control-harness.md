@@ -146,6 +146,13 @@ patches are proven versus speculative. Revert or isolate speculative edits befor
 unless the evidence shows they are necessary. Continue with either a smaller targeted probe or a
 source-level root cause in the app/toolkit/render flow.
 
+The same reset rule applies when a visible GUI or artist-tool bug survives repeated harness work.
+After two focused attempts or roughly 20 minutes without a before/after symptom delta, stop expanding
+the harness. Reopen the matching domain donors, GUI/product-surface route, OSTM/offscreen route, and
+target code map; record the donor facts, local mismatch, failed hypotheses, speculative-patch
+keep/revert decisions, and the next smallest user-equivalent proof before changing more app or
+harness code.
+
 ## Observation, Or Sonar
 
 Agents need direct evidence instead of guessing from success strings. Plan these observation classes:
@@ -180,8 +187,11 @@ automation path passes.
 Before changing code:
 
 - reproduce the reported behavior through the closest user-equivalent path available
-- for visible GUI/windowed bugs, run the scenario through the project-approved launcher or `ostm`
-  and use Sonar text/visual readback when available to prove the target window state
+- for visible GUI/windowed bugs, run automated scenario, smoke, screenshot, and proof execution
+  through `ostm` when the offscreen-test-manager skill or CLI is available; if it is unavailable,
+  use the target repo's approved nonblocking launcher/smoke manager and say OSTM evidence is
+  unavailable
+- use Sonar text/visual readback when available to prove the target window state
 - record the exact command, scenario id, input sequence, app state, logs, Sonar report, capture path,
   image/video artifact, metric, and failing assertion that demonstrate the symptom
 - label that evidence as the before state

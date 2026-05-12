@@ -77,9 +77,15 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   exact before/after proof: agents must reproduce the reported behavior, save comparable before and
   after evidence, and refuse to present a fix when the evidence is identical, self-confirming,
   backend-only for a visible bug, or too narrow for the user's report. Visible GUI/windowed bug proof
-  is explicitly wired to Sonar readback, OSTM/project launchers, and Rewind rollback anchors when
-  available. If an agent cannot see or capture the actual UI surface, it must say it is UI-blind on
-  that bug and stop treating harness-only/JSON-only work as progress on the visible symptom.
+  is explicitly wired to Sonar readback, OSTM-first automated proof when available, and Rewind
+  rollback anchors. If an agent cannot see or capture the actual UI surface, it must say it is
+  UI-blind on that bug and stop treating harness-only/JSON-only work as progress on the visible
+  symptom. Stalled visible bugs and artist-tool interaction work now have a donor-realignment gate:
+  after two focused attempts or about 20 minutes without direct symptom improvement, agents must
+  reopen code-map and donor routes, record failed hypotheses plus keep/revert decisions, and stop
+  relying on model memory before another patch. Sculpting brush bugs specifically route back through
+  the Blender Sculpt Brushes study-only profile and must prove pointer/control-to-committed-result
+  behavior, not just a generic mesh revision or nonblank screenshot.
 - `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map
   projects catch changed source paths that are not routed by the manifest.
 - `c68ae77` - Hardened code-map and trigger validation, made manual managed-skill install

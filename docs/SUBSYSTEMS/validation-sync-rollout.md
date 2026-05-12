@@ -100,6 +100,9 @@ skills, and watch-mode publishing behavior.
 - Trigger-matrix and static skill validation now guard visible-GUI bug proof language: UI-blind
   status, rejection of harness-only/JSON-only progress, and planning coverage for UI-blind reporting
   in UI-heavy slices.
+- Static validation should continue guarding OSTM-first GUI proof language and donor-realignment
+  language so future edits do not soften visible bug loops back to direct foreground launches,
+  backend-only proof, or training-data patching after repeated failures.
 - Trigger prompt rendering supports portable installed-path evidence so checked-in trigger result
   artifacts can use `${CODEX_HOME:-$HOME/.codex}` and `${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}`
   instead of maintainer-local absolute paths.

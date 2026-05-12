@@ -15,6 +15,12 @@ renderer, or GUI donors.
 Blender remains study-only: extract brush behavior contracts, acceleration-shape ideas, fixtures, and
 validation targets, then implement independently in the selected C++/Vulkan/CUDA lane.
 
+If a sculpting or brush bug stalls after two focused attempts, stop generic local patching and return
+to this route before another code edit. The next slice must map the reported symptom to Blender or
+peer-tool behavior, the local mismatch, and a before/after proof. This is mandatory for brush
+palette selection, delayed active-tool changes, mouse/stylus hit offsets, stroke sampling, pressure,
+falloff, masks, smooth/clay/grab behavior, high-poly dirty uploads, or viewport picking.
+
 ## Sculpt Brush And Topology References
 
 | Donor | Tier | License Signal | Best Use |
@@ -39,6 +45,10 @@ validation targets, then implement independently in the selected C++/Vulkan/CUDA
 
 - Use Blender Sculpt Brushes as the primary behavior donor for mesh-sculpt brush families. Do not use
   generic displacement tests as the product brush plan after this route triggers.
+- For brush-selection and pointer-hit bugs, start with Blender's stroke/operator and Paint BVH
+  concepts before renderer or generic mouse-event code. Recent Blender sculpt notes include explicit
+  operator support for deriving stroke positions from mouse events; use that as a reminder to prove
+  the screen-to-surface path, not only that a mesh revision changed.
 - Treat ZBrush, Nomad, and Mudbox as peer-tool/product references, not code donors. Use them to check
   expected brush families, topology warnings, pressure/falloff behavior, and UI vocabulary.
 - For high-poly performance, require chunked sculpt storage, Paint-BVH-style spatial queries,

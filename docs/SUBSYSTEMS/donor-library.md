@@ -41,6 +41,8 @@ selection policy, and trigger-regression metadata.
   tablet APIs, or other artist-input routes for pressure-sensitive tools
 - sculpting, brush, high-poly mesh editing, Paint BVH/PBVH, or dense-mesh performance donor
   categories/profiles change
+- donor-realignment gates change for stalled visible bugs, brush/viewport interaction fixes, or
+  domain algorithm slices that must return to donors before more local patching
 - trigger-matrix expectations for GUI convention tables, icon/text affordance checks, screenshot
   scorecards, harness readiness invariants, route inventory reconciliation, or action inventories
   change

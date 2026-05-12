@@ -64,6 +64,13 @@ generated-project workflow instructions.
   implementation. "Upstream research" means public current-source research such as official repos,
   docs, samples, standards docs, vendor docs, papers, release notes, and peer-tool references; it is
   not permission to fill gaps from model memory.
+- Donor realignment is now an explicit stall gate. If a visible bug, interaction bug, product-shape
+  problem, renderer/sim behavior issue, or domain algorithm slice survives two focused attempts or
+  about 20 minutes without direct symptom improvement, agents must stop local patching and reopen the
+  code map, matching donor route/profile, GUI/product route when applicable, and current upstream or
+  peer-tool sources before another code edit. The realignment note must name donor facts, local
+  mismatch, failed hypotheses, keep/revert decisions for speculative patches, and the next smallest
+  proof.
 - Substantial greenfield and architecture-setting research must be durable. Agents should write a
   target-project `docs/planning/RESEARCH_BRIEF.md` before implementation, combining local donor
   routes and curated web/upstream sources with short descriptions, project benefits, freshness or
@@ -171,16 +178,25 @@ generated-project workflow instructions.
   the real widget/action or viewport/canvas event path, including click/selection latency and
   pointer-mapping readback such as widget geometry, device-pixel ratio, render-target coordinates,
   hit data, committed edit point, and fresh visual proof when practical.
+- Sculpt, brush, paint, groom, stroke, and high-poly mesh slices now have a donor-specific gate:
+  before changing brush behavior, palette selection, viewport hit tests, stroke sampling, pressure,
+  falloff, masks, high-poly storage, or dirty uploads, agents must open the sculpt/grooming donor
+  route. Mesh sculpting starts with the Blender Sculpt Brushes study-only profile before generic
+  geometry, renderer, or GUI donors, and the slice plan needs a donor mapping plus user-equivalent
+  before/after proof.
 - User-reported bug fixes require a before/after proof gate before agents present the fix: reproduce
   the exact reported behavior first, capture before evidence, rerun the same or equivalent scenario
   after the fix, and compare in the symptom's own terms. Visible GUI/windowed bugs should route
-  through Sonar readback and the project-approved launcher or `ostm` when available, with Rewind used
-  as the rollback anchor before stacked GUI probes. Visible GUI bugs now have an explicit UI-blind
-  failure mode: if the agent cannot observe the actual surface, it must say so before more edits and
-  must not present harness-only/JSON-only progress as a visible fix. Identical, self-confirming,
-  backend-only, or too-narrow evidence is not a fixed claim; after one blocked proof-route attempt,
-  agents stop expanding harness infrastructure for that bug and choose a bounded app-side fix,
-  repaired observation path, manual visible evidence request, or stuck report.
+  automated scenarios, smoke, screenshots, and proof through `ostm` when available; otherwise agents
+  use the target repo's approved nonblocking launcher/smoke manager and state that OSTM evidence is
+  unavailable. Direct foreground app launches are only for explicit manual/user inspection or bounded
+  launch-command proof. Rewind is used as the rollback anchor before stacked GUI probes. Visible GUI
+  bugs now have an explicit UI-blind failure mode: if the agent cannot observe the actual surface, it
+  must say so before more edits and must not present harness-only/JSON-only progress as a visible
+  fix. Identical, self-confirming, backend-only, or too-narrow evidence is not a fixed claim; after
+  one blocked proof-route attempt, agents stop expanding harness infrastructure for that bug and
+  choose a bounded app-side fix, repaired observation path, manual visible evidence request, or stuck
+  report.
 - User-facing desktop launch commands require human-visible launch proof: exact command, intended
   app process/window identity, terminal-title false-positive rejection, mapped/focusable visibility,
   workspace/desktop and geometry readback, control-harness responsiveness, and clean shutdown of the

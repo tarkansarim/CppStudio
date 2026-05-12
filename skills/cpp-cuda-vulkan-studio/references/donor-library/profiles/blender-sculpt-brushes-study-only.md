@@ -1,7 +1,7 @@
 # Blender Sculpt Brushes Study-Only Donor Profile
 
-Sources: https://docs.blender.org/manual/en/latest/sculpt_paint/sculpting/brushes/index.html https://docs.blender.org/manual/en/latest/sculpt_paint/sculpting/introduction/adaptive.html https://developer.blender.org/docs/features/sculpt_paint/mesh_paint/ https://projects.blender.org/blender/blender/src/branch/main/source/blender/editors/sculpt_paint/brushes
-Last checked: 2026-05-10
+Sources: https://docs.blender.org/manual/en/latest/sculpt_paint/sculpting/brushes/index.html https://docs.blender.org/manual/en/latest/sculpt_paint/sculpting/introduction/adaptive.html https://developer.blender.org/docs/features/sculpt_paint/mesh_paint/ https://developer.blender.org/docs/release_notes/4.4/sculpt/ https://projects.blender.org/blender/blender/src/branch/main/source/blender/editors/sculpt_paint/brushes
+Last checked: 2026-05-12
 Tier: `study-only`
 Backend signal: native-cpu, dcc-interchange, mixed-backend
 License signal: Blender source is GPL-family. This profile is for behavior extraction, UX contracts,
@@ -30,12 +30,26 @@ explicitly accepts GPL-compatible reuse.
   structures, and selective GPU update concepts.
 - Focused source files under `source/blender/editors/sculpt_paint/brushes/` only for behavior study,
   not copying.
+- Nearby current source or docs found through upstream search for `brush_stroke`, `paint_stroke`,
+  `sculpt.brush_stroke`, `PBVH`, and brush-specific operators. Do not guess file names from memory;
+  inspect the current Blender tree or official developer docs before citing a path.
+- Blender 4.4 sculpt notes mention `sculpt.brush_stroke` location override behavior for mouse-event
+  derived stroke positions. Treat that as a source-backed reminder that viewport brush bugs need a
+  tested screen-to-surface coordinate pipeline, not just a generic mesh edit.
 
 ## Extracted Brush Contracts
 
 - **Common stroke substrate**: stroke sampling, radius, strength, pressure modulation, falloff,
   direction mode, active surface plane, symmetry, masks/face sets, accumulation, and undo/replay must
   be shared by all brush families.
+- **Pointer-to-stroke contract**: a brush dab starts from the user event, maps through widget/window
+  geometry and device-pixel ratio into the viewport render target, constructs a camera ray, queries
+  the sculpt acceleration structure, and commits the brush center on the hit surface. Tests should
+  compare requested pointer, local/render-target point, hit primitive, committed world point, and
+  visible marker/result.
+- **Active-brush contract**: palette or hotkey selection must update the active brush promptly through
+  the same command path a user exercises. Tests should cover repeated selection across enabled brush
+  entries and measure event-to-active-brush latency.
 - **Draw versus Inflate**: Draw/Standard moves affected vertices along a sampled stroke/surface
   direction; Inflate/Deflate moves each vertex along its own normal. Tests should distinguish them.
 - **Smooth/Relax**: smoothing must respect masks, boundaries, visibility/backface policy, and
@@ -91,6 +105,12 @@ stylus sculpting, dirty chunk upload.
 
 - Tiny mesh fixtures for each milestone brush: Draw, Smooth, Clay, Inflate, Grab, Pinch/Crease,
   Flatten/Scrape, and Mask.
+- GUI interaction fixtures for brush palette selection: repeated selection across every enabled V1
+  brush, active-brush text/icon state before and after, latency, and visible viewport cursor/falloff
+  update.
+- Pointer-mapping fixtures for viewport sculpt strokes: requested screen point, viewport-local point,
+  device-pixel ratio, render-target point, camera ray, hit primitive, committed edit center, and
+  fresh capture with a test-only marker at requested and committed positions.
 - Per-brush tests for pressure, falloff, mask protection, symmetry where applicable, undo/replay,
   bounds, degenerate triangles, and backface or visibility behavior.
 - Performance fixtures that report polygon count, chunk count, dirty chunks, dirty upload bytes,

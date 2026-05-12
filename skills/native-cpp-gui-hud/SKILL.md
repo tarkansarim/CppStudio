@@ -21,6 +21,15 @@ spaces, socket/type compatibility, focus/modal state, and validation affordances
 change will be verified before wiring commands into production UI. State the donors or peer-tool
 references that ground the layout before implementation.
 
+If GUI or interaction work stalls, do not keep layering local guesses. After two focused attempts or
+roughly 20 minutes without direct user-visible improvement, stop and realign with donors before any
+more code edits. Reopen the UI/product-surface donor route, the domain donor route, current
+upstream/peer-tool sources, and the target code map; record the failed hypotheses, donor facts, local
+mismatch, keep/revert decision for speculative patches, and the next smallest visible proof. This is
+mandatory for brush palettes, viewport hit tests, timeline/transport controls, node graphs,
+sculpt/paint/groom strokes, and other artist-tool surfaces where training-data intuition can produce
+plausible but wrong UI.
+
 When comparing GUI options for the user, always include links where they can inspect the visual style
 or example output. Do not present a GUI choice as abstract library trivia; show what it looks like and
 state what kind of app it fits.
@@ -52,6 +61,8 @@ commands whose meaning is not represented by a common symbol, for confirmation d
 workflow actions where the peer tools use text, or when accessibility/localization constraints require
 visible text. If a common transport or viewport command is implemented as a prominent text button,
 state the donor evidence or constraint that justified it before claiming the UI is product-ready.
+For artist tools, a prominent text-only palette or transport surface is a product-fit failure unless
+the convention table shows peer-tool evidence that text is the correct primary affordance.
 
 Before closeout, run a visual product-fit review against the convention table. The minimum review is a
 fresh screenshot or captured frame plus a short scorecard for control placement, icon/text fit,
@@ -96,8 +107,11 @@ For user-reported GUI bugs, closeout requires before/after evidence for the repo
 reproduce the visible failure through the closest real user path and capture the before state:
 visible controls, active selection/mode, input sequence, latency, pointer mapping, screenshot or
 frame artifact, and any logs/readback that prove the symptom. Use Sonar text/visual readback when it
-is available for the target window, and route windowed scenario or smoke execution through the
-project-approved launcher or `ostm` instead of ad hoc display workarounds. After the fix, run the same
+is available for the target window, and route automated windowed scenario, smoke, screenshot, and
+proof execution through `ostm` when the offscreen-test-manager skill or CLI is available. If OSTM is
+unavailable, use the target repo's approved nonblocking launch/smoke manager and say OSTM evidence is
+unavailable. Do not use repeated direct foreground app launches for automated GUI debugging loops.
+After the fix, run the same
 or equivalent scenario and compare the after state against the before state. If they are identical,
 if the proof uses only a backend command, or if it tests only one convenient control while the user
 reported a broader selection/control problem, do not call it fixed. Continue diagnosis from a Rewind

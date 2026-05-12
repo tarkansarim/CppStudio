@@ -16,6 +16,14 @@ test code, do not rely on training data or intuition as the source of truth. Ope
 reference, the relevant CppStudio skill routes, and the smallest matching donor-library categories
 for the target app domain first. State which sources ground the control shape before implementation.
 
+If a harness or GUI proof route stalls, do not keep adding scripts, waits, direct launches, or
+nearby readback to make the result look green. After two focused attempts or roughly 20 minutes
+without proving the actual user-visible symptom changed, stop and realign with the domain donors,
+GUI donor route, OSTM/offscreen path, and target code map. Record failed hypotheses, donor facts,
+local mismatch, keep/revert decisions for speculative harness patches, and the next smallest proof.
+For artist-tool bugs such as brush selection or viewport hit offsets, the harness is insufficient
+until it proves the real widget or pointer path the user complained about.
+
 For interactive native apps, tools, viewers, renderers, simulations, and editor-like workflows,
 plan an agentic control harness from the first milestone by default. Treat it as default-on unless
 the target is a headless library, a security-sensitive product surface, or the user explicitly opts
@@ -77,8 +85,11 @@ control harness itself.
   pass. Reproduce the reported symptom first and store the before evidence under the closest
   user-equivalent path available: launch command, scenario id, exact input sequence, harness state,
   logs, capture path, Sonar readback, metric, or failing assertion. For visible GUI/windowed bugs,
-  scenario execution should use the project-approved launcher or `ostm`, and Sonar should verify the
-  visible target window when available. After changing code, rerun the same scenario or a documented
+  automated scenario, smoke, screenshot, and proof execution must use `ostm` when the
+  offscreen-test-manager skill or CLI is available; otherwise use the target repo's approved
+  nonblocking launcher/smoke manager and say OSTM evidence is unavailable. Sonar should verify the
+  visible target window when available. Repeated direct foreground app launches are not an approved
+  automated GUI proof loop. After changing code, rerun the same scenario or a documented
   equivalent and compare the after evidence against the before evidence in the symptom's own terms.
   If the evidence is identical, self-confirming, backend-only for a UI bug, or covers only one easy
   variant while the report names a broader interaction, the harness proof is insufficient and the
