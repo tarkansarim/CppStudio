@@ -97,6 +97,9 @@ skills, and watch-mode publishing behavior.
 - Trigger-matrix validation requires the dedicated code-map bootstrap, enabled-map maintenance, and
   routing-smoke proof cases to remain present. `validate.sh` renders each case by name so aggregate
   `code-map` coverage cannot hide missing scenarios.
+- Trigger-matrix and static skill validation now guard visible-GUI bug proof language: UI-blind
+  status, rejection of harness-only/JSON-only progress, and planning coverage for UI-blind reporting
+  in UI-heavy slices.
 - Trigger prompt rendering supports portable installed-path evidence so checked-in trigger result
   artifacts can use `${CODEX_HOME:-$HOME/.codex}` and `${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}`
   instead of maintainer-local absolute paths.

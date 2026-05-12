@@ -84,7 +84,12 @@ control harness itself.
   variant while the report names a broader interaction, the harness proof is insufficient and the
   agent must continue diagnosis instead of asking the user to confirm the fix. When repeated probes
   are needed, use an available Rewind pre-fix checkpoint as the rollback anchor or state that exact
-  replay was unavailable before continuing.
+  replay was unavailable before continuing. If the harness cannot currently see or drive the actual
+  user-visible UI surface, report "I am UI-blind on this bug:" with the missing observation path
+  before doing more implementation. Building another route, endpoint, or proof script is not a user
+  bug fix by itself; after one blocked route-building attempt, either repair the specific blocked
+  observation path, switch to a bounded app-side root-cause fix with the visual-proof caveat stated
+  first, or ask for the smallest manual visible evidence needed.
 - Name readiness and success fields after the exact invariant they prove. Do not let a broad
   readiness boolean stand in for a weaker nearby condition. If the app has a widget, a backend, and a
   live composed capture as separate facts, expose separate fields such as `has_widget`,
@@ -95,7 +100,9 @@ control harness itself.
   requested input and committed state when that difference matters.
 - Make visual/UI awareness first-class. For viewers, tools, editors, and sandboxes, the harness
   should expose screenshots, offscreen frames, render-target dumps, UI state, or another reliable
-  surrogate for what the user is seeing.
+  surrogate for what the user is seeing. For visible bugs, the surrogate must be compared with the
+  actual visual symptom; a JSON state change, route inventory, or internal revision number cannot
+  stand in for a user-facing button, selection, viewport hit, stroke, or rendered result.
 - Design observation as sonar, not as decoration. At minimum, expose text-queryable state, recent
   logs, warnings/non-fatal errors, command availability, active mode/focus/selection, and visual or
   UI readback for user-visible changes. When a screenshot or render target is the only evidence for

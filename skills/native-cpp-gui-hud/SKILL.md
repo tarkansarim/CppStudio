@@ -103,6 +103,13 @@ if the proof uses only a backend command, or if it tests only one convenient con
 reported a broader selection/control problem, do not call it fixed. Continue diagnosis from a Rewind
 checkpoint when one exists, or if exact pre-fix replay was missed, say so. If repeated attempts fail,
 start the status by saying the GUI bug is not proven fixed and state the missing before/after proof.
+If no available tool can observe the actual user-visible surface, say "I am UI-blind on this bug:"
+and name the missing screenshot, Sonar, OSTM, desktop-window, or manual evidence path before doing
+more edits. Do not convert a visible bug into an endless harness slice: after one failed attempt to
+drive or capture the real UI path, either repair the single blocked observation route, make a bounded
+app-side fix with an explicit "not visually proven yet" caveat, or ask for the minimal manual visual
+evidence needed. A harness-only commit, JSON readback, model revision, or newly added proof route is
+not progress on the reported visible bug unless it shows the before/after symptom difference.
 
 For desktop GUI apps, verify the documented human launch command opens the actual app window before
 claiming the app launches. The proof must identify the app window by class/process/title rather than

@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened visible GUI bug proof so agents must state when they are UI-blind, require actual
+  visible-surface evidence for UI fixes, and stop presenting harness-only/JSON-only work as progress
+  on a user-visible symptom after a blocked proof-route attempt.
 - Added a user-reported bug before/after proof gate: agents must reproduce the exact reported
   behavior first, save before evidence, rerun the same or equivalent scenario after the fix, compare
   the reported symptom directly, and refuse to present a fixed claim when the evidence is identical,

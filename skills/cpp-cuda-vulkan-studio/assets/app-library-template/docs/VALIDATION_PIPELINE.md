@@ -186,7 +186,9 @@ GUI behavior needs scenario evidence that exercises the real event path when pra
   include a test-only marker or overlay at the requested pointer and committed hit/edit point
 
 Do not accept a backend command success, generic revision increment, or delayed state update as proof
-that a visible button, palette item, or pointer-mapped viewport interaction works.
+that a visible button, palette item, or pointer-mapped viewport interaction works. A GUI proof route
+is not a substitute for visible observation: if the agent cannot see or capture the target surface,
+the status must say that the agent is UI-blind on the reported behavior before more code is changed.
 
 For user-reported bugs, add a before/after proof before presenting the fix:
 
@@ -203,7 +205,10 @@ For visible GUI/windowed bugs, run scenario or smoke execution through the proje
 or `ostm`, and verify the target window with Sonar text/visual readback when those tools are
 available. When Rewind is available, identify a pre-fix checkpoint before speculative GUI probes so
 failed attempts can roll back cleanly; if no pre-change checkpoint exists, report that exact replay
-was missed.
+was missed. If one attempt to add or use a proof route still cannot drive the real widget/window or
+produce a fresh visible capture, stop expanding harness infrastructure for that bug. Continue only
+with a bounded app-side root-cause fix that is explicitly labeled not visually proven yet, a repaired
+single observation path, or a request for minimal manual visible evidence.
 
 If before and after are identical, if the proof is self-confirming, if it covers only a narrower path
 than the user's report, or if it tests backend state for a visible GUI bug, keep debugging. After the

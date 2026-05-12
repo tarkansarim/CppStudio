@@ -175,9 +175,12 @@ generated-project workflow instructions.
   the exact reported behavior first, capture before evidence, rerun the same or equivalent scenario
   after the fix, and compare in the symptom's own terms. Visible GUI/windowed bugs should route
   through Sonar readback and the project-approved launcher or `ostm` when available, with Rewind used
-  as the rollback anchor before stacked GUI probes. Identical, self-confirming, backend-only, or
-  too-narrow evidence is not a fixed claim; after repeated failed attempts the status must start by
-  saying the bug is not proven fixed or the agent is stuck.
+  as the rollback anchor before stacked GUI probes. Visible GUI bugs now have an explicit UI-blind
+  failure mode: if the agent cannot observe the actual surface, it must say so before more edits and
+  must not present harness-only/JSON-only progress as a visible fix. Identical, self-confirming,
+  backend-only, or too-narrow evidence is not a fixed claim; after one blocked proof-route attempt,
+  agents stop expanding harness infrastructure for that bug and choose a bounded app-side fix,
+  repaired observation path, manual visible evidence request, or stuck report.
 - User-facing desktop launch commands require human-visible launch proof: exact command, intended
   app process/window identity, terminal-title false-positive rejection, mapped/focusable visibility,
   workspace/desktop and geometry readback, control-harness responsiveness, and clean shutdown of the

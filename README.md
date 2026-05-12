@@ -78,7 +78,8 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   after evidence, and refuse to present a fix when the evidence is identical, self-confirming,
   backend-only for a visible bug, or too narrow for the user's report. Visible GUI/windowed bug proof
   is explicitly wired to Sonar readback, OSTM/project launchers, and Rewind rollback anchors when
-  available.
+  available. If an agent cannot see or capture the actual UI surface, it must say it is UI-blind on
+  that bug and stop treating harness-only/JSON-only work as progress on the visible symptom.
 - `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map
   projects catch changed source paths that are not routed by the manifest.
 - `c68ae77` - Hardened code-map and trigger validation, made manual managed-skill install

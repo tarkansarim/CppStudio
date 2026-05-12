@@ -182,8 +182,15 @@ When this skill is active, work like a native C++ GPU systems engineer:
   before/after comparison shows a material change in the reported behavior. For visible GUI or
   windowed bugs, include Sonar text/visual readback when available and run windowed scenario or smoke
   commands through the project-approved launcher or `ostm`; backend state alone is not user-visible
-  proof. If the before and after evidence are identical, nearby, self-confirming, backend-only, or
-  unrelated to the user's symptom, keep debugging instead of handing it back. When Rewind is
+  proof. A visible GUI bug also needs an actual visible-surface observation: screenshot, video,
+  Sonar visual readback, OSTM/window capture, or explicit user-provided visual evidence. If the
+  agent cannot currently see or drive that surface, start the status with "I am UI-blind on this
+  bug:" and name the missing observation route; do not keep presenting harness-only or JSON-only
+  work as progress on the visible fix. If a proof lane fails once because it cannot reach the real
+  window/event path, stop expanding proof infrastructure and switch to a bounded app-side fix
+  hypothesis, a visible/manual repro path, or a clear blocker report. If the before and after
+  evidence are identical, nearby, self-confirming, backend-only, or unrelated to the user's symptom,
+  keep debugging instead of handing it back. When Rewind is
   available, use the pre-fix checkpoint as the rollback anchor before stacking another focused GUI
   probe; if no pre-change checkpoint exists, say exact replay was missed. After repeated focused
   attempts or the repo's hard-reset threshold, start the status with "I am stuck on this bug:" and
@@ -224,7 +231,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
   fresh visual marker/capture when practical. The scenario must exercise enough variants to cover the
   user's complaint, such as every affected enabled tool or repeated selection changes when the bug is
   "other tools cannot be selected." Do not call these fixed from backend command success, a generic
-  model revision, a one-item self-confirming scenario, or a nonblank screenshot alone.
+  model revision, a one-item self-confirming scenario, or a nonblank screenshot alone. Harness,
+  scenario, or control-route construction is only a means to observe or drive the bug; it is not a
+  completed fix for the user-visible symptom unless it produces before/after visible evidence and the
+  app behavior actually changes.
 - Keep harness roadmap/readiness readback current. If a target app exposes machine-readable fields
   such as `next_required_slice`, `blockers`, `prerequisites`, readiness booleans, or backend/feature
   eligibility, a verified slice that satisfies one prerequisite must update that readback before

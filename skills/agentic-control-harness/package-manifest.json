@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 17876,
-      "sha256": "2c0b1a35e20be03e76cbc7b49d4dc05e4ffe6c15730d7519dbefdaf2afebf419"
+      "size": 18638,
+      "sha256": "d3ee16569b2a5c4a4e0139cc61243777b2f59e911234dc517438f9c6e926c7c8"
     },
     {
       "path": "agents/openai.yaml",

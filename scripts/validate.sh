@@ -161,6 +161,14 @@ grep -q "what the user is seeing" \
     "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
 grep -q "visible link table has been shown" \
     "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
+grep -q "I am UI-blind on this" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "harness-only or JSON-only" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "not progress on the reported visible bug" \
+    "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
+grep -q "JSON state change" \
+    "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
 if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     for rel_path in "${required_repo_files[@]}"; do
         if ! git -C "${ROOT_DIR}" ls-files --error-unmatch "${rel_path}" >/dev/null 2>&1; then
@@ -788,6 +796,8 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning h
             grep -q "UI convention table" "${trigger_tag_md}"
             grep -q "icon/text affordance checks" "${trigger_tag_md}"
             grep -q "screenshot product-fit scorecard" "${trigger_tag_md}"
+            grep -q "UI-blind status" "${trigger_tag_md}"
+            grep -q "harness-only or JSON-only" "${trigger_tag_md}"
             ;;
         planning)
             grep -q "cppstudio-project-planner" "${trigger_tag_md}"
@@ -798,6 +808,7 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning h
             grep -q "prefer the best available option unless the user asks for a lighter route" "${trigger_tag_md}"
             grep -q "agentic-control-harness" "${trigger_tag_md}"
             grep -q "before asking the user for routine manual testing" "${trigger_tag_md}"
+            grep -q "UI-blind failure reporting" "${trigger_tag_md}"
             ;;
         harness)
             grep -q "agentic-control-harness" "${trigger_tag_md}"
