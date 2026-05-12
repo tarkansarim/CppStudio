@@ -79,6 +79,22 @@ Results:
   task, naming exact source/test paths, avoiding edits, stopping without broad source auditing, and
   grading the result pass/partial/fail.
 
-This confirmation covers the installed-path behavior for the code-map trigger matrix. The static
-validator separately requires the three code-map case names and `validate.sh` renders each case by
+This confirmation covers the installed-path behavior for the earlier code-map trigger matrix. The
+static validator now requires dedicated code-map case names and `validate.sh` renders each case by
 name so the coverage cannot silently collapse back to one aggregate `code-map` case.
+
+## Sidecar Maintenance Lane Contract
+
+Ticket #59 added a fourth dedicated code-map trigger case:
+`code-map-sidecar-maintenance-lane`. The intended behavior is bounded and conservative:
+
+- Use a code-map-only sidecar when drift output, a long-running slice interval, ownership/data-flow
+  changes, new or moved routable files, or stale subsystem docs would otherwise force the main worker
+  to keep too much map context loaded.
+- Give the sidecar a fixed snapshot anchor such as a Rewind checkpoint, temporary git anchor, commit,
+  worktree copy, or archive. The sidecar records that anchor and returns map updates plus assumptions.
+- The original worker may continue implementation, but it owns the final reconcile before commit:
+  apply or merge sidecar output, rerun drift and schema validation against the current tree, and
+  update or relaunch the sidecar if later source changes touched additional routable areas.
+- Rewind checkpoints and temporary anchors are proof/snapshot boundaries, not public verified-slice
+  commits. The normal clean public history unit remains the verified slice commit.

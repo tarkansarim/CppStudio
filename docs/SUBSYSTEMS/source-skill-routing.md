@@ -45,13 +45,21 @@ generated-project workflow instructions.
   source audit. A smoke that skips manifest/state reads, over-reads broadly, edits files, or never
   produces a final routing report is partial or failed evidence.
 - Trigger-regression coverage includes dedicated code-map cases for existing-project bootstrap,
-  enabled-map maintenance closeout, and routing-smoke proof. Keep those cases aligned with the
-  code-map bootstrap scripts and source-skill rules whenever the protocol changes.
+  enabled-map maintenance closeout, sidecar maintenance, and routing-smoke proof. Keep those cases
+  aligned with the code-map bootstrap scripts and source-skill rules whenever the protocol changes.
 - Enabled code maps have an ordinary pre-commit maintenance gate. Agents must run
   `scripts/check_code_map_drift.py --require-enabled` when available before committing a verified
   source slice, then update the manifest and matching subsystem doc for any changed routable path
   that is not covered. The checker catches path coverage; semantic ownership/data-flow changes still
   require agent judgment even when the path is already routed.
+- Code-map sidecars are bounded maintenance lanes, not parallel source workers. Use one when a drift
+  hook/check reports map work, a long-running slice hits a planned maintenance interval, ownership or
+  data-flow changes make subsystem docs stale, new or moved routable files appear, or the main worker
+  needs to reduce context bloat. The sidecar reads a named fixed snapshot such as a Rewind checkpoint,
+  temporary git anchor, commit, worktree copy, or archive, returns code-map-only updates, and records
+  its snapshot assumptions. The original worker owns the final reconcile: apply or merge the sidecar
+  result, rerun drift and validation on the current tree, and update or relaunch the sidecar if later
+  source changes touched more routable areas.
 - Target-repo instruction files are sensitive. `AGENTS.md`, `CLAUDE.md`, repo-local skills, and
   agent metadata must be named separately in status reports when dirty or changed; they must not be
   hidden under generic "unrelated dirty files" wording.
@@ -209,6 +217,7 @@ generated-project workflow instructions.
 - project archetype routing changes
 - the repo-local onboarding skill changes
 - code-map readiness, bootstrap, or maintenance behavior changes for agents
+- code-map sidecar lane triggers, snapshot/anchor requirements, or final reconcile gates change
 - target-repo code-map authority or map-first navigation behavior changes
 - donor-grounding or web-ceiling-check expectations for native GPU brainstorming/design proposals
   change

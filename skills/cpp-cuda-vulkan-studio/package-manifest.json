@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 63233,
-      "sha256": "63db28d172c36fadccfba6b69b5af468fb5bb1cc48a3c9094a1cc45bdaa8a62a"
+      "size": 66399,
+      "sha256": "6e61e6b2948029af793a52cd814091156c279fd8041c20c9032ad7ba3f042d3f"
     },
     {
       "path": "agents/openai.yaml",
@@ -63,8 +63,8 @@
       "path": "assets/app-library-template/README.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 3848,
-      "sha256": "1452b2802c57c48516f63e59244b6adb78e28ae1187dc0b6c1fbe7ac928e43bb"
+      "size": 4917,
+      "sha256": "4bbb611247c1f2153d885503f4b1d06b4289823b83933f1f05a0322be390ebe9"
     },
     {
       "path": "assets/app-library-template/benchmarks/benchmark_smoke.cpp",
@@ -126,8 +126,8 @@
       "path": "assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 1687,
-      "sha256": "df2e7dc3ebd89bb81e62876311a6a4d696634cb840b78e1e9973219ef82727b6"
+      "size": 2036,
+      "sha256": "c1836dd8036c0b94f973e06a891384708231714c0c7aa924f62cd2e0afbff880"
     },
     {
       "path": "assets/app-library-template/docs/CODEBASE_SUBSYSTEM_MANIFEST.json",

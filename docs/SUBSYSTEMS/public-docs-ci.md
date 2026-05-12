@@ -54,6 +54,10 @@ workflow, and repo banner/sample assets.
   signals before implementation starts.
 - Code maps are described as the first navigation step before code changes, not a replacement for
   source inspection or a hard gate around normal engineering work.
+- Public code-map docs now describe a bounded sidecar lane for large or long-running enabled-map
+  slices. The sidecar reads a fixed snapshot and prepares map-only updates, while the original worker
+  remains responsible for final reconcile, current-tree drift/schema validation, and the verified
+  slice commit.
 - Existing-project code-map setup is described as audit-first: agents should show concrete findings,
   evidence paths, cleanup cost, and actual restructuring needs before asking the user to choose a
   route.

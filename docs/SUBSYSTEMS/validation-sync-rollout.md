@@ -94,9 +94,9 @@ skills, and watch-mode publishing behavior.
 - Code-map validation permits unmatched `primary_paths` globs while still validating that any matched
   paths remain inside the repo. This keeps optional ownership patterns valid without placeholder
   files.
-- Trigger-matrix validation requires the dedicated code-map bootstrap, enabled-map maintenance, and
-  routing-smoke proof cases to remain present. `validate.sh` renders each case by name so aggregate
-  `code-map` coverage cannot hide missing scenarios.
+- Trigger-matrix validation requires the dedicated code-map bootstrap, enabled-map maintenance,
+  code-map sidecar, and routing-smoke proof cases to remain present. `validate.sh` renders each case
+  by name so aggregate `code-map` coverage cannot hide missing scenarios.
 - Trigger-matrix and static skill validation now guard visible-GUI bug proof language: UI-blind
   status, rejection of harness-only/JSON-only progress, and planning coverage for UI-blind reporting
   in UI-heavy slices.

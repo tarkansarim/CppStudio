@@ -52,6 +52,21 @@ If the drift check reports a changed path that is not routed by the manifest, up
 `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` and the matching `docs/SUBSYSTEMS/*.md` file in the same
 slice before committing.
 
+### Code-Map Sidecar Lane
+
+For long-running implementation or high-churn slices, the main worker may offload only map
+maintenance to a bounded code-map sidecar when drift output, new or moved routable files, changed
+ownership/data flow/backend boundaries, a planned interval, or stale subsystem docs justify the
+extra lane. The sidecar must read a fixed snapshot such as a Rewind checkpoint, temporary git anchor,
+commit, worktree copy, or archive, and its prompt/response must name that anchor.
+
+The main worker may continue source work, but before staging or committing it must apply or merge the
+sidecar's map update, rerun `scripts/check_code_map_drift.py --require-enabled` and
+`scripts/validate_code_map.py --require-enabled` against the current tree, and update the map again
+or relaunch the sidecar if later source changes touched additional routable ownership or data-flow
+areas. Do not create public commits only to feed sidecars; use Rewind checkpoints or temporary
+anchors for that boundary, then keep the verified slice commit as the public history unit.
+
 ## Validate
 
 ```bash

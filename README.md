@@ -38,7 +38,7 @@ selected recent highlights for people scanning the repo. The top `current` item 
 latest unreleased/high-churn changes, while stable older entries use commit ids.
 
 - `current` - Hardened rollout and trigger-regression safety with symlink-safe bundled auxiliary
-  rollback handling, required code-map bootstrap/maintenance/routing-smoke trigger cases with
+  rollback handling, required code-map bootstrap/maintenance/sidecar/routing-smoke trigger cases with
   installed-path fresh-agent evidence, fresh-scaffold drift coverage before the first baseline
   commit, greenfield Git bootstrap handling for Codex worker read-only `.git` sandbox blockers,
   Vulkan-only default scaffolds that omit CUDA files/routes/presets unless a CUDA lane is explicitly
@@ -85,7 +85,11 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   reopen code-map and donor routes, record failed hypotheses plus keep/revert decisions, and stop
   relying on model memory before another patch. Sculpting brush bugs specifically route back through
   the Blender Sculpt Brushes study-only profile and must prove pointer/control-to-committed-result
-  behavior, not just a generic mesh revision or nonblank screenshot.
+  behavior, not just a generic mesh revision or nonblank screenshot. Enabled code-map projects now
+  also have a bounded sidecar lane for long-running or high-churn map maintenance: sidecars work
+  from a fixed snapshot and return map-only updates, while the original worker must reconcile,
+  rerun drift/schema validation against the current tree, and keep the verified slice commit as the
+  public history boundary.
 - `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map
   projects catch changed source paths that are not routed by the manifest.
 - `c68ae77` - Hardened code-map and trigger validation, made manual managed-skill install
@@ -471,6 +475,15 @@ Create a Vulkan-first C++ application called RayLab and make sure future agents 
 
 Support files may exist before a map is enabled, but agents should maintain and load the map only
 when `.cppstudio/code-map-state.json` says `enabled`.
+
+For long-running or high-churn enabled-map slices, the main worker may use a bounded code-map
+sidecar to reduce context bloat. The sidecar should be code-map-only, read a named fixed snapshot
+such as a Rewind checkpoint, temporary git anchor, commit, worktree copy, or archive, and report its
+map update plus snapshot assumptions. The original worker still owns the final gate: merge or apply
+the sidecar output, rerun drift and schema validation against the current tree, and update the map
+again if later implementation work touched additional routable ownership or data-flow areas. Normal
+git history should stay clean; Rewind checkpoints and temporary anchors are not public verified-slice
+commits.
 
 ## Skills And Donors Included
 

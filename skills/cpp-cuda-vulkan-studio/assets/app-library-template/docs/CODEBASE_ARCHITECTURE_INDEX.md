@@ -33,3 +33,8 @@ paths named by the route.
 When code-map state is `enabled`, update this map in the same work stream as changes that affect
 subsystem ownership, GPU backend boundaries, build/test lanes, data flow, validation, CI, or public
 runtime behavior. If the map and code disagree, inspect the code and update the map.
+
+For large or long-running slices, a code-map-only sidecar may prepare map updates from a fixed
+checkpoint, commit, or worktree snapshot. The original worker still owns the final gate: merge the
+sidecar output, rerun drift and validation against the current tree, and update this map again if
+later source changes touched additional routable areas.

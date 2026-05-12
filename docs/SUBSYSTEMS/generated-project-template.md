@@ -51,6 +51,11 @@ validation.
   It fails when changed source/header/shader/script/docs paths are not covered by a manifest route,
   forcing new routable files to be added to `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` and the matching
   `docs/SUBSYSTEMS/*.md` route before the verified slice is committed.
+- Generated README and architecture-index guidance describe the optional code-map sidecar lane for
+  long-running or high-churn enabled-map work. The sidecar must be code-map-only, must read a fixed
+  Rewind checkpoint, temporary git anchor, commit, worktree copy, or archive snapshot, and must leave
+  the original worker responsible for merging the map update and rerunning drift and validation
+  against the current tree before the verified slice commit.
 - Generated and bootstrapped code maps route GPU optimization docs through validation/CI canonical
   docs so a brand-new git repo can pass the drift checker before the first baseline commit.
 - Existing-project code-map enablement installs missing repo-local `scripts/validate_code_map.py`

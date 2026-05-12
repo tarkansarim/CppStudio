@@ -296,9 +296,10 @@ portable-installed` and require the claimed case names so the artifact cannot si
 repo-relative evidence or shrink the result set.
 
 `validate_trigger_matrix.py` requires the dedicated code-map cases
-`code-map-existing-project-bootstrap`, `enabled-code-map-maintenance-closeout`, and
-`code-map-routing-smoke-proof` to remain present. `validate.sh` also renders those cases by name so a
-single aggregate `code-map` case cannot accidentally stand in for the whole workflow.
+`code-map-existing-project-bootstrap`, `enabled-code-map-maintenance-closeout`,
+`code-map-sidecar-maintenance-lane`, and `code-map-routing-smoke-proof` to remain present.
+`validate.sh` also renders those cases by name so a single aggregate `code-map` case cannot
+accidentally stand in for the whole workflow.
 
 ## Sync And Rollout Details
 

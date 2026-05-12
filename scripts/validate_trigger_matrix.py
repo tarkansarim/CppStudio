@@ -18,6 +18,7 @@ REQUIRED_CASES = {
     "greenfield-code-map-pre-source-gate",
     "code-map-existing-project-bootstrap",
     "enabled-code-map-maintenance-closeout",
+    "code-map-sidecar-maintenance-lane",
     "code-map-routing-smoke-proof",
 }
 ALLOWED_TAGS = {

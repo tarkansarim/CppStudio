@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a bounded code-map sidecar lane for enabled-map repos: agents may offload map-only updates
+  from a fixed Rewind checkpoint, temporary git anchor, commit, worktree copy, or archive when drift,
+  long-running slices, ownership/data-flow changes, moved routable files, or stale subsystem docs
+  justify it, while the original worker must reconcile the sidecar output and rerun drift/schema
+  validation on the current tree before the verified slice commit.
 - Hardened stalled visible-bug and artist-tool debugging: after two focused attempts or about
   20 minutes without direct symptom improvement, agents must stop local patching, reopen the target
   code map and donor routes, record a donor realignment note with failed hypotheses and keep/revert

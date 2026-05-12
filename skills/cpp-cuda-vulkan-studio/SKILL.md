@@ -227,6 +227,26 @@ When this skill is active, work like a native C++ GPU systems engineer:
   public runtime behavior, or adds/moves files under routable source areas, update the matching
   subsystem doc and manifest before commit. The drift checker catches unmapped paths; the agent still
   must make the semantic call on whether an already-covered route needs clearer notes.
+- Use a bounded code-map sidecar lane when map maintenance would otherwise bloat or destabilize the
+  main worker context: a drift check reports work, a long-running implementation slice reaches a
+  planned map-maintenance interval, changed source ownership/data flow/backend boundaries affect
+  subsystem docs, new or moved routable files appear, or local evidence suggests subsystem docs are
+  stale. The sidecar is code-map-only: it may inspect the frozen source snapshot, architecture index,
+  manifest, and subsystem docs, then return map/doc updates and rationale; it must not implement
+  product/source changes or assume live access to the original worker's evolving tree.
+- Code-map sidecars need snapshot semantics. The original worker must name the fixed checkpoint,
+  Rewind checkpoint, temporary git anchor, commit, worktree copy, or archive snapshot that the
+  sidecar is reading. The original may continue implementation only if it plans a final reconcile
+  before staging or committing. A temporary anchor or Rewind checkpoint is not a public slice commit,
+  and CppStudio must not require noisy public commits for every sidecar. The final history boundary
+  remains the verified slice commit after build/test/map validation, with the normal
+  `Commit-Origin` trailer.
+- Before the original worker commits an enabled-map slice that used a sidecar, it must apply or merge
+  the sidecar map update, rerun the drift checker and code-map validator against the current tree,
+  and compare the sidecar's fixed snapshot with current changed routable areas. If the original
+  changed additional routable files, ownership, data flow, validation lanes, or public behavior after
+  the sidecar snapshot, the original must either update the map itself or launch a fresh sidecar from
+  a new fixed snapshot before committing.
 - For realtime rendering, viewport, simulation, XR, or GPU-performance work, measure frame time/FPS
   or profiler timings while implementing and verify the actual visual output.
 - When a target app has an agentic control harness, use it as the first route for routine launch,
@@ -516,26 +536,37 @@ When this skill is active, work like a native C++ GPU systems engineer:
    schema; use the bootstrap script and validator.
 6. For an existing project with no `.cppstudio/code-map-state.json`, treat code-map enablement as a readiness protocol, not as an immediate choice prompt. If the user says they want to opt in to a code map, first say that you will run a non-destructive audit and that no restructure decision is needed yet. Then run `scripts/bootstrap_code_map.py --audit-existing` before asking any restructure/preserve/decline question. Summarize the actual stdout with concrete findings, evidence paths, nonstandard layout risks, estimated cleanup cost, and any specific restructuring that would be needed. If the audit did not run or you have not read its output, do not claim an audit happened and do not ask the user to choose a restructuring route. Do not write `docs/CODEMAP_BOOTSTRAP_AUDIT.md` unless the user wants a saved audit; then rerun with `--write-audit`. Only after presenting audit evidence ask whether the user wants to restructure first, preserve the current layout and document exceptions, or decline the map. Do not run `--enable` until the user chooses either restructure-complete or preserve-as-is. If generated map files already exist, use `--enable --force` only after the user accepts replacing those generated map files.
 7. When `.cppstudio/code-map-state.json` says `enabled`, or when repo-local instructions declare a maintained codebase map required, read the target repo's `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before code changes. Use that map to select the subsystem doc and primary paths for the change, then keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, public runtime behavior, or routable file ownership changes. Before every verified-slice commit in an enabled-map repo, run `scripts/check_code_map_drift.py --require-enabled` when present plus `scripts/validate_code_map.py --require-enabled`; if repo-local wrappers are absent in an older existing-project map, run the installed skill scripts from `${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/` and report the wrapper gap instead of treating it as a target project failure. If the drift check reports an unmapped path, update the manifest and matching subsystem doc before committing. Prefer adding the owning directory or glob route for related app-owned files, such as flat `src/*.h`, `src/*.cpp`, or `src/ui_panel_*.h`, instead of adding a one-off route for each controller/panel/helper file. If the user asks about a code map mid-project, explain it, run the existing-project readiness protocol, and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; if generated map files already exist, use `--force` only after the user accepts replacing them. For large existing repos, use parallel-lens subsystem audits only when delegation is explicitly authorized.
-8. If the readiness audit leads to pre-map infrastructure work such as `CMakePresets.json`,
+8. For enabled-map repos, prefer a code-map sidecar only when it is bounded and useful: drift output,
+   long-running slice interval, ownership/data-flow/backend-boundary changes, new or moved routable
+   files, or stale subsystem docs justify offloading map maintenance. Launch or instruct the sidecar
+   from a fixed snapshot, Rewind checkpoint, temporary git anchor, commit, worktree copy, or archive;
+   document that anchor in the sidecar prompt and response. The sidecar edits only map files
+   (`docs/CODEBASE_*`, `docs/SUBSYSTEMS/*`, and project-local map notes) and reports its snapshot
+   assumptions. The original worker may keep implementing, but before staging or committing it must
+   apply or merge the sidecar output, rerun drift and validation on the current tree, and update or
+   relaunch the sidecar if later source changes touched more routable ownership/data-flow areas. Do
+   not create public commits solely to feed sidecars; use Rewind checkpoints or temporary anchors for
+   that proof boundary, then keep the normal verified slice commit as the public history unit.
+9. If the readiness audit leads to pre-map infrastructure work such as `CMakePresets.json`,
    canonical `scripts/`, validation wrappers, CI files, or build-entrypoint cleanup, label that work
    as an audit-backed infrastructure slice before map enablement. Get the user's route acceptance
    first, verify and commit or clearly stage that slice separately where practical, and do not
    present it as "just the code map." After map enablement or major map edits, run the fresh-agent
    routing smoke described above before calling the setup complete. If it is skipped, say exactly why
    and list it as remaining work.
-9. Preserve any existing package manager or project-specific dependency policy. Do not introduce vcpkg, Conan, containers, FetchContent, or submodules unless there is a concrete reason.
-10. Keep CUDA and Vulkan optional through CMake cache options. For unspecified new GPU/3D/realtime/XR/cross-platform C++ projects, recommend and scaffold Vulkan-first: the normal `dev` preset is Vulkan-only, CUDA stays off unless the user explicitly chooses the CUDA lane or the requirements force CUDA.
-11. Do not mix CUDA into a Vulkan-chosen or Vulkan-assumed project by default. Use CUDA only for explicit CUDA/Vulkan interop, CUDA-specific compute, NVIDIA-only libraries, CUDA graphs, or custom CUDA kernels. When the user explicitly chooses CUDA, Vulkan may be added for presentation, realtime visualization, XR, swapchain/display work, or interop if the boundary is documented.
-12. For new Vulkan template work, target Vulkan 1.3 with Vulkan-Hpp RAII, synchronization2, dynamic rendering, GLSL compiled by `glslc`, SPIR-V validation by `spirv-val`, and optional portability-enumeration support for MoltenVK-style platforms.
-13. For realtime Vulkan apps or generated viewport preflights, keep CPU/software Vulkan lanes
+10. Preserve any existing package manager or project-specific dependency policy. Do not introduce vcpkg, Conan, containers, FetchContent, or submodules unless there is a concrete reason.
+11. Keep CUDA and Vulkan optional through CMake cache options. For unspecified new GPU/3D/realtime/XR/cross-platform C++ projects, recommend and scaffold Vulkan-first: the normal `dev` preset is Vulkan-only, CUDA stays off unless the user explicitly chooses the CUDA lane or the requirements force CUDA.
+12. Do not mix CUDA into a Vulkan-chosen or Vulkan-assumed project by default. Use CUDA only for explicit CUDA/Vulkan interop, CUDA-specific compute, NVIDIA-only libraries, CUDA graphs, or custom CUDA kernels. When the user explicitly chooses CUDA, Vulkan may be added for presentation, realtime visualization, XR, swapchain/display work, or interop if the boundary is documented.
+13. For new Vulkan template work, target Vulkan 1.3 with Vulkan-Hpp RAII, synchronization2, dynamic rendering, GLSL compiled by `glslc`, SPIR-V validation by `spirv-val`, and optional portability-enumeration support for MoltenVK-style platforms.
+14. For realtime Vulkan apps or generated viewport preflights, keep CPU/software Vulkan lanes
     diagnostic-only unless the project explicitly opts into them. A default runtime/readiness test
     that selects llvmpipe/Lavapipe, a virtual GPU, or any CPU physical device must report a hardware
     backend blocker instead of producing a green realtime-viewport claim. Use capability dumps,
     loader/ICD environment inspection, and project-owned readback to classify whether the failure is
     SDK/tooling, loader, ICD visibility, physical-device selection, queue/swapchain support, or
     surface/present support before changing renderer code.
-14. Register tests with CTest labels so quick, GPU, GUI, Vulkan, CUDA, shader, compute, render, validation, perf, and nightly lanes can be selected independently.
-15. For GPU performance work, use the generated optimization loop when available. Start from
+15. Register tests with CTest labels so quick, GPU, GUI, Vulkan, CUDA, shader, compute, render, validation, perf, and nightly lanes can be selected independently.
+16. For GPU performance work, use the generated optimization loop when available. Start from
     the target project's `docs/GPU_OPTIMIZATION_LOOP.md`; when working in this source package before
     that doc has been copied, use the bundled template copy at
     `assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md`. Create a representative target table
@@ -548,21 +579,21 @@ When this skill is active, work like a native C++ GPU systems engineer:
     benchmarking an attempt, keep only correct improvements, revert rejected or divergent attempts,
     use `plan-round` for beam-style parallel worker slots when exploring multiple bottlenecks, use
     `next` for move-on decisions, and generate a consolidation report before claiming speedups.
-16. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
+17. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
     For Nsight Systems stats readback, prefer the bundled `scripts/run_nsys_smoke.sh` because it
     probes the installed report and format surface. If writing a manual `nsys stats` command, inspect
     `nsys stats --help-reports` and `nsys stats --help` first, use explicit reports such as
     `vulkan_api_sum,osrt_sum,nvtx_sum` or `cuda_api_gpu_sum,cuda_gpu_kern_sum,osrt_sum,nvtx_sum`,
     include `--force-export=true`, and do not use legacy `--report summary` or unsupported
     `--format text` assumptions.
-17. Before greenfield scaffolding, major backbone edits, or native GPU architecture brainstorming,
+18. Before greenfield scaffolding, major backbone edits, or native GPU architecture brainstorming,
     read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library,
     CUDA+Vulkan combined/interop app, native GUI/HUD/editor UI, AI runtime, neural 3D viewer,
     sculpting/brush tool, grooming/brush/fur tool, glTF/runtime asset viewer, renderer backbone/runtime mesh pipeline,
     DCC scene pipeline,
     volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool,
     3D/physics/GPU simulation tool, or XR app.
-18. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects,
+19. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects,
     or when brainstorming native GPU architecture that will recommend solvers, rendering paths,
     dependencies, subsystem boundaries, or MVP order, use the nested donor router before giving the
     recommendation. Read `references/donor-library/README.md` for policy; when the prompt uses VFX
@@ -579,7 +610,7 @@ When this skill is active, work like a native C++ GPU systems engineer:
     brainstorms that mention fluid, fire, smoke, water, destruction, shatter, neural 3D,
     upscaling/reconstruction, XR, or renderer architecture, do the web ceiling check even if the user
     did not use "current" or "best."
-19. Do not route design-only, frontend-only, storyboarding, generic image/video, generic product-AI UI, plain text rendering, or ordinary data import requests through this skill unless the user explicitly asks for native C++ GPU implementation, C++/CUDA/Vulkan infrastructure, or donor-reference selection.
+20. Do not route design-only, frontend-only, storyboarding, generic image/video, generic product-AI UI, plain text rendering, or ordinary data import requests through this skill unless the user explicitly asks for native C++ GPU implementation, C++/CUDA/Vulkan infrastructure, or donor-reference selection.
 
 For long-running target-project implementation, repeat this rhythm between slices:
 
@@ -592,10 +623,13 @@ For long-running target-project implementation, repeat this rhythm between slice
    to the change.
 5. Update code-map, control-harness registry, and donor/provenance docs when the slice changed their
    routed behavior, route inventory, product-shape evidence, or risky backend/UI/solver decisions.
+   If a code-map sidecar supplied map changes, apply or merge them only after checking the sidecar's
+   fixed snapshot against the current tree.
 6. Clean generated probe junk from the source root, review `git status`, keep unrelated user changes
    out, run both `scripts/check_code_map_drift.py --require-enabled` and
    `scripts/validate_code_map.py --require-enabled` before staging/committing when the map is
-   enabled, check diff hygiene, and commit the verified slice with exactly one allowed
+   enabled, relaunch the sidecar or update the map yourself if current changes outgrew the sidecar
+   snapshot, check diff hygiene, and commit the verified slice with exactly one allowed
    `Commit-Origin` trailer: `agent-slice` or `user-requested`.
 7. Continue to the next slice only after the commit is in place, or after clearly reporting why a
    commit was intentionally skipped.
