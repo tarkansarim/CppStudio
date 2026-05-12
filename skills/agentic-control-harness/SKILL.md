@@ -73,6 +73,18 @@ control harness itself.
   A drag, move, edit, connect, delete, timeline, or scene command that is rejected or does not
   actually change the claimed state must not return `ok=true` unless the endpoint explicitly
   reports a deliberate no-op. Include before/after readback for user-visible mutations.
+- For user-reported bugs, use the harness to make "fixed" a before/after comparison, not a nearby
+  pass. Reproduce the reported symptom first and store the before evidence under the closest
+  user-equivalent path available: launch command, scenario id, exact input sequence, harness state,
+  logs, capture path, Sonar readback, metric, or failing assertion. For visible GUI/windowed bugs,
+  scenario execution should use the project-approved launcher or `ostm`, and Sonar should verify the
+  visible target window when available. After changing code, rerun the same scenario or a documented
+  equivalent and compare the after evidence against the before evidence in the symptom's own terms.
+  If the evidence is identical, self-confirming, backend-only for a UI bug, or covers only one easy
+  variant while the report names a broader interaction, the harness proof is insufficient and the
+  agent must continue diagnosis instead of asking the user to confirm the fix. When repeated probes
+  are needed, use an available Rewind pre-fix checkpoint as the rollback anchor or state that exact
+  replay was unavailable before continuing.
 - Name readiness and success fields after the exact invariant they prove. Do not let a broad
   readiness boolean stand in for a weaker nearby condition. If the app has a widget, a backend, and a
   live composed capture as separate facts, expose separate fields such as `has_widget`,
@@ -130,6 +142,13 @@ control harness itself.
   and elapsed time. Multi-second delayed selection, delayed visible labels, or state changes that
   only appear after unrelated input are failing GUI behavior even if the backend command eventually
   succeeds.
+- User-reported GUI bugs need coverage shaped like the report. If the report says multiple brush
+  entries cannot be selected, the scenario must exercise repeated selection across all relevant
+  enabled entries or explain why a narrower subset is the only available repro. If the report says a
+  pointer or stroke is offset, the scenario must compare requested pointer, committed edit point, and
+  visual marker/capture before and after. A single internally chosen click that passes because the
+  app clicked the point it predicted for itself is useful diagnostic evidence, but it is not enough
+  to claim the user's bug is fixed.
 - Viewport and canvas interactions need a pointer-mapping oracle. For click, drag, stroke, pick,
   sculpt, paint, groom, transform, gizmo, node-canvas, or graph-coordinate work, read back the target
   widget geometry, viewport-local point, device-pixel ratio, framebuffer/render-target point,
@@ -182,6 +201,9 @@ A first harness slice is only provisionally successful when these are verified:
 - user-visible GUI fixes for clicks, selections, drags, or viewport strokes include an interaction
   scenario that exercises the real GUI event path, records event-to-committed-state latency, and
   proves the visible widget/action state changed without relying on unrelated later input
+- user-reported bug fixes include matching before/after evidence for the exact reported symptom; a
+  fix is not ready to present when the after scenario is identical to the before scenario or covers a
+  narrower, self-confirming path
 - viewport/canvas hit or stroke fixes include a pointer-mapping readback with widget geometry,
   device-pixel ratio, local/render-target coordinates, picked ray or canvas transform, committed
   hit/edit point, and fresh visual evidence when practical

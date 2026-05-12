@@ -172,6 +172,36 @@ For UI-heavy tools, visual awareness is not optional. The harness should expose 
 panel, focus, modal, screenshot, and frame-output evidence that an agent can understand what the user
 would see on screen for ordinary debugging and regression checks.
 
+## User-Reported Bug Proof
+
+When the user reports a bug, the harness job is to prove the bug changed, not merely that a nearby
+automation path passes.
+
+Before changing code:
+
+- reproduce the reported behavior through the closest user-equivalent path available
+- for visible GUI/windowed bugs, run the scenario through the project-approved launcher or `ostm`
+  and use Sonar text/visual readback when available to prove the target window state
+- record the exact command, scenario id, input sequence, app state, logs, Sonar report, capture path,
+  image/video artifact, metric, and failing assertion that demonstrate the symptom
+- label that evidence as the before state
+- when Rewind is available, mark or identify the pre-fix checkpoint before speculative GUI probes so
+  failed attempts can roll back instead of accumulating; if no pre-change checkpoint exists, record
+  that exact replay is unavailable
+
+After changing code:
+
+- rerun the same scenario, or document why the replacement scenario is equivalent to the reported
+  path
+- record the same evidence fields as the after state
+- compare before and after in the terms of the user's report, such as selected visible tool,
+  selection latency, pointer-to-edit offset, changed pixels, warning disappearance, or metric change
+
+The agent must not present a fix when the before/after evidence is identical, self-confirming, only
+backend state for a visible UI bug, or when a single convenient variant is used for a report that
+names a broader family. In those cases the correct closeout is continued diagnosis or a stuck report
+that starts by saying the fix is not proven.
+
 ## GUI Interaction Scenarios
 
 Interactive tools need a second class of tests beyond backend control commands: scenarios that drive

@@ -187,3 +187,25 @@ GUI behavior needs scenario evidence that exercises the real event path when pra
 
 Do not accept a backend command success, generic revision increment, or delayed state update as proof
 that a visible button, palette item, or pointer-mapped viewport interaction works.
+
+For user-reported bugs, add a before/after proof before presenting the fix:
+
+1. Reproduce the reported behavior first through the closest user-equivalent command, scenario, or
+   manual harness path.
+2. Save the before evidence: exact command/steps, scenario id, input sequence, state/readback fields,
+   logs, screenshots/video/captures, Sonar readback when available, metrics, or failing assertions
+   that show the symptom.
+3. After changing code, rerun the same scenario or document the equivalence of any replacement.
+4. Save the after evidence with the same fields and compare it to the before evidence.
+5. Claim the bug is fixed only when the comparison shows a material change in the reported behavior.
+
+For visible GUI/windowed bugs, run scenario or smoke execution through the project-approved launcher
+or `ostm`, and verify the target window with Sonar text/visual readback when those tools are
+available. When Rewind is available, identify a pre-fix checkpoint before speculative GUI probes so
+failed attempts can roll back cleanly; if no pre-change checkpoint exists, report that exact replay
+was missed.
+
+If before and after are identical, if the proof is self-confirming, if it covers only a narrower path
+than the user's report, or if it tests backend state for a visible GUI bug, keep debugging. After the
+repo's repeated-attempt threshold, start the status with "I am stuck on this bug:" and name the
+missing proof and next diagnostic path.

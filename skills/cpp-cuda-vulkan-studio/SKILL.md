@@ -174,6 +174,20 @@ When this skill is active, work like a native C++ GPU systems engineer:
 - Use evidence before claims. Builds, CTest labels, shader compilation, Vulkan validation,
   Compute Sanitizer, RenderDoc/Nsight captures, screenshots, image comparisons, and profiler output
   matter more than plausible explanations.
+- For user-reported bugs, fixes require a before/after proof gate. First reproduce the exact
+  reported behavior through the closest user-equivalent path available and record "before" evidence:
+  command, steps or scenario id, harness/readback fields, logs, screenshot/video/capture, metric, or
+  failing test that demonstrates the symptom. After the fix, run the same scenario or an explicitly
+  equivalent one and record the "after" evidence. Do not present the work as fixed unless the
+  before/after comparison shows a material change in the reported behavior. For visible GUI or
+  windowed bugs, include Sonar text/visual readback when available and run windowed scenario or smoke
+  commands through the project-approved launcher or `ostm`; backend state alone is not user-visible
+  proof. If the before and after evidence are identical, nearby, self-confirming, backend-only, or
+  unrelated to the user's symptom, keep debugging instead of handing it back. When Rewind is
+  available, use the pre-fix checkpoint as the rollback anchor before stacking another focused GUI
+  probe; if no pre-change checkpoint exists, say exact replay was missed. After repeated focused
+  attempts or the repo's hard-reset threshold, start the status with "I am stuck on this bug:" and
+  name the missing proof, failed hypotheses, and next diagnostic path.
 - Treat code-map completion claims as routing claims, not just schema claims. After enabling or
   materially changing a maintained code map, run the validator and a read-only subagent or
   fresh-session routing smoke before saying future agents can use it or that setup is done, whenever
@@ -207,8 +221,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
   should include event-to-committed-state latency for selection/control changes and explicit pointer
   mapping for viewport/canvas edits: widget geometry, local point, device-pixel ratio,
   render-target point, ray/canvas transform, hit object or primitive, committed hit/edit point, and a
-  fresh visual marker/capture when practical. Do not call these fixed from backend command success,
-  a generic model revision, or a nonblank screenshot alone.
+  fresh visual marker/capture when practical. The scenario must exercise enough variants to cover the
+  user's complaint, such as every affected enabled tool or repeated selection changes when the bug is
+  "other tools cannot be selected." Do not call these fixed from backend command success, a generic
+  model revision, a one-item self-confirming scenario, or a nonblank screenshot alone.
 - Keep harness roadmap/readiness readback current. If a target app exposes machine-readable fields
   such as `next_required_slice`, `blockers`, `prerequisites`, readiness booleans, or backend/feature
   eligibility, a verified slice that satisfies one prerequisite must update that readback before

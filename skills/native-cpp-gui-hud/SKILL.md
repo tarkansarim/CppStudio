@@ -92,6 +92,18 @@ canvas transforms, committed hit/edit points, and fresh visual evidence for poin
 Backend command success or a generic model revision is not enough when the user-visible question is
 "did the click hit the right control or mesh point?"
 
+For user-reported GUI bugs, closeout requires before/after evidence for the reported behavior. First
+reproduce the visible failure through the closest real user path and capture the before state:
+visible controls, active selection/mode, input sequence, latency, pointer mapping, screenshot or
+frame artifact, and any logs/readback that prove the symptom. Use Sonar text/visual readback when it
+is available for the target window, and route windowed scenario or smoke execution through the
+project-approved launcher or `ostm` instead of ad hoc display workarounds. After the fix, run the same
+or equivalent scenario and compare the after state against the before state. If they are identical,
+if the proof uses only a backend command, or if it tests only one convenient control while the user
+reported a broader selection/control problem, do not call it fixed. Continue diagnosis from a Rewind
+checkpoint when one exists, or if exact pre-fix replay was missed, say so. If repeated attempts fail,
+start the status by saying the GUI bug is not proven fixed and state the missing before/after proof.
+
 For desktop GUI apps, verify the documented human launch command opens the actual app window before
 claiming the app launches. The proof must identify the app window by class/process/title rather than
 matching a terminal title, show that it is mapped, normal, focusable or deliberately raised/reused,

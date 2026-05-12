@@ -14,6 +14,7 @@
         "skills/native-cpp-gui-hud/SKILL.md",
         "skills/cppstudio-project-planner/SKILL.md",
         "skills/agentic-control-harness/SKILL.md",
+        "skills/agentic-control-harness/references/control-harness.md",
         "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md"
       ],
       "primary_paths": [
@@ -21,6 +22,7 @@
         "skills/native-cpp-gui-hud/SKILL.md",
         "skills/cppstudio-project-planner/SKILL.md",
         "skills/agentic-control-harness/SKILL.md",
+        "skills/agentic-control-harness/references/control-harness.md",
         ".codex/skills/cppstudio-repo-onboarding/SKILL.md"
       ]
     },

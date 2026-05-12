@@ -90,6 +90,11 @@ validation.
   UI-heavy tools need scenarios for real control clicks, selection latency, viewport/canvas
   pointer-mapping, device-pixel-ratio handling, committed hit/edit points, and fresh visual evidence
   before agents claim GUI fixes work.
+- Generated validation docs require user-reported bug fixes to start from a reproduced before state,
+  capture comparable after evidence, route visible GUI/windowed scenarios through Sonar and
+  OSTM/project launchers when available, use Rewind checkpoints as rollback anchors for speculative
+  GUI probes, and reject fixed claims when before/after artifacts are identical, self-confirming,
+  backend-only for a visible bug, or narrower than the reported symptom.
 - Generated app guidance requires agents to verify the exact user-facing launch command when they
   provide or change it; offscreen smoke alone is not enough launch evidence.
 - Exact launch-command verification must prove the human-visible app window, not only a process or

@@ -11,6 +11,7 @@ generated-project workflow instructions.
 - `skills/native-cpp-gui-hud/SKILL.md`
 - `skills/cppstudio-project-planner/SKILL.md`
 - `skills/agentic-control-harness/SKILL.md`
+- `skills/agentic-control-harness/references/control-harness.md`
 - `skills/cpp-cuda-vulkan-studio/references/project-archetypes.md`
 
 ## Primary Paths
@@ -19,6 +20,7 @@ generated-project workflow instructions.
 - `skills/native-cpp-gui-hud/SKILL.md`
 - `skills/cppstudio-project-planner/SKILL.md`
 - `skills/agentic-control-harness/SKILL.md`
+- `skills/agentic-control-harness/references/control-harness.md`
 - `.codex/skills/cppstudio-repo-onboarding/SKILL.md`
 
 ## Current External Doctrine Posture
@@ -169,6 +171,13 @@ generated-project workflow instructions.
   the real widget/action or viewport/canvas event path, including click/selection latency and
   pointer-mapping readback such as widget geometry, device-pixel ratio, render-target coordinates,
   hit data, committed edit point, and fresh visual proof when practical.
+- User-reported bug fixes require a before/after proof gate before agents present the fix: reproduce
+  the exact reported behavior first, capture before evidence, rerun the same or equivalent scenario
+  after the fix, and compare in the symptom's own terms. Visible GUI/windowed bugs should route
+  through Sonar readback and the project-approved launcher or `ostm` when available, with Rewind used
+  as the rollback anchor before stacked GUI probes. Identical, self-confirming, backend-only, or
+  too-narrow evidence is not a fixed claim; after repeated failed attempts the status must start by
+  saying the bug is not proven fixed or the agent is stuck.
 - User-facing desktop launch commands require human-visible launch proof: exact command, intended
   app process/window identity, terminal-title false-positive rejection, mapped/focusable visibility,
   workspace/desktop and geometry readback, control-harness responsiveness, and clean shutdown of the
@@ -217,6 +226,9 @@ generated-project workflow instructions.
 - GUI interaction scenario rules change, including when agents must test visible control clicks,
   event-to-state latency, viewport/canvas pointer mapping, stylus strokes, or real user input paths
   instead of backend commands alone
+- user-reported bug verification rules change, including reproduction-first requirements,
+  before/after evidence, Sonar/OSTM/Rewind routing, identical-evidence rejection, or stuck-status
+  wording after repeated failed attempts
 - user-facing desktop launch-command verification requirements change, including non-blocking
   long-running GUI launch verification, launcher probe behavior, and duplicate-launch contracts
 - Vulkan runtime/readiness policy changes, including how realtime viewport preflights classify

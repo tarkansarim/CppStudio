@@ -4,6 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a user-reported bug before/after proof gate: agents must reproduce the exact reported
+  behavior first, save before evidence, rerun the same or equivalent scenario after the fix, compare
+  the reported symptom directly, and refuse to present a fixed claim when the evidence is identical,
+  self-confirming, backend-only for a visible bug, or too narrow for the report. Visible GUI/windowed
+  bug proof now explicitly routes through Sonar readback, OSTM/project launchers, and Rewind rollback
+  anchors when those tools are available.
 - Tightened desktop GUI launch verification so agents must prove the exact documented command opens
   the intended visible, focusable app window, reject terminal-title or stale-window matches, read back
   workspace/geometry/window state, and confirm harness responsiveness before claiming launch success.
