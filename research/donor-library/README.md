@@ -17,8 +17,8 @@ for discussion, expansion, and source provenance before future skill updates.
 - [trigger-regression-checklist.md](trigger-regression-checklist.md): manual/subagent trigger-lane
   expectations.
 - [trigger-results-2026-05-10-installed.json](trigger-results-2026-05-10-installed.json): portable
-  installed-path fresh-subagent evidence for the planning, donor-promotion, harness, grooming, and
-  sculpting route probes. Validate filled result artifacts with
+  installed-path fresh-subagent evidence for the planning, donor-promotion, harness, grooming,
+  sculpting, and code-map sidecar route probes. Validate filled result artifacts with
   `scripts/validate_trigger_results.py --matrix research/donor-library/trigger-matrix.json` so
   `pass` cases cannot omit matrix-rendered expected opened paths, self-edit the expected-path
   contract, touch forbidden paths, downgrade checked-in installed evidence out of

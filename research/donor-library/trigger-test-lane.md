@@ -208,7 +208,7 @@ This lane split the full 66-case trigger matrix across five read-only subagents:
   TressFX remains correct for hair, fur, grooming, strand, or TressFX-named prompts, but neither should
   be implied as a direct donor for a generic native C++ simulation/geometry kernel prompt.
 
-## Planning, Harness, Grooming, And Sculpting Installed-Path Lane
+## Planning, Harness, Grooming, Sculpting, And Code-Map Sidecar Installed-Path Lane
 
 Run date: 2026-05-10
 
@@ -222,8 +222,8 @@ mode. Portable result artifact:
 The artifact is validated by
 `scripts/validate_trigger_results.py --matrix research/donor-library/trigger-matrix.json`, so a
 recorded `pass` must include all matrix-rendered expected opened paths and no forbidden paths.
-`validate.sh` pins this checked-in artifact to `portable-installed` mode and requires all five named
-cases to remain present.
+`validate.sh` pins this checked-in artifact to `portable-installed` mode and requires all six named
+cases, including `code-map-sidecar-maintenance-lane`, to remain present.
 
 Prompt pack/result-template command:
 
@@ -238,6 +238,7 @@ python3 scripts/render_trigger_eval_prompt.py \
   --case agentic-control-harness-default \
   --case grooming-brush-authoring-donors \
   --case sculpting-brush-high-poly-donors \
+  --case code-map-sidecar-maintenance-lane \
   --write-result-template research/donor-library/trigger-results-2026-05-10-installed.json
 ```
 
@@ -248,6 +249,7 @@ python3 scripts/render_trigger_eval_prompt.py \
 | Agentic control harness | Native C++/Vulkan realtime artist tool with GUI/viewport needs autonomous launch, state, screenshot, and troubleshooting controls | Passed. Agent selected `cppstudio-project-planner`, `cpp-cuda-vulkan-studio`, `agentic-control-harness`, `native-cpp-gui-hud`, `offscreen-test-manager`, and `sonar-design`; opened installed `agentic-control-harness/references/control-harness.md`, GUI options, native GUI donors, Vulkan foundation, graphics, and agent lookup; required a localhost dev/test control surface, curlable/CLI route, safe GUI/render-thread command routing, fresh screenshot/readback evidence, and OSTM for GUI tests. | Pass |
 | Realtime grooming/fur artist tool | C++/Vulkan hair grooming/fur strand tool with brush editing, Alembic/USD interchange, realtime shading, and donor references | Passed. Agent selected `cpp-cuda-vulkan-studio`, `cppstudio-project-planner`, `native-cpp-gui-hud`, `agentic-control-harness`, `vulkan-compute-sync`, and `modern-cpp-cmake`; opened `hair-grooming-fur.md`, `selection-policy.md`, `agent-lookup.md`, `production/vfx-studio.md`, `native-gui-hud.md`, `dcc-scene-pipeline.md`, `graphics-rendering.md`, `blender-curves-groom-brushes-study-only.md`, `tressfx.md`, `openusd.md`, `alembic.md`, `imgui-tooling.md`, and `sdl3-platform-input.md`; kept Blender/HairWorks/Unreal/Unity study-only and did not add CUDA to the Vulkan lane. | Pass |
 | High-poly sculpting brush tool | C++/Vulkan ZBrush-like sculpting tool with named brushes, Wacom pressure, dynamic topology, multiresolution, and high-poly performance | Passed. Agent selected `cpp-cuda-vulkan-studio`, `cppstudio-project-planner`, `ceiling-research`, `native-cpp-gui-hud`, `agentic-control-harness`, `vulkan-compute-sync`, `modern-cpp-cmake`, and `gpu-profiling-workstation`; opened `project-archetypes.md`, donor `README.md`, `selection-policy.md`, `agent-lookup.md`, `sculpting-brushes.md`, `blender-sculpt-brushes-study-only.md`, `surfaces-subdivision.md`, `meshoptimizer.md`, `opensubdiv.md`, `vulkan-memory-allocator.md`, `geometry-simulation.md`, `graphics-rendering.md`, `vulkan-foundation-tooling.md`, `native-gui-hud.md`, `imgui-tooling.md`, and `sdl3-platform-input.md`; kept Blender GPL-family material study-only and required numeric high-poly gates. | Pass |
+| Code-map sidecar maintenance lane | Long-running enabled-map C++/CUDA/Vulkan/realtime work wants another worker to maintain map artifacts while source work continues | Passed. Fresh probe `019e1ea3-ea57-7922-864a-64e6c6498cf2` selected installed `cpp-cuda-vulkan-studio`; opened installed `SKILL.md`, `check_code_map_drift.py`, `validate_code_map.py`, template `README.md`, and source code-map manifest/index files; reported bounded triggers, fixed snapshot/anchor semantics, map-only output, no concurrent live-worktree edits except serialized handoff, final drift/schema validation, and no public commits solely for sidecars. | Pass |
 
 Two follow-up focused fresh probes were run after adding result-artifact validation because the first
 checked-in artifact did not list every expected opened path for two pass cases:
@@ -261,8 +263,8 @@ checked-in artifact did not list every expected opened path for two pass cases:
 
 ## Planning/Harness Lane Findings
 
-- The installed paths now route recent planning, missing-donor promotion, harness, grooming, and
-  sculpting cases without relying on source-repo context.
+- The installed paths now route recent planning, missing-donor promotion, harness, grooming,
+  sculpting, and code-map sidecar cases without relying on source-repo context.
 - The missing-donor promotion probe confirmed local donor-candidate capture is mandatory evidence
   even when reusable/global promotion is requested immediately.
 - The midstream realtime ray-tracing probe confirmed vague major feature requests reopen the planning
@@ -271,3 +273,6 @@ checked-in artifact did not list every expected opened path for two pass cases:
   and fresh visual/UI evidence rather than routine user-driven testing.
 - Grooming and sculpting probes confirmed GPL-family Blender material remains study-only and Vulkan
   lanes do not silently acquire CUDA because of donor backend history.
+- The code-map sidecar probe confirmed long-running enabled-map work keeps sidecar map updates
+  anchored to a fixed snapshot, isolated from live source edits unless serialized, and gated by a
+  final current-tree drift/schema reconciliation before staging or commit.

@@ -759,7 +759,8 @@ python3 "${ROOT_DIR}/scripts/validate_trigger_results.py" \
     --require-case missing-donor-promotion-boundary \
     --require-case agentic-control-harness-default \
     --require-case grooming-brush-authoring-donors \
-    --require-case sculpting-brush-high-poly-donors
+    --require-case sculpting-brush-high-poly-donors \
+    --require-case code-map-sidecar-maintenance-lane
 python3 - "${SKILL_DIR}/assets/app-library-template/.github/workflows/gpu-cpp.yml" <<'PY'
 import sys
 from pathlib import Path
@@ -1024,7 +1025,8 @@ expect_failure "installed trigger result requires portable-installed mode" "does
     --require-case missing-donor-promotion-boundary \
     --require-case agentic-control-harness-default \
     --require-case grooming-brush-authoring-donors \
-    --require-case sculpting-brush-high-poly-donors
+    --require-case sculpting-brush-high-poly-donors \
+    --require-case code-map-sidecar-maintenance-lane
 trigger_missing_case="$(mktemp "${VALIDATE_TMP}/trigger_eval_missing_case.XXXXXX.json")"
 python3 - "${ROOT_DIR}/research/donor-library/trigger-results-2026-05-10-installed.json" "${trigger_missing_case}" <<'PY'
 import json
@@ -1034,7 +1036,7 @@ from pathlib import Path
 source = Path(sys.argv[1])
 target = Path(sys.argv[2])
 data = json.loads(source.read_text(encoding="utf-8"))
-data["cases"] = [case for case in data["cases"] if case["name"] != "sculpting-brush-high-poly-donors"]
+data["cases"] = [case for case in data["cases"] if case["name"] != "code-map-sidecar-maintenance-lane"]
 data["case_count"] = len(data["cases"])
 target.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
 PY
@@ -1047,7 +1049,8 @@ expect_failure "installed trigger result requires all claimed cases" "missing re
     --require-case missing-donor-promotion-boundary \
     --require-case agentic-control-harness-default \
     --require-case grooming-brush-authoring-donors \
-    --require-case sculpting-brush-high-poly-donors
+    --require-case sculpting-brush-high-poly-donors \
+    --require-case code-map-sidecar-maintenance-lane
 expect_failure "unknown trigger eval tag" "unknown trigger tag" \
     python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \

@@ -110,8 +110,9 @@ skills, and watch-mode publishing behavior.
   checked-in trigger results that mark a case as `pass` without opening every matrix-rendered
   expected path, with any forbidden path opened, with self-edited expected/forbidden path lists, or
   without fresh-run metadata. `validate.sh` pins the checked-in installed-path evidence to
-  `--expected-path-mode portable-installed` and requires the five claimed case names so the artifact
-  cannot downgrade path mode or silently shrink the result set.
+  `--expected-path-mode portable-installed` and requires the six claimed case names, including
+  `code-map-sidecar-maintenance-lane`, so the artifact cannot downgrade path mode or silently shrink
+  the result set.
 - Existing-project code-map enablement can add missing repo-local validation/drift wrappers under
   `scripts/` so agents do not need to remember the installed skill path after a map is enabled.
   Existing target-owned scripts are preserved.

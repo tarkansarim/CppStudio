@@ -286,7 +286,8 @@ python3 scripts/validate_trigger_results.py trigger-results.json \
   --require-case missing-donor-promotion-boundary \
   --require-case agentic-control-harness-default \
   --require-case grooming-brush-authoring-donors \
-  --require-case sculpting-brush-high-poly-donors
+  --require-case sculpting-brush-high-poly-donors \
+  --require-case code-map-sidecar-maintenance-lane
 ```
 
 Passing cases must list all expected paths in `result.opened_files`, keep forbidden paths untouched,

@@ -9,6 +9,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
   long-running slices, ownership/data-flow changes, moved routable files, or stale subsystem docs
   justify it, while the original worker must reconcile the sidecar output and rerun drift/schema
   validation on the current tree before the verified slice commit.
+- Pinned checked-in installed-path trigger evidence to include the code-map sidecar case so validation
+  cannot silently regress to the earlier planning/harness/grooming/sculpting evidence set.
 - Hardened stalled visible-bug and artist-tool debugging: after two focused attempts or about
   20 minutes without direct symptom improvement, agents must stop local patching, reopen the target
   code map and donor routes, record a donor realignment note with failed hypotheses and keep/revert
