@@ -87,9 +87,9 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   the Blender Sculpt Brushes study-only profile and must prove pointer/control-to-committed-result
   behavior, not just a generic mesh revision or nonblank screenshot. Enabled code-map projects now
   also have a bounded sidecar lane for long-running or high-churn map maintenance: sidecars work
-  from a fixed snapshot and return map-only updates, while the original worker must reconcile,
-  rerun drift/schema validation against the current tree, and keep the verified slice commit as the
-  public history boundary.
+  from isolated fixed snapshots and return map-only patches, while the original worker must
+  reconcile, rerun drift/schema validation against the current tree, and keep the verified slice
+  commit as the public history boundary.
 - `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map
   projects catch changed source paths that are not routed by the manifest.
 - `c68ae77` - Hardened code-map and trigger validation, made manual managed-skill install
@@ -478,12 +478,14 @@ when `.cppstudio/code-map-state.json` says `enabled`.
 
 For long-running or high-churn enabled-map slices, the main worker may use a bounded code-map
 sidecar to reduce context bloat. The sidecar should be code-map-only, read a named fixed snapshot
-such as a Rewind checkpoint, temporary git anchor, commit, worktree copy, or archive, and report its
-map update plus snapshot assumptions. The original worker still owns the final gate: merge or apply
-the sidecar output, rerun drift and schema validation against the current tree, and update the map
-again if later implementation work touched additional routable ownership or data-flow areas. Normal
-git history should stay clean; Rewind checkpoints and temporary anchors are not public verified-slice
-commits.
+such as a Rewind checkpoint, temporary git anchor, commit, isolated worktree copy, or archive, and
+report its map update plus snapshot assumptions. If the original keeps implementing, the sidecar must
+return a patch/diff or map-file replacements instead of editing the original live worktree
+concurrently; same-worktree edits require a serialized handoff with the original paused. The original
+worker still owns the final gate: merge or apply the sidecar output, rerun drift and schema
+validation against the current tree, and update the map again if later implementation work touched
+additional routable ownership or data-flow areas. Normal git history should stay clean; Rewind
+checkpoints and temporary anchors are not public verified-slice commits.
 
 ## Skills And Donors Included
 

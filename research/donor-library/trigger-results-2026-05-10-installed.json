@@ -2,11 +2,11 @@
   "schema_version": 1,
   "matrix_description": "Manual/subagent trigger-regression matrix for the CppStudio donor and lane-routing skills. Repo validation checks schema, tags, and path integrity; fresh agent behavior still requires a manual or delegated rerun.",
   "path_mode": "portable-installed",
-  "case_count": 5,
+  "case_count": 6,
   "run": {
-    "run_date": "2026-05-10",
+    "run_date": "2026-05-10; sidecar case appended 2026-05-13",
     "agent_environment": "fresh Codex subagents, fork_context=false, read-only probes, installed skill paths under ${CODEX_HOME:-$HOME/.codex}/skills",
-    "render_command": "python3 scripts/render_trigger_eval_prompt.py research/donor-library/trigger-matrix.json --repo-root . --installed-paths --portable-installed-paths --case realtime-raytracing-framework-donors --case missing-donor-promotion-boundary --case agentic-control-harness-default --case grooming-brush-authoring-donors --case sculpting-brush-high-poly-donors --write-result-template research/donor-library/trigger-results-2026-05-10-installed.json"
+    "render_command": "python3 scripts/render_trigger_eval_prompt.py research/donor-library/trigger-matrix.json --repo-root . --installed-paths --portable-installed-paths --case realtime-raytracing-framework-donors --case missing-donor-promotion-boundary --case agentic-control-harness-default --case grooming-brush-authoring-donors --case sculpting-brush-high-poly-donors --case code-map-sidecar-maintenance-lane --write-result-template research/donor-library/trigger-results-2026-05-10-installed.json"
   },
   "cases": [
     {
@@ -235,6 +235,45 @@
         "forbidden_paths_used": false,
         "verdict": "pass",
         "notes": "Probe routed first to sculpting-brushes and Blender Sculpt Brushes study-only, treated Blender GPL-family source as behavior/reference only, required meshoptimizer/OpenSubdiv/VMA and numeric high-poly gates, rejected whole-mesh-per-stroke uploads as production architecture, and did not touch ai-runtimes-kernels."
+      }
+    },
+    {
+      "name": "code-map-sidecar-maintenance-lane",
+      "tags": [
+        "smoke",
+        "positive",
+        "code-map",
+        "infrastructure"
+      ],
+      "prompt_shape": "Agent is in a long-running or high-churn implementation slice in an enabled-map C++/CUDA/Vulkan/realtime repo and wants to offload map maintenance to another worker.",
+      "expected_behavior": "Trigger cpp-cuda-vulkan-studio and use a bounded code-map-only sidecar only when drift output, a planned long-run interval, changed source ownership/data flow/backend boundaries, new or moved routable files, or stale subsystem docs justify it. The sidecar must read a fixed checkpoint, Rewind checkpoint, temporary git anchor, commit, isolated worktree copy, or archive snapshot; document that anchor; avoid source/product implementation; and return a map-only patch/diff or map-file replacements plus snapshot assumptions. It must not edit the original worker's live worktree while source work continues; same-worktree edits require a serialized handoff with the original paused. The original worker may continue source work only with a final reconcile before staging or committing: apply or merge the sidecar map update, rerun check_code_map_drift.py and validate_code_map.py against the current tree, and update or relaunch the sidecar if later changes touched additional routable areas. Do not require noisy public commits just to feed sidecars; distinguish Rewind checkpoints, temporary anchors, and the verified slice commit.",
+      "expected_paths": [
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/SKILL.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/assets/app-library-template/README.md",
+        "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/docs/CODEBASE_ARCHITECTURE_INDEX.md",
+        "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json"
+      ],
+      "forbidden_paths": [],
+      "result": {
+        "selected_skills": [
+          "cpp-cuda-vulkan-studio"
+        ],
+        "opened_files": [
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/SKILL.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/assets/app-library-template/README.md",
+          "${CODEX_HOME:-$HOME/.codex}/AGENTS.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/agent-tickets/SKILL.md",
+          "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/.codex/skills/cppstudio-repo-onboarding/SKILL.md",
+          "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/docs/CODEBASE_ARCHITECTURE_INDEX.md",
+          "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json"
+        ],
+        "forbidden_paths_used": false,
+        "verdict": "pass",
+        "notes": "Fresh probe 019e1ea3-ea57-7922-864a-64e6c6498cf2 selected installed cpp-cuda-vulkan-studio for a long-running enabled-map sidecar prompt, opened every expected installed/source path, found no forbidden path use, and reported the bounded sidecar invariants: justified triggers only, fixed snapshot/anchor, map-only output, no concurrent live-worktree edits unless serialized, final reconcile with drift plus validation, and no noisy public commits solely for sidecars."
       }
     }
   ]

@@ -58,10 +58,13 @@ For long-running implementation or high-churn slices, the main worker may offloa
 maintenance to a bounded code-map sidecar when drift output, new or moved routable files, changed
 ownership/data flow/backend boundaries, a planned interval, or stale subsystem docs justify the
 extra lane. The sidecar must read a fixed snapshot such as a Rewind checkpoint, temporary git anchor,
-commit, worktree copy, or archive, and its prompt/response must name that anchor.
+commit, isolated worktree copy, or archive, and its prompt/response must name that anchor.
 
-The main worker may continue source work, but before staging or committing it must apply or merge the
-sidecar's map update, rerun `scripts/check_code_map_drift.py --require-enabled` and
+If the main worker continues source work, the sidecar must not edit that live worktree concurrently.
+Use an isolated worktree, archive/snapshot copy, or read-only snapshot that returns a patch/diff or
+map-file replacements. Same-worktree map edits are allowed only as a serialized handoff with the main
+worker paused. Before staging or committing, the main worker must apply or merge the sidecar's map
+update, rerun `scripts/check_code_map_drift.py --require-enabled` and
 `scripts/validate_code_map.py --require-enabled` against the current tree, and update the map again
 or relaunch the sidecar if later source changes touched additional routable ownership or data-flow
 areas. Do not create public commits only to feed sidecars; use Rewind checkpoints or temporary

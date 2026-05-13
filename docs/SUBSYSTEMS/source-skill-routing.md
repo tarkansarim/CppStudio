@@ -56,10 +56,12 @@ generated-project workflow instructions.
   hook/check reports map work, a long-running slice hits a planned maintenance interval, ownership or
   data-flow changes make subsystem docs stale, new or moved routable files appear, or the main worker
   needs to reduce context bloat. The sidecar reads a named fixed snapshot such as a Rewind checkpoint,
-  temporary git anchor, commit, worktree copy, or archive, returns code-map-only updates, and records
-  its snapshot assumptions. The original worker owns the final reconcile: apply or merge the sidecar
-  result, rerun drift and validation on the current tree, and update or relaunch the sidecar if later
-  source changes touched more routable areas.
+  temporary git anchor, commit, isolated worktree copy, or archive, returns code-map-only patch
+  output or map-file replacements, and records its snapshot assumptions. It must not edit the
+  original worker's live worktree while source work continues; same-worktree edits require a
+  serialized handoff with the original paused. The original worker owns the final reconcile: apply or
+  merge the sidecar result, rerun drift and validation on the current tree, and update or relaunch
+  the sidecar if later source changes touched more routable areas.
 - Target-repo instruction files are sensitive. `AGENTS.md`, `CLAUDE.md`, repo-local skills, and
   agent metadata must be named separately in status reports when dirty or changed; they must not be
   hidden under generic "unrelated dirty files" wording.

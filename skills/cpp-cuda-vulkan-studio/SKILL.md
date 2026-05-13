@@ -232,8 +232,9 @@ When this skill is active, work like a native C++ GPU systems engineer:
   planned map-maintenance interval, changed source ownership/data flow/backend boundaries affect
   subsystem docs, new or moved routable files appear, or local evidence suggests subsystem docs are
   stale. The sidecar is code-map-only: it may inspect the frozen source snapshot, architecture index,
-  manifest, and subsystem docs, then return map/doc updates and rationale; it must not implement
-  product/source changes or assume live access to the original worker's evolving tree.
+  manifest, and subsystem docs, then return a patch/diff, map-file replacements, and rationale; it
+  must not implement product/source changes or assume live access to the original worker's evolving
+  tree.
 - Code-map sidecars need snapshot semantics. The original worker must name the fixed checkpoint,
   Rewind checkpoint, temporary git anchor, commit, worktree copy, or archive snapshot that the
   sidecar is reading. The original may continue implementation only if it plans a final reconcile
@@ -241,6 +242,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
   and CppStudio must not require noisy public commits for every sidecar. The final history boundary
   remains the verified slice commit after build/test/map validation, with the normal
   `Commit-Origin` trailer.
+- Code-map sidecars must not edit the original worker's live worktree while the original continues
+  source work. Use an isolated worktree, archive/snapshot copy, read-only snapshot plus patch output,
+  or a serialized same-worktree handoff where the original worker pauses and resumes only after
+  sidecar output is reviewed. If a sidecar returns a patch, the original applies it deliberately in
+  the live worktree during the final reconcile; unreviewed concurrent same-worktree map edits are not
+  a valid sidecar lane.
 - Before the original worker commits an enabled-map slice that used a sidecar, it must apply or merge
   the sidecar map update, rerun the drift checker and code-map validator against the current tree,
   and compare the sidecar's fixed snapshot with current changed routable areas. If the original
@@ -540,13 +547,16 @@ When this skill is active, work like a native C++ GPU systems engineer:
    long-running slice interval, ownership/data-flow/backend-boundary changes, new or moved routable
    files, or stale subsystem docs justify offloading map maintenance. Launch or instruct the sidecar
    from a fixed snapshot, Rewind checkpoint, temporary git anchor, commit, worktree copy, or archive;
-   document that anchor in the sidecar prompt and response. The sidecar edits only map files
-   (`docs/CODEBASE_*`, `docs/SUBSYSTEMS/*`, and project-local map notes) and reports its snapshot
-   assumptions. The original worker may keep implementing, but before staging or committing it must
-   apply or merge the sidecar output, rerun drift and validation on the current tree, and update or
-   relaunch the sidecar if later source changes touched more routable ownership/data-flow areas. Do
-   not create public commits solely to feed sidecars; use Rewind checkpoints or temporary anchors for
-   that proof boundary, then keep the normal verified slice commit as the public history unit.
+   document that anchor in the sidecar prompt and response. The sidecar may only produce map-file
+   changes (`docs/CODEBASE_*`, `docs/SUBSYSTEMS/*`, and project-local map notes) plus rationale, and
+   it reports its snapshot assumptions. If the original worker keeps implementing, the sidecar must
+   work in an isolated worktree, archive/snapshot copy, or read-only snapshot and return a patch/diff
+   or map-file replacements; same-worktree map edits are allowed only as a serialized handoff with
+   the original paused. Before staging or committing, the original must apply or merge the sidecar
+   output, rerun drift and validation on the current tree, and update or relaunch the sidecar if
+   later source changes touched more routable ownership/data-flow areas. Do not create public commits
+   solely to feed sidecars; use Rewind checkpoints or temporary anchors for that proof boundary, then
+   keep the normal verified slice commit as the public history unit.
 9. If the readiness audit leads to pre-map infrastructure work such as `CMakePresets.json`,
    canonical `scripts/`, validation wrappers, CI files, or build-entrypoint cleanup, label that work
    as an audit-backed infrastructure slice before map enablement. Get the user's route acceptance
@@ -623,8 +633,8 @@ For long-running target-project implementation, repeat this rhythm between slice
    to the change.
 5. Update code-map, control-harness registry, and donor/provenance docs when the slice changed their
    routed behavior, route inventory, product-shape evidence, or risky backend/UI/solver decisions.
-   If a code-map sidecar supplied map changes, apply or merge them only after checking the sidecar's
-   fixed snapshot against the current tree.
+   If a code-map sidecar supplied map changes, apply or merge its patch/output only after checking
+   the sidecar's fixed snapshot against the current tree.
 6. Clean generated probe junk from the source root, review `git status`, keep unrelated user changes
    out, run both `scripts/check_code_map_drift.py --require-enabled` and
    `scripts/validate_code_map.py --require-enabled` before staging/committing when the map is

@@ -92,7 +92,9 @@ Ticket #59 added a fourth dedicated code-map trigger case:
   changes, new or moved routable files, or stale subsystem docs would otherwise force the main worker
   to keep too much map context loaded.
 - Give the sidecar a fixed snapshot anchor such as a Rewind checkpoint, temporary git anchor, commit,
-  worktree copy, or archive. The sidecar records that anchor and returns map updates plus assumptions.
+  isolated worktree copy, or archive. The sidecar records that anchor and returns a map-only patch or
+  map-file replacements plus assumptions. It does not edit the original worker's live worktree while
+  source work continues; same-worktree edits require a serialized handoff with the original paused.
 - The original worker may continue implementation, but it owns the final reconcile before commit:
   apply or merge sidecar output, rerun drift and schema validation against the current tree, and
   update or relaunch the sidecar if later source changes touched additional routable areas.

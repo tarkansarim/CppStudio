@@ -49,6 +49,5 @@ selection policy, and trigger-regression metadata.
 - trigger-evaluation prompt wording, matrix-anchored result-artifact validation, pass/fail evidence
   rules, or forbidden-path probe rules change
 - trigger-matrix expectations for greenfield code-map pre-source gates, code-map bootstrap,
-  enabled-map maintenance, or routing-smoke
-  proof change
+  enabled-map maintenance, code-map sidecar maintenance, or routing-smoke proof change
 - required trigger case-name validation changes

@@ -844,6 +844,8 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning h
             grep -q "non-destructive existing-project readiness audit" "${trigger_tag_md}"
             grep -q "code-map-only sidecar" "${trigger_tag_md}"
             grep -q "fixed checkpoint" "${trigger_tag_md}"
+            grep -q "isolated worktree" "${trigger_tag_md}"
+            grep -q "same-worktree edits require a serialized handoff" "${trigger_tag_md}"
             grep -q "final reconcile before staging or committing" "${trigger_tag_md}"
             ;;
         *)
@@ -855,7 +857,7 @@ code_map_case_checks=(
     "greenfield-code-map-pre-source-gate|hard pre-source gate|accepted, declined, or explicitly deferred|bootstrap_code_map.py|code-map choice as acceptance"
     "code-map-existing-project-bootstrap|non-destructive existing-project readiness audit|bootstrap_code_map.py|check_code_map_drift.py|read-only fresh-agent or subagent routing smoke"
     "enabled-code-map-maintenance-closeout|check_code_map_drift.py|validate_code_map.py|CODEBASE_ARCHITECTURE_INDEX.md|AGENTS.md"
-    "code-map-sidecar-maintenance-lane|code-map-only sidecar|fixed checkpoint|final reconcile before staging or committing|verified slice commit"
+    "code-map-sidecar-maintenance-lane|code-map-only sidecar|isolated worktree|same-worktree edits require a serialized handoff|verified slice commit"
     "code-map-routing-smoke-proof|schema validation alone|read-only fresh-agent or subagent routing smoke|first confident subsystem route|pass/partial/fail"
 )
 for case_check in "${code_map_case_checks[@]}"; do
