@@ -86,6 +86,13 @@ generated-project workflow instructions.
   routes and curated web/upstream sources with short descriptions, project benefits, freshness or
   primary-source notes, and direct-donor/dependency/reference-only caveats. Chat-only research is not
   enough for these cases.
+- Source-access failures are quality gates, not automatic aborts or workaround permission. If a web
+  search finds a source but opening it fails, agents may continue only when equivalent or stronger
+  primary/upstream sources, local donor profiles, or current peer-tool docs still cover the affected
+  decision. The failed URL, exact error, substitute evidence, and blocked-or-not decision impact must
+  be recorded in the research artifact. If the failed source is unique for a critical architecture,
+  GUI/product, solver, dependency, input, license, or validation choice, agents must stop and report
+  the blocker instead of producing a lower-confidence plan.
 - Durable research briefs should include `Project Dos And Don'ts`, split into app/domain and
   GUI/product-surface rules. Each rule needs source evidence, affected subsystem or UI surface, and a
   validation signal. GUI rules must cite peer-tool, UI-framework, or donor evidence for layout,
@@ -224,6 +231,7 @@ generated-project workflow instructions.
 - donor-grounding or web-ceiling-check expectations for native GPU brainstorming/design proposals
   change
 - durable project-local research artifact or donor-candidate capture requirements change
+- research source-access failure handling or quality-floor behavior changes
 - missing-donor promotion rules change, including when agents promote discovered web/upstream donors
   into the CppStudio source repo instead of leaving only target-project candidates
 - project-specific dos and don'ts research-artifact requirements change, including GUI/product-surface

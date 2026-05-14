@@ -44,6 +44,16 @@ renderer, dependency, authoring-model, or hardware choices. Keep the user-facing
 the research must be deep enough that the user is choosing between current, competitive options
 rather than unsupported guesses.
 
+Source-access failures must not lower the planning quality bar. If one searched source cannot be
+opened through the normal web tool path, record the URL, source type, error, and affected decision.
+Retry the same tool path once when the failure looks transient, but do not silently switch to curl,
+browser CLI, mirrors, cached copies, or model memory unless the user explicitly approves that
+alternate route. Continue the research only when the affected decision still has equivalent or
+stronger coverage from other primary/upstream sources, local donor profiles, or current peer-tool
+documentation. If the failed source is the only source for a critical decision, or a major subsystem
+would be left with weak/secondary evidence, stop and report the blocker instead of producing a lower
+confidence plan.
+
 For substantial greenfield projects, ambitious artist/game/VFX/DCC tools, or any plan that could be
 lost to context compaction, the research pass must be persisted before implementation. Create a
 target-repo planning artifact such as `docs/planning/RESEARCH_BRIEF.md` before asking for Plan mode
@@ -52,7 +62,9 @@ deduplicating stale, overlapping, weak, unclear-license, or non-primary material
 routes and web/upstream sources together, with a short note for each link explaining what it is, why
 it matters to this project, whether it is current/primary, and whether it is direct-donor,
 dependency-candidate, or reference-only. For large projects, expect a broad curated source set across
-the major subsystems, not a handful of links in chat.
+the major subsystems, not a handful of links in chat. When a source was searched but not opened,
+include it in an `Unavailable or unverified sources` note with the exact error, replacement evidence
+used, and whether any decision remains blocked.
 
 For those substantial planning artifacts, include a `Project Dos And Don'ts` section. This is the
 operational distillation of the research, not a style appendix. It must turn local donor routes,
@@ -200,27 +212,30 @@ facade over the same API, and which state/log/visual observation surfaces are ne
    documentation, active samples, release notes, and adoption signals. Include current comparable
    tools from the same user/workflow domain, and extract their common authoring practices before
    proposing a source-of-truth model.
-5. For large artist, game, VFX, DCC, simulation-editor, or technical-art tools, state the software
+5. Apply the source-access quality gate: document any failed opens, continue only with equivalent
+   primary-source coverage, and block the plan when a critical decision would otherwise depend on
+   missing or secondary evidence.
+6. For large artist, game, VFX, DCC, simulation-editor, or technical-art tools, state the software
    orientation and current peer-tool family before ranking product-shape decisions.
-6. Open the smallest matching donor categories and profiles before recommending solvers, renderer
+7. Open the smallest matching donor categories and profiles before recommending solvers, renderer
    backbones, GUI stacks, asset/runtime formats, AI runtimes, or simulation architecture.
-7. Treat product-surface choices as donor-gated decisions, not implementation conveniences. Before
+8. Treat product-surface choices as donor-gated decisions, not implementation conveniences. Before
    recommending or scaffolding viewport dimensionality, timeline/transport placement, editor layout,
    node graph/layer stack/source of truth, solver architecture, or render path, cite the donor or
    peer-tool evidence that supports it.
-8. Distill the research into project-specific dos and don'ts before implementation. Include app/domain
+9. Distill the research into project-specific dos and don'ts before implementation. Include app/domain
    rules and GUI/product-surface rules. Each rule needs source evidence, affected subsystem/surface,
    and validation signal.
-9. Add a short decision record for each major subsystem: local facts, peer/upstream/donor evidence,
+10. Add a short decision record for each major subsystem: local facts, peer/upstream/donor evidence,
    selected default, rejected alternatives, open user decision if any, and milestone-1 validation.
-10. Separate current leading approaches from legacy/outdated approaches, state the freshness evidence,
+11. Separate current leading approaches from legacy/outdated approaches, state the freshness evidence,
    and call out when a local donor is still useful only as reference because the current best approach
    has moved on.
-11. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
+12. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
    routes, peer-tool authoring-model findings, web sources checked, current-vs-legacy notes, and the
    reasoning for the best available option, then ask for Plan mode and only then ask decision
    questions.
-12. Persist the research brief for substantial projects before implementation. Prefer
+13. Persist the research brief for substantial projects before implementation. Prefer
    `docs/planning/RESEARCH_BRIEF.md`; include `docs/planning/DONOR_CANDIDATES.md` when strong
    reusable sources were found that are not already covered by the donor library. If the user only
    asked for a tiny exploratory answer and no project repo exists, state that no durable artifact was
@@ -244,6 +259,8 @@ Every substantial plan should include:
 - skill routes opened and donor categories/profiles selected
 - web sources checked and what changed because of them, with durable project-local research artifact
   path when one was written
+- unavailable or unverified source URLs, exact errors, substitute evidence if any, and whether the
+  missing source blocks a decision
 - donor candidates discovered outside the current library, with whether they were saved in the
   target project or promoted into the CppStudio source donor library; installed user-level donor
   files must be regenerated from source rollout, not patched directly

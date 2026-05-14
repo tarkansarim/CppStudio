@@ -26,6 +26,12 @@ Minimum pre-plan research pass:
   asking the user for routine manual testing.
 - For simulation, renderer, SDK, hardware, or "best/current/ceiling" claims, web-check official
   upstream repos, standards docs, vendor docs, papers, or primary project docs.
+- If one researched source cannot be opened through the normal web tool path, do not treat that as
+  permission to lower the research bar or silently use alternate fetch tooling. Record the URL, source
+  type, error, affected decision, and any substitute evidence. Continue only when equivalent or
+  stronger primary/upstream sources, local donor profiles, or current peer-tool docs still cover the
+  decision. If a critical architecture, GUI/product, solver, dependency, input, or validation choice
+  would depend on the missing source, stop and report the blocker instead of producing a weaker plan.
 - For substantial greenfield or architecture-setting work, persist the research in the target repo
   before implementation. Use `docs/planning/RESEARCH_BRIEF.md` for curated local-donor and web
   sources, with a short description and project benefit for each kept link. Use

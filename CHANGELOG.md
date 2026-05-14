@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a quality-preserving research failure gate: when a searched source cannot be opened, agents
+  must record the URL/error and may continue only when equivalent primary or donor evidence still
+  covers the decision; critical missing sources now block planning instead of causing silent
+  workarounds or weaker research artifacts.
 - Surfaced the latest code-map sidecar commits as explicit README Recent Commit Highlights before
   remote push, so the main page shows those changes as stable commit entries instead of hiding them
   only inside the aggregate `current` item.

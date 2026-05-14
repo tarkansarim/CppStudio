@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 67238,
-      "sha256": "cbae76c9e9b14c6cd21e950906ec606fbfc24a68ed6401717c54cfc2834266f7"
+      "size": 67840,
+      "sha256": "4514c550cf539eef38a0218d6bdcebe22be18f46b06e81fb1a803ec4d362c050"
     },
     {
       "path": "agents/openai.yaml",
@@ -1274,8 +1274,8 @@
       "path": "references/donor-library/selection-policy.md",
       "role": "reference",
       "disclosure_group": "donor-router",
-      "size": 8089,
-      "sha256": "26c3decf39702d030767ccd8e1b490a013e364326e0a5d209668603191a2afcb"
+      "size": 8679,
+      "sha256": "62e5c8d254bbaee0b2b23eb8ac0e3b6eb4474688cfd0bdbe352da674ec12f1ee"
     },
     {
       "path": "references/donor-library/simulation-gpu.md",

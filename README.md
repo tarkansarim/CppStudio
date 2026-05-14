@@ -46,9 +46,10 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   slices, exact readiness invariants, route-inventory drift checks, GUI convention tables with
   icon/text affordance review, no-touch forbidden-path trigger probes, canonical bundled-skill
   rollout guidance, hardware-backed Vulkan readiness, donor-first web/upstream research for missing
-  routes, durable greenfield research artifacts with mandatory project dos/don'ts, donor-candidate
-  disposition, README planning guidance for those artifacts, SDL3 pen/tablet input routing for
-  stroke-based artist tools, supervised-worker interrogation before inferring CppStudio gaps,
+  routes, durable greenfield research artifacts with mandatory project dos/don'ts, quality-preserving
+  source-access failure handling, donor-candidate disposition, README planning guidance for those
+  artifacts, SDL3 pen/tablet input routing for stroke-based artist tools, supervised-worker
+  interrogation before inferring CppStudio gaps,
   stricter enabled-code-map drift/schema closeout, generated repo-local map wrappers,
   donor/provenance closeout, and a GPL-safe Blender curves groom-brush study donor.
   It also lets implementation task lists realign when new evidence invalidates stale assumptions,
@@ -272,6 +273,11 @@ donor evidence, name the affected subsystem or UI surface, and define a mileston
 signal. This is where agents should capture practical lessons such as "use a real 3D viewport, not a
 diagnostic panel" or "treat stylus pressure as replayable input data," grounded in current tools and
 references rather than memory.
+
+If one researched URL cannot be opened by the normal web tooling, the planner should not silently
+work around it or lower the bar. It records the failed URL and error, continues only when equivalent
+or stronger primary sources still cover the decision, and stops when a critical choice would be
+based on missing or weak evidence.
 
 If research finds a strong reusable donor that is missing from the library, agents should save it in
 the target project's donor-candidate notes first. When you want that donor to become part of

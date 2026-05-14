@@ -23,6 +23,13 @@ CppStudio source donor library during explicit donor-library maintenance or when
 extend the reusable/global donor library, then roll them out from source; the installed user-level
 copy is not the source of truth.
 
+When a candidate source is discovered but cannot be opened through the normal research tool path, do
+not silently discard it or replace it with model memory. Record the URL, failed access method, exact
+error, and decision impact in the target project's research notes. Keep researching only if other
+primary/upstream or local donor evidence covers the same decision at equal or higher quality. A
+missing unique source for a critical donor, license, API, UX, or architecture decision blocks the
+plan until the user approves a bounded alternate fetch route or the source becomes accessible.
+
 ## Promotion Source Boundary
 
 The installed donor library under `~/.codex/skills` is a generated deployment target. Do not promote
