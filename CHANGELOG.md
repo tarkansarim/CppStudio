@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Surfaced the latest code-map sidecar commits as explicit README Recent Commit Highlights before
+  remote push, so the main page shows those changes as stable commit entries instead of hiding them
+  only inside the aggregate `current` item.
 - Added a bounded code-map sidecar lane for enabled-map repos: agents may offload map-only updates
   from a fixed Rewind checkpoint, temporary git anchor, commit, worktree copy, or archive when drift,
   long-running slices, ownership/data-flow changes, moved routable files, or stale subsystem docs

@@ -90,6 +90,13 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   from isolated fixed snapshots and return map-only patches, while the original worker must
   reconcile, rerun drift/schema validation against the current tree, and keep the verified slice
   commit as the public history boundary.
+- `ee03b49` - Guarded code-map sidecar trigger evidence so checked-in installed-path validation
+  proves the sidecar case stays covered instead of silently shrinking to older trigger lanes.
+- `d0ea9a2` - Hardened sidecar isolation rules: sidecars must work from fixed snapshots, return
+  map-only patch output, and leave current-tree reconciliation plus validation to the original
+  worker.
+- `b939b38` - Integrated the bounded code-map sidecar lane for enabled maps, including trigger
+  coverage, generated-template guidance, and public docs for long-running map maintenance slices.
 - `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map
   projects catch changed source paths that are not routed by the manifest.
 - `c68ae77` - Hardened code-map and trigger validation, made manual managed-skill install
@@ -101,6 +108,10 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
 - `d9024a6` - Hardened code-map completion so validation is not treated as routing proof,
   fresh-agent smokes are graded pass/partial/fail, instruction-file drift is reported separately,
   and audit-backed presets/scripts are labeled as pre-map infrastructure.
+
+<details>
+<summary>Show older commit highlights</summary>
+
 - `3195bb8` - Required existing-project code-map opt-in to run and summarize the non-destructive
   readiness audit before asking whether to restructure, preserve layout, or decline.
 - `37f3fb7` - Adopted generic doctrine from a 22-skill Sortie assistant-pack audit: API discovery,
@@ -108,10 +119,6 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   agent monitoring without importing Sortie runtime mechanics.
 - `e0a29f5` - Broadened shell-search quoting guidance so validation audits quote script fragments,
   regex text, `$`, embedded quotes, and other shell metacharacters safely.
-
-<details>
-<summary>Show older commit highlights</summary>
-
 - `3f78dc7` - Tightened GUI and control-harness verification so broad interaction rewrites build
   before more layers, mutation endpoints prove committed state, and snapped/clamped values are
   asserted after validation.
