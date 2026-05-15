@@ -148,6 +148,12 @@ additional harness routes.
 When GUI work is delegated to a worker, subagent, reviewer, or background validation lane, monitor it
 until it reports done, idle, or blocked. Do not give final status while delegated work is still
 running; report the active worker state and remaining blocker instead.
+Do not accept delegated GUI work from the worker's summary alone. Before judging the work, inspect
+the actual UI convention table, changed UI files or diff, scenario/OSTM/control-harness artifacts,
+screenshots or visual readbacks, and the relevant transcript tail. If an offscreen job is queued or
+still running, wait for the terminal result. If the only screenshot is blank, stale, external-only, or
+not tied to the changed control surface, classify that proof as insufficient instead of asking the
+user to retest.
 
 When delegation is explicitly authorized and GUI behavior remains uncertain, use parallel lenses
 before another broad patch. Assign separate hypotheses such as action routing, selection/constraint

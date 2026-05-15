@@ -121,6 +121,18 @@ generated-project workflow instructions.
   the transcript and files.
 - Worker answers are evidence, not authority. If the worker is unreachable, supervisors inspect the
   available transcript and project files and state the uncertainty instead of inventing intent.
+- Worker summaries are never enough to judge plan quality, implementation quality, or closeout.
+  Supervisors must inspect the primary artifacts before saying a worker plan or slice is good:
+  planning packets, research briefs, code-map state/index/manifest/subsystem docs, changed files or
+  diff, validation logs, OSTM/control-harness artifacts, screenshots or semantic readbacks for
+  visible work, ticket comments, and the relevant transcript tail.
+- Planning packets and research briefs are live handoff artifacts. After source slices, commits,
+  resolved blockers, or architecture choices land, agents must reconcile stale "planning only",
+  "no source exists", or obsolete blocker language before the next major slice.
+- Offscreen/background-manager evidence is terminal-state evidence only. Queued jobs are pending,
+  manager-context script path failures should be rerun with absolute paths or explicit working
+  directories, and external screenshots, app-owned screenshots, render-target captures, and semantic
+  readback must be labeled by what they actually prove.
 
 ## Current Native UI Product-Fit Posture
 
@@ -250,6 +262,8 @@ generated-project workflow instructions.
   categories before code changes or product-shape decisions
 - supervised-worker interrogation rules change, including when agents must question a tmux worker or
   subagent before drawing conclusions from unclear behavior
+- supervised-worker artifact-audit gates change, including when summaries are insufficient, planning
+  packets need lifecycle reconciliation, or background/OSTM evidence must reach a terminal state
 - code-map bootstrap script authority, code-map schema validation, or generated CMake probe cleanup
   requirements change
 - code-map drift-check or pre-commit map-maintenance requirements change

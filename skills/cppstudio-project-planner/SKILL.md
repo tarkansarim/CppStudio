@@ -276,6 +276,27 @@ Every substantial plan should include:
 - validation/profiling plan for the first implementation milestone
 - implementation handoff checklist for the next agent step
 
+## Planning Packet Lifecycle
+
+Planning packets, research briefs, donor-candidate files, and implementation slice plans are live
+handoff artifacts. They are not allowed to freeze at the pre-source state once implementation starts.
+
+Before a major next slice, a supervisor or worker must reconcile those artifacts against the current
+repo state:
+
+- source files, build files, harness routes, code-map docs, or commits that now exist
+- completed slices and validation evidence
+- user choices that were accepted, declined, or superseded
+- blockers that were resolved, newly discovered, or still active
+- current next task, expected files, donor routes, and verification gates
+
+Do not rely on a worker's chat summary to decide whether a plan is legitimate. Inspect the actual
+planning artifacts, code map, diff, validation artifacts, and relevant transcript tail before saying
+the plan is good or ready to implement. If an artifact still says "planning only", "no source exists",
+or points at a stale blocker after source work has landed, update or supersede it before the next
+major implementation slice. The update can be a small `Current State` or `Superseded By` section when
+rewriting the original packet would obscure useful history.
+
 ## Defaults
 
 - When CUDA and Vulkan are both plausible but unspecified, recommend Vulkan first for reusable

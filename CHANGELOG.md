@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a supervised-worker artifact audit and planning-packet lifecycle gate: worker summaries are
+  now only pointers, supervisors must inspect primary planning/code-map/diff/validation/OSTM/UI
+  artifacts before judging a plan or slice, stale "planning only" packets must be reconciled after
+  source work lands, and offscreen jobs must reach a terminal state with clearly labeled proof
+  surfaces before they count as evidence.
 - Added a quality-preserving research failure gate: when a searched source cannot be opened, agents
   must record the URL/error and may continue only when equivalent primary or donor evidence still
   covers the decision; critical missing sources now block planning instead of causing silent

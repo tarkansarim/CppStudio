@@ -303,6 +303,21 @@ When this skill is active, work like a native C++ GPU systems engineer:
 - When worker, subagent, reviewer, or background validation work is gated by the current task, keep
   supervision active until it reports done, idle, or blocked. Do not give final status while delegated
   work is still running; report the active worker state and remaining blocker instead.
+- When supervising a worker, do not judge plan quality, implementation quality, or "is this done?"
+  from the worker's summary alone. Treat the summary as a pointer to primary evidence. Before saying
+  a worker plan or slice looks good, inspect the durable artifacts that should prove it: planning
+  packets, `docs/planning/*`, code-map state/index/manifest/subsystem docs, changed files or diff,
+  validation logs, OSTM/control-harness artifacts, screenshots or semantic readbacks for visible
+  work, ticket comments, and the relevant transcript tail. If those artifacts have not been audited,
+  say that directly and audit them first. If the worker is still running, blocked in a queue, or has
+  outstanding validation jobs, report that state instead of closing the supervision loop.
+- Treat planning packets and research briefs as live artifacts after source work begins. If a target
+  repo now has source slices, verified commits, resolved blockers, or changed architecture choices,
+  do not leave a packet or handoff that still says "planning only", "no source exists", or that a
+  solved blocker is still the next gate. Before the next major slice, reconcile the packet/current
+  state docs with completed work, unresolved decisions, new blockers, validation evidence, and the
+  next bounded task. Stale planning artifacts are a process bug because later agents will route from
+  them.
 - When delegation is explicitly authorized and a bug, product-shape decision, or broad subsystem
   audit resists one perspective, escalate to parallel lenses. Assign independent hypotheses such as
   state flow, command/API routing, rendering/capture timing, build/toolchain contracts, or UI/product
@@ -426,6 +441,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   script is the canonical smoke; offscreen managers may not preserve the caller shell's current
   directory. Classify "script not found" manager-context failures as invocation issues rather than
   app failures.
+- Offscreen/background-manager jobs are not evidence until they reach a terminal state and their
+  artifacts are read. A queued job means "still pending", not pass or fail, and a manager-context
+  failure such as a relative script path must be rerun once with an absolute path or explicit working
+  directory before blaming the app. Distinguish external window screenshots, app-owned screenshots,
+  render-target captures, and structured semantic readback. A blank external capture can still leave
+  app-owned or semantic evidence useful, but it cannot prove the user-visible surface by itself; name
+  which surface each artifact proves before accepting it.
 - After broad GUI/editor event-handler rewrites, inspect the edited source for stale control-flow
   fragments, duplicate helpers, mismatched braces/namespaces, and surviving obsolete paths, then
   build before adding more harness routes or documentation. Do not stack docs on top of a malformed

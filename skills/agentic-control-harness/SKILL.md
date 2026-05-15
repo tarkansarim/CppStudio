@@ -101,6 +101,14 @@ control harness itself.
   bug fix by itself; after one blocked route-building attempt, either repair the specific blocked
   observation path, switch to a bounded app-side root-cause fix with the visual-proof caveat stated
   first, or ask for the smallest manual visible evidence needed.
+- When automated GUI/windowed evidence goes through an offscreen/background manager, wait for the
+  submitted job to finish and read the produced stdout/stderr, state, screenshots, or artifacts
+  before using it as proof. Queued means pending. A script-not-found or relative-path failure in the
+  manager context is an invocation failure; rerun once with an absolute script path or explicit
+  working directory before treating it as an app failure. Separate what each artifact proves:
+  external window screenshot, app-owned screenshot, render-target capture, structured UI state, or
+  semantic readback. Do not let one green semantic field stand in for a missing user-visible surface
+  when the bug is visual.
 - Name readiness and success fields after the exact invariant they prove. Do not let a broad
   readiness boolean stand in for a weaker nearby condition. If the app has a widget, a backend, and a
   live composed capture as separate facts, expose separate fields such as `has_widget`,
