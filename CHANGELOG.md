@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Made enabled-code-map maintenance a strict worker-owned closeout gate: source slices should run
+  `check_code_map_drift.py --require-enabled --strict-review`, then update the map, launch the
+  code-map sidecar, or explicitly acknowledge a reviewed no-map-change case before staging.
 - Routed enabled-code-map drift and no-map-touch semantic review output toward the guarded
   `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]` helper, with validation coverage and
   generated-project docs so sidecar maintenance is surfaced as an actionable command instead of only

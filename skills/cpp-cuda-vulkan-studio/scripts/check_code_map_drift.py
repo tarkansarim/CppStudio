@@ -238,7 +238,7 @@ def sidecar_focus(reason: str, paths: Iterable[str]) -> str:
     return f"{reason}: {path_summary}"
 
 
-def print_sidecar_hint(repo: Path, reason: str, paths: Iterable[str]) -> None:
+def print_sidecar_action(repo: Path, reason: str, paths: Iterable[str]) -> None:
     focus = sidecar_focus(reason, paths)
     command = shlex.join(
         [
@@ -250,8 +250,12 @@ def print_sidecar_hint(repo: Path, reason: str, paths: Iterable[str]) -> None:
         ]
     )
     print(
-        "Sidecar hint: if agent-tmux is available and this map maintenance would interrupt "
-        "the source slice, create or choose a fixed snapshot anchor and run the guarded helper:"
+        "Code-map maintenance action required: resolve this before staging or committing. "
+        "Do not ask the user to prompt the map update."
+    )
+    print(
+        "Worker action: update the map directly when the route change is small and clear, "
+        "or create/choose a fixed snapshot anchor and launch the guarded sidecar yourself:"
     )
     print(f"  {command}")
     print(
@@ -281,6 +285,22 @@ def main() -> int:
         action="store_true",
         help="Fail if the CppStudio code map is missing or declined",
     )
+    parser.add_argument(
+        "--strict-review",
+        action="store_true",
+        help=(
+            "Fail when routable files changed but code-map files did not, unless "
+            "--reviewed-no-map-change is supplied after an explicit semantic map review"
+        ),
+    )
+    parser.add_argument(
+        "--reviewed-no-map-change",
+        action="store_true",
+        help=(
+            "Acknowledge that changed routable files were reviewed and do not require "
+            "manifest or subsystem-doc updates for this slice"
+        ),
+    )
     args = parser.parse_args()
 
     repo = Path(args.repo).expanduser().resolve()
@@ -307,7 +327,7 @@ def main() -> int:
             "Update docs/CODEBASE_SUBSYSTEM_MANIFEST.json and the matching docs/SUBSYSTEMS/*.md "
             "route, or explicitly add the owning directory/glob if the subsystem already owns it."
         )
-        print_sidecar_hint(repo, "Update code-map routes for uncovered paths", uncovered)
+        print_sidecar_action(repo, "Update code-map routes for uncovered paths", uncovered)
         return 1
 
     print(f"Code map drift check passed: {len(routable_paths)} changed routable path(s) covered")
@@ -316,11 +336,23 @@ def main() -> int:
             "Map review note: source/build/docs changed but map files did not. "
             "Confirm no ownership, data-flow, backend-boundary, validation, or public behavior route changed."
         )
-        print_sidecar_hint(
+        print_sidecar_action(
             repo,
             "Review semantic code-map maintenance for changed routable paths",
             routable_paths,
         )
+        if args.reviewed_no_map_change:
+            print(
+                "Map semantic review acknowledged: caller asserts no manifest or subsystem-doc "
+                "update is required for this slice."
+            )
+        elif args.strict_review:
+            print(
+                "Strict review mode: map review is unresolved. Update the map, launch the "
+                "sidecar, or rerun with --reviewed-no-map-change only after checking that "
+                "ownership, data flow, backend boundaries, validation, and public routing stayed current."
+            )
+            return 2
     return 0
 
 

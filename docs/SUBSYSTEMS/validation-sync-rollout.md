@@ -117,8 +117,10 @@ skills, and watch-mode publishing behavior.
   `scripts/` so agents do not need to remember the installed skill path after a map is enabled.
   Existing target-owned scripts are preserved.
 - The code-map drift checker prints the guarded sidecar helper command
-  `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]` when uncovered routable paths or the
-  existing no-map-touch semantic review note indicate map maintenance may need a bounded sidecar.
+  `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]` as a worker action when uncovered
+  routable paths or the no-map-touch semantic review note indicate map maintenance may need a
+  bounded sidecar. Strict review mode blocks source-slice closeout until the worker updates the map,
+  launches the sidecar, or explicitly acknowledges a reviewed no-map-change case.
 - The bundled code-map bootstrap audit text tells agents to present actual findings and cleanup cost
   before asking restructure/preserve/decline questions, so existing-project opt-in cannot become a
   pre-audit choice prompt.

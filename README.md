@@ -91,8 +91,10 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   from isolated fixed snapshots and return map-only patches, while the original worker must
   reconcile, rerun drift/schema validation against the current tree, and keep the verified slice
   commit as the public history boundary. Drift and no-map-touch semantic review output now surfaces
-  the guarded `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]` helper so sidecar routing is
-  actionable at the moment map maintenance is detected. Supervised workers now also have an
+  the guarded `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]` helper as a worker-owned
+  action, and strict drift review now blocks source-slice closeout until the worker updates the map,
+  self-launches the sidecar, or explicitly acknowledges a reviewed no-map-change case. Supervised
+  workers now also have an
   artifact-audit gate: summaries are only evidence pointers, planning packets must be reconciled once
   source work lands, and queued/offscreen proof must finish with labeled artifacts before it can
   justify a plan or closeout judgment.
@@ -495,7 +497,11 @@ Support files may exist before a map is enabled, but agents should maintain and 
 when `.cppstudio/code-map-state.json` says `enabled`.
 
 For long-running or high-churn enabled-map slices, the main worker may use a bounded code-map
-sidecar to reduce context bloat. The sidecar should be code-map-only, read a named fixed snapshot
+sidecar to reduce context bloat. Strict drift review is the closeout gate:
+`scripts/check_code_map_drift.py --require-enabled --strict-review`. If it reports uncovered drift
+or source changes with no map edit, the worker resolves that itself before staging by updating the
+map, self-launching the sidecar, or acknowledging a reviewed no-map-change case after checking route
+semantics. The sidecar should be code-map-only, read a named fixed snapshot
 such as a Rewind checkpoint, temporary git anchor, commit, isolated worktree copy, or archive, and
 report its map update plus snapshot assumptions. If the original keeps implementing, the sidecar must
 return a patch/diff or map-file replacements instead of editing the original live worktree

@@ -44,13 +44,16 @@ scripts/bootstrap_code_map.py --decline
 Before committing a verified source slice with the map enabled, run:
 
 ```bash
-scripts/check_code_map_drift.py --require-enabled
+scripts/check_code_map_drift.py --require-enabled --strict-review
 scripts/validate_code_map.py --require-enabled
 ```
 
 If the drift check reports a changed path that is not routed by the manifest, update
 `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` and the matching `docs/SUBSYSTEMS/*.md` file in the same
-slice before committing.
+slice before committing. If strict review reports source changes with no map-file edit, resolve that
+yourself before staging: update the map, launch the code-map sidecar, or rerun with
+`--reviewed-no-map-change` only after confirming no ownership, data-flow, backend-boundary,
+validation, or public route changed.
 
 ### Code-Map Sidecar Lane
 
@@ -60,7 +63,8 @@ ownership/data flow/backend boundaries, a planned interval, or stale subsystem d
 extra lane. The sidecar must read a fixed snapshot such as a Rewind checkpoint, temporary git anchor,
 commit, isolated worktree copy, or archive, and its prompt/response must name that anchor.
 
-When `agent-tmux` is available, prefer the guarded helper surfaced by the drift checker:
+When `agent-tmux` is available, use the guarded helper surfaced by the drift checker when map
+maintenance is non-trivial:
 
 ```bash
 agent-tmux codex-code-map-sidecar /path/to/repo ANCHOR "Update code-map routes for the changed slice"
@@ -72,7 +76,7 @@ If the main worker continues source work, the sidecar must not edit that live wo
 Use an isolated worktree, archive/snapshot copy, or read-only snapshot that returns a patch/diff or
 map-file replacements. Same-worktree map edits are allowed only as a serialized handoff with the main
 worker paused. Before staging or committing, the main worker must apply or merge the sidecar's map
-update, rerun `scripts/check_code_map_drift.py --require-enabled` and
+update, rerun `scripts/check_code_map_drift.py --require-enabled --strict-review` and
 `scripts/validate_code_map.py --require-enabled` against the current tree, and update the map again
 or relaunch the sidecar if later source changes touched additional routable ownership or data-flow
 areas. Do not create public commits only to feed sidecars; use Rewind checkpoints or temporary

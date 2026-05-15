@@ -232,9 +232,14 @@ When this skill is active, work like a native C++ GPU systems engineer:
   an enabled-map repo changes source ownership, data flow, backend boundaries, validation lanes,
   public runtime behavior, or adds/moves files under routable source areas, update the matching
   subsystem doc and manifest before commit. The drift checker catches unmapped paths; the agent still
-  must make the semantic call on whether an already-covered route needs clearer notes. When drift
-  output or the no-map-touch review note points to non-trivial map maintenance, prefer the guarded
-  sidecar helper when available:
+  must make the semantic call on whether an already-covered route needs clearer notes. Before commit,
+  run the drift checker in strict-review mode when the wrapper supports it:
+  `scripts/check_code_map_drift.py --require-enabled --strict-review`. If strict review reports
+  uncovered drift or a no-map-touch semantic review, the worker must resolve it itself before
+  staging: update the map directly, launch the guarded sidecar, or rerun with
+  `--reviewed-no-map-change` only after explicitly checking that no route changed. Do not ask the
+  user or supervising agent to prompt the map update. When drift output or the no-map-touch review
+  points to non-trivial map maintenance, prefer the guarded sidecar helper when available:
   `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]`.
 - Use a bounded code-map sidecar lane when map maintenance would otherwise bloat or destabilize the
   main worker context: a drift check reports work, a long-running implementation slice reaches a
@@ -357,10 +362,11 @@ When this skill is active, work like a native C++ GPU systems engineer:
   slice, or explicitly report the exact dirty files and ask whether to preserve them. Do not commit,
   continue, or claim readiness from an interrupted partial edit.
 - In an enabled-code-map repo, the code-map closeout has two distinct gates before staging or
-  committing: run `scripts/check_code_map_drift.py --require-enabled` to catch changed routable paths
-  that the map does not cover, and run `scripts/validate_code_map.py --require-enabled` to validate
-  schema/state. If repo-local wrappers are absent, use the installed CppStudio scripts. Do not treat
-  `validate_code_map.py` as a substitute for the drift check, and do not commit first and drift-check
+  committing: run `scripts/check_code_map_drift.py --require-enabled --strict-review` to catch
+  changed routable paths that the map does not cover and unresolved no-map-touch semantic reviews,
+  and run `scripts/validate_code_map.py --require-enabled` to validate schema/state. If repo-local
+  wrappers are absent, use the installed CppStudio scripts. Do not treat `validate_code_map.py` as a
+  substitute for the drift check, and do not commit first and drift-check
   afterward unless the user explicitly asked for that emergency ordering.
 - Harness endpoints that touch UI, renderer, swapchain, toolkit action state, screenshot/grab APIs,
   or visual-capture state must run on the app's safe GUI/render thread or an app-owned command queue.
@@ -575,14 +581,14 @@ When this skill is active, work like a native C++ GPU systems engineer:
    `docs/CODEBASE_ARCHITECTURE_INDEX.md`, or `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` by guessing the
    schema; use the bootstrap script and validator.
 6. For an existing project with no `.cppstudio/code-map-state.json`, treat code-map enablement as a readiness protocol, not as an immediate choice prompt. If the user says they want to opt in to a code map, first say that you will run a non-destructive audit and that no restructure decision is needed yet. Then run `scripts/bootstrap_code_map.py --audit-existing` before asking any restructure/preserve/decline question. Summarize the actual stdout with concrete findings, evidence paths, nonstandard layout risks, estimated cleanup cost, and any specific restructuring that would be needed. If the audit did not run or you have not read its output, do not claim an audit happened and do not ask the user to choose a restructuring route. Do not write `docs/CODEMAP_BOOTSTRAP_AUDIT.md` unless the user wants a saved audit; then rerun with `--write-audit`. Only after presenting audit evidence ask whether the user wants to restructure first, preserve the current layout and document exceptions, or decline the map. Do not run `--enable` until the user chooses either restructure-complete or preserve-as-is. If generated map files already exist, use `--enable --force` only after the user accepts replacing those generated map files.
-7. When `.cppstudio/code-map-state.json` says `enabled`, or when repo-local instructions declare a maintained codebase map required, read the target repo's `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before code changes. Use that map to select the subsystem doc and primary paths for the change, then keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, public runtime behavior, or routable file ownership changes. Before every verified-slice commit in an enabled-map repo, run `scripts/check_code_map_drift.py --require-enabled` when present plus `scripts/validate_code_map.py --require-enabled`; if repo-local wrappers are absent in an older existing-project map, run the installed skill scripts from `${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/` and report the wrapper gap instead of treating it as a target project failure. If the drift check reports an unmapped path, update the manifest and matching subsystem doc before committing. Prefer adding the owning directory or glob route for related app-owned files, such as flat `src/*.h`, `src/*.cpp`, or `src/ui_panel_*.h`, instead of adding a one-off route for each controller/panel/helper file. If the user asks about a code map mid-project, explain it, run the existing-project readiness protocol, and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; if generated map files already exist, use `--force` only after the user accepts replacing them. For large existing repos, use parallel-lens subsystem audits only when delegation is explicitly authorized.
-8. For enabled-map repos, prefer a code-map sidecar only when it is bounded and useful: drift output,
+7. When `.cppstudio/code-map-state.json` says `enabled`, or when repo-local instructions declare a maintained codebase map required, read the target repo's `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before code changes. Use that map to select the subsystem doc and primary paths for the change, then keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, public runtime behavior, or routable file ownership changes. Before every verified-slice commit in an enabled-map repo, run `scripts/check_code_map_drift.py --require-enabled --strict-review` when present plus `scripts/validate_code_map.py --require-enabled`; if repo-local wrappers are absent in an older existing-project map, run the installed skill scripts from `${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/` and report the wrapper gap instead of treating it as a target project failure. If the drift check reports an unmapped path or unresolved no-map-touch review, do not ask the user to prompt code-map work: update the manifest and matching subsystem doc, launch the code-map sidecar yourself, or rerun with `--reviewed-no-map-change` only after an explicit semantic review proves no ownership/data-flow/backend/validation/public-route note changed. Prefer adding the owning directory or glob route for related app-owned files, such as flat `src/*.h`, `src/*.cpp`, or `src/ui_panel_*.h`, instead of adding a one-off route for each controller/panel/helper file. If the user asks about a code map mid-project, explain it, run the existing-project readiness protocol, and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; if generated map files already exist, use `--force` only after the user accepts replacing them. For large existing repos, use parallel-lens subsystem audits only when delegation is explicitly authorized.
+8. For enabled-map repos, use a code-map sidecar when it is bounded and useful: drift output,
    long-running slice interval, ownership/data-flow/backend-boundary changes, new or moved routable
    files, or stale subsystem docs justify offloading map maintenance. When `agent-tmux` is available,
    prefer the guarded helper shape
    `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]`; the drift checker prints this command
-   as a hint for uncovered routable paths and for covered routable changes that did not touch map
-   files. Launch or instruct the sidecar from a fixed snapshot, Rewind checkpoint, temporary git
+   as a required worker action for uncovered routable paths and for covered routable changes that did
+   not touch map files. Launch the sidecar yourself from a fixed snapshot, Rewind checkpoint, temporary git
    anchor, commit, worktree copy, or archive; document that anchor in the sidecar prompt and response.
    The sidecar may only produce map-file changes (`docs/CODEBASE_*`, `docs/SUBSYSTEMS/*`, and
    project-local map notes) plus rationale, and it reports its snapshot assumptions. If the original
@@ -673,10 +679,12 @@ For long-running target-project implementation, repeat this rhythm between slice
    If a code-map sidecar supplied map changes, apply or merge its patch/output only after checking
    the sidecar's fixed snapshot against the current tree.
 6. Clean generated probe junk from the source root, review `git status`, keep unrelated user changes
-   out, run both `scripts/check_code_map_drift.py --require-enabled` and
+   out, run both `scripts/check_code_map_drift.py --require-enabled --strict-review` and
    `scripts/validate_code_map.py --require-enabled` before staging/committing when the map is
-   enabled, relaunch the sidecar or update the map yourself if current changes outgrew the sidecar
-   snapshot, check diff hygiene, and commit the verified slice with exactly one allowed
+   enabled. If strict review fails because source changed without map files, resolve it before commit
+   by updating the map, launching the sidecar yourself, or rerunning with `--reviewed-no-map-change`
+   only after an explicit semantic review. Relaunch the sidecar or update the map yourself if current
+   changes outgrew the sidecar snapshot, check diff hygiene, and commit the verified slice with exactly one allowed
    `Commit-Origin` trailer: `agent-slice` or `user-requested`.
 7. Continue to the next slice only after the commit is in place, or after clearly reporting why a
    commit was intentionally skipped.

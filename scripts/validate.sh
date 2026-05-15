@@ -512,6 +512,21 @@ python3 "${ROOT_DIR}/scripts/check_code_map_drift.py" "${code_map_enable_tmp}" -
 grep -Fq "Map review note:" "${drift_review_out}"
 grep -Fq "agent-tmux codex-code-map-sidecar" "${drift_review_out}"
 grep -Fq "Review semantic code-map maintenance for changed routable paths" "${drift_review_out}"
+grep -Fq "Worker action:" "${drift_review_out}"
+drift_strict_review_out="$(mktemp "${VALIDATE_TMP}/code_map_drift_strict_review.XXXXXX")"
+if python3 "${ROOT_DIR}/scripts/check_code_map_drift.py" "${code_map_enable_tmp}" --require-enabled --strict-review \
+    >"${drift_strict_review_out}" 2>&1; then
+    cat "${drift_strict_review_out}" >&2
+    echo "Expected strict code map drift review to fail until semantic map review is acknowledged" >&2
+    exit 1
+fi
+grep -Fq "Strict review mode: map review is unresolved" "${drift_strict_review_out}"
+grep -Fq "Do not ask the user to prompt the map update" "${drift_strict_review_out}"
+drift_ack_review_out="$(mktemp "${VALIDATE_TMP}/code_map_drift_ack_review.XXXXXX")"
+python3 "${ROOT_DIR}/scripts/check_code_map_drift.py" "${code_map_enable_tmp}" \
+    --require-enabled --strict-review --reviewed-no-map-change \
+    >"${drift_ack_review_out}" 2>&1
+grep -Fq "Map semantic review acknowledged" "${drift_ack_review_out}"
 mkdir -p "${code_map_enable_tmp}/tools"
 printf "int cppstudio_unrouted_tool() { return 7; }\n" >"${code_map_enable_tmp}/tools/new_tool.cpp"
 drift_failure_out="$(mktemp "${VALIDATE_TMP}/code_map_drift_failure.XXXXXX")"
@@ -528,6 +543,7 @@ if grep -q "Traceback" "${drift_failure_out}"; then
 fi
 grep -Fq "tools/new_tool.cpp" "${drift_failure_out}"
 grep -Fq "agent-tmux codex-code-map-sidecar" "${drift_failure_out}"
+grep -Fq "Code-map maintenance action required" "${drift_failure_out}"
 grep -Fq "Update code-map routes for uncovered paths" "${drift_failure_out}"
 python3 - "${code_map_enable_tmp}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json" <<'PY'
 import json
