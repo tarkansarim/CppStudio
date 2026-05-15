@@ -31,6 +31,26 @@ cmake --build --preset dev
 ctest --preset gpu --output-on-failure
 ```
 
+GPU feature capability and regression proof:
+
+- Treat feature capability failures as hypotheses until the exact requested path has been tested on
+  the selected GPU/device.
+- Before disabling, hiding, downgrading, redesigning, or rewriting around a Vulkan, CUDA,
+  ray-tracing, interop, upscaler, denoiser, shader-model, profiler, or hardware-extension feature,
+  run the exact forced-feature lane when the project exposes one.
+- Nearby green lanes are supporting evidence only. For example, a non-RT renderer pass does not
+  prove an RT regression is fixed, a non-interop test does not prove interop, and a profile file does
+  not prove stats readback unless the exact stats command succeeds.
+- Capability dumps, engineering memory, failed-probe ledgers, and old comments are evidence to
+  challenge, not authority. Current target-device repros and known-good/known-bad comparisons
+  override stale memory.
+- If the user says a feature used to work, names a suspected commit or boundary, or asks for
+  historical comparison, test or inspect that boundary before changing feature gates, UI policy, or
+  tests.
+- Preserve explicit user selection plus diagnostics until the exact feature lane is proven
+  unavailable on the target device. Do not remove or disable a user-facing feature just because one
+  capability readback reported false.
+
 CUDA sanitizer gate:
 
 ```bash

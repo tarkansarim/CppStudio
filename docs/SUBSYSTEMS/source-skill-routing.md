@@ -167,6 +167,23 @@ generated-project workflow instructions.
   should classify SDK/tooling, loader, ICD visibility, physical-device selection, queue/swapchain,
   and surface/present support separately before changing renderer code.
 
+## Current GPU Feature Regression Posture
+
+- GPU capability failures are hypotheses until the exact requested feature lane is tested on the
+  target device. Before agents hide, disable, downgrade, rewrite, or change tests around a Vulkan,
+  CUDA, ray-tracing, interop, upscaler, denoiser, shader-model, profiler, or hardware-extension
+  feature, they must exercise the exact forced-feature path when one exists.
+- Nearby success is supporting evidence only. A different renderer primitive, fallback backend,
+  non-interop path, or generated profile file must not be accepted as proof for the feature being
+  changed.
+- Project engineering memory, failed-probe ledgers, old docs, and capability readbacks are evidence
+  to challenge with current target-device repros and known-good/known-bad comparisons. If fresh
+  evidence contradicts durable memory, the target repo's memory or failed-probe ledger should be
+  updated with the new boundary.
+- If the user says a feature used to work, names a suspected commit or boundary, or asks for
+  historical comparison, that comparison stays active until completed or explicitly cleared before
+  capability gates, UI policy, or tests are changed.
+
 ## Current Target-Slice Execution Posture
 
 - After agents name a bounded target-project slice with code-map route, donor/reference grounding,
@@ -248,6 +265,8 @@ generated-project workflow instructions.
 - target-repo code-map authority or map-first navigation behavior changes
 - donor-grounding or web-ceiling-check expectations for native GPU brainstorming/design proposals
   change
+- GPU feature capability, exact-lane proof, stale-memory challenge, or used-to-work regression
+  comparison behavior changes
 - durable project-local research artifact or donor-candidate capture requirements change
 - research source-access failure handling or quality-floor behavior changes
 - missing-donor promotion rules change, including when agents promote discovered web/upstream donors

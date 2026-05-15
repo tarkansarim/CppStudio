@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a generic GPU feature regression protocol: agents must prove the exact requested feature lane
+  on the target device before hiding, disabling, downgrading, or changing UI/tests around a reported
+  capability failure, use historical comparison when the user says a feature used to work, and treat
+  stale engineering memory as challengeable evidence rather than authority.
 - Made enabled-code-map maintenance a strict worker-owned closeout gate: source slices should run
   `check_code_map_drift.py --require-enabled --strict-review`, then update the map, launch the
   code-map sidecar, or explicitly acknowledge a reviewed no-map-change case before staging.

@@ -128,6 +128,20 @@ When this skill is active, work like a native C++ GPU systems engineer:
 - Do not silently downgrade the work to get a green run. If CMake, CUDA, Vulkan SDK tools, shader
   compilation, validation layers, GPU selection, profilers, or tests fail, surface the failure and fix
   the root cause when it is in scope.
+- Treat GPU feature capability failures as hypotheses until the exact requested lane is proven on the
+  target device. Before hiding, disabling, downgrading, redesigning, or rewriting around a Vulkan,
+  CUDA, ray-tracing, interop, upscaler, denoiser, shader-model, profiler, or hardware-extension
+  feature, run the exact forced-feature path on the target GPU/device when the project can expose
+  one. The proof must exercise the feature being changed: an RT fix needs the RT lane, an interop fix
+  needs interop, a profiler/readback fix needs the exact profiler/readback command, and a
+  vendor-extension fix needs that extension path. Nearby success is supporting evidence only, never
+  acceptance proof. Capability readback, engineering-memory notes, failed-probe ledgers, and old
+  comments are diagnostic evidence to challenge with current target-device repros; they are not
+  permission to remove the user-facing feature path. Prefer preserving explicit user selection plus a
+  clear diagnostic reason over silently removing the option. If the user says the feature used to
+  work, names a suspected commit/boundary, or asks for history comparison, test or inspect that
+  historical boundary before capability gates, UI policy, or tests are changed. When fresh evidence
+  contradicts durable project memory, update the memory or failed-probe ledger with the new boundary.
 - Inspect before editing. Read the build graph, presets, target ownership, shader or kernel paths,
   dispatch/render loop, and direct callers before changing native GPU infrastructure.
 - When building or validating an existing repo, use the repo-declared commands first: CMake presets,
@@ -188,6 +202,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
 - Use evidence before claims. Builds, CTest labels, shader compilation, Vulkan validation,
   Compute Sanitizer, RenderDoc/Nsight captures, screenshots, image comparisons, and profiler output
   matter more than plausible explanations.
+- For native GPU regressions, acceptance proof must match the changed feature contract. Do not make a
+  UI, model, or test change that converts an unproven backend failure into the new expected behavior.
+  If a capability probe says "unsupported" but the feature is requested, first prove whether the
+  actual feature path fails on the selected device, compare against a known-good commit when
+  available, and only then decide whether to adjust gates, expose a diagnostic, or document a real
+  unsupported state.
 - For user-reported bugs, fixes require a before/after proof gate. First reproduce the exact
   reported behavior through the closest user-equivalent path available and record "before" evidence:
   command, steps or scenario id, harness/readback fields, logs, screenshot/video/capture, metric, or

@@ -97,7 +97,10 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   workers now also have an
   artifact-audit gate: summaries are only evidence pointers, planning packets must be reconciled once
   source work lands, and queued/offscreen proof must finish with labeled artifacts before it can
-  justify a plan or closeout judgment.
+  justify a plan or closeout judgment. GPU feature regressions now also require exact-lane proof on
+  the target device before agents hide, disable, downgrade, or rewrite around capability failures;
+  used-to-work reports keep historical comparison active, and stale engineering memory is treated as
+  challengeable evidence rather than authority.
 - `ee03b49` - Guarded code-map sidecar trigger evidence so checked-in installed-path validation
   proves the sidecar case stays covered instead of silently shrinking to older trigger lanes.
 - `d0ea9a2` - Hardened sidecar isolation rules: sidecars must work from fixed snapshots, return
