@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import fnmatch
 import json
+import shlex
 import subprocess
 from pathlib import Path
 from typing import Iterable
@@ -91,6 +92,7 @@ MAP_PATHS = {
     "docs/CODEBASE_ARCHITECTURE_INDEX.md",
     str(MANIFEST_PATH),
 }
+SIDECAR_FOCUS_PATH_LIMIT = 6
 
 
 def run_git(repo: Path, args: list[str], *, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -224,6 +226,41 @@ def map_touched(paths: Iterable[str]) -> bool:
     return any(path in MAP_PATHS or path.startswith("docs/SUBSYSTEMS/") for path in paths)
 
 
+def sidecar_focus(reason: str, paths: Iterable[str]) -> str:
+    normalized_paths = [normalize_path(path) for path in paths]
+    if not normalized_paths:
+        return reason
+    shown_paths = normalized_paths[:SIDECAR_FOCUS_PATH_LIMIT]
+    path_summary = ", ".join(shown_paths)
+    omitted_count = len(normalized_paths) - len(shown_paths)
+    if omitted_count:
+        path_summary = f"{path_summary}, and {omitted_count} more"
+    return f"{reason}: {path_summary}"
+
+
+def print_sidecar_hint(repo: Path, reason: str, paths: Iterable[str]) -> None:
+    focus = sidecar_focus(reason, paths)
+    command = shlex.join(
+        [
+            "agent-tmux",
+            "codex-code-map-sidecar",
+            str(repo),
+            "ANCHOR",
+            focus,
+        ]
+    )
+    print(
+        "Sidecar hint: if agent-tmux is available and this map maintenance would interrupt "
+        "the source slice, create or choose a fixed snapshot anchor and run the guarded helper:"
+    )
+    print(f"  {command}")
+    print(
+        "Replace ANCHOR with a Rewind checkpoint, temporary git anchor, commit, "
+        "isolated worktree copy, or archive snapshot; validate and apply sidecar artifacts "
+        "before committing."
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("repo", nargs="?", default=".", help="Repository root")
@@ -270,6 +307,7 @@ def main() -> int:
             "Update docs/CODEBASE_SUBSYSTEM_MANIFEST.json and the matching docs/SUBSYSTEMS/*.md "
             "route, or explicitly add the owning directory/glob if the subsystem already owns it."
         )
+        print_sidecar_hint(repo, "Update code-map routes for uncovered paths", uncovered)
         return 1
 
     print(f"Code map drift check passed: {len(routable_paths)} changed routable path(s) covered")
@@ -277,6 +315,11 @@ def main() -> int:
         print(
             "Map review note: source/build/docs changed but map files did not. "
             "Confirm no ownership, data-flow, backend-boundary, validation, or public behavior route changed."
+        )
+        print_sidecar_hint(
+            repo,
+            "Review semantic code-map maintenance for changed routable paths",
+            routable_paths,
         )
     return 0
 

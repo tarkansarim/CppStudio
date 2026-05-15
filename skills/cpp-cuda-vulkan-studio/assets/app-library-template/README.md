@@ -60,6 +60,14 @@ ownership/data flow/backend boundaries, a planned interval, or stale subsystem d
 extra lane. The sidecar must read a fixed snapshot such as a Rewind checkpoint, temporary git anchor,
 commit, isolated worktree copy, or archive, and its prompt/response must name that anchor.
 
+When `agent-tmux` is available, prefer the guarded helper surfaced by the drift checker:
+
+```bash
+agent-tmux codex-code-map-sidecar /path/to/repo ANCHOR "Update code-map routes for the changed slice"
+```
+
+Replace `ANCHOR` with the fixed snapshot id or path that the sidecar should inspect.
+
 If the main worker continues source work, the sidecar must not edit that live worktree concurrently.
 Use an isolated worktree, archive/snapshot copy, or read-only snapshot that returns a patch/diff or
 map-file replacements. Same-worktree map edits are allowed only as a serialized handoff with the main

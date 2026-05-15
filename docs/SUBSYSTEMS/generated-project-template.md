@@ -50,7 +50,10 @@ validation.
 - Enabled-map generated projects include `scripts/check_code_map_drift.py` as a pre-commit helper.
   It fails when changed source/header/shader/script/docs paths are not covered by a manifest route,
   forcing new routable files to be added to `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` and the matching
-  `docs/SUBSYSTEMS/*.md` route before the verified slice is committed.
+  `docs/SUBSYSTEMS/*.md` route before the verified slice is committed. Its drift and no-map-touch
+  review output also prints the guarded sidecar helper shape,
+  `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]`, when map maintenance may need a
+  bounded sidecar instead of remaining prose.
 - Generated README and architecture-index guidance describe the optional code-map sidecar lane for
   long-running or high-churn enabled-map work. The sidecar must be code-map-only, must read a fixed
   Rewind checkpoint, temporary git anchor, commit, isolated worktree copy, or archive snapshot, and

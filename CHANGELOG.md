@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Routed enabled-code-map drift and no-map-touch semantic review output toward the guarded
+  `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]` helper, with validation coverage and
+  generated-project docs so sidecar maintenance is surfaced as an actionable command instead of only
+  prose.
 - Added a supervised-worker artifact audit and planning-packet lifecycle gate: worker summaries are
   now only pointers, supervisors must inspect primary planning/code-map/diff/validation/OSTM/UI
   artifacts before judging a plan or slice, stale "planning only" packets must be reconciled after

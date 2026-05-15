@@ -58,7 +58,9 @@ workflow, and repo banner/sample assets.
 - Public code-map docs now describe a bounded sidecar lane for large or long-running enabled-map
   slices. The sidecar reads an isolated fixed snapshot and prepares map-only patch output, while the
   original worker remains responsible for final reconcile, current-tree drift/schema validation, and
-  the verified slice commit.
+  the verified slice commit. Drift checker output now names the guarded sidecar helper command for
+  uncovered drift and no-map-touch semantic review moments instead of leaving sidecar routing only in
+  prose.
 - Existing-project code-map setup is described as audit-first: agents should show concrete findings,
   evidence paths, cleanup cost, and actual restructuring needs before asking the user to choose a
   route.

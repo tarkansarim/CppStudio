@@ -37,6 +37,8 @@ runtime behavior. If the map and code disagree, inspect the code and update the 
 For large or long-running slices, a code-map-only sidecar may prepare map updates from a fixed
 checkpoint, commit, isolated worktree, or archive snapshot. The sidecar should return a patch or
 map-file replacements instead of editing the original worker's live worktree while source work
-continues. The original worker still owns the final gate: merge the sidecar output, rerun drift and
-validation against the current tree, and update this map again if later source changes touched
-additional routable areas.
+continues. When `agent-tmux` is available, use
+`agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]` for that guarded artifact lane. The
+original worker still owns the final gate: merge the sidecar output, rerun drift and validation
+against the current tree, and update this map again if later source changes touched additional
+routable areas.

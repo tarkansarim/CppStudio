@@ -90,10 +90,12 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   also have a bounded sidecar lane for long-running or high-churn map maintenance: sidecars work
   from isolated fixed snapshots and return map-only patches, while the original worker must
   reconcile, rerun drift/schema validation against the current tree, and keep the verified slice
-  commit as the public history boundary. Supervised workers now also have an artifact-audit gate:
-  summaries are only evidence pointers, planning packets must be reconciled once source work lands,
-  and queued/offscreen proof must finish with labeled artifacts before it can justify a plan or
-  closeout judgment.
+  commit as the public history boundary. Drift and no-map-touch semantic review output now surfaces
+  the guarded `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]` helper so sidecar routing is
+  actionable at the moment map maintenance is detected. Supervised workers now also have an
+  artifact-audit gate: summaries are only evidence pointers, planning packets must be reconciled once
+  source work lands, and queued/offscreen proof must finish with labeled artifacts before it can
+  justify a plan or closeout judgment.
 - `ee03b49` - Guarded code-map sidecar trigger evidence so checked-in installed-path validation
   proves the sidecar case stays covered instead of silently shrinking to older trigger lanes.
 - `d0ea9a2` - Hardened sidecar isolation rules: sidecars must work from fixed snapshots, return
