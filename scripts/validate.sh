@@ -145,6 +145,24 @@ grep -q "extensive state-of-the-art web ceiling check" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "Project Dos And Don'ts" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "Primary visible loop before breadth" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "Shared tool substrate before tool proliferation" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "primary user-visible loop" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "shared tool substrate" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "Primary visible loop:" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+grep -q "First solid tool:" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+grep -q "Product visible loop" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
+grep -q "Shared tool substrate" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
+grep -q "primary visible interaction loop" \
+    "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
 grep -q "GUI/product-surface" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
 grep -q "authoring model/source of truth" \
@@ -185,7 +203,17 @@ grep -q "After two focused attempts or roughly 20 minutes" \
     "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
 grep -q "Pointer-to-stroke contract" \
     "${SKILL_DIR}/references/donor-library/profiles/blender-sculpt-brushes-study-only.md"
+grep -q "Brush naming contract" \
+    "${SKILL_DIR}/references/donor-library/profiles/blender-sculpt-brushes-study-only.md"
+grep -q "Use target peer-tool vocabulary" \
+    "${SKILL_DIR}/references/donor-library/sculpting-brushes.md"
+grep -q "Standard/Sculpt displacement" \
+    "${SKILL_DIR}/references/donor-library/profiles/blender-sculpt-brushes-study-only.md"
 grep -q "roughly 20" \
+    "${SKILL_DIR}/assets/app-library-template/docs/VALIDATION_PIPELINE.md"
+grep -q "visible-loop proof" \
+    "${SKILL_DIR}/assets/app-library-template/docs/VALIDATION_PIPELINE.md"
+grep -q "shared substrate" \
     "${SKILL_DIR}/assets/app-library-template/docs/VALIDATION_PIPELINE.md"
 if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     for rel_path in "${required_repo_files[@]}"; do

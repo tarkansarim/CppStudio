@@ -46,6 +46,19 @@ expectations, and debug-vs-product UI boundaries against donors or peer tools be
 Do not present a 2D diagnostic projection as the main viewport for a 3D tool unless the user
 explicitly accepts it as a temporary diagnostic milestone.
 
+Before adding UI breadth for an interactive tool, identify the primary visible interaction loop for
+the affected product surface. The loop is domain-derived, not hardcoded by this skill: user action,
+state changed, visible result, and proof route. The UI plan should make the first milestone prove
+that loop through the real control, viewport, canvas, graph, timeline, or inspector path before
+adding secondary modes, extra tool entries, decorative panels, or debug-only controls. A palette full
+of advertised actions is not progress if the primary action cannot be selected, applied, and seen.
+
+For tool families, UI should expose shared substrate behavior once instead of duplicating it per
+tool. Active-tool selection, palette state, cursor overlays, input routing, pressure/falloff widgets,
+mask/undo/replay affordances, and harness action metadata should have a common owner. Do not add
+more tool entries until the first tool is selectable, applies through the real event path, and has a
+visible proof path.
+
 For user-facing tool surfaces, build a compact UI convention table before changing layout or command
 widgets. Cover the affected surfaces such as viewport, timeline, transport, toolbar, menu, context
 menu, node graph, inspector, status bar, and overlay. For each surface, record the donor or peer-tool

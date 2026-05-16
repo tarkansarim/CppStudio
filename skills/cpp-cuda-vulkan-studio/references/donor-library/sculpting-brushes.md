@@ -25,7 +25,7 @@ falloff, masks, smooth/clay/grab behavior, high-poly dirty uploads, or viewport 
 
 | Donor | Tier | License Signal | Best Use |
 | --- | --- | --- | --- |
-| [Blender Sculpt Brushes](profiles/blender-sculpt-brushes-study-only.md) | study-only | Blender source is GPL-family; do not copy code/assets | Primary behavior donor for Draw/Standard, Smooth/Relax, Clay, Inflate, Grab/Move, Pinch/Crease, Flatten/Scrape, Mask, pressure/falloff, Paint BVH-style queries, stroke caches, Mesh/BMesh/Grid storage, and selective GPU update concepts. |
+| [Blender Sculpt Brushes](profiles/blender-sculpt-brushes-study-only.md) | study-only | Blender source is GPL-family; do not copy code/assets | Primary behavior donor for standard sculpt displacement, Smooth/Relax, Clay, Inflate, Grab/Move, Pinch/Crease, Flatten/Scrape, Mask, pressure/falloff, Paint BVH-style queries, stroke caches, Mesh/BMesh/Grid storage, and selective GPU update concepts. Use target peer-tool vocabulary for visible brush names. |
 | [ZBrush Sculpting Brushes](https://help.maxon.net/zbr/en-us/Content/html/user-guide/3d-modeling/sculpting/sculpting-brushes/sculpting-brushes.html) | study-only | Proprietary product docs; no code reuse | Peer-tool brush behavior and artist expectations for Standard, Smooth, Move, Inflate, Pinch, Flatten, Clay, and related sculpt verbs. |
 | [Nomad Sculpt Topology](https://nomadsculpt.com/manual/topology) | study-only | Proprietary product docs; no code reuse | Compact high-poly product workflow reference for polygon stats, multiresolution, voxel remesh, dynamic topology, decimation, and topology warnings. |
 | [Nomad Sculpt Tools](https://nomadsculpt.com/manual/tools) | study-only | Proprietary product docs; no code reuse | Brush grouping and tool-surface reference for brush, move, mask, flatten/planar, crease/pinch, trim, split, and transform style workflows. |
@@ -51,6 +51,8 @@ falloff, masks, smooth/clay/grab behavior, high-poly dirty uploads, or viewport 
   the screen-to-surface path, not only that a mesh revision changed.
 - Treat ZBrush, Nomad, and Mudbox as peer-tool/product references, not code donors. Use them to check
   expected brush families, topology warnings, pressure/falloff behavior, and UI vocabulary.
+- Do not let study-donor naming leak into product UI by default. Pick visible brush/tool names from
+  the selected peer-tool family, then map them to donor-backed behavior contracts.
 - For high-poly performance, require chunked sculpt storage, Paint-BVH-style spatial queries,
   dirty-region GPU uploads, multiresolution/LOD, and numeric frame/stroke/memory gates before claiming
   the engine can handle dense production meshes.

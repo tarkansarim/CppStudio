@@ -100,7 +100,13 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   justify a plan or closeout judgment. GPU feature regressions now also require exact-lane proof on
   the target device before agents hide, disable, downgrade, or rewrite around capability failures;
   used-to-work reports keep historical comparison active, and stale engineering memory is treated as
-  challengeable evidence rather than authority.
+  challengeable evidence rather than authority. Interactive artist/game/VFX/DCC tools now also have
+  a generic primary-visible-loop gate: the plan must derive the first core user action from donors
+  and peer tools, prove that visible loop before secondary feature breadth, and reject fixture-only
+  scaffolding or extra modes as product progress until input-to-result evidence exists. Related tool
+  families now also need a shared substrate before tool proliferation, so common selection, input,
+  pressure/falloff, undo/replay, resource-update, harness, and validation paths are factored before
+  sibling tools are added.
 - `ee03b49` - Guarded code-map sidecar trigger evidence so checked-in installed-path validation
   proves the sidecar case stays covered instead of silently shrinking to older trigger lanes.
 - `d0ea9a2` - Hardened sidecar isolation rules: sidecars must work from fixed snapshots, return

@@ -212,6 +212,20 @@ that a visible button, palette item, or pointer-mapped viewport interaction work
 is not a substitute for visible observation: if the agent cannot see or capture the target surface,
 the status must say that the agent is UI-blind on the reported behavior before more code is changed.
 
+Interactive artist, game, VFX, DCC, simulation-editor, and technical-art tools also need primary
+visible-loop proof before feature breadth. The loop is project-specific and should come from the
+planning donor/peer-tool research: user action, state changed, visible result, and proof route. The
+first milestone should prove that loop end to end, or explicitly prove a prerequisite required for
+that loop. Do not count extra modes, tools, panels, format breadth, fixture-only variants, nonblank
+screenshots, or backend revisions as product progress while the core visible loop is still
+unproven.
+
+For related tool families, validate the first real tool and the shared substrate before adding
+siblings. Active-tool state, selection, input mapping, pressure/falloff, masks, undo/replay, dirty
+resource updates, serialization, harness readback, and scenario proof should be common paths unless
+a donor-backed reason makes a feature unique. Duplicated common behavior across tools is a
+validation smell.
+
 For user-reported bugs, add a before/after proof before presenting the fix:
 
 1. Reproduce the reported behavior first through the closest user-equivalent command, scenario, or

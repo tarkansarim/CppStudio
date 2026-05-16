@@ -13,7 +13,7 @@ explicitly accepts GPL-compatible reuse.
 
 - ZBrush-like or Mudbox-like mesh sculpting tools that need real brush families instead of one generic
   test stroke.
-- Brush behavior contracts for Draw/Standard, Smooth/Relax, Clay/Clay Build, Inflate/Deflate,
+- Brush behavior contracts for Standard/Sculpt/Draw-style displacement, Smooth/Relax, Clay/Clay Build, Inflate/Deflate,
   Grab/Move, Pinch/Crease, Flatten/Scrape, Mask, Clay Strips, Layer, Snake Hook, Nudge/Thumb, Relax
   Slide, Draw Face Sets, Density, Pose, Boundary, Cloth, and multires displacement brushes.
 - High-poly sculpt-engine planning: Mesh/BMesh/Grid storage, Paint BVH-style raycasts/coarse
@@ -50,7 +50,12 @@ explicitly accepts GPL-compatible reuse.
 - **Active-brush contract**: palette or hotkey selection must update the active brush promptly through
   the same command path a user exercises. Tests should cover repeated selection across enabled brush
   entries and measure event-to-active-brush latency.
-- **Draw versus Inflate**: Draw/Standard moves affected vertices along a sampled stroke/surface
+- **Brush naming contract**: do not blindly expose Blender's internal or manual vocabulary as the
+  product UI. Choose visible brush names from the target peer family the project selected, then map
+  those names to the donor-backed behavior contract. For example, a ZBrush-like product may expose a
+  Standard or Sculpt brush even when studying Blender's Draw behavior.
+- **Standard/Sculpt displacement versus Inflate**: the standard sculpt displacement family, including
+  Blender's Draw behavior as study material, moves affected vertices along a sampled stroke/surface
   direction; Inflate/Deflate moves each vertex along its own normal. Tests should distinguish them.
 - **Smooth/Relax**: smoothing must respect masks, boundaries, visibility/backface policy, and
   topology mode. It should not destroy intended silhouettes or masked regions.
@@ -85,11 +90,11 @@ explicitly accepts GPL-compatible reuse.
 ## Routing Keywords
 
 Use this profile for: sculpt brush, sculpting brush, ZBrush-like sculpting, Mudbox-like sculpting,
-Blender sculpt, high-poly sculpt, dense mesh sculpt, Draw brush, Standard brush, Clay brush, Clay
-Strips, Smooth brush, Relax brush, Inflate brush, Deflate brush, Grab brush, Move brush, Pinch brush,
-Crease brush, Flatten brush, Scrape brush, Mask brush, face set brush, dynamic topology, Dyntopo,
-multires sculpt, voxel remesh, Paint BVH, PBVH, brush falloff, pressure sculpting, Wacom sculpting,
-stylus sculpting, dirty chunk upload.
+Blender sculpt, high-poly sculpt, dense mesh sculpt, Standard brush, Sculpt brush,
+Blender Draw behavior, Clay brush, Clay Strips, Smooth brush, Relax brush, Inflate brush, Deflate
+brush, Grab brush, Move brush, Pinch brush, Crease brush, Flatten brush, Scrape brush, Mask brush,
+face set brush, dynamic topology, Dyntopo, multires sculpt, voxel remesh, Paint BVH, PBVH, brush
+falloff, pressure sculpting, Wacom sculpting, stylus sculpting, dirty chunk upload.
 
 ## Integration Notes
 
@@ -103,8 +108,9 @@ stylus sculpting, dirty chunk upload.
 
 ## Validation Ideas
 
-- Tiny mesh fixtures for each milestone brush: Draw, Smooth, Clay, Inflate, Grab, Pinch/Crease,
-  Flatten/Scrape, and Mask.
+- Tiny mesh fixtures for each milestone brush family after the primary visible loop is proven:
+  Standard/Sculpt displacement using target-appropriate UI naming, Smooth, Clay, Inflate, Grab,
+  Pinch/Crease, Flatten/Scrape, and Mask.
 - GUI interaction fixtures for brush palette selection: repeated selection across every enabled V1
   brush, active-brush text/icon state before and after, latency, and visible viewport cursor/falloff
   update.

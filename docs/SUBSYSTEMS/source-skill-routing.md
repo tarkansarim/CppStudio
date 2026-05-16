@@ -104,6 +104,16 @@ generated-project workflow instructions.
   validation signal. GUI rules must cite peer-tool, UI-framework, or donor evidence for layout,
   control placement, icon/text affordance, viewport/timeline/inspector conventions,
   debug-vs-product boundaries, and visual proof.
+- Interactive artist, game, VFX, DCC, simulation-editor, technical-art, viewer/editor, brush, paint,
+  grooming, terrain, material, rigging, animation, layout, lighting, and effects tools now require a
+  primary visible-loop gate before implementation. The loop is derived from domain donors and peer
+  tools, then records user action, state changed, visible result, proof route, and secondary breadth
+  blocked until the loop is proven. This is generic product-slice discipline, not a project-specific
+  sculpting rule.
+- Tool families now require shared substrate ownership before tool proliferation. Common selection,
+  active-tool state, input sampling, coordinate mapping, pressure/falloff, masks, undo/replay, cursor
+  overlays, dirty-resource updates, serialization, harness readback, and validation scenarios should
+  be factored once before sibling tools are added.
 - New reusable references discovered during web research are first saved as target-project donor
   candidates, normally `docs/planning/DONOR_CANDIDATES.md` or a donor-candidates section in the
   research brief. That candidate capture is required evidence even when global promotion happens
@@ -150,6 +160,10 @@ generated-project workflow instructions.
   changing layout or command widgets. The table records donor or peer-tool evidence, expected control
   location, icon/text convention, tooltip/accessibility text, enabled states, and proof method for the
   affected surfaces.
+- GUI/tool-surface plans must preserve the primary visible interaction loop for the affected product
+  surface before adding secondary controls or advertised modes. A palette, toolbar, graph, inspector,
+  or timeline with extra entries is not product progress if the primary user action cannot be
+  selected, applied, and observed through the real event path.
 - Universal tool commands such as play, stop, step, save, undo, redo, select, transform, visibility,
   lock, zoom, and delete should use recognizable icon affordances when the toolkit supports them.
   Prominent text controls for those commands require donor evidence or an explicit accessibility,
@@ -273,6 +287,8 @@ generated-project workflow instructions.
   into the CppStudio source repo instead of leaving only target-project candidates
 - project-specific dos and don'ts research-artifact requirements change, including GUI/product-surface
   best-practice capture
+- primary visible-loop planning, shared-substrate, or slice-order rules change for interactive
+  artist/game/VFX/DCC tools
 - artist-input or tablet/stylus planning defaults change, including when mouse-first window/input
   stacks must be demoted for brush, sculpt, paint, groom, terrain, texture, or stroke tools
 - native C++ GUI/HUD/editor UI skill routing or option-presentation behavior changes

@@ -4,6 +4,15 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a generic primary-visible-loop planning gate for interactive artist/game/VFX/DCC tools:
+  agents must derive the core user action from donors and peer tools, prove that visible loop before
+  secondary feature breadth, and treat fixture-only scaffolding or extra modes as blocked until the
+  loop has input-to-result evidence.
+- Added a shared-tool-substrate gate for related tool families so the first real tool must be solid
+  and common behavior such as selection, input mapping, pressure/falloff, undo/replay, harness
+  readback, and validation is factored once before sibling tools are added.
+- Clarified the sculpt-brush donor profile so agents study Blender brush behavior without blindly
+  exposing Blender-specific brush names when another peer family defines the target UI vocabulary.
 - Added a generic GPU feature regression protocol: agents must prove the exact requested feature lane
   on the target device before hiding, disabling, downgrading, or changing UI/tests around a reported
   capability failure, use historical comparison when the user says a feature used to work, and treat

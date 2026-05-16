@@ -60,6 +60,10 @@ The first visible response after that research should be a concise **Pre-Plan Re
 - durable research artifact path, when the project is substantial enough to require one
 - donor candidates discovered outside the current library, if any
 - project dos and don'ts artifact path and the most important app/domain and GUI/product-surface rules
+- for interactive tools, the primary user-visible loop: user action, changed state, visible result,
+  first proof, and secondary feature breadth blocked until that loop is proven
+- for tool families, the shared substrate that owns common state, input, validation, resource-update,
+  serialization, and harness behavior before sibling tools are added
 - clear recommended default and alternatives
 
 Then ask the user to switch to Plan mode before implementation:
@@ -113,6 +117,23 @@ When this skill is active, work like a native C++ GPU systems engineer:
   for speculative patches, and the next smallest proof. Do not continue from training-data guesses,
   backend-only green checks, or newly expanded harness scripts. If the donor route was skipped,
   treat that as the root process bug before another code edit.
+- Primary visible loop before breadth: for interactive artist, game, VFX, DCC, simulation-editor,
+  technical-art, viewer/editor, brush, paint, grooming, terrain, material, rigging, animation,
+  layout, lighting, or effects tools, the first implementation milestone must prove the core
+  user-visible loop before secondary breadth. Derive the loop from the target domain's donors and
+  peer tools. A valid loop names the user action, the state it changes, the visible result, and the
+  proof route. Do not add extra tools, brushes, panels, modes, file-format breadth, polish controls,
+  or fixture-only variants as product progress before that loop has input-to-result evidence. If
+  the current plan lacks the loop or treats fixture-only scaffolding as product-visible progress,
+  stop and repair the plan before source edits continue.
+- Shared tool substrate before tool proliferation: when a project has a family of related tools,
+  make the first tool solid through the real user path before adding siblings. Common behavior such
+  as selection, active-tool state, input sampling, coordinate mapping, pressure/falloff, masks,
+  undo/replay, cursor overlays, dirty-resource uploads, serialization, harness readback, and
+  validation scenarios belongs in shared infrastructure. Do not duplicate that behavior across tool
+  implementations. Only behavior that is genuinely unique to a tool should live in that tool's
+  code. If adding another tool would copy shared behavior or hide that the first tool is not yet
+  proven, stop and refactor or finish the shared substrate first.
 - Treat Vulkan as an explicit-lifetime API. Resource ownership, synchronization, image layouts, queue
   ownership, descriptor lifetime, command-buffer reuse, and frames-in-flight must be designed
   deliberately.
@@ -361,6 +382,14 @@ When this skill is active, work like a native C++ GPU systems engineer:
   still missing. Do not spend several more minutes re-reading broadly after the route is already
   sufficient; if the route still feels insufficient, say which missing source, donor, or API contract
   blocks implementation.
+- Slice order must preserve the primary visible loop. If an interactive tool's core user action is
+  not yet visible and testable, the next source slice should either prove that loop or implement a
+  strictly necessary prerequisite named by the plan. A worker should not add secondary feature
+  breadth while the primary loop remains hidden, fixture-only, or unverified.
+- Tool-family slices must preserve shared substrate ownership. Before adding a second sibling tool,
+  the first tool's common state, input, validation, resource-update, serialization, and harness
+  paths should be shared and proven. Extra tool entries without a solid first tool and common
+  substrate are a process miss, even if each entry has a small fixture.
 - Treat the slice task list as a live alignment tool. If real evidence during implementation shows
   that a planned task is stale, impossible, too broad, missing a prerequisite, or aimed at the wrong
   subsystem, update the task list immediately: name the new fact, the invalidated assumption, the

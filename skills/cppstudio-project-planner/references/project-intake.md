@@ -32,6 +32,11 @@ The pre-plan research brief should include:
   practices when the target has an interface
 - current state-of-the-art or actively popular approaches, separated from legacy approaches
 - software orientation and current peer-tool family for large artist/game/VFX/DCC tools
+- primary user-visible loop for interactive tools: the first target user action, the state it changes,
+  the visible result, how milestone 1 proves it, and which secondary features are blocked until it
+  works
+- shared tool substrate for tool families: common selection/input/validation/state behavior that must
+  be factored before adding sibling tools
 - recommended best-available default and why
 
 For substantial greenfield projects or architecture-setting plans, persist the research before
@@ -105,6 +110,36 @@ Do not default to the easiest route if a better current approach exists. Recomme
 lower-ceiling options only as tradeoffs when the user asks for a lightweight solution, conservative
 dependencies, teaching/demo code, or a throwaway prototype.
 
+For interactive tools, add a primary visible-loop gate before implementation. The gate is generic:
+derive the loop from the target domain's peer tools and donors, then make the first implementation
+slice prove that one end-to-end action before feature breadth. A fixture, hidden backend model,
+nonblank screenshot, or extra set of modes is not enough. The gate needs:
+
+```text
+Primary visible loop:
+User action:
+State changed:
+Visible result:
+Milestone-1 proof:
+Blocked breadth until proven:
+Evidence sources:
+```
+
+For tool families with multiple sibling tools, add a shared-substrate gate before adding tool count:
+
+```text
+First solid tool:
+Shared tool substrate:
+Per-tool unique behavior:
+Duplication risks:
+Milestone-1 proof:
+Blocked sibling tools until proven:
+```
+
+If the plan cannot fill these in, or if the next slice would add secondary tools, modes, panels,
+format options, duplicated tool code, or fixture-only breadth before the primary loop is visible and
+testable, stop and repair the plan.
+
 Then ask the user to switch to Plan mode before implementation, unless the current turn explicitly
 says the session is already in Plan mode.
 
@@ -143,6 +178,10 @@ Collect these facts before committing to architecture:
 - Software orientation for large tools: closest current peer-tool family, primary workflow, editor vs
   runtime split, asset handoff, command surfaces, validation style, and where current peer practice
   differs from simpler scaffold-friendly approaches.
+- Primary visible loop for interactive tools: the target user's first meaningful action, the state it
+  changes, the visible result, the first proof, and the secondary breadth that must wait.
+- Shared tool substrate for sibling tools: common state, event, input, validation, resource-update,
+  serialization, and harness behavior that must not be duplicated per tool.
 - Platforms: Linux, Windows, macOS, WSL, Steam Deck, studio workstation, or CI-only headless lane.
 - GPU lane: Vulkan-first, CUDA, or explicit CUDA/Vulkan interop. If unspecified, recommend Vulkan
   first for cross-vendor realtime work.

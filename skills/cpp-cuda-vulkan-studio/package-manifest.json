@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 73576,
-      "sha256": "9f8577fb0d45bf92129b999d37fc8b6489c904eb6bb895c07f384fa1d7d64d9f"
+      "size": 76240,
+      "sha256": "fbe30373417d71438f15490092314083aeeeb4ab61724041c79959e16a1c331f"
     },
     {
       "path": "agents/openai.yaml",
@@ -196,8 +196,8 @@
       "path": "assets/app-library-template/docs/VALIDATION_PIPELINE.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 13223,
-      "sha256": "082776c2e1bcc9371cebc9ec03523828fa529286dec855a7427d873b53cc17e9"
+      "size": 14222,
+      "sha256": "a4232afc21e378b44294ef776bf91df5b8f328f555a54e5496db747391282924"
     },
     {
       "path": "assets/app-library-template/include/{{PROJECT_NAME}}/cuda_vector_add.hpp",
@@ -525,8 +525,8 @@
       "path": "references/donor-library/profiles/blender-sculpt-brushes-study-only.md",
       "role": "reference",
       "disclosure_group": "donor-profile",
-      "size": 8789,
-      "sha256": "dea068d61b06aa29870e35ce8a33641ffcdb9c6a91c957e41964010ad3643a8e"
+      "size": 9425,
+      "sha256": "af798301cb7fbf8d79912639d0714c5506e8d2ec25d5c3469b9c1ef9ceca57e2"
     },
     {
       "path": "references/donor-library/profiles/blender-study-only.md",
@@ -1267,8 +1267,8 @@
       "path": "references/donor-library/sculpting-brushes.md",
       "role": "reference",
       "disclosure_group": "donor-category",
-      "size": 6734,
-      "sha256": "e69510e9d84fa421b44c34a415bbb62e56dd04bea0099b823db953f07b3fed16"
+      "size": 6989,
+      "sha256": "d71f210b78b8de9685546a21a525da83dcf976baef9d73feb44f6193681b08a8"
     },
     {
       "path": "references/donor-library/selection-policy.md",
@@ -1337,8 +1337,8 @@
       "path": "references/project-archetypes.md",
       "role": "reference",
       "disclosure_group": "entrypoint",
-      "size": 21920,
-      "sha256": "cd9a2acd9b406c047c29555e8d0115b5c9322741e714bc751bcb8e3fc80fed58"
+      "size": 22205,
+      "sha256": "90725b7ce584fdc49e47c864b6af5a053b658719559a2c3ea250260acff111fe"
     },
     {
       "path": "scripts/apply_studio_backbone.py",

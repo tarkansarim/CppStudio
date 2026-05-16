@@ -180,9 +180,12 @@ viewport performance.
   for brush palette/product UI, [donor-library/vulkan-foundation-tooling.md](donor-library/vulkan-foundation-tooling.md)
   for GPU buffer and synchronization correctness, and meshoptimizer/OpenSubdiv/VMA profiles for
   high-poly performance architecture.
-- Verification priority: tiny fixtures for Draw, Smooth, Clay, Inflate, Grab, Pinch/Crease,
-  Flatten/Scrape, and Mask; pressure/falloff/mask/undo/replay tests; code-map and harness state for
-  active brush; then numeric polygon/frame-time/stroke-latency/dirty-upload evidence before claiming
+- Verification priority: first prove the donor-backed primary sculpt interaction end to end,
+  including visible mesh target, active brush/control selection, viewport hit or stroke mapping,
+  committed edit point, and visible deformation. Then add tiny fixtures for peer-backed brush
+  families such as standard sculpt/clay, smooth, inflate, grab, pinch/crease, flatten/scrape, and
+  mask; pressure, falloff, mask, undo, and replay tests; code-map and harness state for active brush;
+  then numeric polygon, frame-time, stroke-latency, and dirty-upload evidence before claiming
   high-poly readiness.
 
 ## DCC Scene Pipeline Tool

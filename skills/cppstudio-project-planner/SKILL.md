@@ -144,6 +144,27 @@ viewport shape, timeline/transport placement, editor layout, command surfaces, a
 solver architecture, or source-of-truth ownership. The plan must separate peer-backed decisions from
 local donor guidance and inference.
 
+For any interactive artist, game, VFX, DCC, simulation-editor, technical-art, viewer/editor, brush,
+paint, grooming, terrain, material, rigging, animation, layout, lighting, or effects tool, lock the
+primary user-visible loop before implementation. Derive that loop from peer-tool and donor research;
+do not hardcode it from a generic template. The loop must name the target user action, the authored
+or runtime state it changes, the visible result, the proof method, and the first slice that proves it
+end to end. The first implementation milestone must make that loop visible and testable unless a
+documented prerequisite is strictly required to prove it. Secondary breadth such as extra tools,
+brushes, panels, modes, format options, polish controls, or fixture-only variants is blocked until
+the primary loop has comparable before/after or input-to-result evidence. If a plan adds breadth
+while the primary loop is still invisible, fixture-only, or unverified, repair the plan before source
+files are created.
+
+When a tool family has multiple sibling tools, solve the shared tool substrate before proliferating
+tool entries. The first real tool must be solid, selectable, applied through the real event path, and
+visibly proven before adding more siblings. Shared behavior such as selection state, input sampling,
+coordinate mapping, pressure/falloff, masks, undo/replay, cursor overlays, dirty-resource updates,
+serialization, harness readback, and validation scenarios belongs in common tool infrastructure.
+Only behavior that is genuinely unique to one tool should live in that tool's code. A plan that
+duplicates shared behavior across early tools, or adds several tools before the first one works, is
+not implementation-ready.
+
 Default to the best available approach for the target project, not the easiest implementation. Do not
 recommend a simpler, older, or lower-ceiling route just because it is quick to scaffold unless the
 user explicitly asks for a lighter solution, throwaway prototype, conservative dependency set, or
@@ -248,6 +269,10 @@ Every substantial plan should include:
 - project intent and target users
 - local target facts discovered before asking the user
 - software orientation and current peer-tool family for large artist/game/VFX/DCC tools
+- primary user-visible loop: user action, state change, visible result, proof method, and first slice
+  that proves it before secondary feature breadth
+- shared tool substrate for tool families: common state/input/validation/features factored before
+  adding sibling tools, with only unique behavior isolated per tool
 - recommended CppStudio archetype/template
 - authoring model/source of truth options and recommendation, with peer-practice evidence
 - GPU lane: Vulkan-first, CUDA, or explicit interop, with why

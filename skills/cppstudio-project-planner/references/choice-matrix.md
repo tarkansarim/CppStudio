@@ -26,6 +26,12 @@ should emulate, what it should avoid, which source supports each rule, where it 
 first milestone will prove it. GUI/product-surface rules are mandatory for interactive tools and must
 cite peer-tool, donor, or UI-framework evidence.
 
+For interactive tools, add a primary visible-loop decision before implementation. It must be derived
+from the same donor and peer-tool evidence as the rest of the plan, and it must define the first
+end-to-end user action that proves the product is real. Secondary breadth is not implementation-ready
+until that loop is visible and testable. For tool families, add a shared-substrate decision before
+adding sibling tools so common behavior is factored once and only unique behavior is per-tool.
+
 | Subsystem | Minimum Evidence Before Recommendation | Decision Record Must Name |
 | --- | --- | --- |
 | Renderer or render path | Project archetype, Vulkan/CUDA lane, renderer donors, current upstream/vendor guidance when version-sensitive | Chosen render architecture, rejected render paths, validation capture or screenshot plan |
@@ -39,6 +45,8 @@ cite peer-tool, donor, or UI-framework evidence.
 | Build/dependency policy | Existing presets/manifests, repo dependency policy, native infrastructure donors | Dependency source, license/deployment caveats, build/CTest validation |
 | Validation/profiling | Project risk, target platform, available toolchain, required evidence threshold | First milestone acceptance tests, profiler/sanitizer/tool-gap notes |
 | AI/runtime integration | AI/runtime donor category, model/data boundaries, CUDA/Vulkan lane constraints | Runtime/dependency choice, model artifact policy, numerical/performance tests |
+| Product visible loop | Peer-tool workflow, domain donor route, GUI/product-surface rules, validation route | User action, state changed, visible result, proof method, and secondary breadth blocked until proven |
+| Shared tool substrate | Planned sibling tools, common input/state/validation/resource behavior, donor patterns | Shared substrate owner, per-tool unique behavior, duplication risks, and first-tool proof before siblings |
 
 ## Template And Archetype Choices
 
