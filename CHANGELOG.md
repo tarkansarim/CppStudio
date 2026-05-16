@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added Codex skill-load hygiene validation so repo and installed skill roots reject backup-looking
+  files/directories, duplicate loaded skill names, and oversized description metadata before rollout
+  or validation can claim a clean install.
 - Added a six-level planning depth contract for substantial software: intake/context,
   research/ceiling, whole-product scaffold, donor coverage and quality contract, slice readiness,
   and implementation/closeout proof. Serious native C++ GPU, artist, game, VFX, DCC,

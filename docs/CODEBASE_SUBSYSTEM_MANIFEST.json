@@ -86,6 +86,7 @@
         "scripts/watch_to_codex.sh",
         "scripts/quick_validate_skill.py",
         "scripts/validate_skill_package.py",
+        "scripts/validate_skill_load_hygiene.py",
         "scripts/validate_trigger_results.py",
         "scripts/bootstrap_code_map.py",
         "scripts/validate_code_map.py",

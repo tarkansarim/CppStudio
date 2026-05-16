@@ -8,6 +8,7 @@ CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
 REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
 PACKAGE_VALIDATOR="${ROOT_DIR}/scripts/validate_skill_package.py"
+SKILL_LOAD_HYGIENE_VALIDATOR="${ROOT_DIR}/scripts/validate_skill_load_hygiene.py"
 if [[ -z "${VALIDATOR:-}" ]]; then
     if [[ -f "${SYSTEM_VALIDATOR}" || -x "${SYSTEM_VALIDATOR}" ]]; then
         VALIDATOR="${SYSTEM_VALIDATOR}"
@@ -92,6 +93,7 @@ required_repo_files=(
     "scripts/check_code_map_drift.py"
     "scripts/quick_validate_skill.py"
     "scripts/validate_skill_package.py"
+    "scripts/validate_skill_load_hygiene.py"
     "scripts/audit_donor_freshness.py"
     "scripts/render_trigger_eval_prompt.py"
     "scripts/validate_trigger_matrix.py"
@@ -408,6 +410,10 @@ for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     python3 "${VALIDATOR}" "${auxiliary_skill_dir}"
     python3 "${PACKAGE_VALIDATOR}" "${auxiliary_skill_dir}"
 done
+python3 "${SKILL_LOAD_HYGIENE_VALIDATOR}" --self-test
+python3 "${SKILL_LOAD_HYGIENE_VALIDATOR}" \
+    --skills-root "${ROOT_DIR}/skills" \
+    --optional-skills-root "${CODEX_HOME_DIR}/skills"
 if [[ -d "${ROOT_DIR}/.codex/skills" ]]; then
     while IFS= read -r -d '' project_skill; do
         python3 "${VALIDATOR}" "${project_skill}"

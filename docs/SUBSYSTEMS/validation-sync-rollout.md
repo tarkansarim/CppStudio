@@ -17,6 +17,7 @@ skills, and watch-mode publishing behavior.
 - `scripts/watch_to_codex.sh`
 - `scripts/quick_validate_skill.py`
 - `scripts/validate_skill_package.py`
+- `scripts/validate_skill_load_hygiene.py`
 - `scripts/validate_trigger_results.py`
 - `scripts/bootstrap_code_map.py`
 - `scripts/validate_code_map.py`
@@ -49,6 +50,9 @@ skills, and watch-mode publishing behavior.
   `package-manifest.json` files to verify shipped file hashes, sizes,
   disclosure groups, package layout, and package hygiene. Manifest writes reject unsupported
   top-level files plus VCS, editor, cache, env, secret-like, archive, log, swap, and temp artifacts.
+- Skill-load hygiene validation uses `scripts/validate_skill_load_hygiene.py` to scan repo and
+  installed Codex skill roots, reject backup-looking files/directories that can bloat discovery,
+  catch duplicate loaded skill names, and keep description metadata inside a startup budget.
 - Non-dry-run sync stages and validates the skill before replacing the installed target, then restores
   the previous target if final validation fails.
 - Sync validates the selected source skill, staged skill, and final installed skill against that

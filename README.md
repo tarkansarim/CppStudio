@@ -40,7 +40,8 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
 - `current` - Hardened rollout and trigger-regression safety with symlink-safe bundled auxiliary
   rollback handling, required code-map bootstrap/maintenance/sidecar/routing-smoke trigger cases with
   installed-path fresh-agent evidence, fresh-scaffold drift coverage before the first baseline
-  commit, greenfield Git bootstrap handling for Codex worker read-only `.git` sandbox blockers,
+  commit, skill-load hygiene checks that reject backup artifacts and oversized startup descriptions,
+  greenfield Git bootstrap handling for Codex worker read-only `.git` sandbox blockers,
   Vulkan-only default scaffolds that omit CUDA files/routes/presets unless a CUDA lane is explicitly
   selected, control-harness roadmap/readiness readback that advances after verified prerequisite
   slices, exact readiness invariants, route-inventory drift checks, GUI convention tables with
