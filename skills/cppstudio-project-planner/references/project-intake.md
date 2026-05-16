@@ -133,10 +133,16 @@ Primary visible loop:
 User action:
 State changed:
 Visible result:
+Concrete first proof object/state:
 Milestone-1 proof:
 Blocked breadth until proven:
 Evidence sources:
 ```
+
+The concrete proof object/state should be the first domain-appropriate thing a user can see or
+manipulate, not a vague sample. Name the primitive, scene, generated asset, graph, dataset, fixture,
+or authored state and why donors or peer tools make it the right first proof. Keep tiny deterministic
+fixtures separate from the user-visible proof object when both are needed.
 
 For tool families with multiple sibling tools, add a shared-substrate gate before adding tool count:
 
@@ -223,6 +229,7 @@ Donors and peer links to open:
 Source/API contracts to inspect:
 Shared infrastructure reused:
 Unique behavior owned by this slice:
+Concrete first proof object/state:
 Expected files/subsystems:
 Blocked scope:
 Validation evidence:
@@ -292,7 +299,8 @@ Collect these facts before committing to architecture:
 - Donor coverage matrix: high-salience donor and peer expectations, evidence source, include/defer/
   reject/block disposition, reason, and validation signal.
 - Primary visible loop for interactive tools: the target user's first meaningful action, the state it
-  changes, the visible result, the first proof, and the secondary breadth that must wait.
+  changes, the visible result, the concrete first proof object/state, the first proof, and the
+  secondary breadth that must wait.
 - Shared tool substrate for sibling tools: common state, event, input, validation, resource-update,
   serialization, and harness behavior that must not be duplicated per tool.
 - Slice readiness packets: which future sections are scaffold-only and what donor-backed packet must

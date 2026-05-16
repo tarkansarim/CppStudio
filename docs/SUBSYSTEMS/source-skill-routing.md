@@ -114,6 +114,10 @@ generated-project workflow instructions.
   tools, then records user action, state changed, visible result, proof route, and secondary breadth
   blocked until the loop is proven. This is generic product-slice discipline, not a project-specific
   sculpting rule.
+- Visible/domain slices now also require a concrete first proof object or state. Agents must name the
+  actual primitive, scene, generated asset, graph, dataset, or interaction target that makes the loop
+  visible, justify it from donor or peer-tool evidence, and keep tiny numeric fixtures separate from
+  the user-facing proof object. Vague "generated target" or "sample object" language is not enough.
 - Tool families now require shared substrate ownership before tool proliferation. Common selection,
   active-tool state, input sampling, coordinate mapping, pressure/falloff, masks, undo/replay, cursor
   overlays, dirty-resource updates, serialization, harness readback, and validation scenarios should

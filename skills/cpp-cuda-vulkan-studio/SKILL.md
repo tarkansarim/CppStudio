@@ -69,6 +69,8 @@ The first visible response after that research should be a concise **Pre-Plan Re
   validation signals
 - for interactive tools, the primary user-visible loop: user action, changed state, visible result,
   first proof, and secondary feature breadth blocked until that loop is proven
+- for visible/domain slices, the concrete first proof object or state: the primitive, scene, asset,
+  graph, dataset, or interaction target that makes the loop real, with donor/peer justification
 - for tool families, the shared substrate that owns common state, input, validation, resource-update,
   serialization, and harness behavior before sibling tools are added
 - the slice readiness rule: scaffolded future sections are not implementation-ready until a
@@ -136,6 +138,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   or fixture-only variants as product progress before that loop has input-to-result evidence. If
   the current plan lacks the loop or treats fixture-only scaffolding as product-visible progress,
   stop and repair the plan before source edits continue.
+- Concrete proof object/state before visible work: when a visible/domain slice depends on an object,
+  scene, asset, graph, primitive, dataset, or authored state, the plan must name it specifically and
+  justify it from the same donor or peer-tool evidence. Do not accept vague "sample object",
+  "generated target", "test scene", "demo asset", "default graph", or "placeholder content"
+  language when the domain implies a better first proof. If there are multiple plausible objects,
+  record the options and ask before source files are created. Tiny deterministic fixtures can exist
+  for unit tests, but they do not replace the first user-visible proof object.
 - Shared tool substrate before tool proliferation: when a project has a family of related tools,
   make the first tool solid through the real user path before adding siblings. Common behavior such
   as selection, active-tool state, input sampling, coordinate mapping, pressure/falloff, masks,
@@ -154,9 +163,9 @@ When this skill is active, work like a native C++ GPU systems engineer:
   rejected, or blocked capabilities with reasons and validation signals. Before touching code for any
   scaffolded slice, write or update a Level 4 readiness packet with the current code-map state,
   donors and peer links to open, source/API contracts to inspect, shared infrastructure reused,
-  unique behavior owned, expected files/subsystems, blocked scope, validation evidence,
-  rollback/checkpoint state, and parallel safety. If only a scaffold bullet exists, the slice is not
-  implementation-ready.
+  concrete first proof object/state for visible or domain behavior, unique behavior owned, expected
+  files/subsystems, blocked scope, validation evidence, rollback/checkpoint state, and parallel
+  safety. If only a scaffold bullet exists, the slice is not implementation-ready.
 - Parallel planning is an ownership map, not automatic fan-out. Identify lanes that could run in
   parallel only after shared contracts are frozen, file/subsystem ownership is disjoint, and
   integration/validation handoffs are defined. Keep coupled C++/GPU/UI/resource-lifetime slices

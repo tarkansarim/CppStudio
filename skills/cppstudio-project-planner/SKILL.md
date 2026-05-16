@@ -156,6 +156,17 @@ the primary loop has comparable before/after or input-to-result evidence. If a p
 while the primary loop is still invisible, fixture-only, or unverified, repair the plan before source
 files are created.
 
+For that primary loop, vague nouns are not enough. The plan must name the concrete first proof
+object, authored item, scene state, dataset, primitive, fixture, graph, asset, or interaction target
+that makes the loop visible in the target domain, and it must justify that choice from donor or
+peer-tool evidence. Do not accept generic wording such as "sample object", "generated target",
+"test scene", "demo asset", "default graph", or "placeholder content" when a domain-appropriate
+first proof object can be inferred. Examples: a sculpting loop should name a high-enough-resolution
+sphere-like target plus a tiny numeric fixture; a fluid tool should name the first emitter/container
+state; a material tool should name the first shader/material ball or asset; a node editor should
+name the minimal graph that evaluates and displays a result. If the exact proof object is genuinely
+uncertain, record the viable options and make it a user decision before source files are created.
+
 When a tool family has multiple sibling tools, solve the shared tool substrate before proliferating
 tool entries. The first real tool must be solid, selectable, applied through the real event path, and
 visibly proven before adding more siblings. Shared behavior such as selection state, input sampling,
@@ -182,8 +193,8 @@ must state which depth it has reached and which depth is still required before i
   lightweight prototype or tiny scoped change.
 - `Level 4 - Slice Readiness`: the next slice has a just-in-time donor-backed packet naming the
   exact objective, current repo/code-map state, donors to reopen, APIs/contracts to inspect, shared
-  infrastructure, unique behavior, expected files/subsystems, blocked scope, validation evidence,
-  rollback/checkpoint state, and parallel safety.
+  infrastructure, concrete first proof object or state, unique behavior, expected files/subsystems,
+  blocked scope, validation evidence, rollback/checkpoint state, and parallel safety.
 - `Level 5 - Implementation And Closeout Proof`: source edits, exact validation, launch/UI/profiling
   or before/after evidence when relevant, code-map drift review, planning artifact reconciliation,
   and commit/changelog closeout when required.
@@ -224,10 +235,11 @@ the next capability unlocks, and what breadth remains blocked.
 Before implementing any scaffolded section or slice, create a just-in-time slice readiness packet
 for that slice. The packet must name the exact objective, current repo/code-map state, donor and
 peer-tool links to open, source/API contracts to inspect, shared infrastructure it reuses, unique
-behavior it owns, expected files/subsystems, blocked scope, validation evidence, rollback/checkpoint
-state, and whether parallel work is safe. Large renderer, GUI, input, brush/tool, solver, asset,
-authoring, persistence, harness, or performance slices need real donor-backed readiness packets.
-Tiny documentation or config slices may use a compact version, but code must not start from a
+behavior it owns, the concrete first proof object/state when the slice has visible or domain
+behavior, expected files/subsystems, blocked scope, validation evidence, rollback/checkpoint state,
+and whether parallel work is safe. Large renderer, GUI, input, brush/tool, solver, asset, authoring,
+persistence, harness, or performance slices need real donor-backed readiness packets. Tiny
+documentation or config slices may use a compact version, but code must not start from a
 scaffold-level bullet alone.
 
 When the scaffold identifies possible parallel lanes, also record a parallelization map. It should
@@ -353,13 +365,17 @@ Every substantial plan should include:
   rejected, or blocked plan sections with reasons and validation signals
 - primary user-visible loop: user action, state change, visible result, proof method, and first slice
   that proves it before secondary feature breadth
+- concrete first proof object/state: the domain object, scene, asset, graph, primitive, dataset, or
+  interaction target that makes the visible loop real, with donor/peer justification and separate
+  tiny fixtures when numeric unit tests need them
 - shared tool substrate for tool families: common state/input/validation/features factored before
   adding sibling tools, with only unique behavior isolated per tool
 - capability priority ladder: what must be created first, how complete it must be before moving on,
   what adjacent capability proves the shared substrate next, and what stays delayed breadth
 - slice readiness packet rule: scaffolded future slices are not implementation-ready until a
   just-in-time donor-backed packet names objective, donors, contracts, shared/unique behavior,
-  expected files, blocked scope, validation, and rollback/checkpoint state
+  concrete proof object/state, expected files, blocked scope, validation, and rollback/checkpoint
+  state
 - parallelization map: candidate independent lanes, required frozen shared contracts, ownership
   boundaries, handoff validations, and lanes that must remain sequential
 - recommended CppStudio archetype/template

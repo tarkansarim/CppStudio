@@ -17,6 +17,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
   agents must derive the core user action from donors and peer tools, prove that visible loop before
   secondary feature breadth, and treat fixture-only scaffolding or extra modes as blocked until the
   loop has input-to-result evidence.
+- Added a concrete-proof-object gate for visible/domain slices: Level 4 readiness now has to name
+  the actual primitive, scene, generated asset, graph, dataset, or interaction target that proves the
+  loop, instead of hiding behind vague "sample object" or "generated target" wording.
 - Added a shared-tool-substrate gate for related tool families so the first real tool must be solid
   and common behavior such as selection, input mapping, pressure/falloff, undo/replay, harness
   readback, and validation is factored once before sibling tools are added.
@@ -29,6 +32,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 - Made enabled-code-map maintenance a strict worker-owned closeout gate: source slices should run
   `check_code_map_drift.py --require-enabled --strict-review`, then update the map, launch the
   code-map sidecar, or explicitly acknowledge a reviewed no-map-change case before staging.
+- Cleaned up the enabled-code-map drift checker so the guarded sidecar/action instruction is printed
+  only for unresolved map-maintenance cases, not after an explicit reviewed no-map-change
+  acknowledgement.
 - Routed enabled-code-map drift and no-map-touch semantic review output toward the guarded
   `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]` helper, with validation coverage and
   generated-project docs so sidecar maintenance is surfaced as an actionable command instead of only

@@ -50,7 +50,8 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   source-access failure handling, donor-candidate disposition, README planning guidance for those
   artifacts, SDL3 pen/tablet input routing for stroke-based artist tools, supervised-worker
   interrogation before inferring CppStudio gaps,
-  stricter enabled-code-map drift/schema closeout, generated repo-local map wrappers,
+  stricter enabled-code-map drift/schema closeout, clearer reviewed-no-map-change drift output,
+  generated repo-local map wrappers,
   donor/provenance closeout, and a GPL-safe Blender curves groom-brush study donor.
   It also lets implementation task lists realign when new evidence invalidates stale assumptions,
   while preserving user-facing product and stack decisions, and forces midstream major feature
@@ -113,8 +114,8 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   source files are created, so missing fundamentals are mapped as included, deferred, rejected, or
   blocked instead of hidden inside a plausible scaffold. Scaffolded future sections are not
   implementation-ready until a just-in-time slice packet names donors, contracts, shared and unique
-  behavior, expected files, blocked scope, validation evidence, rollback/checkpoint state, and
-  parallel safety.
+  behavior, the concrete first proof object/state, expected files, blocked scope, validation
+  evidence, rollback/checkpoint state, and parallel safety.
 - `ee03b49` - Guarded code-map sidecar trigger evidence so checked-in installed-path validation
   proves the sidecar case stays covered instead of silently shrinking to older trigger lanes.
 - `d0ea9a2` - Hardened sidecar isolation rules: sidecars must work from fixed snapshots, return

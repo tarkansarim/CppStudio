@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 78608,
-      "sha256": "a7b4f6b25f2c9b0dca8f716b400d6fa9c48777889eb25a5025546b65bbbe68aa"
+      "size": 79534,
+      "sha256": "0e8f4ab17c97cf4d90fa80daf40ba2ff192e4f8d41d46cd5880c097fa6bd2bb8"
     },
     {
       "path": "agents/openai.yaml",
@@ -1358,8 +1358,8 @@
       "path": "scripts/check_code_map_drift.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 11143,
-      "sha256": "5972a5c85aa522e4f2b6ac54f654ae6c7ffbe4f4d32b29d68b0fc3d56f05d241"
+      "size": 11203,
+      "sha256": "024eb32a49effe53cc7ca456757732ff870d025eb06ab128fd5a7adbeb948c69"
     },
     {
       "path": "scripts/check_dev_tools.sh",

@@ -336,23 +336,24 @@ def main() -> int:
             "Map review note: source/build/docs changed but map files did not. "
             "Confirm no ownership, data-flow, backend-boundary, validation, or public behavior route changed."
         )
-        print_sidecar_action(
-            repo,
-            "Review semantic code-map maintenance for changed routable paths",
-            routable_paths,
-        )
         if args.reviewed_no_map_change:
             print(
                 "Map semantic review acknowledged: caller asserts no manifest or subsystem-doc "
                 "update is required for this slice."
             )
-        elif args.strict_review:
-            print(
-                "Strict review mode: map review is unresolved. Update the map, launch the "
-                "sidecar, or rerun with --reviewed-no-map-change only after checking that "
-                "ownership, data flow, backend boundaries, validation, and public routing stayed current."
+        else:
+            print_sidecar_action(
+                repo,
+                "Review semantic code-map maintenance for changed routable paths",
+                routable_paths,
             )
-            return 2
+            if args.strict_review:
+                print(
+                    "Strict review mode: map review is unresolved. Update the map, launch the "
+                    "sidecar, or rerun with --reviewed-no-map-change only after checking that "
+                    "ownership, data flow, backend boundaries, validation, and public routing stayed current."
+                )
+                return 2
     return 0
 
 

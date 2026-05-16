@@ -587,6 +587,16 @@ python3 "${ROOT_DIR}/scripts/check_code_map_drift.py" "${code_map_enable_tmp}" \
     --require-enabled --strict-review --reviewed-no-map-change \
     >"${drift_ack_review_out}" 2>&1
 grep -Fq "Map semantic review acknowledged" "${drift_ack_review_out}"
+if grep -Fq "Code-map maintenance action required" "${drift_ack_review_out}"; then
+    cat "${drift_ack_review_out}" >&2
+    echo "Acknowledged no-map-change drift review must not print unresolved maintenance action" >&2
+    exit 1
+fi
+if grep -Fq "agent-tmux codex-code-map-sidecar" "${drift_ack_review_out}"; then
+    cat "${drift_ack_review_out}" >&2
+    echo "Acknowledged no-map-change drift review must not print sidecar launch command" >&2
+    exit 1
+fi
 mkdir -p "${code_map_enable_tmp}/tools"
 printf "int cppstudio_unrouted_tool() { return 7; }\n" >"${code_map_enable_tmp}/tools/new_tool.cpp"
 drift_failure_out="$(mktemp "${VALIDATE_TMP}/code_map_drift_failure.XXXXXX")"

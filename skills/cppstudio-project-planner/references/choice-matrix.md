@@ -31,6 +31,10 @@ from the same donor and peer-tool evidence as the rest of the plan, and it must 
 end-to-end user action that proves the product is real. Secondary breadth is not implementation-ready
 until that loop is visible and testable. For tool families, add a shared-substrate decision before
 adding sibling tools so common behavior is factored once and only unique behavior is per-tool.
+The visible-loop decision must also name the concrete first proof object or state: the primitive,
+asset, scene, graph, dataset, or interaction target that is domain-appropriate for the proof. Vague
+phrases such as "sample object", "generated target", or "test scene" are not sufficient when peer
+tools or donors imply a better first object.
 
 For substantial software, label the planning depth before source work. Level 0 is intake/context,
 Level 1 is research/ceiling, Level 2 is whole-product scaffold, Level 3 is donor coverage and quality
@@ -56,7 +60,7 @@ against accepting a plausible scaffold that forgot a fundamental capability.
 | Whole-product scaffold | Product orientation, target users, peer workflow, local donor routes, major expected software sections | Major sections, rough priority, dependencies, donor/reference route, and scaffold-only vs ready-detail state |
 | Donor coverage matrix | High-salience donor and peer-tool expectations, research brief, local donor routes, accepted/deferred decisions | Capability/contract, evidence source, plan section, included/deferred/rejected/blocked state, reason, validation signal |
 | Capability priority ladder | Primary visible loop, shared substrate gates, peer-tool workflow order, technical prerequisites | What to create first, minimum completeness before moving on, next adjacent capability, and delayed breadth |
-| Slice readiness packet | Current repo/code-map state, donor links, source/API contracts, validation route, rollback/checkpoint status | Objective, donors, shared infrastructure, unique behavior, expected files, blocked scope, validation evidence |
+| Slice readiness packet | Current repo/code-map state, donor links, source/API contracts, validation route, rollback/checkpoint status | Objective, donors, shared infrastructure, concrete first proof object/state, unique behavior, expected files, blocked scope, validation evidence |
 | Parallelization map | Major sections, shared contracts, ownership boundaries, C++/GPU/UI coupling risks | Parallel candidates, frozen contracts required first, owned files/subsystems, integration/validation handoffs, sequential risks |
 | Renderer or render path | Project archetype, Vulkan/CUDA lane, renderer donors, current upstream/vendor guidance when version-sensitive | Chosen render architecture, rejected render paths, validation capture or screenshot plan |
 | Simulation or solver | Domain donor route, current papers/samples/vendor docs when ceiling matters, coupling to renderer and assets | Solver family, data ownership, rejected solvers, deterministic tests and visual proof |
@@ -69,7 +73,7 @@ against accepting a plausible scaffold that forgot a fundamental capability.
 | Build/dependency policy | Existing presets/manifests, repo dependency policy, native infrastructure donors | Dependency source, license/deployment caveats, build/CTest validation |
 | Validation/profiling | Project risk, target platform, available toolchain, required evidence threshold | First milestone acceptance tests, profiler/sanitizer/tool-gap notes |
 | AI/runtime integration | AI/runtime donor category, model/data boundaries, CUDA/Vulkan lane constraints | Runtime/dependency choice, model artifact policy, numerical/performance tests |
-| Product visible loop | Peer-tool workflow, domain donor route, GUI/product-surface rules, validation route | User action, state changed, visible result, proof method, and secondary breadth blocked until proven |
+| Product visible loop | Peer-tool workflow, domain donor route, GUI/product-surface rules, validation route | User action, state changed, visible result, concrete proof object/state, proof method, and secondary breadth blocked until proven |
 | Shared tool substrate | Planned sibling tools, common input/state/validation/resource behavior, donor patterns | Shared substrate owner, per-tool unique behavior, duplication risks, and first-tool proof before siblings |
 
 ## Template And Archetype Choices
