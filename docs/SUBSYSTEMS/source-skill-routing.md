@@ -10,6 +10,8 @@ generated-project workflow instructions.
 - `skills/cpp-cuda-vulkan-studio/SKILL.md`
 - `skills/native-cpp-gui-hud/SKILL.md`
 - `skills/cppstudio-project-planner/SKILL.md`
+- `skills/cppstudio-project-planner/references/project-intake.md`
+- `skills/cppstudio-project-planner/references/choice-matrix.md`
 - `skills/agentic-control-harness/SKILL.md`
 - `skills/agentic-control-harness/references/control-harness.md`
 - `skills/cpp-cuda-vulkan-studio/references/project-archetypes.md`
@@ -19,6 +21,8 @@ generated-project workflow instructions.
 - `skills/cpp-cuda-vulkan-studio/SKILL.md`
 - `skills/native-cpp-gui-hud/SKILL.md`
 - `skills/cppstudio-project-planner/SKILL.md`
+- `skills/cppstudio-project-planner/references/project-intake.md`
+- `skills/cppstudio-project-planner/references/choice-matrix.md`
 - `skills/agentic-control-harness/SKILL.md`
 - `skills/agentic-control-harness/references/control-harness.md`
 - `.codex/skills/cppstudio-repo-onboarding/SKILL.md`
@@ -114,12 +118,16 @@ generated-project workflow instructions.
   active-tool state, input sampling, coordinate mapping, pressure/falloff, masks, undo/replay, cursor
   overlays, dirty-resource updates, serialization, harness readback, and validation scenarios should
   be factored once before sibling tools are added.
-- Substantial software plans now use two planning depths. First, a shallow whole-product scaffold
-  maps the expected product sections, rough priority, dependencies, donor/reference routes, and
-  sequential/parallel/blocker classification so major systems are not forgotten. Second, any
-  scaffolded section requires a just-in-time slice readiness packet before code begins; that packet
-  names donors, source/API contracts, shared and unique behavior, expected files, blocked scope,
-  validation evidence, rollback/checkpoint state, and parallel safety.
+- Substantial software plans now use a six-level planning depth contract. Level 0 is intake/context,
+  Level 1 is research/ceiling, Level 2 is whole-product scaffold, Level 3 is donor coverage and
+  quality contract, Level 4 is slice readiness, and Level 5 is implementation/closeout proof. Serious
+  native C++ GPU, artist, game, VFX, DCC, simulation-editor, and technical-art tools default to
+  Level 3 before source files are created. The Level 3 donor coverage matrix maps high-salience donor
+  and peer-tool expectations to included, deferred, rejected, or blocked capabilities with reasons
+  and validation signals, so a plausible scaffold cannot hide missing fundamentals. Each scaffolded
+  implementation slice still requires a Level 4 packet naming donors, source/API contracts, shared
+  and unique behavior, expected files, blocked scope, validation evidence, rollback/checkpoint state,
+  and parallel safety before code begins.
 - Parallelization planning is a map, not an automatic worker launch. Plans should identify candidate
   independent lanes, frozen shared contracts, file/subsystem ownership, and integration/validation
   handoffs, while keeping tightly coupled C++/GPU/UI/resource-lifetime work sequential until the

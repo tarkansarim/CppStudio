@@ -149,15 +149,19 @@ grep -q "Primary visible loop before breadth" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "Shared tool substrate before tool proliferation" \
     "${SKILL_DIR}/SKILL.md"
-grep -q "Whole-product scaffold plus just-in-time slice readiness" \
+grep -q "Planning depth before source" \
     "${SKILL_DIR}/SKILL.md"
+grep -q "Donor coverage matrix" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "Parallel planning is an ownership map" \
     "${SKILL_DIR}/SKILL.md"
+grep -q "Planning depth contract:" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
 grep -q "primary user-visible loop" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "shared tool substrate" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
-grep -q "shallow whole-product scaffold plan" \
+grep -q "Level 2 whole-product scaffold" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "just-in-time slice readiness packet" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
@@ -171,6 +175,8 @@ grep -q "First solid tool:" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
 grep -q "Whole-product scaffold:" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+grep -q "Donor coverage matrix:" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
 grep -q "Slice readiness packet:" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
 grep -q "Parallelization map:" \
@@ -182,6 +188,8 @@ grep -q "Product visible loop" \
 grep -q "Shared tool substrate" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "Capability priority ladder" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
+grep -q "Donor coverage matrix" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "Slice readiness packet" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"

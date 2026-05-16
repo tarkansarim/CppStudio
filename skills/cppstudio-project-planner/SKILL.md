@@ -165,17 +165,61 @@ Only behavior that is genuinely unique to one tool should live in that tool's co
 duplicates shared behavior across early tools, or adds several tools before the first one works, is
 not implementation-ready.
 
-For substantial software, produce a shallow whole-product scaffold plan before the first source
-slice. The scaffold is not a speculative implementation design for every future feature; it is a
-coverage map that names the major sections the product is expected to need, their rough priority,
-their dependencies, their donor/reference route, and whether they look sequential, parallelizable, or
-blocked by an earlier proof. Use it to prevent blind spots. Do not treat a shallow scaffold entry as
+For substantial software, use a six-level planning depth contract. Each durable planning artifact
+must state which depth it has reached and which depth is still required before implementation:
+
+- `Level 0 - Intake And Context`: target user, product intent, platform, repo state, local
+  constraints, Git/Rewind/code-map readiness, and missing facts.
+- `Level 1 - Research And Ceiling`: local skills and donor routes opened, web/upstream sources,
+  peer-tool scan, current best practices, source links, donor candidates, and source-access gaps.
+- `Level 2 - Whole-Product Scaffold`: major systems for the full expected product, rough priority,
+  dependencies, blocked areas, donor/reference routes, and parallelizable lanes. This prevents blind
+  spots, but is not implementation-ready.
+- `Level 3 - Donor Coverage And Quality Contract`: donor/peer expectations are converted into an
+  explicit coverage matrix of included, deferred, rejected, or blocked capabilities with reasons and
+  validation signals. For serious native C++ GPU, artist, game, VFX, DCC, simulation-editor, or
+  technical-art tools, Level 3 is the default pre-source gate unless the user explicitly requests a
+  lightweight prototype or tiny scoped change.
+- `Level 4 - Slice Readiness`: the next slice has a just-in-time donor-backed packet naming the
+  exact objective, current repo/code-map state, donors to reopen, APIs/contracts to inspect, shared
+  infrastructure, unique behavior, expected files/subsystems, blocked scope, validation evidence,
+  rollback/checkpoint state, and parallel safety.
+- `Level 5 - Implementation And Closeout Proof`: source edits, exact validation, launch/UI/profiling
+  or before/after evidence when relevant, code-map drift review, planning artifact reconciliation,
+  and commit/changelog closeout when required.
+
+For substantial software, produce the Level 2 whole-product scaffold before the first source slice.
+The scaffold is not a speculative implementation design for every future feature; it is a coverage
+map that names the major sections the product is expected to need, their rough priority, their
+dependencies, their donor/reference route, and whether they look sequential, parallelizable, or
+blocked by an earlier proof. Use it to prevent blind spots. Do not treat a Level 2 scaffold entry as
 implementation-ready.
 
-Use explicit section headings when presenting this planning structure: `Whole-Product Scaffold`,
-`Capability Priority Ladder`, `Parallelization Map`, and `Slice Readiness Packet`. Do not hide the
-priority ladder inside generic "next steps" or "priority rules"; it must say what gets made first,
-how complete it must be before the next capability unlocks, and what breadth remains blocked.
+Before accepting a substantial scaffold as ready to feed implementation, produce the Level 3 donor
+coverage and quality contract. It must map high-salience donor and peer-tool expectations to the
+plan:
+
+```text
+Donor coverage matrix:
+Capability or quality contract:
+Evidence source:
+Plan section or slice:
+State: included | deferred | rejected | blocked
+Reason:
+Milestone validation signal:
+```
+
+Do not hide multiple important donor expectations inside one broad row such as "brush substrate",
+"renderer", "GUI", or "tooling". Split the expectations until a reviewer can tell whether important
+fundamentals were included, consciously deferred, rejected with reason, or blocked by an earlier
+proof. If a high-salience peer-tool or donor contract is missing from the matrix, the plan is not
+ready to implement.
+
+Use explicit section headings when presenting this planning structure: `Planning Depth Contract`,
+`Whole-Product Scaffold`, `Donor Coverage Matrix`, `Capability Priority Ladder`,
+`Parallelization Map`, and `Slice Readiness Packet`. Do not hide the priority ladder inside generic
+"next steps" or "priority rules"; it must say what gets made first, how complete it must be before
+the next capability unlocks, and what breadth remains blocked.
 
 Before implementing any scaffolded section or slice, create a just-in-time slice readiness packet
 for that slice. The packet must name the exact objective, current repo/code-map state, donor and
@@ -280,11 +324,15 @@ facade over the same API, and which state/log/visual observation surfaces are ne
 11. Separate current leading approaches from legacy/outdated approaches, state the freshness evidence,
    and call out when a local donor is still useful only as reference because the current best approach
    has moved on.
-12. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
+12. For substantial software, label the current planning depth and do not let a Level 1 research
+   brief or Level 2 scaffold masquerade as implementation-ready. If the project is an ambitious
+   artist/game/VFX/DCC/simulation-editor/technical-art tool, build the Level 3 donor coverage matrix
+   before accepting the scaffold for implementation.
+13. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
    routes, peer-tool authoring-model findings, web sources checked, current-vs-legacy notes, and the
    reasoning for the best available option, then ask for Plan mode and only then ask decision
    questions.
-13. Persist the research brief for substantial projects before implementation. Prefer
+14. Persist the research brief for substantial projects before implementation. Prefer
    `docs/planning/RESEARCH_BRIEF.md`; include `docs/planning/DONOR_CANDIDATES.md` when strong
    reusable sources were found that are not already covered by the donor library. If the user only
    asked for a tiny exploratory answer and no project repo exists, state that no durable artifact was
@@ -297,8 +345,12 @@ Every substantial plan should include:
 - project intent and target users
 - local target facts discovered before asking the user
 - software orientation and current peer-tool family for large artist/game/VFX/DCC tools
+- planning depth contract: current Level 0-5 state, required depth before source, and why any lower
+  depth is sufficient only for tiny scoped work
 - shallow whole-product scaffold map: major product sections, rough priority, dependencies, donor
   routes, and sequential/parallel/blocker classification
+- donor coverage matrix: high-salience donor/peer expectations mapped to included, deferred,
+  rejected, or blocked plan sections with reasons and validation signals
 - primary user-visible loop: user action, state change, visible result, proof method, and first slice
   that proves it before secondary feature breadth
 - shared tool substrate for tool families: common state/input/validation/features factored before

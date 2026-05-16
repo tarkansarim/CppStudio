@@ -60,8 +60,13 @@ The first visible response after that research should be a concise **Pre-Plan Re
 - durable research artifact path, when the project is substantial enough to require one
 - donor candidates discovered outside the current library, if any
 - project dos and don'ts artifact path and the most important app/domain and GUI/product-surface rules
+- planning depth contract: current Level 0-5 state, required depth before source, and why any lower
+  depth is acceptable only for tiny scoped work
 - for substantial software, the shallow whole-product scaffold: major sections, rough priority,
   dependencies, donor routes, and sequential/parallel/blocker classification
+- for substantial software, the donor coverage matrix: high-salience donor and peer-tool
+  expectations mapped to included, deferred, rejected, or blocked capabilities with reasons and
+  validation signals
 - for interactive tools, the primary user-visible loop: user action, changed state, visible result,
   first proof, and secondary feature breadth blocked until that loop is proven
 - for tool families, the shared substrate that owns common state, input, validation, resource-update,
@@ -139,15 +144,19 @@ When this skill is active, work like a native C++ GPU systems engineer:
   implementations. Only behavior that is genuinely unique to a tool should live in that tool's
   code. If adding another tool would copy shared behavior or hide that the first tool is not yet
   proven, stop and refactor or finish the shared substrate first.
-- Whole-product scaffold plus just-in-time slice readiness: for substantial native apps and tools,
-  planning must cover the whole expected software surface at scaffold depth before source work:
-  major sections, rough priority, dependencies, donor/reference routes, and sequential versus
-  parallelizable lanes. That shallow scaffold prevents blind spots, but it is not permission to code
-  each future section. Before touching code for any scaffolded slice, write or update a focused
-  readiness packet with the current code-map state, donors and peer links to open, source/API
-  contracts to inspect, shared infrastructure reused, unique behavior owned, expected
-  files/subsystems, blocked scope, validation evidence, rollback/checkpoint state, and parallel
-  safety. If only a scaffold bullet exists, the slice is not implementation-ready.
+- Planning depth before source: for substantial native apps and tools, use the project planner's
+  six-level depth contract. Level 0 is intake/context, Level 1 is research/ceiling, Level 2 is
+  whole-product scaffold, Level 3 is donor coverage and quality contract, Level 4 is slice
+  readiness, and Level 5 is implementation/closeout proof. Serious native C++ GPU, artist, game,
+  VFX, DCC, simulation-editor, and technical-art tools default to Level 3 before source files are
+  created. A Level 2 scaffold prevents blind spots, but it is not permission to code each future
+  section. Level 3 must map high-salience donor and peer-tool expectations to included, deferred,
+  rejected, or blocked capabilities with reasons and validation signals. Before touching code for any
+  scaffolded slice, write or update a Level 4 readiness packet with the current code-map state,
+  donors and peer links to open, source/API contracts to inspect, shared infrastructure reused,
+  unique behavior owned, expected files/subsystems, blocked scope, validation evidence,
+  rollback/checkpoint state, and parallel safety. If only a scaffold bullet exists, the slice is not
+  implementation-ready.
 - Parallel planning is an ownership map, not automatic fan-out. Identify lanes that could run in
   parallel only after shared contracts are frozen, file/subsystem ownership is disjoint, and
   integration/validation handoffs are defined. Keep coupled C++/GPU/UI/resource-lifetime slices

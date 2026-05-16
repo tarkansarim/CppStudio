@@ -32,9 +32,13 @@ The pre-plan research brief should include:
   practices when the target has an interface
 - current state-of-the-art or actively popular approaches, separated from legacy approaches
 - software orientation and current peer-tool family for large artist/game/VFX/DCC tools
+- planning depth contract: the current Level 0-5 planning state, the required depth before source,
+  and why any lower depth is acceptable only for tiny scoped work
 - shallow whole-product scaffold plan: all major software sections the product is expected to need,
   rough priority, dependencies, donor/reference route, and whether each section looks sequential,
   parallelizable, or blocked
+- donor coverage matrix: high-salience donor and peer-tool expectations mapped to included,
+  deferred, rejected, or blocked capabilities with reasons and validation signals
 - primary user-visible loop for interactive tools: the first target user action, the state it changes,
   the visible result, how milestone 1 proves it, and which secondary features are blocked until it
   works
@@ -145,14 +149,56 @@ Milestone-1 proof:
 Blocked sibling tools until proven:
 ```
 
-For substantial software, add a shallow whole-product scaffold and a slice-readiness rule. The
-scaffold prevents missing major systems, but it should stay shallow enough to avoid fake precision
-for distant features:
+For substantial software, use this planning depth hierarchy:
 
-Use these headings explicitly in user-facing plans: `Whole-Product Scaffold`, `Capability Priority
-Ladder`, `Parallelization Map`, and `Slice Readiness Packet`. The capability ladder is not a generic
-priority list; it must state the minimum complete first capability, the threshold that unlocks the
-next capability, and the feature breadth that stays blocked.
+```text
+Planning depth contract:
+Level 0 - Intake And Context:
+Level 1 - Research And Ceiling:
+Level 2 - Whole-Product Scaffold:
+Level 3 - Donor Coverage And Quality Contract:
+Level 4 - Slice Readiness:
+Level 5 - Implementation And Closeout Proof:
+Current depth:
+Required depth before source:
+Reason if lower depth is acceptable:
+```
+
+Level 0 records target context and constraints. Level 1 records local donors plus current
+web/upstream/peer research. Level 2 maps the whole expected software surface. Level 3 converts donor
+and peer-tool expectations into explicit include/defer/reject/block decisions. Level 4 prepares a
+single implementation slice. Level 5 records source edits and closeout proof.
+
+For serious native C++ GPU, artist, game, VFX, DCC, simulation-editor, or technical-art tools,
+default to Level 3 before any source files are created. A Level 2 scaffold is useful coverage, but it
+does not prove the plan caught the domain fundamentals.
+
+The Level 3 donor coverage matrix should use this shape:
+
+```text
+Donor coverage matrix:
+Capability or quality contract:
+Evidence source:
+Plan section or slice:
+State: included | deferred | rejected | blocked
+Reason:
+Milestone validation signal:
+```
+
+Do not collapse multiple fundamentals into one broad row. If peer tools or donors imply separate
+contracts, such as an authoring surface, first visible loop, shared tool substrate, input path,
+selection state, renderer feedback, persistence, validation, or performance proof, map them
+separately so omissions are visible.
+
+For substantial software, add a Level 2 shallow whole-product scaffold and a Level 4 slice-readiness
+rule. The scaffold prevents missing major systems, but it should stay shallow enough to avoid fake
+precision for distant features:
+
+Use these headings explicitly in user-facing plans: `Planning Depth Contract`, `Whole-Product
+Scaffold`, `Donor Coverage Matrix`, `Capability Priority Ladder`, `Parallelization Map`, and
+`Slice Readiness Packet`. The capability ladder is not a generic priority list; it must state the
+minimum complete first capability, the threshold that unlocks the next capability, and the feature
+breadth that stays blocked.
 
 ```text
 Whole-product scaffold:
@@ -239,8 +285,12 @@ Collect these facts before committing to architecture:
 - Software orientation for large tools: closest current peer-tool family, primary workflow, editor vs
   runtime split, asset handoff, command surfaces, validation style, and where current peer practice
   differs from simpler scaffold-friendly approaches.
+- Planning depth: current Level 0-5 state, required depth before source, and whether a lower-depth
+  plan is valid only because the task is tiny, scoped, or explicitly lightweight.
 - Whole-product scaffold: major sections, rough priority order, dependencies, donor/reference routes,
   and sequential/parallel/blocker classification.
+- Donor coverage matrix: high-salience donor and peer expectations, evidence source, include/defer/
+  reject/block disposition, reason, and validation signal.
 - Primary visible loop for interactive tools: the target user's first meaningful action, the state it
   changes, the visible result, the first proof, and the secondary breadth that must wait.
 - Shared tool substrate for sibling tools: common state, event, input, validation, resource-update,

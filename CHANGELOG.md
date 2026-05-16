@@ -4,10 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
-- Added a two-depth planning model for substantial software: agents now need a shallow
-  whole-product scaffold map with major sections, priority, dependencies, donor routes, and
-  sequential/parallel/blocker classification, while each scaffolded slice still needs a
-  just-in-time donor-backed readiness packet before code starts.
+- Added a six-level planning depth contract for substantial software: intake/context,
+  research/ceiling, whole-product scaffold, donor coverage and quality contract, slice readiness,
+  and implementation/closeout proof. Serious native C++ GPU, artist, game, VFX, DCC,
+  simulation-editor, and technical-art tools now default to donor-coverage depth before source files
+  are created, so high-salience donor and peer-tool expectations must be mapped as included,
+  deferred, rejected, or blocked with reasons and validation signals before implementation.
 - Added capability-priority and parallelization planning requirements so agents decide how much to
   build first, what completeness threshold unlocks the next capability, which shared contracts must
   be frozen, and which C++/GPU/UI slices should remain sequential.

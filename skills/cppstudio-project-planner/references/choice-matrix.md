@@ -32,17 +32,29 @@ end-to-end user action that proves the product is real. Secondary breadth is not
 until that loop is visible and testable. For tool families, add a shared-substrate decision before
 adding sibling tools so common behavior is factored once and only unique behavior is per-tool.
 
-For substantial software, add a shallow whole-product scaffold before source work. The scaffold
-should cover every major expected section, but distant sections stay scaffold-only until their
-just-in-time slice readiness packet is written. Use the scaffold to choose priority and identify
-parallelizable lanes, not to pretend every future subsystem has been deeply designed. A slice with
-only scaffold-level detail is blocked from implementation until its readiness packet names donors,
-contracts, shared/unique behavior, expected files, validation, rollback/checkpoint state, and
-parallel safety.
+For substantial software, label the planning depth before source work. Level 0 is intake/context,
+Level 1 is research/ceiling, Level 2 is whole-product scaffold, Level 3 is donor coverage and quality
+contract, Level 4 is slice readiness, and Level 5 is implementation/closeout proof. Serious native
+C++ GPU, artist, game, VFX, DCC, simulation-editor, and technical-art tools default to Level 3 before
+source files are created. A lower depth is acceptable only for a tiny scoped task, an explicitly
+lightweight prototype, or a user-approved narrower gate.
+
+The Level 2 scaffold should cover every major expected section, but distant sections stay
+scaffold-only until their just-in-time Level 4 slice readiness packet is written. Use the scaffold to
+choose priority and identify parallelizable lanes, not to pretend every future subsystem has been
+deeply designed. A slice with only scaffold-level detail is blocked from implementation until its
+readiness packet names donors, contracts, shared/unique behavior, expected files, validation,
+rollback/checkpoint state, and parallel safety.
+
+The Level 3 donor coverage matrix maps high-salience donor and peer-tool expectations to
+include/defer/reject/block decisions with reasons and validation signals. It is the main guard
+against accepting a plausible scaffold that forgot a fundamental capability.
 
 | Subsystem | Minimum Evidence Before Recommendation | Decision Record Must Name |
 | --- | --- | --- |
+| Planning depth contract | Project scale, user intent, local/repo state, whether the task is substantial or tiny | Current Level 0-5 state, required depth before source, and any reason lower depth is acceptable |
 | Whole-product scaffold | Product orientation, target users, peer workflow, local donor routes, major expected software sections | Major sections, rough priority, dependencies, donor/reference route, and scaffold-only vs ready-detail state |
+| Donor coverage matrix | High-salience donor and peer-tool expectations, research brief, local donor routes, accepted/deferred decisions | Capability/contract, evidence source, plan section, included/deferred/rejected/blocked state, reason, validation signal |
 | Capability priority ladder | Primary visible loop, shared substrate gates, peer-tool workflow order, technical prerequisites | What to create first, minimum completeness before moving on, next adjacent capability, and delayed breadth |
 | Slice readiness packet | Current repo/code-map state, donor links, source/API contracts, validation route, rollback/checkpoint status | Objective, donors, shared infrastructure, unique behavior, expected files, blocked scope, validation evidence |
 | Parallelization map | Major sections, shared contracts, ownership boundaries, C++/GPU/UI coupling risks | Parallel candidates, frozen contracts required first, owned files/subsystems, integration/validation handoffs, sequential risks |
