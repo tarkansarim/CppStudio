@@ -4,6 +4,13 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a two-depth planning model for substantial software: agents now need a shallow
+  whole-product scaffold map with major sections, priority, dependencies, donor routes, and
+  sequential/parallel/blocker classification, while each scaffolded slice still needs a
+  just-in-time donor-backed readiness packet before code starts.
+- Added capability-priority and parallelization planning requirements so agents decide how much to
+  build first, what completeness threshold unlocks the next capability, which shared contracts must
+  be frozen, and which C++/GPU/UI slices should remain sequential.
 - Added a generic primary-visible-loop planning gate for interactive artist/game/VFX/DCC tools:
   agents must derive the core user action from donors and peer tools, prove that visible loop before
   secondary feature breadth, and treat fixture-only scaffolding or extra modes as blocked until the

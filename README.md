@@ -106,7 +106,11 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   scaffolding or extra modes as product progress until input-to-result evidence exists. Related tool
   families now also need a shared substrate before tool proliferation, so common selection, input,
   pressure/falloff, undo/replay, resource-update, harness, and validation paths are factored before
-  sibling tools are added.
+  sibling tools are added. Substantial software plans now also need a shallow whole-product scaffold
+  map so major systems are not missed, plus a capability-priority ladder and parallelization map.
+  Scaffolded future sections are not implementation-ready until a just-in-time slice packet names
+  donors, contracts, shared and unique behavior, expected files, blocked scope, validation evidence,
+  rollback/checkpoint state, and parallel safety.
 - `ee03b49` - Guarded code-map sidecar trigger evidence so checked-in installed-path validation
   proves the sidecar case stays covered instead of silently shrinking to older trigger lanes.
 - `d0ea9a2` - Hardened sidecar isolation rules: sidecars must work from fixed snapshots, return

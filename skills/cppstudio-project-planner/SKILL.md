@@ -165,6 +165,34 @@ Only behavior that is genuinely unique to one tool should live in that tool's co
 duplicates shared behavior across early tools, or adds several tools before the first one works, is
 not implementation-ready.
 
+For substantial software, produce a shallow whole-product scaffold plan before the first source
+slice. The scaffold is not a speculative implementation design for every future feature; it is a
+coverage map that names the major sections the product is expected to need, their rough priority,
+their dependencies, their donor/reference route, and whether they look sequential, parallelizable, or
+blocked by an earlier proof. Use it to prevent blind spots. Do not treat a shallow scaffold entry as
+implementation-ready.
+
+Use explicit section headings when presenting this planning structure: `Whole-Product Scaffold`,
+`Capability Priority Ladder`, `Parallelization Map`, and `Slice Readiness Packet`. Do not hide the
+priority ladder inside generic "next steps" or "priority rules"; it must say what gets made first,
+how complete it must be before the next capability unlocks, and what breadth remains blocked.
+
+Before implementing any scaffolded section or slice, create a just-in-time slice readiness packet
+for that slice. The packet must name the exact objective, current repo/code-map state, donor and
+peer-tool links to open, source/API contracts to inspect, shared infrastructure it reuses, unique
+behavior it owns, expected files/subsystems, blocked scope, validation evidence, rollback/checkpoint
+state, and whether parallel work is safe. Large renderer, GUI, input, brush/tool, solver, asset,
+authoring, persistence, harness, or performance slices need real donor-backed readiness packets.
+Tiny documentation or config slices may use a compact version, but code must not start from a
+scaffold-level bullet alone.
+
+When the scaffold identifies possible parallel lanes, also record a parallelization map. It should
+state which sections can proceed independently, which shared contracts must be frozen first, which
+files or subsystems each lane would own, what validation handoff proves compatibility, and which
+lanes must stay sequential because C++ ownership, renderer state, GPU resource lifetime, UI event
+routing, or source-of-truth coupling makes parallel edits risky. Multi-agent execution remains a
+supervisor/user decision; the plan prepares the split, it does not automatically spawn workers.
+
 Default to the best available approach for the target project, not the easiest implementation. Do not
 recommend a simpler, older, or lower-ceiling route just because it is quick to scaffold unless the
 user explicitly asks for a lighter solution, throwaway prototype, conservative dependency set, or
@@ -269,10 +297,19 @@ Every substantial plan should include:
 - project intent and target users
 - local target facts discovered before asking the user
 - software orientation and current peer-tool family for large artist/game/VFX/DCC tools
+- shallow whole-product scaffold map: major product sections, rough priority, dependencies, donor
+  routes, and sequential/parallel/blocker classification
 - primary user-visible loop: user action, state change, visible result, proof method, and first slice
   that proves it before secondary feature breadth
 - shared tool substrate for tool families: common state/input/validation/features factored before
   adding sibling tools, with only unique behavior isolated per tool
+- capability priority ladder: what must be created first, how complete it must be before moving on,
+  what adjacent capability proves the shared substrate next, and what stays delayed breadth
+- slice readiness packet rule: scaffolded future slices are not implementation-ready until a
+  just-in-time donor-backed packet names objective, donors, contracts, shared/unique behavior,
+  expected files, blocked scope, validation, and rollback/checkpoint state
+- parallelization map: candidate independent lanes, required frozen shared contracts, ownership
+  boundaries, handoff validations, and lanes that must remain sequential
 - recommended CppStudio archetype/template
 - authoring model/source of truth options and recommendation, with peer-practice evidence
 - GPU lane: Vulkan-first, CUDA, or explicit interop, with why

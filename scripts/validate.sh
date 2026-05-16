@@ -149,17 +149,41 @@ grep -q "Primary visible loop before breadth" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "Shared tool substrate before tool proliferation" \
     "${SKILL_DIR}/SKILL.md"
+grep -q "Whole-product scaffold plus just-in-time slice readiness" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "Parallel planning is an ownership map" \
+    "${SKILL_DIR}/SKILL.md"
 grep -q "primary user-visible loop" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "shared tool substrate" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "shallow whole-product scaffold plan" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "just-in-time slice readiness packet" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "parallelization map" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "Do not hide the" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "Primary visible loop:" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
 grep -q "First solid tool:" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+grep -q "Whole-product scaffold:" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+grep -q "Slice readiness packet:" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+grep -q "Parallelization map:" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+grep -q "Use these headings explicitly" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
 grep -q "Product visible loop" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "Shared tool substrate" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
+grep -q "Capability priority ladder" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
+grep -q "Slice readiness packet" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "primary visible interaction loop" \
     "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"

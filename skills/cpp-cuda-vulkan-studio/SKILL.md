@@ -60,10 +60,15 @@ The first visible response after that research should be a concise **Pre-Plan Re
 - durable research artifact path, when the project is substantial enough to require one
 - donor candidates discovered outside the current library, if any
 - project dos and don'ts artifact path and the most important app/domain and GUI/product-surface rules
+- for substantial software, the shallow whole-product scaffold: major sections, rough priority,
+  dependencies, donor routes, and sequential/parallel/blocker classification
 - for interactive tools, the primary user-visible loop: user action, changed state, visible result,
   first proof, and secondary feature breadth blocked until that loop is proven
 - for tool families, the shared substrate that owns common state, input, validation, resource-update,
   serialization, and harness behavior before sibling tools are added
+- the slice readiness rule: scaffolded future sections are not implementation-ready until a
+  just-in-time donor-backed packet names objective, donors, contracts, shared/unique behavior,
+  expected files, blocked scope, validation, and rollback/checkpoint state
 - clear recommended default and alternatives
 
 Then ask the user to switch to Plan mode before implementation:
@@ -134,6 +139,20 @@ When this skill is active, work like a native C++ GPU systems engineer:
   implementations. Only behavior that is genuinely unique to a tool should live in that tool's
   code. If adding another tool would copy shared behavior or hide that the first tool is not yet
   proven, stop and refactor or finish the shared substrate first.
+- Whole-product scaffold plus just-in-time slice readiness: for substantial native apps and tools,
+  planning must cover the whole expected software surface at scaffold depth before source work:
+  major sections, rough priority, dependencies, donor/reference routes, and sequential versus
+  parallelizable lanes. That shallow scaffold prevents blind spots, but it is not permission to code
+  each future section. Before touching code for any scaffolded slice, write or update a focused
+  readiness packet with the current code-map state, donors and peer links to open, source/API
+  contracts to inspect, shared infrastructure reused, unique behavior owned, expected
+  files/subsystems, blocked scope, validation evidence, rollback/checkpoint state, and parallel
+  safety. If only a scaffold bullet exists, the slice is not implementation-ready.
+- Parallel planning is an ownership map, not automatic fan-out. Identify lanes that could run in
+  parallel only after shared contracts are frozen, file/subsystem ownership is disjoint, and
+  integration/validation handoffs are defined. Keep coupled C++/GPU/UI/resource-lifetime slices
+  sequential until the contracts are stable or the supervisor/user explicitly chooses a parallel
+  worker split.
 - Treat Vulkan as an explicit-lifetime API. Resource ownership, synchronization, image layouts, queue
   ownership, descriptor lifetime, command-buffer reuse, and frames-in-flight must be designed
   deliberately.

@@ -32,11 +32,20 @@ The pre-plan research brief should include:
   practices when the target has an interface
 - current state-of-the-art or actively popular approaches, separated from legacy approaches
 - software orientation and current peer-tool family for large artist/game/VFX/DCC tools
+- shallow whole-product scaffold plan: all major software sections the product is expected to need,
+  rough priority, dependencies, donor/reference route, and whether each section looks sequential,
+  parallelizable, or blocked
 - primary user-visible loop for interactive tools: the first target user action, the state it changes,
   the visible result, how milestone 1 proves it, and which secondary features are blocked until it
   works
 - shared tool substrate for tool families: common selection/input/validation/state behavior that must
   be factored before adding sibling tools
+- capability priority ladder: how much to create first, what minimum completeness threshold unlocks
+  the next capability, and which breadth stays delayed
+- just-in-time slice readiness rule: shallow scaffold entries are not implementation-ready until the
+  worker writes a focused donor-backed packet for that slice before touching code
+- parallelization map: which sections could be split across workers later, what shared contracts must
+  be frozen first, and which sections must stay sequential because of coupling
 - recommended best-available default and why
 
 For substantial greenfield projects or architecture-setting plans, persist the research before
@@ -136,6 +145,58 @@ Milestone-1 proof:
 Blocked sibling tools until proven:
 ```
 
+For substantial software, add a shallow whole-product scaffold and a slice-readiness rule. The
+scaffold prevents missing major systems, but it should stay shallow enough to avoid fake precision
+for distant features:
+
+Use these headings explicitly in user-facing plans: `Whole-Product Scaffold`, `Capability Priority
+Ladder`, `Parallelization Map`, and `Slice Readiness Packet`. The capability ladder is not a generic
+priority list; it must state the minimum complete first capability, the threshold that unlocks the
+next capability, and the feature breadth that stays blocked.
+
+```text
+Whole-product scaffold:
+Section:
+Purpose:
+Priority:
+Depends on:
+Donor/reference route:
+Implementation detail level: scaffold-only | ready packet required | ready now
+Parallelization: independent | parallel after contract | sequential
+Blocked until:
+```
+
+Before any scaffolded section becomes code, write a just-in-time readiness packet for that slice:
+
+```text
+Slice readiness packet:
+Slice:
+Objective:
+Current repo/code-map state:
+Donors and peer links to open:
+Source/API contracts to inspect:
+Shared infrastructure reused:
+Unique behavior owned by this slice:
+Expected files/subsystems:
+Blocked scope:
+Validation evidence:
+Rollback/checkpoint state:
+Parallel safety:
+```
+
+If multiple workers might help later, add a compact parallelization map:
+
+```text
+Parallelization map:
+Lane:
+Can run in parallel with:
+Frozen shared contracts required first:
+Owned files/subsystems:
+Integration handoff:
+Validation handoff:
+Sequential risks:
+```
+
 If the plan cannot fill these in, or if the next slice would add secondary tools, modes, panels,
 format options, duplicated tool code, or fixture-only breadth before the primary loop is visible and
 testable, stop and repair the plan.
@@ -178,10 +239,16 @@ Collect these facts before committing to architecture:
 - Software orientation for large tools: closest current peer-tool family, primary workflow, editor vs
   runtime split, asset handoff, command surfaces, validation style, and where current peer practice
   differs from simpler scaffold-friendly approaches.
+- Whole-product scaffold: major sections, rough priority order, dependencies, donor/reference routes,
+  and sequential/parallel/blocker classification.
 - Primary visible loop for interactive tools: the target user's first meaningful action, the state it
   changes, the visible result, the first proof, and the secondary breadth that must wait.
 - Shared tool substrate for sibling tools: common state, event, input, validation, resource-update,
   serialization, and harness behavior that must not be duplicated per tool.
+- Slice readiness packets: which future sections are scaffold-only and what donor-backed packet must
+  be written immediately before code starts on each one.
+- Parallelization map: candidate independent lanes, shared contracts to freeze, ownership boundaries,
+  and validation handoffs before multi-agent work is used.
 - Platforms: Linux, Windows, macOS, WSL, Steam Deck, studio workstation, or CI-only headless lane.
 - GPU lane: Vulkan-first, CUDA, or explicit CUDA/Vulkan interop. If unspecified, recommend Vulkan
   first for cross-vendor realtime work.

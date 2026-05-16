@@ -114,6 +114,16 @@ generated-project workflow instructions.
   active-tool state, input sampling, coordinate mapping, pressure/falloff, masks, undo/replay, cursor
   overlays, dirty-resource updates, serialization, harness readback, and validation scenarios should
   be factored once before sibling tools are added.
+- Substantial software plans now use two planning depths. First, a shallow whole-product scaffold
+  maps the expected product sections, rough priority, dependencies, donor/reference routes, and
+  sequential/parallel/blocker classification so major systems are not forgotten. Second, any
+  scaffolded section requires a just-in-time slice readiness packet before code begins; that packet
+  names donors, source/API contracts, shared and unique behavior, expected files, blocked scope,
+  validation evidence, rollback/checkpoint state, and parallel safety.
+- Parallelization planning is a map, not an automatic worker launch. Plans should identify candidate
+  independent lanes, frozen shared contracts, file/subsystem ownership, and integration/validation
+  handoffs, while keeping tightly coupled C++/GPU/UI/resource-lifetime work sequential until the
+  contracts are stable or the supervisor/user explicitly chooses a parallel split.
 - New reusable references discovered during web research are first saved as target-project donor
   candidates, normally `docs/planning/DONOR_CANDIDATES.md` or a donor-candidates section in the
   research brief. That candidate capture is required evidence even when global promotion happens
