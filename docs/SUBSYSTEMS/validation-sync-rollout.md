@@ -26,6 +26,7 @@ skills, and watch-mode publishing behavior.
 - `skills/native-cpp-gui-hud/package-manifest.json`
 - `skills/cppstudio-project-planner/package-manifest.json`
 - `skills/agentic-control-harness/package-manifest.json`
+- `skills/important-instruction-ledger/package-manifest.json`
 - `skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py`
 
 ## Update When
@@ -78,9 +79,9 @@ skills, and watch-mode publishing behavior.
 - Manual install fallback snippets stage and validate all bundled skills before mutating the target
   Codex home, then restore the full managed-skill set if any later copy or validation step fails.
 - `rollout_to_codex.sh` installs bundled auxiliary skills such as `native-cpp-gui-hud`,
-  `cppstudio-project-planner`, and `agentic-control-harness`, installs the minimal user-level
-  `AGENTS.md` relay by default, and preserves user-owned content outside the marked CppStudio relay
-  block.
+  `cppstudio-project-planner`, `agentic-control-harness`, and `important-instruction-ledger`,
+  installs the minimal user-level `AGENTS.md` relay by default, and preserves user-owned content
+  outside the marked CppStudio relay block.
 - Set `SKIP_USER_AGENTS_RELAY=1` only for deliberate relay opt-out installs.
 - `validate.sh` includes a synthetic GPU optimization fixture that exercises success-criteria
   enforcement, target numeric validation, baseline recording, hardware profile/SOL parsing,

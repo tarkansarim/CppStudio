@@ -15,6 +15,9 @@ C++/CUDA/Vulkan development.
 ## Source Of Truth
 
 - Edit `skills/cpp-cuda-vulkan-studio/` in this repo.
+- For important user rules, prerequisites, corrections, and supervision constraints that must
+  survive compaction, use the bundled `important-instruction-ledger` source skill and keep
+  `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md` current before continuing related work.
 - Use `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` as the
   maintained code map for this repo.
 - Before changing repo files, use the maintained code map to choose the matching subsystem doc and

@@ -116,7 +116,10 @@ stable entries stay collapsed under the expander.
   blocked instead of hidden inside a plausible scaffold. Scaffolded future sections are not
   implementation-ready until a just-in-time slice packet names donors, contracts, shared and unique
   behavior, the concrete first proof object/state, expected files, blocked scope, validation
-  evidence, rollback/checkpoint state, and parallel safety.
+  evidence, rollback/checkpoint state, and parallel safety. Important user instructions now have a
+  bundled ledger skill and repo-local `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md` path so
+  compaction-sensitive constraints are written down immediately and rechecked before worker nudges,
+  slice approval, commits, and status summaries.
 - `fa6f957` - Added skill-load hygiene validation so repo and installed skill roots reject backup
   artifacts, duplicate loaded skill names, and oversized startup descriptions before rollout.
 - `9dc4ae3` - Required concrete proof objects in planning so visible/domain slices name the actual
@@ -420,8 +423,9 @@ toolchains only when you want this machine to build or validate generated C++ GP
   `${HOME}/.codex/skills/cpp-cuda-vulkan-studio`
 - Bundled auxiliary skills:
   `${HOME}/.codex/skills/cppstudio-project-planner`,
-  `${HOME}/.codex/skills/native-cpp-gui-hud`, and
-  `${HOME}/.codex/skills/agentic-control-harness`
+  `${HOME}/.codex/skills/native-cpp-gui-hud`,
+  `${HOME}/.codex/skills/agentic-control-harness`, and
+  `${HOME}/.codex/skills/important-instruction-ledger`
 - Optional companion donor links for installed companion skills such as `cuda-kernel-authoring`,
   `vulkan-compute-sync`, and `modern-cpp-cmake`
 - Tiny user-level `AGENTS.md` relay that tells agents to load `cpp-cuda-vulkan-studio` for
@@ -568,6 +572,10 @@ checkpoints and temporary anchors are not public verified-slice commits.
 - `agentic-control-harness`: installed user-level skill for local HTTP/curl controls, optional MCP
   facades, launch/control registries, state/log/visual observation, and autonomous test lanes for
   native C++ realtime apps.
+- `important-instruction-ledger`: installed user-level skill for recording important user
+  constraints, hard rules, prerequisites, and supervision requirements into durable repo-local
+  ledgers so agents revisit them before planning, nudging workers, editing, committing, or claiming
+  closeout.
 - `cppstudio-repo-onboarding`: repo-local onboarding skill for agents editing this CppStudio repo.
   It is not the public user-level C++ GPU skill.
 
@@ -727,6 +735,8 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
   inspection links
 - `skills/agentic-control-harness/`: bundled control-harness skill for autonomous app launch,
   control, observation, visual/UI evidence, and troubleshooting
+- `skills/important-instruction-ledger/`: bundled active-constraint ledger skill for durable user
+  instructions and compaction-safe worker supervision
 - `skills/cpp-cuda-vulkan-studio/assets/app-library-template/`: generated-project template
 - `skills/cpp-cuda-vulkan-studio/references/`: project archetypes and donor-reference guidance
 - `skills/*/package-manifest.json`: deterministic skill package inventories and integrity metadata

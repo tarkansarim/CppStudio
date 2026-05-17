@@ -166,6 +166,18 @@ When this skill is active, work like a native C++ GPU systems engineer:
   concrete first proof object/state for visible or domain behavior, unique behavior owned, expected
   files/subsystems, blocked scope, validation evidence, rollback/checkpoint state, and parallel
   safety. If only a scaffold bullet exists, the slice is not implementation-ready.
+- Important user instructions before source: when the user gives a hard rule, prerequisite,
+  "important", "remember", "don't forget", "from now on", "always", or "never" instruction, use
+  `important-instruction-ledger` before continuing. Append the instruction to the target repo or
+  owning source repo ledger, then review active ledger items before planning, worker nudges, source
+  edits, slice approval, commits, and status summaries. Compaction risk is not an excuse to rely on
+  transcript memory. If an active ledger item affects the current slice, the slice is blocked until
+  the worker either satisfies it or records that it is superseded or explicitly deferred by the user.
+- per-slice detailed planning gate: for substantial software, every implementation slice needs a
+  Level 4 slice-readiness packet before source edits. A worker reading the old plan, passing the
+  planning guard, or summarizing intended work in chat is not enough. The supervisor must inspect the
+  actual packet path/section and reject the slice when no detailed packet exists for the slice being
+  implemented, even if build, OSTM, code-map, and tests pass.
 - Parallel planning is an ownership map, not automatic fan-out. Identify lanes that could run in
   parallel only after shared contracts are frozen, file/subsystem ownership is disjoint, and
   integration/validation handoffs are defined. Keep coupled C++/GPU/UI/resource-lifetime slices
@@ -399,6 +411,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
   work, ticket comments, and the relevant transcript tail. If those artifacts have not been audited,
   say that directly and audit them first. If the worker is still running, blocked in a queue, or has
   outstanding validation jobs, report that state instead of closing the supervision loop.
+- Before approving a worker's next implementation slice, review
+  `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md` when present and verify the slice has a
+  matching Level 4 readiness artifact. Passing validators around an implementation does not waive
+  active user constraints or missing per-slice detailed planning.
 - Treat planning packets and research briefs as live artifacts after source work begins. If a target
   repo now has source slices, verified commits, resolved blockers, or changed architecture choices,
   do not leave a packet or handoff that still says "planning only", "no source exists", or that a

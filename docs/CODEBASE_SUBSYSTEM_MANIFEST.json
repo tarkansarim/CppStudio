@@ -17,6 +17,9 @@
         "skills/cppstudio-project-planner/references/choice-matrix.md",
         "skills/agentic-control-harness/SKILL.md",
         "skills/agentic-control-harness/references/control-harness.md",
+        "skills/important-instruction-ledger/SKILL.md",
+        "skills/important-instruction-ledger/scripts/important_instruction_ledger.py",
+        "docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md",
         "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md"
       ],
       "primary_paths": [
@@ -27,6 +30,9 @@
         "skills/cppstudio-project-planner/references/choice-matrix.md",
         "skills/agentic-control-harness/SKILL.md",
         "skills/agentic-control-harness/references/control-harness.md",
+        "skills/important-instruction-ledger/SKILL.md",
+        "skills/important-instruction-ledger/scripts/important_instruction_ledger.py",
+        "docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md",
         ".codex/skills/cppstudio-repo-onboarding/SKILL.md"
       ]
     },
@@ -95,6 +101,7 @@
         "skills/native-cpp-gui-hud/package-manifest.json",
         "skills/cppstudio-project-planner/package-manifest.json",
         "skills/agentic-control-harness/package-manifest.json",
+        "skills/important-instruction-ledger/package-manifest.json",
         "skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py"
       ]
     },

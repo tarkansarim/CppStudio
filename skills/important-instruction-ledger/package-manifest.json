@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "package": "important-instruction-ledger",
+  "hash_algorithm": "sha256",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "role": "main",
+      "disclosure_group": "entrypoint",
+      "size": 3029,
+      "sha256": "d2f82e2671414ed0d06d104c6f8d53ff5adbb94beb6a9a23f8ece67fdcabc097"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "role": "metadata",
+      "disclosure_group": "entrypoint",
+      "size": 290,
+      "sha256": "55449375d7051c2a9c50acb2b988f63b12729f5a8bc8689c07886373c04ea1e2"
+    },
+    {
+      "path": "scripts/important_instruction_ledger.py",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 6264,
+      "sha256": "1a609557bb7a33027a2b978bfc61c8efbcb65e5f01e66a993b77a7fbb7c969aa"
+    }
+  ]
+}

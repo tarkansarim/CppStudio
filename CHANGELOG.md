@@ -4,6 +4,14 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a bundled `important-instruction-ledger` skill and script so durable user constraints, hard
+  rules, prerequisites, and supervision requirements are written to repo-local
+  `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md` / JSONL before compaction can erase them, then
+  rechecked before planning, worker nudges, source edits, slice approval, commits, and closeout
+  claims.
+- Hardened slice supervision so substantial implementation slices require a matching Level 4
+  readiness packet as a primary artifact; a worker reading the plan, passing the planning guard, or
+  reporting green validation no longer substitutes for detailed per-slice planning.
 - Refreshed README Recent Commit Highlights so the main page now lists the latest CppStudio hardening
   commits as stable entries instead of leaving them only inside the aggregate `current` summary.
 - Added Codex skill-load hygiene validation so repo and installed skill roots reject backup-looking

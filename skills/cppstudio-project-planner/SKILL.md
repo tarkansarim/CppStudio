@@ -116,6 +116,13 @@ internal realignments that preserve the project intent and quality bar. Pause an
 realignment changes a user-facing product decision, selected stack, scope, schedule, data ownership,
 license/dependency posture, or an explicitly agreed constraint.
 
+When the user gives a durable instruction, project constraint, hard rule, important prerequisite, or
+correction that should survive compaction, use `important-instruction-ledger` before continuing.
+Record it in the target repo or owning source repo ledger, then review active ledger items before
+major planning decisions, worker nudges, slice readiness approval, source edits, commits, and status
+summaries. The planning packet and validators are not substitutes for checking active user
+constraints.
+
 Midstream feature requests are planning inputs, not shortcuts around planning. If the user asks to
 add, include, swap, or "already support" a major subsystem after planning or implementation has
 started, reopen the same research-to-plan gate for that subsystem before coding or giving a final
@@ -241,6 +248,10 @@ and whether parallel work is safe. Large renderer, GUI, input, brush/tool, solve
 persistence, harness, or performance slices need real donor-backed readiness packets. Tiny
 documentation or config slices may use a compact version, but code must not start from a
 scaffold-level bullet alone.
+
+If the next source slice has no matching Level 4 readiness packet, it is not ready to implement even
+if the Level 2 scaffold, Level 3 matrix, build, OSTM, code-map checks, and planning guard pass.
+Reading the plan in chat or summarizing the next slice is not a detailed planning artifact.
 
 When the scaffold identifies possible parallel lanes, also record a parallelization map. It should
 state which sections can proceed independently, which shared contracts must be frozen first, which

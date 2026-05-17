@@ -13,6 +13,7 @@ skills/cpp-cuda-vulkan-studio/package-manifest.json
 skills/native-cpp-gui-hud/package-manifest.json
 skills/cppstudio-project-planner/package-manifest.json
 skills/agentic-control-harness/package-manifest.json
+skills/important-instruction-ledger/package-manifest.json
 ```
 
 This manifest records every shipped skill file except the manifest itself. Each entry includes:
@@ -31,6 +32,7 @@ python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio --write-
 python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud --write-manifest
 python3 scripts/validate_skill_package.py skills/cppstudio-project-planner --write-manifest
 python3 scripts/validate_skill_package.py skills/agentic-control-harness --write-manifest
+python3 scripts/validate_skill_package.py skills/important-instruction-ledger --write-manifest
 ```
 
 Validate it without rewriting:
@@ -40,6 +42,7 @@ python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio
 python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud
 python3 scripts/validate_skill_package.py skills/cppstudio-project-planner
 python3 scripts/validate_skill_package.py skills/agentic-control-harness
+python3 scripts/validate_skill_package.py skills/important-instruction-ledger
 ```
 
 ## Progressive Disclosure Groups

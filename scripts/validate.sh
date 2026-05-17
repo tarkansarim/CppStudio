@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_DIR="${ROOT_DIR}/skills/cpp-cuda-vulkan-studio"
-AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness")
+AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "important-instruction-ledger")
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
 REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
@@ -119,6 +119,10 @@ required_repo_files=(
     "skills/agentic-control-harness/agents/openai.yaml"
     "skills/agentic-control-harness/references/control-harness.md"
     "skills/agentic-control-harness/package-manifest.json"
+    "skills/important-instruction-ledger/SKILL.md"
+    "skills/important-instruction-ledger/agents/openai.yaml"
+    "skills/important-instruction-ledger/scripts/important_instruction_ledger.py"
+    "skills/important-instruction-ledger/package-manifest.json"
     "research/donor-library/trigger-regression-checklist.md"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/.gitignore"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md"
@@ -153,6 +157,14 @@ grep -q "Shared tool substrate before tool proliferation" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "Planning depth before source" \
     "${SKILL_DIR}/SKILL.md"
+grep -q "Important user instructions before source" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "per-slice detailed planning gate" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "important-instruction-ledger" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md" \
+    "${ROOT_DIR}/skills/important-instruction-ledger/SKILL.md"
 grep -q "Donor coverage matrix" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "Parallel planning is an ownership map" \

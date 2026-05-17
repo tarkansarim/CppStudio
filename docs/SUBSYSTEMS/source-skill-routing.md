@@ -14,6 +14,9 @@ generated-project workflow instructions.
 - `skills/cppstudio-project-planner/references/choice-matrix.md`
 - `skills/agentic-control-harness/SKILL.md`
 - `skills/agentic-control-harness/references/control-harness.md`
+- `skills/important-instruction-ledger/SKILL.md`
+- `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
+- `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md`
 - `skills/cpp-cuda-vulkan-studio/references/project-archetypes.md`
 
 ## Primary Paths
@@ -25,6 +28,9 @@ generated-project workflow instructions.
 - `skills/cppstudio-project-planner/references/choice-matrix.md`
 - `skills/agentic-control-harness/SKILL.md`
 - `skills/agentic-control-harness/references/control-harness.md`
+- `skills/important-instruction-ledger/SKILL.md`
+- `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
+- `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md`
 - `.codex/skills/cppstudio-repo-onboarding/SKILL.md`
 
 ## Current External Doctrine Posture
@@ -151,6 +157,14 @@ generated-project workflow instructions.
 
 ## Current Supervised Worker Posture
 
+- Important user instructions are durable constraints, not chat-only context. When the user marks a
+  rule, prerequisite, correction, or decision as important, agents use `important-instruction-ledger`
+  to write it to `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md` in the target or owning source
+  repo, then review active entries before worker nudges, source edits, slice approval, commits, and
+  status summaries.
+- Implementation slice approval requires the relevant Level 4 readiness packet as a primary
+  artifact. Reading an old plan, passing the planning guard, or receiving a worker summary is not
+  enough; the supervisor rejects source work when the detailed packet for that slice is missing.
 - When a supervised tmux worker, subagent, or terminal agent makes, skips, or rejects a decision and
   the cause is unclear, the supervising agent interrogates the worker before claiming the cause or
   changing CppStudio rules.

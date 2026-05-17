@@ -48,6 +48,9 @@ The pre-plan research brief should include:
   the next capability, and which breadth stays delayed
 - just-in-time slice readiness rule: shallow scaffold entries are not implementation-ready until the
   worker writes a focused donor-backed packet for that slice before touching code
+- important instruction ledger: durable user constraints and hard rules are recorded in
+  `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md` and reviewed before worker nudges, source
+  edits, slice approval, commits, and status summaries
 - parallelization map: which sections could be split across workers later, what shared contracts must
   be frozen first, and which sections must stay sequential because of coupling
 - recommended best-available default and why
@@ -236,6 +239,10 @@ Validation evidence:
 Rollback/checkpoint state:
 Parallel safety:
 ```
+
+The slice readiness packet is a hard pre-code artifact. A worker summary, a passing planning guard,
+or reading the existing scaffold is not enough. If the packet is missing, create or repair it before
+source edits.
 
 If multiple workers might help later, add a compact parallelization map:
 
