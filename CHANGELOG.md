@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Refreshed README Recent Commit Highlights so the main page now lists the latest CppStudio hardening
+  commits as stable entries instead of leaving them only inside the aggregate `current` summary.
 - Added Codex skill-load hygiene validation so repo and installed skill roots reject backup-looking
   files/directories, duplicate loaded skill names, and oversized description metadata before rollout
   or validation can claim a clean install.

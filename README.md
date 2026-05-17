@@ -33,9 +33,9 @@ As a harness, CppStudio focuses on:
 
 ## Recent Commit Highlights
 
-The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list shows 10
-selected recent highlights for people scanning the repo. The top `current` item summarizes the
-latest unreleased/high-churn changes, while stable older entries use commit ids.
+The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list shows a
+`current` aggregate plus 10 stable recent commit highlights for people scanning the repo. Older
+stable entries stay collapsed under the expander.
 
 - `current` - Hardened rollout and trigger-regression safety with symlink-safe bundled auxiliary
   rollback handling, required code-map bootstrap/maintenance/sidecar/routing-smoke trigger cases with
@@ -117,6 +117,32 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
   implementation-ready until a just-in-time slice packet names donors, contracts, shared and unique
   behavior, the concrete first proof object/state, expected files, blocked scope, validation
   evidence, rollback/checkpoint state, and parallel safety.
+- `fa6f957` - Added skill-load hygiene validation so repo and installed skill roots reject backup
+  artifacts, duplicate loaded skill names, and oversized startup descriptions before rollout.
+- `9dc4ae3` - Required concrete proof objects in planning so visible/domain slices name the actual
+  primitive, scene, generated asset, graph, dataset, or interaction target that proves the loop.
+- `1156eb0` - Added the six-level planning depth contract for substantial native GPU, artist, game,
+  VFX, DCC, simulation-editor, and technical-art tools.
+- `7e06b57` - Added scaffold-first and just-in-time slice planning gates so future product sections
+  are mapped without pretending they are implementation-ready.
+- `9978dd0` - Hardened interactive tool planning around primary visible loops and shared substrates,
+  blocking secondary feature breadth until the first core user action is proven.
+- `df60c3a` - Added exact GPU feature regression protocol so agents prove the requested feature lane
+  on the target device before hiding, disabling, downgrading, or rewriting around capability failures.
+- `d4d7976` - Made enabled-code-map maintenance a strict worker-owned closeout gate before staging
+  source/build/docs slices.
+- `a34a08b` - Routed code-map drift and no-map-touch semantic review output toward the guarded
+  code-map sidecar helper as an actionable worker-owned path.
+- `8488e6c` - Hardened supervised-worker evidence gates so summaries remain pointers and supervisors
+  inspect primary planning, code-map, diff, validation, OSTM, and UI artifacts before judging quality.
+- `8d6d94e` - Hardened planner source-access failures so missing or inaccessible sources are recorded
+  and critical evidence gaps block planning instead of silently weakening research.
+
+<details>
+<summary>Show older commit highlights</summary>
+
+- `01959fa` - Surfaced the latest code-map sidecar commits as explicit README Recent Commit
+  Highlights before remote push.
 - `ee03b49` - Guarded code-map sidecar trigger evidence so checked-in installed-path validation
   proves the sidecar case stays covered instead of silently shrinking to older trigger lanes.
 - `d0ea9a2` - Hardened sidecar isolation rules: sidecars must work from fixed snapshots, return
@@ -135,10 +161,6 @@ latest unreleased/high-churn changes, while stable older entries use commit ids.
 - `d9024a6` - Hardened code-map completion so validation is not treated as routing proof,
   fresh-agent smokes are graded pass/partial/fail, instruction-file drift is reported separately,
   and audit-backed presets/scripts are labeled as pre-map infrastructure.
-
-<details>
-<summary>Show older commit highlights</summary>
-
 - `3195bb8` - Required existing-project code-map opt-in to run and summarize the non-destructive
   readiness audit before asking whether to restructure, preserve layout, or decline.
 - `37f3fb7` - Adopted generic doctrine from a 22-skill Sortie assistant-pack audit: API discovery,
