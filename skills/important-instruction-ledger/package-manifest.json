@@ -7,22 +7,22 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 3029,
-      "sha256": "d2f82e2671414ed0d06d104c6f8d53ff5adbb94beb6a9a23f8ece67fdcabc097"
+      "size": 4516,
+      "sha256": "1e623bdcba92cf2bd7c87d679b11b259e11969ebd34c3f5f8e879e26edf87a22"
     },
     {
       "path": "agents/openai.yaml",
       "role": "metadata",
       "disclosure_group": "entrypoint",
-      "size": 290,
-      "sha256": "55449375d7051c2a9c50acb2b988f63b12729f5a8bc8689c07886373c04ea1e2"
+      "size": 310,
+      "sha256": "0c3597a3e11f7d783a6cb4327284a6f5dfb6fcb45758772f1a2d5048d1ae21bf"
     },
     {
       "path": "scripts/important_instruction_ledger.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 6264,
-      "sha256": "1a609557bb7a33027a2b978bfc61c8efbcb65e5f01e66a993b77a7fbb7c969aa"
+      "size": 7687,
+      "sha256": "893b054852cd69056c6368e3dbd6b26a562fb4c6f40d899b8ebdaefc593ba929"
     }
   ]
 }

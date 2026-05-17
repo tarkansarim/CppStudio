@@ -116,12 +116,12 @@ internal realignments that preserve the project intent and quality bar. Pause an
 realignment changes a user-facing product decision, selected stack, scope, schedule, data ownership,
 license/dependency posture, or an explicitly agreed constraint.
 
-When the user gives a durable instruction, project constraint, hard rule, important prerequisite, or
-correction that should survive compaction, use `important-instruction-ledger` before continuing.
-Record it in the target repo or owning source repo ledger, then review active ledger items before
+For substantial software, use `important-instruction-ledger` as the active slice watchlist before
 major planning decisions, worker nudges, slice readiness approval, source edits, commits, and status
-summaries. The planning packet and validators are not substitutes for checking active user
-constraints.
+summaries. Record what the supervising or direct agent must actively watch for the next slice:
+quality risks, donor facts, plan gates, code-map state, blocked scope, visible-loop expectations,
+verification evidence, review findings, and user hard rules or prerequisites. The planning packet
+and validators are not substitutes for checking active watch items against primary artifacts.
 
 Midstream feature requests are planning inputs, not shortcuts around planning. If the user asks to
 add, include, swap, or "already support" a major subsystem after planning or implementation has

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Maintain a compact active-instruction ledger for agent work."""
+"""Maintain a compact active slice-watchlist for agent work."""
 
 from __future__ import annotations
 
@@ -12,18 +12,22 @@ from typing import Iterable
 
 
 LEDGER_DIR = Path("docs/agent-context")
-MARKDOWN_NAME = "IMPORTANT_USER_INSTRUCTIONS.md"
-JSONL_NAME = "important-user-instructions.jsonl"
+MARKDOWN_NAME = "SLICE_WATCHLIST.md"
+JSONL_NAME = "slice-watchlist.jsonl"
+LEGACY_MARKDOWN_NAME = "IMPORTANT_USER_INSTRUCTIONS.md"
+LEGACY_JSONL_NAME = "important-user-instructions.jsonl"
 
 
 @dataclass(frozen=True)
 class Entry:
     timestamp: str
     status: str
+    slice: str
     scope: str
-    summary: str
+    watch: str
     source: str
     trigger: str
+    gate: str
     evidence: str
 
 
@@ -43,6 +47,11 @@ def paths(project: Path) -> tuple[Path, Path]:
     return root / MARKDOWN_NAME, root / JSONL_NAME
 
 
+def legacy_paths(project: Path) -> tuple[Path, Path]:
+    root = project / LEDGER_DIR
+    return root / LEGACY_MARKDOWN_NAME, root / LEGACY_JSONL_NAME
+
+
 def load_entries(jsonl_path: Path) -> list[Entry]:
     if not jsonl_path.exists():
         return []
@@ -60,24 +69,35 @@ def load_entries(jsonl_path: Path) -> list[Entry]:
                 Entry(
                     timestamp=str(data.get("timestamp", "")),
                     status=str(data.get("status", "")),
+                    slice=str(data.get("slice", "global")),
                     scope=str(data.get("scope", "")),
-                    summary=str(data.get("summary", "")),
+                    watch=str(data.get("watch", data.get("summary", ""))),
                     source=str(data.get("source", "")),
                     trigger=str(data.get("trigger", "")),
+                    gate=str(data.get("gate", "")),
                     evidence=str(data.get("evidence", "")),
                 )
             )
     return entries
 
 
+def load_project_entries(project: Path, jsonl_path: Path) -> list[Entry]:
+    if jsonl_path.exists():
+        return load_entries(jsonl_path)
+    _, legacy_jsonl_path = legacy_paths(project)
+    return load_entries(legacy_jsonl_path)
+
+
 def render_markdown(entries: Iterable[Entry]) -> str:
     active = [entry for entry in entries if entry.status == "active"]
     other = [entry for entry in entries if entry.status != "active"]
     lines = [
-        "# Important User Instructions",
+        "# Active Slice Watchlist",
         "",
-        "This file is agent-maintained. It preserves active user constraints and decisions that must",
-        "survive chat compaction and worker handoffs.",
+        "This file is agent-maintained. It lists what the supervising or direct agent must keep",
+        "watching during each implementation slice: constraints, risks, gates, donor facts, user",
+        "rules, verification expectations, and rejection conditions that must survive compaction and",
+        "worker handoffs.",
         "",
         "## Active",
         "",
@@ -99,11 +119,13 @@ def render_markdown(entries: Iterable[Entry]) -> str:
 
 def render_entry(index: int, entry: Entry) -> list[str]:
     return [
-        f"{index}. **{entry.summary}**",
+        f"{index}. **{entry.watch}**",
         f"   - Status: `{entry.status}`",
+        f"   - Slice: `{entry.slice}`",
         f"   - Scope: `{entry.scope}`",
         f"   - Source: {entry.source}",
         f"   - Revisit when: {entry.trigger}",
+        f"   - Gate: {entry.gate or 'none recorded'}",
         f"   - Evidence: {entry.evidence or 'none recorded'}",
         f"   - Recorded: `{entry.timestamp}`",
         "",
@@ -120,29 +142,34 @@ def write_entries(markdown_path: Path, jsonl_path: Path, entries: list[Entry]) -
 
 def print_review(project: Path, markdown_path: Path, entries: list[Entry]) -> None:
     active = [entry for entry in entries if entry.status == "active"]
-    print(f"Instruction ledger: {markdown_path}")
+    print(f"Slice watchlist: {markdown_path}")
     print(f"Active entries: {len(active)}")
     for entry in active:
-        print(f"- [{entry.scope}] {entry.summary}")
+        print(f"- [{entry.slice} | {entry.scope}] {entry.watch}")
         print(f"  Revisit when: {entry.trigger}")
+        if entry.gate:
+            print(f"  Gate: {entry.gate}")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    init_parser = subparsers.add_parser("init", help="Create the ledger files if missing.")
+    init_parser = subparsers.add_parser("init", help="Create the watchlist files if missing.")
     init_parser.add_argument("--project", required=True)
 
-    review_parser = subparsers.add_parser("review", help="Print active ledger items.")
+    review_parser = subparsers.add_parser("review", help="Print active watchlist items.")
     review_parser.add_argument("--project", required=True)
 
-    append_parser = subparsers.add_parser("append", help="Append one ledger entry.")
+    append_parser = subparsers.add_parser("append", help="Append one watchlist entry.")
     append_parser.add_argument("--project", required=True)
-    append_parser.add_argument("--summary", required=True)
+    append_parser.add_argument("--watch", help="What the agent must actively watch or reject.")
+    append_parser.add_argument("--summary", help="Deprecated alias for --watch.")
+    append_parser.add_argument("--slice", default="current-slice")
     append_parser.add_argument("--scope", required=True)
     append_parser.add_argument("--source", required=True)
     append_parser.add_argument("--trigger", required=True)
+    append_parser.add_argument("--gate", default="")
     append_parser.add_argument("--evidence", default="")
     append_parser.add_argument(
         "--status",
@@ -153,7 +180,7 @@ def main() -> int:
     args = parser.parse_args()
     project = resolve_project(args.project)
     markdown_path, jsonl_path = paths(project)
-    entries = load_entries(jsonl_path)
+    entries = load_project_entries(project, jsonl_path)
 
     if args.command == "init":
         write_entries(markdown_path, jsonl_path, entries)
@@ -163,13 +190,18 @@ def main() -> int:
         print_review(project, markdown_path, entries)
         return 0
     if args.command == "append":
+        watch = args.watch or args.summary
+        if not watch:
+            raise SystemExit("append requires --watch or deprecated --summary")
         entry = Entry(
             timestamp=utc_now(),
             status=args.status,
+            slice=args.slice,
             scope=args.scope,
-            summary=args.summary,
+            watch=watch,
             source=args.source,
             trigger=args.trigger,
+            gate=args.gate,
             evidence=args.evidence,
         )
         entries.append(entry)

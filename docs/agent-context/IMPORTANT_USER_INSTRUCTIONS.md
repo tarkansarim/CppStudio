@@ -1,19 +1,7 @@
-# Important User Instructions
+# Superseded: Active Slice Watchlist
 
-This file is agent-maintained. It preserves active user constraints and decisions that must
-survive chat compaction and worker handoffs.
+This legacy file name is kept only to make the old route obvious during migration.
 
-## Active
-
-1. **Record important user instructions immediately and revisit them before supervision or closeout**
-   - Status: `active`
-   - Scope: `reusable-skill-supervision`
-   - Source: User: important information must be written down because compaction loses details
-   - Revisit when: Before worker nudges, slice approval, planning validation, commits, status summaries, or after context compaction
-   - Evidence: self-improvement:friction:68699857a7cc864e
-   - Recorded: `2026-05-17T01:31:46Z`
-
-
-## Superseded Or Historical
-
-- No historical entries.
+Use [SLICE_WATCHLIST.md](./SLICE_WATCHLIST.md) instead. The current mechanism is an active
+per-slice supervision watchlist for what an agent must watch, verify, block, or reject during each
+slice. User instructions are one input to that watchlist, not the whole purpose.

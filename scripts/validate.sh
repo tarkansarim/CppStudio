@@ -123,6 +123,7 @@ required_repo_files=(
     "skills/important-instruction-ledger/agents/openai.yaml"
     "skills/important-instruction-ledger/scripts/important_instruction_ledger.py"
     "skills/important-instruction-ledger/package-manifest.json"
+    "docs/agent-context/SLICE_WATCHLIST.md"
     "research/donor-library/trigger-regression-checklist.md"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/.gitignore"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md"
@@ -157,13 +158,13 @@ grep -q "Shared tool substrate before tool proliferation" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "Planning depth before source" \
     "${SKILL_DIR}/SKILL.md"
-grep -q "Important user instructions before source" \
+grep -q "Active slice watchlist before source" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "per-slice detailed planning gate" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "important-instruction-ledger" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
-grep -q "docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md" \
+grep -q "docs/agent-context/SLICE_WATCHLIST.md" \
     "${ROOT_DIR}/skills/important-instruction-ledger/SKILL.md"
 grep -q "Donor coverage matrix" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"

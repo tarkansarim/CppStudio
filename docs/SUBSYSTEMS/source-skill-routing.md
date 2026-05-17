@@ -16,6 +16,7 @@ generated-project workflow instructions.
 - `skills/agentic-control-harness/references/control-harness.md`
 - `skills/important-instruction-ledger/SKILL.md`
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
+- `docs/agent-context/SLICE_WATCHLIST.md`
 - `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md`
 - `skills/cpp-cuda-vulkan-studio/references/project-archetypes.md`
 
@@ -30,6 +31,7 @@ generated-project workflow instructions.
 - `skills/agentic-control-harness/references/control-harness.md`
 - `skills/important-instruction-ledger/SKILL.md`
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
+- `docs/agent-context/SLICE_WATCHLIST.md`
 - `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md`
 - `.codex/skills/cppstudio-repo-onboarding/SKILL.md`
 
@@ -157,11 +159,12 @@ generated-project workflow instructions.
 
 ## Current Supervised Worker Posture
 
-- Important user instructions are durable constraints, not chat-only context. When the user marks a
-  rule, prerequisite, correction, or decision as important, agents use `important-instruction-ledger`
-  to write it to `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md` in the target or owning source
-  repo, then review active entries before worker nudges, source edits, slice approval, commits, and
-  status summaries.
+- Slice watchlists are active supervision state, not passive chat notes. For substantial slices,
+  worker nudges, direct source edits, slice approval, commits, and closeout, agents use
+  `important-instruction-ledger` to write or review `docs/agent-context/SLICE_WATCHLIST.md` in the
+  target or owning source repo. User constraints are one input; donor facts, plan gates, code-map
+  state, visible-loop expectations, blocked scope, verification risks, review findings, and prior
+  misses are also watch items.
 - Implementation slice approval requires the relevant Level 4 readiness packet as a primary
   artifact. Reading an old plan, passing the planning guard, or receiving a worker summary is not
   enough; the supervisor rejects source work when the detailed packet for that slice is missing.

@@ -1,4 +1,4 @@
 interface:
-  display_name: "Important Instruction Ledger"
-  short_description: "Durable active constraints for agents."
-  default_prompt: "Use $important-instruction-ledger to record and revisit important user instructions before planning, worker supervision, edits, closeout, or commits."
+  display_name: "Active Slice Watchlist"
+  short_description: "Per-slice supervision watchlist for what agents must watch, verify, or reject."
+  default_prompt: "Use $important-instruction-ledger as an active slice watchlist before planning, worker supervision, direct edits, closeout, or commits."

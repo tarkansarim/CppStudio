@@ -4,11 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
-- Added a bundled `important-instruction-ledger` skill and script so durable user constraints, hard
-  rules, prerequisites, and supervision requirements are written to repo-local
-  `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md` / JSONL before compaction can erase them, then
-  rechecked before planning, worker nudges, source edits, slice approval, commits, and closeout
-  claims.
+- Reframed `important-instruction-ledger` as an active per-slice watchlist instead of passive
+  user-note capture. New entries now target `docs/agent-context/SLICE_WATCHLIST.md` / JSONL and
+  describe what supervising or direct agents must watch, verify, block, or reject during each slice;
+  legacy `IMPORTANT_USER_INSTRUCTIONS.md` files remain compatibility pointers.
+- Added the original bundled `important-instruction-ledger` skill and script for durable supervision
+  constraints; the active path is now the slice-watchlist behavior above.
 - Hardened slice supervision so substantial implementation slices require a matching Level 4
   readiness packet as a primary artifact; a worker reading the plan, passing the planning guard, or
   reporting green validation no longer substitutes for detailed per-slice planning.
