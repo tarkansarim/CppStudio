@@ -37,8 +37,11 @@ The pre-plan research brief should include:
 - shallow whole-product scaffold plan: all major software sections the product is expected to need,
   rough priority, dependencies, donor/reference route, and whether each section looks sequential,
   parallelizable, or blocked
-- donor coverage matrix: high-salience donor and peer-tool expectations mapped to included,
-  deferred, rejected, or blocked capabilities with reasons and validation signals
+- donor feature disposition matrix: high-salience donor and peer-tool expectations mapped to
+  included, deferred, rejected, or blocked capabilities with reasons, return conditions or owners,
+  and validation signals. Donor citation alone is not enough; for donor shaders, brushes, renderers,
+  solvers, UI patterns, importers, optimizers, or subsystems, important donor features must be
+  broken down before the plan is written so omitted features cannot disappear silently.
 - primary user-visible loop for interactive tools: the first target user action, the state it changes,
   the visible result, how milestone 1 proves it, and which secondary features are blocked until it
   works
@@ -177,29 +180,36 @@ Reason if lower depth is acceptable:
 
 Level 0 records target context and constraints. Level 1 records local donors plus current
 web/upstream/peer research. Level 2 maps the whole expected software surface. Level 3 converts donor
-and peer-tool expectations into explicit include/defer/reject/block decisions. Level 4 prepares a
-single implementation slice. Level 5 records source edits and closeout proof.
+and peer-tool expectations into explicit feature disposition decisions. Level 4 prepares a single
+implementation slice. Level 5 records source edits and closeout proof.
 
 For serious native C++ GPU, artist, game, VFX, DCC, simulation-editor, or technical-art tools,
 default to Level 3 before any source files are created. A Level 2 scaffold is useful coverage, but it
 does not prove the plan caught the domain fundamentals.
 
-The Level 3 donor coverage matrix should use this shape:
+The Level 3 donor feature disposition matrix should use this shape:
 
 ```text
-Donor coverage matrix:
-Capability or quality contract:
+Donor feature disposition matrix:
+Donor or peer source:
+Feature or quality contract:
 Evidence source:
 Plan section or slice:
 State: included | deferred | rejected | blocked
 Reason:
+If deferred/rejected/blocked, return condition or owner:
 Milestone validation signal:
 ```
 
 Do not collapse multiple fundamentals into one broad row. If peer tools or donors imply separate
 contracts, such as an authoring surface, first visible loop, shared tool substrate, input path,
-selection state, renderer feedback, persistence, validation, or performance proof, map them
-separately so omissions are visible.
+selection state, renderer feedback, persistence, validation, shader features, brush behavior, or
+performance proof, map them separately so omissions are visible. If a donor materially shapes a plan,
+important donor features must be inventoried before plan creation even when the current slice
+implements only a subset. For donor shaders, break down stages/passes, entry points, inputs/outputs,
+descriptor/uniform contracts, spaces/units, variants/macros, render states, sampling/filtering,
+lighting/material terms, quality features, edge cases, and validation signals before deciding what
+the slice includes or defers.
 
 For substantial software, add a Level 2 shallow whole-product scaffold and a Level 4 slice-readiness
 rule. The scaffold prevents missing major systems, but it should stay shallow enough to avoid fake
@@ -305,8 +315,9 @@ Collect these facts before committing to architecture:
   plan is valid only because the task is tiny, scoped, or explicitly lightweight.
 - Whole-product scaffold: major sections, rough priority order, dependencies, donor/reference routes,
   and sequential/parallel/blocker classification.
-- Donor coverage matrix: high-salience donor and peer expectations, evidence source, include/defer/
-  reject/block disposition, reason, and validation signal.
+- Donor feature disposition matrix: high-salience donor and peer expectations, donor/source,
+  feature/contract, evidence source, include/defer/reject/block disposition, reason, return
+  condition or owner, and validation signal.
 - Primary visible loop for interactive tools: the target user's first meaningful action, the state it
   changes, the visible result, the concrete first proof object/state, the first proof, and the
   secondary breadth that must wait.

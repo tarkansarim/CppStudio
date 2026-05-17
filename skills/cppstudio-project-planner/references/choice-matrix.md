@@ -50,15 +50,21 @@ deeply designed. A slice with only scaffold-level detail is blocked from impleme
 readiness packet names donors, contracts, shared/unique behavior, expected files, validation,
 rollback/checkpoint state, and parallel safety.
 
-The Level 3 donor coverage matrix maps high-salience donor and peer-tool expectations to
-include/defer/reject/block decisions with reasons and validation signals. It is the main guard
-against accepting a plausible scaffold that forgot a fundamental capability.
+The Level 3 donor feature disposition matrix maps high-salience donor and peer-tool expectations to
+include/defer/reject/block decisions with reasons, return conditions or owners, and validation
+signals. It is the main guard against accepting a plausible scaffold that forgot a fundamental
+capability. If the plan says it uses a donor shader, brush, renderer, solver, UI pattern, importer,
+optimizer, or subsystem, the matrix must inventory the important donor features; otherwise the donor
+was only name-dropped and the plan is not implementation-ready. For shader donors, this breakdown
+comes before planning and covers stages/passes, entry points, inputs/outputs, descriptor/uniform
+contracts, spaces/units, variants/macros, render states, sampling/filtering, lighting/material
+terms, quality features, edge cases, and validation signals.
 
 | Subsystem | Minimum Evidence Before Recommendation | Decision Record Must Name |
 | --- | --- | --- |
 | Planning depth contract | Project scale, user intent, local/repo state, whether the task is substantial or tiny | Current Level 0-5 state, required depth before source, and any reason lower depth is acceptable |
 | Whole-product scaffold | Product orientation, target users, peer workflow, local donor routes, major expected software sections | Major sections, rough priority, dependencies, donor/reference route, and scaffold-only vs ready-detail state |
-| Donor coverage matrix | High-salience donor and peer-tool expectations, research brief, local donor routes, accepted/deferred decisions | Capability/contract, evidence source, plan section, included/deferred/rejected/blocked state, reason, validation signal |
+| Donor feature disposition matrix | High-salience donor and peer-tool expectations, research brief, local donor routes, accepted/deferred decisions | Donor/source, feature/contract, evidence source, plan section, included/deferred/rejected/blocked state, reason, return condition/owner, validation signal |
 | Capability priority ladder | Primary visible loop, shared substrate gates, peer-tool workflow order, technical prerequisites | What to create first, minimum completeness before moving on, next adjacent capability, and delayed breadth |
 | Slice readiness packet | Current repo/code-map state, donor links, source/API contracts, validation route, rollback/checkpoint status | Objective, donors, shared infrastructure, concrete first proof object/state, unique behavior, expected files, blocked scope, validation evidence |
 | Parallelization map | Major sections, shared contracts, ownership boundaries, C++/GPU/UI coupling risks | Parallel candidates, frozen contracts required first, owned files/subsystems, integration/validation handoffs, sequential risks |

@@ -160,7 +160,18 @@ When this skill is active, work like a native C++ GPU systems engineer:
   VFX, DCC, simulation-editor, and technical-art tools default to Level 3 before source files are
   created. A Level 2 scaffold prevents blind spots, but it is not permission to code each future
   section. Level 3 must map high-salience donor and peer-tool expectations to included, deferred,
-  rejected, or blocked capabilities with reasons and validation signals. Before touching code for any
+  rejected, or blocked capabilities with reasons and validation signals. Donor citation alone is not
+  evidence: when a shader, brush, renderer, solver, UI pattern, importer, optimizer, or subsystem
+  donor is used, the agent must first break down the donor code or official behavior docs into its
+  important elements before creating the plan. For shaders, that means stages/passes, entry points,
+  inputs/outputs, descriptor and uniform contracts, coordinate spaces and units, variants/macros,
+  render states, sampling/filtering, lighting/material terms, quality features, edge cases, and
+  validation signals. For tools and subsystems, break down the equivalent state, data-flow, input,
+  ownership, lifecycle, performance, and UI contracts. The plan must then mark each important donor
+  feature as included, deferred, rejected, or blocked. Silent omissions are plan failures, even when
+  the resulting scaffold looks plausible. If a feature is deferred or rejected, name the reason, the
+  slice or milestone where it may return, and the validation signal that proves the current omission
+  is intentional rather than forgotten. Before touching code for any
   scaffolded slice, write or update a Level 4 readiness packet with the current code-map state,
   donors and peer links to open, source/API contracts to inspect, shared infrastructure reused,
   concrete first proof object/state for visible or domain behavior, unique behavior owned, expected

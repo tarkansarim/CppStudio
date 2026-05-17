@@ -119,7 +119,14 @@ stable entries stay collapsed under the expander.
   evidence, rollback/checkpoint state, and parallel safety. Slice supervision now has an active
   watchlist skill and repo-local `docs/agent-context/SLICE_WATCHLIST.md` path so the supervising or
   direct agent keeps checking what must be watched, verified, blocked, or rejected throughout each
-  slice instead of treating compaction-sensitive constraints as passive notes.
+  slice instead of treating compaction-sensitive constraints as passive notes. Donor-backed plans now
+  also require explicit donor feature disposition: important features from donor shaders, brushes,
+  renderers, solvers, UI patterns, importers, optimizers, or subsystems must be marked included,
+  deferred, rejected, or blocked with reasons and validation signals before source work, so an agent
+  cannot cite a donor while silently leaving out most of what made it useful. Shader and donor-code
+  use now requires a pre-plan breakdown of stages, passes, IO, descriptors/uniforms, spaces,
+  variants, states, quality features, edge cases, and validation signals before planning from that
+  donor.
 - `fa6f957` - Added skill-load hygiene validation so repo and installed skill roots reject backup
   artifacts, duplicate loaded skill names, and oversized startup descriptions before rollout.
 - `9dc4ae3` - Required concrete proof objects in planning so visible/domain slices name the actual

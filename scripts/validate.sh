@@ -166,8 +166,12 @@ grep -q "important-instruction-ledger" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "docs/agent-context/SLICE_WATCHLIST.md" \
     "${ROOT_DIR}/skills/important-instruction-ledger/SKILL.md"
-grep -q "Donor coverage matrix" \
+grep -q "Donor Feature Disposition Matrix" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "skim donor code" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "important elements before creating the plan" \
+    "${SKILL_DIR}/SKILL.md"
 grep -q "Parallel planning is an ownership map" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "Planning depth contract:" \
@@ -190,7 +194,9 @@ grep -q "First solid tool:" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
 grep -q "Whole-product scaffold:" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
-grep -q "Donor coverage matrix:" \
+grep -q "Donor feature disposition matrix:" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+grep -q "before plan creation" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
 grep -q "Slice readiness packet:" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
@@ -204,7 +210,9 @@ grep -q "Shared tool substrate" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "Capability priority ladder" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
-grep -q "Donor coverage matrix" \
+grep -q "Donor feature disposition matrix" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
+grep -q "For shader donors, this breakdown" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "Slice readiness packet" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"

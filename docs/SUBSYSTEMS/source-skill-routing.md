@@ -140,6 +140,14 @@ generated-project workflow instructions.
   implementation slice still requires a Level 4 packet naming donors, source/API contracts, shared
   and unique behavior, expected files, blocked scope, validation evidence, rollback/checkpoint state,
   and parallel safety before code begins.
+- Donor coverage now means explicit donor feature disposition, not citation. If a worker uses a
+  donor shader, brush, renderer, solver, UI pattern, importer, optimizer, or subsystem, the plan must
+  inventory important donor features and mark each one included, deferred, rejected, or blocked with
+  reasons, owner/return condition, and validation signal. For shader donors, agents break down
+  stages/passes, entry points, inputs/outputs, descriptor/uniform contracts, spaces/units,
+  variants/macros, render states, sampling/filtering, lighting/material terms, quality features, edge
+  cases, and validation signals before planning. Silent omissions from donors are source planning
+  failures.
 - Parallelization planning is a map, not an automatic worker launch. Plans should identify candidate
   independent lanes, frozen shared contracts, file/subsystem ownership, and integration/validation
   handoffs, while keeping tightly coupled C++/GPU/UI/resource-lifetime work sequential until the

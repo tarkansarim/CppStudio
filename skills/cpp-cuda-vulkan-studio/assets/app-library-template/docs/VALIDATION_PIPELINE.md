@@ -226,6 +226,15 @@ resource updates, serialization, harness readback, and scenario proof should be 
 a donor-backed reason makes a feature unique. Duplicated common behavior across tools is a
 validation smell.
 
+For donor-backed slices, validate donor feature disposition before accepting source work. If a plan
+uses a donor shader, brush, renderer, solver, UI pattern, importer, optimizer, or subsystem, the
+important donor features must be listed as included, deferred, rejected, or blocked with reasons and
+validation signals. For shader donors, the pre-plan breakdown should include stages/passes, entry
+points, inputs/outputs, descriptor/uniform contracts, coordinate spaces and units, variants/macros,
+render states, sampling/filtering, lighting/material terms, quality features, edge cases, and
+validation signals. A green build or plausible visual result does not prove the donor was followed
+when important features silently disappeared.
+
 For user-reported bugs, add a before/after proof before presenting the fix:
 
 1. Reproduce the reported behavior first through the closest user-equivalent command, scenario, or

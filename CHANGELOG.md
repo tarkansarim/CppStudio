@@ -4,6 +4,13 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Tightened donor-backed planning so Level 3 coverage now requires explicit donor feature
+  disposition. Agents must inventory important features from donor shaders, brushes, renderers,
+  solvers, UI patterns, importers, optimizers, or subsystems and mark each included, deferred,
+  rejected, or blocked with reasons, owners/return conditions, and validation signals before source
+  work; silent donor omissions are plan failures. Shader and donor-code use now requires a pre-plan
+  breakdown of stages, passes, IO, descriptors/uniforms, spaces, variants, states, quality features,
+  edge cases, and validation signals so agents cannot skim donor code and then plan from memory.
 - Reframed `important-instruction-ledger` as an active per-slice watchlist instead of passive
   user-note capture. New entries now target `docs/agent-context/SLICE_WATCHLIST.md` / JSONL and
   describe what supervising or direct agents must watch, verify, block, or reject during each slice;

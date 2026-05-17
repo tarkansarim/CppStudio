@@ -108,6 +108,9 @@ skills, and watch-mode publishing behavior.
 - Static validation should continue guarding OSTM-first GUI proof language and donor-realignment
   language so future edits do not soften visible bug loops back to direct foreground launches,
   backend-only proof, or training-data patching after repeated failures.
+- Static validation should continue guarding donor feature disposition language so future planner
+  edits cannot regress to broad donor citation without inventorying included, deferred, rejected, or
+  blocked donor features, including the pre-plan donor shader/code breakdown requirement.
 - Trigger prompt rendering supports portable installed-path evidence so checked-in trigger result
   artifacts can use `${CODEX_HOME:-$HOME/.codex}` and `${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}`
   instead of maintainer-local absolute paths.

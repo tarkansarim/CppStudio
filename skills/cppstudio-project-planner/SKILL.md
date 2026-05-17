@@ -218,12 +218,14 @@ coverage and quality contract. It must map high-salience donor and peer-tool exp
 plan:
 
 ```text
-Donor coverage matrix:
-Capability or quality contract:
+Donor feature disposition matrix:
+Donor or peer source:
+Feature or quality contract:
 Evidence source:
 Plan section or slice:
 State: included | deferred | rejected | blocked
 Reason:
+If deferred/rejected/blocked, return condition or owner:
 Milestone validation signal:
 ```
 
@@ -231,10 +233,20 @@ Do not hide multiple important donor expectations inside one broad row such as "
 "renderer", "GUI", or "tooling". Split the expectations until a reviewer can tell whether important
 fundamentals were included, consciously deferred, rejected with reason, or blocked by an earlier
 proof. If a high-salience peer-tool or donor contract is missing from the matrix, the plan is not
-ready to implement.
+ready to implement. Donor citation by itself is invalid: when a plan says it is using a donor
+shader, brush, renderer, solver, UI pattern, importer, optimizer, or subsystem, it must inventory the
+important donor features before the plan is written, not retroactively after coding starts. Do not
+skim donor code. Break the donor down into the elements that would make an implementation materially
+different if they were omitted: for shaders, stages/passes, entry points, inputs/outputs,
+descriptor/uniform contracts, coordinate spaces and units, variants/macros, render states,
+sampling/filtering, lighting/material terms, quality features, edge cases, and validation signals;
+for tools and subsystems, the equivalent state, data-flow, input, ownership, lifecycle, performance,
+and UI contracts. Silent omissions are not allowed. If the current slice implements only a subset,
+the omitted features must still appear as deferred, rejected, or blocked with reasons, owner/slice,
+and validation signals so the omission is visible and reviewable.
 
 Use explicit section headings when presenting this planning structure: `Planning Depth Contract`,
-`Whole-Product Scaffold`, `Donor Coverage Matrix`, `Capability Priority Ladder`,
+`Whole-Product Scaffold`, `Donor Feature Disposition Matrix`, `Capability Priority Ladder`,
 `Parallelization Map`, and `Slice Readiness Packet`. Do not hide the priority ladder inside generic
 "next steps" or "priority rules"; it must say what gets made first, how complete it must be before
 the next capability unlocks, and what breadth remains blocked.
@@ -374,6 +386,13 @@ Every substantial plan should include:
   routes, and sequential/parallel/blocker classification
 - donor coverage matrix: high-salience donor/peer expectations mapped to included, deferred,
   rejected, or blocked plan sections with reasons and validation signals
+- donor feature disposition: for each donor shader, brush, renderer, solver, UI pattern, importer,
+  optimizer, or subsystem that materially shapes the plan, the important donor features are
+  inventoried and marked included, deferred, rejected, or blocked; silent omissions from donors are
+  plan failures
+- pre-plan donor-code breakdown: when donor code or official behavior docs are used, break down the
+  donor's important elements before writing the plan so the matrix is derived from observed donor
+  contracts rather than an eyeballed summary
 - primary user-visible loop: user action, state change, visible result, proof method, and first slice
   that proves it before secondary feature breadth
 - concrete first proof object/state: the domain object, scene, asset, graph, primitive, dataset, or
