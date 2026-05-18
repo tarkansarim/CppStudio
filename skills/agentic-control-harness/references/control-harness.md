@@ -224,6 +224,14 @@ the same GUI path a user uses. Backend routes can prove the semantic command lay
 prove tool buttons, palette clicks, focus, event routing, DPI scaling, widget geometry, or viewport
 hit tests.
 
+For user-facing tools, verification starts from the product-visible workflow. Harness endpoints,
+fake-host smokes, and CLI paths are supporting infrastructure until a visible control or equivalent
+user-facing affordance drives the feature and produces comparable state plus visual/session
+evidence. If the app asks users to record repro sessions for agents, the app should expose
+record/stop/replay or equivalent capture controls with status and latest artifact path; the harness
+can inspect and automate those controls, but it should not hide the only recorder behind a command
+line.
+
 For desktop apps, add a human-launch scenario for the documented launch command. Start the exact
 command nonblocking while capturing stdout and stderr, identify the intended app process and window
 by pid, executable/app id, toolkit class or `WM_CLASS`, and title when available, and reject terminal

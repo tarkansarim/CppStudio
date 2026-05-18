@@ -267,6 +267,18 @@ grep -q "viewport-session-testing" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "record/replay real widget" \
     "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
+grep -q "User-facing verification is the acceptance surface" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "visible record/stop/replay" \
+    "${ROOT_DIR}/skills/viewport-session-testing/SKILL.md"
+grep -q "held-button or stylus-contact move samples" \
+    "${ROOT_DIR}/skills/viewport-session-testing/references/viewport-session-testing.md"
+grep -q "primary_button_down" \
+    "${SKILL_DIR}/assets/app-library-template/include/{{PROJECT_NAME}}/viewport_session.hpp"
+grep -q "primary_button_down" \
+    "${SKILL_DIR}/assets/app-library-template/src/testing/viewport_session.cpp"
+grep -q "visible record/stop/replay" \
+    "${SKILL_DIR}/assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md"
 grep -q "app-owned viewport-session testing lane" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "Viewport Session Testing" \

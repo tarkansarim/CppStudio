@@ -4,6 +4,13 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Made user-facing verification a first-class acceptance gate for interactive features. Planning,
+  GUI/HUD, control-harness, and viewport-session skills now require the real visible control,
+  interaction shape, committed state, and visible result before a feature or bug fix can be claimed;
+  hidden CLI recorders, backend commands, fake-host smokes, OSTM jobs, JSON state, or nonblank
+  screenshots are supporting evidence only. Generated viewport-session scaffolds now record button
+  state and validate held-button move samples so continuous gestures cannot be represented by a
+  press/release-only smoke.
 - Added a bundled `viewport-session-testing` skill plus generated-project runtime scaffold for
   app-owned UI/viewport session recording and replay. New scaffolds include a host-adapter contract,
   fake-host smoke test, copied `run_viewport_session_smoke.py` helper, viewport-session docs, CTest

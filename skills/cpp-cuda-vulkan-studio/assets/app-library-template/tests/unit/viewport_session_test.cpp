@@ -1,5 +1,6 @@
 #include "{{PROJECT_NAME}}/viewport_session.hpp"
 
+#include <algorithm>
 #include <filesystem>
 #include <iostream>
 
@@ -34,9 +35,18 @@ int main() {
         std::cerr << "viewport session events did not round-trip\n";
         return 4;
     }
+    const auto held_move_count = std::count_if(
+        events.begin(), events.end(), [](const {{CPP_NAMESPACE}}::ViewportSessionEvent& event) {
+            return event.type == {{CPP_NAMESPACE}}::ViewportSessionEventType::mouse_move &&
+                   event.primary_button_down;
+        });
+    if (held_move_count < 1) {
+        std::cerr << "viewport session smoke did not prove a held-button move sample\n";
+        return 5;
+    }
     if (report.after.active_tool != "primary_tool" || !report.after.last_hit_point.has_value()) {
         std::cerr << "viewport session did not commit visible tool state\n";
-        return 5;
+        return 6;
     }
 
     return 0;

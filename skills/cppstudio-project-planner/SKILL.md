@@ -163,6 +163,14 @@ the primary loop has comparable before/after or input-to-result evidence. If a p
 while the primary loop is still invisible, fixture-only, or unverified, repair the plan before source
 files are created.
 
+The visible loop must also classify the user interaction shape before implementation. A visible
+button click, click-and-drag, continuous stroke, scrub, lasso, gizmo drag, camera orbit, timeline
+drag, node connection, stylus stroke, or palette selection has different acceptance evidence. The
+slice cannot prove a continuous or compound interaction with a single click/dab smoke. The plan must
+name the expected gesture, the sample/readback fields that prove it happened through the real UI
+path, the visible control or affordance used to initiate it, and the before/after artifact that lets
+another agent or user inspect the result.
+
 For that primary loop, vague nouns are not enough. The plan must name the concrete first proof
 object, authored item, scene state, dataset, primitive, fixture, graph, asset, or interaction target
 that makes the loop visible in the target domain, and it must justify that choice from donor or
@@ -312,8 +320,10 @@ facade over the same API, and which state/log/visual observation surfaces are ne
 For interactive viewport or GUI tools, also include an app-owned viewport-session testing lane by
 default. This is the real user-path recorder/replayer for viewport clicks, stylus strokes, tool
 buttons, timelines, node graphs, gizmos, camera controls, screenshots, semantic traces, and
-before/after bug proof. It does not replace the control harness; it complements it. If a project is
-headless or the user opts out, record why the lane is not applicable.
+before/after bug proof. It does not replace the control harness; it complements it. For user-facing
+tools, the lane needs visible record/stop/replay or equivalent capture controls in the app once the
+first interactive surface exists, not only a hidden CLI smoke path. If a project is headless or the
+user opts out, record why the lane is not applicable.
 
 ## What To Load
 
@@ -403,6 +413,9 @@ Every substantial plan should include:
   contracts rather than an eyeballed summary
 - primary user-visible loop: user action, state change, visible result, proof method, and first slice
   that proves it before secondary feature breadth
+- interaction-shape contract: click, click-drag, continuous stroke, scrub, lasso, gizmo drag,
+  camera orbit, timeline drag, node connection, stylus stroke, palette selection, or other shape,
+  with the real UI affordance, event samples/readback, and before/after evidence needed to prove it
 - concrete first proof object/state: the domain object, scene, asset, graph, primitive, dataset, or
   interaction target that makes the visible loop real, with donor/peer justification and separate
   tiny fixtures when numeric unit tests need them

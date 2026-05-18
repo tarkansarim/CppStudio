@@ -116,6 +116,13 @@ canvas transforms, committed hit/edit points, and fresh visual evidence for poin
 Backend command success or a generic model revision is not enough when the user-visible question is
 "did the click hit the right control or mesh point?"
 
+Do not treat user-facing verification as a late polish pass. For interactive product surfaces, the
+visible control, gesture shape, and visible result are the acceptance surface. A hidden CLI recorder,
+backend state change, OSTM job, or fake-host smoke can support verification, but it cannot replace a
+scenario or readback that proves the actual visible widget/control and user gesture. If the product
+expects users to record sessions for agents, expose record/stop/replay or equivalent capture
+affordances in the app and verify that they create replayable artifacts.
+
 For user-reported GUI bugs, closeout requires before/after evidence for the reported behavior. First
 reproduce the visible failure through the closest real user path and capture the before state:
 visible controls, active selection/mode, input sequence, latency, pointer mapping, screenshot or

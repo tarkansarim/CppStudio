@@ -139,9 +139,12 @@ nonblank screenshot, or extra set of modes is not enough. The gate needs:
 ```text
 Primary visible loop:
 User action:
+Interaction shape:
 State changed:
 Visible result:
+Visible control or affordance:
 Concrete first proof object/state:
+Gesture/sample readback:
 Milestone-1 proof:
 Blocked breadth until proven:
 Evidence sources:
@@ -151,6 +154,13 @@ The concrete proof object/state should be the first domain-appropriate thing a u
 manipulate, not a vague sample. Name the primitive, scene, generated asset, graph, dataset, fixture,
 or authored state and why donors or peer tools make it the right first proof. Keep tiny deterministic
 fixtures separate from the user-visible proof object when both are needed.
+
+The interaction shape is part of the contract, not an implementation detail. A click, click-drag,
+continuous stroke, scrub, lasso, gizmo drag, camera orbit, timeline drag, node connection, stylus
+stroke, or palette selection needs proof that matches that shape. Do not let a single click, hidden
+backend command, fake-host smoke, or press/release at one coordinate stand in for a sustained or
+compound user action. Name the event samples, latency/readback, hit or control state, and visible
+before/after artifact that will prove the real user-facing path.
 
 For tool families with multiple sibling tools, add a shared-substrate gate before adding tool count:
 
@@ -245,6 +255,9 @@ Source/API contracts to inspect:
 Shared infrastructure reused:
 Unique behavior owned by this slice:
 Concrete first proof object/state:
+User-facing interaction shape:
+Visible controls/affordances:
+Gesture/sample assertions:
 Expected files/subsystems:
 Blocked scope:
 Validation evidence:
@@ -321,6 +334,10 @@ Collect these facts before committing to architecture:
 - Primary visible loop for interactive tools: the target user's first meaningful action, the state it
   changes, the visible result, the concrete first proof object/state, the first proof, and the
   secondary breadth that must wait.
+- Interaction shape and user-facing verification: the visible control or affordance, whether the
+  action is a click, drag, continuous stroke, scrub, lasso, gizmo move, camera orbit, timeline drag,
+  node connection, stylus stroke, or palette selection, and which event samples, state readback,
+  latency, hit/control data, screenshots, or session artifacts prove the real UI path.
 - Shared tool substrate for sibling tools: common state, event, input, validation, resource-update,
   serialization, and harness behavior that must not be duplicated per tool.
 - Slice readiness packets: which future sections are scaffold-only and what donor-backed packet must
@@ -363,7 +380,8 @@ Collect these facts before committing to architecture:
   or explicitly deferred by the user. A merely pending code-map choice blocks implementation. For
   existing repos, require the code-map readiness audit before enabling it.
 - Validation: build presets, CTest labels, shader compilation, Vulkan validation, Compute Sanitizer,
-  offscreen screenshots, profiler lanes, CI, and first milestone acceptance tests.
+  offscreen screenshots, profiler lanes, CI, first milestone acceptance tests, and user-facing
+  viewport/session proof for interactive controls and gesture shapes.
 
 ## Artist Tool Input Checklist
 

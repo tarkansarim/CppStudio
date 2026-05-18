@@ -124,6 +124,12 @@ control harness itself.
   surrogate for what the user is seeing. For visible bugs, the surrogate must be compared with the
   actual visual symptom; a JSON state change, route inventory, or internal revision number cannot
   stand in for a user-facing button, selection, viewport hit, stroke, or rendered result.
+- Keep user-facing verification primary. The control harness is not allowed to become a substitute
+  for proving the product-visible workflow. For interactive tools, pair harness commands with
+  viewport-session scenarios or equivalent GUI probes that exercise the real visible control and
+  gesture shape. If users are expected to record repro sessions for agents, the app should expose a
+  visible record/stop/replay or equivalent capture affordance and the harness should report its
+  state and latest artifact path.
 - Design observation as sonar, not as decoration. At minimum, expose text-queryable state, recent
   logs, warnings/non-fatal errors, command availability, active mode/focus/selection, and visual or
   UI readback for user-visible changes. When a screenshot or render target is the only evidence for

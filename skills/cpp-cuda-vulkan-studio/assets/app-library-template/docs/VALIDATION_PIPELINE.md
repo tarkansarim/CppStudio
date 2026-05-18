@@ -18,6 +18,12 @@ scripts/run_viewport_session_smoke.py --build-dir build/dev
 For visible UI, viewport, brush, paint, sculpt, groom, timeline, node, camera, or gizmo bugs, record
 or replay a user-equivalent viewport session and compare before/after `report.json`, state files,
 semantic traces, and fresh captures before claiming the bug is fixed.
+The proof must exercise the user-facing control and the actual interaction shape. For continuous
+actions such as strokes, drags, scrubs, camera orbits, timeline drags, node wires, and gizmo moves,
+assert held-button or stylus-contact move samples, pointer/hit/readback along the path, and a
+visible or semantic delta; do not use a single click/dab smoke as proof. Once the app has a real
+interactive surface, visible record/stop/replay or equivalent capture controls should create
+replayable artifacts so users can hand agents a repro session without hidden CLI knowledge.
 
 Self-hosted CI runner expectations and artifact paths are documented in
 [GPU_RUNNER_CI.md](GPU_RUNNER_CI.md).

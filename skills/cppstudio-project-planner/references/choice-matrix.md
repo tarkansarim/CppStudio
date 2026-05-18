@@ -80,6 +80,7 @@ terms, quality features, edge cases, and validation signals.
 | Validation/profiling | Project risk, target platform, available toolchain, required evidence threshold | First milestone acceptance tests, profiler/sanitizer/tool-gap notes |
 | AI/runtime integration | AI/runtime donor category, model/data boundaries, CUDA/Vulkan lane constraints | Runtime/dependency choice, model artifact policy, numerical/performance tests |
 | Product visible loop | Peer-tool workflow, domain donor route, GUI/product-surface rules, validation route | User action, state changed, visible result, concrete proof object/state, proof method, and secondary breadth blocked until proven |
+| User-facing interaction shape | Peer-tool interaction pattern, toolkit/input path, viewport-session route, and control-harness readback | Click, drag, continuous stroke, scrub, lasso, gizmo move, camera orbit, timeline drag, node connection, stylus stroke, palette selection, or other gesture; visible control or affordance; required samples/readback/latency/hit data; before/after proof |
 | Shared tool substrate | Planned sibling tools, common input/state/validation/resource behavior, donor patterns | Shared substrate owner, per-tool unique behavior, duplication risks, and first-tool proof before siblings |
 
 ## Template And Archetype Choices
@@ -144,7 +145,9 @@ manual verification.
 For interactive viewport or GUI tools, pair the control harness with `viewport-session-testing`.
 The control harness proves command/readback surfaces; viewport-session testing records and replays
 the visible user path: tool clicks, pointer/stylus strokes, camera/gizmo/timeline/node interactions,
-screenshots, semantic traces, and before/after bug reports.
+screenshots, semantic traces, and before/after bug reports. For user-facing tools, plan visible
+record/stop/replay or equivalent capture affordances once the first interactive surface exists so
+the user can hand the agent a real repro session without needing hidden CLI knowledge.
 
 ## GUI/HUD Choices
 

@@ -37,7 +37,7 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-17T08:55:45Z`
 
-4. **Implement viewport session testing as a real generated runtime scaffold plus skill routing, not only advisory prose; extract the proven grooming-style session replay and paint/simulation scenario concepts without copying app-specific code.**
+4. **Implement viewport session testing as a real generated runtime scaffold plus skill routing, not only advisory prose; extract production grooming-style session replay and paint/simulation GUI scenario concepts without copying app-specific code.**
    - Status: `active`
    - Slice: `viewport-session-testing lane`
    - Scope: `reusable-skill`
@@ -46,6 +46,16 @@ worker handoffs.
    - Gate: Skill exists, template runtime/files/docs/scripts exist, validation includes them, rollout succeeds, and trigger/behavior evidence is reported.
    - Evidence: none recorded
    - Recorded: `2026-05-18T00:47:44Z`
+
+5. **User-facing verification is the primary acceptance surface for interactive features: backend/control/OSTM success is supporting evidence only until the real visible control, gesture shape, and visible result are proven.**
+   - Status: `active`
+   - Slice: `user-facing verification gate`
+   - Scope: `reusable-skill`
+   - Source: user correction: user-facing verification must not be an afterthought
+   - Revisit when: before source patch closeout, rollout, trigger-lane claim, or approving interactive worker slices
+   - Gate: Reject reusable skill changes or worker slices that let hidden CLI/backend/event smokes stand in for visible user workflow proof.
+   - Evidence: none recorded
+   - Recorded: `2026-05-18T07:09:04Z`
 
 
 ## Superseded Or Historical

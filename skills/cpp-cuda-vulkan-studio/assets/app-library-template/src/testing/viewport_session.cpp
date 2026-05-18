@@ -48,6 +48,10 @@ std::string json_number(std::string_view key, double value) {
     return out.str();
 }
 
+std::string json_bool(std::string_view key, bool value) {
+    return "\"" + std::string(key) + "\":" + (value ? "true" : "false");
+}
+
 std::string json_uint(std::string_view key, std::uint64_t value) {
     return "\"" + std::string(key) + "\":" + std::to_string(value);
 }
@@ -140,6 +144,22 @@ double find_json_number(std::string_view line, std::string_view key, double fall
     return parsed.ec == std::errc{} ? value : fallback;
 }
 
+bool find_json_bool(std::string_view line, std::string_view key, bool fallback) {
+    const std::string needle = "\"" + std::string(key) + "\":";
+    const std::size_t start = line.find(needle);
+    if (start == std::string_view::npos) {
+        return fallback;
+    }
+    const std::string_view value = line.substr(start + needle.size());
+    if (value.starts_with("true")) {
+        return true;
+    }
+    if (value.starts_with("false")) {
+        return false;
+    }
+    return fallback;
+}
+
 ViewportSessionPoint find_json_point(std::string_view line, std::string_view key,
                                      const ViewportSessionPoint& fallback) {
     const std::string needle = "\"" + std::string(key) + "\":{";
@@ -167,10 +187,13 @@ std::string event_json(const ViewportSessionEvent& event) {
         << point_json("screen_point", event.screen_point) << ","
         << point_json("viewport_point", event.viewport_point) << ","
         << json_number("device_pixel_ratio", event.device_pixel_ratio) << ","
-        << json_number("pressure", event.pressure) << "," << json_number("tilt_x", event.tilt_x)
-        << "," << json_number("tilt_y", event.tilt_y) << "," << json_number("twist", event.twist)
-        << "," << json_string("value", event.value) << "," << json_string("note", event.note)
-        << "}";
+        << json_bool("primary_button_down", event.primary_button_down) << ","
+        << json_bool("shift_down", event.shift_down) << ","
+        << json_bool("ctrl_down", event.ctrl_down) << "," << json_bool("alt_down", event.alt_down)
+        << "," << json_number("pressure", event.pressure) << ","
+        << json_number("tilt_x", event.tilt_x) << "," << json_number("tilt_y", event.tilt_y) << ","
+        << json_number("twist", event.twist) << "," << json_string("value", event.value) << ","
+        << json_string("note", event.note) << "}";
     return out.str();
 }
 
@@ -312,6 +335,7 @@ std::vector<ViewportSessionEvent> default_viewport_session_smoke_events() {
     press.type = ViewportSessionEventType::mouse_press;
     press.screen_point = {320.0, 240.0, 0.0};
     press.viewport_point = {0.0, 0.0, 0.0};
+    press.primary_button_down = true;
     press.pressure = 0.75;
     press.note = "begin user-equivalent viewport edit";
 
@@ -320,6 +344,7 @@ std::vector<ViewportSessionEvent> default_viewport_session_smoke_events() {
     move.type = ViewportSessionEventType::mouse_move;
     move.screen_point = {360.0, 260.0, 0.0};
     move.viewport_point = {0.15, 0.05, 0.0};
+    move.primary_button_down = true;
     move.pressure = 0.8;
 
     ViewportSessionEvent release;
@@ -369,6 +394,10 @@ read_viewport_session_events_jsonl(const std::filesystem::path& path) {
         event.screen_point = find_json_point(line, "screen_point", {});
         event.viewport_point = find_json_point(line, "viewport_point", {});
         event.device_pixel_ratio = find_json_number(line, "device_pixel_ratio", 1.0);
+        event.primary_button_down = find_json_bool(line, "primary_button_down", false);
+        event.shift_down = find_json_bool(line, "shift_down", false);
+        event.ctrl_down = find_json_bool(line, "ctrl_down", false);
+        event.alt_down = find_json_bool(line, "alt_down", false);
         event.pressure = find_json_number(line, "pressure", 0.0);
         event.tilt_x = find_json_number(line, "tilt_x", 0.0);
         event.tilt_y = find_json_number(line, "tilt_y", 0.0);

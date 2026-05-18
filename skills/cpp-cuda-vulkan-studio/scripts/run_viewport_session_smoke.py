@@ -64,6 +64,13 @@ def main() -> int:
     if report.get("steps_executed", 0) < 1:
         raise SystemExit("viewport-session report did not execute events")
 
+    events_text = (session_dir / "events.jsonl").read_text(encoding="utf-8")
+    if '"type":"mouse_move"' not in events_text or '"primary_button_down":true' not in events_text:
+        raise SystemExit(
+            "viewport-session smoke did not record a held-button move sample; "
+            "continuous gestures would be unproven"
+        )
+
     print(f"viewport-session smoke ok: {session_dir / 'report.json'}")
     return 0
 

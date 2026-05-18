@@ -35,6 +35,9 @@ Minimum lane:
 
 - session record command
 - session replay command
+- visible record/stop/replay or equivalent capture affordance in the app, with status and artifact
+  path once the first user-facing interactive surface exists, unless the target is headless or the
+  user explicitly accepts a CLI-only tool surface
 - app-owned host adapter that routes events through the real UI/viewport path
 - state snapshots for tool, focus, viewport geometry, camera, scene/document revision, and render
   revision when available
@@ -44,9 +47,20 @@ Minimum lane:
 - `report.json` with scenario id, command line, pass/fail, before/after state, artifacts, assertions,
   warnings, and failure reason
 
+User-facing verification is the acceptance surface for this lane. Fake-host smokes, hidden CLI
+recorders, backend commands, JSON state changes, and nonblank captures prove infrastructure only.
+They do not prove that a user can find the control, start a recording, perform the intended gesture,
+stop/replay the session, and see the result in the product surface.
+
 Backend HTTP/curl commands alone do not satisfy this lane for visible UI bugs. They are useful
 supporting evidence, but they do not prove widget focus, visible control clicks, DPI mapping, mouse
 or stylus routing, viewport hit tests, or screenshot freshness.
+
+The recorded scenario must match the interaction shape. A click, click-drag, continuous stroke,
+scrub, lasso, gizmo drag, camera orbit, timeline drag, node connection, stylus stroke, or palette
+selection must be captured and asserted as that shape. For continuous actions, require held-button
+or stylus-contact move samples, timestamps, pointer/hit/readback along the path, and a visible or
+semantic delta; a single press/release at one point does not prove a stroke or drag.
 
 ## User-Reported Visible Bugs
 

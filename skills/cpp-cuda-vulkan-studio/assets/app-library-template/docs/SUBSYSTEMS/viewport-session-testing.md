@@ -20,5 +20,6 @@ artifact reporting, and user-equivalent visible bug proof.
 
 - viewport/session event schema, host adapter contract, scenario artifact layout, replay behavior,
   screenshot/capture freshness, or report fields change
+- visible record/stop/replay affordances, session status readback, or latest-artifact display change
 - visible GUI or viewport validation moves from fake-host smoke to real app interaction scenarios
 - scripts or CTest labels for viewport-session proof change

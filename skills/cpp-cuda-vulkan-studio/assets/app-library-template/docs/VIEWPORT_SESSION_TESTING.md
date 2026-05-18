@@ -20,6 +20,11 @@ path as real UI/viewport input and read back committed state such as active tool
 viewport geometry, device-pixel ratio, camera state, document revision, render revision, hit point,
 and selection when available.
 
+When the app has a real interactive surface, add visible record/stop/replay or equivalent capture
+controls in the app, with status text/readback and the latest artifact path. Hidden CLI-only
+recording is acceptable for the generated fake-host smoke, but it is not enough for an artist-facing
+tool where the user needs to record a repro for the agent.
+
 ## Smoke Lane
 
 After building the app, run:
@@ -56,3 +61,8 @@ results.
 
 Use OSTM/background execution when available for automated windowed proof. If the lane cannot
 observe the visible surface yet, report that gap before continuing.
+
+For continuous interactions, record the continuous part of the gesture. A drag, stroke, scrub,
+camera orbit, timeline drag, node wire, or gizmo move needs held-button or stylus-contact move
+samples, timestamps, pointer/hit/readback along the path, and a visible or semantic delta. A
+press/release-only session proves a click or dab, not a continuous tool.

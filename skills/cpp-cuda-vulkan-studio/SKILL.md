@@ -141,6 +141,18 @@ When this skill is active, work like a native C++ GPU systems engineer:
   or fixture-only variants as product progress before that loop has input-to-result evidence. If
   the current plan lacks the loop or treats fixture-only scaffolding as product-visible progress,
   stop and repair the plan before source edits continue.
+- User-facing verification is the acceptance surface: for interactive features, the proof that
+  matters is the real visible control, real user gesture shape, committed state, and visible result.
+  Backend routes, control-harness commands, OSTM execution, fake-host smokes, nonblank screenshots,
+  and JSON state changes are supporting evidence only until they are tied to the user-facing
+  workflow. If the user needs to record a session for the agent, the product needs a visible
+  record/stop/replay or equivalent capture affordance, status/readback, and artifact path; hidden
+  CLI-only recorders are not enough for an artist-facing tool unless the user explicitly accepts
+  that limitation. A click/dab proof does not prove a drag, stroke, scrub, lasso, gizmo move,
+  timeline drag, node connection, or stylus stroke. The slice plan and validation must name the
+  expected interaction shape and assert the semantic samples that make it real, such as held-button
+  move samples, pressure samples, hit points, affected controls, latency, and before/after visual
+  deltas.
 - Concrete proof object/state before visible work: when a visible/domain slice depends on an object,
   scene, asset, graph, primitive, dataset, or authored state, the plan must name it specifically and
   justify it from the same donor or peer-tool evidence. Do not accept vague "sample object",
@@ -396,7 +408,11 @@ When this skill is active, work like a native C++ GPU systems engineer:
   model revision, a one-item self-confirming scenario, or a nonblank screenshot alone. Harness,
   scenario, or control-route construction is only a means to observe or drive the bug; it is not a
   completed fix for the user-visible symptom unless it produces before/after visible evidence and the
-  app behavior actually changes.
+  app behavior actually changes. For continuous interactions, the scenario must include and assert
+  the continuous part of the gesture, not only a press/release pair at one point. If the feature is
+  a stroke, scrub, drag, lasso, gizmo move, camera orbit, timeline drag, node wire, or similar
+  sustained action, proof must include the expected move/sample count, path shape or distance,
+  committed state along the path, and fresh visible result.
 - For sculpting, brush, paint, groom, stroke, or high-poly mesh editing work, donor realignment has
   an extra gate. Before changing brush behavior, viewport hit tests, palette selection, stroke
   sampling, falloff, pressure, mask, high-poly storage, or dirty upload code, open the sculpt or

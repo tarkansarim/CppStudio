@@ -35,6 +35,10 @@ struct ViewportSessionEvent {
     ViewportSessionPoint screen_point;
     ViewportSessionPoint viewport_point;
     double device_pixel_ratio = 1.0;
+    bool primary_button_down = false;
+    bool shift_down = false;
+    bool ctrl_down = false;
+    bool alt_down = false;
     double pressure = 0.0;
     double tilt_x = 0.0;
     double tilt_y = 0.0;

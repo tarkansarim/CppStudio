@@ -89,6 +89,9 @@ Interactive viewport or GUI work should use the app-owned viewport-session testi
 UI/viewport interactions, writes session artifacts under ignored `artifacts/viewport-sessions/`, and
 produces `report.json` plus screenshots or render captures. Use it for visible controls, pointer
 mapping, stylus/brush paths, camera/gizmo/timeline/node interactions, and user-reported GUI bugs.
+Once a real interactive surface exists, expose visible record/stop/replay or equivalent capture
+controls in the app and assert continuous gestures with held-button or stylus-contact move samples,
+not only press/release clicks.
 
 Generated smoke command:
 

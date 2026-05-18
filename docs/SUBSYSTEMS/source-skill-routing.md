@@ -126,6 +126,18 @@ generated-project workflow instructions.
   tools, then records user action, state changed, visible result, proof route, and secondary breadth
   blocked until the loop is proven. This is generic product-slice discipline, not a project-specific
   sculpting rule.
+- User-facing verification is the primary acceptance surface for interactive work. Backend/control
+  routes, OSTM jobs, fake-host smokes, nonblank screenshots, and JSON state are supporting evidence
+  until the real visible control, interaction shape, committed state, and visible result are proven.
+  Hidden CLI-only record/replay lanes are insufficient for artist-facing tools once the app has an
+  interactive surface; visible record/stop/replay or equivalent capture affordances, status, and
+  latest-artifact readback are required unless explicitly opted out.
+- Interactive slices now require an interaction-shape contract. A click, click-drag, continuous
+  stroke, scrub, lasso, gizmo move, camera orbit, timeline drag, node connection, stylus stroke, or
+  palette selection must be tested as that shape. Continuous actions need held-button or
+  stylus-contact move samples, path or sample assertions, pointer/hit/readback along the path, and
+  visible or semantic before/after evidence; a single press/release smoke cannot prove a continuous
+  gesture.
 - Visible/domain slices now also require a concrete first proof object or state. Agents must name the
   actual primitive, scene, generated asset, graph, dataset, or interaction target that makes the loop
   visible, justify it from donor or peer-tool evidence, and keep tiny numeric fixtures separate from
