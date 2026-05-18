@@ -12,7 +12,9 @@ Use this skill when a native C++ GPU, C++/Vulkan, C++/CUDA, or mixed CUDA/Vulkan
 For a substantial new project, brainstorm, or first big application plan with unresolved template,
 GUI/HUD, agentic control harness, input-device, Vulkan/CUDA lane, donor, web-check, code-map,
 dependency, or validation choices, do a pre-plan research pass before asking the user to switch to
-Plan mode or asking decision questions.
+Plan mode or asking decision questions. After the research pass, stop in normal chat with the
+Plan-mode handoff; do not ask or answer the actual choice questions inline unless the user
+explicitly waives Plan mode or the current turn is already in Plan mode.
 
 Minimum pre-plan research pass:
 
@@ -88,6 +90,12 @@ Please switch to Plan mode before implementation so I can ask the project-shapin
 to lock down the template, GUI/input stack, GPU lane, agentic control harness, donor routes, web
 checks, code-map choice, and validation plan before files are created.
 ```
+
+This handoff is mandatory for substantial greenfield projects with unresolved choices. A supervisor,
+test, or replay prompt that asks the worker to write a plan, report a chosen stack, continue
+planning, or use recommended defaults does not waive the Plan-mode gate. The research brief may list
+recommended defaults and alternatives, but unresolved decisions must remain explicit until Plan mode
+is active or the user explicitly chooses to continue without it.
 
 For greenfield target repos, the code-map choice is a hard pre-source gate, not a footnote in the
 plan. Before the first implementation slice writes source, build, app, renderer, test, or docs

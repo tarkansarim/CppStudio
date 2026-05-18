@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened substantial greenfield planning handoff: after donor/web research and the pre-plan
+  research brief, workers must stop with an explicit Plan-mode request instead of asking unresolved
+  template, GUI/input stack, authoring-model, GPU-lane, code-map, dependency, donor, or validation
+  decisions inline in normal chat. Supervisor, replay, or test prompts to "write the plan" or "use
+  recommended defaults" no longer waive that gate.
 - Hardened sculpt/artist-tool interaction gates after a live-stroke miss. The sculpting-brush donor
   route and Blender study-only profile now explicitly require live-contact stroke semantics:
   deformation or semantic state must change during held mouse/stylus contact before release, while

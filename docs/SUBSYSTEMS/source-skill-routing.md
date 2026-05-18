@@ -19,6 +19,7 @@ generated-project workflow instructions.
 - `skills/important-instruction-ledger/SKILL.md`
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
 - `docs/agent-context/SLICE_WATCHLIST.md`
+- `docs/agent-context/slice-watchlist.jsonl`
 - `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md`
 - `skills/cpp-cuda-vulkan-studio/references/project-archetypes.md`
 
@@ -36,6 +37,7 @@ generated-project workflow instructions.
 - `skills/important-instruction-ledger/SKILL.md`
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
 - `docs/agent-context/SLICE_WATCHLIST.md`
+- `docs/agent-context/slice-watchlist.jsonl`
 - `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md`
 - `.codex/skills/cppstudio-repo-onboarding/SKILL.md`
 
@@ -90,6 +92,12 @@ generated-project workflow instructions.
 
 ## Current Donor-First Research Posture
 
+- Substantial greenfield project intake has a hard Plan-mode handoff after the pre-plan research
+  artifact. Research briefs may include recommended defaults and alternatives, but unresolved
+  template, GUI/input stack, code-map, authoring-model, GPU lane, dependency, donor, or validation
+  decisions must not become inline normal-chat questions unless Plan mode is unavailable or the user
+  explicitly waives it. Supervisor, replay, or test prompts asking a worker to write a plan or report
+  a chosen stack do not override that gate.
 - Donor-first means local donor-library routes are opened before code or product-shape decisions.
   If no suitable donor exists, or the local donor route is stale or too generic for a new subsystem,
   agents must run web/upstream research against current primary sources before designing the

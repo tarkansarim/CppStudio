@@ -9,7 +9,9 @@ If the project has unresolved choices across template, authoring model/source of
 lane, agentic control harness, dependencies, input devices, or donor strategy, gather a pre-plan
 research brief before asking the user to switch to Plan mode or presenting decision questions. The
 brief should use local CppStudio skill/donor routing plus an extensive state-of-the-art web ceiling
-check against upstream or primary sources, so the user is choosing from researched options.
+check against upstream or primary sources, so the user is choosing from researched options. Once the
+brief is written or presented, stop with the Plan-mode handoff; do not ask the decisions inline in
+normal chat unless the user explicitly waives Plan mode or the current turn is already in Plan mode.
 
 Start with a target bootstrap pass. Auto-discover facts the workspace can answer before asking the
 user: repo instructions, enabled code maps, README/build docs, presets, manifests, scripts, validation
@@ -300,6 +302,12 @@ created.
 
 The benefit is fewer wrong dependencies, cleaner Vulkan/CUDA lane boundaries, better donor
 grounding, and a validation plan before files are created.
+
+This handoff is not optional for substantial greenfield projects with unresolved choices. A
+supervisor, replay, or test prompt that asks the worker to write a plan, report a chosen stack, keep
+planning, or use recommended defaults does not waive the handoff. Record recommended defaults and
+alternatives in the research artifact, then wait for Plan mode or an explicit waiver before asking
+the actual decision questions.
 
 If the session is already in Plan mode, still show the pre-plan research brief before calling any
 question UI. If Plan mode is unavailable, ask no more than three questions at a time. Do not scaffold

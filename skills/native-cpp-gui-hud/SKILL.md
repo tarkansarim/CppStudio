@@ -39,6 +39,12 @@ until a visible link table has been shown in the conversation immediately before
 include compact source or visual URLs in the option descriptions when the question UI allows it. The
 choice UI alone is not enough if it only shows short labels and prose.
 
+For substantial CppStudio project intake, the GUI/HUD choice belongs behind the project-planning
+Plan-mode gate. Present researched GUI defaults and alternatives with links, then let
+`cppstudio-project-planner` stop with its Plan-mode handoff. Do not turn a normal-chat research brief
+into an inline Qt/ImGui/custom-shell decision unless the user explicitly waives Plan mode or has
+already chosen the GUI stack.
+
 For native GPU artist tools, DCC-style tools, game tools, simulation editors, and viewport-heavy
 applications, product-surface conventions are not optional. Verify viewport dimensionality,
 transport/timeline placement, editor shell layout, inspector location, graph/layer/scene-tree
@@ -252,7 +258,9 @@ the evidence before wiring or closing.
    - source/docs link
    - visual/gallery/examples link
    - license/dependency caveat
-12. Only after that link table is visible, ask the user to choose among the researched options.
+12. Only after that link table is visible, ask the user to choose among the researched options. For
+   substantial CppStudio intake, this choice should happen after the Plan-mode handoff, not inline in
+   normal chat, unless the user explicitly waives Plan mode.
 13. Before adding a dependency, check the target repo's package policy and exact upstream license.
 14. If CppStudio is available, read its donor category first:
    `cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md`.

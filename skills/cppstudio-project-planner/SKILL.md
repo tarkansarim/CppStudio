@@ -21,7 +21,10 @@ and current upstream sources that grounded the recommendation. If no donor route
 gap and do focused research before designing or scaffolding.
 
 For a substantial initial project request, gather a pre-plan research brief before asking the user to
-switch to Plan mode or presenting decision questions. Do not jump straight into question UI.
+switch to Plan mode or presenting decision questions. Do not jump straight into question UI. After
+the brief is written or presented, stop in normal chat with the Plan-mode handoff; do not ask the
+decision questions inline unless the user explicitly says to continue without Plan mode or the
+current turn is already in Plan mode.
 
 Before asking the user for target facts, auto-discover what the local workspace can already answer.
 For an existing repo, inspect repo instructions, enabled code maps, README/build docs, presets,
@@ -318,6 +321,13 @@ control harness, donor routes, web checks, code-map choice, and validation plan 
 created.
 ```
 
+This handoff is mandatory for substantial greenfield projects with unresolved choices. A supervisor,
+test, or replay prompt that asks the worker to "write the plan", "report the chosen stack", "continue
+planning", "use recommended defaults", or similar is not permission to bypass the handoff or lock
+choices in normal chat. The research artifact may include recommended defaults and alternatives, but
+the worker must not ask or answer the actual choice questions until Plan mode is active or the user
+explicitly waives Plan mode.
+
 For greenfield target repos, code-map choice is a hard pre-source gate. Before the first
 implementation slice writes source, build, app, renderer, test, or docs scaffold files, the plan must
 end with one of these states: maintained code map accepted and ready to bootstrap, code map declined
@@ -405,10 +415,10 @@ user opts out, record why the lane is not applicable.
    brief or Level 2 scaffold masquerade as implementation-ready. If the project is an ambitious
    artist/game/VFX/DCC/simulation-editor/technical-art tool, build the Level 3 donor coverage matrix
    before accepting the scaffold for implementation.
-13. Present a compact pre-plan research brief with choices, recommended defaults, links, donor
-   routes, peer-tool authoring-model findings, web sources checked, current-vs-legacy notes, and the
-   reasoning for the best available option, then ask for Plan mode and only then ask decision
-   questions.
+13. Present a compact pre-plan research brief with unresolved choices, recommended defaults, links,
+   donor routes, peer-tool authoring-model findings, web sources checked, current-vs-legacy notes,
+   and the reasoning for the best available option. Then stop with the Plan-mode handoff. Ask the
+   decision questions only after Plan mode is active, or after the user explicitly waives Plan mode.
 14. Persist the research brief for substantial projects before implementation. Prefer
    `docs/planning/RESEARCH_BRIEF.md`; include `docs/planning/DONOR_CANDIDATES.md` when strong
    reusable sources were found that are not already covered by the donor library. If the user only

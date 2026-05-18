@@ -67,6 +67,15 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-18T09:53:41Z`
 
+7. **Substantial greenfield planning must stop after the research brief with an explicit Plan-mode handoff; supervisor, replay, or test prompts to write a plan or use defaults must not waive that gate.**
+   - Status: `active`
+   - Slice: `greenfield plan-mode handoff`
+   - Scope: `reusable-skill`
+   - Source: fresh 3dSculptTool worker produced good research but asked unresolved stack choices inline
+   - Revisit when: before rollout, trigger-lane claim, or approving a fresh greenfield planning worker
+   - Gate: Reject the reusable change if the fresh worker asks unresolved template, GUI/input, code-map, authoring-model, GPU-lane, dependency, donor, or validation choices inline in normal chat instead of asking the user to switch to Plan mode or recording an explicit waiver.
+   - Evidence: none recorded
+   - Recorded: `2026-05-18T12:14:03Z`
 
 ## Superseded Or Historical
 

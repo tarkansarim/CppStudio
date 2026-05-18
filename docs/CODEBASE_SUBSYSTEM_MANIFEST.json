@@ -22,6 +22,7 @@
         "skills/important-instruction-ledger/SKILL.md",
         "skills/important-instruction-ledger/scripts/important_instruction_ledger.py",
         "docs/agent-context/SLICE_WATCHLIST.md",
+        "docs/agent-context/slice-watchlist.jsonl",
         "docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md",
         "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md"
       ],
@@ -38,6 +39,7 @@
         "skills/important-instruction-ledger/SKILL.md",
         "skills/important-instruction-ledger/scripts/important_instruction_ledger.py",
         "docs/agent-context/SLICE_WATCHLIST.md",
+        "docs/agent-context/slice-watchlist.jsonl",
         "docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md",
         ".codex/skills/cppstudio-repo-onboarding/SKILL.md"
       ]
