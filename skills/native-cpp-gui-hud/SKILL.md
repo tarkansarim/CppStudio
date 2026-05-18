@@ -66,6 +66,16 @@ evidence, expected control location, icon/text convention, tooltip/accessibility
 disabled states, and the harness or screenshot proof that will verify it. Do not start from convenient
 widgets and then judge after the fact; the convention table is the implementation constraint.
 
+For greenfield artist tools, the convention table must include a visual quality target, not only
+control existence. Name the closest peer-tool family or product surface being aimed at, such as a
+ZBrush/Mudbox-like sculpting surface, Maya-like viewport navigation, Houdini-like FX authoring, or
+Blender-like DCC editor shell, then record which visible traits matter for the first milestone:
+viewport prominence, palette density, icon/text balance, typography scale, spacing, color restraint,
+status/readback placement, and which debug elements are hidden or demoted. A default debug-looking
+immediate-mode panel is infrastructure, not product UI, unless the project is explicitly a debug HUD.
+If the first screenshot would look like a throwaway test harness to the target artist, reject the UI
+closeout even when the controls function.
+
 Use familiar icon affordances for universal tool commands when the chosen toolkit supports them:
 play, pause, stop, step, loop, record, save, load, undo, redo, select, move, rotate, scale, pan, zoom,
 lock, visibility, frame, pin, search, delete, add, and remove. Put the human-readable name in tooltip,

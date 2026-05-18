@@ -69,6 +69,13 @@ scenario should assert sample count, path distance or shape, timestamps, committ
 path, and a fresh visual or semantic delta. A press/release-only session can prove a click or dab;
 it must not be used to claim a continuous tool works.
 
+For live artist tools, the session must prove the state changes before release when that is the
+expected product behavior. Sculpting, painting, grooming, terrain editing, grease-pencil style
+drawing, and similar tools need a mid-stroke probe after a held-contact move sample and before
+mouse/stylus release. Assert a changed document or render revision, dirty region, semantic stroke
+trace, or fresh app-owned capture at that moment. If the only deformation appears after release, the
+report should say the tool is batched/release-only rather than live.
+
 ## Replay Rules
 
 - Replay events in timestamp order through the real app path.

@@ -57,6 +57,16 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-18T07:09:04Z`
 
+6. **Sculpt brush behavior must be donor-backed against production sculpt implementations such as Blender before accepting architecture or tests; live stroke/dab semantics cannot be inferred from training data.**
+   - Status: `active`
+   - Slice: `3dSculptTool supervision`
+   - Scope: `reusable-skill`
+   - Source: user correction: release-only sculpting proved donor route was missed
+   - Revisit when: before approving sculpt brush fixes or changing CppStudio routing
+   - Gate: worker shows Blender/donor route, exact code behavior considered, and mid-drag proof exists
+   - Evidence: none recorded
+   - Recorded: `2026-05-18T09:53:41Z`
+
 
 ## Superseded Or Historical
 

@@ -76,6 +76,15 @@ for layout, control placement, icon/text affordance, viewport/timeline/inspector
 debug-vs-product boundaries, and visual proof expectations. Do not let generic advice such as "make
 the UI polished" satisfy this section.
 
+For greenfield artist-tool planning, also name the intended product-surface quality target before
+source files are created. This is a compact visual contract derived from peer tools: viewport
+dominance, palette or shelf style, inspector placement, icon/text usage, spacing, typography scale,
+color restraint, status/readback placement, and which debug controls are hidden, collapsed, or
+clearly marked diagnostic. If the target is a serious sculpting, painting, grooming, VFX, DCC, or
+game-dev tool, the first milestone cannot be accepted with a generic debug UI just because it has the
+right buttons. The slice proof must include a screenshot or app-owned frame judged against that
+visual contract.
+
 When web research finds a strong reusable source that is missing from the CppStudio donor library,
 do not leave that discovery only in chat. First capture it in the target project's durable research,
 normally `docs/planning/DONOR_CANDIDATES.md` or a "Donor candidates" section in the research brief,
@@ -170,6 +179,11 @@ slice cannot prove a continuous or compound interaction with a single click/dab 
 name the expected gesture, the sample/readback fields that prove it happened through the real UI
 path, the visible control or affordance used to initiate it, and the before/after artifact that lets
 another agent or user inspect the result.
+
+When the expected behavior is live feedback during the gesture, the plan must require proof before
+release or final commit. Sculpt, paint, groom, terrain, drawing, and live transform tools need a
+mid-gesture readback after a held-contact move sample and before release showing the visible or
+semantic state has already changed. A final after-release diff is insufficient for those tools.
 
 For that primary loop, vague nouns are not enough. The plan must name the concrete first proof
 object, authored item, scene state, dataset, primitive, fixture, graph, asset, or interaction target

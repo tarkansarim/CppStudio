@@ -138,6 +138,11 @@ generated-project workflow instructions.
   stylus-contact move samples, path or sample assertions, pointer/hit/readback along the path, and
   visible or semantic before/after evidence; a single press/release smoke cannot prove a continuous
   gesture.
+- Live-contact artist tools have a stricter pre-release proof gate. For sculpting, painting,
+  grooming, terrain, drawing, or transform behavior that should update while contact is held, agents
+  must prove document/render revision, dirty region, semantic trace, or fresh capture changes after a
+  held-contact move and before release. Release-only deformation is a batched diagnostic behavior
+  unless explicitly requested; it is not acceptable proof for live sculpting or similar tools.
 - Visible/domain slices now also require a concrete first proof object or state. Agents must name the
   actual primitive, scene, generated asset, graph, dataset, or interaction target that makes the loop
   visible, justify it from donor or peer-tool evidence, and keep tiny numeric fixtures separate from
@@ -227,6 +232,11 @@ generated-project workflow instructions.
   surface before adding secondary controls or advertised modes. A palette, toolbar, graph, inspector,
   or timeline with extra entries is not product progress if the primary user action cannot be
   selected, applied, and observed through the real event path.
+- Greenfield artist tools need a product-surface visual contract before source UI work: target
+  peer-tool family, viewport prominence, palette density, icon/text balance, spacing, typography
+  scale, color restraint, status/readback placement, and debug-control demotion. A default
+  debug-looking UI is infrastructure, not a product milestone, unless the user explicitly requested a
+  debug HUD.
 - Universal tool commands such as play, stop, step, save, undo, redo, select, transform, visibility,
   lock, zoom, and delete should use recognizable icon affordances when the toolkit supports them.
   Prominent text controls for those commands require donor evidence or an explicit accessibility,

@@ -39,6 +39,13 @@ explicitly accepts GPL-compatible reuse.
 
 ## Extracted Brush Contracts
 
+- **Live stroke runtime contract**: an interactive sculpt stroke is a live operation while the mouse
+  button or stylus contact is held. Start the stroke transaction on press/contact, extend it on each
+  accepted move sample, evaluate the brush against the current hit surface or stroke cache, dirty the
+  affected sculpt chunk/mesh region, and advance visible document/render state before release.
+  Release finalizes one undoable stroke record and replay data; it must not be the first time the
+  deformation appears. A release-only batch implementation is a temporary diagnostic shortcut only
+  when explicitly labeled as such and rejected for product sculpting.
 - **Common stroke substrate**: stroke sampling, radius, strength, pressure modulation, falloff,
   direction mode, active surface plane, symmetry, masks/face sets, accumulation, and undo/replay must
   be shared by all brush families.
@@ -117,6 +124,11 @@ falloff, pressure sculpting, Wacom sculpting, stylus sculpting, dirty chunk uplo
 - Pointer-mapping fixtures for viewport sculpt strokes: requested screen point, viewport-local point,
   device-pixel ratio, render-target point, camera ray, hit primitive, committed edit center, and
   fresh capture with a test-only marker at requested and committed positions.
+- Live-contact fixtures for sculpt strokes: after at least one held-contact move sample and before
+  the release event, assert that the sculpt document or mesh revision, dirty chunk set, semantic
+  stroke trace, and fresh render/app-owned capture have changed. Then assert that release only
+  finalizes the grouped undo/replay transaction. A test that calls one whole-stroke apply function
+  after collecting all samples proves final stroke application only; it does not prove live sculpting.
 - Per-brush tests for pressure, falloff, mask protection, symmetry where applicable, undo/replay,
   bounds, degenerate triangles, and backface or visibility behavior.
 - Performance fixtures that report polygon count, chunk count, dirty chunks, dirty upload bytes,

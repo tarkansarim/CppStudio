@@ -62,6 +62,13 @@ selection must be captured and asserted as that shape. For continuous actions, r
 or stylus-contact move samples, timestamps, pointer/hit/readback along the path, and a visible or
 semantic delta; a single press/release at one point does not prove a stroke or drag.
 
+For continuous tools whose visible result is expected to update while contact is held, such as
+sculpting, painting, grooming, terrain editing, grease-pencil style drawing, or live gizmo drags, the
+scenario must include a pre-release proof point. After one or more held-contact move samples and
+before the release event, read back a changed document/render revision, dirty region, semantic trace,
+or fresh capture. A final after-release before/after proves only batched application and must not be
+accepted as proof of live interaction feedback.
+
 ## User-Reported Visible Bugs
 
 For visible bugs, use before/after evidence shaped like the report.

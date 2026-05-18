@@ -15,6 +15,15 @@ renderer, or GUI donors.
 Blender remains study-only: extract brush behavior contracts, acceleration-shape ideas, fixtures, and
 validation targets, then implement independently in the selected C++/Vulkan/CUDA lane.
 
+For mesh sculpting, do not collapse Blender-style stroke behavior into "collect samples, apply once
+on release" unless the user explicitly asked for an offline apply tool. A normal interactive sculpt
+brush updates while the button or stylus contact is held: each accepted move sample extends the stroke
+runtime, evaluates the brush against the hit surface, dirties the affected sculpt chunks or mesh
+region, and advances the visible document/render state before release. Release finalizes the single
+undoable stroke transaction; it is not the first time deformation appears. A Level 4 slice for a
+Standard/Sculpt/Draw-style brush is not ready until it states this live-contact contract and defines
+a mid-stroke proof before mouse/stylus release.
+
 If a sculpting or brush bug stalls after two focused attempts, stop generic local patching and return
 to this route before another code edit. The next slice must map the reported symptom to Blender or
 peer-tool behavior, the local mismatch, and a before/after proof. This is mandatory for brush
@@ -49,6 +58,10 @@ falloff, masks, smooth/clay/grab behavior, high-poly dirty uploads, or viewport 
   concepts before renderer or generic mouse-event code. Recent Blender sculpt notes include explicit
   operator support for deriving stroke positions from mouse events; use that as a reminder to prove
   the screen-to-surface path, not only that a mesh revision changed.
+- For live sculpt strokes, prove a pre-release state change: after a held-contact move and before the
+  release event, read back a changed mesh/document/render revision, dirty region, semantic stroke
+  trace, or fresh app-owned capture. A final before/after after release proves only batched stroke
+  application, not live sculpting.
 - Treat ZBrush, Nomad, and Mudbox as peer-tool/product references, not code donors. Use them to check
   expected brush families, topology warnings, pressure/falloff behavior, and UI vocabulary.
 - Do not let study-donor naming leak into product UI by default. Pick visible brush/tool names from

@@ -24,6 +24,10 @@ assert held-button or stylus-contact move samples, pointer/hit/readback along th
 visible or semantic delta; do not use a single click/dab smoke as proof. Once the app has a real
 interactive surface, visible record/stop/replay or equivalent capture controls should create
 replayable artifacts so users can hand agents a repro session without hidden CLI knowledge.
+For tools that are expected to update live during contact, add a pre-release assertion: after a
+held-contact move and before mouse/stylus release, document/render revision, dirty region, semantic
+trace, or an app-owned capture must already show the edit. Release should finalize undo/replay, not
+be the first visible edit.
 
 Self-hosted CI runner expectations and artifact paths are documented in
 [GPU_RUNNER_CI.md](GPU_RUNNER_CI.md).

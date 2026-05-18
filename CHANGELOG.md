@@ -4,6 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened sculpt/artist-tool interaction gates after a live-stroke miss. The sculpting-brush donor
+  route and Blender study-only profile now explicitly require live-contact stroke semantics:
+  deformation or semantic state must change during held mouse/stylus contact before release, while
+  release finalizes the undo/replay transaction. Viewport-session docs, generated validation docs,
+  project planning, and GUI/HUD guidance now require mid-gesture proof for live artist tools and a
+  peer-tool visual quality contract so debug-looking greenfield UIs cannot pass as product surfaces.
 - Made user-facing verification a first-class acceptance gate for interactive features. Planning,
   GUI/HUD, control-harness, and viewport-session skills now require the real visible control,
   interaction shape, committed state, and visible result before a feature or bug fix can be claimed;

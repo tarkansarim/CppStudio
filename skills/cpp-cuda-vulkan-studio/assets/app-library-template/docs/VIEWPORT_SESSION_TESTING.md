@@ -66,3 +66,8 @@ For continuous interactions, record the continuous part of the gesture. A drag, 
 camera orbit, timeline drag, node wire, or gizmo move needs held-button or stylus-contact move
 samples, timestamps, pointer/hit/readback along the path, and a visible or semantic delta. A
 press/release-only session proves a click or dab, not a continuous tool.
+
+If the tool should update while the user is still holding contact, prove that specifically. Sculpt,
+paint, groom, terrain, drawing, and live transform tools need a mid-gesture checkpoint after a move
+sample and before release where document/render revision, dirty region, semantic trace, or a fresh
+capture has already changed. A final after-release capture proves only batched application.

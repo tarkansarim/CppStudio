@@ -203,15 +203,15 @@
       "path": "assets/app-library-template/docs/VALIDATION_PIPELINE.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 15904,
-      "sha256": "7ea1a903c4eee812486eebc4a50471f77bffc28a0918636b224d583cb538f574"
+      "size": 16227,
+      "sha256": "7c06139e4d73179536c442a600d782ca5ec31b9fbf56a38be6a42963936c6ee9"
     },
     {
       "path": "assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 2783,
-      "sha256": "30f8b934ac9799d3c715ce35b9f7c84a4617f3951ec146450b8666d1d9372ab5"
+      "size": 3175,
+      "sha256": "8cb5889cb017a83fd6ce4997b7bddf8115a5ab2ae1f98768068f4cd2fdcb034f"
     },
     {
       "path": "assets/app-library-template/include/{{PROJECT_NAME}}/cuda_vector_add.hpp",
@@ -560,8 +560,8 @@
       "path": "references/donor-library/profiles/blender-sculpt-brushes-study-only.md",
       "role": "reference",
       "disclosure_group": "donor-profile",
-      "size": 9425,
-      "sha256": "af798301cb7fbf8d79912639d0714c5506e8d2ec25d5c3469b9c1ef9ceca57e2"
+      "size": 10584,
+      "sha256": "af4bc1830622ed341d4555d74e9e685a826f02cd4b815c3f5c0b6b0529da4a0b"
     },
     {
       "path": "references/donor-library/profiles/blender-study-only.md",
@@ -1302,8 +1302,8 @@
       "path": "references/donor-library/sculpting-brushes.md",
       "role": "reference",
       "disclosure_group": "donor-category",
-      "size": 6989,
-      "sha256": "d71f210b78b8de9685546a21a525da83dcf976baef9d73feb44f6193681b08a8"
+      "size": 8070,
+      "sha256": "d9f63086bcd0077a46ca89a571857a6748ccce907a14786a3e809c6435b4a40f"
     },
     {
       "path": "references/donor-library/selection-policy.md",

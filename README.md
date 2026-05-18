@@ -91,7 +91,11 @@ stable entries stay collapsed under the expander.
   reopen code-map and donor routes, record failed hypotheses plus keep/revert decisions, and stop
   relying on model memory before another patch. Sculpting brush bugs specifically route back through
   the Blender Sculpt Brushes study-only profile and must prove pointer/control-to-committed-result
-  behavior, not just a generic mesh revision or nonblank screenshot. Enabled code-map projects now
+  behavior, not just a generic mesh revision or nonblank screenshot. Live sculpt, paint, groom,
+  terrain, drawing, and transform tools must also prove pre-release updates during held contact;
+  release-only deformation is treated as batched diagnostic behavior unless explicitly requested.
+  Greenfield artist-tool UI now needs a peer-tool visual contract, so agents reject debug-looking
+  first screenshots as product milestones even when the controls function. Enabled code-map projects now
   also have a bounded sidecar lane for long-running or high-churn map maintenance: sidecars work
   from isolated fixed snapshots and return map-only patches, while the original worker must
   reconcile, rerun drift/schema validation against the current tree, and keep the verified slice
