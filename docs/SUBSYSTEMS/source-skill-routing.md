@@ -120,6 +120,12 @@ generated-project workflow instructions.
   validation signal. GUI rules must cite peer-tool, UI-framework, or donor evidence for layout,
   control placement, icon/text affordance, viewport/timeline/inspector conventions,
   debug-vs-product boundaries, and visual proof.
+- High-quality standalone artist tools that name polished peers such as ZBrush, Mudbox, Maya,
+  Houdini, Substance, Nuke, Unreal Editor, or Blender are product-like desktop applications for GUI
+  stack selection before they are Vulkan/realtime utilities. Agents should compare Qt-style desktop
+  shells against immediate-mode UI and prefer the polished shell when available or acceptable,
+  keeping Dear ImGui for overlays, diagnostics, or explicitly approved immediate-mode product
+  surfaces.
 - Interactive artist, game, VFX, DCC, simulation-editor, technical-art, viewer/editor, brush, paint,
   grooming, terrain, material, rigging, animation, layout, lighting, and effects tools now require a
   primary visible-loop gate before implementation. The loop is derived from domain donors and peer

@@ -10,6 +10,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
   release finalizes the undo/replay transaction. Viewport-session docs, generated validation docs,
   project planning, and GUI/HUD guidance now require mid-gesture proof for live artist tools and a
   peer-tool visual quality contract so debug-looking greenfield UIs cannot pass as product surfaces.
+- Tightened GUI stack selection for product-like artist tools. High-quality standalone tools that
+  name polished peers such as ZBrush, Mudbox, Maya, Houdini, Substance, Nuke, Unreal Editor, or
+  Blender now route as polished desktop artist applications before generic realtime utilities, so
+  Qt-style shells are preferred when available and Dear ImGui is kept to overlays, diagnostics, or
+  explicitly approved immediate-mode product surfaces.
 - Made user-facing verification a first-class acceptance gate for interactive features. Planning,
   GUI/HUD, control-harness, and viewport-session skills now require the real visible control,
   interaction shape, committed state, and visible result before a feature or bug fix can be claimed;

@@ -95,7 +95,11 @@ stable entries stay collapsed under the expander.
   terrain, drawing, and transform tools must also prove pre-release updates during held contact;
   release-only deformation is treated as batched diagnostic behavior unless explicitly requested.
   Greenfield artist-tool UI now needs a peer-tool visual contract, so agents reject debug-looking
-  first screenshots as product milestones even when the controls function. Enabled code-map projects now
+  first screenshots as product milestones even when the controls function. High-quality standalone
+  artist tools that name peers like ZBrush, Maya, Mudbox, Houdini, Substance, Nuke, Unreal Editor,
+  or Blender now route as polished desktop artist applications first, so Qt-style shells are
+  preferred when available and ImGui is kept to overlays/diagnostics unless explicitly approved as
+  the main product surface. Enabled code-map projects now
   also have a bounded sidecar lane for long-running or high-churn map maintenance: sidecars work
   from isolated fixed snapshots and return map-only patches, while the original worker must
   reconcile, rerun drift/schema validation against the current tree, and keep the verified slice

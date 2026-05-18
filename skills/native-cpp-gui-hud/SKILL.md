@@ -76,6 +76,17 @@ immediate-mode panel is infrastructure, not product UI, unless the project is ex
 If the first screenshot would look like a throwaway test harness to the target artist, reject the UI
 closeout even when the controls function.
 
+For standalone product-like artist tools that name polished commercial peer tools such as ZBrush,
+Mudbox, Maya, Houdini, Substance, Nuke, Unreal Editor, or Blender as the target feel, do not default
+to Dear ImGui solely because the app is Vulkan/realtime. Classify the UI as a polished desktop artist
+application first, then compare Qt and other desktop shells against immediate-mode options. If Qt is
+available locally or is acceptable as a dependency, prefer a Qt-style application shell for the main
+product surface unless the user explicitly asks for a fast internal prototype, debug tool, embedded
+engine editor, or immediate-mode UI. Dear ImGui remains appropriate for in-viewport overlays,
+diagnostic panels, temporary telemetry, or rapid internal tooling, but it must not become the default
+visible product shell for a named-peer high-quality artist app without recorded user approval and a
+visual contract proving it will not look like a throwaway debug UI.
+
 Use familiar icon affordances for universal tool commands when the chosen toolkit supports them:
 play, pause, stop, step, loop, record, save, load, undo, redo, select, move, rotate, scale, pan, zoom,
 lock, visibility, frame, pin, search, delete, add, and remove. Put the human-readable name in tooltip,
@@ -192,8 +203,14 @@ the evidence before wiring or closing.
 
 ## Default Selection
 
-- For Vulkan/CUDA/realtime tools, default to **Dear ImGui + ImGuizmo + ImPlot** unless the user wants
-  a polished end-user desktop app or shipped game UI.
+- For Vulkan/CUDA/realtime internal tools, debug tools, embedded engine editors, and rapid
+  technical-art utilities, default to **Dear ImGui + ImGuizmo + ImPlot** unless the user wants a
+  polished end-user desktop app or shipped game UI.
+- For standalone, high-quality, product-like artist tools with named peer-tool targets such as
+  ZBrush, Mudbox, Maya, Houdini, Substance, Nuke, Unreal Editor, or Blender, treat the app as a
+  polished desktop artist application first. Prefer **Qt** for the main shell when it is available or
+  acceptable, and keep Dear ImGui scoped to viewport overlays, diagnostics, or explicitly approved
+  immediate-mode product surfaces.
 - For standalone desktop products with complex menus, docks, document workflows, settings, and native
   application behavior, compare **Qt** and **wxWidgets** before proposing an immediate-mode UI.
 - For styled runtime/game HUDs and menus, compare **RmlUi** and **NoesisGUI** before using an internal

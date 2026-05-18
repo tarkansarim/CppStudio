@@ -85,6 +85,16 @@ game-dev tool, the first milestone cannot be accepted with a generic debug UI ju
 right buttons. The slice proof must include a screenshot or app-owned frame judged against that
 visual contract.
 
+When the requested tool names polished commercial peers or asks for high-quality standalone artist
+software, do not classify the GUI stack as "fast Vulkan tooling" just because Vulkan is involved.
+Classify the main shell as a product-like desktop artist application unless the user explicitly asks
+for a fast prototype, debug HUD, or internal tool. For that class, compare Qt-style desktop shells
+against immediate-mode UI and prefer the polished shell when available or acceptable; keep Dear ImGui
+for overlays, diagnostics, or explicitly approved immediate-mode product surfaces. A plan that picks
+Dear ImGui for a ZBrush/Maya/Mudbox/Houdini-like standalone product must include recorded user
+approval plus a strict visual contract, otherwise revise the recommendation before source files are
+created.
+
 When web research finds a strong reusable source that is missing from the CppStudio donor library,
 do not leave that discovery only in chat. First capture it in the target project's durable research,
 normally `docs/planning/DONOR_CANDIDATES.md` or a "Donor candidates" section in the research brief,
