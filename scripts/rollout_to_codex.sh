@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_NAME="${SKILL_NAME:-cpp-cuda-vulkan-studio}"
-AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger")
+AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "vulkan-compute-sync")
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SOURCE_DIR="${ROOT_DIR}/skills/${SKILL_NAME}"
 TARGET_DIR="${TARGET_DIR:-${CODEX_HOME_DIR}/skills/${SKILL_NAME}}"
@@ -263,7 +263,7 @@ for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
         "${target_skills_dir}/${auxiliary_skill_name}" \
         "auxiliary skill target"
 done
-for companion in cuda-kernel-authoring vulkan-compute-sync modern-cpp-cmake; do
+for companion in cuda-kernel-authoring modern-cpp-cmake; do
     reject_symlink_rollout_path \
         "${CODEX_HOME_DIR}/skills/${companion}" \
         "companion skill directory"
@@ -302,7 +302,6 @@ fi
 
 for snippet in \
     "${SNIPPET_ROOT}/cuda-kernel-authoring/donor-library.md" \
-    "${SNIPPET_ROOT}/vulkan-compute-sync/donor-library.md" \
     "${SNIPPET_ROOT}/modern-cpp-cmake/donor-library.md" \
     "${USER_AGENTS_RELAY_SNIPPET}"
 do
@@ -350,7 +349,7 @@ backup_rollout_path "${target_resolved}"
 for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     backup_rollout_path "${target_skills_dir}/${auxiliary_skill_name}"
 done
-for companion in cuda-kernel-authoring vulkan-compute-sync modern-cpp-cmake; do
+for companion in cuda-kernel-authoring modern-cpp-cmake; do
     companion_skill="${CODEX_HOME_DIR}/skills/${companion}/SKILL.md"
     if [[ -e "${companion_skill}" ]]; then
         backup_rollout_path "${companion_skill}"
@@ -395,7 +394,7 @@ for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     python3 "${VALIDATOR}" "${auxiliary_target_dir}"
     python3 "${PACKAGE_VALIDATOR}" "${auxiliary_target_dir}"
 done
-for companion in cuda-kernel-authoring vulkan-compute-sync modern-cpp-cmake; do
+for companion in cuda-kernel-authoring modern-cpp-cmake; do
     companion_dir="${CODEX_HOME_DIR}/skills/${companion}"
     if [[ -d "${companion_dir}" ]]; then
         python3 "${VALIDATOR}" "${companion_dir}"

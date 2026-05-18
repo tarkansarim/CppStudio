@@ -1,0 +1,4 @@
+interface:
+  display_name: "Vulkan Compute Sync"
+  short_description: "Vulkan compute/render synchronization."
+  default_prompt: "Use $vulkan-compute-sync to implement or debug Vulkan compute/render synchronization, barriers, descriptors, resource lifetime, and frame ordering."

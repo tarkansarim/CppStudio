@@ -43,7 +43,7 @@ stable entries stay collapsed under the expander.
   rollback handling, required code-map bootstrap/maintenance/sidecar/routing-smoke trigger cases with
   installed-path fresh-agent evidence, fresh-scaffold drift coverage before the first baseline
   commit, source skill-load hygiene checks plus explicit installed-root audits for backup artifacts
-  and oversized startup descriptions,
+  and oversized startup descriptions, CppStudio-owned `vulkan-compute-sync` rollout,
   greenfield Git bootstrap handling for Codex worker read-only `.git` sandbox blockers,
   Vulkan-only default scaffolds that omit CUDA files/routes/presets unless a CUDA lane is explicitly
   selected, control-harness roadmap/readiness readback that advances after verified prerequisite
@@ -454,9 +454,10 @@ toolchains only when you want this machine to build or validate generated C++ GP
   `${HOME}/.codex/skills/native-cpp-gui-hud`,
   `${HOME}/.codex/skills/agentic-control-harness`,
   `${HOME}/.codex/skills/viewport-session-testing`, and
-  `${HOME}/.codex/skills/important-instruction-ledger`
-- Optional companion donor links for installed companion skills such as `cuda-kernel-authoring`,
-  `vulkan-compute-sync`, and `modern-cpp-cmake`
+  `${HOME}/.codex/skills/important-instruction-ledger`,
+  `${HOME}/.codex/skills/vulkan-compute-sync`
+- Optional companion donor links for installed companion skills such as `cuda-kernel-authoring`
+  and `modern-cpp-cmake`
 - Tiny user-level `AGENTS.md` relay that tells agents to load `cpp-cuda-vulkan-studio` for
   native C++ GPU, realtime rendering/visualization, C++ GPU code-map, Vulkan, CUDA, or mixed
   CUDA/Vulkan work. Set `SKIP_USER_AGENTS_RELAY=1` during rollout only if you explicitly do not want
@@ -522,7 +523,8 @@ not trigger.
   particles, simulation, XR, and native engineering infrastructure.
 - Offer an optional code map for larger generated or upgraded C++ GPU projects that need durable
   architecture context across future agent sessions.
-- Coordinate companion skills for CMake, Vulkan synchronization, CUDA kernels, and verification.
+- Coordinate bundled Vulkan synchronization guidance plus companion skills for CMake, CUDA kernels,
+  and verification.
 
 ## Optional Code Maps
 
@@ -608,16 +610,17 @@ checkpoints and temporary anchors are not public verified-slice commits.
   watchlist. It records what supervising or direct agents must watch, verify, block, or reject
   during planning, worker nudges, source edits, commits, and closeout; user hard rules are one input
   to that watchlist, not the whole mechanism.
+- `vulkan-compute-sync`: installed user-level skill for Vulkan compute/render setup, descriptors,
+  barriers, synchronization, image layouts, frame lifetime, validation-layer triage, RenderDoc, and
+  Nsight Graphics-oriented debugging.
 - `cppstudio-repo-onboarding`: repo-local onboarding skill for agents editing this CppStudio repo.
   It is not the public user-level C++ GPU skill.
 
 ### Companion Skill Links
 
-CppStudio can add donor-library links to these companion skills when they are already installed:
+CppStudio can add donor-library links to these external companion skills when they are already installed:
 
 - `modern-cpp-cmake`: CMake, target layout, presets, tests, and native C++ project hygiene.
-- `vulkan-compute-sync`: Vulkan compute/render setup, descriptors, barriers, synchronization, and
-  frame lifetime.
 - `cuda-kernel-authoring`: CUDA kernels, launch wrappers, numerical tests, and Compute Sanitizer
   planning.
 
@@ -771,6 +774,8 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
   recording, replay, reports, and before/after proof
 - `skills/important-instruction-ledger/`: bundled active slice-watchlist skill for compaction-safe
   supervision and direct-work gates
+- `skills/vulkan-compute-sync/`: bundled Vulkan synchronization skill for compute/render barriers,
+  descriptors, image layouts, frame lifetime, and validation/debug capture triage
 - `skills/cpp-cuda-vulkan-studio/assets/app-library-template/`: generated-project template
 - `skills/cpp-cuda-vulkan-studio/references/`: project archetypes and donor-reference guidance
 - `skills/*/package-manifest.json`: deterministic skill package inventories and integrity metadata

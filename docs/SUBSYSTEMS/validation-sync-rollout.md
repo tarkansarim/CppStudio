@@ -28,6 +28,7 @@ skills, and watch-mode publishing behavior.
 - `skills/agentic-control-harness/package-manifest.json`
 - `skills/viewport-session-testing/package-manifest.json`
 - `skills/important-instruction-ledger/package-manifest.json`
+- `skills/vulkan-compute-sync/package-manifest.json`
 - `skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py`
 
 ## Update When
@@ -84,7 +85,7 @@ skills, and watch-mode publishing behavior.
   Codex home, then restore the full managed-skill set if any later copy or validation step fails.
 - `rollout_to_codex.sh` installs bundled auxiliary skills such as `native-cpp-gui-hud`,
   `cppstudio-project-planner`, `agentic-control-harness`, `viewport-session-testing`, and
-  `important-instruction-ledger`,
+  `important-instruction-ledger`, and `vulkan-compute-sync`,
   installs the minimal user-level `AGENTS.md` relay by default, and preserves user-owned content
   outside the marked CppStudio relay block.
 - Set `SKIP_USER_AGENTS_RELAY=1` only for deliberate relay opt-out installs.

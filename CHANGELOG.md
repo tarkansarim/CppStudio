@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Claimed `vulkan-compute-sync` as a bundled CppStudio-owned skill instead of an external companion
+  donor-link target. Rollout, watch, validation, manual install docs, package-integrity docs, and the
+  code map now include it as a managed auxiliary skill installed from this repo.
 - Hardened substantial greenfield planning handoff: after donor/web research and the pre-plan
   research brief, workers must stop with an explicit Plan-mode request instead of asking unresolved
   template, GUI/input stack, authoring-model, GPU-lane, code-map, dependency, donor, or validation

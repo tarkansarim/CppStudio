@@ -1,8 +1,9 @@
 # Companion Snippets And User Relay
 
-Owns managed donor-link snippets for companion skills and the tiny user-level `AGENTS.md` relay,
-including the code-map trigger wording that points native C++ GPU map requests at
-`cpp-cuda-vulkan-studio`.
+Owns managed donor-link snippets for external companion skills and the tiny user-level `AGENTS.md`
+relay, including the code-map trigger wording that points native C++ GPU map requests at
+`cpp-cuda-vulkan-studio`. `vulkan-compute-sync` is now a bundled CppStudio skill, not an external
+companion donor-link target.
 
 ## Canonical Docs
 

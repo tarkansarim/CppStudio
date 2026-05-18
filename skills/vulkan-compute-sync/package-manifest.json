@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "package": "vulkan-compute-sync",
+  "hash_algorithm": "sha256",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "role": "main",
+      "disclosure_group": "entrypoint",
+      "size": 8630,
+      "sha256": "5d886655d733a7572816a7a1c7109bd516d4f76fdf3202cd4001cf2304a0f262"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "role": "metadata",
+      "disclosure_group": "entrypoint",
+      "size": 279,
+      "sha256": "831358c3a4f96ae9463dd035937433034434db67559beb4443531d6a5acd18b7"
+    }
+  ]
+}

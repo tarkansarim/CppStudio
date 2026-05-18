@@ -18,7 +18,6 @@ END_BYTES = END.encode("utf-8")
 
 COMPANIONS = {
     "cuda-kernel-authoring": "## Design Rules",
-    "vulkan-compute-sync": "## Compute Pipeline Checklist",
     "modern-cpp-cmake": "## Renderer Bootstrap",
 }
 

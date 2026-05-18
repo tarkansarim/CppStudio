@@ -331,7 +331,7 @@ ${SYNC_CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio
 
 Set `SKILL_NAME=native-cpp-gui-hud`, `SKILL_NAME=cppstudio-project-planner`,
 `SKILL_NAME=agentic-control-harness`, `SKILL_NAME=viewport-session-testing`, or
-`SKILL_NAME=important-instruction-ledger` only for an
+`SKILL_NAME=important-instruction-ledger`, or `SKILL_NAME=vulkan-compute-sync` only for an
 intentional single-skill diagnostic sync. Do not use the default sync command as proof that auxiliary
 skill edits were installed.
 
@@ -355,6 +355,7 @@ python3 scripts/validate_skill_package.py skills/cppstudio-project-planner --wri
 python3 scripts/validate_skill_package.py skills/agentic-control-harness --write-manifest
 python3 scripts/validate_skill_package.py skills/viewport-session-testing --write-manifest
 python3 scripts/validate_skill_package.py skills/important-instruction-ledger --write-manifest
+python3 scripts/validate_skill_package.py skills/vulkan-compute-sync --write-manifest
 ```
 
 Then validate normally:
@@ -366,6 +367,7 @@ python3 scripts/validate_skill_package.py skills/cppstudio-project-planner
 python3 scripts/validate_skill_package.py skills/agentic-control-harness
 python3 scripts/validate_skill_package.py skills/viewport-session-testing
 python3 scripts/validate_skill_package.py skills/important-instruction-ledger
+python3 scripts/validate_skill_package.py skills/vulkan-compute-sync
 ```
 
 Use a custom Codex home:
@@ -408,7 +410,8 @@ Use that override only for deliberate staging.
 
 By default, companion donor-link rollout skips absent optional companion skills. Set
 `STRICT_COMPANION_SKILLS=1` when validating a full local release environment where
-`cuda-kernel-authoring`, `vulkan-compute-sync`, and `modern-cpp-cmake` must all be installed.
+`cuda-kernel-authoring` and `modern-cpp-cmake` must both be installed. `vulkan-compute-sync` is
+bundled and installed by CppStudio rollout.
 
 Rollout snapshots the main skill, bundled auxiliary skills, matching companion `SKILL.md` files, and
 the optional user-level `AGENTS.md` relay target before mutation, then restores those paths if any

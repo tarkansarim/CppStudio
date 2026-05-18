@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_DIR="${ROOT_DIR}/skills/cpp-cuda-vulkan-studio"
-AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger")
+AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "vulkan-compute-sync")
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
 REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
@@ -127,6 +127,9 @@ required_repo_files=(
     "skills/important-instruction-ledger/agents/openai.yaml"
     "skills/important-instruction-ledger/scripts/important_instruction_ledger.py"
     "skills/important-instruction-ledger/package-manifest.json"
+    "skills/vulkan-compute-sync/SKILL.md"
+    "skills/vulkan-compute-sync/agents/openai.yaml"
+    "skills/vulkan-compute-sync/package-manifest.json"
     "docs/agent-context/SLICE_WATCHLIST.md"
     "research/donor-library/trigger-regression-checklist.md"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/.gitignore"
@@ -393,11 +396,9 @@ write_companion_fixtures() {
     local codex_home="$1"
     rm -rf \
         "${codex_home}/skills/cuda-kernel-authoring" \
-        "${codex_home}/skills/vulkan-compute-sync" \
-        "${codex_home}/skills/modern-cpp-cmake"
+    "${codex_home}/skills/modern-cpp-cmake"
     mkdir -p \
         "${codex_home}/skills/cuda-kernel-authoring" \
-        "${codex_home}/skills/vulkan-compute-sync" \
         "${codex_home}/skills/modern-cpp-cmake"
     cat >"${codex_home}/skills/cuda-kernel-authoring/SKILL.md" <<'EOF'
 ---
@@ -406,14 +407,6 @@ description: Test fixture.
 ---
 # CUDA Kernel Authoring
 ## Design Rules
-EOF
-    cat >"${codex_home}/skills/vulkan-compute-sync/SKILL.md" <<'EOF'
----
-name: vulkan-compute-sync
-description: Test fixture.
----
-# Vulkan Compute Sync
-## Compute Pipeline Checklist
 EOF
     cat >"${codex_home}/skills/modern-cpp-cmake/SKILL.md" <<'EOF'
 ---
@@ -1695,7 +1688,6 @@ write_companion_fixtures "${companion_tmp}"
 missing_companion_tmp="$(mktemp -d "${VALIDATE_TMP}/companion_missing.XXXXXX")"
 write_companion_fixtures "${missing_companion_tmp}"
 rm -rf \
-    "${missing_companion_tmp}/skills/vulkan-compute-sync" \
     "${missing_companion_tmp}/skills/modern-cpp-cmake"
 missing_companion_out="$(mktemp "${VALIDATE_TMP}/companion_missing.XXXXXX.out")"
 python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
@@ -1704,7 +1696,7 @@ python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
     --donor-root "${missing_companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
     --source-skill-dir "${SKILL_DIR}" \
     --snippet-root "${ROOT_DIR}/companion-skill-snippets" >"${missing_companion_out}"
-grep -q "preflight skipped: ${missing_companion_tmp}/skills/vulkan-compute-sync/SKILL.md" \
+grep -q "preflight skipped: ${missing_companion_tmp}/skills/modern-cpp-cmake/SKILL.md" \
     "${missing_companion_out}"
 expect_failure "strict companion skill missing" "missing installed companion skill" \
     python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
@@ -1855,10 +1847,7 @@ expect_failure "companion skill duplicate frontmatter name" "expected exactly on
 snippet_tmp="${companion_tmp}/snippets"
 mkdir -p \
     "${snippet_tmp}/cuda-kernel-authoring" \
-    "${snippet_tmp}/vulkan-compute-sync" \
     "${snippet_tmp}/modern-cpp-cmake"
-cp "${ROOT_DIR}/companion-skill-snippets/vulkan-compute-sync/donor-library.md" \
-    "${snippet_tmp}/vulkan-compute-sync/donor-library.md"
 cp "${ROOT_DIR}/companion-skill-snippets/modern-cpp-cmake/donor-library.md" \
     "${snippet_tmp}/modern-cpp-cmake/donor-library.md"
 {

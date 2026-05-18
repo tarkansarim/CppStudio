@@ -77,6 +77,17 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-18T12:14:03Z`
 
+8. **Claim vulkan-compute-sync as a CppStudio-owned bundled skill without editing unrelated repos directly; update rollout/install validation, code map, docs, manifests, and then file/dispatch description-deferral tickets to owner repos.**
+   - Status: `active`
+   - Slice: `vulkan-compute-sync ownership and skill-description ticketing`
+   - Scope: `reusable-skill`
+   - Source: user request
+   - Revisit when: before source edits, validation, rollout, ticket filing, and closeout
+   - Gate: Source skill exists under CppStudio, rollout installs it from source, validation passes, tickets are filed to source-owning repos, and owner agents are launched through guarded tmux/contact.
+   - Evidence: none recorded
+   - Recorded: `2026-05-18T21:05:36Z`
+
+
 ## Superseded Or Historical
 
 1. **Record important user instructions immediately and revisit them before supervision or closeout**

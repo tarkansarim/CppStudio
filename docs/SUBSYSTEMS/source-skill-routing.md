@@ -18,6 +18,7 @@ generated-project workflow instructions.
 - `skills/viewport-session-testing/references/viewport-session-testing.md`
 - `skills/important-instruction-ledger/SKILL.md`
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
+- `skills/vulkan-compute-sync/SKILL.md`
 - `docs/agent-context/SLICE_WATCHLIST.md`
 - `docs/agent-context/slice-watchlist.jsonl`
 - `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md`
@@ -36,6 +37,7 @@ generated-project workflow instructions.
 - `skills/viewport-session-testing/references/viewport-session-testing.md`
 - `skills/important-instruction-ledger/SKILL.md`
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
+- `skills/vulkan-compute-sync/SKILL.md`
 - `docs/agent-context/SLICE_WATCHLIST.md`
 - `docs/agent-context/slice-watchlist.jsonl`
 - `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md`
