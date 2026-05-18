@@ -50,6 +50,15 @@ generated-project workflow instructions.
   call sequences, L0/L1/L2 Harness roles, checkpoint/rewind/gauntlet machinery, workflow graph
   execution, agent resource defaults, or `.sortie` artifact contracts.
 
+## Current Skill Discovery Posture
+
+- Bundled CppStudio skill frontmatter descriptions are compact discovery triggers only. Detailed
+  routing rules, trigger phrase lists, examples, matrices, lifecycle rules, and operational policy
+  belong in the skill body or lazily read references so startup skill discovery stays within budget.
+- When shortening frontmatter, preserve the moved discovery details in source skill bodies or
+  references, then validate both description lengths and representative trigger/detail probes before
+  rollout.
+
 ## Current Code-Map Bootstrap Posture
 
 - Greenfield code-map choice is a hard pre-source gate. Before the first source/build/app/test/docs

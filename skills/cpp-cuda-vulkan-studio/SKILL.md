@@ -1,11 +1,25 @@
 ---
 name: cpp-cuda-vulkan-studio
-description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, agentic control harnesses, viewport-session testing, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests, build/test/profiling standardization, CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, local HTTP/curl/MCP controls, viewport/UI session replay proof, or donor selection for renderers, assets, WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, sculpting/brush tools, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. For big initial planning or stack choices, use cppstudio-project-planner first."
+description: "Use first for native C++ GPU/Vulkan/CUDA projects, maintained code maps, scaffolds, validation lanes, donor routing, and CUDA/Vulkan interop."
 ---
 
 # C++ CUDA Vulkan Studio
 
 Use this skill when a native C++ GPU, C++/Vulkan, C++/CUDA, or mixed CUDA/Vulkan repo needs a repeatable professional development backbone or maintained code map, not a one-off local build. There is no separate CppStudio code-map skill; the code-map protocol lives here. This skill coordinates the more specific global skills instead of replacing them.
+
+## Discovery Details
+
+Load this skill for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests,
+build/test/profiling standardization, CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, local
+HTTP/curl/MCP controls, viewport/UI session replay proof, or donor selection for renderers, assets,
+WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, sculpting/brush tools, grooming/fur, DCC,
+volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code.
+
+This skill owns reusable C++ GPU project infrastructure and maintained code maps for Vulkan-first,
+CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels,
+Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts,
+agentic control harnesses, viewport-session testing, and donor routing. For big initial planning or
+stack choices, use `cppstudio-project-planner` first.
 
 ## Initial Planning Gate
 

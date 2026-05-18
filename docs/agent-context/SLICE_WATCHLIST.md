@@ -87,6 +87,16 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-18T21:05:36Z`
 
+9. **Ticket #112 closeout requires source-only edits, compact frontmatter descriptions, moved details preserved in skill bodies/references, representative trigger probes, validate.sh, rollout_to_codex.sh, evidence comments, strict closeout-check, clean source worktree, and HEAD/commit/install evidence before closing.**
+   - Status: `active`
+   - Slice: `ticket-112 skill description deferral`
+   - Scope: `reusable-skill`
+   - Source: user ticket closeout gate and ticket #112 body
+   - Revisit when: before source edits, validation, rollout, ticket evidence comments, closeout-check, close, and final status
+   - Gate: Do not close ticket #112 unless the ticket contains validation results, before/after description lengths, trigger/detail probe evidence, install/rollout evidence, source clean status, and HEAD/commit evidence.
+   - Evidence: none recorded
+   - Recorded: `2026-05-18T21:17:19Z`
+
 
 ## Superseded Or Historical
 

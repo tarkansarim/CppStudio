@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Deferred bundled skill discovery detail out of frontmatter descriptions and into source skill
+  bodies. Skill-load hygiene now enforces compact CppStudio startup descriptions, while rollout
+  preserves full trigger/routing detail for C++ GPU, planning, control-harness, watchlist, GUI,
+  viewport-session, and Vulkan synchronization skills.
 - Claimed `vulkan-compute-sync` as a bundled CppStudio-owned skill instead of an external companion
   donor-link target. Rollout, watch, validation, manual install docs, package-integrity docs, and the
   code map now include it as a managed auxiliary skill installed from this repo.

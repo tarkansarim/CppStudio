@@ -1,11 +1,21 @@
 ---
 name: vulkan-compute-sync
-description: "Vulkan compute and render synchronization guidance for C++ engines: SPIR-V shader compilation, compute pipeline setup, descriptor sets, push constants, specialization constants, vkCmdDispatch, synchronization2 barriers, image layout transitions, frames in flight, command pools, queue ownership, swapchain acquire/present, validation layers, RenderDoc, and Nsight Graphics. Use when implementing or debugging Vulkan compute shaders, barriers, resource lifetime, or GPU/CPU coordination."
+description: "Use for Vulkan compute/render synchronization in C++: barriers, image layouts, descriptors, dispatch, frames in flight, validation, and capture debugging."
 ---
 
 # Vulkan Compute Sync
 
 Use this skill for Vulkan compute or render synchronization work. Prefer the repository's existing Vulkan wrapper and naming first. Apply these rules when the code lacks a clear local convention or when validation, frame capture, or synchronization bugs are being investigated.
+
+## Discovery Details
+
+Load this skill when implementing or debugging Vulkan compute shaders, barriers, resource lifetime,
+or GPU/CPU coordination.
+
+Use it for Vulkan compute and render synchronization guidance for C++ engines: SPIR-V shader compilation,
+compute pipeline setup, descriptor sets, push constants, specialization constants,
+`vkCmdDispatch`, synchronization2 barriers, image layout transitions, frames in flight, command
+pools, queue ownership, swapchain acquire/present, validation layers, RenderDoc, and Nsight Graphics.
 
 ## First Principles
 

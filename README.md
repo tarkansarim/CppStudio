@@ -39,7 +39,8 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 `current` aggregate plus 10 stable recent commit highlights for people scanning the repo. Older
 stable entries stay collapsed under the expander.
 
-- `current` - Hardened rollout and trigger-regression safety with symlink-safe bundled auxiliary
+- `current` - Hardened rollout and trigger-regression safety with compact bundled-skill discovery
+  descriptions that defer detailed routing into skill bodies, symlink-safe bundled auxiliary
   rollback handling, required code-map bootstrap/maintenance/sidecar/routing-smoke trigger cases with
   installed-path fresh-agent evidence, fresh-scaffold drift coverage before the first baseline
   commit, source skill-load hygiene checks plus explicit installed-root audits for backup artifacts

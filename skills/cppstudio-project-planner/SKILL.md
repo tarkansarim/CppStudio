@@ -1,6 +1,6 @@
 ---
 name: cppstudio-project-planner
-description: "Plan native C++ GPU/realtime projects before scaffolding or major architecture work: gather requirements, choose CppStudio project archetype/template, project authoring model/source-of-truth, Vulkan/CUDA/interop lane, GUI/HUD stack, agentic control harness, artist input such as Wacom/stylus pressure, donor categories, state-of-the-art web ceiling checks, code-map policy, validation lanes, and user decisions. Use for initial project planning, project intake, architecture blueprints, 'what stack should we use' questions, best-current-stack selection, or when a C++/Vulkan/CUDA/3D/AI/simulation/tool app has multiple unresolved choices."
+description: "Plan substantial native C++ GPU/realtime projects before scaffolding, stack choices, architecture decisions, donor research, GUI/input, and validation."
 ---
 
 # CppStudio Project Planner
@@ -8,6 +8,19 @@ description: "Plan native C++ GPU/realtime projects before scaffolding or major 
 Use this skill as the front door for major native C++ GPU project planning. It does not replace
 `cpp-cuda-vulkan-studio`; it prepares a grounded project plan, records user choices, and then hands
 implementation to the specific CppStudio, GUI, Vulkan, CUDA, CMake, and donor routes.
+
+## Discovery Details
+
+Load this skill for initial project planning, project intake, architecture blueprints, "what stack
+should we use" questions, best-current-stack selection, or when a C++/Vulkan/CUDA/3D/AI/simulation
+or tool app has multiple unresolved choices.
+
+Use it to gather requirements and choose the CppStudio project archetype or template, project
+authoring model/source of truth, Vulkan/CUDA/interop lane, GUI/HUD stack, agentic control harness,
+artist input such as Wacom/stylus pressure, donor categories, state-of-the-art web ceiling checks,
+code-map policy, validation lanes, and user decisions.
+Keep project authoring model decisions explicit when evaluating source-of-truth and workflow
+ownership.
 
 ## Core Rule
 

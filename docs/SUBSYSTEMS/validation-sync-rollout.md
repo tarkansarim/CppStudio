@@ -55,10 +55,12 @@ skills, and watch-mode publishing behavior.
   top-level files plus VCS, editor, cache, env, secret-like, archive, log, swap, and temp artifacts.
 - Skill-load hygiene validation uses `scripts/validate_skill_load_hygiene.py` to scan the repo
   skill root as a hard gate, reject backup-looking files/directories that can bloat discovery, catch
-  duplicate loaded skill names, and keep description metadata inside a startup budget. The installed
-  user-level Codex skill root is audited visibly but non-blocking by default because it may contain
-  unrelated skills from other repos; set `CPPSTUDIO_STRICT_USER_SKILL_LOAD=1` to make that installed
-  root a fatal maintainer gate.
+  duplicate loaded skill names, and keep description metadata inside a compact startup budget. Keep
+  frontmatter descriptions as short discovery triggers; move routing lists, matrices, examples, and
+  operational policy into the skill body or lazily read references. The installed user-level Codex
+  skill root is audited visibly but non-blocking by default because it may contain unrelated skills
+  from other repos; set `CPPSTUDIO_STRICT_USER_SKILL_LOAD=1` to make that installed root a fatal
+  maintainer gate.
 - Non-dry-run sync stages and validates the skill before replacing the installed target, then restores
   the previous target if final validation fails.
 - Sync validates the selected source skill, staged skill, and final installed skill against that

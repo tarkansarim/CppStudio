@@ -1,6 +1,6 @@
 ---
 name: agentic-control-harness
-description: "Plan, build, or review local agentic control harnesses for native C++ GPU/realtime apps: localhost HTTP/curl controls, optional MCP facade, launch/control registries, main-thread command routing, state/log/visual observation, endpoint discovery, feature-control maintenance, and autonomous test/troubleshooting lanes. Use when project planning or implementation needs an AI agent to control, test, inspect, debug, or troubleshoot a C++/Vulkan/CUDA GUI, renderer, simulator, artist tool, game tool, or realtime app."
+description: "Design local agent control surfaces for native C++ realtime apps: launch, HTTP/curl/CLI/MCP controls, readback, and troubleshooting."
 ---
 
 # Agentic Control Harness
@@ -8,6 +8,17 @@ description: "Plan, build, or review local agentic control harnesses for native 
 Use this skill when a native C++ GPU app should be controllable by an AI agent during development,
 testing, debugging, profiling, or future feature work. It complements `cppstudio-project-planner`,
 `cpp-cuda-vulkan-studio`, `native-cpp-gui-hud`, and `viewport-session-testing`.
+
+## Discovery Details
+
+Load this skill when project planning or implementation needs an AI agent to control, test, inspect,
+debug, or troubleshoot a C++/Vulkan/CUDA GUI, renderer, simulator, artist tool, game tool, or
+realtime app.
+
+Use it to plan, build, or review local agentic control harnesses for native C++ GPU/realtime apps:
+localhost HTTP/curl controls, optional MCP facade, launch/control registries,
+main-thread command routing, state/log/visual observation, endpoint discovery, feature-control maintenance, and
+autonomous test/troubleshooting lanes.
 
 ## Default Posture
 

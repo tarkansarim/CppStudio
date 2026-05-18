@@ -1,6 +1,6 @@
 ---
 name: important-instruction-ledger
-description: "Maintain an active per-slice watchlist for supervising or directly implementing work: what must be watched, verified, rejected, revisited, or carried across compaction before planning, worker nudges, source edits, closeout, commits, or status claims. Use for substantial implementation slices, worker supervision, slice approval, direct source work, repeated misses, and also when the user gives important constraints, hard rules, prerequisites, always/never instructions, or decisions."
+description: "Maintain an active slice watchlist for implementation or supervision work with hard constraints, verification gates, risks, or closeout rules."
 ---
 
 # Active Slice Watchlist
@@ -9,6 +9,16 @@ Use this skill to maintain an active supervision watchlist for each implementati
 passive note-taking and it is not limited to user quotes. The watchlist tells the supervising or
 direct agent what to keep an eye on as the slice progresses, what would invalidate the slice, and
 what evidence must exist before approval or closeout.
+
+## Discovery Details
+
+Load this skill for substantial implementation slices, worker supervision, slice approval, direct
+source work, repeated misses, and when the user gives important constraints, hard rules,
+prerequisites, always/never instructions, or decisions.
+
+Use it to maintain an active per-slice watchlist for supervising or directly implementing work: what
+must be watched, verified, rejected, revisited, or carried across compaction before planning,
+worker nudges, source edits, closeout, commits, or status claims.
 
 User instructions are one source of watch items. Other sources include plan packets, donor facts,
 code-map routes, previous misses, review findings, tool failures, visible-loop requirements,

@@ -1,6 +1,6 @@
 ---
 name: viewport-session-testing
-description: "Design, implement, or use app-owned viewport/UI session recording and replay lanes for native C++ GPU tools: record real viewport, stylus, mouse, keyboard, camera, tool, timeline, gizmo, node, and GUI interactions; replay them deterministically; produce before/after reports, screenshots, semantic traces, probes, and OSTM/background proof for visible UI bugs."
+description: "Design or use app-owned viewport/UI session replay for native C++ tools: real gestures, screenshots, traces, and visible bug proof."
 ---
 
 # Viewport Session Testing
@@ -10,6 +10,14 @@ needs user-equivalent viewport/UI proof instead of backend-only control checks.
 
 This skill complements `agentic-control-harness`. The control harness exposes commands and readback;
 viewport session testing records and replays the actual interaction path a user exercises.
+
+## Discovery Details
+
+Load this skill to design, implement, or use app-owned viewport/UI session recording and replay lanes
+for native C++ GPU tools: record real viewport, stylus, mouse, keyboard, camera, tool, timeline,
+gizmo, node, and GUI interactions; replay them deterministically; produce before/after reports,
+screenshots, semantic traces, probes, and OSTM/background proof for visible UI bugs.
+Use gui_run_scenario-style proof when the project already has that scenario lane.
 
 ## Grounding Donors
 

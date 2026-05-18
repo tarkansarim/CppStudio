@@ -1,6 +1,6 @@
 ---
 name: native-cpp-gui-hud
-description: "Choose and integrate native C++ GUI, HUD, editor UI, viewport overlay, tool panel, docking, inspector, gizmo, plotting, telemetry, or runtime/game UI options for C++/Vulkan/CUDA/realtime applications. Use when comparing Dear ImGui, ImGuizmo, ImPlot, Qt, wxWidgets, RmlUi, NoesisGUI, Nuklear, FLTK, libui-ng, CEF, or similar native GUI stacks. When presenting options, include web links where the user can inspect how each GUI looks."
+description: "Choose or integrate native C++ GUI/HUD/editor UI for C++ GPU tools, including docking, gizmos, plotting, runtime UI, and visual conventions."
 ---
 
 # Native C++ GUI And HUD
@@ -8,6 +8,16 @@ description: "Choose and integrate native C++ GUI, HUD, editor UI, viewport over
 Use this skill when a native C++ project needs GUI/HUD/tool UI selection or integration. It is
 especially relevant for Vulkan/CUDA/realtime artist tools, editor panels, debug overlays, performance
 HUDs, gizmos, timeline controls, graph/plot panels, and runtime game UI.
+
+## Discovery Details
+
+Load this skill when choosing or integrating native C++ GUI, HUD, editor UI, viewport overlay, tool
+panel, docking, inspector, gizmo, plotting, telemetry, or runtime/game UI options for
+C++/Vulkan/CUDA/realtime applications.
+
+Use it when comparing Dear ImGui, ImGuizmo, ImPlot, Qt, wxWidgets, RmlUi, NoesisGUI, Nuklear, FLTK,
+libui-ng, CEF, or similar native GUI stacks. When presenting options, include web links where the
+user can inspect how each GUI looks.
 
 ## Core Rule
 
