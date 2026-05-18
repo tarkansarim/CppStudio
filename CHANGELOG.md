@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a bundled `viewport-session-testing` skill plus generated-project runtime scaffold for
+  app-owned UI/viewport session recording and replay. New scaffolds include a host-adapter contract,
+  fake-host smoke test, copied `run_viewport_session_smoke.py` helper, viewport-session docs, CTest
+  labels, code-map routing, and before/after visible bug proof guidance so agents do not rebuild the
+  same record/replay lane per project.
 - Tightened donor-backed planning so Level 3 coverage now requires explicit donor feature
   disposition. Agents must inventory important features from donor shaders, brushes, renderers,
   solvers, UI patterns, importers, optimizers, or subsystems and mark each included, deferred,
@@ -22,9 +27,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
   reporting green validation no longer substitutes for detailed per-slice planning.
 - Refreshed README Recent Commit Highlights so the main page now lists the latest CppStudio hardening
   commits as stable entries instead of leaving them only inside the aggregate `current` summary.
-- Added Codex skill-load hygiene validation so repo and installed skill roots reject backup-looking
+- Added Codex skill-load hygiene validation so repo skill roots reject backup-looking
   files/directories, duplicate loaded skill names, and oversized description metadata before rollout
-  or validation can claim a clean install.
+  or validation can claim a clean source package; installed user-level roots are audited visibly by
+  default and become fatal with `CPPSTUDIO_STRICT_USER_SKILL_LOAD=1`.
 - Added a six-level planning depth contract for substantial software: intake/context,
   research/ceiling, whole-product scaffold, donor coverage and quality contract, slice readiness,
   and implementation/closeout proof. Serious native C++ GPU, artist, game, VFX, DCC,

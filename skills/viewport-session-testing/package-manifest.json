@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "package": "viewport-session-testing",
+  "hash_algorithm": "sha256",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "role": "main",
+      "disclosure_group": "entrypoint",
+      "size": 3467,
+      "sha256": "f5f1fa948f359566923a066f405b48739a803a810870f3bc01a6eccf548ee425"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "role": "metadata",
+      "disclosure_group": "entrypoint",
+      "size": 261,
+      "sha256": "918f6245d530aa5e93bd3f351fecc773e6254ab4c86d7e846c283ecd88040d7f"
+    },
+    {
+      "path": "references/viewport-session-testing.md",
+      "role": "reference",
+      "disclosure_group": "reference",
+      "size": 3658,
+      "sha256": "9bbb0bf2115f36cf81c5c6ccc0a0a90a64bb0e8011fd0ea37f623251abd65e40"
+    }
+  ]
+}

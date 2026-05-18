@@ -9,6 +9,16 @@ cmake --build --preset dev
 ctest --preset quick --output-on-failure
 ```
 
+Viewport-session smoke gate:
+
+```bash
+scripts/run_viewport_session_smoke.py --build-dir build/dev
+```
+
+For visible UI, viewport, brush, paint, sculpt, groom, timeline, node, camera, or gizmo bugs, record
+or replay a user-equivalent viewport session and compare before/after `report.json`, state files,
+semantic traces, and fresh captures before claiming the bug is fixed.
+
 Self-hosted CI runner expectations and artifact paths are documented in
 [GPU_RUNNER_CI.md](GPU_RUNNER_CI.md).
 

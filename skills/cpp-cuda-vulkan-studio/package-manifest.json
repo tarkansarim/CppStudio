@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 82301,
-      "sha256": "0ab344f0760bc575be0f4c1c918b5ac903da984d9e9d1b418547321ed71cdf1d"
+      "size": 83336,
+      "sha256": "00dc7ad7c61b287fa1899eba47bc3c525ef010fb1f7d1493894d9b6bf89b1539"
     },
     {
       "path": "agents/openai.yaml",
@@ -49,8 +49,8 @@
       "path": "assets/app-library-template/CMakeLists.txt",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 7139,
-      "sha256": "ead098cc6fdc5f636d4f3177cfc6b5d2068df21be9528b706703798e77c60293"
+      "size": 8053,
+      "sha256": "570f9981204e9db62e7d89708687476ff51d58adf82a29c0b0294c31c08a9e66"
     },
     {
       "path": "assets/app-library-template/CMakePresets.json",
@@ -63,8 +63,8 @@
       "path": "assets/app-library-template/README.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 5857,
-      "sha256": "6ef0537def1a21961a51e4cc83953e83acb5eb65a0223c658a3930ac836d4f48"
+      "size": 6466,
+      "sha256": "807a5181ab4ce7fb6cb20f544c19d8249e6553c034667fdec6de4dadb1be1577"
     },
     {
       "path": "assets/app-library-template/benchmarks/benchmark_smoke.cpp",
@@ -126,15 +126,15 @@
       "path": "assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 2413,
-      "sha256": "e1a5d90c7a84d3c6b5af810c4ee14ba5035f19cd78c8b79721464cf1794fea45"
+      "size": 2524,
+      "sha256": "835ce1d375192c3d12cebfcd74096ac1d1731e5927677220e045889a715923e4"
     },
     {
       "path": "assets/app-library-template/docs/CODEBASE_SUBSYSTEM_MANIFEST.json",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 1854,
-      "sha256": "94ab6c64b98a5b07f64dbd4e0ce79b947027fc646765bcd54731ad7023874631"
+      "size": 2371,
+      "sha256": "27c7d7328d7c4ebccc847308cb474338b466f5217119ea7ec9a1c1e4b53b1865"
     },
     {
       "path": "assets/app-library-template/docs/DEVELOPMENT_ENVIRONMENT.md",
@@ -186,6 +186,13 @@
       "sha256": "573774d9f094331f0f573da3b5c86ffe5cfa7b2bdbf9291365853aca09ce2374"
     },
     {
+      "path": "assets/app-library-template/docs/SUBSYSTEMS/viewport-session-testing.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 793,
+      "sha256": "ea3dacb61912083b9da53ca73a52693d6eecd4a09a3f69ec7ab8494f35711d9d"
+    },
+    {
       "path": "assets/app-library-template/docs/SUBSYSTEMS/vulkan-lane.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
@@ -196,8 +203,15 @@
       "path": "assets/app-library-template/docs/VALIDATION_PIPELINE.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 14958,
-      "sha256": "22a26ca58b72bf5881a99f88437fda4ce9a7fec9aade2df02d48143ce390b7b9"
+      "size": 15331,
+      "sha256": "08755005e38a6005a87164e85a3bbb383d838446967d19529ae77eed15f1b1b5"
+    },
+    {
+      "path": "assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 2074,
+      "sha256": "cb4217c7f1cdfa1a6056b9a293464969fd1adb7214064d338c19af9f2e34c1d4"
     },
     {
       "path": "assets/app-library-template/include/{{PROJECT_NAME}}/cuda_vector_add.hpp",
@@ -212,6 +226,13 @@
       "disclosure_group": "generated-project-template",
       "size": 163,
       "sha256": "93c681bcc0c2e709de41bcad8c055cdb29bf14accd412dcbba0349045a9c1c50"
+    },
+    {
+      "path": "assets/app-library-template/include/{{PROJECT_NAME}}/viewport_session.hpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 3069,
+      "sha256": "d186af4d9540d6d78e1e8d379774b974b446d12dfe418493690b6c8d212b3327"
     },
     {
       "path": "assets/app-library-template/include/{{PROJECT_NAME}}/vulkan_probe.hpp",
@@ -245,8 +266,8 @@
       "path": "assets/app-library-template/src/app/main.cpp",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 2412,
-      "sha256": "24cae1d647043e298af9940529dbcc1b9954b89ab07b4985644c4e7f367a9ecd"
+      "size": 3342,
+      "sha256": "6d7281ad32f071fd325ebde7163ce569e27e3443cff7e06a72b7c5dc78d1d9db"
     },
     {
       "path": "assets/app-library-template/src/core/library.cpp",
@@ -270,6 +291,13 @@
       "sha256": "1b3eed6587c47161ff539553852dbb2d8d887140db0b14c5c66e5a1015b2cc13"
     },
     {
+      "path": "assets/app-library-template/src/testing/viewport_session.cpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 17595,
+      "sha256": "64252a90e33babe17ba5a41b741b63d6060ed1d802f27048743864df4ccb0473"
+    },
+    {
       "path": "assets/app-library-template/tests/unit/core_test.cpp",
       "role": "asset",
       "disclosure_group": "generated-project-template",
@@ -282,6 +310,13 @@
       "disclosure_group": "generated-project-template",
       "size": 233,
       "sha256": "ca33bdb43e041cfffcffbb993c0dde020b72ad595578c88f2a4a070d9ff7530f"
+    },
+    {
+      "path": "assets/app-library-template/tests/unit/viewport_session_test.cpp",
+      "role": "asset",
+      "disclosure_group": "generated-project-template",
+      "size": 1653,
+      "sha256": "b93eb96b31537d9cf5021f0ae611c30ce67d9e751e45d63c2c0cf0d807125edc"
     },
     {
       "path": "assets/app-library-template/tests/unit/vulkan_compute_test.cpp",
@@ -1344,15 +1379,15 @@
       "path": "scripts/apply_studio_backbone.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 6785,
-      "sha256": "2ce0c523c2aed05564df375f26a17e1ed44fa135989657973001c8fbe40aa94a"
+      "size": 6913,
+      "sha256": "b1b1a1a920b11c5c1442490a5af346026abf558614b4522e46bb222ff0b00551"
     },
     {
       "path": "scripts/bootstrap_code_map.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 24481,
-      "sha256": "c6279b8142ee5619582c45c1ae3689b11e90d813eaee09faf442783a7f1f6a41"
+      "size": 25121,
+      "sha256": "ef8a629d4544ec7b95b8620a1a63f3533fb1184c6af4238310fe980915737733"
     },
     {
       "path": "scripts/check_code_map_drift.py",
@@ -1404,6 +1439,13 @@
       "sha256": "7fda61b87961fc9d339deba69ad8abe7aaac9dbf3a05dc52dd6bd16ace37f10f"
     },
     {
+      "path": "scripts/run_viewport_session_smoke.py",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 2560,
+      "sha256": "b9d53ecd271d15cb6f15952097fceada7467fe9498656f6e6a60e91495d4ee80"
+    },
+    {
       "path": "scripts/run_vulkan_validation.sh",
       "role": "script",
       "disclosure_group": "script",
@@ -1414,8 +1456,8 @@
       "path": "scripts/scaffold_gpu_cpp_project.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 27262,
-      "sha256": "f6203499d4d2f7c80e9fe81886db127ac3a901edadadfd207bb58ccba3eb853d"
+      "size": 27960,
+      "sha256": "e61f6f87b4f4ef53d314f7c5a825a927ef10ad581897f1af4b4f85a9f0ae951d"
     },
     {
       "path": "scripts/select_idle_gpu.sh",
@@ -1435,15 +1477,15 @@
       "path": "scripts/validate_code_map.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 12878,
-      "sha256": "c7524f8884e74e5eab08e5aa67f6632a4f2802bbe0fb9cea513eb6fdf2548c84"
+      "size": 12910,
+      "sha256": "fe7df51283f538a43fc5dab7c3a58c4f6956d7a2325b8920c8d80b7a8cf330ed"
     },
     {
       "path": "scripts/validate_studio_backbone.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 11150,
-      "sha256": "566c3af4bc6b69cefeeadb0ddc1da235f9a17ea7cc7a2a95b89791a5d466846f"
+      "size": 11311,
+      "sha256": "e3ae6201b3b1839baee4c20be2ba84474ba86cd11979a349e899977cdfb730b2"
     }
   ]
 }

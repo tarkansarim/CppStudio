@@ -1,4 +1,5 @@
 #include "{{PROJECT_NAME}}/version.hpp"
+#include "{{PROJECT_NAME}}/viewport_session.hpp"
 
 #ifdef PROJECT_HAS_CUDA
 #include "{{PROJECT_NAME}}/cuda_vector_add.hpp"
@@ -8,6 +9,7 @@
 #include "{{PROJECT_NAME}}/vulkan_probe.hpp"
 #endif
 
+#include <filesystem>
 #include <iostream>
 #include <string_view>
 
@@ -20,6 +22,16 @@ bool has_arg(int argc, char** argv, std::string_view wanted) {
         }
     }
     return false;
+}
+
+std::filesystem::path option_path(int argc, char** argv, std::string_view option,
+                                  std::filesystem::path fallback) {
+    for (int index = 1; index + 1 < argc; ++index) {
+        if (argv[index] == option) {
+            return argv[index + 1];
+        }
+    }
+    return fallback;
 }
 
 int run_cuda_smoke() {
@@ -71,6 +83,15 @@ int main(int argc, char** argv) {
 #else
         return 0;
 #endif
+    }
+    if (has_arg(argc, argv, "--viewport-session-smoke")) {
+        const auto output_dir =
+            option_path(argc, argv, "--viewport-session-dir",
+                        std::filesystem::path("artifacts") / "viewport-sessions" / "smoke");
+        const auto report = {{CPP_NAMESPACE}}::run_viewport_session_fake_host_smoke(output_dir);
+        std::cout << "Viewport session smoke: " << (report.ok ? "ok" : report.message)
+                  << " report=" << (output_dir / "report.json") << '\n';
+        return report.ok ? 0 : 6;
     }
 
     std::cout << "Project: " << {{CPP_NAMESPACE}}::project_name() << '\n';

@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 20275,
-      "sha256": "3963662ee4636c0139710ee5af2281450f6cd23c9f7cb31baee6f60525282a3c"
+      "size": 20814,
+      "sha256": "d97bdae801e885206f4b7a368c854346c7261273dc0a94828d6a3f15779c734f"
     },
     {
       "path": "agents/openai.yaml",
@@ -21,8 +21,8 @@
       "path": "references/control-harness.md",
       "role": "reference",
       "disclosure_group": "reference",
-      "size": 19927,
-      "sha256": "fb33b9c0f0d84c5ae7931a054364e3e3d06d49763997e9e4d1a0fd34b9e41b26"
+      "size": 20236,
+      "sha256": "c8b4448b70c6cb25391256487245deea2aa272462f5955c0b4576823f67c9343"
     }
   ]
 }

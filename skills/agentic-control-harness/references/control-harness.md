@@ -81,6 +81,11 @@ The app command layer owns:
 - committed-state readback
 - scenario orchestration and cleanup
 
+For real viewport or GUI interaction replay, pair this command layer with the CppStudio
+`viewport-session-testing` lane. The control harness can launch the app and expose readback; the
+viewport-session lane owns user-equivalent event journals, screenshots, semantic traces, probes, and
+before/after reports.
+
 Do not use transport convenience as a reason to expose shell execution, arbitrary file access,
 dynamic code execution, or remote network control. If a TCP or socket bridge is used, it should keep
 the same local-only safety posture, schema discipline, and app-side invariant checks as the HTTP

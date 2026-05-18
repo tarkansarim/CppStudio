@@ -20,6 +20,7 @@ endif()
 
 add_library({{PROJECT_NAME_LOWER}}_core
     src/core/library.cpp
+    src/testing/viewport_session.cpp
 )
 add_library({{PROJECT_NAME}}::core ALIAS {{PROJECT_NAME_LOWER}}_core)
 
@@ -131,6 +132,24 @@ if(PROJECT_BUILD_TESTS)
 
     add_test(NAME {{PROJECT_NAME_LOWER}}_app_smoke COMMAND {{PROJECT_NAME_LOWER}}_app --smoke-test)
     set_tests_properties({{PROJECT_NAME_LOWER}}_app_smoke PROPERTIES LABELS "quick")
+
+    add_executable({{PROJECT_NAME_LOWER}}_viewport_session_test
+        tests/unit/viewport_session_test.cpp
+    )
+    target_link_libraries({{PROJECT_NAME_LOWER}}_viewport_session_test PRIVATE {{PROJECT_NAME}}::core)
+    project_set_warnings({{PROJECT_NAME_LOWER}}_viewport_session_test)
+    project_enable_host_sanitizers({{PROJECT_NAME_LOWER}}_viewport_session_test)
+    project_add_labeled_test(
+        {{PROJECT_NAME_LOWER}}_viewport_session_test
+        {{PROJECT_NAME_LOWER}}_viewport_session_test
+        "quick;viewport-session"
+    )
+
+    add_test(
+        NAME {{PROJECT_NAME_LOWER}}_viewport_session_smoke
+        COMMAND {{PROJECT_NAME_LOWER}}_app --viewport-session-smoke --viewport-session-dir "${CMAKE_BINARY_DIR}/viewport-session-smoke"
+    )
+    set_tests_properties({{PROJECT_NAME_LOWER}}_viewport_session_smoke PROPERTIES LABELS "quick;viewport-session")
 
     if(PROJECT_ENABLE_CUDA)
         add_executable({{PROJECT_NAME_LOWER}}_cuda_test

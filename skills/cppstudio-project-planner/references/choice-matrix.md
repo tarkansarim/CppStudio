@@ -141,6 +141,11 @@ manual verification.
 | Optional MCP facade | The HTTP/curl or CLI control API is stable enough to wrap for richer agent integration | `agentic-control-harness`, same underlying API, no MCP-only controls |
 | Deferred or disabled | Headless library, security-sensitive product surface, or explicit user opt-out | Record why, keep validation lanes strong, and do not repeatedly ask again |
 
+For interactive viewport or GUI tools, pair the control harness with `viewport-session-testing`.
+The control harness proves command/readback surfaces; viewport-session testing records and replays
+the visible user path: tool clicks, pointer/stylus strokes, camera/gizmo/timeline/node interactions,
+screenshots, semantic traces, and before/after bug reports.
+
 ## GUI/HUD Choices
 
 When these options are presented to the user, include the source/docs and visual inspection links so
@@ -203,7 +208,7 @@ substitute for clickable links.
 | Vulkan renderer/compute | shader compile, SPIR-V validation, Vulkan validation, offscreen render/compute smoke, screenshot or capture |
 | CUDA kernels | CPU reference tests, CTest GPU label, Compute Sanitizer, Nsight Compute only after a hot path exists |
 | GUI/tool shell | input focus, DPI/resize, screenshot or offscreen frame, UI smoke test, validation labels |
-| Artist brush/stylus | input event trace, pressure curve test, stroke replay, undo/redo recording, latency/frame-time measure |
+| Artist brush/stylus | viewport-session recording/replay, input event trace, pressure curve test, stroke replay, undo/redo recording, latency/frame-time measure |
 
 For stroke-based artist tools, GLFW availability is a local fact, not a sufficient recommendation.
 If the selected first window/input stack does not directly provide stylus pressure and tablet-event

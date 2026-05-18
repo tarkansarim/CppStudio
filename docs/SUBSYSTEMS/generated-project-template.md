@@ -19,6 +19,7 @@ validation.
 - `skills/cpp-cuda-vulkan-studio/scripts/bootstrap_code_map.py`
 - `skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py`
 - `skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py`
+- `skills/cpp-cuda-vulkan-studio/scripts/run_viewport_session_smoke.py`
 
 ## Update When
 
@@ -137,6 +138,10 @@ validation.
 - Generated app guidance should make agents inspect capture API timing before adding render waits:
   some captures render a fresh offscreen frame during the grab, while others copy the last presented
   frame and require pre-capture scheduling.
+- Generated interactive projects include a viewport-session testing scaffold: runtime host adapter
+  contracts, fake-host smoke coverage, `scripts/run_viewport_session_smoke.py`, ignored
+  `artifacts/viewport-sessions/` outputs, and docs for replacing the fake host with app-owned
+  record/replay of real UI and viewport interactions.
 - Template docs tell agents to commit each coherent verified implementation slice before moving to
   the next milestone while keeping generated build outputs, screenshots, profiler captures, logs, and
   temporary verification artifacts out of git unless the project intentionally tracks them.

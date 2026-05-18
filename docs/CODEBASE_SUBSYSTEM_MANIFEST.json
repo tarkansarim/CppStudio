@@ -17,6 +17,8 @@
         "skills/cppstudio-project-planner/references/choice-matrix.md",
         "skills/agentic-control-harness/SKILL.md",
         "skills/agentic-control-harness/references/control-harness.md",
+        "skills/viewport-session-testing/SKILL.md",
+        "skills/viewport-session-testing/references/viewport-session-testing.md",
         "skills/important-instruction-ledger/SKILL.md",
         "skills/important-instruction-ledger/scripts/important_instruction_ledger.py",
         "docs/agent-context/SLICE_WATCHLIST.md",
@@ -31,6 +33,8 @@
         "skills/cppstudio-project-planner/references/choice-matrix.md",
         "skills/agentic-control-harness/SKILL.md",
         "skills/agentic-control-harness/references/control-harness.md",
+        "skills/viewport-session-testing/SKILL.md",
+        "skills/viewport-session-testing/references/viewport-session-testing.md",
         "skills/important-instruction-ledger/SKILL.md",
         "skills/important-instruction-ledger/scripts/important_instruction_ledger.py",
         "docs/agent-context/SLICE_WATCHLIST.md",
@@ -75,7 +79,8 @@
         "skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py",
         "skills/cpp-cuda-vulkan-studio/scripts/bootstrap_code_map.py",
         "skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py",
-        "skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py"
+        "skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py",
+        "skills/cpp-cuda-vulkan-studio/scripts/run_viewport_session_smoke.py"
       ]
     },
     {
@@ -103,6 +108,7 @@
         "skills/native-cpp-gui-hud/package-manifest.json",
         "skills/cppstudio-project-planner/package-manifest.json",
         "skills/agentic-control-harness/package-manifest.json",
+        "skills/viewport-session-testing/package-manifest.json",
         "skills/important-instruction-ledger/package-manifest.json",
         "skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py"
       ]

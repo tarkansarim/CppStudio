@@ -29,6 +29,7 @@ BACKBONE_PATHS = [
     "docs/BENCHMARKS.md",
     "docs/GPU_OPTIMIZATION_LOOP.md",
     "docs/GPU_RUNNER_CI.md",
+    "docs/VIEWPORT_SESSION_TESTING.md",
     "shaders/compute.comp",
     "shaders/offscreen_triangle.vert",
     "shaders/offscreen_triangle.frag",
@@ -40,6 +41,7 @@ CODE_MAP_BACKBONE_PATHS = [
     "docs/SUBSYSTEMS/app-core.md",
     "docs/SUBSYSTEMS/vulkan-lane.md",
     "docs/SUBSYSTEMS/cuda-lane.md",
+    "docs/SUBSYSTEMS/viewport-session-testing.md",
     "docs/SUBSYSTEMS/validation-ci.md",
 ]
 RUNTIME_SCRIPTS = [
@@ -50,6 +52,7 @@ RUNTIME_SCRIPTS = [
     "dump_vulkan_capabilities.sh",
     "run_nsys_smoke.sh",
     "run_gpu_optimization_loop.py",
+    "run_viewport_session_smoke.py",
     "format_check.sh",
     "tidy_check.sh",
 ]

@@ -1,6 +1,6 @@
 ---
 name: cpp-cuda-vulkan-studio
-description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, agentic control harnesses, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests, build/test/profiling standardization, custom CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, local HTTP/curl/MCP app controls, or donor selection for graphics/renderers, assets, WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, sculpting/brush tools, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. For big initial planning or 'what stack should we use' questions, use cppstudio-project-planner first, research first, then ask for Plan mode."
+description: "Create, audit, or upgrade native C++ GPU project infrastructure and maintained code maps for Vulkan-first, CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels, Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts, agentic control harnesses, viewport-session testing, and donor routing. Use for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests, build/test/profiling standardization, CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, local HTTP/curl/MCP controls, viewport/UI session replay proof, or donor selection for renderers, assets, WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, sculpting/brush tools, grooming/fur, DCC, volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code. For big initial planning or stack choices, use cppstudio-project-planner first."
 ---
 
 # C++ CUDA Vulkan Studio
@@ -24,6 +24,9 @@ Minimum pre-plan research pass:
 - For interactive apps/tools/viewers/simulators, open `agentic-control-harness` and plan a local
   control surface so agents can launch, drive, inspect, screenshot, and troubleshoot the app before
   asking the user for routine manual testing.
+- For interactive viewport, GUI, brush, sculpt, paint, grooming, timeline, node, gizmo, camera, or
+  canvas work, open `viewport-session-testing` and plan an app-owned record/replay lane so agents
+  can reproduce and compare real user interactions instead of relying on backend-only controls.
 - For simulation, renderer, SDK, hardware, or "best/current/ceiling" claims, web-check official
   upstream repos, standards docs, vendor docs, papers, or primary project docs.
 - If one researched source cannot be opened through the normal web tool path, do not treat that as
@@ -529,6 +532,11 @@ When this skill is active, work like a native C++ GPU systems engineer:
   published state, approximate versus final results, or diagnostic versus product surfaces. If the
   visible text could mislead the user about what actually happened, revise the label and make the
   harness/screenshot checks assert that wording.
+- For viewport, brush, paint, sculpt, grooming, timeline, node graph, gizmo, camera, and other
+  visible interaction bugs, use `viewport-session-testing` as the user-equivalent proof lane. Record
+  or replay the real interaction path, capture before/after state and fresh visual artifacts, and
+  compare the reported symptom directly. Backend command success, route inventory, generic mesh or
+  scene revision changes, and stale screenshots do not prove visible input behavior.
 - When visual freshness checks fail repeatedly, pause code edits and audit the capture API timing.
   Some toolkit grabs render during the capture call, so the correct proof is a post-capture rendered
   revision; others copy the last presented frame and need pre-capture scheduling. Classify the issue
@@ -669,6 +677,9 @@ When this skill is active, work like a native C++ GPU systems engineer:
   drive, inspect, screenshot, and troubleshoot native apps through HTTP/curl, CLI, or MCP-backed
   surfaces. For interactive apps, make this default-on unless the user opts out or the target is a
   headless library or security-sensitive product surface.
+- Use `viewport-session-testing` when planning, implementing, or verifying real UI/viewport
+  interaction recording and replay. For generated interactive apps, keep the runtime scaffold in the
+  project and replace the fake host with the real app adapter as soon as visible tools exist.
 - Use available profiling or frame-debugging skills and local profiler tools only when the active environment exposes them and the user needs performance or capture evidence.
 - Use `verification-before-completion` before claiming the generated or upgraded backbone is valid.
 

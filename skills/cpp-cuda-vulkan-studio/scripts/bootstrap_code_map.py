@@ -136,6 +136,20 @@ BASE_SUBSYSTEMS: list[dict[str, Any]] = [
         "primary_paths": ["tests", "benchmarks", "scripts", ".github/workflows"],
         "summary": "CTest labels, smoke tests, GPU runner expectations, profiling evidence, formatting, and static analysis.",
     },
+    {
+        "id": "viewport_session_testing",
+        "name": "Viewport Session Testing",
+        "router_doc": "docs/SUBSYSTEMS/viewport-session-testing.md",
+        "canonical_docs": ["docs/VIEWPORT_SESSION_TESTING.md", "docs/VALIDATION_PIPELINE.md"],
+        "primary_paths": [
+            "include/*/viewport_session.hpp",
+            "src/testing",
+            "tests/unit/viewport_session_test.cpp",
+            "scripts/run_viewport_session_smoke.py",
+            "docs/VIEWPORT_SESSION_TESTING.md",
+        ],
+        "summary": "App-owned viewport/UI session recording, replay, reports, captures, and visible bug proof.",
+    },
 ]
 
 

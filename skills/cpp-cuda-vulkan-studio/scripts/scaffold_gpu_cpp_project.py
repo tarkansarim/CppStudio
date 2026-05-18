@@ -20,6 +20,7 @@ RUNTIME_SCRIPTS = [
     "dump_vulkan_capabilities.sh",
     "run_nsys_smoke.sh",
     "run_gpu_optimization_loop.py",
+    "run_viewport_session_smoke.py",
     "format_check.sh",
     "tidy_check.sh",
     "bootstrap_code_map.py",
@@ -211,6 +212,13 @@ def remove_required_pattern(text: str, pattern: str, path: Path) -> str:
     return updated
 
 
+def replace_required_pattern(text: str, pattern: str, replacement: str, path: Path) -> str:
+    updated, count = re.subn(pattern, replacement, text, flags=re.DOTALL)
+    if count == 0:
+        raise RuntimeError(f"expected pattern not found while pruning CUDA from {path}")
+    return updated
+
+
 def remove_named_presets(path: Path, blocked_names: set[str]) -> None:
     data = json.loads(read_text(path))
     for key in ("configurePresets", "buildPresets", "testPresets"):
@@ -312,37 +320,24 @@ def prune_vulkan_only_cmake(destination: Path, replacements: dict[str, str]) -> 
     )
     text = remove_required_pattern(
         text,
-        rf"\nint run_cuda_smoke\(\) \{{\n#ifdef PROJECT_HAS_CUDA\n    return {re.escape(namespace)}::cuda_vector_add_smoke\(\) \? 0 : 4;\n#else\n    std::cerr << \"CUDA smoke requested but CUDA is disabled\\n\";\n    return 3;\n#endif\n\}}\n",
+        rf"\nint run_cuda_smoke\(\) \{{\n#ifdef PROJECT_HAS_CUDA\n\s*return {re.escape(namespace)}::cuda_vector_add_smoke\(\) \? 0 : 4;\n#else\n\s*std::cerr << \"CUDA smoke requested but CUDA is disabled\\n\";\n\s*return 3;\n#endif\n\}}\n",
+        main_cpp,
+    )
+    text = replace_required_pattern(
+        text,
+        r'\n\s*if \(has_arg\(argc, argv, "--cuda-smoke"\)\) \{\n\s*return run_cuda_smoke\(\);\n\s*\}\n',
+        "\n",
+        main_cpp,
+    )
+    text = replace_required_pattern(
+        text,
+        r'\n\s*if \(has_arg\(argc, argv, "--gpu-smoke"\)\) \{\n\s*const int vulkan_result = run_vulkan_smoke\(\);\n\s*if \(vulkan_result != 0\) \{\n\s*return vulkan_result;\n\s*\}\n#ifdef PROJECT_HAS_CUDA\n\s*return run_cuda_smoke\(\);\n#else\n\s*return 0;\n#endif\n\s*\}\n',
+        '\n    if (has_arg(argc, argv, "--gpu-smoke")) {\n        return run_vulkan_smoke();\n    }\n',
         main_cpp,
     )
     text = remove_required_pattern(
         text,
-        r'    if \(has_arg\(argc, argv, "--cuda-smoke"\)\) \{\n        return run_cuda_smoke\(\);\n    \}\n',
-        main_cpp,
-    )
-    text = replace_required(
-        text,
-        """    if (has_arg(argc, argv, "--gpu-smoke")) {
-        const int vulkan_result = run_vulkan_smoke();
-        if (vulkan_result != 0) {
-            return vulkan_result;
-        }
-#ifdef PROJECT_HAS_CUDA
-        return run_cuda_smoke();
-#else
-        return 0;
-#endif
-    }
-""",
-        """    if (has_arg(argc, argv, "--gpu-smoke")) {
-        return run_vulkan_smoke();
-    }
-""",
-        main_cpp,
-    )
-    text = remove_required_pattern(
-        text,
-        rf'#ifdef PROJECT_HAS_CUDA\n    std::cout << "CUDA smoke: " << \({re.escape(namespace)}::cuda_vector_add_smoke\(\) \? "ok" : "failed"\)\n              << \'\\n\';\n#else\n    std::cout << "CUDA: disabled\\n";\n#endif\n',
+        rf'#ifdef PROJECT_HAS_CUDA\n\s*std::cout << "CUDA smoke: "\s*<< \({re.escape(namespace)}::cuda_vector_add_smoke\(\) \? "ok"\s*: "failed"\)\s*<< \'\\n\';\n#else\n\s*std::cout << "CUDA: disabled\\n";\n#endif\n',
         main_cpp,
     )
     write_text(main_cpp, text)
@@ -440,6 +435,16 @@ cmake --preset vulkan-debug
 cmake --build --preset vulkan-debug
 ctest --preset vulkan --output-on-failure
 ```
+
+Viewport-session smoke gate:
+
+```bash
+scripts/run_viewport_session_smoke.py --build-dir build/dev
+```
+
+For visible UI, viewport, brush, paint, sculpt, groom, timeline, node, camera, or gizmo bugs, record
+or replay a user-equivalent viewport session and compare before/after `report.json`, state files,
+semantic traces, and fresh captures before claiming the bug is fixed.
 
 Vulkan validation gate:
 

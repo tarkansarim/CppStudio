@@ -50,6 +50,7 @@ ALLOWED_TAGS = {
     "smoke",
     "study-only",
     "vfx",
+    "viewport",
     "vulkan",
     "volumes",
     "webgpu",

@@ -6,7 +6,8 @@ path needs direct review. Normal installation is agent-run through the repo scri
 Manual install touches only:
 
 - the managed `cpp-cuda-vulkan-studio`, `native-cpp-gui-hud`, `cppstudio-project-planner`,
-  `agentic-control-harness`, and `important-instruction-ledger` skill folders
+  `agentic-control-harness`, `viewport-session-testing`, and `important-instruction-ledger` skill
+  folders
 - optional marked CppStudio relay content in user-level `AGENTS.md`
 - optional marked donor-library blocks in matching companion skills
 
@@ -35,7 +36,7 @@ cd /path/to/CppStudio
 
 codex_home="${CODEX_HOME:-${HOME}/.codex}"
 skills_root="${codex_home}/skills"
-skill_names=("cpp-cuda-vulkan-studio" "native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "important-instruction-ledger")
+skill_names=("cpp-cuda-vulkan-studio" "native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger")
 system_validator="${skills_root}/.system/skill-creator/scripts/quick_validate.py"
 repo_validator="${PWD}/scripts/quick_validate_skill.py"
 package_validator="${PWD}/scripts/validate_skill_package.py"
@@ -123,7 +124,7 @@ Windows PowerShell:
 Set-Location C:\path\to\CppStudio
 $CodexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME ".codex" }
 $SkillsRoot = Join-Path $CodexHome "skills"
-$SkillNames = @("cpp-cuda-vulkan-studio", "native-cpp-gui-hud", "cppstudio-project-planner", "agentic-control-harness", "important-instruction-ledger")
+$SkillNames = @("cpp-cuda-vulkan-studio", "native-cpp-gui-hud", "cppstudio-project-planner", "agentic-control-harness", "viewport-session-testing", "important-instruction-ledger")
 $SystemValidator = Join-Path $SkillsRoot ".system\skill-creator\scripts\quick_validate.py"
 $RepoValidator = Join-Path (Get-Location) "scripts\quick_validate_skill.py"
 $PackageValidator = Join-Path (Get-Location) "scripts\validate_skill_package.py"

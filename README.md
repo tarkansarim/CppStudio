@@ -24,6 +24,8 @@ As a harness, CppStudio focuses on:
   GUI, input, agentic control, donor, and validation choices are locked in.
 - A local agentic control-harness skill for interactive apps, so agents can launch, drive, inspect,
   screenshot, and troubleshoot generated tools before asking users for routine manual testing.
+- A viewport-session testing lane for interactive tools, so agents can record and replay real
+  UI/viewport sessions with reports, captures, and before/after evidence.
 - A nested donor-reference library that routes agents to relevant 3D, AI, simulation, rendering,
   CUDA, Vulkan, and infrastructure references without loading the whole library into context.
 - Persisted planning research that captures current-source evidence, donor candidates, and
@@ -40,7 +42,8 @@ stable entries stay collapsed under the expander.
 - `current` - Hardened rollout and trigger-regression safety with symlink-safe bundled auxiliary
   rollback handling, required code-map bootstrap/maintenance/sidecar/routing-smoke trigger cases with
   installed-path fresh-agent evidence, fresh-scaffold drift coverage before the first baseline
-  commit, skill-load hygiene checks that reject backup artifacts and oversized startup descriptions,
+  commit, source skill-load hygiene checks plus explicit installed-root audits for backup artifacts
+  and oversized startup descriptions,
   greenfield Git bootstrap handling for Codex worker read-only `.git` sandbox blockers,
   Vulkan-only default scaffolds that omit CUDA files/routes/presets unless a CUDA lane is explicitly
   selected, control-harness roadmap/readiness readback that advances after verified prerequisite
@@ -126,7 +129,9 @@ stable entries stay collapsed under the expander.
   cannot cite a donor while silently leaving out most of what made it useful. Shader and donor-code
   use now requires a pre-plan breakdown of stages, passes, IO, descriptors/uniforms, spaces,
   variants, states, quality features, edge cases, and validation signals before planning from that
-  donor.
+  donor. Generated interactive projects now also include a reusable viewport-session testing
+  scaffold and bundled skill so agents can record/replay real UI and viewport interactions, produce
+  session reports, and compare visible before/after evidence without rebuilding that lane per app.
 - `fa6f957` - Added skill-load hygiene validation so repo and installed skill roots reject backup
   artifacts, duplicate loaded skill names, and oversized startup descriptions before rollout.
 - `9dc4ae3` - Required concrete proof objects in planning so visible/domain slices name the actual
@@ -431,7 +436,8 @@ toolchains only when you want this machine to build or validate generated C++ GP
 - Bundled auxiliary skills:
   `${HOME}/.codex/skills/cppstudio-project-planner`,
   `${HOME}/.codex/skills/native-cpp-gui-hud`,
-  `${HOME}/.codex/skills/agentic-control-harness`, and
+  `${HOME}/.codex/skills/agentic-control-harness`,
+  `${HOME}/.codex/skills/viewport-session-testing`, and
   `${HOME}/.codex/skills/important-instruction-ledger`
 - Optional companion donor links for installed companion skills such as `cuda-kernel-authoring`,
   `vulkan-compute-sync`, and `modern-cpp-cmake`
@@ -579,6 +585,9 @@ checkpoints and temporary anchors are not public verified-slice commits.
 - `agentic-control-harness`: installed user-level skill for local HTTP/curl controls, optional MCP
   facades, launch/control registries, state/log/visual observation, and autonomous test lanes for
   native C++ realtime apps.
+- `viewport-session-testing`: installed user-level skill for app-owned UI/viewport session
+  recording and replay, including mouse, keyboard, stylus, camera, tool, timeline, node, gizmo,
+  screenshot/capture, semantic trace, and before/after report workflows.
 - `important-instruction-ledger`: installed user-level skill that now acts as an active per-slice
   watchlist. It records what supervising or direct agents must watch, verify, block, or reject
   during planning, worker nudges, source edits, commits, and closeout; user hard rules are one input
@@ -742,6 +751,8 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
   inspection links
 - `skills/agentic-control-harness/`: bundled control-harness skill for autonomous app launch,
   control, observation, visual/UI evidence, and troubleshooting
+- `skills/viewport-session-testing/`: bundled viewport-session skill for real UI/viewport
+  recording, replay, reports, and before/after proof
 - `skills/important-instruction-ledger/`: bundled active slice-watchlist skill for compaction-safe
   supervision and direct-work gates
 - `skills/cpp-cuda-vulkan-studio/assets/app-library-template/`: generated-project template

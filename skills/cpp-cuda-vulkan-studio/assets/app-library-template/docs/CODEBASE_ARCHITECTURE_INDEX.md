@@ -26,6 +26,7 @@ paths named by the route.
 - App core: [SUBSYSTEMS/app-core.md](./SUBSYSTEMS/app-core.md)
 - Vulkan lane: [SUBSYSTEMS/vulkan-lane.md](./SUBSYSTEMS/vulkan-lane.md)
 - CUDA lane: [SUBSYSTEMS/cuda-lane.md](./SUBSYSTEMS/cuda-lane.md)
+- Viewport session testing: [SUBSYSTEMS/viewport-session-testing.md](./SUBSYSTEMS/viewport-session-testing.md)
 - Validation and CI: [SUBSYSTEMS/validation-ci.md](./SUBSYSTEMS/validation-ci.md)
 
 ## Maintenance Rule

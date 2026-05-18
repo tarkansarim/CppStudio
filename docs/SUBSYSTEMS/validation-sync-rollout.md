@@ -26,6 +26,7 @@ skills, and watch-mode publishing behavior.
 - `skills/native-cpp-gui-hud/package-manifest.json`
 - `skills/cppstudio-project-planner/package-manifest.json`
 - `skills/agentic-control-harness/package-manifest.json`
+- `skills/viewport-session-testing/package-manifest.json`
 - `skills/important-instruction-ledger/package-manifest.json`
 - `skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py`
 
@@ -51,9 +52,12 @@ skills, and watch-mode publishing behavior.
   `package-manifest.json` files to verify shipped file hashes, sizes,
   disclosure groups, package layout, and package hygiene. Manifest writes reject unsupported
   top-level files plus VCS, editor, cache, env, secret-like, archive, log, swap, and temp artifacts.
-- Skill-load hygiene validation uses `scripts/validate_skill_load_hygiene.py` to scan repo and
-  installed Codex skill roots, reject backup-looking files/directories that can bloat discovery,
-  catch duplicate loaded skill names, and keep description metadata inside a startup budget.
+- Skill-load hygiene validation uses `scripts/validate_skill_load_hygiene.py` to scan the repo
+  skill root as a hard gate, reject backup-looking files/directories that can bloat discovery, catch
+  duplicate loaded skill names, and keep description metadata inside a startup budget. The installed
+  user-level Codex skill root is audited visibly but non-blocking by default because it may contain
+  unrelated skills from other repos; set `CPPSTUDIO_STRICT_USER_SKILL_LOAD=1` to make that installed
+  root a fatal maintainer gate.
 - Non-dry-run sync stages and validates the skill before replacing the installed target, then restores
   the previous target if final validation fails.
 - Sync validates the selected source skill, staged skill, and final installed skill against that
@@ -79,7 +83,8 @@ skills, and watch-mode publishing behavior.
 - Manual install fallback snippets stage and validate all bundled skills before mutating the target
   Codex home, then restore the full managed-skill set if any later copy or validation step fails.
 - `rollout_to_codex.sh` installs bundled auxiliary skills such as `native-cpp-gui-hud`,
-  `cppstudio-project-planner`, `agentic-control-harness`, and `important-instruction-ledger`,
+  `cppstudio-project-planner`, `agentic-control-harness`, `viewport-session-testing`, and
+  `important-instruction-ledger`,
   installs the minimal user-level `AGENTS.md` relay by default, and preserves user-owned content
   outside the marked CppStudio relay block.
 - Set `SKIP_USER_AGENTS_RELAY=1` only for deliberate relay opt-out installs.

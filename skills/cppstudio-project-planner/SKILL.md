@@ -309,6 +309,12 @@ security-sensitive product surface, or the user explicitly opts out. The decisio
 which local control shape to use first: localhost HTTP plus curl, CLI/script adapter, optional MCP
 facade over the same API, and which state/log/visual observation surfaces are needed for milestone 1.
 
+For interactive viewport or GUI tools, also include an app-owned viewport-session testing lane by
+default. This is the real user-path recorder/replayer for viewport clicks, stylus strokes, tool
+buttons, timelines, node graphs, gizmos, camera controls, screenshots, semantic traces, and
+before/after bug proof. It does not replace the control harness; it complements it. If a project is
+headless or the user opts out, record why the lane is not applicable.
+
 ## What To Load
 
 1. Read `references/project-intake.md` for the planning protocol and project packet.
@@ -319,7 +325,9 @@ facade over the same API, and which state/log/visual observation surfaces are ne
    source/docs links and visual inspection links from `native-cpp-gui-hud/references/gui-options.md`.
 5. Use `agentic-control-harness` for local HTTP/curl controls, optional MCP facade, launch/control
    registry, main-thread routing, app observation, and feature-control maintenance.
-6. Use `modern-cpp-cmake`, `vulkan-compute-sync`, and `cuda-kernel-authoring` only when their lane is
+6. Use `viewport-session-testing` for app-owned recording/replay of real viewport and GUI
+   interactions, session reports, screenshot/capture proof, and user-reported visible bug repros.
+7. Use `modern-cpp-cmake`, `vulkan-compute-sync`, and `cuda-kernel-authoring` only when their lane is
    selected or needed for a concrete planning decision.
 
 ## Planning Workflow

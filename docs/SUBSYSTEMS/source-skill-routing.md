@@ -14,6 +14,8 @@ generated-project workflow instructions.
 - `skills/cppstudio-project-planner/references/choice-matrix.md`
 - `skills/agentic-control-harness/SKILL.md`
 - `skills/agentic-control-harness/references/control-harness.md`
+- `skills/viewport-session-testing/SKILL.md`
+- `skills/viewport-session-testing/references/viewport-session-testing.md`
 - `skills/important-instruction-ledger/SKILL.md`
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
 - `docs/agent-context/SLICE_WATCHLIST.md`
@@ -29,6 +31,8 @@ generated-project workflow instructions.
 - `skills/cppstudio-project-planner/references/choice-matrix.md`
 - `skills/agentic-control-harness/SKILL.md`
 - `skills/agentic-control-harness/references/control-harness.md`
+- `skills/viewport-session-testing/SKILL.md`
+- `skills/viewport-session-testing/references/viewport-session-testing.md`
 - `skills/important-instruction-ledger/SKILL.md`
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
 - `docs/agent-context/SLICE_WATCHLIST.md`

@@ -23,6 +23,7 @@ GENERATED_SUBSYSTEM_IDS = {
     "vulkan_lane",
     "cuda_lane",
     "validation_ci",
+    "viewport_session_testing",
 }
 LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 EXTERNAL_RE = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*:")

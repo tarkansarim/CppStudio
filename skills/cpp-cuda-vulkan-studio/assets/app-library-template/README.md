@@ -82,6 +82,20 @@ or relaunch the sidecar if later source changes touched additional routable owne
 areas. Do not create public commits only to feed sidecars; use Rewind checkpoints or temporary
 anchors for that boundary, then keep the verified slice commit as the public history unit.
 
+## Viewport Session Testing
+
+Interactive viewport or GUI work should use the app-owned viewport-session testing lane in
+[VIEWPORT_SESSION_TESTING.md](docs/VIEWPORT_SESSION_TESTING.md). It records and replays real
+UI/viewport interactions, writes session artifacts under ignored `artifacts/viewport-sessions/`, and
+produces `report.json` plus screenshots or render captures. Use it for visible controls, pointer
+mapping, stylus/brush paths, camera/gizmo/timeline/node interactions, and user-reported GUI bugs.
+
+Generated smoke command:
+
+```bash
+scripts/run_viewport_session_smoke.py --build-dir build/dev
+```
+
 ## Validate
 
 ```bash

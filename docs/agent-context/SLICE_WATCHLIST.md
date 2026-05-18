@@ -37,6 +37,16 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-17T08:55:45Z`
 
+4. **Implement viewport session testing as a real generated runtime scaffold plus skill routing, not only advisory prose; extract the proven grooming-style session replay and paint/simulation scenario concepts without copying app-specific code.**
+   - Status: `active`
+   - Slice: `viewport-session-testing lane`
+   - Scope: `reusable-skill`
+   - Source: user request and donor inspection
+   - Revisit when: before source edits, validation, rollout, and closeout
+   - Gate: Skill exists, template runtime/files/docs/scripts exist, validation includes them, rollout succeeds, and trigger/behavior evidence is reported.
+   - Evidence: none recorded
+   - Recorded: `2026-05-18T00:47:44Z`
+
 
 ## Superseded Or Historical
 
@@ -49,4 +59,3 @@ worker handoffs.
    - Gate: Superseded by active slice-watchlist framing
    - Evidence: self-improvement:friction:68699857a7cc864e
    - Recorded: `2026-05-17T01:31:46Z`
-

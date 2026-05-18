@@ -112,6 +112,7 @@ For a bundled auxiliary single-skill diagnostic sync, set `SKILL_NAME` explicitl
 SKILL_NAME=native-cpp-gui-hud ./scripts/sync_to_codex.sh
 SKILL_NAME=cppstudio-project-planner ./scripts/sync_to_codex.sh
 SKILL_NAME=agentic-control-harness ./scripts/sync_to_codex.sh
+SKILL_NAME=viewport-session-testing ./scripts/sync_to_codex.sh
 SKILL_NAME=important-instruction-ledger ./scripts/sync_to_codex.sh
 ```
 
@@ -329,7 +330,8 @@ ${SYNC_CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio
 ```
 
 Set `SKILL_NAME=native-cpp-gui-hud`, `SKILL_NAME=cppstudio-project-planner`,
-`SKILL_NAME=agentic-control-harness`, or `SKILL_NAME=important-instruction-ledger` only for an
+`SKILL_NAME=agentic-control-harness`, `SKILL_NAME=viewport-session-testing`, or
+`SKILL_NAME=important-instruction-ledger` only for an
 intentional single-skill diagnostic sync. Do not use the default sync command as proof that auxiliary
 skill edits were installed.
 
@@ -351,6 +353,7 @@ python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio --write-
 python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud --write-manifest
 python3 scripts/validate_skill_package.py skills/cppstudio-project-planner --write-manifest
 python3 scripts/validate_skill_package.py skills/agentic-control-harness --write-manifest
+python3 scripts/validate_skill_package.py skills/viewport-session-testing --write-manifest
 python3 scripts/validate_skill_package.py skills/important-instruction-ledger --write-manifest
 ```
 
@@ -361,6 +364,7 @@ python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio
 python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud
 python3 scripts/validate_skill_package.py skills/cppstudio-project-planner
 python3 scripts/validate_skill_package.py skills/agentic-control-harness
+python3 scripts/validate_skill_package.py skills/viewport-session-testing
 python3 scripts/validate_skill_package.py skills/important-instruction-ledger
 ```
 

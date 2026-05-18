@@ -7,7 +7,7 @@ description: "Plan, build, or review local agentic control harnesses for native 
 
 Use this skill when a native C++ GPU app should be controllable by an AI agent during development,
 testing, debugging, profiling, or future feature work. It complements `cppstudio-project-planner`,
-`cpp-cuda-vulkan-studio`, and `native-cpp-gui-hud`.
+`cpp-cuda-vulkan-studio`, `native-cpp-gui-hud`, and `viewport-session-testing`.
 
 ## Default Posture
 
@@ -45,6 +45,8 @@ The main planning question is not whether a harness should exist. The useful que
   stable?
 - Which feature, state-readback, warning/log, visual capture, UI readback, text-queryable surrogate,
   and scenario endpoints are needed for the first milestone?
+- Which visible user interactions need the separate app-owned viewport-session lane so agents can
+  record/replay real widget, pointer, stylus, camera, timeline, gizmo, or node paths?
 
 ## What To Load
 
@@ -156,6 +158,10 @@ control harness itself.
   press/drag/release, or window-system event injection through the app's approved test path. Backend
   HTTP commands are useful control surfaces, but they do not prove that the visible widget, focus,
   hit target, event routing, or input coordinate transform works.
+- When the task is specifically record/replay of viewport or GUI sessions, load
+  `viewport-session-testing`. The control harness should expose launch, state, logs, and command
+  surfaces; the viewport-session lane owns user-equivalent input journals, screenshots/captures,
+  semantic traces, and before/after session reports.
 - For desktop GUI apps, include a human-launch scenario for the documented launch command. It should
   start the exact command nonblocking, capture stdout/stderr, prove the intended app process owns a
   mapped normal window, reject terminal-title or stale-window matches, focus or raise the window when

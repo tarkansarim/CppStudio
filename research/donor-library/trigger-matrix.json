@@ -369,6 +369,24 @@
       ]
     },
     {
+      "name": "viewport-session-testing-visible-bug",
+      "tags": [
+        "positive",
+        "harness",
+        "gui",
+        "viewport"
+      ],
+      "prompt_shape": "User reports a visible viewport, brush, stylus, tool-button, timeline, node, gizmo, camera, or pointer-hit bug and wants the agent to prove it is fixed.",
+      "expected_behavior": "Trigger viewport-session-testing with agentic-control-harness and CppStudio routing; require a recorded or replayed user-equivalent session, before/after report, fresh screenshot or render capture, semantic trace or probe, and direct comparison of the reported symptom. Backend-only commands, generic scene revision changes, stale screenshots, or harness-only JSON must not be accepted as visible bug proof.",
+      "expected_paths": [
+        "skills/viewport-session-testing/SKILL.md",
+        "skills/viewport-session-testing/references/viewport-session-testing.md",
+        "skills/agentic-control-harness/SKILL.md",
+        "skills/agentic-control-harness/references/control-harness.md",
+        "skills/cpp-cuda-vulkan-studio/SKILL.md"
+      ]
+    },
+    {
       "name": "game-technical-art-native-ui-overlay",
       "tags": [
         "positive",

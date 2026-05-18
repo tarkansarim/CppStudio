@@ -1,0 +1,4 @@
+interface:
+  display_name: "Viewport Session Testing"
+  short_description: "Record/replay real viewport and GUI sessions."
+  default_prompt: "Use $viewport-session-testing to record, replay, and report real viewport/UI interactions with before/after evidence."

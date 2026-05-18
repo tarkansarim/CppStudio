@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_DIR="${ROOT_DIR}/skills/cpp-cuda-vulkan-studio"
-AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "important-instruction-ledger")
+AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger")
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
 REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
@@ -119,6 +119,10 @@ required_repo_files=(
     "skills/agentic-control-harness/agents/openai.yaml"
     "skills/agentic-control-harness/references/control-harness.md"
     "skills/agentic-control-harness/package-manifest.json"
+    "skills/viewport-session-testing/SKILL.md"
+    "skills/viewport-session-testing/agents/openai.yaml"
+    "skills/viewport-session-testing/references/viewport-session-testing.md"
+    "skills/viewport-session-testing/package-manifest.json"
     "skills/important-instruction-ledger/SKILL.md"
     "skills/important-instruction-ledger/agents/openai.yaml"
     "skills/important-instruction-ledger/scripts/important_instruction_ledger.py"
@@ -129,7 +133,10 @@ required_repo_files=(
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/CODEBASE_SUBSYSTEM_MANIFEST.json"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md"
+    "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md"
+    "skills/cpp-cuda-vulkan-studio/assets/app-library-template/docs/SUBSYSTEMS/viewport-session-testing.md"
     "skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py"
+    "skills/cpp-cuda-vulkan-studio/scripts/run_viewport_session_smoke.py"
     "research/gpu-optimization-autokernel-mapping.md"
     "research/gpu-optimization-kernelagent-mapping.md"
     "research/gpu-optimization-agentsys-mapping.md"
@@ -256,6 +263,18 @@ grep -q "through \`ostm\` when the offscreen-test-manager" \
     "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
 grep -q "After two focused attempts or roughly 20 minutes" \
     "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
+grep -q "viewport-session-testing" \
+    "${SKILL_DIR}/SKILL.md"
+grep -q "record/replay real widget" \
+    "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
+grep -q "app-owned viewport-session testing lane" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "Viewport Session Testing" \
+    "${SKILL_DIR}/assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md"
+grep -q "run_viewport_session_smoke.py" \
+    "${SKILL_DIR}/assets/app-library-template/README.md"
+grep -q "viewport-session" \
+    "${SKILL_DIR}/assets/app-library-template/CMakeLists.txt"
 grep -q "Pointer-to-stroke contract" \
     "${SKILL_DIR}/references/donor-library/profiles/blender-sculpt-brushes-study-only.md"
 grep -q "Brush naming contract" \
@@ -408,7 +427,8 @@ write_code_map_project_fixture() {
         "${repo}/src/core" \
         "${repo}/src/cuda" \
         "${repo}/src/render" \
-        "${repo}/tests"
+        "${repo}/src/testing" \
+        "${repo}/tests/unit"
     touch \
         "${repo}/CMakeLists.txt" \
         "${repo}/CMakePresets.json" \
@@ -418,10 +438,15 @@ write_code_map_project_fixture() {
         "${repo}/docs/GPU_OPTIMIZATION_LOOP.md" \
         "${repo}/docs/GPU_RUNNER_CI.md" \
         "${repo}/docs/VALIDATION_PIPELINE.md" \
+        "${repo}/docs/VIEWPORT_SESSION_TESTING.md" \
         "${repo}/include/studio_validate/cuda_vector_add.hpp" \
+        "${repo}/include/studio_validate/viewport_session.hpp" \
         "${repo}/src/app.cpp" \
         "${repo}/src/flat_app_state.hpp" \
-        "${repo}/src/ui_panel_brush_slider_value_controller.h"
+        "${repo}/src/ui_panel_brush_slider_value_controller.h" \
+        "${repo}/src/testing/viewport_session.cpp" \
+        "${repo}/tests/unit/viewport_session_test.cpp" \
+        "${repo}/scripts/run_viewport_session_smoke.py"
 }
 
 python3 "${VALIDATOR}" "${SKILL_DIR}"
@@ -433,8 +458,19 @@ for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
 done
 python3 "${SKILL_LOAD_HYGIENE_VALIDATOR}" --self-test
 python3 "${SKILL_LOAD_HYGIENE_VALIDATOR}" \
-    --skills-root "${ROOT_DIR}/skills" \
-    --optional-skills-root "${CODEX_HOME_DIR}/skills"
+    --skills-root "${ROOT_DIR}/skills"
+if [[ -d "${CODEX_HOME_DIR}/skills" ]]; then
+    if [[ "${CPPSTUDIO_STRICT_USER_SKILL_LOAD:-0}" == "1" ]]; then
+        python3 "${SKILL_LOAD_HYGIENE_VALIDATOR}" \
+            --skills-root "${CODEX_HOME_DIR}/skills"
+    elif ! python3 "${SKILL_LOAD_HYGIENE_VALIDATOR}" \
+        --skills-root "${CODEX_HOME_DIR}/skills"; then
+        echo "Warning: user-level Codex skill-load hygiene failed; non-blocking for CppStudio source validation." >&2
+        echo "Set CPPSTUDIO_STRICT_USER_SKILL_LOAD=1 to make the installed user skill root a fatal gate." >&2
+    fi
+else
+    echo "Skill load hygiene skipped missing optional root: ${CODEX_HOME_DIR}/skills"
+fi
 if [[ -d "${ROOT_DIR}/.codex/skills" ]]; then
     while IFS= read -r -d '' project_skill; do
         python3 "${VALIDATOR}" "${project_skill}"
@@ -925,7 +961,7 @@ python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
 grep -q "agent-lookup.md" "${trigger_lookup_md}"
 grep -q "Treat forbidden paths as no-touch paths" "${trigger_lookup_md}"
 grep -q "existence-check them" "${trigger_lookup_md}"
-for trigger_tag in dcc materials volumes vfx games infrastructure gui planning harness code-map; do
+for trigger_tag in dcc materials volumes vfx games infrastructure gui planning harness viewport code-map; do
     trigger_tag_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_${trigger_tag}.XXXXXX.md")"
     python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
         "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
@@ -969,6 +1005,12 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning h
             grep -q "route registry/docs reconciliation" "${trigger_tag_md}"
             grep -q "UI action/affordance inventory" "${trigger_tag_md}"
             grep -q "before asking the user for manual verification" "${trigger_tag_md}"
+            ;;
+        viewport)
+            grep -q "viewport-session-testing" "${trigger_tag_md}"
+            grep -q "recorded or replayed user-equivalent session" "${trigger_tag_md}"
+            grep -q "before/after report" "${trigger_tag_md}"
+            grep -q "Backend-only commands" "${trigger_tag_md}"
             ;;
         code-map)
             grep -q "bootstrap_code_map.py" "${trigger_tag_md}"
