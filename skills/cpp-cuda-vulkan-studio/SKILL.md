@@ -154,6 +154,32 @@ When this skill is active, work like a native C++ GPU systems engineer:
   for speculative patches, and the next smallest proof. Do not continue from training-data guesses,
   backend-only green checks, or newly expanded harness scripts. If the donor route was skipped,
   treat that as the root process bug before another code edit.
+- Long-lane acceptance and cutover gate: for visual, reference-render, calibration, viewport,
+  import/export, or semantic-wrapper lanes, define the top-level acceptance artifact before repeated
+  probes. Examples include a valid final beauty/reference image, non-identical primary/secondary
+  renders when variation is expected, a fresh viewport capture, a consumer-readable export, or a
+  user-facing before/after report. If that final artifact stays red after three wrapper/OSTM/scenario
+  runs, two source probes, or roughly 45 minutes, stop source edits. Write an acceptance ledger with
+  `new this session`, `previously established`, `still red`, `debug-only evidence`, `failed
+  hypotheses`, `keep/revert decisions`, and `cutover options`. Diagnostic narrowing, internal debug
+  buffers, generated intermediates, route inventory, or successful wrapper execution do not count as
+  progress unless the final artifact improves or a named failure branch is eliminated with evidence.
+  Before another local patch, run a narrow read-only `codex exec` stuck probe for the exact blocking
+  question and run a current web/upstream research pass targeted at the failing layer. Local package
+  source and already-open donors remain necessary evidence, but after this gate they are not
+  sufficient by themselves. The research pass must check current primary sources such as official
+  docs, upstream repos, samples, issue trackers, release notes, standards/vendor docs, or peer-tool
+  references; record the queries or links, what each source proves, and what it changes about the
+  next attempt. If search or source access is unavailable for a critical stuck integration, say so as
+  a blocker instead of continuing from memory. Then choose one scoped outcome: continue the same
+  lane with one named proof, cut over to another donor/tool/lane that still satisfies the user's
+  objective, or stop as blocked. If the user named a required upstream, app, SDK, shader, renderer,
+  file format, or port target, a cutover must preserve that reference family and success contract;
+  unrelated peer tools may be diagnostic comparisons, not replacement targets. If another focused
+  attempt still leaves the final artifact red or the root cause is uncertain, run a fresh scoped
+  adversarial review; the review must judge the
+  current lane and acceptance artifact, not turn into a whole-repo review unless explicitly
+  requested.
 - Primary visible loop before breadth: for interactive artist, game, VFX, DCC, simulation-editor,
   technical-art, viewer/editor, brush, paint, grooming, terrain, material, rigging, animation,
   layout, lighting, or effects tools, the first implementation milestone must prove the core

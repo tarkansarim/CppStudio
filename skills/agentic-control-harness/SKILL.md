@@ -35,6 +35,17 @@ local mismatch, keep/revert decisions for speculative harness patches, and the n
 For artist-tool bugs such as brush selection or viewport hit offsets, the harness is insufficient
 until it proves the real widget or pointer path the user complained about.
 
+For long visual, reference-render, calibration, import/export, viewport-capture, or
+semantic-wrapper lanes, define the top-level acceptance artifact before adding more harness
+machinery. If repeated wrapper or OSTM runs stay red against that artifact, do not summarize
+internal debug buffers, successful launches, route inventory, or generated intermediates as
+progress. Stop and write an acceptance ledger that separates new evidence from prior work,
+debug-only evidence from final acceptance, failed hypotheses from kept patches, and
+continue/cutover options. The next local route, wait, endpoint, scenario, or wrapper is allowed only
+when it is the named next proof from that ledger, after a narrow read-only stuck probe and a current
+web/upstream research pass justify staying on the same lane. Local source inspection alone does not
+satisfy that pass for a repeatedly stuck integration or toolchain problem.
+
 For interactive native apps, tools, viewers, renderers, simulations, and editor-like workflows,
 plan an agentic control harness from the first milestone by default. Treat it as default-on unless
 the target is a headless library, a security-sensitive product surface, or the user explicitly opts

@@ -4,6 +4,16 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added an acceptance-artifact cutover gate for long visual, reference-render, calibration,
+  viewport-capture, import/export, and semantic-wrapper lanes. Agents must define the final artifact
+  before repeated probes, stop after repeated red wrapper/OSTM/scenario runs or extended unchanged
+  artifacts, write a ledger separating new evidence from prior work and debug-only signals, run a
+  narrow read-only stuck probe, perform current web/upstream research into the failing layer, and
+  explicitly choose continue or cutover before more local patching. Local source-only analysis is no
+  longer enough after this stall gate. Cutover must preserve any user-named upstream, SDK, shader,
+  renderer, file-format, or port target; unrelated peer tools are diagnostic references, not
+  replacement targets.
+
 - Hardened viewport-session and generated-project validation closeouts so agents cannot treat
   semantic path coverage, changed vertices, or "no debug overlay" readback as proof for broader
   user-visible stroke-direction, cursor-hit feel, shading-quality, or product-material complaints.

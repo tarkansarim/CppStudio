@@ -158,6 +158,35 @@ target code map; record the donor facts, local mismatch, failed hypotheses, spec
 keep/revert decisions, and the next smallest user-equivalent proof before changing more app or
 harness code.
 
+For longer reference-render, calibration, viewport-capture, import/export, or semantic-wrapper
+lanes, keep the final acceptance artifact separate from diagnostics. A launcher exit code, populated
+debug buffer, route list, generated intermediate asset, or successful offscreen job is not progress
+when the declared final artifact is still invalid, stale, empty, byte-identical, unreadable, or
+visually wrong. After three red wrapper/scenario runs, two source probes, or roughly 45 minutes with
+the same top-level artifact red, stop and produce an acceptance ledger:
+
+- `new this session`: evidence that was not already true before this work period
+- `previously established`: scaffold, imports, commands, or capabilities that predated this run
+- `still red`: the exact acceptance artifact and assertion that still fails
+- `debug-only evidence`: buffers, logs, generated files, or internal signals that do not satisfy the
+  acceptance condition
+- `failed hypotheses`: what was tried and whether each patch was kept, reverted, or isolated
+- `cutover options`: current-donor/upstream refresh, alternate donor/tool/lane, or stop/blocker
+
+Do not continue by adding another wrapper, wait, or diagnostic route unless that route is the named
+next proof in the ledger. Before staying in the same lane, run a narrow read-only `codex exec` stuck
+probe on the exact unresolved question and perform current web/upstream research for the failing
+layer. Local package source is useful, but it is not enough after repeated red final artifacts. The
+research pass should inspect current primary sources such as official docs, upstream repos, samples,
+issue trackers, release notes, vendor docs, standards docs, or peer-tool references, then record the
+links or queries, source facts, and decision impact in the ledger. If the user, plan, or research
+brief named an alternate lane that still satisfies the objective, include it in the cutover options
+before continuing the original lane. If the user named a required upstream, app, SDK, shader,
+renderer, file format, or port target, a cutover must preserve that reference family and success
+contract; unrelated peer tools may be diagnostic comparisons, not replacement targets. If another
+focused attempt leaves the final artifact red, request a fresh scoped adversarial review to decide
+continue, cut over, or stop.
+
 ## Observation, Or Sonar
 
 Agents need direct evidence instead of guessing from success strings. Plan these observation classes:

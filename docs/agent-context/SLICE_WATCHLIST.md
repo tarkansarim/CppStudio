@@ -117,6 +117,16 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-19T19:25:21Z`
 
+12. **Prevent repeated red visual/reference render lanes from treating diagnostic narrowing, debug buffers, wrapper execution, or local-source-only analysis as product progress; require top-level acceptance artifact status, current web/upstream realignment, and cutover decision before more local probes after repeated failure.**
+   - Status: `active`
+   - Slice: `long visual reference lane hardening`
+   - Scope: `reusable-skill`
+   - Source: user correction and long-running visual reference lane postmortem
+   - Revisit when: before source patch closeout, rollout, trigger-lane claim, or supervising long-running render/reference workers
+   - Gate: Reject the reusable change if skills/templates still allow more local probes after repeated unchanged acceptance artifacts without a written acceptance ledger, current web/upstream research into the failing layer, and explicit continue/cutover decision.
+   - Evidence: none recorded
+   - Recorded: `2026-05-19T20:19:16Z`
+
 ## Superseded Or Historical
 
 1. **Record important user instructions immediately and revisit them before supervision or closeout**

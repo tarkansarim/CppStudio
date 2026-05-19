@@ -134,6 +134,17 @@ generated-project workflow instructions.
   peer-tool sources before another code edit. The realignment note must name donor facts, local
   mismatch, failed hypotheses, keep/revert decisions for speculative patches, and the next smallest
   proof.
+- Long visual/reference/calibration lanes now have an acceptance-artifact cutover gate. Agents must
+  define the final artifact up front and stop after repeated red wrapper/OSTM/scenario runs, repeated
+  source probes, or an extended unchanged artifact window. Internal diagnostics, debug buffers,
+  generated intermediates, route inventory, or wrapper success are not progress unless the final
+  artifact improves. The required ledger separates new evidence, prior work, still-red acceptance,
+  debug-only evidence, failed hypotheses, keep/revert decisions, and continue/cutover options backed
+  by a narrow `codex exec` stuck probe plus current web/upstream research into the failing layer.
+  Local source-only analysis is not enough after this stall gate. Cutover must still preserve any
+  user-named upstream, SDK, shader, renderer, file-format, or port target; unrelated peer tools are
+  diagnostic references, not replacement targets. A fresh scoped adversarial review is required
+  before further patching if the next attempt still leaves the artifact red.
 - Substantial greenfield and architecture-setting research must be durable. Agents should write a
   target-project `docs/planning/RESEARCH_BRIEF.md` before implementation, combining local donor
   routes and curated web/upstream sources with short descriptions, project benefits, freshness or
@@ -474,6 +485,10 @@ generated-project workflow instructions.
   UI/renderer state must run on the app GUI/render thread rather than an HTTP/server worker
 - repeated visual-capture or render-scheduling failure policy changes, including hard-reset evidence
   ledgers and keep/revert decisions before additional patches
+- long visual/reference/calibration acceptance-artifact policy changes, including repeated red
+  wrapper/OSTM/scenario cutover gates, acceptance ledgers, narrow `codex exec` stuck probes,
+  mandatory current web/upstream research after stall, and rules separating debug-only evidence from
+  final artifact progress
 - control-harness mutation-success semantics change, including when endpoint `ok` must prove actual
   committed state and post-snap/post-clamp values instead of raw command input
 - GUI/editor event-handler rewrite discipline changes, including source-structure inspection before

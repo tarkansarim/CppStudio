@@ -310,3 +310,22 @@ map, matching donor route/profile, GUI/product-surface evidence, and current ups
 sources; record donor facts, local mismatch, failed hypotheses, keep/revert decisions for
 speculative patches, and the next smallest proof. Do not keep relying on model memory, backend-only
 success, or additional harness scripts to justify more patches.
+
+For long visual, reference-render, calibration, viewport-capture, import/export, or semantic-wrapper
+lanes, declare the top-level acceptance artifact before repeated probes. If that artifact remains red
+after three scenario/wrapper/OSTM runs, two source probes, or roughly 45 minutes, stop source edits
+and write an acceptance ledger before another local probe. The ledger separates new evidence from
+previously established work, final acceptance from debug-only buffers/logs/intermediates, failed
+hypotheses from kept patches, and continue/cutover options. Diagnostic narrowing, internal debug
+buffers, route inventory, generated intermediates, or successful wrapper execution do not count as
+progress unless the final artifact changes or a named failure branch is eliminated with evidence.
+Before staying on the same lane, run a narrow read-only stuck probe and a current web/upstream
+research pass for the failing layer; local source inspection alone is not enough after repeated red
+final artifacts. Record official docs, upstream repos, samples, issue trackers, release notes,
+vendor/standards docs, or peer-tool references checked, what each source proves, and how it changes
+the next proof. Then explicitly compare continuing with cutting over to an alternate donor, tool, or
+validation lane that still satisfies the objective. If the next focused attempt still leaves the
+final artifact red, run a fresh scoped adversarial review of that lane and artifact before any more
+patching. If the user named a required upstream, app, SDK, shader, renderer, file format, or port
+target, cutover options must preserve that reference family and success contract; unrelated peer
+tools may be diagnostic comparisons, not replacement targets.

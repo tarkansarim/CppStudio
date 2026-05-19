@@ -39,7 +39,14 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 `current` aggregate plus 10 stable recent commit highlights for people scanning the repo. Older
 stable entries stay collapsed under the expander.
 
-- `current` - Hardened rollout and trigger-regression safety with source-owned CMake, CUDA kernel,
+- `current` - Added an acceptance-artifact cutover gate for long visual/reference/calibration lanes,
+  so repeated red wrapper/OSTM/scenario runs must stop local patching, separate new evidence from
+  prior work and debug-only signals, run a narrow stuck probe, perform current web/upstream research
+  into the failing layer, and choose continue or cutover before more patches. Local source-only
+  analysis is no longer enough after this gate, and cutover must preserve user-named reference
+  families rather than replacing them with unrelated peer tools. Hardened rollout and
+  trigger-regression safety with
+  source-owned CMake, CUDA kernel,
   and workstation profiling companion skills, compact bundled-skill discovery descriptions that
   defer detailed routing into skill bodies, symlink-safe bundled auxiliary
   rollback handling, required code-map bootstrap/maintenance/sidecar/routing-smoke trigger cases with
