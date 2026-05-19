@@ -150,7 +150,7 @@ stable entries stay collapsed under the expander.
   defaults and alternatives, but unresolved template, GUI/input, authoring-model, GPU-lane, code-map,
   dependency, donor, or validation choices stay out of inline normal-chat questions unless the user
   explicitly waives Plan mode.
-- `32d2985` - Claimed `modern-cpp-cmake`, `cuda-kernel-authoring`, and
+- `efd8375` - Claimed `modern-cpp-cmake`, `cuda-kernel-authoring`, and
   `gpu-profiling-workstation` as CppStudio-owned bundled skills with source provenance, compact
   discovery metadata, rollout/watch validation, and installed-path parity checks.
 - `fa6f957` - Added skill-load hygiene validation so repo and installed skill roots reject backup
