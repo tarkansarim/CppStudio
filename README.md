@@ -150,6 +150,9 @@ stable entries stay collapsed under the expander.
   defaults and alternatives, but unresolved template, GUI/input, authoring-model, GPU-lane, code-map,
   dependency, donor, or validation choices stay out of inline normal-chat questions unless the user
   explicitly waives Plan mode.
+- `0f260fa` - Fixed the hosted validation failure by replacing the single-item quoted
+  `rollout_to_codex.sh` snippet loop that ShellCheck rejected, and documented the CI repair in the
+  changelog.
 - `efd8375` - Claimed `modern-cpp-cmake`, `cuda-kernel-authoring`, and
   `gpu-profiling-workstation` as CppStudio-owned bundled skills with source provenance, compact
   discovery metadata, rollout/watch validation, and installed-path parity checks.
@@ -169,11 +172,11 @@ stable entries stay collapsed under the expander.
   source/build/docs slices.
 - `a34a08b` - Routed code-map drift and no-map-touch semantic review output toward the guarded
   code-map sidecar helper as an actionable worker-owned path.
-- `8488e6c` - Hardened supervised-worker evidence gates so summaries remain pointers and supervisors
-  inspect primary planning, code-map, diff, validation, OSTM, and UI artifacts before judging quality.
 <details>
 <summary>Show older commit highlights</summary>
 
+- `8488e6c` - Hardened supervised-worker evidence gates so summaries remain pointers and supervisors
+  inspect primary planning, code-map, diff, validation, OSTM, and UI artifacts before judging quality.
 - `8d6d94e` - Hardened planner source-access failures so missing or inaccessible sources are recorded
   and critical evidence gaps block planning instead of silently weakening research.
 - `01959fa` - Surfaced the latest code-map sidecar commits as explicit README Recent Commit
