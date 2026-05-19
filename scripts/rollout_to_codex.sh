@@ -282,14 +282,10 @@ if [[ ! -f "${USER_AGENTS_RELAY_INSTALLER}" ]]; then
     exit 1
 fi
 
-for snippet in \
-    "${USER_AGENTS_RELAY_SNIPPET}"
-do
-    if [[ ! -f "${snippet}" ]]; then
-        echo "Missing companion snippet: ${snippet}" >&2
-        exit 1
-    fi
-done
+if [[ ! -f "${USER_AGENTS_RELAY_SNIPPET}" ]]; then
+    echo "Missing companion snippet: ${USER_AGENTS_RELAY_SNIPPET}" >&2
+    exit 1
+fi
 
 CPPSTUDIO_SKIP_ROLLOUT_VALIDATOR_REGRESSION=1 \
     SYNC_CODEX_HOME="${CODEX_HOME_DIR}" \

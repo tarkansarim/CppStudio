@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Fixed the hosted validation failure in `scripts/rollout_to_codex.sh` by replacing a single-item
+  quoted `for` loop with a direct user-AGENTS relay snippet existence check. The CI ShellCheck lane
+  now reproduces locally with the same `shellcheck scripts/*.sh` and
+  `shellcheck skills/cpp-cuda-vulkan-studio/scripts/*.sh` commands.
 - Claimed `modern-cpp-cmake`, `cuda-kernel-authoring`, and `gpu-profiling-workstation` as
   CppStudio-owned source skills. Rollout now installs them as exact bundled snapshots with
   `.skill-source` provenance and compact discovery descriptions instead of patching installed-only
