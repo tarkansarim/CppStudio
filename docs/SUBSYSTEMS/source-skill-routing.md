@@ -131,9 +131,11 @@ generated-project workflow instructions.
   problem, renderer/sim behavior issue, or domain algorithm slice survives two focused attempts or
   about 20 minutes without direct symptom improvement, agents must stop local patching and reopen the
   code map, matching donor route/profile, GUI/product route when applicable, and current upstream or
-  peer-tool sources before another code edit. The realignment note must name donor facts, local
-  mismatch, failed hypotheses, keep/revert decisions for speculative patches, and the next smallest
-  proof.
+  peer-tool sources before another code edit. The current-source pass must be substantive enough to
+  answer the exact stuck layer, using multiple current primary or upstream sources when available and
+  recording links or queries, proven facts, stale/conflicting evidence, and next-attempt impact. The
+  realignment note must name donor facts, local mismatch, failed hypotheses, keep/revert decisions
+  for speculative patches, and the next smallest proof.
 - Long visual/reference/calibration lanes now have an acceptance-artifact cutover gate. Agents must
   define the final artifact up front and stop after repeated red wrapper/OSTM/scenario runs, repeated
   source probes, or an extended unchanged artifact window. Internal diagnostics, debug buffers,
@@ -141,10 +143,14 @@ generated-project workflow instructions.
   artifact improves. The required ledger separates new evidence, prior work, still-red acceptance,
   debug-only evidence, failed hypotheses, keep/revert decisions, and continue/cutover options backed
   by a narrow `codex exec` stuck probe plus current web/upstream research into the failing layer.
-  Local source-only analysis is not enough after this stall gate. Cutover must still preserve any
-  user-named upstream, SDK, shader, renderer, file-format, or port target; unrelated peer tools are
-  diagnostic references, not replacement targets. A fresh scoped adversarial review is required
-  before further patching if the next attempt still leaves the artifact red.
+  Local source-only analysis is not enough after this stall gate, and a token web search is not
+  sufficient. The research pass must inspect enough current primary/upstream sources to explain the
+  stuck layer, then record links or queries, source facts, stale/conflicting evidence, and decision
+  impact. Cutover must still preserve any user-named upstream, SDK, shader, renderer, file-format, or
+  port target; unrelated peer tools are diagnostic references, not replacement targets. Stale-context
+  or peer-tool lanes that conflict with the required reference target must be filtered out as rejected
+  or diagnostic-only before options are shown to the user. A fresh scoped adversarial review is
+  required before further patching if the next attempt still leaves the artifact red.
 - Substantial greenfield and architecture-setting research must be durable. Agents should write a
   target-project `docs/planning/RESEARCH_BRIEF.md` before implementation, combining local donor
   routes and curated web/upstream sources with short descriptions, project benefits, freshness or

@@ -151,9 +151,14 @@ When this skill is active, work like a native C++ GPU systems engineer:
   without direct symptom improvement, stop local patching immediately. Reopen the target code map,
   the matching donor route/profile, and current upstream or peer-tool sources; write a compact donor
   realignment note naming the donor facts, local mismatch, failed hypotheses, keep/revert decision
-  for speculative patches, and the next smallest proof. Do not continue from training-data guesses,
-  backend-only green checks, or newly expanded harness scripts. If the donor route was skipped,
-  treat that as the root process bug before another code edit.
+  for speculative patches, and the next smallest proof. The current-source pass must be substantive
+  enough to answer the exact thing the worker is struggling with: use multiple current primary or
+  upstream sources when available, such as official docs, source repos, samples, issue threads,
+  release notes, standards/vendor docs, papers, or peer-tool references; record the links or queries,
+  the fact each source proves, stale/conflicting evidence, and how it changes the next attempt. A
+  token web search, local source inventory, or model-memory recap is not enough. Do not continue from
+  training-data guesses, backend-only green checks, or newly expanded harness scripts. If the donor
+  route was skipped, treat that as the root process bug before another code edit.
 - Long-lane acceptance and cutover gate: for visual, reference-render, calibration, viewport,
   import/export, or semantic-wrapper lanes, define the top-level acceptance artifact before repeated
   probes. Examples include a valid final beauty/reference image, non-identical primary/secondary
@@ -167,17 +172,21 @@ When this skill is active, work like a native C++ GPU systems engineer:
   Before another local patch, run a narrow read-only `codex exec` stuck probe for the exact blocking
   question and run a current web/upstream research pass targeted at the failing layer. Local package
   source and already-open donors remain necessary evidence, but after this gate they are not
-  sufficient by themselves. The research pass must check current primary sources such as official
-  docs, upstream repos, samples, issue trackers, release notes, standards/vendor docs, or peer-tool
-  references; record the queries or links, what each source proves, and what it changes about the
-  next attempt. If search or source access is unavailable for a critical stuck integration, say so as
-  a blocker instead of continuing from memory. Then choose one scoped outcome: continue the same
+  sufficient by themselves. The research pass must be deeper than a quick search: gather enough
+  current primary/upstream evidence to explain the failing layer and choose the next proof, using
+  multiple sources when available. Check official docs, upstream repos, samples, issue trackers,
+  release notes, standards/vendor docs, papers, or peer-tool references; record the queries or links,
+  what each source proves, stale/conflicting evidence, and what the evidence changes about the next
+  attempt. If search or source access is unavailable for a critical stuck integration, say so as a
+  blocker instead of continuing from memory. Then choose one scoped outcome: continue the same
   lane with one named proof, cut over to another donor/tool/lane that still satisfies the user's
   objective, or stop as blocked. If the user named a required upstream, app, SDK, shader, renderer,
   file format, or port target, a cutover must preserve that reference family and success contract;
-  unrelated peer tools may be diagnostic comparisons, not replacement targets. If another focused
-  attempt still leaves the final artifact red or the root cause is uncertain, run a fresh scoped
-  adversarial review; the review must judge the
+  unrelated peer tools may be diagnostic comparisons, not replacement targets. Filter cutover
+  options before presenting them: a stale-context or peer-tool lane that conflicts with the user's
+  required reference target must be recorded as `rejected` or `diagnostic-only` with the reason, not
+  offered as a user decision. If another focused attempt still leaves the final artifact red or the
+  root cause is uncertain, run a fresh scoped adversarial review; the review must judge the
   current lane and acceptance artifact, not turn into a whole-repo review unless explicitly
   requested.
 - Primary visible loop before breadth: for interactive artist, game, VFX, DCC, simulation-editor,

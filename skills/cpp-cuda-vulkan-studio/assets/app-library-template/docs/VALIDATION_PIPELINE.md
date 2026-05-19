@@ -307,9 +307,11 @@ If a visible bug, artist-tool interaction, viewport hit path, renderer/sim behav
 algorithm slice survives two focused attempts or roughly 20 minutes without direct symptom
 improvement, stop local patching and realign with donors before another edit. Reopen the target code
 map, matching donor route/profile, GUI/product-surface evidence, and current upstream or peer-tool
-sources; record donor facts, local mismatch, failed hypotheses, keep/revert decisions for
-speculative patches, and the next smallest proof. Do not keep relying on model memory, backend-only
-success, or additional harness scripts to justify more patches.
+sources; perform a substantive current-source pass on the exact stuck layer; record donor facts,
+links or queries, stale/conflicting evidence, local mismatch, failed hypotheses, keep/revert
+decisions for speculative patches, and the next smallest proof. Do not keep relying on model memory,
+backend-only success, token web searches, local-source-only inventories, or additional harness
+scripts to justify more patches.
 
 For long visual, reference-render, calibration, viewport-capture, import/export, or semantic-wrapper
 lanes, declare the top-level acceptance artifact before repeated probes. If that artifact remains red
@@ -321,11 +323,15 @@ buffers, route inventory, generated intermediates, or successful wrapper executi
 progress unless the final artifact changes or a named failure branch is eliminated with evidence.
 Before staying on the same lane, run a narrow read-only stuck probe and a current web/upstream
 research pass for the failing layer; local source inspection alone is not enough after repeated red
-final artifacts. Record official docs, upstream repos, samples, issue trackers, release notes,
-vendor/standards docs, or peer-tool references checked, what each source proves, and how it changes
-the next proof. Then explicitly compare continuing with cutting over to an alternate donor, tool, or
+final artifacts. The research must be substantive enough to explain the exact stuck question, using
+multiple current primary or upstream sources when available. Record official docs, upstream repos,
+samples, issue trackers, release notes, vendor/standards docs, papers, or peer-tool references
+checked, what each source proves, stale/conflicting evidence, and how it changes the next proof. Then
+explicitly compare continuing with cutting over to an alternate donor, tool, or
 validation lane that still satisfies the objective. If the next focused attempt still leaves the
 final artifact red, run a fresh scoped adversarial review of that lane and artifact before any more
 patching. If the user named a required upstream, app, SDK, shader, renderer, file format, or port
 target, cutover options must preserve that reference family and success contract; unrelated peer
-tools may be diagnostic comparisons, not replacement targets.
+tools may be diagnostic comparisons, not replacement targets. Filter cutover options before
+presenting them: a stale-context or peer-tool lane that conflicts with the required reference target
+must be recorded as `rejected` or `diagnostic-only` with the reason, not offered as a user decision.

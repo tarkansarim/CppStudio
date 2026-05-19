@@ -154,9 +154,11 @@ source-level root cause in the app/toolkit/render flow.
 The same reset rule applies when a visible GUI or artist-tool bug survives repeated harness work.
 After two focused attempts or roughly 20 minutes without a before/after symptom delta, stop expanding
 the harness. Reopen the matching domain donors, GUI/product-surface route, OSTM/offscreen route, and
-target code map; record the donor facts, local mismatch, failed hypotheses, speculative-patch
-keep/revert decisions, and the next smallest user-equivalent proof before changing more app or
-harness code.
+target code map; perform a substantive current web/upstream research pass on the exact interaction,
+capture, toolkit, renderer, or control layer that is stuck; then record the donor facts, source links
+or queries, local mismatch, failed hypotheses, speculative-patch keep/revert decisions, and the next
+smallest user-equivalent proof before changing more app or harness code. A quick search,
+local-source inventory, or memory recap is not enough after this gate.
 
 For longer reference-render, calibration, viewport-capture, import/export, or semantic-wrapper
 lanes, keep the final acceptance artifact separate from diagnostics. A launcher exit code, populated
@@ -177,15 +179,18 @@ Do not continue by adding another wrapper, wait, or diagnostic route unless that
 next proof in the ledger. Before staying in the same lane, run a narrow read-only `codex exec` stuck
 probe on the exact unresolved question and perform current web/upstream research for the failing
 layer. Local package source is useful, but it is not enough after repeated red final artifacts. The
-research pass should inspect current primary sources such as official docs, upstream repos, samples,
-issue trackers, release notes, vendor docs, standards docs, or peer-tool references, then record the
-links or queries, source facts, and decision impact in the ledger. If the user, plan, or research
-brief named an alternate lane that still satisfies the objective, include it in the cutover options
+research pass should be substantive enough to answer the exact stuck question, using multiple current
+primary or upstream sources when available: official docs, upstream repos, samples, issue trackers,
+release notes, vendor docs, standards docs, papers, or peer-tool references. Record the links or
+queries, source facts, stale/conflicting evidence, and decision impact in the ledger. If the user,
+plan, or research brief named an alternate lane that still satisfies the objective, include it in the cutover options
 before continuing the original lane. If the user named a required upstream, app, SDK, shader,
 renderer, file format, or port target, a cutover must preserve that reference family and success
-contract; unrelated peer tools may be diagnostic comparisons, not replacement targets. If another
-focused attempt leaves the final artifact red, request a fresh scoped adversarial review to decide
-continue, cut over, or stop.
+contract; unrelated peer tools may be diagnostic comparisons, not replacement targets. Filter
+cutover options before presenting them: a stale-context or peer-tool lane that conflicts with the
+required reference target must be recorded as `rejected` or `diagnostic-only` with the reason, not
+offered as a user decision. If another focused attempt leaves the final artifact red, request a fresh
+scoped adversarial review to decide continue, cut over, or stop.
 
 ## Observation, Or Sonar
 
