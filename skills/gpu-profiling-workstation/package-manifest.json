@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "package": "gpu-profiling-workstation",
+  "hash_algorithm": "sha256",
+  "files": [
+    {
+      "path": ".skill-source",
+      "role": "metadata",
+      "disclosure_group": "source",
+      "size": 44,
+      "sha256": "13967d3f1e783d2e6d72dc018022629b6036bf24764b2431afa340cd3d068103"
+    },
+    {
+      "path": "SKILL.md",
+      "role": "main",
+      "disclosure_group": "entrypoint",
+      "size": 8431,
+      "sha256": "de946ac7c0391e52ebc07933d925c1863a88712b8722019d5ca170027bb370ab"
+    },
+    {
+      "path": "references/TOOL_INVENTORY.md",
+      "role": "reference",
+      "disclosure_group": "reference",
+      "size": 1886,
+      "sha256": "fcc2e5d143f67a6bca67cfe1cdbecbeb17a2624f400933c155c9e8269c1ddcf4"
+    }
+  ]
+}

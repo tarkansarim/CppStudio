@@ -71,19 +71,11 @@ exist, `--enable` refuses to replace them unless `--force` is explicit after use
 ## Publish To Codex
 
 Normal publishing for this repo uses rollout. Rollout validates the repo, syncs the main
-`cpp-cuda-vulkan-studio` skill, syncs bundled auxiliary skills, installs companion donor links, and
-updates the minimal user-level `AGENTS.md` relay:
+`cpp-cuda-vulkan-studio` skill, syncs bundled auxiliary skills, and updates the minimal user-level
+`AGENTS.md` relay:
 
 ```bash
 ./scripts/rollout_to_codex.sh
-```
-
-Public installs do not need every companion skill installed. Rollout updates matching companion
-skills that exist under `${SYNC_CODEX_HOME:-$HOME/.codex}/skills` and skips missing optional
-companions. Maintainer checks can require the full companion set:
-
-```bash
-STRICT_COMPANION_SKILLS=1 ./scripts/rollout_to_codex.sh
 ```
 
 The minimal user-level `AGENTS.md` relay is installed by default during rollout. To opt out for a
@@ -114,6 +106,10 @@ SKILL_NAME=cppstudio-project-planner ./scripts/sync_to_codex.sh
 SKILL_NAME=agentic-control-harness ./scripts/sync_to_codex.sh
 SKILL_NAME=viewport-session-testing ./scripts/sync_to_codex.sh
 SKILL_NAME=important-instruction-ledger ./scripts/sync_to_codex.sh
+SKILL_NAME=vulkan-compute-sync ./scripts/sync_to_codex.sh
+SKILL_NAME=modern-cpp-cmake ./scripts/sync_to_codex.sh
+SKILL_NAME=cuda-kernel-authoring ./scripts/sync_to_codex.sh
+SKILL_NAME=gpu-profiling-workstation ./scripts/sync_to_codex.sh
 ```
 
 Before pushing CppStudio to remote, update `CHANGELOG.md` with a concise entry for the tracked
@@ -130,7 +126,7 @@ Continuously validate and publish source-skill edits:
 ./scripts/watch_to_codex.sh
 ```
 
-Continuously validate and publish source-skill edits plus bundled auxiliary skills and companion
+Continuously validate and publish source-skill edits plus bundled auxiliary skills and relay/legacy
 snippets:
 
 ```bash
@@ -310,8 +306,8 @@ accidentally stand in for the whole workflow.
 ## Sync And Rollout Details
 
 `rollout_to_codex.sh` is the normal installed update path for this repo. It validates and installs
-the main `cpp-cuda-vulkan-studio` skill, bundled auxiliary skills, companion donor links, and the
-managed user-level relay together. Use it after any change that must affect future Codex sessions:
+the main `cpp-cuda-vulkan-studio` skill, bundled auxiliary skills, and the managed user-level relay
+together. Use it after any change that must affect future Codex sessions:
 
 ```bash
 ./scripts/rollout_to_codex.sh
@@ -330,10 +326,11 @@ ${SYNC_CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio
 ```
 
 Set `SKILL_NAME=native-cpp-gui-hud`, `SKILL_NAME=cppstudio-project-planner`,
-`SKILL_NAME=agentic-control-harness`, `SKILL_NAME=viewport-session-testing`, or
-`SKILL_NAME=important-instruction-ledger`, or `SKILL_NAME=vulkan-compute-sync` only for an
-intentional single-skill diagnostic sync. Do not use the default sync command as proof that auxiliary
-skill edits were installed.
+`SKILL_NAME=agentic-control-harness`, `SKILL_NAME=viewport-session-testing`,
+`SKILL_NAME=important-instruction-ledger`, `SKILL_NAME=vulkan-compute-sync`,
+`SKILL_NAME=modern-cpp-cmake`, `SKILL_NAME=cuda-kernel-authoring`, or
+`SKILL_NAME=gpu-profiling-workstation` only for an intentional single-skill diagnostic sync. Do not
+use the default sync command as proof that auxiliary skill edits were installed.
 
 It intentionally ignores `CODEX_HOME` unless `SYNC_CODEX_HOME` or `TARGET_DIR` is provided, because
 nested Codex sessions may set isolated homes.
@@ -356,6 +353,9 @@ python3 scripts/validate_skill_package.py skills/agentic-control-harness --write
 python3 scripts/validate_skill_package.py skills/viewport-session-testing --write-manifest
 python3 scripts/validate_skill_package.py skills/important-instruction-ledger --write-manifest
 python3 scripts/validate_skill_package.py skills/vulkan-compute-sync --write-manifest
+python3 scripts/validate_skill_package.py skills/modern-cpp-cmake --write-manifest
+python3 scripts/validate_skill_package.py skills/cuda-kernel-authoring --write-manifest
+python3 scripts/validate_skill_package.py skills/gpu-profiling-workstation --write-manifest
 ```
 
 Then validate normally:
@@ -368,6 +368,9 @@ python3 scripts/validate_skill_package.py skills/agentic-control-harness
 python3 scripts/validate_skill_package.py skills/viewport-session-testing
 python3 scripts/validate_skill_package.py skills/important-instruction-ledger
 python3 scripts/validate_skill_package.py skills/vulkan-compute-sync
+python3 scripts/validate_skill_package.py skills/modern-cpp-cmake
+python3 scripts/validate_skill_package.py skills/cuda-kernel-authoring
+python3 scripts/validate_skill_package.py skills/gpu-profiling-workstation
 ```
 
 Use a custom Codex home:
@@ -399,8 +402,8 @@ staging path. Audit entries include action, skill name, success flag, target pat
 available, package manifest hash, and timestamp. Audit logging should never be treated as the source
 of truth; validation output is authoritative.
 
-`rollout_to_codex.sh` rejects non-standard `TARGET_DIR` values unless explicitly allowed, because it
-renders absolute donor-library links into companion skills:
+`rollout_to_codex.sh` rejects non-standard `TARGET_DIR` values unless explicitly allowed, because the
+main skill and bundled companion skills must resolve to one coherent Codex home:
 
 ```bash
 ALLOW_ROLLOUT_TARGET_OVERRIDE=1 TARGET_DIR=/path/to/staging/skills/cpp-cuda-vulkan-studio ./scripts/rollout_to_codex.sh
@@ -408,18 +411,13 @@ ALLOW_ROLLOUT_TARGET_OVERRIDE=1 TARGET_DIR=/path/to/staging/skills/cpp-cuda-vulk
 
 Use that override only for deliberate staging.
 
-By default, companion donor-link rollout skips absent optional companion skills. Set
-`STRICT_COMPANION_SKILLS=1` when validating a full local release environment where
-`cuda-kernel-authoring` and `modern-cpp-cmake` must both be installed. `vulkan-compute-sync` is
-bundled and installed by CppStudio rollout.
-
-Rollout snapshots the main skill, bundled auxiliary skills, matching companion `SKILL.md` files, and
-the optional user-level `AGENTS.md` relay target before mutation, then restores those paths if any
-post-sync validation or install step fails.
+Rollout snapshots the main skill, bundled auxiliary skills, and the optional user-level `AGENTS.md`
+relay target before mutation, then restores those paths if any post-sync validation or install step
+fails.
 
 Before taking those snapshots, rollout refuses symlinked installed auxiliary skill targets,
-companion skill directories/files, and user `AGENTS.md` relay targets. This keeps rollback pointed at
-the intended Codex install paths instead of symlink-resolved outside locations.
+and user `AGENTS.md` relay targets. This keeps rollback pointed at the intended Codex install paths
+instead of symlink-resolved outside locations.
 
 Rollout also verifies installed packaged skills against their package manifests before reporting
 success.
@@ -435,8 +433,8 @@ be symlinks.
 
 - Edit `skills/cpp-cuda-vulkan-studio/` or bundled auxiliary skills under `skills/` in this repo,
   not the installed user-level copies.
-- Edit companion donor-link text in `companion-skill-snippets/`, not directly in installed companion
-  skills.
+- Edit legacy companion donor-link text in `companion-skill-snippets/`, not directly in installed
+  companion skills.
 - Keep the reusable skill generic. Do not add private-app-only, local-workstation-only, or other
   project-specific policy here.
 - User-level `AGENTS.md` rollout is relay-only. Merge or append the marked CppStudio relay block and

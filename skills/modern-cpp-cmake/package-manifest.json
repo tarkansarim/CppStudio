@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "package": "modern-cpp-cmake",
+  "hash_algorithm": "sha256",
+  "files": [
+    {
+      "path": ".skill-source",
+      "role": "metadata",
+      "disclosure_group": "source",
+      "size": 44,
+      "sha256": "13967d3f1e783d2e6d72dc018022629b6036bf24764b2431afa340cd3d068103"
+    },
+    {
+      "path": "SKILL.md",
+      "role": "main",
+      "disclosure_group": "entrypoint",
+      "size": 10060,
+      "sha256": "63c8cae6ca674632e982730482157d8a845e63f79a8ee0e321d208949cb90bac"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "role": "metadata",
+      "disclosure_group": "entrypoint",
+      "size": 251,
+      "sha256": "d9b25e20f01e750eae4141ab6da7cfcd6fc6060ccc6eed70836ca46f1f42cb92"
+    }
+  ]
+}

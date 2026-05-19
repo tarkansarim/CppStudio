@@ -29,6 +29,9 @@ skills, and watch-mode publishing behavior.
 - `skills/viewport-session-testing/package-manifest.json`
 - `skills/important-instruction-ledger/package-manifest.json`
 - `skills/vulkan-compute-sync/package-manifest.json`
+- `skills/modern-cpp-cmake/package-manifest.json`
+- `skills/cuda-kernel-authoring/package-manifest.json`
+- `skills/gpu-profiling-workstation/package-manifest.json`
 - `skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py`
 
 ## Update When
@@ -78,16 +81,17 @@ skills, and watch-mode publishing behavior.
   a failed backup move leaves the existing installed skill in place.
 - Sync and rollout resolve safety-check paths through Python `Path.resolve(strict=False)` so the
   documented Linux, macOS, and WSL install path does not require GNU `realpath -m`.
-- Rollout snapshots the main skill, auxiliary bundled skills, matching companion skill files, and the optional user-level
+- Rollout snapshots the main skill, auxiliary bundled skills, and the optional user-level
   `AGENTS.md` relay target before mutation, then restores them if a later step fails.
-- Rollout rejects symlinked auxiliary skill targets, companion skill directories/files, and user
+- Rollout rejects symlinked auxiliary skill targets and user
   `AGENTS.md` relay targets before rollback snapshots are created, so rollback never records a
   symlink-resolved path outside the intended install surface.
 - Manual install fallback snippets stage and validate all bundled skills before mutating the target
   Codex home, then restore the full managed-skill set if any later copy or validation step fails.
 - `rollout_to_codex.sh` installs bundled auxiliary skills such as `native-cpp-gui-hud`,
-  `cppstudio-project-planner`, `agentic-control-harness`, `viewport-session-testing`, and
-  `important-instruction-ledger`, and `vulkan-compute-sync`,
+  `cppstudio-project-planner`, `agentic-control-harness`, `viewport-session-testing`,
+  `important-instruction-ledger`, `vulkan-compute-sync`, `modern-cpp-cmake`,
+  `cuda-kernel-authoring`, and `gpu-profiling-workstation`,
   installs the minimal user-level `AGENTS.md` relay by default, and preserves user-owned content
   outside the marked CppStudio relay block.
 - Set `SKIP_USER_AGENTS_RELAY=1` only for deliberate relay opt-out installs.

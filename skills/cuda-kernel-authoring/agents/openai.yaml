@@ -1,0 +1,4 @@
+interface:
+  display_name: "CUDA Kernel Authoring"
+  short_description: "CUDA kernel design and test discipline."
+  default_prompt: "Use $cuda-kernel-authoring to design, debug, or review this CUDA kernel with explicit correctness, boundary, precision, launch, and test-plan reasoning."

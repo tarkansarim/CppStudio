@@ -39,8 +39,9 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 `current` aggregate plus 10 stable recent commit highlights for people scanning the repo. Older
 stable entries stay collapsed under the expander.
 
-- `current` - Hardened rollout and trigger-regression safety with compact bundled-skill discovery
-  descriptions that defer detailed routing into skill bodies, symlink-safe bundled auxiliary
+- `current` - Hardened rollout and trigger-regression safety with source-owned CMake, CUDA kernel,
+  and workstation profiling companion skills, compact bundled-skill discovery descriptions that
+  defer detailed routing into skill bodies, symlink-safe bundled auxiliary
   rollback handling, required code-map bootstrap/maintenance/sidecar/routing-smoke trigger cases with
   installed-path fresh-agent evidence, fresh-scaffold drift coverage before the first baseline
   commit, source skill-load hygiene checks plus explicit installed-root audits for backup artifacts
@@ -149,6 +150,9 @@ stable entries stay collapsed under the expander.
   defaults and alternatives, but unresolved template, GUI/input, authoring-model, GPU-lane, code-map,
   dependency, donor, or validation choices stay out of inline normal-chat questions unless the user
   explicitly waives Plan mode.
+- `32d2985` - Claimed `modern-cpp-cmake`, `cuda-kernel-authoring`, and
+  `gpu-profiling-workstation` as CppStudio-owned bundled skills with source provenance, compact
+  discovery metadata, rollout/watch validation, and installed-path parity checks.
 - `fa6f957` - Added skill-load hygiene validation so repo and installed skill roots reject backup
   artifacts, duplicate loaded skill names, and oversized startup descriptions before rollout.
 - `9dc4ae3` - Required concrete proof objects in planning so visible/domain slices name the actual
@@ -167,12 +171,11 @@ stable entries stay collapsed under the expander.
   code-map sidecar helper as an actionable worker-owned path.
 - `8488e6c` - Hardened supervised-worker evidence gates so summaries remain pointers and supervisors
   inspect primary planning, code-map, diff, validation, OSTM, and UI artifacts before judging quality.
-- `8d6d94e` - Hardened planner source-access failures so missing or inaccessible sources are recorded
-  and critical evidence gaps block planning instead of silently weakening research.
-
 <details>
 <summary>Show older commit highlights</summary>
 
+- `8d6d94e` - Hardened planner source-access failures so missing or inaccessible sources are recorded
+  and critical evidence gaps block planning instead of silently weakening research.
 - `01959fa` - Surfaced the latest code-map sidecar commits as explicit README Recent Commit
   Highlights before remote push.
 - `ee03b49` - Guarded code-map sidecar trigger evidence so checked-in installed-path validation
@@ -456,9 +459,10 @@ toolchains only when you want this machine to build or validate generated C++ GP
   `${HOME}/.codex/skills/agentic-control-harness`,
   `${HOME}/.codex/skills/viewport-session-testing`, and
   `${HOME}/.codex/skills/important-instruction-ledger`,
-  `${HOME}/.codex/skills/vulkan-compute-sync`
-- Optional companion donor links for installed companion skills such as `cuda-kernel-authoring`
-  and `modern-cpp-cmake`
+  `${HOME}/.codex/skills/vulkan-compute-sync`,
+  `${HOME}/.codex/skills/modern-cpp-cmake`,
+  `${HOME}/.codex/skills/cuda-kernel-authoring`, and
+  `${HOME}/.codex/skills/gpu-profiling-workstation`
 - Tiny user-level `AGENTS.md` relay that tells agents to load `cpp-cuda-vulkan-studio` for
   native C++ GPU, realtime rendering/visualization, C++ GPU code-map, Vulkan, CUDA, or mixed
   CUDA/Vulkan work. Set `SKIP_USER_AGENTS_RELAY=1` during rollout only if you explicitly do not want
@@ -474,8 +478,8 @@ blocks:
 
 ## Package Integrity
 
-CppStudio includes `skills/cpp-cuda-vulkan-studio/package-manifest.json`, a deterministic inventory
-of the shipped skill files. It records each file's role, progressive disclosure group, byte size, and
+Each managed CppStudio skill includes `package-manifest.json`, a deterministic inventory of the
+shipped skill files. It records each file's role, progressive disclosure group, byte size, and
 SHA-256 hash so agents can validate source, staged, and installed copies without fetching a remote
 registry.
 
@@ -524,8 +528,8 @@ not trigger.
   particles, simulation, XR, and native engineering infrastructure.
 - Offer an optional code map for larger generated or upgraded C++ GPU projects that need durable
   architecture context across future agent sessions.
-- Coordinate bundled Vulkan synchronization guidance plus companion skills for CMake, CUDA kernels,
-  and verification.
+- Coordinate bundled Vulkan synchronization, CMake, CUDA kernel, workstation profiling, and
+  verification guidance.
 
 ## Optional Code Maps
 
@@ -614,16 +618,23 @@ checkpoints and temporary anchors are not public verified-slice commits.
 - `vulkan-compute-sync`: installed user-level skill for Vulkan compute/render setup, descriptors,
   barriers, synchronization, image layouts, frame lifetime, validation-layer triage, RenderDoc, and
   Nsight Graphics-oriented debugging.
+- `modern-cpp-cmake`: installed user-level skill for C++/CUDA source layout, target-scoped CMake,
+  presets, CTest, imported GPU targets, and build hygiene.
+- `cuda-kernel-authoring`: installed user-level skill for CUDA kernel design, launch wrappers,
+  correctness matrices, numerical stability, sanitizer plans, and profiling discipline.
+- `gpu-profiling-workstation`: installed user-level skill for local Nsight, RenderDoc, perf, and
+  Compute Sanitizer tool ordering on this workstation.
 - `cppstudio-repo-onboarding`: repo-local onboarding skill for agents editing this CppStudio repo.
   It is not the public user-level C++ GPU skill.
 
-### Companion Skill Links
+### Bundled Companion Skills
 
-CppStudio can add donor-library links to these external companion skills when they are already installed:
+CppStudio installs these companion skills from source alongside the main skill:
 
 - `modern-cpp-cmake`: CMake, target layout, presets, tests, and native C++ project hygiene.
 - `cuda-kernel-authoring`: CUDA kernels, launch wrappers, numerical tests, and Compute Sanitizer
   planning.
+- `gpu-profiling-workstation`: local CUDA/Vulkan/OpenGL profiling and frame-debugging tool order.
 
 ### Donor Index Files
 
@@ -777,11 +788,14 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
   supervision and direct-work gates
 - `skills/vulkan-compute-sync/`: bundled Vulkan synchronization skill for compute/render barriers,
   descriptors, image layouts, frame lifetime, and validation/debug capture triage
+- `skills/modern-cpp-cmake/`: bundled C++/CUDA CMake layout and build hygiene skill
+- `skills/cuda-kernel-authoring/`: bundled CUDA kernel authoring and verification skill
+- `skills/gpu-profiling-workstation/`: bundled local workstation profiling and frame-debugging skill
 - `skills/cpp-cuda-vulkan-studio/assets/app-library-template/`: generated-project template
 - `skills/cpp-cuda-vulkan-studio/references/`: project archetypes and donor-reference guidance
 - `skills/*/package-manifest.json`: deterministic skill package inventories and integrity metadata
 - `.cppstudio/` and `docs/CODEBASE_*`: maintained code map for this CppStudio repo
-- `companion-skill-snippets/`: managed donor-link snippets for companion skills and user-level relay
+- `companion-skill-snippets/`: user-level relay snippet and legacy companion donor-link snippets
 - `research/`: source research and trigger-test notes
 - `scripts/`: validation, sync, rollout, and watch helpers
 - `.codex/skills/cppstudio-repo-onboarding/`: project-level onboarding skill for agents editing this

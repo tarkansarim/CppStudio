@@ -23,6 +23,7 @@ HASH_ALGORITHM = "sha256"
 MANIFEST_KEYS = {"schema_version", "package", "hash_algorithm", "files"}
 FILE_ENTRY_KEYS = {"path", "role", "disclosure_group", "size", "sha256"}
 ALLOWED_TOP_LEVEL = {
+    ".skill-source",
     "SKILL.md",
     "agents",
     "assets",
@@ -125,6 +126,8 @@ def is_forbidden_package_path(rel_path: str) -> str | None:
 
 
 def classify_file(rel_path: str) -> tuple[str, str]:
+    if rel_path == ".skill-source":
+        return "metadata", "source"
     if rel_path == "SKILL.md":
         return "main", "entrypoint"
     if rel_path == "agents/openai.yaml":

@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Claimed `modern-cpp-cmake`, `cuda-kernel-authoring`, and `gpu-profiling-workstation` as
+  CppStudio-owned source skills. Rollout now installs them as exact bundled snapshots with
+  `.skill-source` provenance and compact discovery descriptions instead of patching installed-only
+  companion copies.
 - Deferred bundled skill discovery detail out of frontmatter descriptions and into source skill
   bodies. Skill-load hygiene now enforces compact CppStudio startup descriptions, while rollout
   preserves full trigger/routing detail for C++ GPU, planning, control-harness, watchlist, GUI,

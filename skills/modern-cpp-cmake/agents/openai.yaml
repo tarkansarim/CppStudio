@@ -1,0 +1,4 @@
+interface:
+  display_name: "Modern C++ CMake"
+  short_description: "Modern C++ and CUDA CMake layout."
+  default_prompt: "Use $modern-cpp-cmake to structure this C++/CUDA project with modern CMake, clear source boundaries, and verification commands."

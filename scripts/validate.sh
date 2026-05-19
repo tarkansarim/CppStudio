@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_DIR="${ROOT_DIR}/skills/cpp-cuda-vulkan-studio"
-AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "vulkan-compute-sync")
+AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "vulkan-compute-sync" "modern-cpp-cmake" "cuda-kernel-authoring" "gpu-profiling-workstation")
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
 REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
@@ -130,6 +130,18 @@ required_repo_files=(
     "skills/vulkan-compute-sync/SKILL.md"
     "skills/vulkan-compute-sync/agents/openai.yaml"
     "skills/vulkan-compute-sync/package-manifest.json"
+    "skills/modern-cpp-cmake/SKILL.md"
+    "skills/modern-cpp-cmake/agents/openai.yaml"
+    "skills/modern-cpp-cmake/.skill-source"
+    "skills/modern-cpp-cmake/package-manifest.json"
+    "skills/cuda-kernel-authoring/SKILL.md"
+    "skills/cuda-kernel-authoring/agents/openai.yaml"
+    "skills/cuda-kernel-authoring/.skill-source"
+    "skills/cuda-kernel-authoring/package-manifest.json"
+    "skills/gpu-profiling-workstation/SKILL.md"
+    "skills/gpu-profiling-workstation/references/TOOL_INVENTORY.md"
+    "skills/gpu-profiling-workstation/.skill-source"
+    "skills/gpu-profiling-workstation/package-manifest.json"
     "docs/agent-context/SLICE_WATCHLIST.md"
     "research/donor-library/trigger-regression-checklist.md"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/.gitignore"

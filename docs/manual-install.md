@@ -7,9 +7,9 @@ Manual install touches only:
 
 - the managed `cpp-cuda-vulkan-studio`, `native-cpp-gui-hud`, `cppstudio-project-planner`,
   `agentic-control-harness`, `viewport-session-testing`, `important-instruction-ledger`, and
-  `vulkan-compute-sync` skill folders
+  `vulkan-compute-sync`, `modern-cpp-cmake`, `cuda-kernel-authoring`, and
+  `gpu-profiling-workstation` skill folders
 - optional marked CppStudio relay content in user-level `AGENTS.md`
-- optional marked donor-library blocks in matching companion skills
 
 User-created sibling skills under `${HOME}/.codex/skills` are not part of this package and should be
 left alone.
@@ -36,7 +36,7 @@ cd /path/to/CppStudio
 
 codex_home="${CODEX_HOME:-${HOME}/.codex}"
 skills_root="${codex_home}/skills"
-skill_names=("cpp-cuda-vulkan-studio" "native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "vulkan-compute-sync")
+skill_names=("cpp-cuda-vulkan-studio" "native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "vulkan-compute-sync" "modern-cpp-cmake" "cuda-kernel-authoring" "gpu-profiling-workstation")
 system_validator="${skills_root}/.system/skill-creator/scripts/quick_validate.py"
 repo_validator="${PWD}/scripts/quick_validate_skill.py"
 package_validator="${PWD}/scripts/validate_skill_package.py"
@@ -124,7 +124,7 @@ Windows PowerShell:
 Set-Location C:\path\to\CppStudio
 $CodexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME ".codex" }
 $SkillsRoot = Join-Path $CodexHome "skills"
-$SkillNames = @("cpp-cuda-vulkan-studio", "native-cpp-gui-hud", "cppstudio-project-planner", "agentic-control-harness", "viewport-session-testing", "important-instruction-ledger", "vulkan-compute-sync")
+$SkillNames = @("cpp-cuda-vulkan-studio", "native-cpp-gui-hud", "cppstudio-project-planner", "agentic-control-harness", "viewport-session-testing", "important-instruction-ledger", "vulkan-compute-sync", "modern-cpp-cmake", "cuda-kernel-authoring", "gpu-profiling-workstation")
 $SystemValidator = Join-Path $SkillsRoot ".system\skill-creator\scripts\quick_validate.py"
 $RepoValidator = Join-Path (Get-Location) "scripts\quick_validate_skill.py"
 $PackageValidator = Join-Path (Get-Location) "scripts\validate_skill_package.py"
@@ -243,7 +243,11 @@ python .\scripts\install_user_agents_relay.py `
   --snippet ".\companion-skill-snippets\user-agents\cppstudio-relay.md"
 ```
 
-## Optional Companion Donor Links
+## Legacy Companion Donor Links
+
+Normal CppStudio installs no longer need this step because the C++ companion skills are bundled
+source snapshots. Use it only to repair an older external companion install that still carries the
+managed donor marker block.
 
 Linux or macOS:
 

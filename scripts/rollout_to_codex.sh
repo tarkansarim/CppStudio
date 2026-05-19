@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_NAME="${SKILL_NAME:-cpp-cuda-vulkan-studio}"
-AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "vulkan-compute-sync")
+AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "vulkan-compute-sync" "modern-cpp-cmake" "cuda-kernel-authoring" "gpu-profiling-workstation")
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SOURCE_DIR="${ROOT_DIR}/skills/${SKILL_NAME}"
 TARGET_DIR="${TARGET_DIR:-${CODEX_HOME_DIR}/skills/${SKILL_NAME}}"
@@ -22,7 +22,6 @@ SNIPPET_ROOT="${ROOT_DIR}/companion-skill-snippets"
 EXPECTED_TARGET_DIR="${CODEX_HOME_DIR}/skills/${SKILL_NAME}"
 AUDIT_LOG="${CPPSTUDIO_AUDIT_LOG:-${CODEX_HOME_DIR}/cppstudio-install-audit.jsonl}"
 DONOR_VALIDATOR="${ROOT_DIR}/scripts/validate_donor_library.py"
-COMPANION_INSTALLER="${ROOT_DIR}/scripts/install_companion_donor_links.py"
 USER_AGENTS_RELAY_INSTALLER="${ROOT_DIR}/scripts/install_user_agents_relay.py"
 USER_AGENTS_RELAY_SNIPPET="${SNIPPET_ROOT}/user-agents/cppstudio-relay.md"
 USER_AGENTS_RELAY_TARGET="${USER_AGENTS_RELAY_TARGET:-${CODEX_HOME_DIR}/AGENTS.md}"
@@ -171,8 +170,7 @@ usage() {
     cat <<EOF
 Usage: $0
 
-Validate and roll out the CppStudio skill to user-level Codex, then install companion-skill donor
-library links.
+Validate and roll out the CppStudio skill and bundled companion skills to user-level Codex.
 
 Environment:
   SYNC_CODEX_HOME  Defaults to ${HOME}/.codex
@@ -183,8 +181,8 @@ Environment:
                   Optional JSONL audit log path. Defaults to
                   ${CODEX_HOME_DIR}/cppstudio-install-audit.jsonl.
   ALLOW_ROLLOUT_TARGET_OVERRIDE=1
-                  Allow TARGET_DIR outside ${EXPECTED_TARGET_DIR}. Companion-skill donor links will
-                  point at TARGET_DIR, so use this only for deliberate staging.
+                  Allow TARGET_DIR outside ${EXPECTED_TARGET_DIR}. Bundled companion skills must
+                  still resolve inside the same Codex home, so use this only for deliberate staging.
   INSTALL_USER_AGENTS_RELAY
                   Defaults to 1. Merge the minimal CppStudio relay into USER_AGENTS_RELAY_TARGET.
   SKIP_USER_AGENTS_RELAY=1
@@ -194,9 +192,6 @@ Environment:
   ALLOW_USER_AGENTS_RELAY_TARGET_OVERRIDE=1
                   Allow USER_AGENTS_RELAY_TARGET to differ from ${CODEX_HOME_DIR}/AGENTS.md.
                   The target must still be named AGENTS.md and must not be a symlink.
-  STRICT_COMPANION_SKILLS=1
-                  Require all known companion skills to exist. By default, rollout updates only
-                  matching installed companion skills and skips missing optional companions.
 EOF
 }
 
@@ -263,14 +258,6 @@ for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
         "${target_skills_dir}/${auxiliary_skill_name}" \
         "auxiliary skill target"
 done
-for companion in cuda-kernel-authoring modern-cpp-cmake; do
-    reject_symlink_rollout_path \
-        "${CODEX_HOME_DIR}/skills/${companion}" \
-        "companion skill directory"
-    reject_symlink_rollout_path \
-        "${CODEX_HOME_DIR}/skills/${companion}/SKILL.md" \
-        "companion skill file"
-done
 if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
     reject_symlink_rollout_path "${USER_AGENTS_RELAY_TARGET}" "user AGENTS relay target"
 fi
@@ -290,19 +277,12 @@ if [[ ! -x "${PACKAGE_VALIDATOR}" && ! -f "${PACKAGE_VALIDATOR}" ]]; then
     exit 1
 fi
 
-if [[ ! -f "${COMPANION_INSTALLER}" ]]; then
-    echo "Missing companion installer: ${COMPANION_INSTALLER}" >&2
-    exit 1
-fi
-
 if [[ ! -f "${USER_AGENTS_RELAY_INSTALLER}" ]]; then
     echo "Missing user AGENTS relay installer: ${USER_AGENTS_RELAY_INSTALLER}" >&2
     exit 1
 fi
 
 for snippet in \
-    "${SNIPPET_ROOT}/cuda-kernel-authoring/donor-library.md" \
-    "${SNIPPET_ROOT}/modern-cpp-cmake/donor-library.md" \
     "${USER_AGENTS_RELAY_SNIPPET}"
 do
     if [[ ! -f "${snippet}" ]]; then
@@ -315,19 +295,6 @@ CPPSTUDIO_SKIP_ROLLOUT_VALIDATOR_REGRESSION=1 \
     SYNC_CODEX_HOME="${CODEX_HOME_DIR}" \
     VALIDATOR="${VALIDATOR}" \
     "${ROOT_DIR}/scripts/validate.sh"
-companion_args=(
-    --codex-home "${CODEX_HOME_DIR}"
-    --donor-root "${DONOR_ROOT}"
-    --source-skill-dir "${SOURCE_DIR}"
-    --snippet-root "${SNIPPET_ROOT}"
-)
-if [[ "${STRICT_COMPANION_SKILLS:-0}" == "1" ]]; then
-    companion_args+=(--strict)
-fi
-
-python3 "${COMPANION_INSTALLER}" \
-    --preflight \
-    "${companion_args[@]}"
 
 relay_args=(
     --target "${USER_AGENTS_RELAY_TARGET}"
@@ -348,12 +315,6 @@ ROLLBACK_TMP="$(mktemp -d "${TMPDIR:-/tmp}/cppstudio_rollout_rollback.XXXXXX")"
 backup_rollout_path "${target_resolved}"
 for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     backup_rollout_path "${target_skills_dir}/${auxiliary_skill_name}"
-done
-for companion in cuda-kernel-authoring modern-cpp-cmake; do
-    companion_skill="${CODEX_HOME_DIR}/skills/${companion}/SKILL.md"
-    if [[ -e "${companion_skill}" ]]; then
-        backup_rollout_path "${companion_skill}"
-    fi
 done
 if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
     backup_rollout_path "${USER_AGENTS_RELAY_TARGET}"
@@ -377,9 +338,6 @@ for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
 done
 
 python3 "${DONOR_VALIDATOR}" "${DONOR_ROOT}" --reference-root "${TARGET_DIR}/references"
-python3 "${COMPANION_INSTALLER}" \
-    --install \
-    "${companion_args[@]}"
 
 if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
     python3 "${USER_AGENTS_RELAY_INSTALLER}" \
@@ -393,17 +351,6 @@ for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     auxiliary_target_dir="${target_skills_dir}/${auxiliary_skill_name}"
     python3 "${VALIDATOR}" "${auxiliary_target_dir}"
     python3 "${PACKAGE_VALIDATOR}" "${auxiliary_target_dir}"
-done
-for companion in cuda-kernel-authoring modern-cpp-cmake; do
-    companion_dir="${CODEX_HOME_DIR}/skills/${companion}"
-    if [[ -d "${companion_dir}" ]]; then
-        python3 "${VALIDATOR}" "${companion_dir}"
-    elif [[ "${STRICT_COMPANION_SKILLS:-0}" == "1" ]]; then
-        echo "Missing required companion skill: ${companion_dir}" >&2
-        exit 1
-    else
-        echo "Skipped missing companion skill: ${companion_dir}"
-    fi
 done
 
 diff -qr \
@@ -429,4 +376,4 @@ for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     echo "Rolled out ${ROOT_DIR}/skills/${auxiliary_skill_name} -> ${target_skills_dir}/${auxiliary_skill_name}"
 done
 echo "Verified donor library at ${DONOR_ROOT}"
-echo "Verified companion skill links for matching installed skills in ${CODEX_HOME_DIR}/skills"
+echo "Verified bundled companion skills in ${CODEX_HOME_DIR}/skills"

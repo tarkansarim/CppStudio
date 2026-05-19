@@ -97,8 +97,8 @@ C++/CUDA/Vulkan development.
   or README donor inventories, run a sub-agent trigger lane before close-out. Use multiple realistic
   prompts that should trigger the changed skill/routing, verify the agents select the expected skill and
   donor profiles, then fix any ambiguity they find before committing.
-- The rollout script validates the repo copy, bundled installed skills, companion donor links, and
-  the user-level relay. The sync script validates only the selected single-skill sync path.
+- The rollout script validates the repo copy, bundled installed skills, and the user-level relay. The
+  sync script validates only the selected single-skill sync path.
 - If validation fails because of a real script/template issue, fix the repo copy first, then rerun
   rollout or the explicitly selected sync.
 
@@ -109,13 +109,10 @@ C++/CUDA/Vulkan development.
 - Pass `--dry-run` to preview changes.
 - Pass `--no-delete` only for diagnostics; normal publishing should keep delete enabled.
 - `./scripts/watch_to_codex.sh` continuously validates and syncs after file changes.
-- `./scripts/rollout_to_codex.sh` validates, syncs the canonical skill, installs donor-library links
-  into matching installed companion user-level skills, validates affected installed skills, and
-  verifies source/target parity.
-- Set `STRICT_COMPANION_SKILLS=1` only for maintainer checks that should require every known
-  companion skill to be installed. Public installs skip missing optional companion skills.
-- Companion-skill donor link snippets live in `companion-skill-snippets/`; update those snippets,
-  not inline installed skill text or hardcoded markdown inside rollout scripts.
+- `./scripts/rollout_to_codex.sh` validates, syncs the canonical skill and bundled auxiliary skills,
+  validates affected installed skills, and verifies source/target parity.
+- Legacy companion-skill donor link snippets live in `companion-skill-snippets/`; update those
+  snippets, not inline installed skill text or hardcoded markdown inside rollout scripts.
 
 ## Safe Editing Rules
 

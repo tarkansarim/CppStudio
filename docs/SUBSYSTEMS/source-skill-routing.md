@@ -19,6 +19,12 @@ generated-project workflow instructions.
 - `skills/important-instruction-ledger/SKILL.md`
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
 - `skills/vulkan-compute-sync/SKILL.md`
+- `skills/modern-cpp-cmake/SKILL.md`
+- `skills/modern-cpp-cmake/agents/openai.yaml`
+- `skills/cuda-kernel-authoring/SKILL.md`
+- `skills/cuda-kernel-authoring/agents/openai.yaml`
+- `skills/gpu-profiling-workstation/SKILL.md`
+- `skills/gpu-profiling-workstation/references/TOOL_INVENTORY.md`
 - `docs/agent-context/SLICE_WATCHLIST.md`
 - `docs/agent-context/slice-watchlist.jsonl`
 - `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md`
@@ -38,6 +44,12 @@ generated-project workflow instructions.
 - `skills/important-instruction-ledger/SKILL.md`
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
 - `skills/vulkan-compute-sync/SKILL.md`
+- `skills/modern-cpp-cmake/SKILL.md`
+- `skills/modern-cpp-cmake/agents/openai.yaml`
+- `skills/cuda-kernel-authoring/SKILL.md`
+- `skills/cuda-kernel-authoring/agents/openai.yaml`
+- `skills/gpu-profiling-workstation/SKILL.md`
+- `skills/gpu-profiling-workstation/references/TOOL_INVENTORY.md`
 - `docs/agent-context/SLICE_WATCHLIST.md`
 - `docs/agent-context/slice-watchlist.jsonl`
 - `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md`

@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_NAME="${SKILL_NAME:-cpp-cuda-vulkan-studio}"
 SOURCE_DIR="${ROOT_DIR}/skills/${SKILL_NAME}"
-AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "vulkan-compute-sync")
+AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "vulkan-compute-sync" "modern-cpp-cmake" "cuda-kernel-authoring" "gpu-profiling-workstation")
 SNIPPET_ROOT="${ROOT_DIR}/companion-skill-snippets"
 SYNC_SCRIPT="${ROOT_DIR}/scripts/sync_to_codex.sh"
 ROLLOUT_SCRIPT="${ROOT_DIR}/scripts/rollout_to_codex.sh"
@@ -17,11 +17,11 @@ Usage: $0 [--rollout]
 Watch and publish CppStudio skill edits.
 
   default    Watch only ${SOURCE_DIR} and run sync_to_codex.sh.
-  --rollout  Watch ${SOURCE_DIR}, auxiliary bundled skills, and companion-skill snippets, then run
+  --rollout  Watch ${SOURCE_DIR}, auxiliary bundled skills, and relay/legacy snippets, then run
              rollout_to_codex.sh.
 
-Use --rollout when editing donor-library companion snippets; normal sync does not update companion
-skills.
+Use --rollout when editing bundled auxiliary skills or user-level relay snippets; normal sync updates
+only the selected skill.
 EOF
 }
 
@@ -68,11 +68,11 @@ if (( rollout )); then
         fi
         watch_dirs+=("${auxiliary_source_dir}")
     done
-    echo "Rollout watch mode: companion snippets will be installed into user-level skills."
+    echo "Rollout watch mode: bundled auxiliary skills and the user-level relay will be installed."
 else
     run_script="${SYNC_SCRIPT}"
     watch_dirs=("${SOURCE_DIR}")
-    echo "Skill-only watch mode: companion snippets are not rolled out. Use --rollout for snippet edits."
+    echo "Skill-only watch mode: auxiliary skills and relay snippets are not rolled out."
 fi
 
 "${run_script}"

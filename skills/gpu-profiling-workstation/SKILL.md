@@ -1,0 +1,212 @@
+---
+name: gpu-profiling-workstation
+description: "Profile and frame-debug CUDA, Vulkan/OpenGL, and CPU workloads on Tarkan's Ubuntu workstation with Nsight, RenderDoc, perf, and Compute Sanitizer."
+---
+
+# GPU Profiling Workstation
+
+Use the installed-tool order below. Choose the tool by question type first: frame-debugging/correctness vs performance.
+
+## Installed tools on this machine
+
+- `nsys` at `/usr/local/cuda/bin/nsys`
+- `ncu` at `/usr/local/cuda/bin/ncu`
+- `compute-sanitizer` at `/usr/local/cuda/bin/compute-sanitizer`
+- `cuda-gdb` at `/usr/local/cuda/bin/cuda-gdb`
+- `ngfx-ui-for-linux` at `/usr/bin/ngfx-ui-for-linux`
+- `ngfx-capture` at `/opt/nvidia/nsight-graphics-for-linux/nsight-graphics-for-linux-2026.1.0.0/host/linux-desktop-nomad-x64/ngfx-capture`
+- `ngfx-replay` at `/opt/nvidia/nsight-graphics-for-linux/nsight-graphics-for-linux-2026.1.0.0/host/linux-desktop-nomad-x64/ngfx-replay`
+- `renderdoccmd` at `${HOME}/.local/bin/renderdoccmd`
+- `qrenderdoc` at `${HOME}/.local/bin/qrenderdoc`
+- `nvidia-smi` at `/usr/bin/nvidia-smi`
+- `perf` at `/usr/bin/perf`
+- `glxinfo` at `/usr/bin/glxinfo`
+
+## Not currently available
+
+- `nsight-cu` GUI launcher
+- `nvprof`
+- `vulkaninfo`
+
+Load exact versions from [references/TOOL_INVENTORY.md](references/TOOL_INVENTORY.md) when version details matter.
+Current `nsys` resolves through the CUDA Toolkit launcher to Nsight Systems 2025.3.2.
+
+## Default tool order
+
+### For graphics correctness / frame-debugging
+
+1. Use `ngfx-capture` / `ngfx-replay` first for Vulkan frame captures on this workstation, especially RT preview, ray tracing, and shader/event inspection.
+2. Use `qrenderdoc` / `renderdoccmd` for quick graphics inspection when you specifically want RenderDoc, or for non-RT/simple capture paths.
+3. If the question becomes "where is the frame time going?" switch to `nsys`.
+
+### For performance profiling
+
+1. Use `nsys` first for any performance issue.
+2. Use `ncu` only after `nsys` identifies the hot CUDA kernel.
+3. Use `perf` when the hotspot is CPU-side and outside CUDA/OpenGL.
+4. Use `compute-sanitizer` or `cuda-gdb` when profiling suggests a correctness or memory bug instead of a pure speed issue.
+
+## Project Command Rules
+
+- Replace `<app-command> [args...]` with the exact launch or smoke command from the target repo.
+- Do not assume a synthetic smoke command represents the full interactive path. If the user reports
+  live interaction latency, profile the real event path or a project-owned interaction audit mode.
+- Avoid running profiling and benchmark commands concurrently; timings become meaningless.
+- Prefer temporary config homes for reproducible profiling runs:
+  - `HOME=/tmp/... XDG_CONFIG_HOME=/tmp/...`
+- If frame times cluster around display cadence, check vsync/present pacing and app internal GPU
+  timers before concluding the renderer or CUDA kernels are the bottleneck.
+- For Vulkan frame-debugging, a live/presenting path is often easier to capture than offscreen-only
+  modes because frame-capture tools frequently key off present/frame delimiters.
+- If a frame debugger hooks the process but never produces a capture artifact, check delimiter
+  assumptions before blaming the renderer.
+
+## Recommended commands
+
+### Vulkan frame capture with Nsight Graphics
+
+Use this first for Vulkan RT correctness and frame-debug issues.
+
+```bash
+/opt/nvidia/nsight-graphics-for-linux/nsight-graphics-for-linux-2026.1.0.0/host/linux-desktop-nomad-x64/ngfx-capture \
+  --exe <app-command> \
+  --working-dir "$PWD" \
+  --output-dir build/ngfx \
+  --output-file rt_debug.nsgfx \
+  --capture-frame 2 \
+  -n 1 \
+  --terminate-after-capture \
+  --no-hud \
+  --diagnostic-mode \
+  --args [app-arguments...]
+```
+
+Then inspect metadata or export the final screenshot:
+
+```bash
+/opt/nvidia/nsight-graphics-for-linux/nsight-graphics-for-linux-2026.1.0.0/host/linux-desktop-nomad-x64/ngfx-replay \
+  --metadata build/ngfx/rt_debug.nsgfx.ngfx-capture
+
+/opt/nvidia/nsight-graphics-for-linux/nsight-graphics-for-linux-2026.1.0.0/host/linux-desktop-nomad-x64/ngfx-replay \
+  --metadata-screenshot build/ngfx/rt_debug.png \
+  build/ngfx/rt_debug.nsgfx.ngfx-capture
+```
+
+### RenderDoc quick launch
+
+Use this when you want manual UI inspection:
+
+```bash
+qrenderdoc
+```
+
+Or capture a launched app:
+
+```bash
+renderdoccmd capture \
+  -d "$PWD" \
+  -c build/renderdoc/rt_debug \
+  <app-command> [args...]
+```
+
+### Whole-frame timeline
+
+Use this first.
+
+```bash
+nsys profile \
+  --trace=cuda,opengl,nvtx,osrt \
+  --sample=none \
+  --force-overwrite=true \
+  --output build/nsys_profile \
+  <app-command> [args...]
+```
+
+Then read supported stats reports. This is the canonical stats shape for this workstation:
+
+```bash
+nsys stats \
+  --force-export=true \
+  --report cuda_api_gpu_sum,cuda_gpu_kern_sum,opengl_khr_gpu_range_sum,osrt_sum,nvtx_sum \
+  --format column \
+  build/nsys_profile.nsys-rep
+```
+
+For Vulkan-heavy captures, use explicit Vulkan reports:
+
+```bash
+nsys stats \
+  --force-export=true \
+  --report vulkan_api_sum,osrt_sum,nvtx_sum \
+  --format column \
+  build/nsys_profile.nsys-rep
+```
+
+This workstation's Nsight Systems does not support `--format text` or a generic `--report summary`.
+Treat `nsys stats --report summary --format text ...` as an invalid legacy command, not as a path to
+repair. Do not add aliases, wrappers, shell functions, or PATH shims to make that old command pass.
+If old conversation context, old notes, or a resumed agent suggests `summary/text`, replace it with
+the explicit supported commands above.
+
+When verifying that Nsight friction is gone, success means the supported explicit-report command
+passes on the fresh `.nsys-rep`. Do not retest the legacy command unless the user explicitly asks to
+prove that invalid old command still fails.
+
+Before writing a new stats command on this machine, check the active tool surface:
+
+```bash
+hash -r
+type -a nsys
+nsys stats --help
+nsys stats --help-reports
+```
+
+### Confirmed CUDA kernel hotspot
+
+Replace the kernel regex only after `nsys` proves the kernel matters.
+
+```bash
+ncu \
+  --set full \
+  --target-processes all \
+  --kernel-name-base demangled \
+  --kernel-name "regex:<hotKernelName>" \
+  <app-command> [args...]
+```
+
+### CPU-only hotspot
+
+Use when `nsys` shows the stall is mostly host-side:
+
+```bash
+perf record -g -- <app-command> [args...]
+perf report
+```
+
+### Correctness/debug follow-up
+
+```bash
+compute-sanitizer <app-command> [args...]
+```
+
+## Interpretation rules
+
+- If the question is "why does this highlight/lobe/shader output look wrong?" use a frame debugger first, not `nsys`/`ncu`.
+- If a graphics capture log shows Vulkan object lifetime and capture statistics, the frame debugger is successfully hooked even before you inspect the capture in a UI.
+- If an Nsight Graphics offscreen capture doesn't emit a file but a live capture does, suspect missing present/frame delimiters rather than a dead Vulkan hook.
+- If RenderDoc target control only reports `Noop`/`Disconnected`, verify Vulkan layer registration and prefer Nsight Graphics for that session instead of repeatedly patching the capture script.
+- If `nsys` shows long gaps before `cudaGraphicsMapResources` or `cudaGraphicsUnmapResources`, investigate CUDA/GL interop synchronization.
+- If `nsys` shows host thread blocked near swap/present, do not chase CUDA kernels first.
+- If `ncu` shows low occupancy but the kernel is not dominant in `nsys`, do not optimize it yet.
+- If internal app GPU timers stay low but frame time is high, suspect CPU sync, driver wait, or present pacing.
+- If `opengl_khr_gpu_range_sum` is skipped, the app is not emitting KHR debug GPU ranges; use CUDA reports plus the app's internal timers instead of treating that as a profiler failure.
+- If interaction lag is the complaint, separate input handling, simulation/update work,
+  resource/upload work, draw cost, and present/vsync cost.
+
+## Current machine-specific guidance
+
+- `nsys` and `ncu` are modern CUDA 2025 builds and should be the default tools here.
+- `compute-sanitizer` is available and current enough to use before deeper CUDA debugging.
+- Nsight Graphics 2026.1.0.0 is installed and should be the first frame-debugger choice here for Vulkan RT captures.
+- RenderDoc 1.43 is installed and usable, but on this workstation its target-control scripting path can be less reliable than Nsight Graphics for Vulkan RT preview captures.
+- `nvprof` is not available; do not plan workflows around it.

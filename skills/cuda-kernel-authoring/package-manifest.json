@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "package": "cuda-kernel-authoring",
+  "hash_algorithm": "sha256",
+  "files": [
+    {
+      "path": ".skill-source",
+      "role": "metadata",
+      "disclosure_group": "source",
+      "size": 44,
+      "sha256": "13967d3f1e783d2e6d72dc018022629b6036bf24764b2431afa340cd3d068103"
+    },
+    {
+      "path": "SKILL.md",
+      "role": "main",
+      "disclosure_group": "entrypoint",
+      "size": 10069,
+      "sha256": "32c775639ba4e053f08eee1fb064469afd6da44c3d98ad6829f580a441aecf11"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "role": "metadata",
+      "disclosure_group": "entrypoint",
+      "size": 287,
+      "sha256": "7fa7260cf7028624887644a25967d25cf975f4b0c3766e0ae504b39b032aaadd"
+    }
+  ]
+}

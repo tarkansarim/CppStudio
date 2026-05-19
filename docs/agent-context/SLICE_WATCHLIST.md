@@ -97,6 +97,16 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-18T21:17:19Z`
 
+10. **Ticket #130 requires source-owned companion skills, compact frontmatter descriptions, installed .skill-source sentinels, exact validation evidence, rollout/sync evidence, clean source worktree, HEAD/commit evidence, strict closeout-check, and ticket comments before close.**
+   - Status: `active`
+   - Slice: `ticket-130 companion skill ownership`
+   - Scope: `reusable-skill`
+   - Source: ticket #130 closeout gate and installed skill-packaging audit
+   - Revisit when: before source edits, rollout, ticket evidence comments, closeout-check, close, and final status
+   - Gate: Do not close ticket #130 unless source owns the three target skills or explicitly routes ownership, target descriptions are <=300 chars, installed snapshots include .skill-source, rollout/sync evidence is commented, source worktree is clean, and HEAD/commit evidence is reported.
+   - Evidence: none recorded
+   - Recorded: `2026-05-19T00:31:38Z`
+
 
 ## Superseded Or Historical
 
