@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 85679,
-      "sha256": "0e0261363ec4ec47d22c7ba35b4b053db036491e03f71e94dc5ba80a50c89744"
+      "size": 86732,
+      "sha256": "00e0012039a4217c577636510280c68470df6c5ce89c1f1f7f362c0d31879254"
     },
     {
       "path": "agents/openai.yaml",
@@ -203,15 +203,15 @@
       "path": "assets/app-library-template/docs/VALIDATION_PIPELINE.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 16227,
-      "sha256": "7c06139e4d73179536c442a600d782ca5ec31b9fbf56a38be6a42963936c6ee9"
+      "size": 17168,
+      "sha256": "a7f3641848aed69b3ce1d7c9c78e6775fbf78b6a7696d8557b0a8991b8adb93f"
     },
     {
       "path": "assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 3175,
-      "sha256": "8cb5889cb017a83fd6ce4997b7bddf8115a5ab2ae1f98768068f4cd2fdcb034f"
+      "size": 4349,
+      "sha256": "33ef4a2bade4459d0242619e410fb3cbed933cd84d6a0db2ac8c2063c6484912"
     },
     {
       "path": "assets/app-library-template/include/{{PROJECT_NAME}}/cuda_vector_add.hpp",

@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 5357,
-      "sha256": "1c5f17731c3f3927b04f4c3b494b3bf3723d9a6b2eff44ef3f73a902daf1dcce"
+      "size": 7128,
+      "sha256": "8abf69cffe0fec0497de3596ad6a9718b070869fedc9d43894816be343ebe07f"
     },
     {
       "path": "agents/openai.yaml",
@@ -21,8 +21,8 @@
       "path": "references/viewport-session-testing.md",
       "role": "reference",
       "disclosure_group": "reference",
-      "size": 5451,
-      "sha256": "3205e4bf3c6fbac5c27094b1b5aecc8352e63218ca05ca64b12e3017f81df3d8"
+      "size": 7539,
+      "sha256": "e57d1911bc56ad56190eed0781c302156682d198ff6017f9e11ad9833352b48b"
     }
   ]
 }

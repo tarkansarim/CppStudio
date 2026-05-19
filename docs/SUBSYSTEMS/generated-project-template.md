@@ -109,6 +109,11 @@ validation.
   OSTM/project launchers when available, use Rewind checkpoints as rollback anchors for speculative
   GUI probes, and reject fixed claims when before/after artifacts are identical, self-confirming,
   backend-only for a visible bug, or narrower than the reported symptom.
+- Generated viewport-session docs now require stroke-like visible bugs to use a human-input UI
+  session through the real viewport/canvas/widget event path. Reports must compare requested pointer
+  path to committed hit/edit path or affected coverage and directly assert reported
+  material/overlay/product-surface issues; generic revision/checksum deltas, nonblank screenshots,
+  product scorecards, backend endpoints, and one-point dab smokes are only supporting evidence.
 - Generated validation docs now require agents to state when they are UI-blind on a visible bug and
   stop converting the report into harness-only work. After a blocked proof-route attempt, the next
   step must be a bounded app-side fix with a visible-proof caveat, one repaired observation route,

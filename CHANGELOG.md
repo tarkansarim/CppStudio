@@ -4,6 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened viewport-session proof for stroke-like visible bugs. Agents must now create or replay a
+  human-input UI session through the real viewport/canvas/widget path, with press/contact, multiple
+  held move samples, release/finalization, pointer-path-to-hit/edit coverage assertions, and direct
+  material/overlay/product-surface checks when those are reported symptoms. Generic revision,
+  checksum, nonblank screenshot, product-score, backend endpoint, or one-point dab evidence is
+  explicitly supporting-only, and real OS input must not be mislabeled as offscreen/non-disruptive.
 - Fixed the hosted validation failure in `scripts/rollout_to_codex.sh` by replacing a single-item
   quoted `for` loop with a direct user-AGENTS relay snippet existence check. The CI ShellCheck lane
   now reproduces locally with the same `shellcheck scripts/*.sh` and

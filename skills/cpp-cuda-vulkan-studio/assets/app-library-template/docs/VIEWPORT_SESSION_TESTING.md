@@ -62,10 +62,26 @@ results.
 Use OSTM/background execution when available for automated windowed proof. If the lane cannot
 observe the visible surface yet, report that gap before continuing.
 
+Label execution modes honestly. App-owned replay or OSTM/background runs can be non-disruptive only
+when isolated from the user's desktop interaction. Real OS pointer or stylus injection is
+`real-input`/intrusive and must not be summarized as offscreen, background, or non-disruptive.
+
 For continuous interactions, record the continuous part of the gesture. A drag, stroke, scrub,
 camera orbit, timeline drag, node wire, or gizmo move needs held-button or stylus-contact move
 samples, timestamps, pointer/hit/readback along the path, and a visible or semantic delta. A
 press/release-only session proves a click or dab, not a continuous tool.
+
+For stroke-like visible bugs, create or replay a human-input UI session through the real
+viewport/canvas/widget event path before claiming the behavior works. The session should include
+press/contact, multiple held move samples, and release/finalization. The report should compare the
+requested pointer path against hit/edit/path coverage or affected elements, and should assert any
+reported material, overlay, or product-appearance problem directly. Generic revision changes,
+checksums, nonblank screenshots, product-surface scores, backend endpoints, or one-point dab smokes
+are supporting evidence only.
+
+If no current scenario can emulate the user's input shape, add the smallest diagnostic route first
+and run it as the before proof without changing product behavior. Keep that route as the regression
+proof after the fix when the symptom is important enough to prevent recurrence.
 
 If the tool should update while the user is still holding contact, prove that specifically. Sculpt,
 paint, groom, terrain, drawing, and live transform tools need a mid-gesture checkpoint after a move

@@ -145,8 +145,12 @@ stable entries stay collapsed under the expander.
   User-facing verification is now the acceptance surface for interactive work: agents must prove the
   real visible control, interaction shape, committed state, and visible result before claiming a
   feature or bug fix, and generated viewport-session smokes now include held-button move samples so
-  continuous gestures are not reduced to press/release-only evidence. Substantial greenfield
-  planning now has a hard Plan-mode handoff after donor/web research: workers may present researched
+  continuous gestures are not reduced to press/release-only evidence. Stroke-like visible bugs now
+  require a human-input UI replay through the real viewport/canvas/widget path, with pointer-path
+  coverage and material/overlay/product-surface assertions instead of generic revision, checksum, or
+  nonblank-screenshot evidence, and real OS input must be labeled as intrusive instead of offscreen
+  or non-disruptive unless it is actually isolated. Substantial greenfield planning now has a hard Plan-mode handoff
+  after donor/web research: workers may present researched
   defaults and alternatives, but unresolved template, GUI/input, authoring-model, GPU-lane, code-map,
   dependency, donor, or validation choices stay out of inline normal-chat questions unless the user
   explicitly waives Plan mode.

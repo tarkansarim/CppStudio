@@ -64,11 +64,28 @@ Backend HTTP/curl commands alone do not satisfy this lane for visible UI bugs. T
 supporting evidence, but they do not prove widget focus, visible control clicks, DPI mapping, mouse
 or stylus routing, viewport hit tests, or screenshot freshness.
 
+Be precise about execution mode. OSTM/background window ownership, app-owned replay, and real OS
+pointer/stylus injection are different proof modes. If a lane uses real input that can move focus or
+the user's pointer, label it as `real-input`/intrusive and do not describe it as offscreen,
+background, or non-disruptive. Offscreen/background claims are allowed only when the run is actually
+isolated from the user's visible desktop interaction.
+
 The recorded scenario must match the interaction shape. A click, click-drag, continuous stroke,
 scrub, lasso, gizmo drag, camera orbit, timeline drag, node connection, stylus stroke, or palette
 selection must be captured and asserted as that shape. For continuous actions, require held-button
 or stylus-contact move samples, timestamps, pointer/hit/readback along the path, and a visible or
 semantic delta; a single press/release at one point does not prove a stroke or drag.
+
+For stroke-like visible bugs, the agent must create or replay a human-input UI session before
+claiming the behavior works. The session must drive the real viewport/canvas/widget event path with
+press/contact, multiple held move samples, and release/finalization. It must record the requested
+pointer path, viewport-local/render-target coordinates, device-pixel ratio, ray or hit points when
+applicable, committed edit points or affected element/path coverage, and fresh before/mid/after
+captures. Assertions must name the reported symptom, such as `stroke_tracks_pointer_path`,
+`brush_hit_matches_cursor`, `selection_changes_with_click`, `drag_updates_before_release`, or
+`product_material_has_no_debug_overlay`. A generic state/revision/checksum change, nonblank
+screenshot, product-surface score, or one-point dab smoke is infrastructure evidence only and must
+be rejected as closeout proof for a stroke, drag, hit-test, selection, or material-appearance bug.
 
 For continuous tools whose visible result is expected to update while contact is held, such as
 sculpting, painting, grooming, terrain editing, grease-pencil style drawing, or live gizmo drags, the
@@ -86,6 +103,11 @@ For visible bugs, use before/after evidence shaped like the report.
 - Apply the fix.
 - Replay the same session or a documented equivalent.
 - Compare the reported symptom directly.
+
+If the project does not yet have a scenario that emulates the user's input shape, add the smallest
+diagnostic UI-session route first and run it as the before proof. That diagnostic route must not
+change product behavior before the before run. It should become a reusable regression lane after the
+fix when the symptom is important enough to prevent recurrence.
 
 Do not claim the bug is fixed if before/after artifacts are identical, backend-only, self-confirming,
 or narrower than the report. If the lane cannot observe the reported surface, say `I am UI-blind on

@@ -175,6 +175,17 @@ When this skill is active, work like a native C++ GPU systems engineer:
   expected interaction shape and assert the semantic samples that make it real, such as held-button
   move samples, pressure samples, hit points, affected controls, latency, and before/after visual
   deltas.
+- Stroke-like UI proof must be a human-input session. For sculpt, paint, groom, terrain, drawing,
+  lasso, gizmo, drag, scrub, or similar visible bugs, the agent must create or replay a UI session
+  through the real viewport/canvas/widget path with press/contact, multiple held move samples, and
+  release/finalization. The report must compare the requested pointer path to committed hit/edit
+  path or affected element coverage, and must assert any reported material/overlay/product-surface
+  appearance issue directly. Revision/checksum changes, nonblank screenshots, product-surface
+  scorecards, backend endpoints, or one-point dab smokes are supporting evidence only and must be
+  rejected as closeout proof for these bugs. If no such session exists, add the smallest diagnostic
+  route first and run it as the before proof before patching product behavior.
+- UI proof mode labels must be exact. Do not call real OS pointer/stylus input offscreen,
+  background, or non-disruptive unless it is actually isolated from the user's desktop interaction.
 - Concrete proof object/state before visible work: when a visible/domain slice depends on an object,
   scene, asset, graph, primitive, dataset, or authored state, the plan must name it specifically and
   justify it from the same donor or peer-tool evidence. Do not accept vague "sample object",

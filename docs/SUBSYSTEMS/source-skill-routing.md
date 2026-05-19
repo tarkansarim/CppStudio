@@ -175,6 +175,13 @@ generated-project workflow instructions.
   stylus-contact move samples, path or sample assertions, pointer/hit/readback along the path, and
   visible or semantic before/after evidence; a single press/release smoke cannot prove a continuous
   gesture.
+- Stroke-like visible bugs now require a human-input UI session through the real viewport, canvas, or
+  widget event path. Agents must compare requested pointer path to committed hit/edit path or
+  affected element coverage, and directly assert reported material/overlay/product-surface
+  appearance issues. Generic revision/checksum deltas, nonblank screenshots, backend endpoints,
+  product scorecards, and one-point dab smokes are only supporting evidence. If the scenario does not
+  exist, agents add the smallest diagnostic route and run it as before proof before changing product
+  behavior.
 - Live-contact artist tools have a stricter pre-release proof gate. For sculpting, painting,
   grooming, terrain, drawing, or transform behavior that should update while contact is held, agents
   must prove document/render revision, dirty region, semantic trace, or fresh capture changes after a

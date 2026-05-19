@@ -69,6 +69,25 @@ scenario should assert sample count, path distance or shape, timestamps, committ
 path, and a fresh visual or semantic delta. A press/release-only session can prove a click or dab;
 it must not be used to claim a continuous tool works.
 
+For stroke-like visible bugs, build the scenario as a human-input session, not a backend command. The
+route should dispatch press/contact, multiple held move samples, and release/finalization through the
+same viewport, canvas, or widget handler that a user exercises. It should save before, mid-gesture,
+and after captures plus a report that includes:
+
+- requested pointer path and path length
+- viewport-local and render-target coordinates
+- device-pixel ratio
+- ray, hit, picked element, or committed edit point when applicable
+- affected vertex/pixel/control/path coverage or equivalent domain readback
+- material/overlay/color readback when the visual complaint is about product appearance
+- named assertions tied to the report, not generic `changed` checks
+
+Examples of acceptable symptom assertions include `stroke_tracks_pointer_path`,
+`brush_hit_matches_cursor`, `drag_updates_before_release`, `selection_changes_with_click`,
+`timeline_scrub_reaches_requested_frame`, and `product_material_has_no_debug_overlay`. Generic
+revision, checksum, nonblank screenshot, or product-score assertions can stay as supporting checks,
+but they do not close visible stroke, drag, hit-test, selection, or material-appearance bugs.
+
 For live artist tools, the session must prove the state changes before release when that is the
 expected product behavior. Sculpting, painting, grooming, terrain editing, grease-pencil style
 drawing, and similar tools need a mid-stroke probe after a held-contact move sample and before
@@ -84,6 +103,9 @@ report should say the tool is batched/release-only rather than live.
 - Record before and after state in the report.
 - Save fresh visual captures when a visible result matters.
 - If OSTM is available, route automated windowed/background proof through it.
+- Do not conflate proof modes. An app-owned replay can be non-disruptive; a background/OSTM-owned
+  run can be non-disruptive when isolated; real OS pointer or stylus injection is `real-input` and
+  must be reported as intrusive unless the run is explicitly isolated from the user's desktop.
 - If live input may interfere, suppress it during replay or report that deterministic replay is not
   available.
 
@@ -95,10 +117,18 @@ For reported UI or viewport bugs, the lane must prove the symptom changed:
   input-to-committed-state latency
 - pointer or stroke offsets: compare requested pointer, viewport-local point, hit ray, committed
   edit point, and fresh capture marker when practical
+- stroke or drag path bugs: compare requested pointer path against affected edit/path coverage, not
+  only the final point or an aggregate revision
+- product material or overlay bugs: compare screenshot/render-target color or material readback and
+  reject debug-looking product overlays unless they are explicitly enabled diagnostic UI
 - delayed UI updates: record event timestamp, event-loop/render revision, and time to visible or
   queryable state
 - launch bugs: prove the documented command owns the intended visible app window, not a terminal or
   stale window
+
+If no existing scenario can emulate the user's input shape, add the smallest diagnostic UI-session
+route first, run it as the before proof without changing product behavior, then keep it as the
+regression route when the bug is fixed.
 
 If the before/after comparison is not comparable, the fix is not proven.
 

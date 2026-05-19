@@ -29,6 +29,18 @@ held-contact move and before mouse/stylus release, document/render revision, dir
 trace, or an app-owned capture must already show the edit. Release should finalize undo/replay, not
 be the first visible edit.
 
+For stroke-like visible bugs, create or replay a human-input UI session through the real
+viewport/canvas/widget event path. The session must include press/contact, multiple held move
+samples, and release/finalization. The report must compare requested pointer path against hit/edit
+path or affected element coverage, and directly assert material/overlay/product-surface complaints
+when those are the reported symptoms. Revision/checksum changes, nonblank screenshots,
+product-surface scores, backend endpoints, and one-point dab smokes are supporting evidence only. If
+the project lacks this scenario, add the smallest diagnostic route and run it as the before proof
+without changing product behavior, then keep it as the regression route after the fix.
+
+Report execution modes precisely: real OS pointer/stylus injection is `real-input`/intrusive unless
+explicitly isolated; do not describe it as offscreen, background, or non-disruptive.
+
 Self-hosted CI runner expectations and artifact paths are documented in
 [GPU_RUNNER_CI.md](GPU_RUNNER_CI.md).
 
