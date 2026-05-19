@@ -123,7 +123,7 @@ worker handoffs.
    - Scope: `reusable-skill`
    - Source: user correction and long-running visual reference lane postmortem
    - Revisit when: before source patch closeout, rollout, trigger-lane claim, or supervising long-running render/reference workers
-   - Gate: Reject the reusable change if skills/templates still allow more local probes after repeated unchanged acceptance artifacts without a written acceptance ledger, substantive current web/upstream research into the exact stuck layer, recorded links/queries and source facts, filtered continue/cutover options that preserve user-named reference targets, and an explicit continue/cutover/blocker decision.
+   - Gate: Reject the reusable change if skills/templates still allow more local probes after repeated unchanged acceptance artifacts without a written acceptance ledger, a narrow read-only `codex exec` stuck probe, substantive current web/upstream research into the exact stuck layer, recorded links/queries and source facts, filtered continue/cutover options that preserve user-named reference targets, an explicit continue/cutover/blocker decision, and a fresh scoped Codex adversarial review if the next focused attempt still leaves the final artifact red.
    - Evidence: none recorded
    - Recorded: `2026-05-19T20:19:16Z`
 

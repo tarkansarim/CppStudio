@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 90737,
-      "sha256": "ce50b85b44494832ede99374d67db4d6311113ed1787b1666d194a7cdc3c2237"
+      "size": 90743,
+      "sha256": "efed1acabdc848fedd11ee004e5d13b65ecc05b7ac4d5243f82395c91fa85c6e"
     },
     {
       "path": "agents/openai.yaml",
@@ -203,8 +203,8 @@
       "path": "assets/app-library-template/docs/VALIDATION_PIPELINE.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 20192,
-      "sha256": "22854aa6bc1c43d43af2721b0a6c16156e683f002ef914c4c1455451acb421c2"
+      "size": 20211,
+      "sha256": "dbd29259f1f6fe804c2252901a9aeebae45642fdafb2c394e9ad97f12f8640b7"
     },
     {
       "path": "assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md",

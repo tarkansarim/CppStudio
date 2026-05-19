@@ -321,7 +321,7 @@ previously established work, final acceptance from debug-only buffers/logs/inter
 hypotheses from kept patches, and continue/cutover options. Diagnostic narrowing, internal debug
 buffers, route inventory, generated intermediates, or successful wrapper execution do not count as
 progress unless the final artifact changes or a named failure branch is eliminated with evidence.
-Before staying on the same lane, run a narrow read-only stuck probe and a current web/upstream
+Before staying on the same lane, run a narrow read-only `codex exec` stuck probe and a current web/upstream
 research pass for the failing layer; local source inspection alone is not enough after repeated red
 final artifacts. The research must be substantive enough to explain the exact stuck question, using
 multiple current primary or upstream sources when available. Record official docs, upstream repos,
@@ -329,8 +329,8 @@ samples, issue trackers, release notes, vendor/standards docs, papers, or peer-t
 checked, what each source proves, stale/conflicting evidence, and how it changes the next proof. Then
 explicitly compare continuing with cutting over to an alternate donor, tool, or
 validation lane that still satisfies the objective. If the next focused attempt still leaves the
-final artifact red, run a fresh scoped adversarial review of that lane and artifact before any more
-patching. If the user named a required upstream, app, SDK, shader, renderer, file format, or port
+final artifact red, run a fresh scoped Codex adversarial review of that lane and artifact before any
+more patching. If the user named a required upstream, app, SDK, shader, renderer, file format, or port
 target, cutover options must preserve that reference family and success contract; unrelated peer
 tools may be diagnostic comparisons, not replacement targets. Filter cutover options before
 presenting them: a stale-context or peer-tool lane that conflicts with the required reference target

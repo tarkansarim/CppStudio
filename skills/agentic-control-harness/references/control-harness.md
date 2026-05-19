@@ -183,14 +183,14 @@ research pass should be substantive enough to answer the exact stuck question, u
 primary or upstream sources when available: official docs, upstream repos, samples, issue trackers,
 release notes, vendor docs, standards docs, papers, or peer-tool references. Record the links or
 queries, source facts, stale/conflicting evidence, and decision impact in the ledger. If the user,
-plan, or research brief named an alternate lane that still satisfies the objective, include it in the cutover options
-before continuing the original lane. If the user named a required upstream, app, SDK, shader,
-renderer, file format, or port target, a cutover must preserve that reference family and success
-contract; unrelated peer tools may be diagnostic comparisons, not replacement targets. Filter
+plan, or research brief named an alternate lane that still satisfies the objective, include it in the
+cutover options before continuing the original lane. If the user named a required upstream, app, SDK,
+shader, renderer, file format, or port target, a cutover must preserve that reference family and
+success contract; unrelated peer tools may be diagnostic comparisons, not replacement targets. Filter
 cutover options before presenting them: a stale-context or peer-tool lane that conflicts with the
 required reference target must be recorded as `rejected` or `diagnostic-only` with the reason, not
 offered as a user decision. If another focused attempt leaves the final artifact red, request a fresh
-scoped adversarial review to decide continue, cut over, or stop.
+scoped Codex adversarial review to decide continue, cut over, or stop.
 
 ## Observation, Or Sonar
 

@@ -149,7 +149,7 @@ generated-project workflow instructions.
   impact. Cutover must still preserve any user-named upstream, SDK, shader, renderer, file-format, or
   port target; unrelated peer tools are diagnostic references, not replacement targets. Stale-context
   or peer-tool lanes that conflict with the required reference target must be filtered out as rejected
-  or diagnostic-only before options are shown to the user. A fresh scoped adversarial review is
+  or diagnostic-only before options are shown to the user. A fresh scoped Codex adversarial review is
   required before further patching if the next attempt still leaves the artifact red.
 - Substantial greenfield and architecture-setting research must be durable. Agents should write a
   target-project `docs/planning/RESEARCH_BRIEF.md` before implementation, combining local donor

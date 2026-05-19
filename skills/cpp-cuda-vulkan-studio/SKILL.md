@@ -186,7 +186,7 @@ When this skill is active, work like a native C++ GPU systems engineer:
   options before presenting them: a stale-context or peer-tool lane that conflicts with the user's
   required reference target must be recorded as `rejected` or `diagnostic-only` with the reason, not
   offered as a user decision. If another focused attempt still leaves the final artifact red or the
-  root cause is uncertain, run a fresh scoped adversarial review; the review must judge the
+  root cause is uncertain, run a fresh scoped Codex adversarial review; the review must judge the
   current lane and acceptance artifact, not turn into a whole-repo review unless explicitly
   requested.
 - Primary visible loop before breadth: for interactive artist, game, VFX, DCC, simulation-editor,

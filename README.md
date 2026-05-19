@@ -41,12 +41,13 @@ stable entries stay collapsed under the expander.
 
 - `current` - Added an acceptance-artifact cutover gate for long visual/reference/calibration lanes,
   so repeated red wrapper/OSTM/scenario runs must stop local patching, separate new evidence from
-  prior work and debug-only signals, run a narrow stuck probe, perform substantive current
-  web/upstream research into the exact stuck layer, and choose continue or cutover before more
-  patches. Local source-only analysis or token web search is no longer enough after this gate, and
-  cutover must preserve user-named reference families rather than replacing them with unrelated peer
-  tools; conflicting stale-context lanes must be rejected before user-facing options are shown.
-  Hardened rollout and trigger-regression safety with
+  prior work and debug-only signals, run a narrow read-only `codex exec` stuck probe, perform
+  substantive current web/upstream research into the exact stuck layer, and choose continue or
+  cutover before more patches. Local source-only analysis or token web search is no longer enough
+  after this gate, and a fresh scoped Codex adversarial review is required before more patching if
+  the next attempt still leaves the final artifact red. Cutover must preserve user-named reference
+  families rather than replacing them with unrelated peer tools; conflicting stale-context lanes must
+  be rejected before user-facing options are shown. Hardened rollout and trigger-regression safety with
   source-owned CMake, CUDA kernel,
   and workstation profiling companion skills, compact bundled-skill discovery descriptions that
   defer detailed routing into skill bodies, symlink-safe bundled auxiliary
