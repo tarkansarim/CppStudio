@@ -38,6 +38,13 @@ product-surface scores, backend endpoints, and one-point dab smokes are supporti
 the project lacks this scenario, add the smallest diagnostic route and run it as the before proof
 without changing product behavior, then keep it as the regression route after the fix.
 
+Keep visible concerns separate in every closeout. A semantic replay that proves edited vertices cover
+the requested pointer path does not by itself prove that the live stroke reads correctly in the
+viewport. A material readback proving "no debug overlay" does not by itself prove production-quality
+shading or a donor-matched look. For every user-named visible concern, report `resolved`,
+`unresolved`, or `not-tested`, the artifact path, and the next proof needed before moving to feature
+breadth.
+
 Report execution modes precisely: real OS pointer/stylus injection is `real-input`/intrusive unless
 explicitly isolated; do not describe it as offscreen, background, or non-disruptive.
 
@@ -243,6 +250,9 @@ Do not accept a backend command success, generic revision increment, or delayed 
 that a visible button, palette item, or pointer-mapped viewport interaction works. A GUI proof route
 is not a substitute for visible observation: if the agent cannot see or capture the target surface,
 the status must say that the agent is UI-blind on the reported behavior before more code is changed.
+If the visible capture shows a flat, depth-pass-like, placeholder, or debug-looking product surface,
+state that the product-visual concern is still unresolved even if the backend and semantic assertions
+pass.
 
 Interactive artist, game, VFX, DCC, simulation-editor, and technical-art tools also need primary
 visible-loop proof before feature breadth. The loop is project-specific and should come from the

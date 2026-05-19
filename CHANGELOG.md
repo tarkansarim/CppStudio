@@ -4,6 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened viewport-session and generated-project validation closeouts so agents cannot treat
+  semantic path coverage, changed vertices, or "no debug overlay" readback as proof for broader
+  user-visible stroke-direction, cursor-hit feel, shading-quality, or product-material complaints.
+  Closeout must now classify each user-named visible concern as resolved, unresolved, or not-tested
+  with matching artifacts before feature breadth continues.
+
 - Hardened viewport-session proof for stroke-like visible bugs. Agents must now create or replay a
   human-input UI session through the real viewport/canvas/widget path, with press/contact, multiple
   held move samples, release/finalization, pointer-path-to-hit/edit coverage assertions, and direct

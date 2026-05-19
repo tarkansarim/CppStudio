@@ -175,6 +175,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   expected interaction shape and assert the semantic samples that make it real, such as held-button
   move samples, pressure samples, hit points, affected controls, latency, and before/after visual
   deltas.
+- Visible closeout must classify every user-named concern separately. Do not let a narrower
+  assertion such as path coverage, changed vertices, revision advancement, nonblank capture, or "no
+  debug overlay" close a broader complaint about visible stroke direction, cursor-hit feel, material
+  appearance, viewport shading, or product-surface quality. Each concern needs `resolved`,
+  `unresolved`, or `not-tested` status, evidence path, and next proof. If captures still look flat,
+  depth-pass-like, debug-like, or below the peer-tool target, the slice remains product-quality
+  incomplete even when the semantic replay passes.
 - Stroke-like UI proof must be a human-input session. For sculpt, paint, groom, terrain, drawing,
   lasso, gizmo, drag, scrub, or similar visible bugs, the agent must create or replay a UI session
   through the real viewport/canvas/widget path with press/contact, multiple held move samples, and

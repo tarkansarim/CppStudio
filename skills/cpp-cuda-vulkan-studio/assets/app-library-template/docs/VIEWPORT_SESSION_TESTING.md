@@ -79,6 +79,12 @@ reported material, overlay, or product-appearance problem directly. Generic revi
 checksums, nonblank screenshots, product-surface scores, backend endpoints, or one-point dab smokes
 are supporting evidence only.
 
+Do not collapse product-quality questions into narrower semantic checks. If the user reports stroke
+direction and viewport shading, the report needs separate status for stroke direction, hit/edit
+coverage, material overlay state, and shading quality. Passing `stroke_tracks_pointer_path` or
+`product_material_has_no_debug_overlay` is not enough to claim the visible product result is
+acceptable when screenshots still look wrong, flat, depth-like, or placeholder-grade.
+
 If no current scenario can emulate the user's input shape, add the smallest diagnostic route first
 and run it as the before proof without changing product behavior. Keep that route as the regression
 proof after the fix when the symptom is important enough to prevent recurrence.

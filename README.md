@@ -149,7 +149,10 @@ stable entries stay collapsed under the expander.
   require a human-input UI replay through the real viewport/canvas/widget path, with pointer-path
   coverage and material/overlay/product-surface assertions instead of generic revision, checksum, or
   nonblank-screenshot evidence, and real OS input must be labeled as intrusive instead of offscreen
-  or non-disruptive unless it is actually isolated. Substantial greenfield planning now has a hard Plan-mode handoff
+  or non-disruptive unless it is actually isolated. Visible closeout now also separates functional
+  proof from product-quality proof, so path coverage, changed vertices, or "no debug overlay" cannot
+  close broader stroke-direction, cursor-hit, viewport-shading, or material-quality concerns without
+  per-concern resolved/unresolved/not-tested status and matching artifacts. Substantial greenfield planning now has a hard Plan-mode handoff
   after donor/web research: workers may present researched
   defaults and alternatives, but unresolved template, GUI/input, authoring-model, GPU-lane, code-map,
   dependency, donor, or validation choices stay out of inline normal-chat questions unless the user

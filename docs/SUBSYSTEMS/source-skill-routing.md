@@ -182,6 +182,12 @@ generated-project workflow instructions.
   product scorecards, and one-point dab smokes are only supporting evidence. If the scenario does not
   exist, agents add the smallest diagnostic route and run it as before proof before changing product
   behavior.
+- Visible closeout must keep functional and product-quality proof separate. A path-coverage pass,
+  revision advance, changed-vertex count, or "no debug overlay" assertion cannot close broader
+  user-named concerns such as live stroke direction, cursor-hit feel, viewport shading quality, or
+  donor-matched material appearance. Agents must classify each user-named visible concern as
+  resolved, unresolved, or not-tested with artifact paths and next proof before moving to feature
+  breadth.
 - Live-contact artist tools have a stricter pre-release proof gate. For sculpting, painting,
   grooming, terrain, drawing, or transform behavior that should update while contact is held, agents
   must prove document/render revision, dirty region, semantic trace, or fresh capture changes after a

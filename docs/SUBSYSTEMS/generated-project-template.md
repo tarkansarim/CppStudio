@@ -114,6 +114,10 @@ validation.
   path to committed hit/edit path or affected coverage and directly assert reported
   material/overlay/product-surface issues; generic revision/checksum deltas, nonblank screenshots,
   product scorecards, backend endpoints, and one-point dab smokes are only supporting evidence.
+- Generated validation docs now require visible closeout dispositions for each user-named product
+  concern. Semantic path coverage, changed vertices, or absence of a debug overlay cannot close
+  broader concerns about live stroke direction, cursor-hit feel, viewport shading quality, or
+  donor-matched material appearance without matching screenshots/readback and a resolved status.
 - Generated validation docs now require agents to state when they are UI-blind on a visible bug and
   stop converting the report into harness-only work. After a blocked proof-route attempt, the next
   step must be a bounded app-side fix with a visible-proof caveat, one repaired observation route,

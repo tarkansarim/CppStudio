@@ -107,6 +107,15 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-19T00:31:38Z`
 
+11. **Do not let semantic path coverage or absence of a debug overlay close product-visible stroke-direction or shading-quality concerns; each user-named visible concern must be classified resolved/unresolved/not-tested with matching visual/product proof.**
+   - Status: `active`
+   - Slice: `viewport visible proof hardening`
+   - Scope: `reusable-skill`
+   - Source: User correction after 3dSculptTool worker accepted OSTM semantic proof while live stroke direction and shader quality stayed questionable
+   - Revisit when: before source patch closeout, rollout, trigger-lane claim, or worker nudge
+   - Gate: Reject the reusable change if skills/templates still allow a narrower semantic assertion to close broader visible/product-quality complaints.
+   - Evidence: none recorded
+   - Recorded: `2026-05-19T19:25:21Z`
 
 ## Superseded Or Historical
 

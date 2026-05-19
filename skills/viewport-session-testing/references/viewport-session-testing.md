@@ -88,6 +88,15 @@ Examples of acceptable symptom assertions include `stroke_tracks_pointer_path`,
 revision, checksum, nonblank screenshot, or product-score assertions can stay as supporting checks,
 but they do not close visible stroke, drag, hit-test, selection, or material-appearance bugs.
 
+Closeout reports must keep functional proof and product-visual proof separate. A scenario may prove
+that affected vertices cover the requested pointer path while still failing the human-visible stroke
+read, cursor feedback, brush footprint, or material appearance. It may also prove that a saturated
+debug overlay is gone while still leaving only a flat, depth-pass-like, or placeholder shader. For
+every user-named visible concern, the report should include a small disposition table:
+`resolved`, `unresolved`, or `not-tested`, evidence path, and next proof needed. Agents must not
+move on from the first visible loop when any user-named product-quality concern remains unresolved
+unless the user explicitly defers it.
+
 For live artist tools, the session must prove the state changes before release when that is the
 expected product behavior. Sculpting, painting, grooming, terrain editing, grease-pencil style
 drawing, and similar tools need a mid-stroke probe after a held-contact move sample and before
@@ -121,6 +130,8 @@ For reported UI or viewport bugs, the lane must prove the symptom changed:
   only the final point or an aggregate revision
 - product material or overlay bugs: compare screenshot/render-target color or material readback and
   reject debug-looking product overlays unless they are explicitly enabled diagnostic UI
+- shading-quality bugs: compare against a donor-backed target look and reject claims that only prove
+  "not a debug overlay" when the viewport is still using simple/depth-like placeholder shading
 - delayed UI updates: record event timestamp, event-loop/render revision, and time to visible or
   queryable state
 - launch bugs: prove the documented command owns the intended visible app window, not a terminal or

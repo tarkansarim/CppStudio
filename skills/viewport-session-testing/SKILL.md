@@ -60,6 +60,16 @@ recorders, backend commands, JSON state changes, and nonblank captures prove inf
 They do not prove that a user can find the control, start a recording, perform the intended gesture,
 stop/replay the session, and see the result in the product surface.
 
+Do not collapse separate visible concerns into one narrower proof. If a user reports or asks about
+stroke direction, hit location, selection response, material appearance, viewport shading, overlay
+state, or product-surface quality, each concern must be listed in closeout as `resolved`,
+`unresolved`, or `not-tested` with its own matching evidence. Semantic path coverage, revision
+advance, changed vertices, or "no debug overlay" readback can prove a functional subclaim, but it
+does not prove that the visible result reads correctly to a human or that the material/shader quality
+matches the product target. If the screenshots still look wrong, flat, debug-like, depth-pass-like,
+or too crude for the requested tool, report that as an unresolved product-quality issue instead of
+moving to the next feature slice.
+
 Backend HTTP/curl commands alone do not satisfy this lane for visible UI bugs. They are useful
 supporting evidence, but they do not prove widget focus, visible control clicks, DPI mapping, mouse
 or stylus routing, viewport hit tests, or screenshot freshness.
@@ -86,6 +96,10 @@ captures. Assertions must name the reported symptom, such as `stroke_tracks_poin
 `product_material_has_no_debug_overlay`. A generic state/revision/checksum change, nonblank
 screenshot, product-surface score, or one-point dab smoke is infrastructure evidence only and must
 be rejected as closeout proof for a stroke, drag, hit-test, selection, or material-appearance bug.
+For material or shading complaints, `product_material_has_no_debug_overlay` only proves that a debug
+overlay is absent; it does not prove production-quality shading. A shading closeout needs a
+donor-backed target look, fresh captures, and readback/assertions tied to the actual appearance
+standard being claimed.
 
 For continuous tools whose visible result is expected to update while contact is held, such as
 sculpting, painting, grooming, terrain editing, grease-pencil style drawing, or live gizmo drags, the
