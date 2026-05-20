@@ -135,6 +135,21 @@ question UI allows it.
 
 When this skill is active, work like a native C++ GPU systems engineer:
 
+- Use the lightest process tier that still protects correctness. Routine planned slice execution
+  should follow the accepted plan, target code map, relevant donor route, and already-chosen
+  validation lane without restarting broad research or re-planning. Escalate into thorough mode only
+  when the work sets architecture/product shape, chooses a stack or dependency, adds a new domain
+  subsystem, consumes a new donor/upstream source, crosses a user-facing interaction or visual
+  acceptance boundary, changes shared infrastructure, contradicts the plan, encounters stale or
+  missing evidence, or hits a stall/repeated-failure trigger. Do not use thoroughness as permission
+  to turn a narrow planned edit into an open-ended probe loop.
+- In checkpoint, rewind, detached-worktree, or other replay/probe lanes, treat the replayed source
+  tree and the user's replay prompt as the authority for current state. Engineering memory,
+  post-branch commits, current-head docs, external runtime copies, and accepted later outcomes are
+  context to classify or reject, not permission to change the replay baseline. If later memory
+  conflicts with the replay tree, stop and state the conflict or ask whether the replay is meant to
+  test the old branch state or the current accepted state. Do not silently reinterpret a replayed
+  narrow request from old branch values to current-head values.
 - Hard rule: before touching code, do not rely on training data or intuition as the source of truth.
   First open the relevant local skills, the target repo's maintained code map when enabled, and the
   smallest matching donor-library route/category/profile. Then run a compact before-implementation
@@ -189,6 +204,22 @@ When this skill is active, work like a native C++ GPU systems engineer:
   root cause is uncertain, run a fresh scoped Codex adversarial review; the review must judge the
   current lane and acceptance artifact, not turn into a whole-repo review unless explicitly
   requested.
+- Bounded visual parameter tuning: when the requested change is a narrow numeric or look-development
+  tweak on a known route, do not let verification expand into an open-ended render/crop/probe lane.
+  First confirm the donor-backed parameter path and preserve one comparable before artifact. Make the
+  smallest parameter edit, run one representative visual lane, and report the exact value, before
+  artifact, after artifact, and semantic metadata that proves the parameter took effect. If the first
+  probe is technically correct but visually too subtle for the stated acceptance target, one
+  calibrated follow-up probe is allowed. After two total probes, stop and present the evidence plus a
+  clear continue/revert/user-approval decision; do not keep tuning, generating new crop variants, or
+  adding helper scripts. Optional proof-artifact tooling failures, such as an image utility name or
+  format mismatch, may be classified once and resolved with the installed equivalent once; repeated
+  helper-tool friction is a tooling issue or blocker, not permission for another visual-tuning loop.
+  When the visual lane depends on a mutable external runtime copy, editor project, cache, package
+  export, or generated reference folder outside the restored source tree, verify it matches the
+  source/replay state before taking the before artifact. If it does not match, stop and either sync it
+  deliberately before baseline capture or declare the replay/proof invalid; do not baseline against
+  stale external state and then call the before/after evidence clean.
 - Primary visible loop before breadth: for interactive artist, game, VFX, DCC, simulation-editor,
   technical-art, viewer/editor, brush, paint, grooming, terrain, material, rigging, animation,
   layout, lighting, or effects tools, the first implementation milestone must prove the core

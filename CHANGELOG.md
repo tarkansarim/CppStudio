@@ -4,6 +4,24 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Clarified CppStudio process tiering so routine planned slices follow the accepted plan and known
+  donor/validation route without restarting broad research, while architecture, product-shape,
+  dependency, user-facing acceptance, shared-infrastructure, stale-evidence, and stall cases still
+  escalate into thorough research/realignment mode.
+- Hardened replay/probe authority. In checkpoint, rewind, detached-worktree, or other replay lanes,
+  agents must treat the replayed source tree and replay prompt as current-state authority; later
+  engineering memory, current-head docs, external runtime copies, or accepted later outcomes can
+  classify conflicts but must not silently redefine the branch-local baseline.
+- Hardened visual replay/tuning proof against stale mutable external runtime copies. Agents must now
+  verify editor projects, runtime copies, caches, exports, or generated reference folders match the
+  source/replay state before taking a baseline artifact; mismatches must be deliberately synced or
+  reported as invalid evidence.
+- Added a bounded visual-parameter tuning rule for narrow numeric/look-development tweaks. Agents now
+  have to preserve one before artifact, make the smallest donor-backed parameter edit, run one
+  representative visual lane, allow at most one calibrated follow-up if the first probe is
+  semantically correct but visually too subtle, then stop with evidence and a continue/revert/user
+  decision instead of expanding into open-ended crop, render, or helper-tool loops.
+
 - Added an acceptance-artifact cutover gate for long visual, reference-render, calibration,
   viewport-capture, import/export, and semantic-wrapper lanes. Agents must define the final artifact
   before repeated probes, stop after repeated red wrapper/OSTM/scenario runs or extended unchanged

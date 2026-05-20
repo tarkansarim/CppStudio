@@ -39,8 +39,18 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 `current` aggregate plus 10 stable recent commit highlights for people scanning the repo. Older
 stable entries stay collapsed under the expander.
 
-- `current` - Added an acceptance-artifact cutover gate for long visual/reference/calibration lanes,
-  so repeated red wrapper/OSTM/scenario runs must stop local patching, separate new evidence from
+- `current` - Added a bounded visual-parameter tuning rule for narrow numeric/look-development
+  changes, so agents preserve one before artifact, make the smallest donor-backed parameter edit,
+  run one representative visual lane, allow at most one calibrated follow-up, and then stop with
+  evidence plus a continue/revert/user decision instead of drifting into open-ended crop, render, or
+  helper-tool loops. Routine planned slices now stay on the accepted plan and known donor/validation
+  route, while architecture, product-shape, stale-evidence, user-facing acceptance, and stall cases
+  still escalate into thorough research/realignment mode. Replay/probe lanes now treat the replayed
+  source tree and prompt as current-state authority, so later memory or current-head artifacts cannot
+  silently redefine an old branch baseline. Visual replay lanes must also verify mutable external
+  editor/runtime copies match the source or replay state before taking baseline evidence. Added an
+  acceptance-artifact cutover gate for long visual/reference/calibration lanes, so
+  repeated red wrapper/OSTM/scenario runs must stop local patching, separate new evidence from
   prior work and debug-only signals, run a narrow read-only `codex exec` stuck probe, perform
   substantive current web/upstream research into the exact stuck layer, and choose continue or
   cutover before more patches. Local source-only analysis or token web search is no longer enough

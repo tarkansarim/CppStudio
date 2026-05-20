@@ -127,6 +127,17 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-19T20:19:16Z`
 
+13. **Scoped visual parameter tweaks must have a probe budget and stop condition: preserve before evidence, make the smallest donor-backed parameter edit, run one representative visual lane, allow at most one calibrated follow-up if semantically correct but visually insufficient, then stop with evidence and user/owner decision instead of generating more crops or retuning.**
+   - Status: `active`
+   - Slice: `bounded visual parameter tuning`
+   - Scope: `reusable-skill`
+   - Source: user correction: simple hair-width parameter tuning thrashed for 30+ minutes with repeated render/crop loops
+   - Revisit when: before source patch closeout, rollout, or supervising small visual/lookdev parameter workers
+   - Gate: Reject reusable guidance or worker closeout that lets one-parameter visual tuning expand into open-ended render/crop/probe loops without a bounded stop and decision report.
+   - Evidence: none recorded
+   - Recorded: `2026-05-20T07:23:10Z`
+
+
 ## Superseded Or Historical
 
 1. **Record important user instructions immediately and revisit them before supervision or closeout**
