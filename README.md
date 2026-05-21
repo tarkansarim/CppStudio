@@ -38,9 +38,10 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
-- `latest` - Rebuilt this section as a readable front-page changelog and hardened CppStudio
-  instructions so future qualifying commits must update concise README highlights, not just touch
-  `CHANGELOG.md` or append a giant aggregate paragraph.
+- `latest` - Added README guidance for the dedicated supervisor workflow and rebuilt this section as
+  a readable front-page changelog. CppStudio instructions now require future qualifying commits to
+  update concise README highlights, not just touch `CHANGELOG.md` or append a giant aggregate
+  paragraph.
 - `0c04410` - Fixed hosted ShellCheck validation for the shared bundled-skill inventory and recorded
   the CI repair in both the changelog and this front-page highlight list.
 - `a4be459` - Added the bundled `cppstudio-supervisor` skill for supervision-only worker routing,
@@ -195,6 +196,48 @@ web checks, authoring-model options, stylus/input needs, and the questions I nee
 For interactive apps, the planner defaults to a local agentic control harness. The goal is not to
 make users manually test every small fix; the generated app should expose local controls, readback,
 logs/warnings, and visual or viewport evidence so agents can verify routine behavior themselves.
+
+## Supervisor Workflow
+
+CppStudio also ships a dedicated `cppstudio-supervisor` skill for the case where one agent is not
+the implementation worker. Use it when a lead agent is coordinating tmux-managed Codex or Claude
+workers, reviewing their plans, routing fixes, polling progress, or deciding whether a worker failure
+means CppStudio itself needs hardening.
+
+The supervisor skill is intentionally separate from ordinary implementation skills. A normal worker
+building a C++/Vulkan/CUDA app should load `cpp-cuda-vulkan-studio` and the relevant planning,
+donor, GUI, control-harness, profiling, or validation skills. A supervisor should load
+`cppstudio-supervisor` only when it is managing other agents.
+
+What the supervisor is responsible for:
+
+- Verify the target repo, provider, tmux session, and chat identity before sending work.
+- Route implementation to the repo's owner worker instead of patching another repo directly.
+- Read the worker's actual plan artifact before approving or rejecting it.
+- Poll until the worker has stopped, hit a blocker, or produced closeout evidence.
+- Interrogate unclear worker decisions before guessing why they happened.
+- Send actionable adversarial-review or `codex exec` findings back to the owning worker.
+- Check Rewind, code-map, OSTM/viewport-session, and validation evidence before calling a lane done.
+- File tickets when the fix belongs to another repo or reusable agent tool.
+
+Typical use:
+
+```text
+Supervise the native GPU app worker through the next rendering slice. Verify its plan, poll until it
+stops, route any review findings back to it, and report whether any CppStudio rule needs hardening.
+```
+
+Required companion infrastructure:
+
+- `agent-tmux-control` for launching, resuming, contacting, and polling terminal workers.
+- `agent-tickets` when a fix belongs to another repo or owner agent.
+- `important-instruction-ledger` when slice watchpoints or user constraints must survive compaction.
+- `rewind-checkpoints` when behavior probes, failed-fix rollback, or causal replay matter.
+- `verification-before-completion` before claiming the supervised worker's result is complete.
+
+The supervisor closeout should include the worker commit or explicit no-code-change status, dirty
+tree state, validation commands and artifacts, unresolved concerns, and whether any reusable
+CppStudio rule, donor route, code-map rule, or skill needs a follow-up hardening change.
 
 ## Requirements
 

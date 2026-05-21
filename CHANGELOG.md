@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a dedicated README Supervisor Workflow section explaining when to use
+  `cppstudio-supervisor`, what companion infrastructure it expects, and what closeout evidence a
+  supervising agent should require.
 - Rebuilt README Recent Commit Highlights as a readable front-page changelog and hardened repo
   instructions so future CppStudio commits must explicitly check that the front-page list is updated
   as concise bullets, not merely touched.
