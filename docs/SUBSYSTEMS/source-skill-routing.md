@@ -78,6 +78,10 @@ generated-project workflow instructions.
   `AGENTS.md` relay text or ordinary project-planning rules. Load it only when supervising other
   tmux/subagent/repo workers, routing review findings, polling closeout, or interrogating worker
   decisions.
+- Supervised Codex workers for substantive CppStudio-backed native GPU work default to extra-high
+  reasoning. The supervisor skill owns this launch policy: use `model_reasoning_effort="xhigh"`,
+  verify the footer or process args, and do not enable fast/priority service unless the user
+  explicitly asks for fast or priority execution.
 - Supervised multi-slice implementation uses an explicit fresh adversarial-review cadence in
   `cppstudio-supervisor`: after every three verified implementation slices, or every two verified
   slices when four or fewer approved slices remain. The cadence is a pre-nudge and closeout gate, not

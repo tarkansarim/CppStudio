@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Made `cppstudio-supervisor` default substantive supervised Codex workers to
+  `model_reasoning_effort="xhigh"` and require footer/process verification after launch. The
+  fast/priority service tier remains opt-in only when the user explicitly asks for it.
 - Fixed `important-instruction-ledger` Markdown rendering so append operations leave exactly one
   final newline instead of creating a trailing blank line that fails `git diff --check`, and added a
   regression test to the default validation lane.

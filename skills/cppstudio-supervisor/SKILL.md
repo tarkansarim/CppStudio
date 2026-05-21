@@ -51,6 +51,21 @@ validation skills instead.
    checkpoint or branch point, paired chat evidence when conversation matters, preserved-scope drift,
    and the replay delta. Do not accept a forward correction as rewind evidence.
 
+## Codex Worker Model Defaults
+
+When launching or relaunching a supervised Codex worker for CppStudio-backed native C++ GPU work,
+default the worker to extra-high reasoning:
+
+```bash
+codex -m gpt-5.5 -c 'model_reasoning_effort="xhigh"' ...
+```
+
+Do not enable the fast/priority service tier by default. Add `-c 'service_tier="priority"'` only
+when the user explicitly asks for fast, priority, or equivalent faster service on that worker. If an
+existing worker is already running at a lower effort level and the next slice is substantive,
+relaunch or resume the same thread with `model_reasoning_effort="xhigh"` before nudging it. Verify
+the footer or process args after launch; a silent config typo is not acceptable evidence.
+
 ## Reviews And Fix Routing
 
 Fresh adversarial reviews and `codex exec` probes are review evidence, not user handoff artifacts.

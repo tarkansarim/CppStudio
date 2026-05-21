@@ -38,6 +38,9 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
+- `latest` - Made `cppstudio-supervisor` launch substantive Codex worker lanes at
+  `model_reasoning_effort="xhigh"` by default, while keeping fast/priority service opt-in only when
+  the user asks for it, and requiring footer/process verification after relaunch.
 - `latest` - Fixed `important-instruction-ledger` append hygiene so slice watchlists end with one
   final newline instead of a `git diff --check` trailing-blank-line failure, and added regression
   coverage to the default validation lane.
@@ -225,6 +228,11 @@ What the supervisor is responsible for:
 - Send actionable adversarial-review or `codex exec` findings back to the owning worker.
 - Check Rewind, code-map, OSTM/viewport-session, and validation evidence before calling a lane done.
 - File tickets when the fix belongs to another repo or reusable agent tool.
+
+Codex worker model defaults are explicit. For substantive supervised CppStudio-backed native GPU
+work, launch or resume Codex workers with `model_reasoning_effort="xhigh"` and verify the footer or
+process args. Do not enable fast/priority service by default; use `service_tier="priority"` only when
+the user specifically asks for fast or priority execution.
 
 Review cadence is not a chat-memory promise. After every verified implementation slice, the
 supervisor records the commit, whether the slice counts toward cadence, the last post-implementation
