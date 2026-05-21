@@ -42,8 +42,9 @@ stable entries stay collapsed under the expander.
 - `current` - Added a dedicated `cppstudio-supervisor` skill for supervision-only worker
   orchestration, adversarial-review fix routing, polling, interrogation, Rewind/plan evidence gates,
   and closeout checks, while centralizing bundled auxiliary skill inventories so rollout, watch, and
-  validation cannot drift apart. Sync staging and backups now live outside the scanned Codex skills
-  root. Added a bounded visual-parameter tuning rule for narrow numeric/look-development
+  validation cannot drift apart. The shared inventory is now ShellCheck-clean in hosted validation,
+  and sync staging and backups live outside the scanned Codex skills root. Added a bounded
+  visual-parameter tuning rule for narrow numeric/look-development
   changes, so agents preserve one before artifact, make the smallest donor-backed parameter edit,
   run one representative visual lane, allow at most one calibrated follow-up, and then stop with
   evidence plus a continue/revert/user decision instead of drifting into open-ended crop, render, or

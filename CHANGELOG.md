@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Fixed hosted ShellCheck validation for the shared bundled-skill inventory by marking
+  `scripts/managed_skills.sh` as an intentionally sourced definition file.
 - Added a dedicated bundled `cppstudio-supervisor` skill for supervision-only worker orchestration,
   adversarial-review fix routing, polling, interrogation, and closeout gates, keeping ordinary
   always-loaded CppStudio context smaller.
