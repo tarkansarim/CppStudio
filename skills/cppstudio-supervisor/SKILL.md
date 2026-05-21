@@ -59,6 +59,14 @@ Reviewers must be fresh-context reviewers. Do not reuse a prior reviewer or fork
 conversation for an unbiased adversarial review unless the user explicitly scopes it as an inherited
 context review.
 
+For supervised multi-slice implementation, keep an explicit adversarial-review cadence instead of
+waiting for the user to ask. After every three completed implementation slices, run a fresh scoped
+adversarial review before approving the next slice. If the remaining approved plan has four or fewer
+slices left, tighten the cadence to every two completed implementation slices. Count only verified
+implementation slices, not planning-only packets, pure review fixes, or rollback/checkpoint
+housekeeping. Reset or recalculate the cadence when the plan materially changes, and record the last
+reviewed slice in the worker status or active watchlist so compaction does not erase the review debt.
+
 When a fresh review finds actionable correctness issues inside the supervised worker's approved
 scope:
 

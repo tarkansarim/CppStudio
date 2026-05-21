@@ -78,6 +78,10 @@ generated-project workflow instructions.
   `AGENTS.md` relay text or ordinary project-planning rules. Load it only when supervising other
   tmux/subagent/repo workers, routing review findings, polling closeout, or interrogating worker
   decisions.
+- Supervised multi-slice implementation uses an explicit fresh adversarial-review cadence in
+  `cppstudio-supervisor`: after every three verified implementation slices, or every two verified
+  slices when four or fewer approved slices remain. Planning packets, review-fix follow-ups, and
+  checkpoint/rollback housekeeping do not count as implementation slices.
 
 ## Current Code-Map Bootstrap Posture
 

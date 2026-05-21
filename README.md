@@ -38,10 +38,10 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
-- `latest` - Added README guidance for the dedicated supervisor workflow and rebuilt this section as
-  a readable front-page changelog. CppStudio instructions now require future qualifying commits to
-  update concise README highlights, not just touch `CHANGELOG.md` or append a giant aggregate
-  paragraph.
+- `latest` - Added a `cppstudio-supervisor` adversarial-review cadence for supervised multi-slice
+  implementation: review after every three verified slices, or every two slices when four or fewer
+  approved slices remain. Planning packets, review-fix follow-ups, and checkpoint housekeeping do
+  not count as implementation slices.
 - `0c04410` - Fixed hosted ShellCheck validation for the shared bundled-skill inventory and recorded
   the CI repair in both the changelog and this front-page highlight list.
 - `a4be459` - Added the bundled `cppstudio-supervisor` skill for supervision-only worker routing,

@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a supervisor adversarial-review cadence: supervised multi-slice implementation now triggers
+  a fresh scoped review after every three verified implementation slices, or every two slices when
+  four or fewer approved slices remain. Planning packets, review-fix follow-ups, and
+  checkpoint/rollback housekeeping do not count as implementation slices.
 - Added a dedicated README Supervisor Workflow section explaining when to use
   `cppstudio-supervisor`, what companion infrastructure it expects, and what closeout evidence a
   supervising agent should require.
