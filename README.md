@@ -41,10 +41,10 @@ intentionally short: newest public-facing changes first, older highlights collap
 - `latest` - Fixed `important-instruction-ledger` append hygiene so slice watchlists end with one
   final newline instead of a `git diff --check` trailing-blank-line failure, and added regression
   coverage to the default validation lane.
-- `latest` - Added a `cppstudio-supervisor` adversarial-review cadence for supervised multi-slice
-  implementation: review after every three verified slices, or every two slices when four or fewer
-  approved slices remain. Planning packets, review-fix follow-ups, and checkpoint housekeeping do
-  not count as implementation slices.
+- `latest` - Hardened `cppstudio-supervisor` review cadence from a reminder into a mechanical
+  pre-nudge and closeout gate: supervisors must record last reviewed slice, slice count since review,
+  and next-review debt in the worker watchlist/status; unknown cadence state blocks the next
+  implementation nudge.
 - `0c04410` - Fixed hosted ShellCheck validation for the shared bundled-skill inventory and recorded
   the CI repair in both the changelog and this front-page highlight list.
 - `a4be459` - Added the bundled `cppstudio-supervisor` skill for supervision-only worker routing,
@@ -217,11 +217,23 @@ What the supervisor is responsible for:
 - Verify the target repo, provider, tmux session, and chat identity before sending work.
 - Route implementation to the repo's owner worker instead of patching another repo directly.
 - Read the worker's actual plan artifact before approving or rejecting it.
+- Maintain a mechanical adversarial-review cadence in the worker watchlist or status before every
+  implementation nudge and after every verified slice. If the last reviewed slice or
+  `slices_since_review` state is missing, stale, or unknown, the review is due before the next slice.
 - Poll until the worker has stopped, hit a blocker, or produced closeout evidence.
 - Interrogate unclear worker decisions before guessing why they happened.
 - Send actionable adversarial-review or `codex exec` findings back to the owning worker.
 - Check Rewind, code-map, OSTM/viewport-session, and validation evidence before calling a lane done.
 - File tickets when the fix belongs to another repo or reusable agent tool.
+
+Review cadence is not a chat-memory promise. After every verified implementation slice, the
+supervisor records the commit, whether the slice counts toward cadence, the last post-implementation
+reviewed commit, the current `slices_since_review` count, and whether the next nudge is blocked.
+Normal cadence is review after three verified implementation slices; when four or fewer approved
+slices remain, review after two. Risky shader/runtime, UI interaction, GPU synchronization, generated
+project infrastructure, persistence, or visible/rendered-path slices can require an immediate
+post-implementation review even before the numeric cadence. A plan review does not satisfy that
+post-implementation gate.
 
 Typical use:
 

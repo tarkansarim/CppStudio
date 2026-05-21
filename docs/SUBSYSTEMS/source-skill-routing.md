@@ -80,7 +80,10 @@ generated-project workflow instructions.
   decisions.
 - Supervised multi-slice implementation uses an explicit fresh adversarial-review cadence in
   `cppstudio-supervisor`: after every three verified implementation slices, or every two verified
-  slices when four or fewer approved slices remain. Planning packets, review-fix follow-ups, and
+  slices when four or fewer approved slices remain. The cadence is a pre-nudge and closeout gate, not
+  a memory reminder: supervisors must record the last reviewed slice, current count since review, and
+  next-review debt in the worker watchlist/status. Unknown or stale cadence state blocks the next
+  implementation nudge. Planning packets, plan reviews, review-fix follow-ups, and
   checkpoint/rollback housekeeping do not count as implementation slices.
 
 ## Current Code-Map Bootstrap Posture

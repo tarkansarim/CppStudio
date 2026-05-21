@@ -7,10 +7,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 - Fixed `important-instruction-ledger` Markdown rendering so append operations leave exactly one
   final newline instead of creating a trailing blank line that fails `git diff --check`, and added a
   regression test to the default validation lane.
-- Added a supervisor adversarial-review cadence: supervised multi-slice implementation now triggers
-  a fresh scoped review after every three verified implementation slices, or every two slices when
-  four or fewer approved slices remain. Planning packets, review-fix follow-ups, and
-  checkpoint/rollback housekeeping do not count as implementation slices.
+- Hardened the supervisor adversarial-review cadence from a reminder into a mechanical pre-nudge and
+  closeout gate. Supervisors must record the last reviewed slice, current slice count since review,
+  and next-review debt in the worker watchlist/status; unknown, stale, or absent cadence state blocks
+  the next implementation nudge. Risky shader/runtime, GPU sync, UI interaction, persistence,
+  generated-project infrastructure, and visible/rendered-path slices can require immediate
+  post-implementation review even before the numeric cadence.
 - Added a dedicated README Supervisor Workflow section explaining when to use
   `cppstudio-supervisor`, what companion infrastructure it expects, and what closeout evidence a
   supervising agent should require.

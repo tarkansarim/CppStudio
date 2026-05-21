@@ -60,12 +60,42 @@ conversation for an unbiased adversarial review unless the user explicitly scope
 context review.
 
 For supervised multi-slice implementation, keep an explicit adversarial-review cadence instead of
-waiting for the user to ask. After every three completed implementation slices, run a fresh scoped
-adversarial review before approving the next slice. If the remaining approved plan has four or fewer
-slices left, tighten the cadence to every two completed implementation slices. Count only verified
-implementation slices, not planning-only packets, pure review fixes, or rollback/checkpoint
-housekeeping. Reset or recalculate the cadence when the plan materially changes, and record the last
-reviewed slice in the worker status or active watchlist so compaction does not erase the review debt.
+waiting for the user to ask. This is a mechanical gate, not a memory reminder.
+
+Before every worker nudge for a new implementation slice:
+
+1. Review the target repo's active watchlist or worker status.
+2. Identify the last verified implementation slice, the last post-implementation adversarial review,
+   and how many verified implementation slices have landed since that review.
+3. If the count is unknown, stale, or absent after any completed implementation slice, treat review
+   cadence as due and run a fresh scoped post-implementation adversarial review before approving the
+   next slice.
+4. If the cadence is due, do not nudge implementation. Send a review/fix packet first and poll
+   through closeout.
+5. If the cadence is not due, include the current counter in the nudge or supervision notes so the
+   next supervisor can see the debt.
+
+After every verified implementation slice closeout:
+
+1. Increment or record the cadence state in the worker status or active watchlist before reporting
+   closeout.
+2. Record the slice commit, whether it counts as an implementation slice, the last reviewed commit,
+   the current `slices_since_review` count, and whether the next nudge is blocked by review cadence.
+3. If a post-implementation review was run, reset `slices_since_review` to zero only after concrete
+   findings are fixed or explicitly classified as non-actionable.
+
+After every three completed implementation slices, run a fresh scoped adversarial review before
+approving the next slice. If the remaining approved plan has four or fewer slices left, tighten the
+cadence to every two completed implementation slices. Count only verified implementation slices, not
+planning-only packets, plan reviews, pure review fixes, or rollback/checkpoint housekeeping. Reset or
+recalculate the cadence when the plan materially changes, and record the last reviewed slice in the
+worker status or active watchlist so compaction does not erase the review debt.
+
+Run an immediate post-implementation adversarial review even before the numeric cadence when a slice
+touches risky shader/runtime behavior, GPU synchronization, UI interaction, persistence, generated
+project infrastructure, or any visible/rendered path where the validation claim could be too narrow.
+Plan reviews do not satisfy this post-implementation review gate; they only challenge the intended
+slice before code exists.
 
 When a fresh review finds actionable correctness issues inside the supervised worker's approved
 scope:

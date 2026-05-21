@@ -147,6 +147,16 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-21T06:20:40Z`
 
+15. **Supervisor adversarial-review cadence must be mechanical: before every implementation nudge and after every verified slice, check or update last reviewed slice, slices_since_review, and whether next review blocks implementation.**
+   - Status: `active`
+   - Slice: `supervisor review cadence hardening`
+   - Scope: `reusable-skill`
+   - Source: user correction: supervisor missed adversarial-review cadence despite rule existing
+   - Revisit when: before worker nudges, supervised slice closeout, CppStudio supervisor skill changes, or status summaries
+   - Gate: Reject closeout if cppstudio-supervisor still lets review cadence live only in chat memory instead of target watchlist/status evidence.
+   - Evidence: none recorded
+   - Recorded: `2026-05-21T19:07:41Z`
+
 
 ## Superseded Or Historical
 
@@ -159,4 +169,3 @@ worker handoffs.
    - Gate: Superseded by active slice-watchlist framing
    - Evidence: self-improvement:friction:68699857a7cc864e
    - Recorded: `2026-05-17T01:31:46Z`
-
