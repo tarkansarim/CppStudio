@@ -137,6 +137,17 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-20T07:23:10Z`
 
+14. **For CppStudio commits and pushes, the README Recent Commit Highlights section is the front-page changelog and must be updated as short readable bullets for qualifying changes; touching README or CHANGELOG.md is not enough if the front-page list is unreadable.**
+   - Status: `active`
+   - Slice: `front-page changelog discipline`
+   - Scope: `reusable-skill`
+   - Source: user correction after README current entry became a giant unreadable aggregate
+   - Revisit when: before CppStudio commits, pushes, closeout summaries, or after compaction
+   - Gate: Reject commit/push closeout unless staged diff shows readable README Recent Commit Highlights for qualifying changes, plus CHANGELOG.md, or an explicit non-qualifying reason.
+   - Evidence: none recorded
+   - Recorded: `2026-05-21T06:20:40Z`
+
+
 ## Superseded Or Historical
 
 1. **Record important user instructions immediately and revisit them before supervision or closeout**
@@ -148,3 +159,4 @@ worker handoffs.
    - Gate: Superseded by active slice-watchlist framing
    - Evidence: self-improvement:friction:68699857a7cc864e
    - Recorded: `2026-05-17T01:31:46Z`
+

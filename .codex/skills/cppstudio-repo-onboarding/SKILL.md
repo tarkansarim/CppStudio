@@ -106,6 +106,10 @@ installs and for any change that must update bundled auxiliary skills such as `n
 - Also update README Recent Commit Highlights when the pushed commit changes setup, routing,
   generated projects, validation, donor-library behavior, public docs, install, release, or sync
   behavior.
+- The README Recent Commit Highlights section is the front-page changelog. It must stay readable:
+  newest qualifying commits should be short bullets, not a giant aggregate paragraph. Before any
+  CppStudio commit or push, inspect the staged diff and report whether the front-page changelog and
+  `CHANGELOG.md` were updated or why the change is non-qualifying.
 
 ## Close-Out Checklist
 
@@ -114,6 +118,8 @@ installs and for any change that must update bundled auxiliary skills such as `n
 - State whether `./scripts/rollout_to_codex.sh` was run for bundled installed skills. If only
   `sync_to_codex.sh` was run, state the selected skill and why a single-skill sync was sufficient.
 - State whether `CHANGELOG.md` was updated before any push to remote.
+- State whether README Recent Commit Highlights was updated as a readable front-page changelog before
+  any qualifying push.
 - If skills, skill descriptions, donor profiles, donor categories, donor routing, or README donor
   inventory changed, run a sub-agent trigger lane first and report whether the expected skill and donor
   profiles were selected.

@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Rebuilt README Recent Commit Highlights as a readable front-page changelog and hardened repo
+  instructions so future CppStudio commits must explicitly check that the front-page list is updated
+  as concise bullets, not merely touched.
 - Fixed hosted ShellCheck validation for the shared bundled-skill inventory by marking
   `scripts/managed_skills.sh` as an intentionally sourced definition file.
 - Added a dedicated bundled `cppstudio-supervisor` skill for supervision-only worker orchestration,

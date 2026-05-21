@@ -35,155 +35,20 @@ As a harness, CppStudio focuses on:
 
 ## Recent Commit Highlights
 
-The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list shows a
-`current` aggregate plus 10 stable recent commit highlights for people scanning the repo. Older
-stable entries stay collapsed under the expander.
+The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
+intentionally short: newest public-facing changes first, older highlights collapsed below.
 
-- `current` - Added a dedicated `cppstudio-supervisor` skill for supervision-only worker
-  orchestration, adversarial-review fix routing, polling, interrogation, Rewind/plan evidence gates,
-  and closeout checks, while centralizing bundled auxiliary skill inventories so rollout, watch, and
-  validation cannot drift apart. The shared inventory is now ShellCheck-clean in hosted validation,
-  and sync staging and backups live outside the scanned Codex skills root. Added a bounded
-  visual-parameter tuning rule for narrow numeric/look-development
-  changes, so agents preserve one before artifact, make the smallest donor-backed parameter edit,
-  run one representative visual lane, allow at most one calibrated follow-up, and then stop with
-  evidence plus a continue/revert/user decision instead of drifting into open-ended crop, render, or
-  helper-tool loops. Routine planned slices now stay on the accepted plan and known donor/validation
-  route, while architecture, product-shape, stale-evidence, user-facing acceptance, and stall cases
-  still escalate into thorough research/realignment mode. Replay/probe lanes now treat the replayed
-  source tree and prompt as current-state authority, so later memory or current-head artifacts cannot
-  silently redefine an old branch baseline. Visual replay lanes must also verify mutable external
-  editor/runtime copies match the source or replay state before taking baseline evidence. Added an
-  acceptance-artifact cutover gate for long visual/reference/calibration lanes, so
-  repeated red wrapper/OSTM/scenario runs must stop local patching, separate new evidence from
-  prior work and debug-only signals, run a narrow read-only `codex exec` stuck probe, perform
-  substantive current web/upstream research into the exact stuck layer, and choose continue or
-  cutover before more patches. Local source-only analysis or token web search is no longer enough
-  after this gate, and a fresh scoped Codex adversarial review is required before more patching if
-  the next attempt still leaves the final artifact red. Cutover must preserve user-named reference
-  families rather than replacing them with unrelated peer tools; conflicting stale-context lanes must
-  be rejected before user-facing options are shown. Hardened rollout and trigger-regression safety with
-  source-owned CMake, CUDA kernel,
-  and workstation profiling companion skills, compact bundled-skill discovery descriptions that
-  defer detailed routing into skill bodies, symlink-safe bundled auxiliary
-  rollback handling, required code-map bootstrap/maintenance/sidecar/routing-smoke trigger cases with
-  installed-path fresh-agent evidence, fresh-scaffold drift coverage before the first baseline
-  commit, source skill-load hygiene checks plus explicit installed-root audits for backup artifacts
-  and oversized startup descriptions, CppStudio-owned `vulkan-compute-sync` rollout,
-  greenfield Git bootstrap handling for Codex worker read-only `.git` sandbox blockers,
-  Vulkan-only default scaffolds that omit CUDA files/routes/presets unless a CUDA lane is explicitly
-  selected, control-harness roadmap/readiness readback that advances after verified prerequisite
-  slices, exact readiness invariants, route-inventory drift checks, GUI convention tables with
-  icon/text affordance review, no-touch forbidden-path trigger probes, canonical bundled-skill
-  rollout guidance, hardware-backed Vulkan readiness, donor-first web/upstream research for missing
-  routes, durable greenfield research artifacts with mandatory project dos/don'ts, quality-preserving
-  source-access failure handling, donor-candidate disposition, README planning guidance for those
-  artifacts, SDL3 pen/tablet input routing for stroke-based artist tools, supervised-worker
-  interrogation before inferring CppStudio gaps,
-  stricter enabled-code-map drift/schema closeout, clearer reviewed-no-map-change drift output,
-  generated repo-local map wrappers,
-  donor/provenance closeout, and a GPL-safe Blender curves groom-brush study donor.
-  It also lets implementation task lists realign when new evidence invalidates stale assumptions,
-  while preserving user-facing product and stack decisions, and forces midstream major feature
-  requests back through planning artifacts instead of chat-only research. Missing-donor discoveries
-  are now captured project-locally first and promoted into the CppStudio source donor library when
-  reusable/global promotion is requested; installed user-level donor files stay generated rollout
-  targets. Local candidate capture is required evidence even when reusable promotion happens
-  immediately. The donor inventory also now includes a sculpting-brush/high-poly mesh route for
-  ZBrush-like tools, with Blender sculpt brushes as GPL-safe study material and meshoptimizer,
-  OpenSubdiv, and VMA as performance implementation donors. Project maintainer instructions now
-  point normal publishing at `rollout_to_codex.sh`, checked-in fresh-agent trigger evidence covers
-  the recent planning, donor-promotion, harness, grooming, and sculpting routes, and donor freshness
-  auditing now parses plural or wrapped `Sources:` metadata with multiple URLs. Commit-origin
-  guidance now rejects provider-name values and keeps verified-slice commits on the explicit
-  `agent-slice`/`user-requested` taxonomy. GUI-heavy tools now require real interaction scenarios
-  for visible control clicks, selection latency, viewport/canvas pointer mapping, device-pixel-ratio
-  handling, committed hit/edit points, and fresh visual evidence instead of backend-only or nonblank
-  screenshot proof. User-facing launch commands now also need proof that the exact command opens the
-  intended visible app window, not a terminal-title false positive, stale window, hidden workspace
-  window, or offscreen-only smoke. Donor route
-  validation uses the same wrapped-source parsing, and trigger-result artifacts now fail
-  matrix-anchored validation if a recorded `pass` omits expected opened paths, touches forbidden
-  paths, self-edits the expected/forbidden path contract, downgrades checked-in installed evidence
-  out of `portable-installed` mode, or drops claimed cases. User-reported bug fixes now also need
-  exact before/after proof: agents must reproduce the reported behavior, save comparable before and
-  after evidence, and refuse to present a fix when the evidence is identical, self-confirming,
-  backend-only for a visible bug, or too narrow for the user's report. Visible GUI/windowed bug proof
-  is explicitly wired to Sonar readback, OSTM-first automated proof when available, and Rewind
-  rollback anchors. If an agent cannot see or capture the actual UI surface, it must say it is
-  UI-blind on that bug and stop treating harness-only/JSON-only work as progress on the visible
-  symptom. Stalled visible bugs and artist-tool interaction work now have a donor-realignment gate:
-  after two focused attempts or about 20 minutes without direct symptom improvement, agents must
-  reopen code-map and donor routes, record failed hypotheses plus keep/revert decisions, and stop
-  relying on model memory before another patch. Sculpting brush bugs specifically route back through
-  the Blender Sculpt Brushes study-only profile and must prove pointer/control-to-committed-result
-  behavior, not just a generic mesh revision or nonblank screenshot. Live sculpt, paint, groom,
-  terrain, drawing, and transform tools must also prove pre-release updates during held contact;
-  release-only deformation is treated as batched diagnostic behavior unless explicitly requested.
-  Greenfield artist-tool UI now needs a peer-tool visual contract, so agents reject debug-looking
-  first screenshots as product milestones even when the controls function. High-quality standalone
-  artist tools that name peers like ZBrush, Maya, Mudbox, Houdini, Substance, Nuke, Unreal Editor,
-  or Blender now route as polished desktop artist applications first, so Qt-style shells are
-  preferred when available and ImGui is kept to overlays/diagnostics unless explicitly approved as
-  the main product surface. Enabled code-map projects now
-  also have a bounded sidecar lane for long-running or high-churn map maintenance: sidecars work
-  from isolated fixed snapshots and return map-only patches, while the original worker must
-  reconcile, rerun drift/schema validation against the current tree, and keep the verified slice
-  commit as the public history boundary. Drift and no-map-touch semantic review output now surfaces
-  the guarded `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]` helper as a worker-owned
-  action, and strict drift review now blocks source-slice closeout until the worker updates the map,
-  self-launches the sidecar, or explicitly acknowledges a reviewed no-map-change case. Supervised
-  workers now also have an
-  artifact-audit gate: summaries are only evidence pointers, planning packets must be reconciled once
-  source work lands, and queued/offscreen proof must finish with labeled artifacts before it can
-  justify a plan or closeout judgment. GPU feature regressions now also require exact-lane proof on
-  the target device before agents hide, disable, downgrade, or rewrite around capability failures;
-  used-to-work reports keep historical comparison active, and stale engineering memory is treated as
-  challengeable evidence rather than authority. Interactive artist/game/VFX/DCC tools now also have
-  a generic primary-visible-loop gate: the plan must derive the first core user action from donors
-  and peer tools, prove that visible loop before secondary feature breadth, and reject fixture-only
-  scaffolding or extra modes as product progress until input-to-result evidence exists. Related tool
-  families now also need a shared substrate before tool proliferation, so common selection, input,
-  pressure/falloff, undo/replay, resource-update, harness, and validation paths are factored before
-  sibling tools are added. Substantial software plans now also use a six-level planning depth
-  contract: intake/context, research/ceiling, whole-product scaffold, donor coverage and quality
-  matrix, slice readiness, and implementation/closeout proof. Serious native C++ GPU, artist,
-  game, VFX, DCC, simulation-editor, and technical-art tools default to donor-coverage depth before
-  source files are created, so missing fundamentals are mapped as included, deferred, rejected, or
-  blocked instead of hidden inside a plausible scaffold. Scaffolded future sections are not
-  implementation-ready until a just-in-time slice packet names donors, contracts, shared and unique
-  behavior, the concrete first proof object/state, expected files, blocked scope, validation
-  evidence, rollback/checkpoint state, and parallel safety. Slice supervision now has an active
-  watchlist skill and repo-local `docs/agent-context/SLICE_WATCHLIST.md` path so the supervising or
-  direct agent keeps checking what must be watched, verified, blocked, or rejected throughout each
-  slice instead of treating compaction-sensitive constraints as passive notes. Donor-backed plans now
-  also require explicit donor feature disposition: important features from donor shaders, brushes,
-  renderers, solvers, UI patterns, importers, optimizers, or subsystems must be marked included,
-  deferred, rejected, or blocked with reasons and validation signals before source work, so an agent
-  cannot cite a donor while silently leaving out most of what made it useful. Shader and donor-code
-  use now requires a pre-plan breakdown of stages, passes, IO, descriptors/uniforms, spaces,
-  variants, states, quality features, edge cases, and validation signals before planning from that
-  donor. Generated interactive projects now also include a reusable viewport-session testing
-  scaffold and bundled skill so agents can record/replay real UI and viewport interactions, produce
-  session reports, and compare visible before/after evidence without rebuilding that lane per app.
-  User-facing verification is now the acceptance surface for interactive work: agents must prove the
-  real visible control, interaction shape, committed state, and visible result before claiming a
-  feature or bug fix, and generated viewport-session smokes now include held-button move samples so
-  continuous gestures are not reduced to press/release-only evidence. Stroke-like visible bugs now
-  require a human-input UI replay through the real viewport/canvas/widget path, with pointer-path
-  coverage and material/overlay/product-surface assertions instead of generic revision, checksum, or
-  nonblank-screenshot evidence, and real OS input must be labeled as intrusive instead of offscreen
-  or non-disruptive unless it is actually isolated. Visible closeout now also separates functional
-  proof from product-quality proof, so path coverage, changed vertices, or "no debug overlay" cannot
-  close broader stroke-direction, cursor-hit, viewport-shading, or material-quality concerns without
-  per-concern resolved/unresolved/not-tested status and matching artifacts. Substantial greenfield planning now has a hard Plan-mode handoff
-  after donor/web research: workers may present researched
-  defaults and alternatives, but unresolved template, GUI/input, authoring-model, GPU-lane, code-map,
-  dependency, donor, or validation choices stay out of inline normal-chat questions unless the user
-  explicitly waives Plan mode.
-- `0f260fa` - Fixed the hosted validation failure by replacing the single-item quoted
-  `rollout_to_codex.sh` snippet loop that ShellCheck rejected, and documented the CI repair in the
-  changelog.
+- `latest` - Rebuilt this section as a readable front-page changelog and hardened CppStudio
+  instructions so future qualifying commits must update concise README highlights, not just touch
+  `CHANGELOG.md` or append a giant aggregate paragraph.
+- `0c04410` - Fixed hosted ShellCheck validation for the shared bundled-skill inventory and recorded
+  the CI repair in both the changelog and this front-page highlight list.
+- `a4be459` - Added the bundled `cppstudio-supervisor` skill for supervision-only worker routing,
+  polling, interrogation, adversarial-review fix routing, Rewind/plan evidence gates, and closeout
+  checks. Centralized managed skill inventories and moved sync staging/backups outside the scanned
+  Codex skills root.
+- `0f260fa` - Fixed the hosted validation failure in `rollout_to_codex.sh` and documented the CI
+  repair in the changelog.
 - `efd8375` - Claimed `modern-cpp-cmake`, `cuda-kernel-authoring`, and
   `gpu-profiling-workstation` as CppStudio-owned bundled skills with source provenance, compact
   discovery metadata, rollout/watch validation, and installed-path parity checks.
@@ -199,121 +64,27 @@ stable entries stay collapsed under the expander.
   blocking secondary feature breadth until the first core user action is proven.
 - `df60c3a` - Added exact GPU feature regression protocol so agents prove the requested feature lane
   on the target device before hiding, disabling, downgrading, or rewriting around capability failures.
+
+<details>
+<summary>Show older commit highlights</summary>
+
 - `d4d7976` - Made enabled-code-map maintenance a strict worker-owned closeout gate before staging
   source/build/docs slices.
 - `a34a08b` - Routed code-map drift and no-map-touch semantic review output toward the guarded
   code-map sidecar helper as an actionable worker-owned path.
-<details>
-<summary>Show older commit highlights</summary>
-
 - `8488e6c` - Hardened supervised-worker evidence gates so summaries remain pointers and supervisors
   inspect primary planning, code-map, diff, validation, OSTM, and UI artifacts before judging quality.
-- `8d6d94e` - Hardened planner source-access failures so missing or inaccessible sources are recorded
-  and critical evidence gaps block planning instead of silently weakening research.
-- `01959fa` - Surfaced the latest code-map sidecar commits as explicit README Recent Commit
-  Highlights before remote push.
+- `8d6d94e` - Hardened planner source-access failures so missing or inaccessible sources are
+  recorded and critical evidence gaps block planning instead of silently weakening research.
+- `01959fa` - Surfaced code-map sidecar commits as explicit README Recent Commit Highlights before
+  remote push.
 - `ee03b49` - Guarded code-map sidecar trigger evidence so checked-in installed-path validation
-  proves the sidecar case stays covered instead of silently shrinking to older trigger lanes.
-- `d0ea9a2` - Hardened sidecar isolation rules: sidecars must work from fixed snapshots, return
-  map-only patch output, and leave current-tree reconciliation plus validation to the original
-  worker.
-- `b939b38` - Integrated the bounded code-map sidecar lane for enabled maps, including trigger
-  coverage, generated-template guidance, and public docs for long-running map maintenance slices.
-- `db8c823` - Added a code-map drift checker and pre-commit maintenance gate so enabled-map
-  projects catch changed source paths that are not routed by the manifest.
-- `c68ae77` - Hardened code-map and trigger validation, made manual managed-skill install
-  transactional, and added report-only donor freshness auditing.
-- `f072f2d` - Collapsed older README Recent Commit Highlights behind a GitHub details expander.
-- `826a1f7` - Added a front-page highlight for maintained code-map routing-smoke requirements.
-- `535d266` - Required maintained code-map setup to include read-only subagent or fresh-session
-  routing smoke evidence when available, not only schema validation.
-- `d9024a6` - Hardened code-map completion so validation is not treated as routing proof,
-  fresh-agent smokes are graded pass/partial/fail, instruction-file drift is reported separately,
-  and audit-backed presets/scripts are labeled as pre-map infrastructure.
-- `3195bb8` - Required existing-project code-map opt-in to run and summarize the non-destructive
-  readiness audit before asking whether to restructure, preserve layout, or decline.
-- `37f3fb7` - Adopted generic doctrine from a 22-skill Sortie assistant-pack audit: API discovery,
-  constraint mapping, harness observation, planning research gates, GUI proof rules, and supervised
-  agent monitoring without importing Sortie runtime mechanics.
-- `e0a29f5` - Broadened shell-search quoting guidance so validation audits quote script fragments,
-  regex text, `$`, embedded quotes, and other shell metacharacters safely.
-- `3f78dc7` - Tightened GUI and control-harness verification so broad interaction rewrites build
-  before more layers, mutation endpoints prove committed state, and snapped/clamped values are
-  asserted after validation.
-- `0b82acb` - Required hard-reset evidence ledgers and keep/revert decisions after repeated
-  visual-capture or render-scheduling failures.
-- `3aa60ff` - Tightened harness thread-boundary guidance so UI/renderer readback, toolkit action
-  state, and visual capture run through the safe GUI/render thread.
-- `40f1b08` - Added visual-capture timing audit guidance so agents distinguish capture APIs that
-  render during grab from APIs that copy the last presented frame before adding waits or loops.
-- `a18b91c` - Required settled visual-capture evidence so viewport, canvas, render-target, and
-  screenshot checks prove they captured the requested rendered state instead of stale pixels.
-
-- `709e8a6` - Tightened validation-audit shell guidance so agents quote
-  markdown/code-span searches safely instead of letting backticks in docs run as
-  shell command substitutions.
-- `04a276f` - Tightened native C++ GPU validation guidance so agents use
-  repo-declared CMake presets, validation docs, scripts, or code-map build routes
-  instead of guessed build directories.
-- `8d096c2` - Required GUI/editor harness verification to prove real menu,
-  action, shortcut, and enabled-state evidence where practical instead of
-  treating metadata claims as proof.
-- `d4ffdb6` - Added `Commit-Origin` trailers so autonomous agent slice commits
-  and explicit user-requested commits are distinguishable in git history.
-- `b73aa55` - Tightened native GUI/editor guidance so structural graph and scene
-  edits prefer editor actions, menus, shortcuts, or context surfaces before
-  toolbar affordances.
-- `36320ba` - Required agents to commit each verified implementation slice before
-  continuing into the next production milestone.
-- `46586d2` - Required exact desktop launch-command verification for user-facing
-  GUI launch paths instead of relying on offscreen smoke alone.
-- `5e5dbc1` - Tightens desktop launch verification so long-running GUI apps are checked through
-  bounded non-blocking harness probes instead of foreground-blocking terminal runs.
-- `8a64709` - Hardened offscreen GUI verification routing so manager-submitted
-  smoke scripts use absolute paths or explicit working directories.
-- `6633fc2` - Fixed the hosted ShellCheck directive for the Vulkan validation wrapper fixture.
-- `f3a4284` - Hardened donor-first implementation gates, GUI/windowed verification, code-map hygiene,
-  and Vulkan validation-layer environment setup.
-- `ae711f6` - Made project planning prefer current best approaches, state-of-the-art web ceiling
-  checks, and current-vs-legacy separation before stack choices.
-- `57e7a2a` - Added README acknowledgements for the public reference repos that informed the GPU
-  optimization and package-integrity workflows.
-- `5f1902f` - Required donor-grounded native GPU brainstorming plus web ceiling checks for broad
-  realtime simulation/graphics design prompts.
-- `d8a9cdc` - Clarified optional code maps as section-level onboarding and map-first navigation
-  before source inspection.
-- `1096936` - Fixed hosted CI bytecode-cache handling so Python syntax checks do not contaminate
-  strict skill-package validation.
-- `3138a6c` - Fixed review hardening issues around optimization auto-reverts, macOS-safe rollout
-  path resolution, code-map parity checks, and closed package-manifest schemas.
-- `ccb6aeb` - Hardened GPU optimization loops with parser-failure auto-reverts, profiler tool-gap
-  artifacts, target numeric validation, and stricter package-manifest hygiene checks.
-- `ab3c176` - Added deterministic skill package integrity metadata, manifest validation,
-  progressive-disclosure file roles, and sync/rollout audit logging.
-- `e79974e` - Added AgentSys-style performance investigation gates with success criteria,
-  hypotheses, breaking-point search, repeated validation, and consolidation reports.
-- `ba8fa15` - Added the generated GPU optimization loop with AutoKernel-style baseline,
-  keep/revert, report, and commit-highlight maintenance guidance.
-- `13501a2` - Added `docs/BACKLOG.md` to collect future harness, donor, code-map, and tooling ideas.
-- `e53a3b1` - Made README positioning agent-agnostic so Codex-specific wording stays in install and
-  package sections.
-- `c5a0f47` - Clarified that CppStudio is a native C++ GPU development harness delivered as a skill
-  package.
-- `fa8a289` - Hardened validator, sync, and code-map edge cases around quoted metadata, rollback,
-  and local path validation.
-- `02a5b29` - Tightened final review items across rollout rollback, donor validation, trigger-lane
-  notes, and generated-project docs.
-- `4a00635` - Fixed validation coverage so fresh-home checks prove the target Codex home instead of
-  inheriting parent validator overrides.
-- `d1f60c8` - Hardened rollout, manual install safety, code-map enablement, and donor/library
-  validation behavior.
-- `138d2fb` - Made hosted CI discover the installed Lavapipe Vulkan CPU ICD path before Vulkan
-  runtime smoke tests.
+  proves the sidecar case stays covered.
+- `d0ea9a2` - Hardened sidecar isolation rules: sidecars work from fixed snapshots, return map-only
+  patches, and leave reconciliation plus validation to the original worker.
+- `b939b38` - Integrated the bounded code-map sidecar lane for enabled maps.
 
 </details>
-
-Maintainers should add one concise line here for commits that change setup, routing, generated
-projects, validation, donor-library behavior, public docs, install, release, or sync behavior.
 
 ## Sample Projects Built With This Workflow
 

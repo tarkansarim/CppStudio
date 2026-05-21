@@ -141,8 +141,14 @@ C++/CUDA/Vulkan development.
 - Before pushing to remote, update `CHANGELOG.md` with a concise entry for tracked user-visible
   changes, validation/CI changes, generated-template changes, donor-library changes, or install/sync
   behavior changes.
-- Also update README Recent Commit Highlights when a pushed commit changes setup, routing, generated
-  projects, validation, donor-library behavior, public docs, install, release, or sync behavior.
+- Also update README Recent Commit Highlights as the front-page changelog when a pushed commit
+  changes setup, routing, generated projects, validation, donor-library behavior, public docs,
+  install, release, or sync behavior.
+- Do not rely on a chat promise that future pushes will remember these docs. Before committing or
+  pushing from this repo, explicitly inspect the staged diff and report whether `CHANGELOG.md` and
+  README Recent Commit Highlights are included and readable, or why the change is non-qualifying. If
+  either qualifying change-history surface is missing or the front-page changelog is unreadable,
+  update it before the commit instead of promising to do better later.
 
 ## Close-Out
 
@@ -154,5 +160,7 @@ When finishing work here, report:
   single-skill `./scripts/sync_to_codex.sh` run was used and why
 - whether the sub-agent trigger lane was run when skill/donor routing changed
 - whether `CHANGELOG.md` was updated before any push to remote
-- whether README Recent Commit Highlights was updated before any qualifying push to remote
+- whether README Recent Commit Highlights was updated as a readable front-page changelog before any
+  qualifying push to remote
+- the exact reason if either change-history surface was not updated
 - any installed-tool gaps, such as missing `clang-format` or `clang-tidy`
