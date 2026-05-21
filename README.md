@@ -38,6 +38,9 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
+- `latest` - Fixed `important-instruction-ledger` append hygiene so slice watchlists end with one
+  final newline instead of a `git diff --check` trailing-blank-line failure, and added regression
+  coverage to the default validation lane.
 - `latest` - Added a `cppstudio-supervisor` adversarial-review cadence for supervised multi-slice
   implementation: review after every three verified slices, or every two slices when four or fewer
   approved slices remain. Planning packets, review-fix follow-ups, and checkpoint housekeeping do

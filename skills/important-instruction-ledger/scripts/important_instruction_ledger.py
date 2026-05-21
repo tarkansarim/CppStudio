@@ -113,8 +113,7 @@ def render_markdown(entries: Iterable[Entry]) -> str:
             lines.extend(render_entry(index, entry))
     else:
         lines.append("- No historical entries.")
-    lines.append("")
-    return "\n".join(lines)
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def render_entry(index: int, entry: Entry) -> list[str]:

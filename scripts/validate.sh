@@ -97,6 +97,7 @@ required_repo_files=(
     "scripts/quick_validate_skill.py"
     "scripts/validate_skill_package.py"
     "scripts/validate_skill_load_hygiene.py"
+    "scripts/test_important_instruction_ledger.py"
     "scripts/audit_donor_freshness.py"
     "scripts/render_trigger_eval_prompt.py"
     "scripts/validate_trigger_matrix.py"
@@ -509,6 +510,7 @@ if [[ -d "${ROOT_DIR}/.codex/skills" ]]; then
 fi
 pycache_tmp="$(mktemp -d "${VALIDATE_TMP}/pycache.XXXXXX")"
 PYTHONPYCACHEPREFIX="${pycache_tmp}" python3 -m py_compile "${ROOT_DIR}"/scripts/*.py "${SKILL_DIR}"/scripts/*.py
+PYTHONDONTWRITEBYTECODE=1 python3 "${ROOT_DIR}/scripts/test_important_instruction_ledger.py"
 quick_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/quick_validator.XXXXXX")"
 mkdir -p "${quick_validator_tmp}/duplicate" "${quick_validator_tmp}/bad-openai/agents" "${quick_validator_tmp}/missing-reference"
 cat >"${quick_validator_tmp}/duplicate/SKILL.md" <<'EOF'

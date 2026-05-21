@@ -18,6 +18,7 @@ skills, and watch-mode publishing behavior.
 - `scripts/quick_validate_skill.py`
 - `scripts/validate_skill_package.py`
 - `scripts/validate_skill_load_hygiene.py`
+- `scripts/test_important_instruction_ledger.py`
 - `scripts/validate_trigger_results.py`
 - `scripts/managed_skills.sh`
 - `scripts/bootstrap_code_map.py`

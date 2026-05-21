@@ -21,8 +21,8 @@
       "path": "scripts/important_instruction_ledger.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 7687,
-      "sha256": "893b054852cd69056c6368e3dbd6b26a562fb4c6f40d899b8ebdaefc593ba929"
+      "size": 7682,
+      "sha256": "e80366665c4bb962191f33590d3db56b030c3a8532001361469832ceb4915e9d"
     }
   ]
 }
