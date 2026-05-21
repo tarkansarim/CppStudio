@@ -32,6 +32,7 @@ target_include_directories({{PROJECT_NAME_LOWER}}_core
 target_compile_features({{PROJECT_NAME_LOWER}}_core PUBLIC cxx_std_20)
 project_set_warnings({{PROJECT_NAME_LOWER}}_core)
 project_enable_host_sanitizers({{PROJECT_NAME_LOWER}}_core)
+project_enable_host_coverage({{PROJECT_NAME_LOWER}}_core)
 
 if(PROJECT_ENABLE_CUDA)
     add_library({{PROJECT_NAME_LOWER}}_cuda
@@ -83,6 +84,7 @@ if(PROJECT_ENABLE_VULKAN)
     project_configure_vulkan_target({{PROJECT_NAME_LOWER}}_render)
     project_set_warnings({{PROJECT_NAME_LOWER}}_render)
     project_enable_host_sanitizers({{PROJECT_NAME_LOWER}}_render)
+    project_enable_host_coverage({{PROJECT_NAME_LOWER}}_render)
 endif()
 
 add_executable({{PROJECT_NAME_LOWER}}_app
@@ -104,6 +106,7 @@ endif()
 
 project_set_warnings({{PROJECT_NAME_LOWER}}_app)
 project_enable_host_sanitizers({{PROJECT_NAME_LOWER}}_app)
+project_enable_host_coverage({{PROJECT_NAME_LOWER}}_app)
 
 if(PROJECT_BUILD_BENCHMARKS)
     add_executable({{PROJECT_NAME_LOWER}}_benchmark_smoke
@@ -112,6 +115,7 @@ if(PROJECT_BUILD_BENCHMARKS)
     target_link_libraries({{PROJECT_NAME_LOWER}}_benchmark_smoke PRIVATE {{PROJECT_NAME}}::core)
     project_set_warnings({{PROJECT_NAME_LOWER}}_benchmark_smoke)
     project_enable_host_sanitizers({{PROJECT_NAME_LOWER}}_benchmark_smoke)
+    project_enable_host_coverage({{PROJECT_NAME_LOWER}}_benchmark_smoke)
 endif()
 
 if(PROJECT_BUILD_TESTS)
@@ -128,6 +132,7 @@ if(PROJECT_BUILD_TESTS)
     target_link_libraries({{PROJECT_NAME_LOWER}}_core_test PRIVATE {{PROJECT_NAME}}::core)
     project_set_warnings({{PROJECT_NAME_LOWER}}_core_test)
     project_enable_host_sanitizers({{PROJECT_NAME_LOWER}}_core_test)
+    project_enable_host_coverage({{PROJECT_NAME_LOWER}}_core_test)
     project_add_labeled_test({{PROJECT_NAME_LOWER}}_core_test {{PROJECT_NAME_LOWER}}_core_test "quick")
 
     add_test(NAME {{PROJECT_NAME_LOWER}}_app_smoke COMMAND {{PROJECT_NAME_LOWER}}_app --smoke-test)
@@ -139,6 +144,7 @@ if(PROJECT_BUILD_TESTS)
     target_link_libraries({{PROJECT_NAME_LOWER}}_viewport_session_test PRIVATE {{PROJECT_NAME}}::core)
     project_set_warnings({{PROJECT_NAME_LOWER}}_viewport_session_test)
     project_enable_host_sanitizers({{PROJECT_NAME_LOWER}}_viewport_session_test)
+    project_enable_host_coverage({{PROJECT_NAME_LOWER}}_viewport_session_test)
     project_add_labeled_test(
         {{PROJECT_NAME_LOWER}}_viewport_session_test
         {{PROJECT_NAME_LOWER}}_viewport_session_test
@@ -168,6 +174,7 @@ if(PROJECT_BUILD_TESTS)
         target_link_libraries({{PROJECT_NAME_LOWER}}_vulkan_test PRIVATE {{PROJECT_NAME}}::render)
         project_set_warnings({{PROJECT_NAME_LOWER}}_vulkan_test)
         project_enable_host_sanitizers({{PROJECT_NAME_LOWER}}_vulkan_test)
+        project_enable_host_coverage({{PROJECT_NAME_LOWER}}_vulkan_test)
         project_add_labeled_test({{PROJECT_NAME_LOWER}}_vulkan_test {{PROJECT_NAME_LOWER}}_vulkan_test "vulkan;loader")
 
         add_executable({{PROJECT_NAME_LOWER}}_vulkan_compute_test
@@ -176,6 +183,7 @@ if(PROJECT_BUILD_TESTS)
         target_link_libraries({{PROJECT_NAME_LOWER}}_vulkan_compute_test PRIVATE {{PROJECT_NAME}}::render)
         project_set_warnings({{PROJECT_NAME_LOWER}}_vulkan_compute_test)
         project_enable_host_sanitizers({{PROJECT_NAME_LOWER}}_vulkan_compute_test)
+        project_enable_host_coverage({{PROJECT_NAME_LOWER}}_vulkan_compute_test)
         project_add_labeled_test(
             {{PROJECT_NAME_LOWER}}_vulkan_compute_test
             {{PROJECT_NAME_LOWER}}_vulkan_compute_test
@@ -188,6 +196,7 @@ if(PROJECT_BUILD_TESTS)
         target_link_libraries({{PROJECT_NAME_LOWER}}_vulkan_render_test PRIVATE {{PROJECT_NAME}}::render)
         project_set_warnings({{PROJECT_NAME_LOWER}}_vulkan_render_test)
         project_enable_host_sanitizers({{PROJECT_NAME_LOWER}}_vulkan_render_test)
+        project_enable_host_coverage({{PROJECT_NAME_LOWER}}_vulkan_render_test)
         project_add_labeled_test(
             {{PROJECT_NAME_LOWER}}_vulkan_render_test
             {{PROJECT_NAME_LOWER}}_vulkan_render_test

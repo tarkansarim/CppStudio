@@ -164,3 +164,9 @@ validation.
   agents do not mix CUDA into a Vulkan project by accident.
 - `validate_studio_backbone.py` is lane-aware. It auto-detects CUDA-capable scaffolds from CUDA
   files/options, accepts clean Vulkan-only scaffolds, and can be pinned with `--gpu-lane` in tests.
+- Generated projects include a focused host coverage lane beside the existing host sanitizer lane.
+  The `coverage` configure/build preset disables CUDA and Vulkan, enables Clang/LLVM or GCC
+  instrumentation for host C++ targets, and the `coverage-quick` CTest preset runs quick tests with
+  `LLVM_PROFILE_FILE` set for Clang profile emission. Generated validation docs frame coverage as
+  harness maturity evidence for tests, scenarios, and fuzz corpora, not correctness, GPU, visual, or
+  performance proof.

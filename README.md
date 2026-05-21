@@ -38,6 +38,9 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
+- `latest` - Added a focused host coverage lane to generated CppStudio projects beside ASan/UBSan,
+  including `coverage` and `coverage-quick` presets, compact test/fuzz/harness guidance, and
+  full-validation coverage for fresh scaffolds.
 - `latest` - Made `cppstudio-supervisor` launch substantive Codex worker lanes at
   `model_reasoning_effort="xhigh"` by default, while keeping fast/priority service opt-in only when
   the user asks for it, and requiring footer/process verification after relaunch.

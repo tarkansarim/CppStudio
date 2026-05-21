@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 93700,
-      "sha256": "85b62d1d63be717e36f55f4bad5f01f7c29337b3d61cc7da37d650620a3f250e"
+      "size": 94897,
+      "sha256": "b492db493ea8b4aeea73a57631d25d93b6971bd46a7c9f5fad2b18577587793f"
     },
     {
       "path": "agents/openai.yaml",
@@ -49,22 +49,22 @@
       "path": "assets/app-library-template/CMakeLists.txt",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 8053,
-      "sha256": "570f9981204e9db62e7d89708687476ff51d58adf82a29c0b0294c31c08a9e66"
+      "size": 8685,
+      "sha256": "c7f09895b4c53c2db43b5cb94b1c549a30430ddd8be250b2ac7c0c181f5ca27c"
     },
     {
       "path": "assets/app-library-template/CMakePresets.json",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 7616,
-      "sha256": "9f3eb9318551574a22308ec5496c65e53e96aba9ea4e9931b554ac29d00ff596"
+      "size": 8451,
+      "sha256": "ef7a37bf4b433c96cb76a8288f9c41bf4c2e4c98903d20592312ffd0e47dd7e2"
     },
     {
       "path": "assets/app-library-template/README.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 6693,
-      "sha256": "cc590caa8ad5cc114d5d1df699cf98d6fdf66688305ce1d71117d80c9c9e5f5a"
+      "size": 7041,
+      "sha256": "33c83683ca5d79b589fc56778bfd19b3aa5c0397ba77499a2f638020e3c1f66f"
     },
     {
       "path": "assets/app-library-template/benchmarks/benchmark_smoke.cpp",
@@ -84,8 +84,8 @@
       "path": "assets/app-library-template/cmake/ProjectOptions.cmake",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 1197,
-      "sha256": "0214421de15574f6d8ee118f0dbd055433986f194cee75ab02b6d3757d100535"
+      "size": 1316,
+      "sha256": "fa42d97e73bf79ba3392998a2a5438b928af96f7cc0d5151494d2d2279734f8b"
     },
     {
       "path": "assets/app-library-template/cmake/ProjectVulkan.cmake",
@@ -98,8 +98,8 @@
       "path": "assets/app-library-template/cmake/Sanitizers.cmake",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 1045,
-      "sha256": "fdea60436a1c80318519dd1a1918169479dd75fd00fdc7dd5ba6adafbff030b5"
+      "size": 2318,
+      "sha256": "0c14d931bb6bb9641fa63ad2ee8e85cc8238806170c14fd41ee9f0ed24ff3fd9"
     },
     {
       "path": "assets/app-library-template/cmake/Testing.cmake",
@@ -182,8 +182,8 @@
       "path": "assets/app-library-template/docs/SUBSYSTEMS/validation-ci.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 652,
-      "sha256": "573774d9f094331f0f573da3b5c86ffe5cfa7b2bdbf9291365853aca09ce2374"
+      "size": 724,
+      "sha256": "ca8253725a7807d95e5242f1dc41cee31bf37f466a43e97ba84f7f36b96d59f7"
     },
     {
       "path": "assets/app-library-template/docs/SUBSYSTEMS/viewport-session-testing.md",
@@ -203,8 +203,8 @@
       "path": "assets/app-library-template/docs/VALIDATION_PIPELINE.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 20211,
-      "sha256": "dbd29259f1f6fe804c2252901a9aeebae45642fdafb2c394e9ad97f12f8640b7"
+      "size": 22583,
+      "sha256": "16fdc618fed9b4d4915592bd7fd43f2907a4bd250058306e79b147262fb74344"
     },
     {
       "path": "assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md",
@@ -1456,8 +1456,8 @@
       "path": "scripts/scaffold_gpu_cpp_project.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 27960,
-      "sha256": "e61f6f87b4f4ef53d314f7c5a825a927ef10ad581897f1af4b4f85a9f0ae951d"
+      "size": 28477,
+      "sha256": "a79fbe6719a90c067c1034d88cecef5503dbdb6e20f7d22c8e59fc7a6df3f31b"
     },
     {
       "path": "scripts/select_idle_gpu.sh",
@@ -1484,8 +1484,8 @@
       "path": "scripts/validate_studio_backbone.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 11311,
-      "sha256": "e3ae6201b3b1839baee4c20be2ba84474ba86cd11979a349e899977cdfb730b2"
+      "size": 11349,
+      "sha256": "7f21e45af2944689ec8a78839c11f03211d10aeb5e7ce9f71305ed682d774b36"
     }
   ]
 }

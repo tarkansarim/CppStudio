@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added focused host coverage to generated CppStudio projects beside the ASan/UBSan sanitizer lane.
+  New scaffolds now include `coverage` and `coverage-quick` presets, CMake host coverage
+  instrumentation for Clang/LLVM and GCC, validation-pipeline guidance for test/fuzz/harness
+  maturity evidence, and full-validation coverage of the generated lane.
 - Made `cppstudio-supervisor` default substantive supervised Codex workers to
   `model_reasoning_effort="xhigh"` and require footer/process verification after launch. The
   fast/priority service tier remains opt-in only when the user explicitly asks for it.

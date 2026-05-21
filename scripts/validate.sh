@@ -2895,6 +2895,9 @@ if (( full )); then
         cmake --preset asan-ubsan
         cmake --build --preset asan-ubsan
         ctest --preset asan-ubsan-quick --output-on-failure --no-tests=error
+        cmake --preset coverage
+        cmake --build --preset coverage
+        ctest --preset coverage-quick --output-on-failure --no-tests=error
     )
 
     cuda_sample_dir="$(mktemp -d "${VALIDATE_TMP}/generated_cuda_project.XXXXXX")"

@@ -1,7 +1,7 @@
 # Validation And CI
 
-CTest labels, smoke tests, GPU runner expectations, profiling evidence, formatting, and static
-analysis.
+CTest labels, smoke tests, host sanitizer and focused coverage lanes, GPU runner expectations,
+profiling evidence, formatting, and static analysis.
 
 ## Canonical Docs
 
@@ -19,7 +19,7 @@ analysis.
 
 ## Update When
 
-- test labels, presets, CI runner labels, validation scripts, profiling artifacts, format/tidy policy,
-  optimization-loop behavior, or benchmark recording requirements change
+- test labels, presets, sanitizer or coverage lanes, CI runner labels, validation scripts, profiling
+  artifacts, format/tidy policy, optimization-loop behavior, or benchmark recording requirements change
 - a new subsystem requires a distinct validation lane
 - CI starts requiring new host tools or environment variables

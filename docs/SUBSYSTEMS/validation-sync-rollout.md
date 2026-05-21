@@ -108,6 +108,9 @@ skills, and watch-mode publishing behavior.
   profiler tool-gap artifacts, hypothesis logging, breaking-point search, repeated validation
   passes, beam-style round planning, keep/revert attempts, malformed benchmark revert behavior, final
   reporting, and scaffold installation of `scripts/run_gpu_optimization_loop.py`.
+- `validate.sh --full` builds generated projects through the host `asan-ubsan` and `coverage`
+  presets, then runs `asan-ubsan-quick` and `coverage-quick` so sanitizer and focused coverage lanes
+  remain registered and buildable in fresh scaffolds.
 - `validate.sh` also fakes Nsight Systems report/format discovery so `run_nsys_smoke.sh` proves it
   avoids unsupported legacy stats options, uses `--force-export=true`, and selects
   lane-appropriate explicit Vulkan/CUDA report sets from the installed `nsys` surface.

@@ -404,9 +404,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
   explicitly asked for that commit. Do not use provider names such as `codex`, `claude`, or model
   names as commit-origin values; the trailer describes the reason for the commit, not which agent
   wrote it.
-- Use evidence before claims. Builds, CTest labels, shader compilation, Vulkan validation,
-  Compute Sanitizer, RenderDoc/Nsight captures, screenshots, image comparisons, and profiler output
-  matter more than plausible explanations.
+- Use evidence before claims. Builds, CTest labels, shader compilation, ASan/UBSan host sanitizer
+  runs, focused host coverage reports, Vulkan validation, Compute Sanitizer, RenderDoc/Nsight
+  captures, screenshots, image comparisons, and profiler output matter more than plausible
+  explanations.
 - For native GPU regressions, acceptance proof must match the changed feature contract. Do not make a
   UI, model, or test change that converts an unproven backend failure into the new expected behavior.
   If a capability probe says "unsupported" but the feature is requested, first prove whether the
@@ -868,7 +869,19 @@ When this skill is active, work like a native C++ GPU systems engineer:
     SDK/tooling, loader, ICD visibility, physical-device selection, queue/swapchain support, or
     surface/present support before changing renderer code.
 15. Register tests with CTest labels so quick, GPU, GUI, Vulkan, CUDA, shader, compute, render, validation, perf, and nightly lanes can be selected independently.
-16. For GPU performance work, use the generated optimization loop when available. Start from
+16. Keep host memory-safety and coverage evidence explicit. Use the generated `asan-ubsan` preset
+    for C++ host memory and undefined-behavior checks, including parser/importer tests and fuzz
+    harnesses that can run without a GPU. On Clang/GCC this lane uses ASan+UBSan; on MSVC it is
+    ASan-only. Keep TSan as a separate host preset or maintainer lane when thread-race evidence is
+    needed, because TSan often conflicts with ASan/UBSan combinations, GPU runtimes, and platform
+    assumptions. Do not hide sanitizer failures behind non-instrumented fallback runs. Use the
+    generated `coverage` preset only for focused host-side harness maturity questions: LLVM/Clang
+    `-fprofile-instr-generate -fcoverage-mapping`, GCC `-ftest-coverage -fprofile-arcs`, corpus or
+    scenario replay, and a report that identifies reached and unreached code. Coverage is a routing
+    signal for missing tests, seed inputs, dictionaries, or harness branches; it is not correctness,
+    GPU, visual, or performance proof. Keep CUDA memory/race/init/sync issues in Compute Sanitizer
+    and Vulkan API issues in validation-layer lanes.
+17. For GPU performance work, use the generated optimization loop when available. Start from
     the target project's `docs/GPU_OPTIMIZATION_LOOP.md`; when working in this source package before
     that doc has been copied, use the bundled template copy at
     `assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md`. Create a representative target table
@@ -881,21 +894,21 @@ When this skill is active, work like a native C++ GPU systems engineer:
     benchmarking an attempt, keep only correct improvements, revert rejected or divergent attempts,
     use `plan-round` for beam-style parallel worker slots when exploring multiple bottlenecks, use
     `next` for move-on decisions, and generate a consolidation report before claiming speedups.
-17. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
+18. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
     For Nsight Systems stats readback, prefer the bundled `scripts/run_nsys_smoke.sh` because it
     probes the installed report and format surface. If writing a manual `nsys stats` command, inspect
     `nsys stats --help-reports` and `nsys stats --help` first, use explicit reports such as
     `vulkan_api_sum,osrt_sum,nvtx_sum` or `cuda_api_gpu_sum,cuda_gpu_kern_sum,osrt_sum,nvtx_sum`,
     include `--force-export=true`, and do not use legacy `--report summary` or unsupported
     `--format text` assumptions.
-18. Before greenfield scaffolding, major backbone edits, or native GPU architecture brainstorming,
+19. Before greenfield scaffolding, major backbone edits, or native GPU architecture brainstorming,
     read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library,
     CUDA+Vulkan combined/interop app, native GUI/HUD/editor UI, AI runtime, neural 3D viewer,
     sculpting/brush tool, grooming/brush/fur tool, glTF/runtime asset viewer, renderer backbone/runtime mesh pipeline,
     DCC scene pipeline,
     volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool,
     3D/physics/GPU simulation tool, or XR app.
-19. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects,
+20. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects,
     or when brainstorming native GPU architecture that will recommend solvers, rendering paths,
     dependencies, subsystem boundaries, or MVP order, use the nested donor router before giving the
     recommendation. Read `references/donor-library/README.md` for policy; when the prompt uses VFX
@@ -912,7 +925,7 @@ When this skill is active, work like a native C++ GPU systems engineer:
     brainstorms that mention fluid, fire, smoke, water, destruction, shatter, neural 3D,
     upscaling/reconstruction, XR, or renderer architecture, do the web ceiling check even if the user
     did not use "current" or "best."
-20. Do not route design-only, frontend-only, storyboarding, generic image/video, generic product-AI UI, plain text rendering, or ordinary data import requests through this skill unless the user explicitly asks for native C++ GPU implementation, C++/CUDA/Vulkan infrastructure, or donor-reference selection.
+21. Do not route design-only, frontend-only, storyboarding, generic image/video, generic product-AI UI, plain text rendering, or ordinary data import requests through this skill unless the user explicitly asks for native C++ GPU implementation, C++/CUDA/Vulkan infrastructure, or donor-reference selection.
 
 For long-running target-project implementation, repeat this rhythm between slices:
 

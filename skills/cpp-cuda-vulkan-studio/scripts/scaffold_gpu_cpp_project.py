@@ -357,7 +357,12 @@ when the project defines that contract deliberately.
     )
     text = remove_required_pattern(
         text,
-        r"\nOptional CUDA lane:\n\n```bash\ncmake --preset cuda-debug\ncmake --build --preset cuda-debug\nctest --preset cuda --output-on-failure\n```\n\nOptional combined CUDA plus Vulkan lane:\n\n```bash\ncmake --preset cuda-vulkan-combined\ncmake --build --preset cuda-vulkan-combined\n```\n",
+        r"\nOptional CUDA lane:\n\n```bash\ncmake --preset cuda-debug\ncmake --build --preset cuda-debug\nctest --preset cuda --output-on-failure\n```\n",
+        readme,
+    )
+    text = remove_required_pattern(
+        text,
+        r"\nOptional combined CUDA plus Vulkan lane:\n\n```bash\ncmake --preset cuda-vulkan-combined\ncmake --build --preset cuda-vulkan-combined\n```\n",
         readme,
     )
     text = replace_required(
@@ -393,6 +398,7 @@ Optional but useful tools:
 - `release`: optimized release build with warnings as errors.
 - `profile`: `RelWithDebInfo` build for profiling.
 - `asan-ubsan`: host sanitizer build with Vulkan disabled.
+- `coverage`: focused host coverage build with Vulkan disabled.
 - `vulkan-debug`: Vulkan runtime and shader smoke build.
 - `vulkan-portability`: Vulkan portability-enumeration build.
 - `vulkan-validation`: Vulkan validation-layer build.
@@ -419,6 +425,18 @@ cmake --preset asan-ubsan
 cmake --build --preset asan-ubsan
 ctest --preset asan-ubsan-quick --output-on-failure
 ```
+
+Focused host coverage gate:
+
+```bash
+cmake --preset coverage
+cmake --build --preset coverage
+ctest --preset coverage-quick --output-on-failure
+```
+
+Use coverage after a test, scenario, or fuzz corpus exists and you need evidence about harness
+maturity. Coverage shows which host-side paths were exercised; it does not prove correctness, GPU
+behavior, or performance.
 
 Vulkan shader gate:
 

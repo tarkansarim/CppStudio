@@ -60,7 +60,49 @@ ctest --preset asan-ubsan-quick --output-on-failure
 ```
 
 The `asan-ubsan` preset uses ASan+UBSan on Clang/GCC-style toolchains. On MSVC it enables
-AddressSanitizer only because MSVC does not provide the same UBSan lane.
+AddressSanitizer only because MSVC does not provide the same UBSan lane. Keep TSan as a separate
+host preset or maintainer lane when a project needs thread-race evidence, because TSan often
+conflicts with sanitizer combinations, GPU runtimes, and platform assumptions.
+Use this lane for host-side memory safety issues, parser/importer tests, fuzz harnesses, and
+regressions that can run without a GPU. Keep ASan/UBSan failures fatal and visible; do not replace
+the sanitizer lane with a non-instrumented run just to get a green result. If a fuzzer drives this
+build, set fuzzer memory limits for ASan's virtual address space, such as libFuzzer
+`-rss_limit_mb=0` or AFL++ `-m none`, and keep CUDA memory/race/init/sync findings in the separate
+Compute Sanitizer lane.
+
+Focused host coverage gate:
+
+```bash
+cmake --preset coverage
+cmake --build --preset coverage
+ctest --preset coverage-quick --output-on-failure
+```
+
+Use coverage after a test, scenario, or fuzz corpus exists and you need evidence about harness
+maturity: which parser branches, import paths, command handlers, viewport-session reducers, or other
+host-side code the corpus actually reaches. Do not treat coverage percentage as correctness or
+performance proof. Use it to find blind spots, plateaued fuzz paths, missing seed inputs, and
+dictionary needs, then add focused tests or corpus seeds and rerun the same report.
+
+For LLVM/Clang coverage, run the `coverage` preset and collect the `coverage-*.profraw` files from
+`build/coverage`:
+
+```bash
+llvm-profdata merge -sparse build/coverage/coverage-*.profraw -o build/coverage/coverage.profdata
+llvm-cov report build/coverage/{{PROJECT_NAME_LOWER}}_core_test \
+  -object build/coverage/{{PROJECT_NAME_LOWER}}_app \
+  -object build/coverage/{{PROJECT_NAME_LOWER}}_viewport_session_test \
+  -instr-profile=build/coverage/coverage.profdata \
+  -ignore-filename-regex='tests/|build/'
+```
+
+Keep the object list aligned with the quick executables that produced the merged profile. If the
+project adds more host-side quick tools or session runners, add them with another `-object` entry
+before using the report as lane-wide coverage evidence.
+
+For GCC coverage, the preset uses `-ftest-coverage -fprofile-arcs`; generate reports with `gcovr`
+or `gcov` from the `build/coverage` tree and exclude generated build files and test harness glue.
+Keep focused coverage artifacts out of commits unless the project intentionally tracks a report.
 
 GPU gate:
 

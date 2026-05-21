@@ -50,6 +50,7 @@ COMMON_CONFIGURE_PRESETS = {
     "release",
     "profile",
     "asan-ubsan",
+    "coverage",
     "vulkan-debug",
     "vulkan-portability",
     "vulkan-validation",
@@ -69,6 +70,7 @@ COMMON_TEST_PRESETS = {
     "vulkan-render",
     "vulkan-validation",
     "asan-ubsan-quick",
+    "coverage-quick",
     "benchmark",
 }
 CUDA_TEST_PRESETS = {"cuda"}

@@ -6,6 +6,7 @@ option(PROJECT_ENABLE_VULKAN_VALIDATION "Enable Vulkan validation-layer requests
 option(PROJECT_ENABLE_VULKAN_DEBUG_UTILS "Enable Vulkan debug-utils object names and labels" ON)
 option(PROJECT_ENABLE_VULKAN_PORTABILITY "Enable Vulkan portability enumeration when supported" OFF)
 option(PROJECT_ENABLE_HOST_SANITIZERS "Enable host ASan/UBSan flags for C++ targets" OFF)
+option(PROJECT_ENABLE_HOST_COVERAGE "Enable host C++ coverage instrumentation for focused test and fuzz evidence" OFF)
 option(PROJECT_ENABLE_CLANG_TIDY "Enable clang-tidy through CMake" OFF)
 option(PROJECT_WARNINGS_AS_ERRORS "Treat project warnings as errors" OFF)
 

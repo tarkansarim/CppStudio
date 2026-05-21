@@ -132,6 +132,17 @@ cmake --build --preset cuda-debug
 ctest --preset cuda --output-on-failure
 ```
 
+Focused host coverage lane:
+
+```bash
+cmake --preset coverage
+cmake --build --preset coverage
+ctest --preset coverage-quick --output-on-failure
+```
+
+Use this lane when tests, fuzz corpora, or harness scenarios need maturity evidence. Coverage shows
+which host-side paths were exercised; it does not prove correctness, GPU behavior, or performance.
+
 Optional combined CUDA plus Vulkan lane:
 
 ```bash

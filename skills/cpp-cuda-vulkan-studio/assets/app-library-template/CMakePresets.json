@@ -66,6 +66,18 @@
       }
     },
     {
+      "name": "coverage",
+      "inherits": "base",
+      "displayName": "Focused host coverage build",
+      "binaryDir": "${sourceDir}/build/coverage",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PROJECT_ENABLE_CUDA": "OFF",
+        "PROJECT_ENABLE_VULKAN": "OFF",
+        "PROJECT_ENABLE_HOST_COVERAGE": "ON"
+      }
+    },
+    {
       "name": "cuda-debug",
       "inherits": "base",
       "displayName": "CUDA debug build",
@@ -155,6 +167,11 @@
     {
       "name": "asan-ubsan",
       "configurePreset": "asan-ubsan",
+      "jobs": 0
+    },
+    {
+      "name": "coverage",
+      "configurePreset": "coverage",
       "jobs": 0
     },
     {
@@ -311,6 +328,24 @@
       "filter": {
         "include": {
           "label": "quick"
+        }
+      }
+    },
+    {
+      "name": "coverage-quick",
+      "configurePreset": "coverage",
+      "environment": {
+        "LLVM_PROFILE_FILE": "coverage-%p.profraw"
+      },
+      "output": {
+        "outputOnFailure": true
+      },
+      "filter": {
+        "include": {
+          "label": "quick"
+        },
+        "exclude": {
+          "label": "gpu|gui|perf|nightly"
         }
       }
     },
