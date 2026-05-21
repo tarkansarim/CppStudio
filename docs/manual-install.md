@@ -7,7 +7,7 @@ Manual install touches only:
 
 - the managed `cpp-cuda-vulkan-studio`, `native-cpp-gui-hud`, `cppstudio-project-planner`,
   `agentic-control-harness`, `viewport-session-testing`, `important-instruction-ledger`, and
-  `vulkan-compute-sync`, `modern-cpp-cmake`, `cuda-kernel-authoring`, and
+  `cppstudio-supervisor`, `vulkan-compute-sync`, `modern-cpp-cmake`, `cuda-kernel-authoring`, and
   `gpu-profiling-workstation` skill folders
 - optional marked CppStudio relay content in user-level `AGENTS.md`
 
@@ -36,7 +36,7 @@ cd /path/to/CppStudio
 
 codex_home="${CODEX_HOME:-${HOME}/.codex}"
 skills_root="${codex_home}/skills"
-skill_names=("cpp-cuda-vulkan-studio" "native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "vulkan-compute-sync" "modern-cpp-cmake" "cuda-kernel-authoring" "gpu-profiling-workstation")
+skill_names=("cpp-cuda-vulkan-studio" "native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "cppstudio-supervisor" "vulkan-compute-sync" "modern-cpp-cmake" "cuda-kernel-authoring" "gpu-profiling-workstation")
 system_validator="${skills_root}/.system/skill-creator/scripts/quick_validate.py"
 repo_validator="${PWD}/scripts/quick_validate_skill.py"
 package_validator="${PWD}/scripts/validate_skill_package.py"
@@ -124,7 +124,7 @@ Windows PowerShell:
 Set-Location C:\path\to\CppStudio
 $CodexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME ".codex" }
 $SkillsRoot = Join-Path $CodexHome "skills"
-$SkillNames = @("cpp-cuda-vulkan-studio", "native-cpp-gui-hud", "cppstudio-project-planner", "agentic-control-harness", "viewport-session-testing", "important-instruction-ledger", "vulkan-compute-sync", "modern-cpp-cmake", "cuda-kernel-authoring", "gpu-profiling-workstation")
+$SkillNames = @("cpp-cuda-vulkan-studio", "native-cpp-gui-hud", "cppstudio-project-planner", "agentic-control-harness", "viewport-session-testing", "important-instruction-ledger", "cppstudio-supervisor", "vulkan-compute-sync", "modern-cpp-cmake", "cuda-kernel-authoring", "gpu-profiling-workstation")
 $SystemValidator = Join-Path $SkillsRoot ".system\skill-creator\scripts\quick_validate.py"
 $RepoValidator = Join-Path (Get-Location) "scripts\quick_validate_skill.py"
 $PackageValidator = Join-Path (Get-Location) "scripts\validate_skill_package.py"

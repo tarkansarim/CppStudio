@@ -23,6 +23,8 @@ dry_run=0
 delete_args=(--delete)
 sync_tmp_parent=""
 sync_backup_path=""
+sync_tmp_root=""
+sync_backup_root=""
 sync_target_existed=0
 sync_backup_created=0
 sync_transaction_complete=0
@@ -46,6 +48,21 @@ import sys
 from pathlib import Path
 
 print(Path(sys.argv[1]).expanduser().resolve(strict=False))
+PY
+}
+
+is_within_path() {
+    python3 - "$1" "$2" <<'PY'
+import sys
+from pathlib import Path
+
+candidate = Path(sys.argv[1]).resolve(strict=False)
+parent = Path(sys.argv[2]).resolve(strict=False)
+try:
+    candidate.relative_to(parent)
+except ValueError:
+    raise SystemExit(1)
+raise SystemExit(0)
 PY
 }
 
@@ -265,7 +282,17 @@ if (( dry_run )); then
 else
     target_parent="$(dirname "${target_resolved}")"
     mkdir -p "${target_parent}"
-    sync_tmp_parent="$(mktemp -d "${target_parent}/.${SKILL_NAME}.sync.XXXXXX")"
+    sync_tmp_root="${CPPSTUDIO_SYNC_TMP_ROOT:-${CODEX_HOME_DIR}/.cppstudio-sync-tmp}"
+    sync_backup_root="${CPPSTUDIO_SYNC_BACKUP_ROOT:-${CODEX_HOME_DIR}/.cppstudio-skill-backups}"
+    if is_within_path "${sync_tmp_root}" "${target_parent}" || is_within_path "${sync_backup_root}" "${target_parent}"; then
+        echo "Refusing sync staging or backup root inside scanned Codex skills root:" >&2
+        echo "  skills root=${target_parent}" >&2
+        echo "  staging root=${sync_tmp_root}" >&2
+        echo "  backup root=${sync_backup_root}" >&2
+        exit 1
+    fi
+    mkdir -p "${sync_tmp_root}" "${sync_backup_root}"
+    sync_tmp_parent="$(mktemp -d "${sync_tmp_root}/${SKILL_NAME}.sync.XXXXXX")"
     staged_target="${sync_tmp_parent}/${SKILL_NAME}"
 
     restore_sync_backup() {
@@ -292,7 +319,7 @@ else
 
     if [[ -e "${target_resolved}" ]]; then
         sync_target_existed=1
-        sync_backup_path="${target_resolved}.backup.$(date +%Y%m%d%H%M%S).$$"
+        sync_backup_path="${sync_backup_root}/${SKILL_NAME}.backup.$(date +%Y%m%d%H%M%S).$$"
         mv "${target_resolved}" "${sync_backup_path}"
         sync_backup_created=1
     fi

@@ -3,7 +3,9 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_DIR="${ROOT_DIR}/skills/cpp-cuda-vulkan-studio"
-AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "vulkan-compute-sync" "modern-cpp-cmake" "cuda-kernel-authoring" "gpu-profiling-workstation")
+# shellcheck source=scripts/managed_skills.sh
+source "${ROOT_DIR}/scripts/managed_skills.sh"
+AUXILIARY_SKILL_NAMES=("${CPPSTUDIO_AUXILIARY_SKILL_NAMES[@]}")
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SYSTEM_VALIDATOR="${CODEX_HOME_DIR}/skills/.system/skill-creator/scripts/quick_validate.py"
 REPO_VALIDATOR="${ROOT_DIR}/scripts/quick_validate_skill.py"
@@ -88,6 +90,7 @@ require_python310
 required_repo_files=(
     "scripts/install_companion_donor_links.py"
     "scripts/install_user_agents_relay.py"
+    "scripts/managed_skills.sh"
     "scripts/bootstrap_code_map.py"
     "scripts/validate_code_map.py"
     "scripts/check_code_map_drift.py"
@@ -127,6 +130,9 @@ required_repo_files=(
     "skills/important-instruction-ledger/agents/openai.yaml"
     "skills/important-instruction-ledger/scripts/important_instruction_ledger.py"
     "skills/important-instruction-ledger/package-manifest.json"
+    "skills/cppstudio-supervisor/SKILL.md"
+    "skills/cppstudio-supervisor/agents/openai.yaml"
+    "skills/cppstudio-supervisor/package-manifest.json"
     "skills/vulkan-compute-sync/SKILL.md"
     "skills/vulkan-compute-sync/agents/openai.yaml"
     "skills/vulkan-compute-sync/package-manifest.json"
@@ -188,6 +194,14 @@ grep -q "important-instruction-ledger" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "docs/agent-context/SLICE_WATCHLIST.md" \
     "${ROOT_DIR}/skills/important-instruction-ledger/SKILL.md"
+grep -q "Send a fix packet to the owning repo worker immediately" \
+    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+grep -q "fresh-context review" \
+    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+grep -q "primary planning artifact" \
+    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+grep -q "Rewind readiness" \
+    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
 grep -q "Donor Feature Disposition Matrix" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "skim donor code" \
@@ -933,6 +947,18 @@ PY
 python3 "${ROOT_DIR}/scripts/audit_donor_freshness.py" \
     "${SKILL_DIR}/references/donor-library" \
     --summary-only
+if rg -q 'AUXILIARY_SKILL_NAMES=\("[^$]' \
+    "${ROOT_DIR}/scripts/rollout_to_codex.sh" \
+    "${ROOT_DIR}/scripts/watch_to_codex.sh"; then
+    echo "rollout/watch scripts must source scripts/managed_skills.sh instead of declaring skill arrays" >&2
+    exit 1
+fi
+grep -q "CPPSTUDIO_SYNC_TMP_ROOT" "${ROOT_DIR}/scripts/sync_to_codex.sh"
+grep -q "CPPSTUDIO_SYNC_BACKUP_ROOT" "${ROOT_DIR}/scripts/sync_to_codex.sh"
+if rg -q 'mktemp -d "\$\{target_parent\}/|\$\{target_resolved\}\.backup' "${ROOT_DIR}/scripts/sync_to_codex.sh"; then
+    echo "sync_to_codex.sh must not stage or back up packages under the scanned skills root" >&2
+    exit 1
+fi
 python3 "${ROOT_DIR}/scripts/validate_trigger_matrix.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
     --repo-root "${ROOT_DIR}"
@@ -1017,6 +1043,7 @@ for trigger_tag in dcc materials volumes vfx games infrastructure gui planning h
             ;;
         harness)
             grep -q "agentic-control-harness" "${trigger_tag_md}"
+            grep -q "cppstudio-supervisor" "${trigger_tag_md}"
             grep -q "visual/UI or viewport evidence" "${trigger_tag_md}"
             grep -q "exact readiness invariants" "${trigger_tag_md}"
             grep -q "route registry/docs reconciliation" "${trigger_tag_md}"
@@ -1066,6 +1093,18 @@ for case_check in "${code_map_case_checks[@]}"; do
     grep -q "${third_pattern}" "${trigger_case_md}"
     grep -q "${fourth_pattern}" "${trigger_case_md}"
 done
+supervisor_case_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_cppstudio_supervisor.XXXXXX.md")"
+python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
+    "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \
+    --repo-root "${ROOT_DIR}" \
+    --case cppstudio-supervisor-worker-lane \
+    --case solo-native-gpu-implementation-no-supervisor >"${supervisor_case_md}"
+grep -q "cppstudio-supervisor-worker-lane" "${supervisor_case_md}"
+grep -q "skills/cppstudio-supervisor/SKILL.md" "${supervisor_case_md}"
+grep -q "fresh-context reviewers" "${supervisor_case_md}"
+grep -q "Rewind readiness" "${supervisor_case_md}"
+grep -q "solo-native-gpu-implementation-no-supervisor" "${supervisor_case_md}"
+grep -q "Do not load cppstudio-supervisor" "${supervisor_case_md}"
 trigger_negative_md="$(mktemp "${VALIDATE_TMP}/trigger_eval_negative.XXXXXX.md")"
 python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     "${ROOT_DIR}/research/donor-library/trigger-matrix.json" \

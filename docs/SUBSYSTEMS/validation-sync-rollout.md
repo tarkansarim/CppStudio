@@ -19,6 +19,7 @@ skills, and watch-mode publishing behavior.
 - `scripts/validate_skill_package.py`
 - `scripts/validate_skill_load_hygiene.py`
 - `scripts/validate_trigger_results.py`
+- `scripts/managed_skills.sh`
 - `scripts/bootstrap_code_map.py`
 - `scripts/validate_code_map.py`
 - `scripts/check_code_map_drift.py`
@@ -28,6 +29,7 @@ skills, and watch-mode publishing behavior.
 - `skills/agentic-control-harness/package-manifest.json`
 - `skills/viewport-session-testing/package-manifest.json`
 - `skills/important-instruction-ledger/package-manifest.json`
+- `skills/cppstudio-supervisor/package-manifest.json`
 - `skills/vulkan-compute-sync/package-manifest.json`
 - `skills/modern-cpp-cmake/package-manifest.json`
 - `skills/cuda-kernel-authoring/package-manifest.json`
@@ -56,6 +58,9 @@ skills, and watch-mode publishing behavior.
   `package-manifest.json` files to verify shipped file hashes, sizes,
   disclosure groups, package layout, and package hygiene. Manifest writes reject unsupported
   top-level files plus VCS, editor, cache, env, secret-like, archive, log, swap, and temp artifacts.
+- `scripts/managed_skills.sh` is the single source for bundled auxiliary skill names used by
+  validation, rollout, and rollout watch mode. Do not reintroduce local auxiliary arrays in those
+  scripts.
 - Skill-load hygiene validation uses `scripts/validate_skill_load_hygiene.py` to scan the repo
   skill root as a hard gate, reject backup-looking files/directories that can bloat discovery, catch
   duplicate loaded skill names, and keep description metadata inside a compact startup budget. Keep
@@ -65,7 +70,9 @@ skills, and watch-mode publishing behavior.
   from other repos; set `CPPSTUDIO_STRICT_USER_SKILL_LOAD=1` to make that installed root a fatal
   maintainer gate.
 - Non-dry-run sync stages and validates the skill before replacing the installed target, then restores
-  the previous target if final validation fails.
+  the previous target if final validation fails. Staging and backups live outside the scanned
+  `${SYNC_CODEX_HOME:-$HOME/.codex}/skills` root so interrupted syncs cannot expose duplicate or
+  stale skill packages to a concurrent Codex startup scan.
 - Sync validates the selected source skill, staged skill, and final installed skill against that
   package manifest. Rollout validates the installed main skill and auxiliary bundled skills before
   completion.
@@ -90,7 +97,7 @@ skills, and watch-mode publishing behavior.
   Codex home, then restore the full managed-skill set if any later copy or validation step fails.
 - `rollout_to_codex.sh` installs bundled auxiliary skills such as `native-cpp-gui-hud`,
   `cppstudio-project-planner`, `agentic-control-harness`, `viewport-session-testing`,
-  `important-instruction-ledger`, `vulkan-compute-sync`, `modern-cpp-cmake`,
+  `important-instruction-ledger`, `cppstudio-supervisor`, `vulkan-compute-sync`, `modern-cpp-cmake`,
   `cuda-kernel-authoring`, and `gpu-profiling-workstation`,
   installs the minimal user-level `AGENTS.md` relay by default, and preserves user-owned content
   outside the marked CppStudio relay block.

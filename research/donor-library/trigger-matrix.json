@@ -387,6 +387,35 @@
       ]
     },
     {
+      "name": "cppstudio-supervisor-worker-lane",
+      "tags": [
+        "positive",
+        "harness",
+        "planning"
+      ],
+      "prompt_shape": "Supervisor agent is asked to monitor, nudge, review, or poll a tmux/subagent/repo worker for a CppStudio-backed native C++ GPU project, including adversarial-review fix routing or closeout verification.",
+      "expected_behavior": "Trigger cppstudio-supervisor only for the supervision lane; verify worker identity before contact, read primary plan artifacts before approval, use fresh-context reviewers, route actionable review findings to the owning worker, verify Rewind readiness before accepting causal replay claims, poll until the worker stops, and classify closeout evidence before reporting completion.",
+      "expected_paths": [
+        "skills/cppstudio-supervisor/SKILL.md",
+        "skills/important-instruction-ledger/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/SKILL.md"
+      ]
+    },
+    {
+      "name": "solo-native-gpu-implementation-no-supervisor",
+      "tags": [
+        "negative",
+        "harness",
+        "vulkan"
+      ],
+      "prompt_shape": "Agent is directly implementing a native C++ Vulkan/CUDA feature itself, with no tmux worker, no subagent worker, no cross-repo owner routing, and no supervision request.",
+      "expected_behavior": "Do not load cppstudio-supervisor for ordinary solo implementation. Use the normal CppStudio, planning, donor, GUI, control-harness, code-map, or validation skills as applicable.",
+      "expected_paths": [],
+      "must_not_trigger_paths": [
+        "skills/cppstudio-supervisor/SKILL.md"
+      ]
+    },
+    {
       "name": "game-technical-art-native-ui-overlay",
       "tags": [
         "positive",

@@ -1,0 +1,4 @@
+interface:
+  display_name: "CppStudio Supervisor"
+  short_description: "Supervise CppStudio worker lanes, reviews, polling, fix routing, and closeout."
+  default_prompt: "Use $cppstudio-supervisor when supervising tmux/subagent workers for CppStudio-backed native C++ GPU work, including reviews, fix packets, polling, and closeout evidence."

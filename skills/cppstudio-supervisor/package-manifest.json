@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "package": "cppstudio-supervisor",
+  "hash_algorithm": "sha256",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "role": "main",
+      "disclosure_group": "entrypoint",
+      "size": 4514,
+      "sha256": "8cc4296b973876b48328b91841615855aea9c27f2c0351c2e072a490ae627c5f"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "role": "metadata",
+      "disclosure_group": "entrypoint",
+      "size": 343,
+      "sha256": "32de041b65a90ed3ebe3386e92da7233e88ed8ddeb0ce05316058e6591727631"
+    }
+  ]
+}

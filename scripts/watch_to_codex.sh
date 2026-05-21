@@ -4,7 +4,9 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_NAME="${SKILL_NAME:-cpp-cuda-vulkan-studio}"
 SOURCE_DIR="${ROOT_DIR}/skills/${SKILL_NAME}"
-AUXILIARY_SKILL_NAMES=("native-cpp-gui-hud" "cppstudio-project-planner" "agentic-control-harness" "viewport-session-testing" "important-instruction-ledger" "vulkan-compute-sync" "modern-cpp-cmake" "cuda-kernel-authoring" "gpu-profiling-workstation")
+# shellcheck source=scripts/managed_skills.sh
+source "${ROOT_DIR}/scripts/managed_skills.sh"
+AUXILIARY_SKILL_NAMES=("${CPPSTUDIO_AUXILIARY_SKILL_NAMES[@]}")
 SNIPPET_ROOT="${ROOT_DIR}/companion-skill-snippets"
 SYNC_SCRIPT="${ROOT_DIR}/scripts/sync_to_codex.sh"
 ROLLOUT_SCRIPT="${ROOT_DIR}/scripts/rollout_to_codex.sh"

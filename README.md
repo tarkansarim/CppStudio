@@ -39,7 +39,11 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 `current` aggregate plus 10 stable recent commit highlights for people scanning the repo. Older
 stable entries stay collapsed under the expander.
 
-- `current` - Added a bounded visual-parameter tuning rule for narrow numeric/look-development
+- `current` - Added a dedicated `cppstudio-supervisor` skill for supervision-only worker
+  orchestration, adversarial-review fix routing, polling, interrogation, Rewind/plan evidence gates,
+  and closeout checks, while centralizing bundled auxiliary skill inventories so rollout, watch, and
+  validation cannot drift apart. Sync staging and backups now live outside the scanned Codex skills
+  root. Added a bounded visual-parameter tuning rule for narrow numeric/look-development
   changes, so agents preserve one before artifact, make the smallest donor-backed parameter edit,
   run one representative visual lane, allow at most one calibrated follow-up, and then stop with
   evidence plus a continue/revert/user decision instead of drifting into open-ended crop, render, or
@@ -488,6 +492,7 @@ toolchains only when you want this machine to build or validate generated C++ GP
   `${HOME}/.codex/skills/agentic-control-harness`,
   `${HOME}/.codex/skills/viewport-session-testing`, and
   `${HOME}/.codex/skills/important-instruction-ledger`,
+  `${HOME}/.codex/skills/cppstudio-supervisor`,
   `${HOME}/.codex/skills/vulkan-compute-sync`,
   `${HOME}/.codex/skills/modern-cpp-cmake`,
   `${HOME}/.codex/skills/cuda-kernel-authoring`, and
@@ -644,6 +649,8 @@ checkpoints and temporary anchors are not public verified-slice commits.
   watchlist. It records what supervising or direct agents must watch, verify, block, or reject
   during planning, worker nudges, source edits, commits, and closeout; user hard rules are one input
   to that watchlist, not the whole mechanism.
+- `cppstudio-supervisor`: installed user-level skill for supervision-only tmux/subagent worker
+  orchestration, adversarial-review fix routing, polling, interrogation, and closeout evidence.
 - `vulkan-compute-sync`: installed user-level skill for Vulkan compute/render setup, descriptors,
   barriers, synchronization, image layouts, frame lifetime, validation-layer triage, RenderDoc, and
   Nsight Graphics-oriented debugging.
@@ -815,6 +822,8 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
   recording, replay, reports, and before/after proof
 - `skills/important-instruction-ledger/`: bundled active slice-watchlist skill for compaction-safe
   supervision and direct-work gates
+- `skills/cppstudio-supervisor/`: bundled supervision-only skill for worker orchestration, review
+  routing, polling, and closeout evidence
 - `skills/vulkan-compute-sync/`: bundled Vulkan synchronization skill for compute/render barriers,
   descriptors, image layouts, frame lifetime, and validation/debug capture triage
 - `skills/modern-cpp-cmake/`: bundled C++/CUDA CMake layout and build hygiene skill

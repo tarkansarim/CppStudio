@@ -15,6 +15,7 @@ skills/cppstudio-project-planner/package-manifest.json
 skills/agentic-control-harness/package-manifest.json
 skills/viewport-session-testing/package-manifest.json
 skills/important-instruction-ledger/package-manifest.json
+skills/cppstudio-supervisor/package-manifest.json
 skills/vulkan-compute-sync/package-manifest.json
 skills/modern-cpp-cmake/package-manifest.json
 skills/cuda-kernel-authoring/package-manifest.json
@@ -39,6 +40,7 @@ python3 scripts/validate_skill_package.py skills/cppstudio-project-planner --wri
 python3 scripts/validate_skill_package.py skills/agentic-control-harness --write-manifest
 python3 scripts/validate_skill_package.py skills/viewport-session-testing --write-manifest
 python3 scripts/validate_skill_package.py skills/important-instruction-ledger --write-manifest
+python3 scripts/validate_skill_package.py skills/cppstudio-supervisor --write-manifest
 python3 scripts/validate_skill_package.py skills/vulkan-compute-sync --write-manifest
 python3 scripts/validate_skill_package.py skills/modern-cpp-cmake --write-manifest
 python3 scripts/validate_skill_package.py skills/cuda-kernel-authoring --write-manifest
@@ -54,6 +56,7 @@ python3 scripts/validate_skill_package.py skills/cppstudio-project-planner
 python3 scripts/validate_skill_package.py skills/agentic-control-harness
 python3 scripts/validate_skill_package.py skills/viewport-session-testing
 python3 scripts/validate_skill_package.py skills/important-instruction-ledger
+python3 scripts/validate_skill_package.py skills/cppstudio-supervisor
 python3 scripts/validate_skill_package.py skills/vulkan-compute-sync
 python3 scripts/validate_skill_package.py skills/modern-cpp-cmake
 python3 scripts/validate_skill_package.py skills/cuda-kernel-authoring

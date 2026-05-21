@@ -137,7 +137,6 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-20T07:23:10Z`
 
-
 ## Superseded Or Historical
 
 1. **Record important user instructions immediately and revisit them before supervision or closeout**

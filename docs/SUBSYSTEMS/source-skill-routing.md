@@ -18,6 +18,8 @@ generated-project workflow instructions.
 - `skills/viewport-session-testing/references/viewport-session-testing.md`
 - `skills/important-instruction-ledger/SKILL.md`
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
+- `skills/cppstudio-supervisor/SKILL.md`
+- `skills/cppstudio-supervisor/agents/openai.yaml`
 - `skills/vulkan-compute-sync/SKILL.md`
 - `skills/modern-cpp-cmake/SKILL.md`
 - `skills/modern-cpp-cmake/agents/openai.yaml`
@@ -43,6 +45,8 @@ generated-project workflow instructions.
 - `skills/viewport-session-testing/references/viewport-session-testing.md`
 - `skills/important-instruction-ledger/SKILL.md`
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
+- `skills/cppstudio-supervisor/SKILL.md`
+- `skills/cppstudio-supervisor/agents/openai.yaml`
 - `skills/vulkan-compute-sync/SKILL.md`
 - `skills/modern-cpp-cmake/SKILL.md`
 - `skills/modern-cpp-cmake/agents/openai.yaml`
@@ -70,6 +74,10 @@ generated-project workflow instructions.
 - When shortening frontmatter, preserve the moved discovery details in source skill bodies or
   references, then validate both description lengths and representative trigger/detail probes before
   rollout.
+- Supervision-only worker orchestration belongs in `cppstudio-supervisor`, not in always-loaded
+  `AGENTS.md` relay text or ordinary project-planning rules. Load it only when supervising other
+  tmux/subagent/repo workers, routing review findings, polling closeout, or interrogating worker
+  decisions.
 
 ## Current Code-Map Bootstrap Posture
 

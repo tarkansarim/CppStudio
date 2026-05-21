@@ -4,6 +4,13 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a dedicated bundled `cppstudio-supervisor` skill for supervision-only worker orchestration,
+  adversarial-review fix routing, polling, interrogation, and closeout gates, keeping ordinary
+  always-loaded CppStudio context smaller.
+- Centralized bundled auxiliary skill inventories into `scripts/managed_skills.sh`, added
+  supervisor trigger-matrix coverage, updated public/manual package inventories, and moved
+  `sync_to_codex.sh` staging/backups outside the scanned Codex skills root so interrupted syncs
+  cannot expose duplicate skill packages.
 - Clarified CppStudio process tiering so routine planned slices follow the accepted plan and known
   donor/validation route without restarting broad research, while architecture, product-shape,
   dependency, user-facing acceptance, shared-infrastructure, stale-evidence, and stall cases still

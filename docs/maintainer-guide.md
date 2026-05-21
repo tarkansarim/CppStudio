@@ -106,6 +106,7 @@ SKILL_NAME=cppstudio-project-planner ./scripts/sync_to_codex.sh
 SKILL_NAME=agentic-control-harness ./scripts/sync_to_codex.sh
 SKILL_NAME=viewport-session-testing ./scripts/sync_to_codex.sh
 SKILL_NAME=important-instruction-ledger ./scripts/sync_to_codex.sh
+SKILL_NAME=cppstudio-supervisor ./scripts/sync_to_codex.sh
 SKILL_NAME=vulkan-compute-sync ./scripts/sync_to_codex.sh
 SKILL_NAME=modern-cpp-cmake ./scripts/sync_to_codex.sh
 SKILL_NAME=cuda-kernel-authoring ./scripts/sync_to_codex.sh
@@ -327,7 +328,8 @@ ${SYNC_CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio
 
 Set `SKILL_NAME=native-cpp-gui-hud`, `SKILL_NAME=cppstudio-project-planner`,
 `SKILL_NAME=agentic-control-harness`, `SKILL_NAME=viewport-session-testing`,
-`SKILL_NAME=important-instruction-ledger`, `SKILL_NAME=vulkan-compute-sync`,
+`SKILL_NAME=important-instruction-ledger`, `SKILL_NAME=cppstudio-supervisor`,
+`SKILL_NAME=vulkan-compute-sync`,
 `SKILL_NAME=modern-cpp-cmake`, `SKILL_NAME=cuda-kernel-authoring`, or
 `SKILL_NAME=gpu-profiling-workstation` only for an intentional single-skill diagnostic sync. Do not
 use the default sync command as proof that auxiliary skill edits were installed.
@@ -352,6 +354,7 @@ python3 scripts/validate_skill_package.py skills/cppstudio-project-planner --wri
 python3 scripts/validate_skill_package.py skills/agentic-control-harness --write-manifest
 python3 scripts/validate_skill_package.py skills/viewport-session-testing --write-manifest
 python3 scripts/validate_skill_package.py skills/important-instruction-ledger --write-manifest
+python3 scripts/validate_skill_package.py skills/cppstudio-supervisor --write-manifest
 python3 scripts/validate_skill_package.py skills/vulkan-compute-sync --write-manifest
 python3 scripts/validate_skill_package.py skills/modern-cpp-cmake --write-manifest
 python3 scripts/validate_skill_package.py skills/cuda-kernel-authoring --write-manifest
@@ -367,6 +370,7 @@ python3 scripts/validate_skill_package.py skills/cppstudio-project-planner
 python3 scripts/validate_skill_package.py skills/agentic-control-harness
 python3 scripts/validate_skill_package.py skills/viewport-session-testing
 python3 scripts/validate_skill_package.py skills/important-instruction-ledger
+python3 scripts/validate_skill_package.py skills/cppstudio-supervisor
 python3 scripts/validate_skill_package.py skills/vulkan-compute-sync
 python3 scripts/validate_skill_package.py skills/modern-cpp-cmake
 python3 scripts/validate_skill_package.py skills/cuda-kernel-authoring
