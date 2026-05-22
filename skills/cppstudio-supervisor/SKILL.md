@@ -90,6 +90,14 @@ Before every worker nudge for a new implementation slice:
 5. If the cadence is not due, include the current counter in the nudge or supervision notes so the
    next supervisor can see the debt.
 
+Every user-facing supervisor status, worker nudge summary, and worker closeout summary must name the
+review-cadence ordinal explicitly, for example `0 slices since last adversarial review`, `1st slice
+since last adversarial review`, `2nd slice since last adversarial review`, or `3rd slice since last
+adversarial review; review is due before another implementation nudge`. Do not leave the count only
+inside a watchlist, hidden transcript, or implied by a commit hash. If the count is unknown, say
+`review cadence unknown; review due before next implementation nudge` and run or route the review
+before approving more implementation.
+
 After every verified implementation slice closeout:
 
 1. Increment or record the cadence state in the worker status or active watchlist before reporting

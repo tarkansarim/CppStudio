@@ -157,6 +157,16 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-21T19:07:41Z`
 
+16. **Every supervised worker status, nudge, and closeout must include an explicit ordinal such as '1st/2nd/3rd slice since last adversarial review' or '0 slices since last adversarial review' so review debt is visible to the user.**
+   - Status: `active`
+   - Slice: `supervisor cadence reporting`
+   - Scope: `reusable-skill`
+   - Source: user rule: always mention which slice since the last adversarial review
+   - Revisit when: before worker nudges, status summaries, closeout reports, and CppStudio supervisor skill changes
+   - Gate: Reject supervisor status/closeout if the slice ordinal since last adversarial review is absent or only implicit.
+   - Evidence: none recorded
+   - Recorded: `2026-05-22T09:51:50Z`
+
 
 ## Superseded Or Historical
 

@@ -77,7 +77,9 @@ generated-project workflow instructions.
 - Supervision-only worker orchestration belongs in `cppstudio-supervisor`, not in always-loaded
   `AGENTS.md` relay text or ordinary project-planning rules. Load it only when supervising other
   tmux/subagent/repo workers, routing review findings, polling closeout, or interrogating worker
-  decisions.
+  decisions. User-facing supervisor updates must expose the current adversarial-review cadence
+  ordinal, such as `1st slice since last adversarial review`, rather than leaving review debt hidden
+  in worker transcripts or watchlist files.
 - Supervised Codex workers for substantive CppStudio-backed native GPU work default to extra-high
   reasoning. The supervisor skill owns this launch policy: use `model_reasoning_effort="xhigh"`,
   verify the footer or process args, and do not enable fast/priority service unless the user

@@ -41,6 +41,9 @@ intentionally short: newest public-facing changes first, older highlights collap
 - `latest` - Added a focused host coverage lane to generated CppStudio projects beside ASan/UBSan,
   including `coverage` and `coverage-quick` presets, compact test/fuzz/harness guidance, and
   full-validation coverage for fresh scaffolds.
+- `latest` - Made `cppstudio-supervisor` report the explicit review-cadence ordinal in every
+  supervised worker status, nudge summary, and closeout, such as `1st slice since last adversarial
+  review`; unknown cadence now has to be called out as review-due before more implementation.
 - `latest` - Made `cppstudio-supervisor` launch substantive Codex worker lanes at
   `model_reasoning_effort="xhigh"` by default, while keeping fast/priority service opt-in only when
   the user asks for it, and requiring footer/process verification after relaunch.
@@ -245,6 +248,12 @@ slices remain, review after two. Risky shader/runtime, UI interaction, GPU synch
 project infrastructure, persistence, or visible/rendered-path slices can require an immediate
 post-implementation review even before the numeric cadence. A plan review does not satisfy that
 post-implementation gate.
+
+Every supervisor status, nudge summary, and closeout should expose that cadence in plain sight:
+`0 slices since last adversarial review`, `1st slice since last adversarial review`, `2nd slice since
+last adversarial review`, or `3rd slice since last adversarial review; review is due before another
+implementation nudge`. If the cadence is unknown, the supervisor should say so and treat review as
+due before approving more implementation.
 
 Typical use:
 

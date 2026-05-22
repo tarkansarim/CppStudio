@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Made `cppstudio-supervisor` expose the review-cadence ordinal in every supervised worker status,
+  nudge summary, and closeout so the user can see `0/1st/2nd/3rd slice since last adversarial
+  review` instead of relying on hidden watchlist state. Unknown cadence is now explicitly review-due
+  before more implementation.
 - Added focused host coverage to generated CppStudio projects beside the ASan/UBSan sanitizer lane.
   New scaffolds now include `coverage` and `coverage-quick` presets, CMake host coverage
   instrumentation for Clang/LLVM and GCC, validation-pipeline guidance for test/fuzz/harness
