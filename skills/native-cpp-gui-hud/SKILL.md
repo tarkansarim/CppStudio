@@ -144,6 +144,15 @@ production paths. Do not claim a menu, context action, shortcut, timeline, viewp
 was tested unless it was actually exercised or introspected; otherwise report it as screenshot-checked
 or metadata-only evidence.
 
+For GUI products, parameter surface closure is part of the UI contract, not optional polish. When a
+slice adds, ports, or changes user-adjustable shader, material, light, renderer, simulation, brush,
+import/export, cache, performance, or runtime settings, the GUI plan and closeout must account for
+the inspector/control-surface row that exposes each setting or explicitly justify why the setting is
+hidden, rejected, deferred, or not user-facing. Backend structs, uniforms, CLI flags, config files,
+logs, JSON state, or harness readback alone do not prove a product-facing UI exposes the feature.
+Verify the actual visible control or control inventory, including default value, clamp/range, label,
+enabled state, and readback path, before accepting closeout.
+
 For user-facing interactive tools, verification must include real GUI interaction evidence for the
 affected surface. Palette clicks, tool buttons, timeline controls, viewport strokes, picks, gizmo
 drags, and graph-canvas edits need scenario coverage or equivalent toolkit-level probes that drive

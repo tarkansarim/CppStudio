@@ -50,6 +50,12 @@ validation skills instead.
 7. When a worker claims Rewind-backed causal proof, verify Rewind readiness, the exact pre-decision
    checkpoint or branch point, paired chat evidence when conversation matters, preserved-scope drift,
    and the replay delta. Do not accept a forward correction as rewind evidence.
+8. When a worker adds, ports, or changes shader, material, light, renderer, simulation, brush, cache,
+   performance, import/export, or runtime parameters, require parameter-surface closure before
+   approving the slice. The closure must account for backend/runtime storage, defaults/clamps,
+   persistence/state, CLI/config/API, GUI or inspector controls for UI products, harness/readback,
+   and tests. If the worker only proves backend, CLI, JSON, or harness state for a product-facing UI,
+   treat closeout as incomplete and route a fix before reporting success.
 
 ## Codex Worker Model Defaults
 
@@ -141,6 +147,8 @@ A supervised worker closeout must include:
 - dirty-tree status for source files and sensitive instruction files;
 - exact validation commands and artifact IDs, including OSTM/viewport/session evidence when visible
   behavior is involved;
+- parameter-surface closure evidence for any new or changed runtime/user-adjustable settings,
+  including UI/control inventory proof when the app has a product-facing UI;
 - unresolved concerns classified as resolved, unresolved, not-tested, or user-decision-needed;
 - whether any reusable CppStudio rule, donor route, code-map rule, or skill needs hardening.
 

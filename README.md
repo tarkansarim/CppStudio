@@ -38,6 +38,11 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
+- `latest` - Added a parameter-surface closure gate so new shader, material, light, renderer,
+  simulation, brush, import/export, cache, performance, and runtime settings must be planned and
+  closed across backend/runtime ownership, defaults, persistence/state, CLI/config/API, product UI
+  controls, harness/readback, and validation instead of stopping at backend or JSON exposure. The
+  gate is now present in the main CppStudio, project-planning, supervisor, and native GUI/HUD routes.
 - `latest` - Added a focused host coverage lane to generated CppStudio projects beside ASan/UBSan,
   including `coverage` and `coverage-quick` presets, compact test/fuzz/harness guidance, and
   full-validation coverage for fresh scaffolds.

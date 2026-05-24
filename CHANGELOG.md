@@ -4,6 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a generic parameter-surface closure gate for donor-derived or user-adjustable shader,
+  material, light, renderer, simulation, brush, import/export, cache, performance, and runtime
+  settings. Plans, GUI/HUD work, supervised worker closeouts, and CppStudio source edits must now
+  account for backend/runtime ownership, defaults/clamps, persistence/state, CLI/config/API, GUI or
+  inspector exposure for UI products, harness/readback, and validation, instead of accepting
+  backend-only or JSON-only evidence for product-facing tools.
 - Made `cppstudio-supervisor` expose the review-cadence ordinal in every supervised worker status,
   nudge summary, and closeout so the user can see `0/1st/2nd/3rd slice since last adversarial
   review` instead of relying on hidden watchlist state. Unknown cadence is now explicitly review-due

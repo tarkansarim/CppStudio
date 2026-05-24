@@ -220,6 +220,17 @@ When this skill is active, work like a native C++ GPU systems engineer:
   source/replay state before taking the before artifact. If it does not match, stop and either sync it
   deliberately before baseline capture or declare the replay/proof invalid; do not baseline against
   stale external state and then call the before/after evidence clean.
+- Parameter surface closure is mandatory for new user-adjustable or donor-derived runtime knobs.
+  When a slice adds, ports, or changes shader, material, light, renderer, simulation, brush, import,
+  export, cache, performance, or runtime settings, the plan and closeout must inventory the full
+  parameter surface before source edits are called complete. For each parameter or grouped parameter
+  family, mark donor/source evidence, backend/runtime storage, defaults and clamping, persistence or
+  state JSON, CLI/config flags when applicable, GUI/inspector/control-surface exposure when the app
+  has a UI, harness/readback routes, and tests/oracles as included, deferred, rejected, blocked, or
+  not applicable. Backend structs, uniforms, CLI flags, config files, logs, or JSON state alone do
+  not satisfy this gate for product-facing tools. If the parameter should not be visible in the UI,
+  the slice plan must say why, name the owner surface that controls it instead, and add a validation
+  signal proving that decision.
 - Primary visible loop before breadth: for interactive artist, game, VFX, DCC, simulation-editor,
   technical-art, viewer/editor, brush, paint, grooming, terrain, material, rigging, animation,
   layout, lighting, or effects tools, the first implementation milestone must prove the core

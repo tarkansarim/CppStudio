@@ -257,6 +257,14 @@ generated-project workflow instructions.
   variants/macros, render states, sampling/filtering, lighting/material terms, quality features, edge
   cases, and validation signals before planning. Silent omissions from donors are source planning
   failures.
+- Parameter surface closure is required for new or changed shader, material, light, renderer,
+  simulation, brush, cache, performance, import/export, or runtime settings. Plans and worker
+  closeouts must account for donor/source semantics, backend/runtime ownership, defaults/clamps,
+  persistence/state, CLI/config/API surfaces, GUI/inspector/control exposure for UI products,
+  harness/readback routes, and validation. The main CppStudio, project-planning, supervisor, and
+  native GUI/HUD routes all carry this gate. Backend, CLI, JSON, or harness-only proof is not enough
+  for product-facing UI tools unless the plan explicitly rejects or defers UI exposure with a reason
+  and validation signal.
 - Parallelization planning is a map, not an automatic worker launch. Plans should identify candidate
   independent lanes, frozen shared contracts, file/subsystem ownership, and integration/validation
   handoffs, while keeping tightly coupled C++/GPU/UI/resource-lifetime work sequential until the

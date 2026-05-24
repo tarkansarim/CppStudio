@@ -293,21 +293,33 @@ and UI contracts. Silent omissions are not allowed. If the current slice impleme
 the omitted features must still appear as deferred, rejected, or blocked with reasons, owner/slice,
 and validation signals so the omission is visible and reviewable.
 
+When a slice adds, ports, or changes shader, material, light, renderer, simulation, brush,
+import/export, cache, performance, or runtime settings, include a `Parameter Surface Closure` table
+before coding.
+For each parameter or parameter family, record donor/source name and semantics, backend/runtime
+owner, default and clamp range, persistence or state serialization, CLI/config/API exposure when
+applicable, GUI/inspector/control-surface exposure when the product has a UI, harness/readback
+route, and validation evidence. Each row must be included, deferred, rejected, blocked, or not
+applicable. Backend-only, CLI-only, JSON-only, or harness-only exposure is incomplete for
+artist-facing or product-facing tools unless the row explicitly justifies why no GUI/control
+exposure is wanted and names the validation signal for that decision.
+
 Use explicit section headings when presenting this planning structure: `Planning Depth Contract`,
-`Whole-Product Scaffold`, `Donor Feature Disposition Matrix`, `Capability Priority Ladder`,
-`Parallelization Map`, and `Slice Readiness Packet`. Do not hide the priority ladder inside generic
-"next steps" or "priority rules"; it must say what gets made first, how complete it must be before
-the next capability unlocks, and what breadth remains blocked.
+`Whole-Product Scaffold`, `Donor Feature Disposition Matrix`, `Parameter Surface Closure`,
+`Capability Priority Ladder`, `Parallelization Map`, and `Slice Readiness Packet`. Do not hide the
+priority ladder inside generic "next steps" or "priority rules"; it must say what gets made first,
+how complete it must be before the next capability unlocks, and what breadth remains blocked.
 
 Before implementing any scaffolded section or slice, create a just-in-time slice readiness packet
 for that slice. The packet must name the exact objective, current repo/code-map state, donor and
 peer-tool links to open, source/API contracts to inspect, shared infrastructure it reuses, unique
 behavior it owns, the concrete first proof object/state when the slice has visible or domain
 behavior, expected files/subsystems, blocked scope, validation evidence, rollback/checkpoint state,
-and whether parallel work is safe. Large renderer, GUI, input, brush/tool, solver, asset, authoring,
-persistence, harness, or performance slices need real donor-backed readiness packets. Tiny
-documentation or config slices may use a compact version, but code must not start from a
-scaffold-level bullet alone.
+whether parallel work is safe, and parameter-surface closure for any new or changed
+user-adjustable/donor-derived runtime settings. Large renderer, GUI, input, brush/tool, solver,
+asset, authoring, persistence, harness, or performance slices need real donor-backed readiness
+packets. Tiny documentation or config slices may use a compact version, but code must not start from
+a scaffold-level bullet alone.
 
 If the next source slice has no matching Level 4 readiness packet, it is not ready to implement even
 if the Level 2 scaffold, Level 3 matrix, build, OSTM, code-map checks, and planning guard pass.
