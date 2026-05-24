@@ -157,6 +157,12 @@ visible, below scroll, collapsed, clipped, mode-gated, or absent, and include a 
 surface readback that matches the user-facing layout. Do not accept "the ids exist in UI JSON" as a
 substitute when the screenshot still shows only old controls.
 
+The screenshot or toolkit readback must come from the same user-facing launcher path the user will
+run, or prove that the tested executable is the fresh binary selected by that launcher. Record the
+exact launch command, selected executable/build tree, and freshness against changed UI/control
+sources. If a stale alternate build tree can still be selected by the launcher, UI proof is not
+closed even when another binary shows the right controls.
+
 For user-facing interactive tools, verification must include real GUI interaction evidence for the
 affected surface. Palette clicks, tool buttons, timeline controls, viewport strokes, picks, gizmo
 drags, and graph-canvas edits need scenario coverage or equivalent toolkit-level probes that drive

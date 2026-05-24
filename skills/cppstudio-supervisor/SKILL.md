@@ -61,6 +61,12 @@ validation skills instead.
    explicitly classify controls that are below scroll, collapsed, clipped, hidden behind a mode, or
    absent. Do not accept a parameter-surface closeout when the visible screenshot still shows only old
    controls, even if JSON contains new ids.
+   The visible proof must be through the exact user-facing launcher/command handed to the user, or
+   must prove that the tested executable is the same fresh executable selected by that launcher.
+   Require the worker to report launcher path, selected executable/build tree, stdout/stderr or state
+   evidence for that selection, and a freshness check against the edited UI/runtime source files. If
+   stale build trees or unrebuildable preferred binaries remain, the closeout must name them as
+   unresolved or show the launcher now refuses/falls back explicitly.
 
 ## Codex Worker Model Defaults
 
@@ -152,6 +158,8 @@ A supervised worker closeout must include:
 - dirty-tree status for source files and sensitive instruction files;
 - exact validation commands and artifact IDs, including OSTM/viewport/session evidence when visible
   behavior is involved;
+- exact user-facing launcher command, selected executable/build tree, and stale-binary rejection or
+  freshness evidence for any GUI/windowed/visible proof;
 - parameter-surface closure evidence for any new or changed runtime/user-adjustable settings,
   including UI/control inventory proof and visible reachability proof when the app has a
   product-facing UI; JSON/model inventory alone is incomplete unless each hidden/deferred control is

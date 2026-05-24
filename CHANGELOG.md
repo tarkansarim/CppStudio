@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Required exact user-facing launcher provenance for visible UI proof. Agents must now record the
+  launcher command, selected executable/build tree, and freshness or stale-binary rejection before
+  accepting screenshots, OSTM jobs, toolkit readbacks, or semantic UI state as proof that product
+  controls are visible to the user.
 - Tightened the parameter-surface closure gate so product UI exposure now requires visible
   reachability proof, not just model or JSON inventory. Supervisors and GUI/HUD closeouts must show
   actual panel/section labels, control labels, enabled/default state, and whether controls are

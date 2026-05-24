@@ -269,6 +269,11 @@ generated-project workflow instructions.
   control labels, enabled/default state, and whether they require scrolling, are collapsed, clipped,
   mode-gated, or absent. A screenshot showing only old controls invalidates the claim until the
   visible surface is fixed or explicitly deferred.
+- Visible UI proof must be tied to the exact user-facing launcher and selected executable. When
+  several build trees or binaries exist, closeout must record launcher path, selected executable,
+  build tree/config, stdout/stderr or semantic state proving the selection, and freshness against the
+  changed UI/runtime source files. Proof from a convenient alternate binary is incomplete if the
+  command handed to the user can still run stale UI.
 - Parallelization planning is a map, not an automatic worker launch. Plans should identify candidate
   independent lanes, frozen shared contracts, file/subsystem ownership, and integration/validation
   handoffs, while keeping tightly coupled C++/GPU/UI/resource-lifetime work sequential until the
@@ -438,8 +443,8 @@ generated-project workflow instructions.
   report.
 - User-facing desktop launch commands require human-visible launch proof: exact command, intended
   app process/window identity, terminal-title false-positive rejection, mapped/focusable visibility,
-  workspace/desktop and geometry readback, control-harness responsiveness, and clean shutdown of the
-  specific launched instance.
+  workspace/desktop and geometry readback, control-harness responsiveness, selected executable/build
+  tree freshness, stale-binary rejection, and clean shutdown of the specific launched instance.
 
 ## Update When
 

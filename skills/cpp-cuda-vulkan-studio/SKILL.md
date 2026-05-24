@@ -236,6 +236,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   parameter-surface claim even if hidden JSON contains new ids. If the parameter should not be
   visible in the UI, the slice plan must say why, name the owner surface that controls it instead,
   and add a validation signal proving that decision.
+- User-facing launch path is part of visible proof. When UI/control exposure is validated through a
+  screenshot, OSTM job, toolkit readback, or semantic UI state, the proof must use the exact
+  launcher/command that the user is told to run, or explicitly prove that the exercised binary is
+  the same fresh executable selected by that launcher. Record the launcher path, selected executable,
+  build tree/config, stdout/stderr line or state field identifying the selected executable, and a
+  freshness check against the edited source/control-surface files. Do not accept proof from a
+  convenient alternate build tree while a stale user-facing launcher or binary can still show old UI.
 - Primary visible loop before breadth: for interactive artist, game, VFX, DCC, simulation-editor,
   technical-art, viewer/editor, brush, paint, grooming, terrain, material, rigging, animation,
   layout, lighting, or effects tools, the first implementation milestone must prove the core
@@ -692,6 +699,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   the exact command starts the intended process, the control harness responds, and a desktop window
   or captured screenshot is visible to the user. Do not treat an offscreen smoke run alone as proof
   that the user's launch command works.
+- If several build trees or binaries exist, launch proof must name which executable the launcher
+  selected and reject stale alternatives. A stale binary means the executable is older than the
+  changed source, generated UI assets, shader/runtime surface, or launch wrapper that should affect
+  the visible result. If the preferred/canonical build tree cannot be rebuilt because local donor,
+  SDK, or runtime paths are missing, report that as an unresolved build-path issue and either repair
+  the build configuration or make the launcher fail/fall back explicitly; do not silently validate a
+  secondary binary and hand the user a command that still runs the stale one.
 - Desktop launch evidence must prove the intended app window, not a coincidental terminal or stale
   previous window. Match by process id, exact executable/app id, `WM_CLASS` or toolkit class, and
   title when available; reject matches that only come from a terminal title containing the repo name.

@@ -38,6 +38,10 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
+- `latest` - Required visible UI proof to run through the exact user-facing launcher, or prove the
+  tested executable is the same fresh binary selected by that launcher. Closeout now has to name the
+  launch command, selected executable/build tree, and stale-binary rejection or freshness evidence so
+  an alternate build tree cannot hide old UI.
 - `latest` - Tightened parameter-surface closure so product UI exposure now requires visible
   reachability proof, not only model or JSON inventory. Supervisors and GUI/HUD closeouts must show
   actual panel/section labels, control labels, enabled/default state, and whether controls are

@@ -306,7 +306,10 @@ exposure is wanted and names the validation signal for that decision. For produc
 validation column must include visible reachability: the panel or section label, control label,
 default or current value, enabled state, screenshot or toolkit surface proof, and whether the control
 is immediately visible, scroll-only, collapsed, clipped, or mode-gated. Semantic JSON inventory can
-support the row, but it cannot replace proof that a user can actually find and use the control.
+support the row, but it cannot replace proof that a user can actually find and use the control. The
+proof route must name the exact user-facing launcher/command and selected executable/build tree for
+GUI products; if the plan will validate through a helper binary or alternate build tree, it must also
+define how the canonical launcher is kept fresh or prevented from selecting stale UI.
 
 Use explicit section headings when presenting this planning structure: `Planning Depth Contract`,
 `Whole-Product Scaffold`, `Donor Feature Disposition Matrix`, `Parameter Surface Closure`,
