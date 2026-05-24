@@ -264,7 +264,11 @@ generated-project workflow instructions.
   harness/readback routes, and validation. The main CppStudio, project-planning, supervisor, and
   native GUI/HUD routes all carry this gate. Backend, CLI, JSON, or harness-only proof is not enough
   for product-facing UI tools unless the plan explicitly rejects or defers UI exposure with a reason
-  and validation signal.
+  and validation signal. UI-state inventories are supporting evidence only: closeout must prove the
+  controls are visible or reachable in the real product surface, including section label, visible
+  control labels, enabled/default state, and whether they require scrolling, are collapsed, clipped,
+  mode-gated, or absent. A screenshot showing only old controls invalidates the claim until the
+  visible surface is fixed or explicitly deferred.
 - Parallelization planning is a map, not an automatic worker launch. Plans should identify candidate
   independent lanes, frozen shared contracts, file/subsystem ownership, and integration/validation
   handoffs, while keeping tightly coupled C++/GPU/UI/resource-lifetime work sequential until the

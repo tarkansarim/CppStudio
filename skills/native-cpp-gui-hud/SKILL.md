@@ -151,7 +151,11 @@ the inspector/control-surface row that exposes each setting or explicitly justif
 hidden, rejected, deferred, or not user-facing. Backend structs, uniforms, CLI flags, config files,
 logs, JSON state, or harness readback alone do not prove a product-facing UI exposes the feature.
 Verify the actual visible control or control inventory, including default value, clamp/range, label,
-enabled state, and readback path, before accepting closeout.
+enabled state, and readback path, before accepting closeout. For inspector panels, visible
+reachability is mandatory: record the panel/section label, whether the control is immediately
+visible, below scroll, collapsed, clipped, mode-gated, or absent, and include a screenshot or toolkit
+surface readback that matches the user-facing layout. Do not accept "the ids exist in UI JSON" as a
+substitute when the screenshot still shows only old controls.
 
 For user-facing interactive tools, verification must include real GUI interaction evidence for the
 affected surface. Palette clicks, tool buttons, timeline controls, viewport strokes, picks, gizmo

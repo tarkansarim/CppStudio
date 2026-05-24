@@ -55,7 +55,12 @@ validation skills instead.
    approving the slice. The closure must account for backend/runtime storage, defaults/clamps,
    persistence/state, CLI/config/API, GUI or inspector controls for UI products, harness/readback,
    and tests. If the worker only proves backend, CLI, JSON, or harness state for a product-facing UI,
-   treat closeout as incomplete and route a fix before reporting success.
+   treat closeout as incomplete and route a fix before reporting success. If the proof is a UI-state
+   inventory, require a matching visible screenshot or toolkit readback showing the actual panel,
+   section labels, control labels, enabled states, and current/default values as reachable by a user;
+   explicitly classify controls that are below scroll, collapsed, clipped, hidden behind a mode, or
+   absent. Do not accept a parameter-surface closeout when the visible screenshot still shows only old
+   controls, even if JSON contains new ids.
 
 ## Codex Worker Model Defaults
 
@@ -148,7 +153,9 @@ A supervised worker closeout must include:
 - exact validation commands and artifact IDs, including OSTM/viewport/session evidence when visible
   behavior is involved;
 - parameter-surface closure evidence for any new or changed runtime/user-adjustable settings,
-  including UI/control inventory proof when the app has a product-facing UI;
+  including UI/control inventory proof and visible reachability proof when the app has a
+  product-facing UI; JSON/model inventory alone is incomplete unless each hidden/deferred control is
+  explicitly justified;
 - unresolved concerns classified as resolved, unresolved, not-tested, or user-decision-needed;
 - whether any reusable CppStudio rule, donor route, code-map rule, or skill needs hardening.
 

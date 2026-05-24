@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Tightened the parameter-surface closure gate so product UI exposure now requires visible
+  reachability proof, not just model or JSON inventory. Supervisors and GUI/HUD closeouts must show
+  actual panel/section labels, control labels, enabled/default state, and whether controls are
+  immediately visible, scroll-only, collapsed, clipped, mode-gated, or absent before claiming shader,
+  material, light, renderer, or other runtime parameters are exposed to users.
 - Added a generic parameter-surface closure gate for donor-derived or user-adjustable shader,
   material, light, renderer, simulation, brush, import/export, cache, performance, and runtime
   settings. Plans, GUI/HUD work, supervised worker closeouts, and CppStudio source edits must now

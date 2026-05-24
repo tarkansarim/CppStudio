@@ -38,6 +38,11 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
+- `latest` - Tightened parameter-surface closure so product UI exposure now requires visible
+  reachability proof, not only model or JSON inventory. Supervisors and GUI/HUD closeouts must show
+  actual panel/section labels, control labels, enabled/default state, and whether controls are
+  immediately visible, scroll-only, collapsed, clipped, mode-gated, or absent before claiming shader,
+  material, light, renderer, or other runtime parameters are exposed to users.
 - `latest` - Added a parameter-surface closure gate so new shader, material, light, renderer,
   simulation, brush, import/export, cache, performance, and runtime settings must be planned and
   closed across backend/runtime ownership, defaults, persistence/state, CLI/config/API, product UI

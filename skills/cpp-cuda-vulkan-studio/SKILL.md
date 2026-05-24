@@ -228,9 +228,14 @@ When this skill is active, work like a native C++ GPU systems engineer:
   state JSON, CLI/config flags when applicable, GUI/inspector/control-surface exposure when the app
   has a UI, harness/readback routes, and tests/oracles as included, deferred, rejected, blocked, or
   not applicable. Backend structs, uniforms, CLI flags, config files, logs, or JSON state alone do
-  not satisfy this gate for product-facing tools. If the parameter should not be visible in the UI,
-  the slice plan must say why, name the owner surface that controls it instead, and add a validation
-  signal proving that decision.
+  not satisfy this gate for product-facing tools. UI-state JSON or a model inventory is supporting
+  evidence only; closeout also needs actual visible-surface proof that the controls are reachable in
+  the product UI where the user would look, with section name, label, enabled state, default or
+  current value, and whether the control is visible immediately, requires scrolling, is collapsed, or
+  is hidden behind another mode. A screenshot that still shows only old controls invalidates a
+  parameter-surface claim even if hidden JSON contains new ids. If the parameter should not be
+  visible in the UI, the slice plan must say why, name the owner surface that controls it instead,
+  and add a validation signal proving that decision.
 - Primary visible loop before breadth: for interactive artist, game, VFX, DCC, simulation-editor,
   technical-art, viewer/editor, brush, paint, grooming, terrain, material, rigging, animation,
   layout, lighting, or effects tools, the first implementation milestone must prove the core
@@ -1027,3 +1032,9 @@ For this skill itself, verify:
 ```bash
 ${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py ${HOME}/.codex/skills/cpp-cuda-vulkan-studio
 ```
+
+<!-- agent-self-improvement-doctrine:begin -->
+## Accepted Self-Improvement Doctrine
+
+- 2026-05-24T05:40:34Z [codex] CppStudio supervised UI parameter-surface closeout must require visible GUI screenshot or viewport evidence that exposed controls are actually reachable and visible in the product UI, not only JSON/model inventory. (source: self-improvement:user_correction:7650ade4518cb112)
+<!-- agent-self-improvement-doctrine:end -->

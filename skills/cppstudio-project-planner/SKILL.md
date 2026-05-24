@@ -302,7 +302,11 @@ applicable, GUI/inspector/control-surface exposure when the product has a UI, ha
 route, and validation evidence. Each row must be included, deferred, rejected, blocked, or not
 applicable. Backend-only, CLI-only, JSON-only, or harness-only exposure is incomplete for
 artist-facing or product-facing tools unless the row explicitly justifies why no GUI/control
-exposure is wanted and names the validation signal for that decision.
+exposure is wanted and names the validation signal for that decision. For product UIs, the
+validation column must include visible reachability: the panel or section label, control label,
+default or current value, enabled state, screenshot or toolkit surface proof, and whether the control
+is immediately visible, scroll-only, collapsed, clipped, or mode-gated. Semantic JSON inventory can
+support the row, but it cannot replace proof that a user can actually find and use the control.
 
 Use explicit section headings when presenting this planning structure: `Planning Depth Contract`,
 `Whole-Product Scaffold`, `Donor Feature Disposition Matrix`, `Parameter Surface Closure`,
