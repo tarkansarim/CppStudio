@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened supervisor closeout for user-reported UI/control-surface bugs. Supervisors now must
+  compare the user's visible report against worker before/after artifacts, reject hidden or
+  mode-gated widget-only proof as default-surface proof, and classify stale runtime capability
+  buttons such as DLSS/upscaler controls before accepting closeout.
 - Added an automatic code-map sidecar launch path for enabled-map closeout. The drift checker now
   supports `--launch-sidecar auto`, creates a frozen tracked/untracked snapshot, and invokes the
   guarded `agent-tmux codex-code-map-sidecar` helper when strict drift review finds uncovered paths

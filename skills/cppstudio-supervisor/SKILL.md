@@ -61,6 +61,17 @@ validation skills instead.
    explicitly classify controls that are below scroll, collapsed, clipped, hidden behind a mode, or
    absent. Do not accept a parameter-surface closeout when the visible screenshot still shows only old
    controls, even if JSON contains new ids.
+   For user-reported UI/control-surface failures, the supervisor must personally compare the
+   worker's before and after visible artifacts against the user's reported surface before accepting
+   closeout. Hidden widgets, mode-gated controls, off-scroll controls, JSON-only ids, model-only
+   state, or a startup oracle that changes controls programmatically after launch do not prove that
+   the default user-facing panel is correct. If the user reports "I only see these controls/buttons",
+   require an initial repro screenshot matching that visible set, then an after screenshot from the
+   exact user-facing launcher that shows the corrected default surface or explicitly shows the
+   required mode/scroll path. Runtime capability buttons such as DLSS, upscalers, denoisers,
+   debug/fallback toggles, and unsupported GPU features must be classified in the visible artifact as
+   enabled-working, disabled-with-reason, hidden-by-capability, or broken; do not accept a closeout
+   that ignores stale visible buttons or proves only unrelated shader/model fields.
    Visible reachability is not wiring proof. For product-facing controls, require live mutation
    evidence through the real widget/control path or an app-owned UI action harness that invokes the
    same UI handler. The evidence must show before and after values for the visible control, committed

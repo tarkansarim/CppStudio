@@ -84,6 +84,12 @@ generated-project workflow instructions.
   reasoning. The supervisor skill owns this launch policy: use `model_reasoning_effort="xhigh"`,
   verify the footer or process args, and do not enable fast/priority service unless the user
   explicitly asks for fast or priority execution.
+- Supervisor closeout for user-reported UI/control-surface bugs must compare the user's reported
+  visible surface to worker before/after artifacts. Hidden or mode-gated widget mutations, JSON-only
+  inventories, and model/state round trips cannot prove that the default panel or toolbar is fixed.
+  Runtime capability buttons such as DLSS/upscalers/denoisers must be classified as enabled-working,
+  disabled-with-reason, hidden-by-capability, or broken in the visible artifact before the supervisor
+  accepts closeout.
 - Supervised multi-slice implementation uses an explicit fresh adversarial-review cadence in
   `cppstudio-supervisor`: after every three verified implementation slices, or every two verified
   slices when four or fewer approved slices remain. The cadence is a pre-nudge and closeout gate, not

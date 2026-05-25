@@ -38,6 +38,10 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
+- `latest` - Hardened supervisor closeout for user-reported UI/control-surface bugs. Worker proof
+  now has to match the user's visible report with before/after artifacts, cannot count hidden or
+  mode-gated widget mutations as default-panel proof, and must classify stale runtime capability
+  buttons such as DLSS/upscaler controls before closeout.
 - `latest` - Added `--launch-sidecar auto` to the enabled-code-map drift checker. Strict closeout can
   now create a frozen tracked/untracked snapshot and start the guarded `agent-tmux
   codex-code-map-sidecar` lane automatically when map maintenance is unresolved, instead of relying
