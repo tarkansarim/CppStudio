@@ -61,6 +61,17 @@ validation skills instead.
    explicitly classify controls that are below scroll, collapsed, clipped, hidden behind a mode, or
    absent. Do not accept a parameter-surface closeout when the visible screenshot still shows only old
    controls, even if JSON contains new ids.
+   For donor-derived shader/material/light parameter surfaces, visible wiring proof is not enough.
+   Require a donor parameter inventory before accepting closeout: list the donor source files and line
+   anchors, enumerate each artist-facing or runtime-significant donor parameter/block/keyword/mode,
+   and compare every item against the target UI, CLI/config, model/state, runtime payload, and
+   validation readback. Each donor parameter must be classified as implemented+visible, implemented
+   but hidden/mode-gated with a visible path, intentionally folded into a preset with donor-backed
+   reasoning, intentionally out of scope with return conditions, or missing. If the donor exposes
+   secondary lobes, tints, shifts, transmittance, absorption/melanin modes, roughness variants,
+   visibility/scattering sources, or quality/sample controls, do not accept a closeout that only
+   proves the primary/default sliders. A live widget oracle proves wiring for the controls it touches;
+   it does not prove the donor parameter surface is complete.
    For user-reported UI/control-surface failures, the supervisor must personally compare the
    worker's before and after visible artifacts against the user's reported surface before accepting
    closeout. Hidden widgets, mode-gated controls, off-scroll controls, JSON-only ids, model-only

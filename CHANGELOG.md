@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a donor-parameter inventory gate for shader/material/light UI closeout. Supervisors now must
+  compare donor-exposed artist/runtime parameters, such as secondary lobes, specular tints/shifts,
+  transmittance, absorption/melanin modes, roughness variants, visibility/scattering sources, and
+  quality controls, against target UI/CLI/model/runtime exposure before accepting widget-wiring proof.
 - Hardened supervisor closeout for user-reported UI/control-surface bugs. Supervisors now must
   compare the user's visible report against worker before/after artifacts, reject hidden or
   mode-gated widget-only proof as default-surface proof, and classify stale runtime capability

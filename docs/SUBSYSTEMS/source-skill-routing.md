@@ -277,6 +277,16 @@ generated-project workflow instructions.
   control labels, enabled/default state, and whether they require scrolling, are collapsed, clipped,
   mode-gated, or absent. A screenshot showing only old controls invalidates the claim until the
   visible surface is fixed or explicitly deferred.
+- Donor-derived shader/material/light parameter surfaces require a donor parameter inventory before
+  closeout. Agents must cite donor source files and line anchors, enumerate each artist-facing or
+  runtime-significant donor parameter/block/keyword/mode, then classify every item against the target
+  UI, CLI/config, model/state, runtime payload, and validation readback. Valid dispositions are
+  implemented+visible, implemented but hidden/mode-gated with a visible path, intentionally folded
+  into a preset with donor-backed reasoning, intentionally out of scope with return conditions, or
+  missing. Live widget mutation proof validates only the controls it touches; it does not prove full
+  donor parameter-surface closure when secondary lobes, tints, shifts, transmittance,
+  absorption/melanin modes, roughness variants, visibility/scattering sources, or quality/sample
+  controls exist in the donor.
 - Product-facing UI control wiring now requires live mutation evidence, not only reachability. Drive
   the real widget/control path, or an app-owned UI action harness that invokes the same handler, and
   record before/after values for the visible control, committed model/state, and runtime/readback

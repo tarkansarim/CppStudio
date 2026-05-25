@@ -164,3 +164,9 @@ When finishing work here, report:
   qualifying push to remote
 - the exact reason if either change-history surface was not updated
 - any installed-tool gaps, such as missing `clang-format` or `clang-tidy`
+
+<!-- agent-self-improvement-doctrine:begin -->
+## Accepted Self-Improvement Doctrine
+
+- 2026-05-25T03:49:05Z [global] For donor-derived shader, material, or light parameter surfaces, CppStudio supervisor closeout must require a donor parameter inventory with source anchors and classify every artist-facing or runtime-significant donor parameter across UI, CLI/config, model/state, runtime payload, and validation readback; visible widget wiring proof alone is not parameter-surface closure. (source: self-improvement:user_correction:acad59bb360d5e49)
+<!-- agent-self-improvement-doctrine:end -->

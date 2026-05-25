@@ -54,6 +54,9 @@ intentionally short: newest public-facing changes first, older highlights collap
   must now drive the real widget/control handler or equivalent app-owned UI action and compare
   before/after visible control values, committed model/state, and runtime/readback deltas; screenshot,
   inventory, model-only setter, and static signal-slot evidence are supporting evidence only.
+- `latest` - Added a donor-parameter inventory gate for shader/material/light UI closeout. A worker
+  now has to list donor-exposed artist/runtime parameters and classify each one against target
+  UI/CLI/model/runtime exposure before widget-wiring proof can count as complete.
 - `latest` - Tightened parameter-surface closure so product UI exposure now requires visible
   reachability proof, not only model or JSON inventory. Supervisors and GUI/HUD closeouts must show
   actual panel/section labels, control labels, enabled/default state, and whether controls are
