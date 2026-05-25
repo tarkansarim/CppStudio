@@ -151,9 +151,9 @@ skills, and watch-mode publishing behavior.
   `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]` as a worker action when uncovered
   routable paths or the no-map-touch semantic review note indicate map maintenance may need a
   bounded sidecar. Strict review mode blocks source-slice closeout until the worker updates the map,
-  launches the sidecar, or explicitly acknowledges a reviewed no-map-change case. Once
-  `--reviewed-no-map-change` is supplied, the checker prints the acknowledgement without the
-  unresolved sidecar/action wording.
+  uses `--launch-sidecar auto` to create a frozen snapshot and start the sidecar, or explicitly
+  acknowledges a reviewed no-map-change case. Once `--reviewed-no-map-change` is supplied, the
+  checker prints the acknowledgement without the unresolved sidecar/action wording.
 - The bundled code-map bootstrap audit text tells agents to present actual findings and cleanup cost
   before asking restructure/preserve/decline questions, so existing-project opt-in cannot become a
   pre-audit choice prompt.

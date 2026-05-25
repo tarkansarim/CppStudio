@@ -110,17 +110,19 @@ generated-project workflow instructions.
   enabled-map maintenance closeout, sidecar maintenance, and routing-smoke proof. Keep those cases
   aligned with the code-map bootstrap scripts and source-skill rules whenever the protocol changes.
 - Enabled code maps have an ordinary pre-commit maintenance gate. Agents must run
-  `scripts/check_code_map_drift.py --require-enabled --strict-review` when available before
+  `scripts/check_code_map_drift.py --require-enabled --strict-review --launch-sidecar auto` when available before
   committing a verified source slice, then update the manifest and matching subsystem doc for any
   changed routable path that is not covered. The checker catches path coverage; semantic
   ownership/data-flow changes still require agent judgment even when the path is already routed. If
   strict review reports covered source changes with no map-file edit, the worker must resolve that
-  signal before staging by updating the map, launching the sidecar itself, or rerunning with
-  `--reviewed-no-map-change` only after a real semantic review.
+  signal before staging by updating the map, letting the checker auto-launch the sidecar, or rerunning
+  with `--reviewed-no-map-change` only after a real semantic review.
 - Code-map sidecars are bounded maintenance lanes, not parallel source workers. Use one when a drift
   hook/check reports map work, a long-running slice hits a planned maintenance interval, ownership or
   data-flow changes make subsystem docs stale, new or moved routable files appear, or the main worker
-  needs to reduce context bloat. When `agent-tmux` is available, the preferred guarded helper is
+  needs to reduce context bloat. When `agent-tmux` is available, the normal closeout command passes
+  `--launch-sidecar auto`, so the drift checker creates a frozen tracked/untracked snapshot and
+  starts the guarded sidecar automatically when maintenance is unresolved. The underlying helper is
   `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]`; the drift checker prints that command
   as a worker action, not a user prompt, for uncovered drift and no-map-touch semantic review output. The sidecar
   reads a named fixed snapshot such as a Rewind checkpoint, temporary git anchor, commit, isolated

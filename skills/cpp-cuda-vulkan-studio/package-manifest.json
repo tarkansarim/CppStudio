@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 98906,
-      "sha256": "a08a2292d4f2d1449dd77d855ad5b1a0c9075858ceb4e0c8b325a640bca204c8"
+      "size": 99309,
+      "sha256": "e519d299309ba5aea58ad6879d36eea9d1232fdcd224cf4fd113352b519e0917"
     },
     {
       "path": "agents/openai.yaml",
@@ -63,8 +63,8 @@
       "path": "assets/app-library-template/README.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 7041,
-      "sha256": "33c83683ca5d79b589fc56778bfd19b3aa5c0397ba77499a2f638020e3c1f66f"
+      "size": 7729,
+      "sha256": "47b07953ce1d1a230462a5bc853ffed3dc24980c191da3802a8dc253d057929c"
     },
     {
       "path": "assets/app-library-template/benchmarks/benchmark_smoke.cpp",
@@ -1393,8 +1393,8 @@
       "path": "scripts/check_code_map_drift.py",
       "role": "script",
       "disclosure_group": "script",
-      "size": 11203,
-      "sha256": "024eb32a49effe53cc7ca456757732ff870d025eb06ab128fd5a7adbeb948c69"
+      "size": 14935,
+      "sha256": "3459137574bb98d68c29e8341a78f41f827d5fbce9444ca5c85ab85a43cb294e"
     },
     {
       "path": "scripts/check_dev_tools.sh",

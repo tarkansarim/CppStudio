@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added an automatic code-map sidecar launch path for enabled-map closeout. The drift checker now
+  supports `--launch-sidecar auto`, creates a frozen tracked/untracked snapshot, and invokes the
+  guarded `agent-tmux codex-code-map-sidecar` helper when strict drift review finds uncovered paths
+  or unresolved no-map-touch semantic review work, so routine map maintenance is no longer only a
+  worker-memory/prose obligation.
 - Required live mutation proof for product-facing UI controls. Parameter-surface closeouts now have
   to drive the real widget/control handler or equivalent app-owned UI action and compare before/after
   visible control values, committed model/state, and runtime/readback deltas; screenshots,

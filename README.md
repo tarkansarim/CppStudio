@@ -38,6 +38,10 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
+- `latest` - Added `--launch-sidecar auto` to the enabled-code-map drift checker. Strict closeout can
+  now create a frozen tracked/untracked snapshot and start the guarded `agent-tmux
+  codex-code-map-sidecar` lane automatically when map maintenance is unresolved, instead of relying
+  on the worker to remember to launch a sidecar.
 - `latest` - Required visible UI proof to run through the exact user-facing launcher, or prove the
   tested executable is the same fresh binary selected by that launcher. Closeout now has to name the
   launch command, selected executable/build tree, and stale-binary rejection or freshness evidence so

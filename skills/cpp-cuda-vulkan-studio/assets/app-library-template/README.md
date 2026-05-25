@@ -51,9 +51,17 @@ scripts/validate_code_map.py --require-enabled
 If the drift check reports a changed path that is not routed by the manifest, update
 `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` and the matching `docs/SUBSYSTEMS/*.md` file in the same
 slice before committing. If strict review reports source changes with no map-file edit, resolve that
-yourself before staging: update the map, launch the code-map sidecar, or rerun with
+yourself before staging: update the map, let the drift checker launch the code-map sidecar, or rerun with
 `--reviewed-no-map-change` only after confirming no ownership, data-flow, backend-boundary,
 validation, or public route changed.
+
+For normal agent closeout, use the auto-sidecar form so unresolved map maintenance starts a bounded
+sidecar instead of becoming a user prompt:
+
+```bash
+scripts/check_code_map_drift.py --require-enabled --strict-review --launch-sidecar auto
+scripts/validate_code_map.py --require-enabled
+```
 
 ### Code-Map Sidecar Lane
 
@@ -63,14 +71,18 @@ ownership/data flow/backend boundaries, a planned interval, or stale subsystem d
 extra lane. The sidecar must read a fixed snapshot such as a Rewind checkpoint, temporary git anchor,
 commit, isolated worktree copy, or archive, and its prompt/response must name that anchor.
 
-When `agent-tmux` is available, use the guarded helper surfaced by the drift checker when map
-maintenance is non-trivial:
+When `agent-tmux` is available, the strict closeout command should use `--launch-sidecar auto` so
+the drift checker creates a frozen snapshot and starts the guarded sidecar when map maintenance is
+non-trivial:
 
 ```bash
-agent-tmux codex-code-map-sidecar /path/to/repo ANCHOR "Update code-map routes for the changed slice"
+scripts/check_code_map_drift.py --require-enabled --strict-review --launch-sidecar auto
 ```
 
-Replace `ANCHOR` with the fixed snapshot id or path that the sidecar should inspect.
+The checker still prints the underlying helper command and snapshot path for auditability. Manual
+`agent-tmux codex-code-map-sidecar /path/to/repo ANCHOR "Update code-map routes for the changed
+slice"` launch is only for older projects without the new drift checker or when deliberately using a
+specific Rewind checkpoint, temporary git anchor, isolated worktree, or archive snapshot.
 
 If the main worker continues source work, the sidecar must not edit that live worktree concurrently.
 Use an isolated worktree, archive/snapshot copy, or read-only snapshot that returns a patch/diff or

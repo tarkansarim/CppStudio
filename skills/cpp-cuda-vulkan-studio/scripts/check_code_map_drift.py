@@ -6,8 +6,12 @@ from __future__ import annotations
 import argparse
 import fnmatch
 import json
+import os
 import shlex
+import shutil
 import subprocess
+import tempfile
+import time
 from pathlib import Path
 from typing import Iterable
 
@@ -93,6 +97,7 @@ MAP_PATHS = {
     str(MANIFEST_PATH),
 }
 SIDECAR_FOCUS_PATH_LIMIT = 6
+SIDECAR_SNAPSHOT_ROOT_ENV = "CPPSTUDIO_CODE_MAP_SIDECAR_SNAPSHOT_ROOT"
 
 
 def run_git(repo: Path, args: list[str], *, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -104,6 +109,10 @@ def run_git(repo: Path, args: list[str], *, check: bool = True) -> subprocess.Co
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
+
+
+def command_available(name: str) -> bool:
+    return shutil.which(name) is not None
 
 
 def git_available(repo: Path) -> bool:
@@ -140,6 +149,13 @@ def collect_git_paths(repo: Path, mode: str, include_untracked: bool) -> list[st
         paths.update(normalize_path(line) for line in result.stdout.splitlines() if line.strip())
 
     return sorted(paths)
+
+
+def collect_snapshot_paths(repo: Path) -> list[str]:
+    tracked = run_git(repo, ["ls-files", "-z"]).stdout.split("\0")
+    untracked = run_git(repo, ["ls-files", "--others", "--exclude-standard", "-z"]).stdout.split("\0")
+    paths = sorted({normalize_path(path) for path in [*tracked, *untracked] if path.strip()})
+    return [path for path in paths if path and not is_ignored(path)]
 
 
 def load_json(path: Path) -> dict:
@@ -238,7 +254,61 @@ def sidecar_focus(reason: str, paths: Iterable[str]) -> str:
     return f"{reason}: {path_summary}"
 
 
-def print_sidecar_action(repo: Path, reason: str, paths: Iterable[str]) -> None:
+def sidecar_snapshot_root() -> Path:
+    configured = os.environ.get(SIDECAR_SNAPSHOT_ROOT_ENV)
+    if configured:
+        root = Path(configured).expanduser()
+    else:
+        state_home = Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local" / "state"))
+        root = state_home / "cppstudio" / "code-map-sidecar-snapshots"
+    root.mkdir(parents=True, exist_ok=True)
+    return root.resolve()
+
+
+def create_sidecar_snapshot(repo: Path) -> tuple[Path, str]:
+    timestamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    snapshot_dir = Path(
+        tempfile.mkdtemp(
+            prefix=f"{repo.name}-code-map-{timestamp}-",
+            dir=sidecar_snapshot_root(),
+        )
+    ).resolve()
+    for relative in collect_snapshot_paths(repo):
+        source = repo / relative
+        if not source.is_file() or source.is_symlink():
+            continue
+        target = snapshot_dir / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
+    head = run_git(repo, ["rev-parse", "--verify", "HEAD"], check=False)
+    head_text = head.stdout.strip() if head.returncode == 0 else "no-git-head"
+    anchor = f"snapshot-{timestamp}-{head_text[:12]}"
+    (snapshot_dir / "SIDECAR_SNAPSHOT_ANCHOR.txt").write_text(
+        f"source_repo={repo}\nanchor={anchor}\nhead={head_text}\ncreated_utc={timestamp}\n",
+        encoding="utf-8",
+    )
+    return snapshot_dir, anchor
+
+
+def launch_sidecar(repo: Path, reason: str, paths: Iterable[str]) -> int:
+    if not command_available("agent-tmux"):
+        print("Code-map sidecar launch blocked: agent-tmux is not available on PATH.")
+        return 127
+    snapshot_dir, anchor = create_sidecar_snapshot(repo)
+    focus = sidecar_focus(reason, paths)
+    command = ["agent-tmux", "codex-code-map-sidecar", str(snapshot_dir), anchor, focus]
+    print("Code-map sidecar auto-launch:")
+    print(f"  source repo: {repo}")
+    print(f"  frozen snapshot: {snapshot_dir}")
+    print(f"  anchor: {anchor}")
+    print(f"  command: {shlex.join(command)}")
+    completed = subprocess.run(command, text=True)
+    if completed.returncode != 0:
+        print(f"Code-map sidecar auto-launch failed with exit code {completed.returncode}.")
+    return completed.returncode
+
+
+def print_sidecar_action(repo: Path, reason: str, paths: Iterable[str], *, launch: bool) -> int:
     focus = sidecar_focus(reason, paths)
     command = shlex.join(
         [
@@ -263,6 +333,9 @@ def print_sidecar_action(repo: Path, reason: str, paths: Iterable[str]) -> None:
         "isolated worktree copy, or archive snapshot; validate and apply sidecar artifacts "
         "before committing."
     )
+    if launch:
+        return launch_sidecar(repo, reason, paths)
+    return 0
 
 
 def main() -> int:
@@ -301,7 +374,18 @@ def main() -> int:
             "manifest or subsystem-doc updates for this slice"
         ),
     )
+    parser.add_argument(
+        "--launch-sidecar",
+        choices=("never", "auto"),
+        default="never",
+        help=(
+            "When maintenance is unresolved, create a frozen snapshot and launch the guarded "
+            "agent-tmux codex-code-map-sidecar helper automatically. Default never keeps CI "
+            "and read-only validation from spawning workers."
+        ),
+    )
     args = parser.parse_args()
+    launch_sidecar_auto = args.launch_sidecar == "auto"
 
     repo = Path(args.repo).expanduser().resolve()
     if not repo.is_dir():
@@ -327,7 +411,14 @@ def main() -> int:
             "Update docs/CODEBASE_SUBSYSTEM_MANIFEST.json and the matching docs/SUBSYSTEMS/*.md "
             "route, or explicitly add the owning directory/glob if the subsystem already owns it."
         )
-        print_sidecar_action(repo, "Update code-map routes for uncovered paths", uncovered)
+        sidecar_rc = print_sidecar_action(
+            repo,
+            "Update code-map routes for uncovered paths",
+            uncovered,
+            launch=launch_sidecar_auto,
+        )
+        if launch_sidecar_auto and sidecar_rc != 0:
+            return sidecar_rc
         return 1
 
     print(f"Code map drift check passed: {len(routable_paths)} changed routable path(s) covered")
@@ -342,11 +433,14 @@ def main() -> int:
                 "update is required for this slice."
             )
         else:
-            print_sidecar_action(
+            sidecar_rc = print_sidecar_action(
                 repo,
                 "Review semantic code-map maintenance for changed routable paths",
                 routable_paths,
+                launch=launch_sidecar_auto,
             )
+            if launch_sidecar_auto and sidecar_rc != 0:
+                return sidecar_rc
             if args.strict_review:
                 print(
                     "Strict review mode: map review is unresolved. Update the map, launch the "

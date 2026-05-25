@@ -678,6 +678,44 @@ if python3 "${ROOT_DIR}/scripts/check_code_map_drift.py" "${code_map_enable_tmp}
 fi
 grep -Fq "Strict review mode: map review is unresolved" "${drift_strict_review_out}"
 grep -Fq "Do not ask the user to prompt the map update" "${drift_strict_review_out}"
+fake_sidecar_bin="${VALIDATE_TMP}/fake-sidecar-bin"
+fake_sidecar_log="${VALIDATE_TMP}/fake-sidecar-launch.log"
+fake_sidecar_snapshots="${VALIDATE_TMP}/fake-sidecar-snapshots"
+mkdir -p "${fake_sidecar_bin}"
+cat >"${fake_sidecar_bin}/agent-tmux" <<'SH'
+#!/usr/bin/env bash
+set -euo pipefail
+printf '%s\n' "$*" >>"${CPPSTUDIO_FAKE_AGENT_TMUX_LOG:?}"
+if [[ "$1" != "codex-code-map-sidecar" ]]; then
+    echo "unexpected agent-tmux command: $*" >&2
+    exit 64
+fi
+if [[ ! -f "$2/SIDECAR_SNAPSHOT_ANCHOR.txt" ]]; then
+    echo "missing sidecar snapshot anchor file" >&2
+    exit 65
+fi
+if [[ ! -f "$2/src/app.cpp" ]]; then
+    echo "missing copied source file in sidecar snapshot" >&2
+    exit 66
+fi
+SH
+chmod +x "${fake_sidecar_bin}/agent-tmux"
+drift_auto_sidecar_out="$(mktemp "${VALIDATE_TMP}/code_map_drift_auto_sidecar.XXXXXX")"
+if PATH="${fake_sidecar_bin}:${PATH}" \
+    CPPSTUDIO_FAKE_AGENT_TMUX_LOG="${fake_sidecar_log}" \
+    CPPSTUDIO_CODE_MAP_SIDECAR_SNAPSHOT_ROOT="${fake_sidecar_snapshots}" \
+    python3 "${ROOT_DIR}/scripts/check_code_map_drift.py" "${code_map_enable_tmp}" \
+        --require-enabled --strict-review --launch-sidecar auto \
+        >"${drift_auto_sidecar_out}" 2>&1; then
+    cat "${drift_auto_sidecar_out}" >&2
+    echo "Expected strict code map drift review to remain unresolved after launching sidecar" >&2
+    exit 1
+fi
+grep -Fq "Code-map sidecar auto-launch:" "${drift_auto_sidecar_out}"
+grep -Fq "frozen snapshot:" "${drift_auto_sidecar_out}"
+grep -Fq "agent-tmux codex-code-map-sidecar" "${drift_auto_sidecar_out}"
+grep -Fq "Review semantic code-map maintenance for changed routable paths" "${fake_sidecar_log}"
+find "${fake_sidecar_snapshots}" -name SIDECAR_SNAPSHOT_ANCHOR.txt -print -quit | grep -q .
 drift_ack_review_out="$(mktemp "${VALIDATE_TMP}/code_map_drift_ack_review.XXXXXX")"
 python3 "${ROOT_DIR}/scripts/check_code_map_drift.py" "${code_map_enable_tmp}" \
     --require-enabled --strict-review --reviewed-no-map-change \
