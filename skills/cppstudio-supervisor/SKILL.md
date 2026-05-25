@@ -61,6 +61,16 @@ validation skills instead.
    explicitly classify controls that are below scroll, collapsed, clipped, hidden behind a mode, or
    absent. Do not accept a parameter-surface closeout when the visible screenshot still shows only old
    controls, even if JSON contains new ids.
+   Visible reachability is not wiring proof. For product-facing controls, require live mutation
+   evidence through the real widget/control path or an app-owned UI action harness that invokes the
+   same UI handler. The evidence must show before and after values for the visible control, committed
+   model/state, and runtime/readback field such as a shader uniform, light payload, renderer config,
+   selected tool, or scene value. Model-only setters, JSON inventories, screenshots, control counts,
+   static signal-slot inspection, or harness routes that bypass the product UI are supporting
+   evidence only. When a surface has many controls, require a complete control inventory plus
+   mutation proof for every newly added or changed critical control and representative proof for each
+   repeated control class; classify every unmutated control as deferred, blocked, not-tested, or
+   intentionally hidden.
    The visible proof must be through the exact user-facing launcher/command handed to the user, or
    must prove that the tested executable is the same fresh executable selected by that launcher.
    Require the worker to report launcher path, selected executable/build tree, stdout/stderr or state
@@ -164,6 +174,10 @@ A supervised worker closeout must include:
   including UI/control inventory proof and visible reachability proof when the app has a
   product-facing UI; JSON/model inventory alone is incomplete unless each hidden/deferred control is
   explicitly justified;
+- live UI mutation proof for product-facing controls: before/after visible control values,
+  committed model/state values, and runtime/readback deltas through the real widget path or a harness
+  action that invokes the same UI handler; inventory, screenshot, model-only API, or static wiring
+  evidence alone is incomplete;
 - unresolved concerns classified as resolved, unresolved, not-tested, or user-decision-needed;
 - whether any reusable CppStudio rule, donor route, code-map rule, or skill needs hardening.
 

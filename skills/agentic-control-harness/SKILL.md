@@ -105,6 +105,12 @@ control harness itself.
   A drag, move, edit, connect, delete, timeline, or scene command that is rejected or does not
   actually change the claimed state must not return `ok=true` unless the endpoint explicitly
   reports a deliberate no-op. Include before/after readback for user-visible mutations.
+- For product-facing UI controls, expose or use a control path that proves wiring through the actual
+  widget/control handler, not only through model or backend APIs. A useful UI-control oracle mutates
+  the visible slider/button/menu/color picker through toolkit action, app-owned UI action, or
+  replayed user interaction, then reports before/after visible control value, committed model/state,
+  and runtime/readback delta. Route inventories, JSON state, static signal-slot inspection, control
+  counts, and model-only setters are supporting evidence only.
 - For user-reported bugs, use the harness to make "fixed" a before/after comparison, not a nearby
   pass. Reproduce the reported symptom first and store the before evidence under the closest
   user-equivalent path available: launch command, scenario id, exact input sequence, harness state,

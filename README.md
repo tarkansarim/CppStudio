@@ -42,6 +42,10 @@ intentionally short: newest public-facing changes first, older highlights collap
   tested executable is the same fresh binary selected by that launcher. Closeout now has to name the
   launch command, selected executable/build tree, and stale-binary rejection or freshness evidence so
   an alternate build tree cannot hide old UI.
+- `latest` - Required live mutation proof for product-facing UI controls. Parameter-surface closeout
+  must now drive the real widget/control handler or equivalent app-owned UI action and compare
+  before/after visible control values, committed model/state, and runtime/readback deltas; screenshot,
+  inventory, model-only setter, and static signal-slot evidence are supporting evidence only.
 - `latest` - Tightened parameter-surface closure so product UI exposure now requires visible
   reachability proof, not only model or JSON inventory. Supervisors and GUI/HUD closeouts must show
   actual panel/section labels, control labels, enabled/default state, and whether controls are

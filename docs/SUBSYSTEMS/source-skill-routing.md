@@ -269,6 +269,13 @@ generated-project workflow instructions.
   control labels, enabled/default state, and whether they require scrolling, are collapsed, clipped,
   mode-gated, or absent. A screenshot showing only old controls invalidates the claim until the
   visible surface is fixed or explicitly deferred.
+- Product-facing UI control wiring now requires live mutation evidence, not only reachability. Drive
+  the real widget/control path, or an app-owned UI action harness that invokes the same handler, and
+  record before/after values for the visible control, committed model/state, and runtime/readback
+  field. Static signal-slot inspection, model-only setters, UI JSON, screenshots, or control counts
+  are supporting evidence only. Large surfaces need a complete inventory, mutation proof for all new
+  or changed critical controls, representative proof for repeated control classes, and explicit
+  disposition for unmutated controls.
 - Visible UI proof must be tied to the exact user-facing launcher and selected executable. When
   several build trees or binaries exist, closeout must record launcher path, selected executable,
   build tree/config, stdout/stderr or semantic state proving the selection, and freshness against the

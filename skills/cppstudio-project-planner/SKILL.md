@@ -310,6 +310,13 @@ support the row, but it cannot replace proof that a user can actually find and u
 proof route must name the exact user-facing launcher/command and selected executable/build tree for
 GUI products; if the plan will validate through a helper binary or alternate build tree, it must also
 define how the canonical launcher is kept fresh or prevented from selecting stale UI.
+For product-facing controls, the validation row must also name the mutation proof route: how the real
+widget/control path, or an app-owned UI action that calls the same handler, will change the visible
+control and prove the committed model/state plus runtime/readback value changed. Model-only setters,
+JSON inventories, screenshots, control counts, and static wiring inspection are not enough to prove a
+slider, button, color picker, menu, or choice is wired. If there are many repeated controls, the plan
+must define full inventory coverage, critical-control mutation coverage, repeated-class sampling, and
+explicit disposition for untested or intentionally hidden controls.
 
 Use explicit section headings when presenting this planning structure: `Planning Depth Contract`,
 `Whole-Product Scaffold`, `Donor Feature Disposition Matrix`, `Parameter Surface Closure`,

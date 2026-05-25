@@ -156,6 +156,13 @@ reachability is mandatory: record the panel/section label, whether the control i
 visible, below scroll, collapsed, clipped, mode-gated, or absent, and include a screenshot or toolkit
 surface readback that matches the user-facing layout. Do not accept "the ids exist in UI JSON" as a
 substitute when the screenshot still shows only old controls.
+For product-facing settings, visibility is not enough to prove wiring. Verification must mutate the
+actual widget/control path, or an app-owned UI action that invokes the same handler, and compare
+before/after values for the visible control, committed model/state, and runtime/readback field. A
+model-only setter, JSON inventory, static signal-slot listing, screenshot, or control count is only
+supporting evidence. For large repeated inspector surfaces, require a full inventory, mutation proof
+for newly added or changed critical controls, representative mutation proof for repeated control
+classes, and explicit disposition for unmutated controls.
 
 The screenshot or toolkit readback must come from the same user-facing launcher path the user will
 run, or prove that the tested executable is the fresh binary selected by that launcher. Record the

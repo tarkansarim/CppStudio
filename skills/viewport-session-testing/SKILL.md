@@ -74,6 +74,15 @@ Backend HTTP/curl commands alone do not satisfy this lane for visible UI bugs. T
 supporting evidence, but they do not prove widget focus, visible control clicks, DPI mapping, mouse
 or stylus routing, viewport hit tests, or screenshot freshness.
 
+For product-facing parameter controls, the session or equivalent toolkit probe must prove the
+control is wired, not only present. Mutate the visible slider, button, menu, choice, color picker, or
+inspector row through the same UI handler a user exercises, then compare before/after visible
+control value, committed model/state, and runtime/readback field. Model-only setters, static
+signal-slot inspection, UI JSON inventories, control counts, or screenshots without a changed value
+are not enough. For large inspector surfaces, pair a complete inventory with mutation proof for all
+newly added or changed critical controls and representative proof for repeated control classes; mark
+unmutated controls as deferred, blocked, not-tested, or intentionally hidden.
+
 Be precise about execution mode. OSTM/background window ownership, app-owned replay, and real OS
 pointer/stylus injection are different proof modes. If a lane uses real input that can move focus or
 the user's pointer, label it as `real-input`/intrusive and do not describe it as offscreen,

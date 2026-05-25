@@ -236,6 +236,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   parameter-surface claim even if hidden JSON contains new ids. If the parameter should not be
   visible in the UI, the slice plan must say why, name the owner surface that controls it instead,
   and add a validation signal proving that decision.
+- Product-facing UI controls also require live mutation proof before closeout. Drive the actual
+  widget/control path, or an app-owned UI action harness that invokes the same handler, and record
+  before/after values for the visible control, committed model/state, and runtime/readback field
+  affected by the control. Static signal-slot inspection, control counts, screenshots, UI JSON,
+  model-only setters, or a backend route that bypasses the visible control are not wiring proof. For
+  large repeated surfaces, inventory all controls, mutate every newly added or changed critical
+  control, sample each repeated control class, and classify unmutated controls explicitly.
 - User-facing launch path is part of visible proof. When UI/control exposure is validated through a
   screenshot, OSTM job, toolkit readback, or semantic UI state, the proof must use the exact
   launcher/command that the user is told to run, or explicitly prove that the exercised binary is

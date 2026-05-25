@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Required live mutation proof for product-facing UI controls. Parameter-surface closeouts now have
+  to drive the real widget/control handler or equivalent app-owned UI action and compare before/after
+  visible control values, committed model/state, and runtime/readback deltas; screenshots,
+  inventories, model-only setters, and static signal-slot evidence are supporting evidence only.
 - Required exact user-facing launcher provenance for visible UI proof. Agents must now record the
   launcher command, selected executable/build tree, and freshness or stale-binary rejection before
   accepting screenshots, OSTM jobs, toolkit readbacks, or semantic UI state as proof that product
