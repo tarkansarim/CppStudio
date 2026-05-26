@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Fixed hosted ShellCheck validation for the CppStudio top-level bundled-skill package guard by
+  quoting the nested prefix expansion used in the unexpected-package diagnostic.
 - Documented CppStudio's deliberate bundled multi-skill layout and added a source validation gate
   that rejects accidental unmanaged top-level `skills/*/SKILL.md` packages unless they are listed in
   `scripts/managed_skills.sh` or are the main `cpp-cuda-vulkan-studio` skill.

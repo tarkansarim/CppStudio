@@ -38,6 +38,8 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
+- `latest` - Fixed the hosted ShellCheck failure in the bundled-skill package guard so the GitHub
+  `Validate` workflow accepts the new unmanaged top-level skill package diagnostic.
 - `latest` - Hardened Vulkan/realtime performance audits so agents classify present/vsync pacing,
   startup/shutdown, CPU/API churn, GPU pass cost, resource churn, and instrumentation gaps before
   proposing shader, shadow, ray tracing, CUDA, or compute optimization. Empty Vulkan/NVTX marker

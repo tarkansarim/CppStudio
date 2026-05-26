@@ -505,7 +505,7 @@ while IFS= read -r -d '' skill_file; do
         fi
     done
     if [[ "${found_expected}" != "1" ]]; then
-        echo "Unexpected top-level CppStudio skill package: ${skill_dir#${ROOT_DIR}/}" >&2
+        echo "Unexpected top-level CppStudio skill package: ${skill_dir#"${ROOT_DIR}"/}" >&2
         echo "Add it to scripts/managed_skills.sh with owner rationale, or move it out of skills/." >&2
         exit 1
     fi
