@@ -4,6 +4,13 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Documented CppStudio's deliberate bundled multi-skill layout and added a source validation gate
+  that rejects accidental unmanaged top-level `skills/*/SKILL.md` packages unless they are listed in
+  `scripts/managed_skills.sh` or are the main `cpp-cuda-vulkan-studio` skill.
+- Hardened Vulkan/realtime performance profiling guidance. Profiling now has to classify
+  present/vsync pacing, startup/shutdown, CPU/API churn, GPU pass cost, resource churn, and
+  instrumentation gaps before proposing shader, shadow, ray tracing, CUDA, or compute optimization;
+  empty marker reports and zero/stale app timing readbacks must be reported as observability gaps.
 - Added a donor-parameter inventory gate for shader/material/light UI closeout. Supervisors now must
   compare donor-exposed artist/runtime parameters, such as secondary lobes, specular tints/shifts,
   transmittance, absorption/melanin modes, roughness variants, visibility/scattering sources, and

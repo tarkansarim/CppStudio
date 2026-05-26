@@ -38,6 +38,16 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
+- `latest` - Hardened Vulkan/realtime performance audits so agents classify present/vsync pacing,
+  startup/shutdown, CPU/API churn, GPU pass cost, resource churn, and instrumentation gaps before
+  proposing shader, shadow, ray tracing, CUDA, or compute optimization. Empty Vulkan/NVTX marker
+  reports and zero/stale app timing readbacks now have to be reported as observability gaps, not
+  pass-level findings.
+- `latest` - Documented CppStudio's intentional bundled multi-skill layout and added validation that
+  rejects accidental unmanaged top-level `skills/*/SKILL.md` packages unless they are the main skill
+  or listed in `scripts/managed_skills.sh`, keeping routing explicit without collapsing distinct
+  CMake, CUDA, Vulkan, profiling, GUI, planning, supervisor, viewport, and harness concerns into one
+  overloaded router.
 - `latest` - Hardened supervisor closeout for user-reported UI/control-surface bugs. Worker proof
   now has to match the user's visible report with before/after artifacts, cannot count hidden or
   mode-gated widget mutations as default-panel proof, and must classify stale runtime capability

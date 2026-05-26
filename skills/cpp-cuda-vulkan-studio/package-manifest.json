@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 99309,
-      "sha256": "e519d299309ba5aea58ad6879d36eea9d1232fdcd224cf4fd113352b519e0917"
+      "size": 100172,
+      "sha256": "f5b7f5b5b6656e3ccdda0be2e8fa79c59ab105979a5086d9abb47cc5617c8c2e"
     },
     {
       "path": "agents/openai.yaml",
@@ -119,8 +119,8 @@
       "path": "assets/app-library-template/docs/BENCHMARKS.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 3140,
-      "sha256": "d54d8372d8b16ace75baf9c3b2a7b8115e8c29f1663f041c9804c4cf04851d80"
+      "size": 4322,
+      "sha256": "352a15bf35cc3ecfec27ffcb089d1cdc29b6d19605d183ab267c14cd70b5790c"
     },
     {
       "path": "assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md",
@@ -203,8 +203,8 @@
       "path": "assets/app-library-template/docs/VALIDATION_PIPELINE.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 22583,
-      "sha256": "16fdc618fed9b4d4915592bd7fd43f2907a4bd250058306e79b147262fb74344"
+      "size": 23207,
+      "sha256": "42693bf463a759fd88e4f9cdf1890314e9ef03e282b84a96a357599c5ddba8f0"
     },
     {
       "path": "assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md",
@@ -1050,8 +1050,8 @@
       "path": "references/donor-library/profiles/profiling-observability.md",
       "role": "reference",
       "disclosure_group": "donor-profile",
-      "size": 1994,
-      "sha256": "0227430261aaba17313b977e3850279a59734a4e1acddba161000bdbb7135d64"
+      "size": 2817,
+      "sha256": "a1a6799f22b9d7c55ee9b79e91b455a18543dd3da88068dc056a1c0155bd3918"
     },
     {
       "path": "references/donor-library/profiles/project-chrono.md",

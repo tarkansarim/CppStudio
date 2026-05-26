@@ -56,6 +56,22 @@ Current `nsys` resolves through the CUDA Toolkit launcher to Nsight Systems 2025
   - `HOME=/tmp/... XDG_CONFIG_HOME=/tmp/...`
 - If frame times cluster around display cadence, check vsync/present pacing and app internal GPU
   timers before concluding the renderer or CUDA kernels are the bottleneck.
+- For Vulkan/realtime app performance audits, classify present pacing separately from shader,
+  dispatch, BLAS/TLAS, resolve, upload, and CPU-submit cost. If `vkQueuePresentKHR`,
+  swapchain acquire, FIFO/FIFO-RELAXED present mode, or app readbacks such as
+  `present_live_cpu_total`/`acquire_slot_wait` dominate the sample, do not recommend shader or
+  renderer-pass optimization until a non-present-paced, uncapped, offscreen, or project-owned
+  benchmark lane shows the pass itself is expensive.
+- Treat startup, shutdown, pipeline creation, device creation, swapchain creation, and destruction
+  as separate phases from steady-state frame cost. If a profile window includes both, report them
+  separately before naming a bottleneck.
+- Validate app-owned timing readbacks before trusting them. If a project state JSON reports zero,
+  missing, or stale timing fields while another lane or profiler reports real timing, classify that
+  as an instrumentation gap and use the reliable lane for findings.
+- For pass-level Vulkan claims, require GPU timestamp ranges, Vulkan debug labels/markers, Nsight
+  Graphics GPU Trace, or equivalent project-owned pass timers. If Nsight marker reports return no
+  data, report a pass-attribution gap; API summaries alone can identify CPU/API/present behavior but
+  cannot prove which shader pass is slow.
 - For Vulkan frame-debugging, a live/presenting path is often easier to capture than offscreen-only
   modes because frame-capture tools frequently key off present/frame delimiters.
 - If a frame debugger hooks the process but never produces a capture artifact, check delimiter
@@ -195,6 +211,14 @@ compute-sanitizer <app-command> [args...]
 - If a graphics capture log shows Vulkan object lifetime and capture statistics, the frame debugger is successfully hooked even before you inspect the capture in a UI.
 - If an Nsight Graphics offscreen capture doesn't emit a file but a live capture does, suspect missing present/frame delimiters rather than a dead Vulkan hook.
 - If RenderDoc target control only reports `Noop`/`Disconnected`, verify Vulkan layer registration and prefer Nsight Graphics for that session instead of repeatedly patching the capture script.
+- If `nsys` shows `vkQueuePresentKHR`, swapchain acquire, or app present/acquire waits dominating
+  a frame, classify the result as present-paced. Do not infer that ray tracing, shaders, lighting,
+  shadows, CUDA, or compute kernels are slow until an uncapped/non-present-paced lane proves it.
+- If Vulkan marker or NVTX reports are empty, say exactly that pass-level attribution is missing and
+  recommend adding labels/timestamp ranges before optimizing a specific pass.
+- If allocation, descriptor, command-buffer, command-pool, pipeline, or device/swapchain creation
+  calls appear during a steady-state window, classify them as resource churn candidates; distinguish
+  one-time startup/destruction churn from recurring per-frame churn before patching.
 - If `nsys` shows long gaps before `cudaGraphicsMapResources` or `cudaGraphicsUnmapResources`, investigate CUDA/GL interop synchronization.
 - If `nsys` shows host thread blocked near swap/present, do not chase CUDA kernels first.
 - If `ncu` shows low occupancy but the kernel is not dominant in `nsys`, do not optimize it yet.

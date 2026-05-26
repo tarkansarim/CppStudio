@@ -249,6 +249,14 @@ PROFILE_LANE=vulkan NSYS_STATS_REPORTS=vulkan_api_sum,osrt_sum,nvtx_sum scripts/
 PROFILE_LANE=cuda NSYS_STATS_REPORTS=cuda_api_gpu_sum,cuda_gpu_kern_sum,osrt_sum,nvtx_sum scripts/run_nsys_smoke.sh
 ```
 
+Performance validation must classify the run before recommending optimization. If present/acquire or
+FIFO/FIFO-RELAXED pacing dominates, report the workload as present-paced and add an uncapped,
+offscreen, or project-owned benchmark lane before changing shaders, shadows, ray tracing, CUDA, or
+compute code. If device/swapchain/pipeline creation or teardown dominates, report startup/shutdown
+separately from steady-state. If Vulkan/NVTX marker summaries are empty or app timing readbacks are
+zero/stale/missing, record an instrumentation gap and add labels/timestamp ranges/project timers
+before making pass-level claims.
+
 Benchmark and profiling result records should follow [BENCHMARKS.md](BENCHMARKS.md). Do not add
 timing thresholds to CI until baselines are recorded for the exact runner hardware.
 

@@ -70,6 +70,11 @@ skills, and watch-mode publishing behavior.
   skill root is audited visibly but non-blocking by default because it may contain unrelated skills
   from other repos; set `CPPSTUDIO_STRICT_USER_SKILL_LOAD=1` to make that installed root a fatal
   maintainer gate.
+- Source validation also treats the managed skill inventory as authoritative. Every top-level
+  `skills/*/SKILL.md` package must be either the main `cpp-cuda-vulkan-studio` skill or listed in
+  `scripts/managed_skills.sh`; otherwise `validate.sh` fails and asks the maintainer to add owner
+  rationale or move the package out of `skills/`. This keeps the deliberate multi-skill layout
+  explicit without collapsing distinct CppStudio concerns into one monolithic router.
 - Non-dry-run sync stages and validates the skill before replacing the installed target, then restores
   the previous target if final validation fails. Staging and backups live outside the scanned
   `${SYNC_CODEX_HOME:-$HOME/.codex}/skills` root so interrupted syncs cannot expose duplicate or

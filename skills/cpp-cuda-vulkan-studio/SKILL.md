@@ -941,6 +941,15 @@ When this skill is active, work like a native C++ GPU systems engineer:
     `vulkan_api_sum,osrt_sum,nvtx_sum` or `cuda_api_gpu_sum,cuda_gpu_kern_sum,osrt_sum,nvtx_sum`,
     include `--force-export=true`, and do not use legacy `--report summary` or unsupported
     `--format text` assumptions.
+    For Vulkan/realtime performance audits, classify the bottleneck before proposing edits:
+    present/vsync pacing, CPU submit/API churn, GPU pass/shader cost, startup/pipeline creation,
+    upload/resource churn, or instrumentation gap. If `vkQueuePresentKHR`, swapchain acquire, FIFO
+    present mode, or app present/acquire wait readbacks dominate, report the run as present-paced and
+    do not optimize shaders, lighting, shadows, CUDA, or compute kernels until a non-present-paced or
+    project-owned benchmark lane proves those passes are expensive. Separate startup/device/pipeline
+    creation and shutdown from steady-state frames. If app timing readbacks are zero/missing/stale or
+    Nsight Vulkan/NVTX marker reports have no data, call out the instrumentation/pass-attribution gap
+    instead of making pass-level claims from API summaries alone.
 19. Before greenfield scaffolding, major backbone edits, or native GPU architecture brainstorming,
     read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library,
     CUDA+Vulkan combined/interop app, native GUI/HUD/editor UI, AI runtime, neural 3D viewer,

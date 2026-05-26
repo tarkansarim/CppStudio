@@ -27,6 +27,15 @@ capture redistribution rules, and CI artifact policy.
 - For Nsight Systems CLI stats, discover supported reports and formats from the installed tool before
   scripting readback. Prefer explicit report names, `--force-export=true`, and a supported format such
   as `column`; do not assume generic `summary` reports or `text` output exist across Nsight versions.
+- For realtime Vulkan apps, classify present pacing separately from GPU pass cost. If present/acquire
+  waits or FIFO/FIFO-RELAXED cadence dominate, require an uncapped, offscreen, or project-owned
+  benchmark lane before recommending shader, shadow, ray tracing, or compute optimization.
+- Do not make pass-level Vulkan claims from API summaries alone. Add or require debug labels, NVTX,
+  GPU timestamp ranges, Nsight Graphics GPU Trace, or project-owned pass timers; if marker reports
+  return no data, the correct finding is an observability gap.
+- Separate startup and shutdown costs such as device/swapchain/pipeline creation and destruction from
+  steady-state frame cost. Resource allocation or descriptor/command-buffer churn is actionable only
+  after confirming whether it recurs inside the steady-state window.
 - Do not commit profiler captures unless a repo explicitly stores small fixtures.
 
 ## Validation Ideas

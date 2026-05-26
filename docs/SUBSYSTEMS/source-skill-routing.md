@@ -71,6 +71,15 @@ generated-project workflow instructions.
 - Bundled CppStudio skill frontmatter descriptions are compact discovery triggers only. Detailed
   routing rules, trigger phrase lists, examples, matrices, lifecycle rules, and operational policy
   belong in the skill body or lazily read references so startup skill discovery stays within budget.
+- CppStudio intentionally ships several discoverable bundled skills rather than one monolithic
+  router skill. This is owner-approved only because the skills cover distinct trigger surfaces:
+  project intake, supervision, GUI/HUD design, viewport replay, control harnesses, CMake, CUDA
+  kernels, Vulkan synchronization, profiling, and active watchlists. Do not collapse them into a
+  single router solely because a package-count heuristic flags multiple `SKILL.md` files. Collapse
+  only variants of one task where exactly one variant is useful per turn, or when real trigger
+  evidence shows agents routinely need a parent router before choosing among near-duplicate modules.
+  For CppStudio bundled skills, the source inventory must stay explicit in `scripts/managed_skills.sh`
+  and validation must reject accidental unmanaged top-level skills.
 - When shortening frontmatter, preserve the moved discovery details in source skill bodies or
   references, then validate both description lengths and representative trigger/detail probes before
   rollout.
@@ -97,6 +106,10 @@ generated-project workflow instructions.
   next-review debt in the worker watchlist/status. Unknown or stale cadence state blocks the next
   implementation nudge. Planning packets, plan reviews, review-fix follow-ups, and
   checkpoint/rollback housekeeping do not count as implementation slices.
+- Profiling guidance now treats Vulkan/realtime performance audits as classification work before
+  optimization. Source skills require agents to separate present/vsync pacing, startup/shutdown,
+  CPU/API churn, GPU pass cost, upload/resource churn, and instrumentation gaps before proposing
+  shader, shadow, ray tracing, CUDA, or compute edits.
 
 ## Current Code-Map Bootstrap Posture
 

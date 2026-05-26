@@ -49,6 +49,23 @@ When using `nsys stats`, choose explicit reports from the installed tool with
 the local Nsight Systems version advertises, then reads them with explicit column output and
 `--force-export=true` when supported.
 
+For realtime Vulkan performance audits, classify the bottleneck before proposing code changes:
+
+- **Present paced**: `vkQueuePresentKHR`, swapchain acquire, FIFO/FIFO-RELAXED cadence, or app
+  present/acquire wait readbacks dominate. Do not optimize shaders, shadows, ray tracing, CUDA, or
+  compute kernels from this evidence alone. Add or run an uncapped, offscreen, or project-owned
+  benchmark lane first.
+- **Startup/shutdown dominated**: device, swapchain, shader module, pipeline, BLAS/TLAS setup, or
+  destruction dominates the capture. Report it separately from steady-state frame cost.
+- **CPU/API churn**: recurring descriptor, command-buffer, command-pool, allocation/free, or submit
+  overhead appears inside the steady-state window. Confirm it is not only startup/destruction before
+  patching.
+- **GPU pass cost**: project timers, Vulkan debug markers, Nsight Graphics GPU Trace, or GPU
+  timestamp ranges identify a specific pass. API summaries alone are not enough for pass-level
+  claims.
+- **Instrumentation gap**: app timing readbacks are zero/stale/missing, or Nsight marker/NVTX reports
+  return no data. Fix observability before claiming which pass is slow.
+
 ## Optimization Sessions
 
 Use [GPU_OPTIMIZATION_LOOP.md](GPU_OPTIMIZATION_LOOP.md) for agent-run performance work. Its script

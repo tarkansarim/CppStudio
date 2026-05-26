@@ -491,6 +491,25 @@ done
 python3 "${SKILL_LOAD_HYGIENE_VALIDATOR}" --self-test
 python3 "${SKILL_LOAD_HYGIENE_VALIDATOR}" \
     --skills-root "${ROOT_DIR}/skills"
+expected_skill_dirs=("${SKILL_DIR}")
+for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
+    expected_skill_dirs+=("${ROOT_DIR}/skills/${auxiliary_skill_name}")
+done
+while IFS= read -r -d '' skill_file; do
+    skill_dir="$(dirname "${skill_file}")"
+    found_expected=0
+    for expected_skill_dir in "${expected_skill_dirs[@]}"; do
+        if [[ "${skill_dir}" == "${expected_skill_dir}" ]]; then
+            found_expected=1
+            break
+        fi
+    done
+    if [[ "${found_expected}" != "1" ]]; then
+        echo "Unexpected top-level CppStudio skill package: ${skill_dir#${ROOT_DIR}/}" >&2
+        echo "Add it to scripts/managed_skills.sh with owner rationale, or move it out of skills/." >&2
+        exit 1
+    fi
+done < <(find "${ROOT_DIR}/skills" -mindepth 2 -maxdepth 2 -name SKILL.md -type f -print0)
 if [[ -d "${CODEX_HOME_DIR}/skills" ]]; then
     if [[ "${CPPSTUDIO_STRICT_USER_SKILL_LOAD:-0}" == "1" ]]; then
         python3 "${SKILL_LOAD_HYGIENE_VALIDATOR}" \

@@ -14,8 +14,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 8431,
-      "sha256": "de946ac7c0391e52ebc07933d925c1863a88712b8722019d5ca170027bb370ab"
+      "size": 10530,
+      "sha256": "2154dbf36247e388af5f616dac800c9350e2587d7de889e4094f0a5534a4484f"
     },
     {
       "path": "references/TOOL_INVENTORY.md",
