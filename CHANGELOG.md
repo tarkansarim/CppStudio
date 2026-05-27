@@ -4,6 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Split Nsight Graphics capture and replay incompatibility handling in the workstation profiling
+  skill. The installed 2026.1 CLI uses `--no-block-on-first-incompatibility` for `ngfx-capture` but
+  `--no-block-on-incompatibility` for `ngfx-replay`; replay/perf-report commands for captures with
+  Vulkan external-memory warnings now have to use the replay-side flag before OSTM can burn a full
+  timeout, and failed perf-report replay must stop as an evidence gap instead of authorizing shader
+  edits from metadata alone.
 - Hardened Nsight Graphics capture guidance for Vulkan RT profiling. The workstation profiling skill
   now requires one quoted `ngfx-capture --args "<full app argument string>"`, documents the supported
   `--ignore-incompatible` route for external-memory compatibility warnings, and requires

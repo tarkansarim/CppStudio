@@ -125,6 +125,19 @@ environment hacks. First retry through the documented capture options:
 Treat the capture as accepted only after replay succeeds. Compatibility warnings may remain in the
 metadata; record them as warnings, not as a blocker, when replay proof is usable.
 
+Before writing replay commands on this workstation, inspect the installed replay surface:
+
+```bash
+/opt/nvidia/nsight-graphics-for-linux/nsight-graphics-for-linux-2026.1.0.0/host/linux-desktop-nomad-x64/ngfx-replay --help
+```
+
+Capture and replay use different incompatibility flags in the installed 2026.1 CLI:
+`ngfx-capture` uses `--no-block-on-first-incompatibility`, while `ngfx-replay` uses
+`--no-block-on-incompatibility`. If capture metadata or stdout/stderr contains Vulkan compatibility
+warnings such as `VK_KHR_external_memory` / `VK_KHR_external_memory_fd`, include
+`--no-block-on-incompatibility` in any replay command that could execute the capture. Do not wait for
+a `zenity` compatibility dialog or OSTM timeout to discover the replay-side flag.
+
 Then inspect metadata or export the final screenshot:
 
 ```bash
@@ -139,6 +152,21 @@ Then inspect metadata or export the final screenshot:
   --metadata-functions build/ngfx/rt_debug_functions.txt \
   build/ngfx/rt_debug.nsgfx.ngfx-capture
 ```
+
+For performance report replay on a capture with known compatibility warnings:
+
+```bash
+/opt/nvidia/nsight-graphics-for-linux/nsight-graphics-for-linux-2026.1.0.0/host/linux-desktop-nomad-x64/ngfx-replay \
+  --no-block-on-incompatibility \
+  --perf-report-dir build/ngfx/perf_report \
+  build/ngfx/rt_debug.nsgfx.ngfx-capture
+```
+
+If `--perf-report-dir` still times out or fails after the documented nonblocking replay flag, stop
+and classify the result as an Nsight Graphics replay/perf-report evidence gap for that capture. Do
+not start shader optimization from API/object metadata alone; require shader-level evidence such as
+instruction/register/spill/function-cost data, GPU timestamps, or project-owned pass/subroute
+timers before planning the next source optimization.
 
 ### RenderDoc quick launch
 
@@ -245,8 +273,10 @@ compute-sanitizer <app-command> [args...]
 - If `ngfx-capture` rejects app flags after `--args`, switch to one quoted `--args "<full app arg
   string>"`; do not patch wrapper aliases around the tool.
 - If `--no-block-on-first-incompatibility` alone still leaves a blocking Vulkan compatibility
-  dialog, retry with `--ignore-incompatible` plus replay metadata proof before planning source
-  changes. Stop after that supported attempt if capture/replay still fails.
+  dialog during capture, retry capture with `--ignore-incompatible` plus replay metadata proof
+  before planning source changes. If replay of a compatibility-warning capture blocks or times out,
+  retry replay only with the installed replay-side `--no-block-on-incompatibility` flag. Stop after
+  that supported attempt if capture/replay still fails.
 - If RenderDoc target control only reports `Noop`/`Disconnected`, verify Vulkan layer registration and prefer Nsight Graphics for that session instead of repeatedly patching the capture script.
 - If `nsys` shows `vkQueuePresentKHR`, swapchain acquire, or app present/acquire waits dominating
   a frame, classify the result as present-paced. Do not infer that ray tracing, shaders, lighting,

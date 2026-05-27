@@ -38,6 +38,11 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
+- `latest` - Split Nsight Graphics capture and replay incompatibility handling for Vulkan RT
+  profiling. Capture keeps the installed `--no-block-on-first-incompatibility` flag, while replay
+  now requires `--no-block-on-incompatibility` for captures with external-memory compatibility
+  warnings before OSTM can burn a full timeout; failed perf-report replay is classified as an
+  evidence gap, not permission to optimize shaders from metadata alone.
 - `latest` - Fixed the hosted ShellCheck failure in the bundled-skill package guard so the GitHub
   `Validate` workflow accepts the new unmanaged top-level skill package diagnostic.
 - `latest` - Hardened Nsight Graphics capture guidance for Vulkan RT profiling: app arguments must
