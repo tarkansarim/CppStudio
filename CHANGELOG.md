@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened Nsight Graphics capture guidance for Vulkan RT profiling. The workstation profiling skill
+  now requires one quoted `ngfx-capture --args "<full app argument string>"`, documents the supported
+  `--ignore-incompatible` route for external-memory compatibility warnings, and requires
+  `ngfx-replay` metadata/screenshot/function proof before accepting a capture path.
 - Fixed hosted ShellCheck validation for the CppStudio top-level bundled-skill package guard by
   quoting the nested prefix expansion used in the unexpected-package diagnostic.
 - Documented CppStudio's deliberate bundled multi-skill layout and added a source validation gate

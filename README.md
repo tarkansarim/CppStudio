@@ -40,6 +40,10 @@ intentionally short: newest public-facing changes first, older highlights collap
 
 - `latest` - Fixed the hosted ShellCheck failure in the bundled-skill package guard so the GitHub
   `Validate` workflow accepts the new unmanaged top-level skill package diagnostic.
+- `latest` - Hardened Nsight Graphics capture guidance for Vulkan RT profiling: app arguments must
+  be passed as one quoted `--args "<full app argument string>"`, external-memory compatibility
+  warnings route through supported `--ignore-incompatible` capture proof instead of dialog hacks, and
+  replay metadata/screenshot/function output is required before a capture path is accepted.
 - `latest` - Hardened Vulkan/realtime performance audits so agents classify present/vsync pacing,
   startup/shutdown, CPU/API churn, GPU pass cost, resource churn, and instrumentation gaps before
   proposing shader, shadow, ray tracing, CUDA, or compute optimization. Empty Vulkan/NVTX marker

@@ -94,8 +94,36 @@ Use this first for Vulkan RT correctness and frame-debug issues.
   --terminate-after-capture \
   --no-hud \
   --diagnostic-mode \
-  --args [app-arguments...]
+  --args "<all app arguments as one shell-quoted string>"
 ```
+
+For this installed `ngfx-capture`, app arguments must be passed as one string after `--args`. Do
+not pass leading app options such as `--foo` as separate tokens after `--args`; the launcher may
+parse them as `ngfx-capture` options before the target app starts. Prove the exact argv shape with a
+tiny passthrough app or by inspecting the target app's captured command line before blaming the app.
+
+If the capture blocks on a Vulkan compatibility dialog such as
+`VK_KHR_external_memory (external revisions ignored)`, do not use dialog-closing, focus, or
+environment hacks. First retry through the documented capture options:
+
+```bash
+/opt/nvidia/nsight-graphics-for-linux/nsight-graphics-for-linux-2026.1.0.0/host/linux-desktop-nomad-x64/ngfx-capture \
+  --exe <app-command> \
+  --working-dir "$PWD" \
+  --output-dir build/ngfx \
+  --output-file rt_debug.nsgfx \
+  --capture-frame 2 \
+  -n 1 \
+  --terminate-after-capture \
+  --no-hud \
+  --diagnostic-mode \
+  --ignore-incompatible \
+  --no-block-on-first-incompatibility \
+  --args "<all app arguments as one shell-quoted string>"
+```
+
+Treat the capture as accepted only after replay succeeds. Compatibility warnings may remain in the
+metadata; record them as warnings, not as a blocker, when replay proof is usable.
 
 Then inspect metadata or export the final screenshot:
 
@@ -105,6 +133,10 @@ Then inspect metadata or export the final screenshot:
 
 /opt/nvidia/nsight-graphics-for-linux/nsight-graphics-for-linux-2026.1.0.0/host/linux-desktop-nomad-x64/ngfx-replay \
   --metadata-screenshot build/ngfx/rt_debug.png \
+  build/ngfx/rt_debug.nsgfx.ngfx-capture
+
+/opt/nvidia/nsight-graphics-for-linux/nsight-graphics-for-linux-2026.1.0.0/host/linux-desktop-nomad-x64/ngfx-replay \
+  --metadata-functions build/ngfx/rt_debug_functions.txt \
   build/ngfx/rt_debug.nsgfx.ngfx-capture
 ```
 
@@ -210,6 +242,11 @@ compute-sanitizer <app-command> [args...]
 - If the question is "why does this highlight/lobe/shader output look wrong?" use a frame debugger first, not `nsys`/`ncu`.
 - If a graphics capture log shows Vulkan object lifetime and capture statistics, the frame debugger is successfully hooked even before you inspect the capture in a UI.
 - If an Nsight Graphics offscreen capture doesn't emit a file but a live capture does, suspect missing present/frame delimiters rather than a dead Vulkan hook.
+- If `ngfx-capture` rejects app flags after `--args`, switch to one quoted `--args "<full app arg
+  string>"`; do not patch wrapper aliases around the tool.
+- If `--no-block-on-first-incompatibility` alone still leaves a blocking Vulkan compatibility
+  dialog, retry with `--ignore-incompatible` plus replay metadata proof before planning source
+  changes. Stop after that supported attempt if capture/replay still fails.
 - If RenderDoc target control only reports `Noop`/`Disconnected`, verify Vulkan layer registration and prefer Nsight Graphics for that session instead of repeatedly patching the capture script.
 - If `nsys` shows `vkQueuePresentKHR`, swapchain acquire, or app present/acquire waits dominating
   a frame, classify the result as present-paced. Do not infer that ray tracing, shaders, lighting,
