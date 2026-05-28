@@ -454,6 +454,11 @@ generated-project workflow instructions.
 - In enabled-code-map repos, agents must run both the drift checker and the validator before staging
   or committing a verified source slice. `validate_code_map.py` proves schema/state only; it is not a
   substitute for `check_code_map_drift.py`.
+- Code-map closeout command paths are resolved before execution. Agents must prove repo-local
+  wrappers exist before invoking `scripts/check_code_map_drift.py` or `scripts/validate_code_map.py`;
+  older existing projects without wrappers should use the installed CppStudio scripts from
+  `${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/` instead of first trying
+  guessed stale repo-local names.
 - Agentic control harness roadmap/readiness fields are part of the verified slice contract. If a
   slice proves one prerequisite named by `next_required_slice`, `blockers`, `prerequisites`,
   readiness booleans, feature eligibility, or backend-selection gates, agents must update the

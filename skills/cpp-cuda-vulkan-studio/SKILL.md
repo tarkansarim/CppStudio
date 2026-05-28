@@ -647,8 +647,14 @@ When this skill is active, work like a native C++ GPU systems engineer:
   committing: run `scripts/check_code_map_drift.py --require-enabled --strict-review` to catch
   changed routable paths that the map does not cover and unresolved no-map-touch semantic reviews,
   and run `scripts/validate_code_map.py --require-enabled` to validate schema/state. If repo-local
-  wrappers are absent, use the installed CppStudio scripts. Do not treat `validate_code_map.py` as a
-  substitute for the drift check, and do not commit first and drift-check
+  wrappers are absent, use the installed CppStudio scripts. Resolve the command path before invoking
+  it: prove `scripts/check_code_map_drift.py` and `scripts/validate_code_map.py` exist and are the
+  intended wrappers, or directly use
+  `${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py` and
+  `${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py`. Do not
+  try guessed repo-local script names first and then classify the resulting file-not-found as normal
+  validation progress. Do not treat `validate_code_map.py` as a substitute for the drift check, and
+  do not commit first and drift-check
   afterward unless the user explicitly asked for that emergency ordering.
 - Harness endpoints that touch UI, renderer, swapchain, toolkit action state, screenshot/grab APIs,
   or visual-capture state must run on the app's safe GUI/render thread or an app-owned command queue.
@@ -1002,10 +1008,13 @@ For long-running target-project implementation, repeat this rhythm between slice
 6. Clean generated probe junk from the source root, review `git status`, keep unrelated user changes
    out, run both `scripts/check_code_map_drift.py --require-enabled --strict-review` and
    `scripts/validate_code_map.py --require-enabled` before staging/committing when the map is
-   enabled. If strict review fails because source changed without map files, resolve it before commit
-   by updating the map, launching the sidecar yourself, or rerunning with `--reviewed-no-map-change`
-   only after an explicit semantic review. Relaunch the sidecar or update the map yourself if current
-   changes outgrew the sidecar snapshot, check diff hygiene, and commit the verified slice with exactly one allowed
+   enabled. Before invoking those paths, resolve whether the target repo actually has repo-local
+   wrappers; when it does not, use the installed CppStudio scripts from
+   `${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/` instead of trying stale or
+   guessed repo-local script names. If strict review fails because source changed without map files,
+   resolve it before commit by updating the map, launching the sidecar yourself, or rerunning with
+   `--reviewed-no-map-change` only after an explicit semantic review. Relaunch the sidecar or update
+   the map yourself if current changes outgrew the sidecar snapshot, check diff hygiene, and commit the verified slice with exactly one allowed
    `Commit-Origin` trailer: `agent-slice` or `user-requested`.
 7. Continue to the next slice only after the commit is in place, or after clearly reporting why a
    commit was intentionally skipped.

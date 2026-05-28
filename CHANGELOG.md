@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Tightened enabled-code-map closeout command resolution. Agents now have to prove repo-local
+  `scripts/check_code_map_drift.py` and `scripts/validate_code_map.py` wrappers exist before
+  invoking them; older existing projects without wrappers should use the installed CppStudio scripts
+  directly instead of first trying stale guessed repo-local names.
 - Hardened before/after profiling comparison guidance in the workstation profiling skill. Agents now
   have to clone the accepted baseline launch shape exactly, including replay recordings, scene/assets,
   GPU/backend/feature toggles, window/maximized state, profile/debug view, warmup/frame budget, and
