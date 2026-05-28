@@ -184,6 +184,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   token web search, local source inventory, or model-memory recap is not enough. Do not continue from
   training-data guesses, backend-only green checks, or newly expanded harness scripts. If the donor
   route was skipped, treat that as the root process bug before another code edit.
+- Portability boundary for reusable scripts/docs: validation commands may use local absolute paths as
+  explicit operator input or evidence, but committed setup, validation, profiling, dependency, or
+  rollout scripts and reusable docs must not hardcode personal checkout paths, machine-specific
+  mountpoints, or "this workstation" assumptions. Prefer environment variables, repo-relative paths,
+  existing config/cache discovery with candidate validation, or a clear setup error that tells the
+  user which variable/configuration is required. If a quick fix adds a local fallback to make
+  validation pass, treat that as a rejected workaround and replace it before commit.
 - Long-lane acceptance and cutover gate: for visual, reference-render, calibration, viewport,
   import/export, or semantic-wrapper lanes, define the top-level acceptance artifact before repeated
   probes. Examples include a valid final beauty/reference image, non-identical primary/secondary

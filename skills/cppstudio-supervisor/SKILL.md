@@ -47,10 +47,15 @@ validation skills instead.
 6. If the worker drifts from the approved slice, stacks failed patches, skips donor realignment, skips
    visible proof, or claims unverified fixes, stop the lane and either redirect it or file a reusable
    CppStudio gap.
-7. When a worker claims Rewind-backed causal proof, verify Rewind readiness, the exact pre-decision
+7. If a supervisor correction cannot be delivered because `agent-contact` refuses while the worker is
+   busy, keep that correction as an explicit pending blocker. Do not treat the worker's later closeout
+   or commit as acceptable until the transcript, diff, and committed files are audited against the
+   pending correction. If the worker already committed before receiving the correction, route a
+   follow-up fix to the owning worker before continuing the lane.
+8. When a worker claims Rewind-backed causal proof, verify Rewind readiness, the exact pre-decision
    checkpoint or branch point, paired chat evidence when conversation matters, preserved-scope drift,
    and the replay delta. Do not accept a forward correction as rewind evidence.
-8. Require Agent-Planning-Harness escalation when a supervised lane outgrows ordinary chat or
+9. Require Agent-Planning-Harness escalation when a supervised lane outgrows ordinary chat or
    watchlist control. Before the next implementation nudge, make the worker create or update a
    planning packet and validate it when the lane is long-running or multi-slice, an adversarial
    review finds four or more actionable issues, findings cross multiple subsystems, two focused
@@ -59,7 +64,7 @@ validation skills instead.
    accepted user decisions, review findings, donor/source anchors, open blockers, high-level slice
    scaffold, next slice readiness, acceptance gates, rollback/checkpoint state, and owner/supervisor
    responsibilities. Do not keep nudging implementation from transcript memory after this gate fires.
-9. When a worker adds, ports, or changes shader, material, light, renderer, simulation, brush, cache,
+10. When a worker adds, ports, or changes shader, material, light, renderer, simulation, brush, cache,
    performance, import/export, or runtime parameters, require parameter-surface closure before
    approving the slice. The closure must account for backend/runtime storage, defaults/clamps,
    persistence/state, CLI/config/API, GUI or inspector controls for UI products, harness/readback,
@@ -201,6 +206,9 @@ A supervised worker closeout must include:
   behavior is involved;
 - exact user-facing launcher command, selected executable/build tree, and stale-binary rejection or
   freshness evidence for any GUI/windowed/visible proof;
+- explicit disposition for every supervisor correction, failed contact attempt, or pending concern
+  raised during the lane; a committed worker slice must still be audited against those concerns before
+  the supervisor accepts it;
 - parameter-surface closure evidence for any new or changed runtime/user-adjustable settings,
   including UI/control inventory proof and visible reachability proof when the app has a
   product-facing UI; JSON/model inventory alone is incomplete unless each hidden/deferred control is
@@ -216,3 +224,9 @@ A supervised worker closeout must include:
 
 If the closeout is missing those basics, ask the worker for them before telling the user the lane is
 done.
+
+When setup, validation, rollout, profiling, or dependency scripts/docs changed, also audit the final
+committed files for machine-specific absolute paths or workstation wording. Local absolute paths are
+acceptable in validation commands and evidence logs, but reusable repo scripts/docs must use
+environment variables, config/cache discovery, repo-relative paths, or clear setup errors instead of
+hardcoded personal checkout locations.

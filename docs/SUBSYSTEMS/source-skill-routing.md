@@ -89,6 +89,10 @@ generated-project workflow instructions.
   decisions. User-facing supervisor updates must expose the current adversarial-review cadence
   ordinal, such as `1st slice since last adversarial review`, rather than leaving review debt hidden
   in worker transcripts or watchlist files.
+- Supervisor corrections that cannot be delivered because a worker is busy remain pending closeout
+  blockers. The supervisor must audit the transcript, diff, and committed files against each pending
+  concern before accepting a worker commit, and must route a follow-up fix if the worker committed
+  before receiving the correction.
 - Supervised Codex workers for substantive CppStudio-backed native GPU work default to extra-high
   reasoning. The supervisor skill owns this launch policy: use `model_reasoning_effort="xhigh"`,
   verify the footer or process args, and do not enable fast/priority service unless the user
@@ -121,6 +125,10 @@ generated-project workflow instructions.
   window/maximized state, profile/debug view, warmup, and scripted-input flags must match except for
   artifact paths and the intended treatment. Runs missing workload-defining flags are discarded
   before metric comparison.
+- Reusable setup, validation, profiling, dependency, and rollout scripts/docs must not commit
+  machine-specific absolute checkout paths or workstation assumptions. Local paths may appear in
+  validation commands and evidence logs, but source-owned scripts/docs should use environment
+  variables, repo-relative paths, validated cache/config discovery, or clear setup failures.
 
 ## Current Code-Map Bootstrap Posture
 
