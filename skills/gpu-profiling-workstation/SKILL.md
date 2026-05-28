@@ -64,6 +64,14 @@ Current `nsys` resolves through the CUDA Toolkit launcher to Nsight Systems 2025
   versus `metric_summaries`. Treat parser failures as evidence-readback failures to fix before
   drawing conclusions; do not keep retrying fragile ad hoc summaries or compare metrics from partial
   output.
+- For GUI, viewport, OSTM, or per-frame JSONL profiling, do not accept final UI-state maximized
+  fields alone as proof that the timing rows are representative. Inspect row-level render/resource
+  dimensions such as `resources.output_width`, `resources.output_height`, viewport size, swapchain
+  size, or the project-owned equivalent. Filter first/last/median/growth comparisons to rows that
+  match the accepted final full-size viewport/window, or segregate startup/resize rows and report
+  them separately. Closeout needs accepted dimensions, accepted row count, rejected row count, and
+  the helper/artifact path used for the readback. Missing row dimensions are an evidence gap for
+  size-sensitive frame-time claims.
 - Prefer temporary config homes for reproducible profiling runs:
   - `HOME=/tmp/... XDG_CONFIG_HOME=/tmp/...`
 - If frame times cluster around display cadence, check vsync/present pacing and app internal GPU

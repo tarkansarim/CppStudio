@@ -207,6 +207,10 @@ A supervised worker closeout must include:
 - dirty-tree status for source files and sensitive instruction files;
 - exact validation commands and artifact IDs, including OSTM/viewport/session evidence when visible
   behavior is involved;
+- for GUI, viewport, OSTM, or per-frame profiling closeout, row-level full-size timing proof:
+  accepted render/resource dimensions, accepted row count, rejected startup/resize row count, and
+  the artifact/helper path used to prove that metrics were computed from the full-size viewport
+  rather than only from the final UI-state maximized fields;
 - exact user-facing launcher command, selected executable/build tree, and stale-binary rejection or
   freshness evidence for any GUI/windowed/visible proof;
 - explicit disposition for every supervisor correction, failed contact attempt, or pending concern

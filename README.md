@@ -38,6 +38,9 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
+- `latest` - Hardened GUI/viewport profiling closeout so OSTM or per-frame timing claims must prove
+  accepted full-size timing rows, rejected startup/resize rows, and the artifact/helper used for
+  readback instead of relying only on final maximized UI state.
 - `latest` - Split Nsight Graphics capture and replay incompatibility handling for Vulkan RT
   profiling. Capture keeps the installed `--no-block-on-first-incompatibility` flag, while replay
   now requires `--no-block-on-incompatibility` for captures with external-memory compatibility
@@ -74,6 +77,10 @@ intentionally short: newest public-facing changes first, older highlights collap
   proposing shader, shadow, ray tracing, CUDA, or compute optimization. Empty Vulkan/NVTX marker
   reports and zero/stale app timing readbacks now have to be reported as observability gaps, not
   pass-level findings.
+
+<details>
+<summary>Show older commit highlights</summary>
+
 - `latest` - Documented CppStudio's intentional bundled multi-skill layout and added validation that
   rejects accidental unmanaged top-level `skills/*/SKILL.md` packages unless they are the main skill
   or listed in `scripts/managed_skills.sh`, keeping routing explicit without collapsing distinct
@@ -147,9 +154,6 @@ intentionally short: newest public-facing changes first, older highlights collap
   blocking secondary feature breadth until the first core user action is proven.
 - `df60c3a` - Added exact GPU feature regression protocol so agents prove the requested feature lane
   on the target device before hiding, disabling, downgrading, or rewriting around capability failures.
-
-<details>
-<summary>Show older commit highlights</summary>
 
 - `d4d7976` - Made enabled-code-map maintenance a strict worker-owned closeout gate before staging
   source/build/docs slices.

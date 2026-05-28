@@ -966,6 +966,15 @@ When this skill is active, work like a native C++ GPU systems engineer:
     `vulkan_api_sum,osrt_sum,nvtx_sum` or `cuda_api_gpu_sum,cuda_gpu_kern_sum,osrt_sum,nvtx_sum`,
     include `--force-export=true`, and do not use legacy `--report summary` or unsupported
     `--format text` assumptions.
+    For GUI, viewport, OSTM, or per-frame JSONL profiling, final UI state is not enough. Before
+    comparing first/last/median/growth frame metrics, filter or classify timing rows by the recorded
+    render or resource dimensions, such as `resources.output_width` and `resources.output_height`,
+    viewport size, or swapchain image size. Compute accepted metrics only from rows that match the
+    accepted full-size/maximized viewport or explicitly label smaller startup/resize rows as rejected.
+    Closeout must report the accepted dimensions, accepted row count, rejected startup/resize row
+    count, and the exact artifact/helper that proved those fields. If the artifact has no per-row
+    dimension signal, treat that as a profiling evidence gap before making size-sensitive performance
+    claims.
     For Vulkan/realtime performance audits, classify the bottleneck before proposing edits:
     present/vsync pacing, CPU submit/API churn, GPU pass/shader cost, startup/pipeline creation,
     upload/resource churn, or instrumentation gap. If `vkQueuePresentKHR`, swapchain acquire, FIFO

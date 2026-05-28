@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened GUI/viewport profiling evidence. CppStudio, workstation profiling, and supervisor
+  closeout now require row-level full-size timing proof for OSTM/per-frame artifacts: accepted render
+  dimensions, accepted row counts, rejected startup/resize rows, and the helper/artifact used for
+  readback. Final maximized UI state alone is no longer enough for size-sensitive frame-time claims.
 - Hardened supervised-worker closeout after a production lane allowed a busy-worker correction to
   arrive too late. Supervisor corrections that cannot be delivered while a worker is active now remain
   explicit closeout blockers, and reusable setup/validation/profiling scripts/docs must avoid

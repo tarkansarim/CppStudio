@@ -125,6 +125,11 @@ generated-project workflow instructions.
   window/maximized state, profile/debug view, warmup, and scripted-input flags must match except for
   artifact paths and the intended treatment. Runs missing workload-defining flags are discarded
   before metric comparison.
+- GUI, viewport, OSTM, and per-frame profiling closeout must prove the timing rows themselves match
+  the accepted full-size viewport or render dimensions. Final UI maximized/window fields are
+  supporting evidence only; source skills and supervisors require accepted dimensions, accepted row
+  counts, rejected startup/resize rows, and the artifact/helper path used for readback before
+  accepting size-sensitive frame-time comparisons.
 - Reusable setup, validation, profiling, dependency, and rollout scripts/docs must not commit
   machine-specific absolute checkout paths or workstation assumptions. Local paths may appear in
   validation commands and evidence logs, but source-owned scripts/docs should use environment
