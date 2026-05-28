@@ -96,6 +96,10 @@ The first visible response after that research should be a concise **Pre-Plan Re
   just-in-time donor-backed packet names objective, donors, contracts, shared/unique behavior,
   expected files, blocked scope, validation, and rollback/checkpoint state
 - clear recommended default and alternatives
+- Agent-Planning-Harness escalation state when the work is already long-running, multi-slice,
+  review-heavy, or has four or more actionable adversarial-review findings; once this gate fires,
+  create or update a planning packet before the next implementation slice instead of relying on chat
+  summaries alone
 
 Then ask the user to switch to Plan mode before implementation:
 
@@ -143,6 +147,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
   acceptance boundary, changes shared infrastructure, contradicts the plan, encounters stale or
   missing evidence, or hits a stall/repeated-failure trigger. Do not use thoroughness as permission
   to turn a narrow planned edit into an open-ended probe loop.
+- When escalation turns a task into a long-running, review-heavy, or multi-slice lane, use
+  `agent-planning-harness` as the durable control packet before continuing. Triggers include four or
+  more actionable adversarial-review findings, cross-subsystem review findings, repeated failed
+  attempts, long-lane acceptance gates, compaction-sensitive constraint stacks, or midstream changes
+  to architecture/product/validation/slice order. Validate the packet before the next implementation
+  slice; a chat TODO list is not enough after this trigger.
 - In checkpoint, rewind, detached-worktree, or other replay/probe lanes, treat the replayed source
   tree and the user's replay prompt as the authority for current state. Engineering memory,
   post-branch commits, current-head docs, external runtime copies, and accepted later outcomes are

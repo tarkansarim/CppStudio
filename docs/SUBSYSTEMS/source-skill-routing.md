@@ -106,6 +106,12 @@ generated-project workflow instructions.
   next-review debt in the worker watchlist/status. Unknown or stale cadence state blocks the next
   implementation nudge. Planning packets, plan reviews, review-fix follow-ups, and
   checkpoint/rollback housekeeping do not count as implementation slices.
+- Long-running or review-heavy planning is now routed through Agent-Planning-Harness instead of
+  transcript memory. `cppstudio-project-planner` and `cppstudio-supervisor` require a validated
+  planning packet before the next implementation slice when a lane is multi-turn/multi-slice, when a
+  fresh adversarial review reports four or more actionable findings, when findings cross multiple
+  subsystems, when two focused attempts fail, when a long-lane acceptance gate fires, or when a
+  midstream request changes architecture, product shape, validation strategy, or slice order.
 - Profiling guidance now treats Vulkan/realtime performance audits as classification work before
   optimization. Source skills require agents to separate present/vsync pacing, startup/shutdown,
   CPU/API churn, GPU pass cost, upload/resource churn, and instrumentation gaps before proposing

@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added Agent-Planning-Harness escalation gates to the CppStudio project planner, supervisor, and
+  main native GPU skill. Long-running, multi-slice, repeated-failure, review-heavy lanes, including
+  adversarial reviews with four or more actionable findings, now have to create or update a validated
+  planning packet before the next implementation slice instead of continuing from transcript memory.
 - Split Nsight Graphics capture and replay incompatibility handling in the workstation profiling
   skill. The installed 2026.1 CLI uses `--no-block-on-first-incompatibility` for `ngfx-capture` but
   `--no-block-on-incompatibility` for `ngfx-replay`; replay/perf-report commands for captures with

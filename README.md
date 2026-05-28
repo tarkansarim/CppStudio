@@ -43,6 +43,10 @@ intentionally short: newest public-facing changes first, older highlights collap
   now requires `--no-block-on-incompatibility` for captures with external-memory compatibility
   warnings before OSTM can burn a full timeout; failed perf-report replay is classified as an
   evidence gap, not permission to optimize shaders from metadata alone.
+- `latest` - Added Agent-Planning-Harness escalation gates to the project planner, supervisor, and
+  main native GPU skill. Long-running, multi-slice, repeated-failure, review-heavy lanes, including
+  adversarial reviews with four or more actionable findings, must now create or update a validated
+  planning packet before the next implementation slice instead of continuing from transcript memory.
 - `latest` - Fixed the hosted ShellCheck failure in the bundled-skill package guard so the GitHub
   `Validate` workflow accepts the new unmanaged top-level skill package diagnostic.
 - `latest` - Hardened Nsight Graphics capture guidance for Vulkan RT profiling: app arguments must

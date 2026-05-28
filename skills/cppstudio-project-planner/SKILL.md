@@ -324,6 +324,31 @@ Use explicit section headings when presenting this planning structure: `Planning
 priority ladder inside generic "next steps" or "priority rules"; it must say what gets made first,
 how complete it must be before the next capability unlocks, and what breadth remains blocked.
 
+## Agent Planning Harness Escalation
+
+Use `agent-planning-harness` as the control packet when planning work becomes too large or risky for
+chat-only planning artifacts. It is not only for brand-new projects.
+
+Create or update an Agent-Planning-Harness packet before continuing implementation when any of these
+triggers fire:
+
+- the expected lane is long-running, multi-turn, multi-slice, or likely to need multiple workers;
+- an adversarial review returns four or more actionable findings;
+- review findings span multiple subsystems, validation lanes, or product-surface contracts;
+- the same visible, performance, shader, UI, harness, or architecture issue has survived two focused
+  attempts or a long-lane acceptance gate;
+- the plan has accumulated enough user constraints, donor expectations, parameter-surface rows, or
+  review debts that compaction could lose the controlling structure;
+- a midstream feature request changes architecture, product shape, validation strategy, or slice
+  ordering after implementation has started.
+
+When this escalation fires midstream, do not restart the whole project by default. Convert the
+current evidence into a packet: objective, current repo state, accepted user decisions, review
+findings, donor/source anchors, open blockers, high-level slice scaffold, next slice readiness,
+acceptance gates, rollback/checkpoint state, and owner/supervisor responsibilities. Validate the
+packet structure before the next implementation slice. Chat summaries, TODO bullets, or watchlist
+items alone do not satisfy this gate once an escalation trigger has fired.
+
 Before implementing any scaffolded section or slice, create a just-in-time slice readiness packet
 for that slice. The packet must name the exact objective, current repo/code-map state, donor and
 peer-tool links to open, source/API contracts to inspect, shared infrastructure it reuses, unique
@@ -454,11 +479,14 @@ user opts out, record why the lane is not applicable.
    brief or Level 2 scaffold masquerade as implementation-ready. If the project is an ambitious
    artist/game/VFX/DCC/simulation-editor/technical-art tool, build the Level 3 donor coverage matrix
    before accepting the scaffold for implementation.
-13. Present a compact pre-plan research brief with unresolved choices, recommended defaults, links,
+13. If an Agent-Planning-Harness escalation trigger has fired, initialize or update the planning
+   packet, then validate it before the next implementation slice. Do not use chat-only planning for a
+   long-running or review-heavy lane after this point.
+14. Present a compact pre-plan research brief with unresolved choices, recommended defaults, links,
    donor routes, peer-tool authoring-model findings, web sources checked, current-vs-legacy notes,
    and the reasoning for the best available option. Then stop with the Plan-mode handoff. Ask the
    decision questions only after Plan mode is active, or after the user explicitly waives Plan mode.
-14. Persist the research brief for substantial projects before implementation. Prefer
+15. Persist the research brief for substantial projects before implementation. Prefer
    `docs/planning/RESEARCH_BRIEF.md`; include `docs/planning/DONOR_CANDIDATES.md` when strong
    reusable sources were found that are not already covered by the donor library. If the user only
    asked for a tiny exploratory answer and no project repo exists, state that no durable artifact was
@@ -473,6 +501,9 @@ Every substantial plan should include:
 - software orientation and current peer-tool family for large artist/game/VFX/DCC tools
 - planning depth contract: current Level 0-5 state, required depth before source, and why any lower
   depth is sufficient only for tiny scoped work
+- Agent-Planning-Harness escalation state: not needed, pending, packet path, validation command, or
+  exact blocker; mandatory when the lane is long-running, review-heavy, has four or more actionable
+  review findings, or has repeated failed attempts
 - shallow whole-product scaffold map: major product sections, rough priority, dependencies, donor
   routes, and sequential/parallel/blocker classification
 - donor coverage matrix: high-salience donor/peer expectations mapped to included, deferred,

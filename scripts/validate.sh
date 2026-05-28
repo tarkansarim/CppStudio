@@ -193,6 +193,16 @@ grep -q "per-slice detailed planning gate" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "important-instruction-ledger" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "Agent Planning Harness Escalation" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "four or more actionable findings" \
+    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+grep -q "Agent-Planning-Harness escalation" \
+    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+grep -q "four or more actionable issues" \
+    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+grep -q "Agent-Planning-Harness escalation state" \
+    "${SKILL_DIR}/SKILL.md"
 grep -q "docs/agent-context/SLICE_WATCHLIST.md" \
     "${ROOT_DIR}/skills/important-instruction-ledger/SKILL.md"
 grep -q "Send a fix packet to the owning repo worker immediately" \

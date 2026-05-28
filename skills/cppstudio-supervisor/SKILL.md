@@ -50,7 +50,16 @@ validation skills instead.
 7. When a worker claims Rewind-backed causal proof, verify Rewind readiness, the exact pre-decision
    checkpoint or branch point, paired chat evidence when conversation matters, preserved-scope drift,
    and the replay delta. Do not accept a forward correction as rewind evidence.
-8. When a worker adds, ports, or changes shader, material, light, renderer, simulation, brush, cache,
+8. Require Agent-Planning-Harness escalation when a supervised lane outgrows ordinary chat or
+   watchlist control. Before the next implementation nudge, make the worker create or update a
+   planning packet and validate it when the lane is long-running or multi-slice, an adversarial
+   review finds four or more actionable issues, findings cross multiple subsystems, two focused
+   attempts fail, a long-lane acceptance gate fires, or a midstream request changes architecture,
+   product shape, validation strategy, or slice order. The packet must capture current repo state,
+   accepted user decisions, review findings, donor/source anchors, open blockers, high-level slice
+   scaffold, next slice readiness, acceptance gates, rollback/checkpoint state, and owner/supervisor
+   responsibilities. Do not keep nudging implementation from transcript memory after this gate fires.
+9. When a worker adds, ports, or changes shader, material, light, renderer, simulation, brush, cache,
    performance, import/export, or runtime parameters, require parameter-surface closure before
    approving the slice. The closure must account for backend/runtime storage, defaults/clamps,
    persistence/state, CLI/config/API, GUI or inspector controls for UI products, harness/readback,
@@ -196,6 +205,8 @@ A supervised worker closeout must include:
   including UI/control inventory proof and visible reachability proof when the app has a
   product-facing UI; JSON/model inventory alone is incomplete unless each hidden/deferred control is
   explicitly justified;
+- Agent-Planning-Harness escalation state when applicable: packet path, validation command, current
+  scaffold/readiness state, or the exact reason escalation was not triggered;
 - live UI mutation proof for product-facing controls: before/after visible control values,
   committed model/state values, and runtime/readback deltas through the real widget path or a harness
   action that invokes the same UI handler; inventory, screenshot, model-only API, or static wiring
