@@ -52,6 +52,12 @@ C++/CUDA/Vulkan development.
   transcript and files, not as authority.
 - If the worker is unreachable, state that directly and inspect the transcript, project files, and
   CppStudio rules before drawing conclusions. Do not infer motives or root causes from memory.
+- During supervised production lanes, continuously watch for worker behavior that points to a
+  reusable CppStudio gap: skipped donor/profile routing, weak or mismatched verification, stale
+  binaries, bad OSTM/session evidence, ignored code-map maintenance, unsupported helper commands,
+  premature closeout, or drift from the approved slice. When such a signal appears, preserve the
+  evidence, interrogate the worker if needed, and fix CppStudio or file/route the owning-repo ticket
+  instead of treating it as a one-off worker mistake.
 
 ## Vulkan-Leaning Defaults
 
