@@ -43,6 +43,9 @@ intentionally short: newest public-facing changes first, older highlights collap
   now requires `--no-block-on-incompatibility` for captures with external-memory compatibility
   warnings before OSTM can burn a full timeout; failed perf-report replay is classified as an
   evidence gap, not permission to optimize shaders from metadata alone.
+- `latest` - Hardened profiling artifact readback so agents prefer project-owned report helpers,
+  inspect the current OSTM/profiling schema before writing one-off parsers, and fix stale key or
+  parser failures as evidence-readback failures before comparing metrics.
 - `latest` - Tightened enabled-code-map closeout command resolution. Agents must prove repo-local
   code-map validator/drift wrappers exist before invoking them; older existing projects without
   wrappers use the installed CppStudio scripts directly instead of first trying stale guessed paths.

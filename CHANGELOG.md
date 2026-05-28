@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened profiling artifact readback guidance. Agents should prefer project-owned report helpers
+  and inspect current OSTM/profiling artifact schemas before writing one-off parsers; stale key
+  assumptions or parser failures must be fixed as evidence-readback failures before comparing
+  metrics.
 - Tightened enabled-code-map closeout command resolution. Agents now have to prove repo-local
   `scripts/check_code_map_drift.py` and `scripts/validate_code_map.py` wrappers exist before
   invoking them; older existing projects without wrappers should use the installed CppStudio scripts

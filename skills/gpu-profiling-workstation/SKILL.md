@@ -58,6 +58,12 @@ Current `nsys` resolves through the CUDA Toolkit launcher to Nsight Systems 2025
   mode, GPU id, no-NGX or feature toggles, window/maximized options, debug/profile view, warmup,
   frame budget, and any interaction/scripted-input flags. If those flags are missing from the fresh
   run, discard that run as non-representative before comparing metrics.
+- When reading profiling or OSTM artifacts, prefer the project-owned report/readback helper when one
+  exists. If a one-off parser is necessary, inspect the current artifact schema first and make the
+  parser tolerate known key variants instead of assuming stale names such as `timing_summaries`
+  versus `metric_summaries`. Treat parser failures as evidence-readback failures to fix before
+  drawing conclusions; do not keep retrying fragile ad hoc summaries or compare metrics from partial
+  output.
 - Prefer temporary config homes for reproducible profiling runs:
   - `HOME=/tmp/... XDG_CONFIG_HOME=/tmp/...`
 - If frame times cluster around display cadence, check vsync/present pacing and app internal GPU
