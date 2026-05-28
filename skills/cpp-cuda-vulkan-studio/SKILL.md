@@ -864,7 +864,9 @@ When this skill is active, work like a native C++ GPU systems engineer:
   interaction recording and replay. For generated interactive apps, keep the runtime scaffold in the
   project and replace the fake host with the real app adapter as soon as visible tools exist.
 - Use available profiling or frame-debugging skills and local profiler tools only when the active environment exposes them and the user needs performance or capture evidence.
-- Use `verification-before-completion` before claiming the generated or upgraded backbone is valid.
+- Before claiming the generated or upgraded backbone is valid, apply the verification rules in this
+  skill and the active project doctrine. If a dedicated `verification-before-completion` skill is
+  installed, load it as an extra gate; do not require that absent skill name to exist.
 
 ## Workflow
 

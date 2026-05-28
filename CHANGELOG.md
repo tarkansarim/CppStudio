@@ -7,7 +7,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 - Hardened supervised-worker closeout after a production lane allowed a busy-worker correction to
   arrive too late. Supervisor corrections that cannot be delivered while a worker is active now remain
   explicit closeout blockers, and reusable setup/validation/profiling scripts/docs must avoid
-  committed machine-specific paths or workstation assumptions.
+  committed machine-specific paths or workstation assumptions. Companion skill references now fail
+  soft when optional ticketing or verification skills are not installed.
 - Hardened profiling artifact readback guidance. Agents should prefer project-owned report helpers
   and inspect current OSTM/profiling artifact schemas before writing one-off parsers; stale key
   assumptions or parser failures must be fixed as evidence-readback failures before comparing

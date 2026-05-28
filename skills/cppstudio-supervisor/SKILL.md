@@ -27,9 +27,12 @@ validation skills instead.
   `agent-tmux` helpers over raw PTY input.
 - Use `important-instruction-ledger` when the supervised slice has active user constraints,
   watchpoints, or closeout gates that must survive compaction.
-- Use `agent-tickets` when the fix belongs to another repo, reusable skill, wrapper, hook, or
-  owner agent.
-- Use `verification-before-completion` before saying a worker fix is complete.
+- Use the available ticketing path when the fix belongs to another repo, reusable skill, wrapper,
+  hook, or owner agent. If an `agent-tickets` skill is installed, load it; otherwise use the local
+  Kanboard `kanboard-ticket` command or MCP ticket tool and report the ticket id.
+- Apply the closeout evidence and verification rules in this skill before saying a worker fix is
+  complete. If a dedicated `verification-before-completion` skill is installed, load it as an extra
+  gate; do not require that absent skill name to exist.
 
 ## Supervision Rules
 
@@ -226,7 +229,7 @@ If the closeout is missing those basics, ask the worker for them before telling 
 done.
 
 When setup, validation, rollout, profiling, or dependency scripts/docs changed, also audit the final
-committed files for machine-specific absolute paths or workstation wording. Local absolute paths are
-acceptable in validation commands and evidence logs, but reusable repo scripts/docs must use
-environment variables, config/cache discovery, repo-relative paths, or clear setup errors instead of
-hardcoded personal checkout locations.
+transcript, diff, and committed files for machine-specific absolute paths or workstation wording.
+Local absolute paths are acceptable in validation commands and evidence logs, but reusable repo
+scripts/docs must use environment variables, config/cache discovery, repo-relative paths, or clear
+setup errors instead of hardcoded personal checkout locations.
