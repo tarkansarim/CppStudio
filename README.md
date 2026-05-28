@@ -43,6 +43,10 @@ intentionally short: newest public-facing changes first, older highlights collap
   now requires `--no-block-on-incompatibility` for captures with external-memory compatibility
   warnings before OSTM can burn a full timeout; failed perf-report replay is classified as an
   evidence gap, not permission to optimize shaders from metadata alone.
+- `latest` - Hardened before/after profiling comparisons so agents must preserve the accepted
+  baseline workload shape exactly: replay recording, scene/assets, GPU/backend toggles, no-NGX or
+  feature modes, window/maximized state, profile/debug view, warmup/frame budget, and scripted-input
+  flags. Runs missing those workload-defining flags are discarded before metric comparison.
 - `latest` - Added Agent-Planning-Harness escalation gates to the project planner, supervisor, and
   main native GPU skill. Long-running, multi-slice, repeated-failure, review-heavy lanes, including
   adversarial reviews with four or more actionable findings, must now create or update a validated

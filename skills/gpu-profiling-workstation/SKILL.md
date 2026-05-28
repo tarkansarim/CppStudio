@@ -52,6 +52,12 @@ Current `nsys` resolves through the CUDA Toolkit launcher to Nsight Systems 2025
 - Do not assume a synthetic smoke command represents the full interactive path. If the user reports
   live interaction latency, profile the real event path or a project-owned interaction audit mode.
 - Avoid running profiling and benchmark commands concurrently; timings become meaningless.
+- For before/after performance comparisons, clone the accepted baseline launch shape before changing
+  anything except artifact paths and the intended treatment. Copy workload-defining flags exactly:
+  replay/recording paths, `--play-recording-exit`, scene/groom/asset path, backend/upscaler/quality
+  mode, GPU id, no-NGX or feature toggles, window/maximized options, debug/profile view, warmup,
+  frame budget, and any interaction/scripted-input flags. If those flags are missing from the fresh
+  run, discard that run as non-representative before comparing metrics.
 - Prefer temporary config homes for reproducible profiling runs:
   - `HOME=/tmp/... XDG_CONFIG_HOME=/tmp/...`
 - If frame times cluster around display cadence, check vsync/present pacing and app internal GPU

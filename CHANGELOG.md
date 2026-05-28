@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened before/after profiling comparison guidance in the workstation profiling skill. Agents now
+  have to clone the accepted baseline launch shape exactly, including replay recordings, scene/assets,
+  GPU/backend/feature toggles, window/maximized state, profile/debug view, warmup/frame budget, and
+  scripted-input flags; runs missing workload-defining flags must be discarded before metric
+  comparison.
 - Added Agent-Planning-Harness escalation gates to the CppStudio project planner, supervisor, and
   main native GPU skill. Long-running, multi-slice, repeated-failure, review-heavy lanes, including
   adversarial reviews with four or more actionable findings, now have to create or update a validated

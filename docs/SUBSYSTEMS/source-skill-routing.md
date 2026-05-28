@@ -116,6 +116,11 @@ generated-project workflow instructions.
   optimization. Source skills require agents to separate present/vsync pacing, startup/shutdown,
   CPU/API churn, GPU pass cost, upload/resource churn, and instrumentation gaps before proposing
   shader, shadow, ray tracing, CUDA, or compute edits.
+- Before/after profiling guidance now requires cloning the accepted baseline launch shape for
+  representative comparisons: replay recordings, scene/assets, GPU/no-NGX/backend settings,
+  window/maximized state, profile/debug view, warmup, and scripted-input flags must match except for
+  artifact paths and the intended treatment. Runs missing workload-defining flags are discarded
+  before metric comparison.
 
 ## Current Code-Map Bootstrap Posture
 
