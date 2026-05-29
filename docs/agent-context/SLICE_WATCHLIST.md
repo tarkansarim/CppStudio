@@ -77,37 +77,7 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-18T12:14:03Z`
 
-8. **Claim vulkan-compute-sync as a CppStudio-owned bundled skill without editing unrelated repos directly; update rollout/install validation, code map, docs, manifests, and then file/dispatch description-deferral tickets to owner repos.**
-   - Status: `active`
-   - Slice: `vulkan-compute-sync ownership and skill-description ticketing`
-   - Scope: `reusable-skill`
-   - Source: user request
-   - Revisit when: before source edits, validation, rollout, ticket filing, and closeout
-   - Gate: Source skill exists under CppStudio, rollout installs it from source, validation passes, tickets are filed to source-owning repos, and owner agents are launched through guarded tmux/contact.
-   - Evidence: none recorded
-   - Recorded: `2026-05-18T21:05:36Z`
-
-9. **Ticket #112 closeout requires source-only edits, compact frontmatter descriptions, moved details preserved in skill bodies/references, representative trigger probes, validate.sh, rollout_to_codex.sh, evidence comments, strict closeout-check, clean source worktree, and HEAD/commit/install evidence before closing.**
-   - Status: `active`
-   - Slice: `ticket-112 skill description deferral`
-   - Scope: `reusable-skill`
-   - Source: user ticket closeout gate and ticket #112 body
-   - Revisit when: before source edits, validation, rollout, ticket evidence comments, closeout-check, close, and final status
-   - Gate: Do not close ticket #112 unless the ticket contains validation results, before/after description lengths, trigger/detail probe evidence, install/rollout evidence, source clean status, and HEAD/commit evidence.
-   - Evidence: none recorded
-   - Recorded: `2026-05-18T21:17:19Z`
-
-10. **Ticket #130 requires source-owned companion skills, compact frontmatter descriptions, installed .skill-source sentinels, exact validation evidence, rollout/sync evidence, clean source worktree, HEAD/commit evidence, strict closeout-check, and ticket comments before close.**
-   - Status: `active`
-   - Slice: `ticket-130 companion skill ownership`
-   - Scope: `reusable-skill`
-   - Source: ticket #130 closeout gate and installed skill-packaging audit
-   - Revisit when: before source edits, rollout, ticket evidence comments, closeout-check, close, and final status
-   - Gate: Do not close ticket #130 unless source owns the three target skills or explicitly routes ownership, target descriptions are <=300 chars, installed snapshots include .skill-source, rollout/sync evidence is commented, source worktree is clean, and HEAD/commit evidence is reported.
-   - Evidence: none recorded
-   - Recorded: `2026-05-19T00:31:38Z`
-
-11. **Do not let semantic path coverage or absence of a debug overlay close product-visible stroke-direction or shading-quality concerns; each user-named visible concern must be classified resolved/unresolved/not-tested with matching visual/product proof.**
+8. **Do not let semantic path coverage or absence of a debug overlay close product-visible stroke-direction or shading-quality concerns; each user-named visible concern must be classified resolved/unresolved/not-tested with matching visual/product proof.**
    - Status: `active`
    - Slice: `viewport visible proof hardening`
    - Scope: `reusable-skill`
@@ -117,7 +87,7 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-19T19:25:21Z`
 
-12. **Prevent repeated red visual/reference render lanes from treating diagnostic narrowing, debug buffers, wrapper execution, or local-source-only analysis as product progress; require top-level acceptance artifact status, current web/upstream realignment, and cutover decision before more local probes after repeated failure.**
+9. **Prevent repeated red visual/reference render lanes from treating diagnostic narrowing, debug buffers, wrapper execution, or local-source-only analysis as product progress; require top-level acceptance artifact status, current web/upstream realignment, and cutover decision before more local probes after repeated failure.**
    - Status: `active`
    - Slice: `long visual reference lane hardening`
    - Scope: `reusable-skill`
@@ -127,7 +97,7 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-19T20:19:16Z`
 
-13. **Scoped visual parameter tweaks must have a probe budget and stop condition: preserve before evidence, make the smallest donor-backed parameter edit, run one representative visual lane, allow at most one calibrated follow-up if semantically correct but visually insufficient, then stop with evidence and user/owner decision instead of generating more crops or retuning.**
+10. **Scoped visual parameter tweaks must have a probe budget and stop condition: preserve before evidence, make the smallest donor-backed parameter edit, run one representative visual lane, allow at most one calibrated follow-up if semantically correct but visually insufficient, then stop with evidence and user/owner decision instead of generating more crops or retuning.**
    - Status: `active`
    - Slice: `bounded visual parameter tuning`
    - Scope: `reusable-skill`
@@ -137,7 +107,7 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-20T07:23:10Z`
 
-14. **For CppStudio commits and pushes, the README Recent Commit Highlights section is the front-page changelog and must be updated as short readable bullets for qualifying changes; touching README or CHANGELOG.md is not enough if the front-page list is unreadable.**
+11. **For CppStudio commits and pushes, the README Recent Commit Highlights section is the front-page changelog and must be updated as short readable bullets for qualifying changes; touching README or CHANGELOG.md is not enough if the front-page list is unreadable.**
    - Status: `active`
    - Slice: `front-page changelog discipline`
    - Scope: `reusable-skill`
@@ -147,7 +117,7 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-21T06:20:40Z`
 
-15. **Supervisor adversarial-review cadence must be mechanical: before every implementation nudge and after every verified slice, check or update last reviewed slice, slices_since_review, and whether next review blocks implementation.**
+12. **Supervisor adversarial-review cadence must be mechanical: before every implementation nudge and after every verified slice, check or update last reviewed slice, slices_since_review, and whether next review blocks implementation.**
    - Status: `active`
    - Slice: `supervisor review cadence hardening`
    - Scope: `reusable-skill`
@@ -157,7 +127,7 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-21T19:07:41Z`
 
-16. **Every supervised worker status, nudge, and closeout must include an explicit ordinal such as '1st/2nd/3rd slice since last adversarial review' or '0 slices since last adversarial review' so review debt is visible to the user.**
+13. **Every supervised worker status, nudge, and closeout must include an explicit ordinal such as '1st/2nd/3rd slice since last adversarial review' or '0 slices since last adversarial review' so review debt is visible to the user.**
    - Status: `active`
    - Slice: `supervisor cadence reporting`
    - Scope: `reusable-skill`

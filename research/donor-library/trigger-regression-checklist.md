@@ -131,7 +131,7 @@ and `xr`.
   technical domains explicitly.
 - Generic "AI assistant" application work, ordinary Python ML scripts, or non-C++/GPU/model-runtime
   tasks should not trigger CppStudio lookup or AI-runtime donors.
-- Generic project-management boards, roadmaps, status dashboards, ticket workflows, or frontend admin
+- Generic project-management boards, roadmaps, status dashboards, issue workflows, or frontend admin
   pages should not trigger Native Engineering Infrastructure unless native C++ build/test/profiling/CI
   infrastructure is explicitly requested.
 - Non-GPU Python, CLI, parser, virtualenv, or business-simulation work should not trigger CppStudio

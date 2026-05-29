@@ -21,7 +21,7 @@ the result or explain why it changed.
 
 ## Baseline Format
 
-Use this compact format in issue comments, PR notes, or a project-owned benchmark log:
+Use this compact format in PR notes, project-owned summaries, or a project-owned benchmark log:
 
 ```text
 Benchmark: <name>

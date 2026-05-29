@@ -1438,7 +1438,7 @@
         "negative",
         "infrastructure"
       ],
-      "prompt_shape": "Create a project management board, roadmap, ticket workflow, status dashboard, or frontend admin view with no native C++, CMake, GPU validation, build system, profiling, CI runner, Vulkan, CUDA, or generated project infrastructure scope.",
+      "prompt_shape": "Create a project management board, roadmap, issue workflow, status dashboard, or frontend admin view with no native C++, CMake, GPU validation, build system, profiling, CI runner, Vulkan, CUDA, or generated project infrastructure scope.",
       "expected_behavior": "Do not route to Native Engineering Infrastructure for ordinary planning, admin, or frontend project-management work.",
       "expected_paths": [],
       "must_not_trigger_paths": [

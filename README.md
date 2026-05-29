@@ -41,6 +41,8 @@ intentionally short: newest public-facing changes first, older highlights collap
 - `latest` - Hardened GUI/viewport profiling closeout so OSTM or per-frame timing claims must prove
   accepted full-size timing rows, rejected startup/resize rows, and the artifact/helper used for
   readback instead of relying only on final maximized UI state.
+- `latest` - Removed CppStudio-owned cross-repo work-routing tool instructions so ownership and
+  dispatch behavior stay governed by user-level doctrine instead of this native GPU harness.
 - `latest` - Split Nsight Graphics capture and replay incompatibility handling for Vulkan RT
   profiling. Capture keeps the installed `--no-block-on-first-incompatibility` flag, while replay
   now requires `--no-block-on-incompatibility` for captures with external-memory compatibility
@@ -50,8 +52,8 @@ intentionally short: newest public-facing changes first, older highlights collap
   `agent-contact` refuses a correction while a worker is busy, that correction remains an explicit
   blocker until the final transcript/diff/commit is audited; reusable setup, validation, profiling,
   dependency, and rollout scripts/docs must use env/config/cache discovery or clear setup errors
-  instead of committed workstation-specific paths. Optional companion skill references now route to
-  available ticketing and verification gates instead of assuming absent skill names exist.
+  instead of committed workstation-specific paths. Optional companion skill references now fail soft
+  when verification gates are absent instead of assuming absent skill names exist.
 - `latest` - Hardened profiling artifact readback so agents prefer project-owned report helpers,
   inspect the current OSTM/profiling schema before writing one-off parsers, and fix stale key or
   parser failures as evidence-readback failures before comparing metrics.
@@ -307,7 +309,8 @@ What the supervisor is responsible for:
 - Interrogate unclear worker decisions before guessing why they happened.
 - Send actionable adversarial-review or `codex exec` findings back to the owning worker.
 - Check Rewind, code-map, OSTM/viewport-session, and validation evidence before calling a lane done.
-- File tickets when the fix belongs to another repo or reusable agent tool.
+- Follow user-level cross-repo routing doctrine when the fix belongs to another repo or reusable
+  agent tool.
 
 Codex worker model defaults are explicit. For substantive supervised CppStudio-backed native GPU
 work, launch or resume Codex workers with `model_reasoning_effort="xhigh"` and verify the footer or
@@ -339,8 +342,6 @@ stops, route any review findings back to it, and report whether any CppStudio ru
 Required companion infrastructure:
 
 - `agent-tmux-control` for launching, resuming, contacting, and polling terminal workers.
-- Available ticketing infrastructure when a fix belongs to another repo or owner agent. If
-  `agent-tickets` is installed, use it; otherwise use the local Kanboard ticket command or MCP tool.
 - `important-instruction-ledger` when slice watchpoints or user constraints must survive compaction.
 - `rewind-checkpoints` when behavior probes, failed-fix rollback, or causal replay matter.
 - The supervisor closeout evidence rules, plus `verification-before-completion` only when that

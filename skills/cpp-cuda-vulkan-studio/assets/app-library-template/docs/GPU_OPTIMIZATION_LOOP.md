@@ -231,7 +231,7 @@ Artifacts live under `artifacts/optimization/<session>/`:
 - `final_report.md`: consolidation report with success criteria, hypotheses, breaking points,
   validation-pass evidence, accepted/rejected attempts, and final recommendation.
 
-`artifacts/` is ignored by the template. Keep important summaries in issue comments, PR notes, or
+`artifacts/` is ignored by the template. Keep important summaries in PR notes, project-owned summaries, or
 project-owned docs only after the report is generated.
 
 ## Move-On Criteria

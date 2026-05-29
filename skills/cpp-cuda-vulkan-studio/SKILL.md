@@ -595,7 +595,7 @@ When this skill is active, work like a native C++ GPU systems engineer:
   a worker plan or slice looks good, inspect the durable artifacts that should prove it: planning
   packets, `docs/planning/*`, code-map state/index/manifest/subsystem docs, changed files or diff,
   validation logs, OSTM/control-harness artifacts, screenshots or semantic readbacks for visible
-  work, ticket comments, and the relevant transcript tail. If those artifacts have not been audited,
+  work, user-level routing records, and the relevant transcript tail. If those artifacts have not been audited,
   say that directly and audit them first. If the worker is still running, blocked in a queue, or has
   outstanding validation jobs, report that state instead of closing the supervision loop.
 - Before approving a worker's next implementation slice, review

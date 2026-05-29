@@ -376,7 +376,7 @@ generated-project workflow instructions.
   Supervisors must inspect the primary artifacts before saying a worker plan or slice is good:
   planning packets, research briefs, code-map state/index/manifest/subsystem docs, changed files or
   diff, validation logs, OSTM/control-harness artifacts, screenshots or semantic readbacks for
-  visible work, ticket comments, and the relevant transcript tail.
+  visible work, user-level routing records, and the relevant transcript tail.
 - Planning packets and research briefs are live handoff artifacts. After source slices, commits,
   resolved blockers, or architecture choices land, agents must reconcile stale "planning only",
   "no source exists", or obsolete blocker language before the next major slice.

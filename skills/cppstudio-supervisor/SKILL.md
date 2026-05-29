@@ -27,9 +27,6 @@ validation skills instead.
   `agent-tmux` helpers over raw PTY input.
 - Use `important-instruction-ledger` when the supervised slice has active user constraints,
   watchpoints, or closeout gates that must survive compaction.
-- Use the available ticketing path when the fix belongs to another repo, reusable skill, wrapper,
-  hook, or owner agent. If an `agent-tickets` skill is installed, load it; otherwise use the local
-  Kanboard `kanboard-ticket` command or MCP ticket tool and report the ticket id.
 - Apply the closeout evidence and verification rules in this skill before saying a worker fix is
   complete. If a dedicated `verification-before-completion` skill is installed, load it as an extra
   gate; do not require that absent skill name to exist.
@@ -40,7 +37,7 @@ validation skills instead.
 2. Do not patch another repo directly when supervising it. Route implementation to that repo's owner
    worker unless the user explicitly assigns this agent as the owner.
 3. Read the primary planning artifact before approving, rejecting, or judging plan quality. Acceptable
-   artifacts include a plan packet, `PLAN.md`, ticket handoff, watchlist entry, or worker-written
+   artifacts include a plan packet, `PLAN.md`, user-level routing record, watchlist entry, or worker-written
    slice plan. If no artifact exists, report that evidence gap instead of inferring from chat.
 4. Poll until the worker has actually stopped, reached a blocker, or produced closeout evidence. Do
    not summarize a moving worker as finished.
@@ -48,8 +45,8 @@ validation skills instead.
    for the exact skills, donor routes, web/upstream sources, plan artifacts, and verification commands
    it used.
 6. If the worker drifts from the approved slice, stacks failed patches, skips donor realignment, skips
-   visible proof, or claims unverified fixes, stop the lane and either redirect it or file a reusable
-   CppStudio gap.
+   visible proof, or claims unverified fixes, stop the lane and record a reusable CppStudio gap or
+   follow the user-level cross-repo routing rules.
 7. If a supervisor correction cannot be delivered because `agent-contact` refuses while the worker is
    busy, keep that correction as an explicit pending blocker. Do not treat the worker's later closeout
    or commit as acceptable until the transcript, diff, and committed files are audited against the

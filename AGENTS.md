@@ -56,8 +56,8 @@ C++/CUDA/Vulkan development.
   reusable CppStudio gap: skipped donor/profile routing, weak or mismatched verification, stale
   binaries, bad OSTM/session evidence, ignored code-map maintenance, unsupported helper commands,
   premature closeout, or drift from the approved slice. When such a signal appears, preserve the
-  evidence, interrogate the worker if needed, and fix CppStudio or file/route the owning-repo ticket
-  instead of treating it as a one-off worker mistake.
+  evidence, interrogate the worker if needed, and fix CppStudio or follow user-level cross-repo
+  routing instead of treating it as a one-off worker mistake.
 
 ## Vulkan-Leaning Defaults
 

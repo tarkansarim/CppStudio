@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 103491,
-      "sha256": "dff2bce919a052be9a135f343ca000c723e93a65111a686ce7265480706dc250"
+      "size": 103502,
+      "sha256": "451f9b464a1e8136ec8cbb65fbdaeeea4b0e112c5c63f86eb1450922d903045d"
     },
     {
       "path": "agents/openai.yaml",
@@ -119,8 +119,8 @@
       "path": "assets/app-library-template/docs/BENCHMARKS.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 4322,
-      "sha256": "352a15bf35cc3ecfec27ffcb089d1cdc29b6d19605d183ab267c14cd70b5790c"
+      "size": 4331,
+      "sha256": "52ff2fd554e2b2f1f889b823b2475acfab861fa8b6631c68e46e3eae341ad063"
     },
     {
       "path": "assets/app-library-template/docs/CODEBASE_ARCHITECTURE_INDEX.md",
@@ -147,8 +147,8 @@
       "path": "assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 11511,
-      "sha256": "c18c2575f2a83b1a7c69978d937acd2d433d9d775413d57f62344e5bf856c910"
+      "size": 11520,
+      "sha256": "3cd56d107cc1fa86f2efe9ceaac21a73af5e5250a672b42ad4e07ef6972e6c5c"
     },
     {
       "path": "assets/app-library-template/docs/GPU_RUNNER_CI.md",

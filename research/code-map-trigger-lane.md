@@ -85,7 +85,7 @@ name so the coverage cannot silently collapse back to one aggregate `code-map` c
 
 ## Sidecar Maintenance Lane Contract
 
-Ticket #59 added a fourth dedicated code-map trigger case:
+Issue #59 added a fourth dedicated code-map trigger case:
 `code-map-sidecar-maintenance-lane`. The intended behavior is bounded and conservative:
 
 - Use a code-map-only sidecar when drift output, a long-running slice interval, ownership/data-flow

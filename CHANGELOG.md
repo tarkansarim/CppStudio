@@ -4,6 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Removed CppStudio-owned cross-repo work-routing tool instructions from the supervisor-facing docs
+  and skill text so ownership and dispatch behavior stay governed by user-level doctrine.
 - Hardened GUI/viewport profiling evidence. CppStudio, workstation profiling, and supervisor
   closeout now require row-level full-size timing proof for OSTM/per-frame artifacts: accepted render
   dimensions, accepted row counts, rejected startup/resize rows, and the helper/artifact used for
@@ -12,7 +14,7 @@ All notable CppStudio changes should be recorded here before pushing to remote.
   arrive too late. Supervisor corrections that cannot be delivered while a worker is active now remain
   explicit closeout blockers, and reusable setup/validation/profiling scripts/docs must avoid
   committed machine-specific paths or workstation assumptions. Companion skill references now fail
-  soft when optional ticketing or verification skills are not installed.
+  soft when optional verification skills are not installed.
 - Hardened profiling artifact readback guidance. Agents should prefer project-owned report helpers
   and inspect current OSTM/profiling artifact schemas before writing one-off parsers; stale key
   assumptions or parser failures must be fixed as evidence-readback failures before comparing

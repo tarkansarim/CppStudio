@@ -266,7 +266,6 @@
           "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py",
           "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/assets/app-library-template/README.md",
           "${CODEX_HOME:-$HOME/.codex}/AGENTS.md",
-          "${CODEX_HOME:-$HOME/.codex}/skills/agent-tickets/SKILL.md",
           "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/.codex/skills/cppstudio-repo-onboarding/SKILL.md",
           "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/docs/CODEBASE_ARCHITECTURE_INDEX.md",
           "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/docs/CODEBASE_SUBSYSTEM_MANIFEST.json"
