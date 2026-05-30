@@ -158,6 +158,49 @@ one-time diagnostic and label it approximate. For new verification-heavy lanes, 
 before the next implementation nudge so the next closeout can say which phases consumed time, which
 validation was decisive, and which checks should be shortened, merged, or rejected earlier.
 
+## Verification Budget And Diminishing Returns
+
+Phase telemetry must drive a stop/continue decision. Verification is not automatically better
+because it is longer or more numerous; it is better only when it increases confidence in the actual
+acceptance claim or exposes a new failure mode.
+
+Before starting an expensive validation route, state the expected evidence and classify the route as
+`required_acceptance` or `supporting`. After it finishes, record whether it actually produced new
+evidence. Do not run another expensive route just because one exists.
+
+Stop escalating verification and report the state when any of these gates fire:
+
+- Acceptance is already proven by the smallest route that exercises the real user-facing behavior,
+  runtime/readback state, and relevant source/test surface. Extra runs are `redundant` unless they
+  check a materially different risk.
+- Two attempts at the same tool route fail for the same infrastructure/tooling reason without new
+  product evidence. Mark the phase `failed_tooling`, preserve the command/error, and stop or route
+  the tool issue instead of trying more fallbacks.
+- A run is stale, wrong-sized, wrong-binary, wrong-workload, wrong-GPU, or missing required artifact
+  fields. Mark it `stale_rejected`; fix the evidence route before comparing metrics or repeating the
+  same run.
+- A phase exceeds its expected cost by about 2x without producing new evidence. Pause, summarize
+  what is known, and choose one of: narrow the proof, switch to a more direct project-owned oracle,
+  route the tool issue, or stop as blocked.
+- Three verification phases in a row are `supporting`, `redundant`, `stale_rejected`, or
+  `failed_tooling` with no new acceptance evidence. Stop and reassess instead of continuing to pile
+  on checks.
+
+Use these default expectations unless the project has a tighter local budget:
+
+- focused compile/unit/static test: cheap enough to repeat after a source edit;
+- GUI/OSTM control proof: one before/after route per visible acceptance claim, then stop unless the
+  user report or reviewer identifies a different visible path;
+- profiling replay: one matched baseline and one matched treatment run per performance claim; repeat
+  only for noise, rejected rows, or a different bottleneck class;
+- adversarial review: one fresh scoped review per cadence gate; if the fresh-review mechanism itself
+  is unavailable after two tool-route attempts, classify that as a review tooling blocker instead of
+  starting unrelated review routes.
+
+Closeout should include a short "verification cost" note: decisive evidence, supporting evidence,
+rejected/stale evidence, failed-tooling time, and the next route to trim if the same kind of slice
+recurs.
+
 ## Codex Worker Model Defaults
 
 When launching or relaunching a supervised Codex worker for CppStudio-backed native C++ GPU work,

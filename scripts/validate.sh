@@ -206,6 +206,12 @@ grep -q "classification=required_acceptance" \
     "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
 grep -q "slice_phase_report.py" \
     "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+grep -q "Verification Budget And Diminishing Returns" \
+    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+grep -q "Two attempts at the same tool route fail" \
+    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+grep -q "verification cost" \
+    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
 grep -q "four or more actionable issues" \
     "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
 grep -q "Agent-Planning-Harness escalation state" \

@@ -102,6 +102,11 @@ generated-project workflow instructions.
   supporting, redundant, stale/rejected, failed tooling, or not applicable. Supervisors use the
   bundled `slice_phase_report.py` helper to identify where time went and which checks can be
   shortened or rejected earlier.
+- The same telemetry now feeds a verification-budget gate. Once the smallest real user-facing proof
+  establishes acceptance, extra checks are redundant unless they address a different risk; two
+  same-route tool failures stop fallback stacking; stale/wrong-workload runs must be rejected before
+  metric comparison; and three non-decisive verification phases in a row force reassessment instead
+  of continuing into diminishing returns.
 - Supervised Codex workers for substantive CppStudio-backed native GPU work default to extra-high
   reasoning. The supervisor skill owns this launch policy: use `model_reasoning_effort="xhigh"`,
   verify the footer or process args, and do not enable fast/priority service unless the user

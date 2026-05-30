@@ -42,7 +42,8 @@ intentionally short: newest public-facing changes first, older highlights collap
   lanes can now emit `CPPSTUDIO_PHASE` markers and use the bundled phase report helper to measure
   research, donor routing, edit, build/test, OSTM, profiling, review, code-map, and commit time
   while classifying verification as required, supporting, redundant, stale/rejected, or failed
-  tooling.
+  tooling. The supervisor now uses those classifications as a diminishing-returns gate so repeated
+  tool failures, stale evidence, or already-proven acceptance stop further escalation.
 - `latest` - Hardened GUI/viewport profiling closeout so OSTM or per-frame timing claims must prove
   accepted full-size timing rows, rejected startup/resize rows, and the artifact/helper used for
   readback instead of relying only on final maximized UI state.
@@ -331,6 +332,12 @@ then the bundled `skills/cppstudio-supervisor/scripts/slice_phase_report.py` hel
 duration, OSTM job ids, artifacts, and whether verification was required, supporting, redundant,
 stale/rejected, or failed tooling. This makes it easier to see when validation is earning its cost
 and when a lane is thrashing.
+
+The supervisor also applies a diminishing-returns gate to that report. If the smallest real
+user-facing proof already establishes acceptance, extra checks are redundant unless they target a
+different risk. If two attempts at the same review, OSTM, profiler, or parser route fail for the same
+tooling reason, the lane stops and reports a tooling blocker instead of trying more fallback routes.
+Stale, wrong-binary, wrong-size, or wrong-workload runs are rejected before metric comparison.
 
 Review cadence is not a chat-memory promise. After every verified implementation slice, the
 supervisor records the commit, whether the slice counts toward cadence, the last post-implementation

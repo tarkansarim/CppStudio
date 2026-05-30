@@ -64,6 +64,9 @@ workflow, and repo banner/sample assets.
 - Public supervisor docs describe slice phase telemetry for expensive supervised lanes so agents can
   measure research, donor routing, editing, build/test, OSTM, profiling, review, code-map, and commit
   time instead of guessing where verification is slowing the process down.
+- Public supervisor docs also describe the diminishing-returns policy attached to telemetry:
+  repeated non-decisive checks, same-route tool failures, stale/wrong-workload evidence, or already
+  proven acceptance should stop escalation and produce a verification-cost note.
 - Existing-project code-map setup is described as audit-first: agents should show concrete findings,
   evidence paths, cleanup cost, and actual restructuring needs before asking the user to choose a
   route.

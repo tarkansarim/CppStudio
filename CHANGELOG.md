@@ -8,6 +8,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
   `slice_phase_report.py` helper and validation fixture. Long-running or verification-heavy worker
   lanes can now record phase durations, OSTM artifacts, and verification classifications so process
   slowdowns and redundant/stale checks are visible.
+- Added a diminishing-returns gate on top of supervised-slice telemetry. Supervisors now stop
+  escalating verification after already-proven acceptance, repeated same-route tool failures,
+  stale/wrong-workload evidence, or repeated non-decisive checks, and closeout must include a
+  verification-cost note for expensive lanes.
 - Removed CppStudio-owned cross-repo work-routing tool instructions from the supervisor-facing docs
   and skill text so ownership and dispatch behavior stay governed by user-level doctrine.
 - Hardened GUI/viewport profiling evidence. CppStudio, workstation profiling, and supervisor
