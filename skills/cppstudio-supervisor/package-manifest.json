@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 16458,
-      "sha256": "b3cf79194fcbb7e3a679d3ae3415c774ac67750a411fd0104ff9a8081886bb37"
+      "size": 18974,
+      "sha256": "e1ae97539d31317b484695bda5952c003ee9a0817e9dc423bc20e8eda8e33171"
     },
     {
       "path": "agents/openai.yaml",
@@ -16,6 +16,13 @@
       "disclosure_group": "entrypoint",
       "size": 343,
       "sha256": "32de041b65a90ed3ebe3386e92da7233e88ed8ddeb0ce05316058e6591727631"
+    },
+    {
+      "path": "scripts/slice_phase_report.py",
+      "role": "script",
+      "disclosure_group": "script",
+      "size": 11790,
+      "sha256": "29ef0b9d38533c9a5d3c6620f98cc361b5cabff63faf77a9021cd1a389333aa9"
     }
   ]
 }

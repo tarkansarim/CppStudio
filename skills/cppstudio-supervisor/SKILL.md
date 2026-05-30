@@ -114,6 +114,50 @@ validation skills instead.
    stale build trees or unrebuildable preferred binaries remain, the closeout must name them as
    unresolved or show the launcher now refuses/falls back explicitly.
 
+## Slice Phase Telemetry
+
+Use phase telemetry for supervised lanes that are long-running, verification-heavy, performance/UI
+or OSTM-heavy, repeated-failure-prone, or visibly thrashing. Do not require it for tiny one-command
+checks. The goal is to expose where time is going and which evidence was decisive, not to create a
+second project-management burden.
+
+Ask the worker to emit compact marker lines into its normal transcript or a repo-local phase log:
+
+```text
+CPPSTUDIO_PHASE event=start phase=research ts=2026-05-30T01:00:00Z note="donor route"
+CPPSTUDIO_PHASE event=end phase=research ts=2026-05-30T01:04:30Z status=ok
+CPPSTUDIO_PHASE event=end phase=ostm_ui ts=2026-05-30T01:09:00Z classification=required_acceptance ostm_job=7578 artifact=/tmp/ui-proof
+```
+
+Recommended phase names are `research`, `donor_route`, `plan`, `edit`, `build_test`, `ostm_ui`,
+`ostm_profile`, `viewport_session`, `profile`, `review`, `code_map`, `commit`, and `closeout`.
+Verification phases should include one of these classifications:
+
+- `required_acceptance`: evidence needed to accept the user-facing or correctness claim.
+- `supporting`: useful corroboration, but not the deciding proof.
+- `redundant`: repeated evidence that could likely be trimmed next time.
+- `stale_rejected`: a run discarded because the binary, workload shape, viewport size, route, or
+  artifact was wrong.
+- `failed_tooling`: time spent on broken tooling, parser drift, wrapper failure, or inaccessible
+  readback before the actual claim could be tested.
+- `not_applicable`: non-verification phase or bookkeeping where classification is only present for
+  completeness.
+
+Use `scripts/slice_phase_report.py` from this skill to turn the transcript or phase log into a cost
+report:
+
+```bash
+python3 ${CODEX_HOME:-$HOME/.codex}/skills/cppstudio-supervisor/scripts/slice_phase_report.py \
+  --input /path/to/worker-phase.log \
+  --output /path/to/slice-phase-report.md \
+  --require-markers
+```
+
+When no marker log exists for an already-moving lane, estimate from the transcript only as a
+one-time diagnostic and label it approximate. For new verification-heavy lanes, require real markers
+before the next implementation nudge so the next closeout can say which phases consumed time, which
+validation was decisive, and which checks should be shortened, merged, or rejected earlier.
+
 ## Codex Worker Model Defaults
 
 When launching or relaunching a supervised Codex worker for CppStudio-backed native C++ GPU work,
@@ -202,6 +246,8 @@ A supervised worker closeout must include:
 
 - commit hash or explicit no-code-change status;
 - dirty-tree status for source files and sensitive instruction files;
+- phase telemetry report path or explicit reason it was not captured when the lane was
+  long-running, verification-heavy, performance/UI-heavy, or repeated-failure-prone;
 - exact validation commands and artifact IDs, including OSTM/viewport/session evidence when visible
   behavior is involved;
 - for GUI, viewport, OSTM, or per-frame profiling closeout, row-level full-size timing proof:

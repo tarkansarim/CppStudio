@@ -31,6 +31,7 @@ skills, and watch-mode publishing behavior.
 - `skills/viewport-session-testing/package-manifest.json`
 - `skills/important-instruction-ledger/package-manifest.json`
 - `skills/cppstudio-supervisor/package-manifest.json`
+- `skills/cppstudio-supervisor/scripts/slice_phase_report.py`
 - `skills/vulkan-compute-sync/package-manifest.json`
 - `skills/modern-cpp-cmake/package-manifest.json`
 - `skills/cuda-kernel-authoring/package-manifest.json`
@@ -75,6 +76,9 @@ skills, and watch-mode publishing behavior.
   `scripts/managed_skills.sh`; otherwise `validate.sh` fails and asks the maintainer to add owner
   rationale or move the package out of `skills/`. This keeps the deliberate multi-skill layout
   explicit without collapsing distinct CppStudio concerns into one monolithic router.
+- `validate.sh` compiles and exercises the `cppstudio-supervisor` slice phase telemetry helper so
+  `CPPSTUDIO_PHASE` markers, verification classifications, OSTM job/artifact fields, and measured
+  phase durations remain parseable before rollout.
 - Non-dry-run sync stages and validates the skill before replacing the installed target, then restores
   the previous target if final validation fails. Staging and backups live outside the scanned
   `${SYNC_CODEX_HOME:-$HOME/.codex}/skills` root so interrupted syncs cannot expose duplicate or

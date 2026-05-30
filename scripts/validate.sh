@@ -133,6 +133,7 @@ required_repo_files=(
     "skills/important-instruction-ledger/package-manifest.json"
     "skills/cppstudio-supervisor/SKILL.md"
     "skills/cppstudio-supervisor/agents/openai.yaml"
+    "skills/cppstudio-supervisor/scripts/slice_phase_report.py"
     "skills/cppstudio-supervisor/package-manifest.json"
     "skills/vulkan-compute-sync/SKILL.md"
     "skills/vulkan-compute-sync/agents/openai.yaml"
@@ -198,6 +199,12 @@ grep -q "Agent Planning Harness Escalation" \
 grep -q "four or more actionable findings" \
     "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
 grep -q "Agent-Planning-Harness escalation" \
+    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+grep -q "Slice Phase Telemetry" \
+    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+grep -q "classification=required_acceptance" \
+    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+grep -q "slice_phase_report.py" \
     "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
 grep -q "four or more actionable issues" \
     "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
@@ -539,7 +546,23 @@ if [[ -d "${ROOT_DIR}/.codex/skills" ]]; then
 fi
 pycache_tmp="$(mktemp -d "${VALIDATE_TMP}/pycache.XXXXXX")"
 PYTHONPYCACHEPREFIX="${pycache_tmp}" python3 -m py_compile "${ROOT_DIR}"/scripts/*.py "${SKILL_DIR}"/scripts/*.py
+PYTHONPYCACHEPREFIX="${pycache_tmp}" python3 -m py_compile \
+    "${ROOT_DIR}/skills/cppstudio-supervisor/scripts/slice_phase_report.py"
 PYTHONDONTWRITEBYTECODE=1 python3 "${ROOT_DIR}/scripts/test_important_instruction_ledger.py"
+phase_report_tmp="$(mktemp -d "${VALIDATE_TMP}/phase_report.XXXXXX")"
+cat >"${phase_report_tmp}/phase.log" <<'EOF'
+CPPSTUDIO_PHASE event=start phase=research ts=2026-05-30T01:00:00Z note="donor route"
+CPPSTUDIO_PHASE event=end phase=research ts=2026-05-30T01:04:30Z status=ok
+CPPSTUDIO_PHASE event=start phase=ostm_ui ts=2026-05-30T01:05:00Z
+CPPSTUDIO_PHASE event=end phase=ostm_ui ts=2026-05-30T01:09:00Z classification=required_acceptance ostm_job=7578 artifact=/tmp/ui-proof status=ok
+EOF
+python3 "${ROOT_DIR}/skills/cppstudio-supervisor/scripts/slice_phase_report.py" \
+    --input "${phase_report_tmp}/phase.log" \
+    --output "${phase_report_tmp}/report.md" \
+    --require-markers
+grep -q "Total measured time: \`510.0s\`" "${phase_report_tmp}/report.md"
+grep -q "| ostm_ui | 240.0 | required_acceptance | ok | 7578 | /tmp/ui-proof |  |" \
+    "${phase_report_tmp}/report.md"
 quick_validator_tmp="$(mktemp -d "${VALIDATE_TMP}/quick_validator.XXXXXX")"
 mkdir -p "${quick_validator_tmp}/duplicate" "${quick_validator_tmp}/bad-openai/agents" "${quick_validator_tmp}/missing-reference"
 cat >"${quick_validator_tmp}/duplicate/SKILL.md" <<'EOF'

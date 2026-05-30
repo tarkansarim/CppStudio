@@ -20,6 +20,7 @@ generated-project workflow instructions.
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
 - `skills/cppstudio-supervisor/SKILL.md`
 - `skills/cppstudio-supervisor/agents/openai.yaml`
+- `skills/cppstudio-supervisor/scripts/slice_phase_report.py`
 - `skills/vulkan-compute-sync/SKILL.md`
 - `skills/modern-cpp-cmake/SKILL.md`
 - `skills/modern-cpp-cmake/agents/openai.yaml`
@@ -47,6 +48,7 @@ generated-project workflow instructions.
 - `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
 - `skills/cppstudio-supervisor/SKILL.md`
 - `skills/cppstudio-supervisor/agents/openai.yaml`
+- `skills/cppstudio-supervisor/scripts/slice_phase_report.py`
 - `skills/vulkan-compute-sync/SKILL.md`
 - `skills/modern-cpp-cmake/SKILL.md`
 - `skills/modern-cpp-cmake/agents/openai.yaml`
@@ -93,6 +95,13 @@ generated-project workflow instructions.
   blockers. The supervisor must audit the transcript, diff, and committed files against each pending
   concern before accepting a worker commit, and must route a follow-up fix if the worker committed
   before receiving the correction.
+- Long-running, verification-heavy, OSTM-heavy, UI-heavy, profiling-heavy, or repeated-failure
+  supervised lanes now use slice phase telemetry. Workers should emit `CPPSTUDIO_PHASE` markers for
+  phases such as research, donor routing, edit, build/test, OSTM UI proof, profiling, review,
+  code-map maintenance, and commit; verification phases are classified as required acceptance,
+  supporting, redundant, stale/rejected, failed tooling, or not applicable. Supervisors use the
+  bundled `slice_phase_report.py` helper to identify where time went and which checks can be
+  shortened or rejected earlier.
 - Supervised Codex workers for substantive CppStudio-backed native GPU work default to extra-high
   reasoning. The supervisor skill owns this launch policy: use `model_reasoning_effort="xhigh"`,
   verify the footer or process args, and do not enable fast/priority service unless the user

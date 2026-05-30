@@ -38,6 +38,11 @@ As a harness, CppStudio focuses on:
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
 intentionally short: newest public-facing changes first, older highlights collapsed below.
 
+- `latest` - Added supervised-slice phase telemetry. Long-running or verification-heavy worker
+  lanes can now emit `CPPSTUDIO_PHASE` markers and use the bundled phase report helper to measure
+  research, donor routing, edit, build/test, OSTM, profiling, review, code-map, and commit time
+  while classifying verification as required, supporting, redundant, stale/rejected, or failed
+  tooling.
 - `latest` - Hardened GUI/viewport profiling closeout so OSTM or per-frame timing claims must prove
   accepted full-size timing rows, rejected startup/resize rows, and the artifact/helper used for
   readback instead of relying only on final maximized UI state.
@@ -74,15 +79,15 @@ intentionally short: newest public-facing changes first, older highlights collap
   be passed as one quoted `--args "<full app argument string>"`, external-memory compatibility
   warnings route through supported `--ignore-incompatible` capture proof instead of dialog hacks, and
   replay metadata/screenshot/function output is required before a capture path is accepted.
+
+<details>
+<summary>Show older commit highlights</summary>
+
 - `latest` - Hardened Vulkan/realtime performance audits so agents classify present/vsync pacing,
   startup/shutdown, CPU/API churn, GPU pass cost, resource churn, and instrumentation gaps before
   proposing shader, shadow, ray tracing, CUDA, or compute optimization. Empty Vulkan/NVTX marker
   reports and zero/stale app timing readbacks now have to be reported as observability gaps, not
   pass-level findings.
-
-<details>
-<summary>Show older commit highlights</summary>
-
 - `latest` - Documented CppStudio's intentional bundled multi-skill layout and added validation that
   rejects accidental unmanaged top-level `skills/*/SKILL.md` packages unless they are the main skill
   or listed in `scripts/managed_skills.sh`, keeping routing explicit without collapsing distinct
@@ -311,11 +316,21 @@ What the supervisor is responsible for:
 - Check Rewind, code-map, OSTM/viewport-session, and validation evidence before calling a lane done.
 - Follow user-level cross-repo routing doctrine when the fix belongs to another repo or reusable
   agent tool.
+- For long-running, verification-heavy, OSTM/profiling-heavy, or repeated-failure lanes, collect
+  `CPPSTUDIO_PHASE` markers and generate a phase report so slowdowns are visible by phase instead of
+  inferred from chat history.
 
 Codex worker model defaults are explicit. For substantive supervised CppStudio-backed native GPU
 work, launch or resume Codex workers with `model_reasoning_effort="xhigh"` and verify the footer or
 process args. Do not enable fast/priority service by default; use `service_tier="priority"` only when
 the user specifically asks for fast or priority execution.
+
+Slice phase telemetry is deliberately small. Workers can mark phases such as `research`,
+`donor_route`, `edit`, `build_test`, `ostm_ui`, `ostm_profile`, `review`, `code_map`, and `commit`,
+then the bundled `skills/cppstudio-supervisor/scripts/slice_phase_report.py` helper summarizes
+duration, OSTM job ids, artifacts, and whether verification was required, supporting, redundant,
+stale/rejected, or failed tooling. This makes it easier to see when validation is earning its cost
+and when a lane is thrashing.
 
 Review cadence is not a chat-memory promise. After every verified implementation slice, the
 supervisor records the commit, whether the slice counts toward cadence, the last post-implementation

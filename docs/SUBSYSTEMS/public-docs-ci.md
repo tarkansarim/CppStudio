@@ -61,6 +61,9 @@ workflow, and repo banner/sample assets.
   the verified slice commit. The strict drift checker can now use `--launch-sidecar auto` to create a
   frozen snapshot and start the guarded sidecar directly for uncovered drift and no-map-touch semantic
   review moments instead of leaving sidecar routing to prose, memory, or a user prompt.
+- Public supervisor docs describe slice phase telemetry for expensive supervised lanes so agents can
+  measure research, donor routing, editing, build/test, OSTM, profiling, review, code-map, and commit
+  time instead of guessing where verification is slowing the process down.
 - Existing-project code-map setup is described as audit-first: agents should show concrete findings,
   evidence paths, cleanup cost, and actual restructuring needs before asking the user to choose a
   route.
