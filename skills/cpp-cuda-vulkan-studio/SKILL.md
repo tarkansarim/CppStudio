@@ -567,6 +567,15 @@ When this skill is active, work like a native C++ GPU systems engineer:
   a stroke, scrub, drag, lasso, gizmo move, camera orbit, timeline drag, node wire, or similar
   sustained action, proof must include the expected move/sample count, path shape or distance,
   committed state along the path, and fresh visible result.
+- For product-facing spatial parameters, do not treat one edited slider as proof for the whole
+  control family. Lights, cameras, gizmos, emitters, colliders, probes, volumes, brush cursors, and
+  other transform-owned surfaces must prove position, orientation/rotation, scale/size, axis/basis
+  vectors, enable/mode gates, strength/intensity, and quality/visibility controls separately when
+  those controls are present or expected. Rotation/aim/orientation is a distinct critical surface:
+  position, size, or intensity mutation does not prove it. A fix for a reported rotate/aim/move/scale
+  failure must show before/after mutation through the real UI/control handler into committed state
+  and runtime/readback payload for the named transform component, or explicitly classify that
+  component as absent, hidden, deferred, or blocked.
 - For sculpting, brush, paint, groom, stroke, or high-poly mesh editing work, donor realignment has
   an extra gate. Before changing brush behavior, viewport hit tests, palette selection, stroke
   sampling, falloff, pressure, mask, high-poly storage, or dirty upload code, open the sculpt or

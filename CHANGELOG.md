@@ -4,6 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened spatial parameter-surface closeout for supervised native GPU tools. Lights, cameras,
+  gizmos, emitters, colliders, probes, volumes, brush cursors, and other transform-owned surfaces
+  now require separate inventory and direct mutation proof for orientation/rotation, position,
+  scale/size, axis/basis vectors, enable/mode gates, intensity/strength, and quality/visibility
+  when those controls are present or expected; representative slider proof no longer counts as
+  rotation/aim proof.
 - Added supervised-slice phase telemetry to `cppstudio-supervisor`, including a packaged
   `slice_phase_report.py` helper and validation fixture. Long-running or verification-heavy worker
   lanes can now record phase durations, OSTM artifacts, and verification classifications so process

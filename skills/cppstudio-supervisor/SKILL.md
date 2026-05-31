@@ -107,6 +107,16 @@ validation skills instead.
    mutation proof for every newly added or changed critical control and representative proof for each
    repeated control class; classify every unmutated control as deferred, blocked, not-tested, or
    intentionally hidden.
+   Do not collapse spatial controls into a generic "parameter class" proof. For lights, cameras,
+   gizmos, emitters, colliders, probes, volumes, brush cursors, and other transform-owned surfaces,
+   position, orientation/rotation, scale/size, axis/basis vectors, enable/mode gates, intensity or
+   strength, and quality/visibility controls are separate critical surfaces when present or expected.
+   A mutation proof for intensity, position, or size does not prove rotation/orientation wiring.
+   Closeout must inventory each transform component by name and either mutate it through the
+   user-facing handler into committed state and runtime/readback payload, or explicitly classify it
+   as absent, hidden, deferred, or blocked. If the user asks "how do I rotate/move/aim/scale this",
+   the affected transform component requires direct before/after proof before the slice can be
+   accepted.
    The visible proof must be through the exact user-facing launcher/command handed to the user, or
    must prove that the tested executable is the same fresh executable selected by that launcher.
    Require the worker to report launcher path, selected executable/build tree, stdout/stderr or state

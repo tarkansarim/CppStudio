@@ -345,6 +345,15 @@ generated-project workflow instructions.
   are supporting evidence only. Large surfaces need a complete inventory, mutation proof for all new
   or changed critical controls, representative proof for repeated control classes, and explicit
   disposition for unmutated controls.
+- Spatial/light/camera parameter proof is component-specific. For lights, cameras, gizmos, emitters,
+  colliders, probes, volumes, brush cursors, and other transform-owned surfaces, agents must
+  inventory and prove position, orientation/rotation, scale/size, axis/basis vectors, enable/mode
+  gates, strength/intensity, and quality/visibility controls separately when present or expected.
+  A mutation proof for intensity, position, or size does not prove rotation/orientation wiring. If
+  the user asks how to rotate, aim, move, or scale an object/control, closeout requires direct
+  before/after proof for that named transform component through the real UI/control handler into
+  committed state and runtime/readback payload, or an explicit absent/hidden/deferred/blocked
+  classification.
 - Visible UI proof must be tied to the exact user-facing launcher and selected executable. When
   several build trees or binaries exist, closeout must record launcher path, selected executable,
   build tree/config, stdout/stderr or semantic state proving the selection, and freshness against the

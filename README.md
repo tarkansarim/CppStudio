@@ -44,6 +44,11 @@ intentionally short: newest public-facing changes first, older highlights collap
   while classifying verification as required, supporting, redundant, stale/rejected, or failed
   tooling. The supervisor now uses those classifications as a diminishing-returns gate so repeated
   tool failures, stale evidence, or already-proven acceptance stop further escalation.
+- `latest` - Hardened spatial parameter-surface closeout for supervised native GPU tools. Rotation,
+  aim, basis vectors, position, scale/size, mode gates, intensity, and quality controls now have to
+  be inventoried and proven as separate surfaces for lights, cameras, gizmos, emitters, colliders,
+  probes, volumes, brush cursors, and similar transform-owned UI. A passing position/size/intensity
+  slider test no longer counts as proof that rotation is wired.
 - `latest` - Hardened GUI/viewport profiling closeout so OSTM or per-frame timing claims must prove
   accepted full-size timing rows, rejected startup/resize rows, and the artifact/helper used for
   readback instead of relying only on final maximized UI state.
@@ -74,16 +79,16 @@ intentionally short: newest public-facing changes first, older highlights collap
   main native GPU skill. Long-running, multi-slice, repeated-failure, review-heavy lanes, including
   adversarial reviews with four or more actionable findings, must now create or update a validated
   planning packet before the next implementation slice instead of continuing from transcript memory.
+
+<details>
+<summary>Show older commit highlights</summary>
+
 - `latest` - Fixed the hosted ShellCheck failure in the bundled-skill package guard so the GitHub
   `Validate` workflow accepts the new unmanaged top-level skill package diagnostic.
 - `latest` - Hardened Nsight Graphics capture guidance for Vulkan RT profiling: app arguments must
   be passed as one quoted `--args "<full app argument string>"`, external-memory compatibility
   warnings route through supported `--ignore-incompatible` capture proof instead of dialog hacks, and
   replay metadata/screenshot/function output is required before a capture path is accepted.
-
-<details>
-<summary>Show older commit highlights</summary>
-
 - `latest` - Hardened Vulkan/realtime performance audits so agents classify present/vsync pacing,
   startup/shutdown, CPU/API churn, GPU pass cost, resource churn, and instrumentation gaps before
   proposing shader, shadow, ray tracing, CUDA, or compute optimization. Empty Vulkan/NVTX marker
