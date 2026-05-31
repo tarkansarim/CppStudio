@@ -107,6 +107,17 @@ validation skills instead.
    mutation proof for every newly added or changed critical control and representative proof for each
    repeated control class; classify every unmutated control as deferred, blocked, not-tested, or
    intentionally hidden.
+   The control inventory must be a machine-readable control-surface contract, not a screenshot-first
+   visual review. For each relevant UI mode/state, require stable id/object name, visible label,
+   widget/control type, section or dock path, mode predicate, visibility/enabled state and reason,
+   value/options/range, source handler/action, committed model/state field, runtime/readback field,
+   and last mutation result when applicable. Treat these as closeout failures until resolved or
+   explicitly classified: visible stale controls with no live binding, raw/internal payload fields
+   leaking into the product panel, duplicate controls fighting over one runtime field, hidden
+   controls with no reachable mode/scroll/path, disabled controls without a user-facing reason, and
+   mutations that update only the widget or only the backend. Screenshots or captures can audit
+   layout, occlusion, polish, and appearance, but they are not primary proof for control wiring,
+   freshness, enabled state, or stale-control absence.
    Do not collapse spatial controls into a generic "parameter class" proof. For lights, cameras,
    gizmos, emitters, colliders, probes, volumes, brush cursors, and other transform-owned surfaces,
    position, orientation/rotation, scale/size, axis/basis vectors, enable/mode gates, intensity or

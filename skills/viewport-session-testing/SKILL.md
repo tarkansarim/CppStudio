@@ -83,6 +83,16 @@ are not enough. For large inspector surfaces, pair a complete inventory with mut
 newly added or changed critical controls and representative proof for repeated control classes; mark
 unmutated controls as deferred, blocked, not-tested, or intentionally hidden.
 
+For GUI-heavy tools, make that inventory a numeric control-surface contract. Each scenario or
+toolkit probe should be able to report the relevant panel's controls as data: stable id/object name,
+label, widget/control type, section/dock path, mode predicate, visible/enabled state and reason,
+value/range/options, source handler/action, committed model/state field, runtime/readback field, and
+last mutation result. The report must fail or flag stale controls: visible but unbound, disabled
+without reason, hidden with no reachable path, duplicate/conflicting owner, raw/internal runtime
+payload leaking into product UI, or mutation that changes only the UI widget or only backend state.
+Screenshots remain useful for layout, occlusion, and product look, but they are secondary to the
+control contract for proving control freshness and wiring.
+
 Be precise about execution mode. OSTM/background window ownership, app-owned replay, and real OS
 pointer/stylus injection are different proof modes. If a lane uses real input that can move focus or
 the user's pointer, label it as `real-input`/intrusive and do not describe it as offscreen,

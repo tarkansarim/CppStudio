@@ -260,6 +260,17 @@ When this skill is active, work like a native C++ GPU systems engineer:
   model-only setters, or a backend route that bypasses the visible control are not wiring proof. For
   large repeated surfaces, inventory all controls, mutate every newly added or changed critical
   control, sample each repeated control class, and classify unmutated controls explicitly.
+- Product-facing control surfaces need a machine-readable control contract as the primary proof.
+  For every relevant UI mode/state, emit or inspect a contract that enumerates visible, hidden,
+  disabled, and expected controls with stable id/object name, label, widget/control type, section or
+  dock path, mode predicate, visibility/enabled state and reason, value/options/range, source
+  handler/action, committed model/state field, runtime/readback field, and last mutation result when
+  applicable. Stale controls fail the gate: visible controls with no live binding, raw/internal
+  payload fields leaking into product UI, duplicate owners for one mode, hidden controls with no
+  reachable path, disabled controls without a reason, and controls whose mutation changes only the
+  widget or only the backend must be fixed or explicitly classified before handoff. Screenshots and
+  captures are secondary evidence for layout, occlusion, product fit, and appearance; they do not
+  replace the control contract for wiring, freshness, or stale-control detection.
 - User-facing launch path is part of visible proof. When UI/control exposure is validated through a
   screenshot, OSTM job, toolkit readback, or semantic UI state, the proof must use the exact
   launcher/command that the user is told to run, or explicitly prove that the exercised binary is
@@ -1116,4 +1127,5 @@ ${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py ${HOME}/.c
 ## Accepted Self-Improvement Doctrine
 
 - 2026-05-24T05:40:34Z [codex] CppStudio supervised UI parameter-surface closeout must require visible GUI screenshot or viewport evidence that exposed controls are actually reachable and visible in the product UI, not only JSON/model inventory. (source: self-improvement:user_correction:7650ade4518cb112)
+- 2026-05-31T21:52:02Z [codex] CppStudio UI/control-surface closeout must use a machine-readable control contract as primary proof for GUI-heavy panels: ids, labels, modes, visibility/enabled reasons, handlers, model/runtime readbacks, mutation results, and stale-control failures; screenshots are secondary appearance/layout evidence. (source: self-improvement:user_correction:1a0ff4f657d3a43a)
 <!-- agent-self-improvement-doctrine:end -->

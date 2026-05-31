@@ -111,6 +111,12 @@ control harness itself.
   replayed user interaction, then reports before/after visible control value, committed model/state,
   and runtime/readback delta. Route inventories, JSON state, static signal-slot inspection, control
   counts, and model-only setters are supporting evidence only.
+- For GUI-heavy control surfaces, prefer a numeric control contract over screenshot inspection as
+  primary evidence. The harness should expose stable control ids/object names, labels, widget types,
+  section/dock paths, mode predicates, visibility/enabled states and reasons, ranges/options,
+  handler/action names, committed model fields, runtime/readback fields, and last mutation results.
+  Stale visible controls, duplicate owners, hidden controls without a reachable path, disabled
+  controls without a reason, and UI-only or backend-only mutations are failing states.
 - For user-reported bugs, use the harness to make "fixed" a before/after comparison, not a nearby
   pass. Reproduce the reported symptom first and store the before evidence under the closest
   user-equivalent path available: launch command, scenario id, exact input sequence, harness state,

@@ -25,6 +25,14 @@ controls in the app, with status text/readback and the latest artifact path. Hid
 recording is acceptable for the generated fake-host smoke, but it is not enough for an artist-facing
 tool where the user needs to record a repro for the agent.
 
+For GUI-heavy panels, add a numeric control-surface contract beside screenshots. The app or test
+host should be able to report each relevant mode's visible, hidden, disabled, and expected controls
+with stable id/object name, label, widget/control type, section/dock path, mode predicate,
+visible/enabled state and reason, value/range/options, source handler/action, committed model/state
+field, runtime/readback field, and last mutation result. Treat visible unbound controls, raw/internal
+runtime fields exposed as product UI, duplicate owners, hidden controls with no reachable path,
+disabled controls without a reason, and UI-only/backend-only mutations as failing evidence.
+
 ## Smoke Lane
 
 After building the app, run:
@@ -58,6 +66,12 @@ replay the same session or a documented equivalent and compare the reported symp
 backend-only route, stale screenshot, or self-confirming state field is not enough proof for visible
 widget clicks, brush selection, delayed state changes, pointer offsets, viewport hits, or rendered
 results.
+
+For user-reported control bugs, compare the before and after control contract in addition to any
+captures. The report should prove the same user-facing launcher and mode, list stale controls found
+or rejected, and show changed values through the real UI handler into committed state and runtime
+readback. Screenshots remain useful for layout and appearance, but they are not the primary proof
+that controls are wired, enabled, fresh, or reachable.
 
 Use OSTM/background execution when available for automated windowed proof. If the lane cannot
 observe the visible surface yet, report that gap before continuing.

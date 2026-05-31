@@ -29,6 +29,15 @@ held-contact move and before mouse/stylus release, document/render revision, dir
 trace, or an app-owned capture must already show the edit. Release should finalize undo/replay, not
 be the first visible edit.
 
+For GUI-heavy panels, validate a numeric control-surface contract before using screenshots as proof.
+The contract should enumerate each relevant mode's visible, hidden, disabled, and expected controls:
+stable id/object name, label, widget/control type, section/dock path, mode predicate,
+visible/enabled state and reason, value/range/options, source handler/action, committed model/state
+field, runtime/readback field, and last mutation result. Treat stale visible controls, unreasoned
+disabled controls, hidden controls with no reachable path, duplicate owners, raw/internal runtime
+fields in product UI, and UI-only/backend-only mutations as failing evidence. Use screenshots for
+layout, occlusion, and appearance after the numeric contract proves wiring and freshness.
+
 For stroke-like visible bugs, create or replay a human-input UI session through the real
 viewport/canvas/widget event path. The session must include press/contact, multiple held move
 samples, and release/finalization. The report must compare requested pointer path against hit/edit

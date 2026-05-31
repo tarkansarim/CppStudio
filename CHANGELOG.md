@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added numeric UI control-surface contract guidance across CppStudio skills and generated
+  validation docs. GUI-heavy panels now need machine-readable control ids, labels, mode predicates,
+  visibility/enabled reasons, handler bindings, model/runtime readbacks, and mutation results before
+  screenshots can support layout or appearance claims; stale visible controls are blocking evidence.
 - Hardened spatial parameter-surface closeout for supervised native GPU tools. Lights, cameras,
   gizmos, emitters, colliders, probes, volumes, brush cursors, and other transform-owned surfaces
   now require separate inventory and direct mutation proof for orientation/rotation, position,

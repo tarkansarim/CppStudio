@@ -144,6 +144,13 @@ generated-project workflow instructions.
   supporting evidence only; source skills and supervisors require accepted dimensions, accepted row
   counts, rejected startup/resize rows, and the artifact/helper path used for readback before
   accepting size-sensitive frame-time comparisons.
+- UI/control-surface proof is now numeric-first. Product-facing panels need a machine-readable
+  control contract that enumerates ids, labels, widget types, sections, mode predicates,
+  visibility/enabled reasons, ranges/options, UI handlers, committed model fields, runtime/readback
+  fields, and mutation results. Screenshots and captures remain supporting evidence for layout,
+  occlusion, and appearance, but stale controls, duplicate owners, hidden controls without a path,
+  unreasoned disabled controls, raw/internal payload leakage, and UI-only/backend-only mutations are
+  blocking control-contract failures.
 - Reusable setup, validation, profiling, dependency, and rollout scripts/docs must not commit
   machine-specific absolute checkout paths or workstation assumptions. Local paths may appear in
   validation commands and evidence logs, but source-owned scripts/docs should use environment

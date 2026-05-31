@@ -136,6 +136,13 @@ For reported UI or viewport bugs, the lane must prove the symptom changed:
   queryable state
 - launch bugs: prove the documented command owns the intended visible app window, not a terminal or
   stale window
+- control-surface bugs: compare a machine-readable control contract before and after. The contract
+  should enumerate stable id/object name, label, widget/control type, section/dock path, mode
+  predicate, visible/enabled state and reason, value/range/options, source handler/action,
+  committed model/state field, runtime/readback field, and last mutation result. Treat visible
+  unbound controls, hidden controls with no reachable path, disabled controls without reason,
+  duplicate/conflicting owners, raw/internal payload fields in product UI, and UI-only/backend-only
+  mutations as failed evidence.
 
 If no existing scenario can emulate the user's input shape, add the smallest diagnostic UI-session
 route first, run it as the before proof without changing product behavior, then keep it as the
@@ -156,5 +163,7 @@ CppStudio generated projects should include:
   when a real GUI exists
 - gesture-shape assertions for continuous interactions, including held-button or stylus-contact
   samples and semantic before/after deltas
+- control-surface contract reports for GUI-heavy panels, with stale-control warnings treated as
+  blocking for user-facing control fixes
 - docs explaining how to replace the fake host with the real app adapter
 - code-map routing for runtime, docs, tests, scripts, and artifacts policy

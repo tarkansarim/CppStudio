@@ -44,6 +44,11 @@ intentionally short: newest public-facing changes first, older highlights collap
   while classifying verification as required, supporting, redundant, stale/rejected, or failed
   tooling. The supervisor now uses those classifications as a diminishing-returns gate so repeated
   tool failures, stale evidence, or already-proven acceptance stop further escalation.
+- `latest` - Added numeric UI control-surface contracts for GUI-heavy native tools. Agents now have
+  to prove control ids, labels, mode predicates, visibility/enabled reasons, handler bindings,
+  model/runtime readbacks, and mutation results before screenshots can support layout or appearance
+  claims; stale visible controls, duplicate owners, hidden-with-no-path controls, and UI-only or
+  backend-only mutations are blocking evidence.
 - `latest` - Hardened spatial parameter-surface closeout for supervised native GPU tools. Rotation,
   aim, basis vectors, position, scale/size, mode gates, intensity, and quality controls now have to
   be inventoried and proven as separate surfaces for lights, cameras, gizmos, emitters, colliders,

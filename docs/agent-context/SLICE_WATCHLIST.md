@@ -137,6 +137,26 @@ worker handoffs.
    - Evidence: none recorded
    - Recorded: `2026-05-22T09:51:50Z`
 
+14. **After the current worker slice stops, run a postmortem and ceiling research on native C++/Qt/Vulkan/CUDA UI control-surface verification. Convert the result into CppStudio rule/tooling so future workers run every relevant visible UI element/slider before handoff and reject stale or broken controls.**
+   - Status: `active`
+   - Slice: `SonicGroom UI verification postmortem`
+   - Scope: `reusable-skill`
+   - Source: user correction: stale Hair Lights sliders and repeated unverified UI fixes
+   - Revisit when: before accepting the SonicGroom lighting UI slice or closing CppStudio supervision
+   - Gate: Postmortem plus web-backed ceiling research packet, then CppStudio source/rollout update or explicit blocker
+   - Evidence: none recorded
+   - Recorded: `2026-05-31T21:36:37Z`
+
+15. **Do not rely on screenshots as primary UI verification. Research and implement a numeric/machine-readable UI control contract: control id, label, section, visibility, enabled state, bound model/runtime field, before/after mutation, stale-control classification, timing, and optional screenshot only as secondary evidence.**
+   - Status: `active`
+   - Slice: `SonicGroom UI verification postmortem`
+   - Scope: `reusable-skill`
+   - Source: user correction: screenshot inspection is slow, subjective, and missed stale controls
+   - Revisit when: during postmortem, ceiling research, and CppStudio verification hardening
+   - Gate: CppStudio update must require numeric control-surface evidence for UI handoff, with screenshots only supporting or auditing evidence
+   - Evidence: none recorded
+   - Recorded: `2026-05-31T21:39:34Z`
+
 
 ## Superseded Or Historical
 

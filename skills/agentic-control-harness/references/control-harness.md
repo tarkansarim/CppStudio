@@ -290,6 +290,10 @@ Useful scenario evidence fields:
 - `scenario_id` and `input_surface`
 - `input_method`: toolkit action, synthetic click, shortcut, menu dispatch, pointer drag, stylus
   event, or approved window-event bridge
+- `control_contract`: per relevant panel/mode, list stable id/object name, label, widget/control
+  type, section/dock path, mode predicate, visible/enabled state and reason, value/range/options,
+  source handler/action, committed model/state field, runtime/readback field, and last mutation
+  result
 - `screen_point`, `widget_geometry`, `viewport_local_point`, `device_pixel_ratio`, and
   `render_target_point` when coordinates are involved
 - active mode/tool/brush/layer/selection before and after
@@ -303,6 +307,14 @@ Useful scenario evidence fields:
 For palette or button interactions, assert that the real visible/action state changes promptly after
 the click or action dispatch. A backend state that updates seconds later, or only after another
 unrelated event, is a failed UI scenario.
+
+For inspector, toolbar, timeline, node, light, material, brush, renderer, or simulation parameter
+surfaces, use the control contract as the primary stale-control detector. Fail or flag a blocking
+warning when a visible control has no live binding, a disabled control has no user-facing reason, a
+hidden control has no reachable mode/scroll/path, duplicate controls fight over one runtime field,
+an internal/raw runtime payload leaks into product UI, or a mutation changes only the widget or only
+the backend. Screenshots/captures remain supporting evidence for layout, occlusion, and appearance;
+they do not prove wiring or freshness by themselves.
 
 For viewport/canvas interactions, assert the coordinate pipeline explicitly. A sculpt, paint, groom,
 pick, transform, or graph edit should report the path from screen point to widget-local coordinates,
@@ -328,6 +340,7 @@ Recommended `docs/AGENTIC_CONTROL.md` sections:
 - curl examples
 - state/readback surfaces
 - UI readback and text-queryable visual surrogates
+- control-surface contract schema and stale-control rules
 - GUI interaction scenarios for real widget/action clicks, viewport/stylus events, latency checks,
   and pointer-mapping oracles
 - scenario smoke tests

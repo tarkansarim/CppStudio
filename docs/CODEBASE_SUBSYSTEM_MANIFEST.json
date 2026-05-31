@@ -170,7 +170,8 @@
         "research/gpu-optimization-kernelagent-mapping.md",
         "research/gpu-optimization-agentsys-mapping.md",
         "research/skill-packaging-agent-skills-mapping.md",
-        "research/sortie-assistant-pack-adoption.md"
+        "research/sortie-assistant-pack-adoption.md",
+        "research/ui-control-surface-verification.md"
       ],
       "primary_paths": [
         "research/vulkan-lane",
@@ -182,7 +183,8 @@
         "research/gpu-optimization-kernelagent-mapping.md",
         "research/gpu-optimization-agentsys-mapping.md",
         "research/skill-packaging-agent-skills-mapping.md",
-        "research/sortie-assistant-pack-adoption.md"
+        "research/sortie-assistant-pack-adoption.md",
+        "research/ui-control-surface-verification.md"
       ]
     },
     {

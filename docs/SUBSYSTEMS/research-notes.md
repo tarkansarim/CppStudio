@@ -14,6 +14,7 @@ the reusable skill and donor library.
 - `research/gpu-optimization-agentsys-mapping.md`
 - `research/skill-packaging-agent-skills-mapping.md`
 - `research/sortie-assistant-pack-adoption.md`
+- `research/ui-control-surface-verification.md`
 
 ## Primary Paths
 
@@ -27,6 +28,7 @@ the reusable skill and donor library.
 - `research/gpu-optimization-agentsys-mapping.md`
 - `research/skill-packaging-agent-skills-mapping.md`
 - `research/sortie-assistant-pack-adoption.md`
+- `research/ui-control-surface-verification.md`
 
 ## Update When
 
