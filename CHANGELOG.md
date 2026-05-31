@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a functional worker-path verification gate for reusable UI/control-surface hardening. Future
+  CppStudio rule changes in this area must be tested with a fresh implementing-agent scenario that
+  requires live visible-control mutation, committed-state/runtime readback, stale-control
+  classification, and launcher freshness before claiming a UI fix is working; reviewer-only rejection
+  probes are supporting evidence, not sufficient proof.
 - Added numeric UI control-surface contract guidance across CppStudio skills and generated
   validation docs. GUI-heavy panels now need machine-readable control ids, labels, mode predicates,
   visibility/enabled reasons, handler bindings, model/runtime readbacks, and mutation results before

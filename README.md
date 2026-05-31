@@ -44,6 +44,9 @@ intentionally short: newest public-facing changes first, older highlights collap
   while classifying verification as required, supporting, redundant, stale/rejected, or failed
   tooling. The supervisor now uses those classifications as a diminishing-returns gate so repeated
   tool failures, stale evidence, or already-proven acceptance stop further escalation.
+- `latest` - Hardened functional verification for reusable UI/control rules. CppStudio now requires
+  fresh implementing-worker probes, not only installed-text checks or reviewer rejection, before
+  claiming numeric control-contract behavior is serving future UI fixes.
 - `latest` - Added numeric UI control-surface contracts for GUI-heavy native tools. Agents now have
   to prove control ids, labels, mode predicates, visibility/enabled reasons, handler bindings,
   model/runtime readbacks, and mutation results before screenshots can support layout or appearance

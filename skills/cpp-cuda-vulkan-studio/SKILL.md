@@ -271,6 +271,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
   widget or only the backend must be fixed or explicitly classified before handoff. Screenshots and
   captures are secondary evidence for layout, occlusion, product fit, and appearance; they do not
   replace the control contract for wiring, freshness, or stale-control detection.
+- When changing CppStudio's reusable UI/control-surface rules, validation must prove the worker path,
+  not only installed text or reviewer rejection. A functional probe has to put a fresh implementing
+  agent in the position of fixing or closing out a realistic UI/control bug and verify it requires the
+  live mutation/control-contract/readback evidence before claiming fixed. A separate reviewer probe
+  that rejects a bad closeout is useful supporting evidence, but it is not enough to claim the rule is
+  serving future implementation work.
 - User-facing launch path is part of visible proof. When UI/control exposure is validated through a
   screenshot, OSTM job, toolkit readback, or semantic UI state, the proof must use the exact
   launcher/command that the user is told to run, or explicitly prove that the exercised binary is
@@ -1128,4 +1134,5 @@ ${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py ${HOME}/.c
 
 - 2026-05-24T05:40:34Z [codex] CppStudio supervised UI parameter-surface closeout must require visible GUI screenshot or viewport evidence that exposed controls are actually reachable and visible in the product UI, not only JSON/model inventory. (source: self-improvement:user_correction:7650ade4518cb112)
 - 2026-05-31T21:52:02Z [codex] CppStudio UI/control-surface closeout must use a machine-readable control contract as primary proof for GUI-heavy panels: ids, labels, modes, visibility/enabled reasons, handlers, model/runtime readbacks, mutation results, and stale-control failures; screenshots are secondary appearance/layout evidence. (source: self-improvement:user_correction:1a0ff4f657d3a43a)
+- 2026-05-31T22:15:28Z [codex] CppStudio reusable UI/control-surface hardening must be verified with a fresh implementing-worker path probe, not only installed text checks or reviewer rejection; the probe must show the worker requires live visible-control mutation, committed-state/runtime readback, stale-control classification, and launcher freshness before closeout. (source: self-improvement:user_correction:390d625d42840a93)
 <!-- agent-self-improvement-doctrine:end -->

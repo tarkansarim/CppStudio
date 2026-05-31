@@ -134,6 +134,11 @@ validation skills instead.
    evidence for that selection, and a freshness check against the edited UI/runtime source files. If
    stale build trees or unrebuildable preferred binaries remain, the closeout must name them as
    unresolved or show the launcher now refuses/falls back explicitly.
+   When hardening this rule or any reusable CppStudio UI/control-surface behavior, do not validate
+   only the supervisor/reviewer side. Run a fresh worker-path probe where the agent is asked to fix or
+   close out a plausible control bug, then verify it refuses to claim fixed without the control
+   contract, real visible-control mutation, committed-state readback, runtime readback, stale-control
+   classification, and user-facing launcher freshness required by this section.
 
 ## Slice Phase Telemetry
 
