@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 106774,
-      "sha256": "a59df6585f0431398503b00618d685adf2955513d04aabf22bfb27df03ea5c3a"
+      "size": 108124,
+      "sha256": "8d9b92965284aa45111dbcafd5a60564f5b3720cb56f5d5879536bca75badddb"
     },
     {
       "path": "agents/openai.yaml",
@@ -203,8 +203,8 @@
       "path": "assets/app-library-template/docs/VALIDATION_PIPELINE.md",
       "role": "asset",
       "disclosure_group": "generated-project-template",
-      "size": 23980,
-      "sha256": "02637bef57b8735f4e6cfb0d80dfc05e785f7b4f7c2bdbee4f03aac4fad3a754"
+      "size": 24663,
+      "sha256": "eeb578b2bbda342c2840c06912e55dae7471efd499042799733afe9b4565d06e"
     },
     {
       "path": "assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md",
@@ -1232,8 +1232,8 @@
       "path": "references/donor-library/profiles/unity-hdrp-hair-study-only.md",
       "role": "reference",
       "disclosure_group": "donor-profile",
-      "size": 2069,
-      "sha256": "0fdf53bb82b0d5b75044ba044d4d7678647e3b0cc5cd68b51729f00a68d581a2"
+      "size": 3082,
+      "sha256": "cfb02fdca4a609d1af08a10d65c8dcb28cfa77f53cb17a05182d3a21181f7317"
     },
     {
       "path": "references/donor-library/profiles/unreal-hairstrands-study-only.md",

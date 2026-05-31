@@ -4,6 +4,16 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened current-tool command guidance from a production supervision lane. CppStudio now
+  tells workers to use exact job-id OSTM `submit`/`status` plus optional queue-wide `drain`, reject
+  stale `ostm job wait`, `ostm wait`, and `ostm drain --timeout` aliases, and pass code-map drift
+  repo roots as positional arguments rather than an unsupported `--repo` flag.
+- Refreshed the Unity HDRP Hair study-only donor profile so workers start from the current Unity
+  Graphics `Runtime/Material/Hair` tree, search for concrete hair/deep-transmittance symbols, and
+  classify missing package paths as stale evidence instead of silently substituting model memory.
+- Tightened supervised adversarial-review wording so a local/self review is explicitly downgraded
+  when a fresh reviewer or subagent is unavailable, instead of being reported as an unbiased
+  adversarial pass.
 - Added a functional worker-path verification gate for reusable UI/control-surface hardening. Future
   CppStudio rule changes in this area must be tested with a fresh implementing-agent scenario that
   requires live visible-control mutation, committed-state/runtime readback, stale-control

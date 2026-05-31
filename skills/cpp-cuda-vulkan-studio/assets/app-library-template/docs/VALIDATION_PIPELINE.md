@@ -57,6 +57,21 @@ breadth.
 Report execution modes precisely: real OS pointer/stylus injection is `real-input`/intrusive unless
 explicitly isolated; do not describe it as offscreen, background, or non-disruptive.
 
+When using OSTM for GUI/windowed proof, use the supported CLI flow:
+
+```bash
+ostm submit -- <absolute-or-repo-owned-smoke-command>
+ostm status <job-id>
+ostm drain
+ostm status <job-id>
+```
+
+Use `ostm drain` only when waiting for the whole queue is acceptable; otherwise do non-overlapping
+work and recheck the exact job with `ostm status <job-id>`. Read the job artifacts after the current
+job completes; a submitted or queued job is not evidence. Do not use stale or guessed wait commands
+such as `ostm job wait`, `ostm wait`, or `ostm drain --timeout`. If a manager command fails, inspect
+the installed OSTM help and fix the invocation before classifying the application behavior.
+
 Self-hosted CI runner expectations and artifact paths are documented in
 [GPU_RUNNER_CI.md](GPU_RUNNER_CI.md).
 

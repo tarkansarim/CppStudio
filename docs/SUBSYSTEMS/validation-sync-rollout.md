@@ -163,6 +163,8 @@ skills, and watch-mode publishing behavior.
   uses `--launch-sidecar auto` to create a frozen snapshot and start the sidecar, or explicitly
   acknowledges a reviewed no-map-change case. Once `--reviewed-no-map-change` is supplied, the
   checker prints the acknowledgement without the unresolved sidecar/action wording.
+- Code-map drift helper usage is positional for the repo root. Do not document or accept a `--repo`
+  flag in reusable examples.
 - The bundled code-map bootstrap audit text tells agents to present actual findings and cleanup cost
   before asking restructure/preserve/decline questions, so existing-project opt-in cannot become a
   pre-audit choice prompt.

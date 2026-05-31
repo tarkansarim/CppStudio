@@ -100,6 +100,9 @@ validation.
   scripts or launcher wrappers with offscreen/background managers and state that OSTM evidence is
   unavailable. Manager-submitted scripts should use absolute paths or explicit working directories so
   invocation-context failures are not confused with app regressions.
+- Generated GUI/windowed validation docs should show the current OSTM evidence flow with exact
+  job-id `submit`/`status`/optional `drain` and reject stale wait aliases so new projects do not
+  inherit obsolete manager commands.
 - Generated viewport-session and validation docs now require a numeric control-surface contract for
   GUI-heavy panels. Agents must prove control ids, labels, widget types, sections, mode predicates,
   visibility/enabled reasons, ranges/options, source handlers, model/runtime readback fields, and

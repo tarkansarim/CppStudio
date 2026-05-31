@@ -44,6 +44,13 @@ intentionally short: newest public-facing changes first, older highlights collap
   while classifying verification as required, supporting, redundant, stale/rejected, or failed
   tooling. The supervisor now uses those classifications as a diminishing-returns gate so repeated
   tool failures, stale evidence, or already-proven acceptance stop further escalation.
+- `latest` - Hardened production-lane command freshness. CppStudio now documents exact job-id OSTM
+  evidence flow as `submit`/`status` plus optional queue-wide `drain`, rejects stale wait aliases,
+  clarifies that code-map drift helpers take the repo root as a positional argument, and requires
+  downgraded local reviews to be named when a fresh adversarial reviewer is unavailable.
+- `latest` - Refreshed the Unity HDRP Hair study-only donor route so agents start from current Unity
+  Graphics hair shader files and symbol searches, then classify missing package paths as stale
+  evidence instead of filling shader/shadow behavior from memory.
 - `latest` - Hardened functional verification for reusable UI/control rules. CppStudio now requires
   fresh implementing-worker probes, not only installed-text checks or reviewer rejection, before
   claiming numeric control-contract behavior is serving future UI fixes.

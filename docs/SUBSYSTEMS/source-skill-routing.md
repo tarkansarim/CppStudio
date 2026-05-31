@@ -155,6 +155,11 @@ generated-project workflow instructions.
   machine-specific absolute checkout paths or workstation assumptions. Local paths may appear in
   validation commands and evidence logs, but source-owned scripts/docs should use environment
   variables, repo-relative paths, validated cache/config discovery, or clear setup failures.
+- Keep reusable tool command guidance aligned with current helper CLIs. Code-map drift helper
+  examples use a positional repo argument, and OSTM evidence examples use exact job-id
+  `submit`/`status`/optional `drain` rather than stale wait aliases.
+- Keep donor-profile path guidance version-aware. External upstream package paths can move; prefer
+  current upstream search terms and symbol/file anchors over brittle stale local paths.
 
 ## Current Code-Map Bootstrap Posture
 
@@ -501,7 +506,10 @@ generated-project workflow instructions.
   wrappers exist before invoking `scripts/check_code_map_drift.py` or `scripts/validate_code_map.py`;
   older existing projects without wrappers should use the installed CppStudio scripts from
   `${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/` instead of first trying
-  guessed stale repo-local names.
+  guessed stale repo-local names. The installed drift helper takes the repo root as a positional
+  argument, for example
+  `python3 ${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py --require-enabled --strict-review --launch-sidecar auto /absolute/repo`;
+  do not invent a `--repo` flag.
 - Agentic control harness roadmap/readiness fields are part of the verified slice contract. If a
   slice proves one prerequisite named by `next_required_slice`, `blockers`, `prerequisites`,
   readiness booleans, feature eligibility, or backend-selection gates, agents must update the

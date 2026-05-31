@@ -179,6 +179,14 @@ python3 ${CODEX_HOME:-$HOME/.codex}/skills/cppstudio-supervisor/scripts/slice_ph
   --require-markers
 ```
 
+For OSTM-backed phase evidence, keep command shape current. The accepted manager flow captures the
+job id from `ostm submit ...`, checks that exact job with `ostm status <job-id>`, uses `ostm drain`
+only when waiting for the whole queue is acceptable, then rereads `ostm status <job-id>` and
+artifacts for that same job. Do not accept or repeat stale aliases such as `ostm job wait`,
+`ostm wait`, or `ostm drain --timeout`; if a worker uses one, classify that as failed tooling, have
+it inspect OSTM help, and rerun the exact evidence route with the supported command surface before
+judging app behavior.
+
 When no marker log exists for an already-moving lane, estimate from the transcript only as a
 one-time diagnostic and label it approximate. For new verification-heavy lanes, require real markers
 before the next implementation nudge so the next closeout can say which phases consumed time, which
@@ -295,6 +303,12 @@ touches risky shader/runtime behavior, GPU synchronization, UI interaction, pers
 project infrastructure, or any visible/rendered path where the validation claim could be too narrow.
 Plan reviews do not satisfy this post-implementation review gate; they only challenge the intended
 slice before code exists.
+
+When the requested review is meant to be adversarial, prefer a fresh-context reviewer or subagent
+when the worker environment exposes one. If the worker cannot launch a fresh reviewer because the
+delegation tool is unavailable or policy-restricted, require it to say the review is downgraded to
+local/self review and keep that as a closeout caveat; do not let "local review found nothing" stand
+in for an unbiased adversarial pass.
 
 When a fresh review finds actionable correctness issues inside the supervised worker's approved
 scope:

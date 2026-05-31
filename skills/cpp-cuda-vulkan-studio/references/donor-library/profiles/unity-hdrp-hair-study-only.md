@@ -15,9 +15,18 @@ docs, and any additional hair package requirements before reuse.
 
 ## First Upstream Areas To Inspect
 
-- `Runtime/Material/Hair/` for HDRP hair material and shader behavior.
-- `Runtime/Material/Hair/MultipleScattering/` for multiple-scattering LUT generation concepts.
-- `Runtime/Material/Hair/Reference/` for reference shader behavior.
+- Unity Graphics package paths move between HDRP versions. Start from the current
+  `Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Hair/` tree in the Unity
+  Graphics repo or the target project's installed HDRP package, then search by symbol/file name
+  instead of assuming an old local package layout.
+- `Hair.hlsl`, `HairRayTracing.hlsl`, `HairPathTracing.hlsl`, `Hair.cs.hlsl`, and
+  `PreIntegratedAzimuthalScattering.hlsl` for HDRP hair material, ray/path tracing, generated
+  material-data, and preintegrated scattering behavior.
+- `MultipleScattering/` and `Reference/` subtrees when present in the checked HDRP version for
+  LUT/reference behavior; do not treat their presence or exact path as stable across versions.
+- For deep opacity/transmittance or strand-shadow behavior, search the checked Unity Graphics tree
+  for `HairStrandsDeepTransmittance*`, `DeepTransmittance`, `DualScattering`, and related hair
+  shadow/transmittance symbols before implementing from memory.
 - `Editor/Material/Hair/ShaderGraph/` for authoring UX and exposed parameters.
 - HDRP documentation for hair/fur and high-quality line rendering.
 
@@ -27,6 +36,9 @@ docs, and any additional hair package requirements before reuse.
 - Keep Shader Graph and package concepts as study references for native C++ UI and shader parameter design.
 - Prefer Unreal or RTXCR for full groom runtime, voxelization, and ray-traced hair architecture.
 - Recreate test fixtures and material knobs in project-owned code instead of copying Unity package code.
+- When a worker uses this profile for a bug fix, close out with the exact Unity files/symbols it
+  actually inspected and classify any path that could not be found as stale profile evidence rather
+  than silently substituting training data.
 
 ## Validation Ideas
 
