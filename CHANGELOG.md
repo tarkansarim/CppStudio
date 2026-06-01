@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Replaced repeated README Recent Commit Highlights `latest` badges with stable commit identifiers
+  and updated the public-docs policy so the front-page changelog no longer uses moving aggregate
+  labels.
 - Hardened current-tool command guidance from a production supervision lane. CppStudio now
   tells workers to use exact job-id OSTM `submit`/`status` plus optional queue-wide `drain`, reject
   stale `ostm job wait`, `ostm wait`, and `ostm drain --timeout` aliases, and pass code-map drift

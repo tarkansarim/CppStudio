@@ -36,129 +36,95 @@ As a harness, CppStudio focuses on:
 ## Recent Commit Highlights
 
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
-intentionally short: newest public-facing changes first, older highlights collapsed below.
+intentionally short: newest public-facing changes first, older highlights collapsed below. Entries
+use commit identifiers so the ordering stays clear; only the changelog itself is authoritative.
 
-- `latest` - Added supervised-slice phase telemetry. Long-running or verification-heavy worker
-  lanes can now emit `CPPSTUDIO_PHASE` markers and use the bundled phase report helper to measure
-  research, donor routing, edit, build/test, OSTM, profiling, review, code-map, and commit time
-  while classifying verification as required, supporting, redundant, stale/rejected, or failed
-  tooling. The supervisor now uses those classifications as a diminishing-returns gate so repeated
-  tool failures, stale evidence, or already-proven acceptance stop further escalation.
-- `latest` - Hardened production-lane command freshness. CppStudio now documents exact job-id OSTM
+- `a5455d1` - Hardened production-lane command freshness. CppStudio now documents exact job-id OSTM
   evidence flow as `submit`/`status` plus optional queue-wide `drain`, rejects stale wait aliases,
   clarifies that code-map drift helpers take the repo root as a positional argument, and requires
   downgraded local reviews to be named when a fresh adversarial reviewer is unavailable.
-- `latest` - Refreshed the Unity HDRP Hair study-only donor route so agents start from current Unity
-  Graphics hair shader files and symbol searches, then classify missing package paths as stale
-  evidence instead of filling shader/shadow behavior from memory.
-- `latest` - Hardened functional verification for reusable UI/control rules. CppStudio now requires
-  fresh implementing-worker probes, not only installed-text checks or reviewer rejection, before
-  claiming numeric control-contract behavior is serving future UI fixes.
-- `latest` - Added numeric UI control-surface contracts for GUI-heavy native tools. Agents now have
-  to prove control ids, labels, mode predicates, visibility/enabled reasons, handler bindings,
-  model/runtime readbacks, and mutation results before screenshots can support layout or appearance
-  claims; stale visible controls, duplicate owners, hidden-with-no-path controls, and UI-only or
-  backend-only mutations are blocking evidence.
-- `latest` - Hardened spatial parameter-surface closeout for supervised native GPU tools. Rotation,
-  aim, basis vectors, position, scale/size, mode gates, intensity, and quality controls now have to
-  be inventoried and proven as separate surfaces for lights, cameras, gizmos, emitters, colliders,
-  probes, volumes, brush cursors, and similar transform-owned UI. A passing position/size/intensity
-  slider test no longer counts as proof that rotation is wired.
-- `latest` - Hardened GUI/viewport profiling closeout so OSTM or per-frame timing claims must prove
-  accepted full-size timing rows, rejected startup/resize rows, and the artifact/helper used for
-  readback instead of relying only on final maximized UI state.
-- `latest` - Removed CppStudio-owned cross-repo work-routing tool instructions so ownership and
+- `82c5da9` - Required fresh implementing-worker probes for reusable UI/control-surface hardening
+  before claiming numeric control-contract behavior will serve future UI fixes.
+- `ca87356` - Added numeric UI control-surface contracts for GUI-heavy native tools, covering
+  control ids, labels, mode predicates, visibility/enabled reasons, handler bindings, model/runtime
+  readbacks, mutation results, and stale-control classification.
+- `37e47ff` - Hardened spatial parameter-surface closeout for transform-owned UI such as lights,
+  cameras, gizmos, emitters, probes, volumes, and brush cursors; rotation, aim, position, size,
+  mode gates, intensity, and quality now require separate proof.
+- `f643dee` - Added a diminishing-returns gate on top of supervised-slice telemetry so repeated
+  tool failures, stale evidence, or already-proven acceptance stop further verification escalation.
+- `73befd0` - Added supervised-slice phase telemetry. Long-running or verification-heavy worker
+  lanes can emit `CPPSTUDIO_PHASE` markers and use the bundled phase report helper to measure
+  research, donor routing, edit, build/test, OSTM, profiling, review, code-map, and commit time.
+- `b6b5eff` - Removed CppStudio-owned cross-repo work-routing tool instructions so ownership and
   dispatch behavior stay governed by user-level doctrine instead of this native GPU harness.
-- `latest` - Split Nsight Graphics capture and replay incompatibility handling for Vulkan RT
-  profiling. Capture keeps the installed `--no-block-on-first-incompatibility` flag, while replay
-  now requires `--no-block-on-incompatibility` for captures with external-memory compatibility
-  warnings before OSTM can burn a full timeout; failed perf-report replay is classified as an
-  evidence gap, not permission to optimize shaders from metadata alone.
-- `latest` - Hardened supervisor closeout for late worker corrections and portability leaks. If
-  `agent-contact` refuses a correction while a worker is busy, that correction remains an explicit
-  blocker until the final transcript/diff/commit is audited; reusable setup, validation, profiling,
-  dependency, and rollout scripts/docs must use env/config/cache discovery or clear setup errors
-  instead of committed workstation-specific paths. Optional companion skill references now fail soft
-  when verification gates are absent instead of assuming absent skill names exist.
-- `latest` - Hardened profiling artifact readback so agents prefer project-owned report helpers,
-  inspect the current OSTM/profiling schema before writing one-off parsers, and fix stale key or
-  parser failures as evidence-readback failures before comparing metrics.
-- `latest` - Tightened enabled-code-map closeout command resolution. Agents must prove repo-local
-  code-map validator/drift wrappers exist before invoking them; older existing projects without
-  wrappers use the installed CppStudio scripts directly instead of first trying stale guessed paths.
-- `latest` - Hardened before/after profiling comparisons so agents must preserve the accepted
-  baseline workload shape exactly: replay recording, scene/assets, GPU/backend toggles, no-NGX or
-  feature modes, window/maximized state, profile/debug view, warmup/frame budget, and scripted-input
-  flags. Runs missing those workload-defining flags are discarded before metric comparison.
-- `latest` - Added Agent-Planning-Harness escalation gates to the project planner, supervisor, and
-  main native GPU skill. Long-running, multi-slice, repeated-failure, review-heavy lanes, including
-  adversarial reviews with four or more actionable findings, must now create or update a validated
-  planning packet before the next implementation slice instead of continuing from transcript memory.
+- `4bcaebc` - Hardened GUI/viewport profiling closeout so OSTM or per-frame timing claims must
+  prove accepted full-size timing rows, rejected startup/resize rows, and the artifact/helper used
+  for readback.
+- `de714e1` - Split optional companion skill handling so supervisor references fail soft when
+  optional verification skills are not installed instead of assuming absent skill names exist.
+- `ca36504` - Hardened supervisor closeout for late worker corrections and portability leaks. Busy
+  `agent-contact` refusals now remain explicit closeout blockers until the transcript, diff, and
+  commit are audited.
 
 <details>
 <summary>Show older commit highlights</summary>
 
-- `latest` - Fixed the hosted ShellCheck failure in the bundled-skill package guard so the GitHub
-  `Validate` workflow accepts the new unmanaged top-level skill package diagnostic.
-- `latest` - Hardened Nsight Graphics capture guidance for Vulkan RT profiling: app arguments must
+- `840896c` - Hardened profiling artifact readback so agents prefer project-owned report helpers,
+  inspect the current OSTM/profiling schema before writing one-off parsers, and fix stale key or
+  parser failures as evidence-readback failures before comparing metrics.
+- `bea365f` - Tightened enabled-code-map closeout command resolution. Agents must prove repo-local
+  code-map validator/drift wrappers exist before invoking them; older existing projects without
+  wrappers use the installed CppStudio scripts directly.
+- `512fbcf` - Hardened before/after profiling comparisons so agents preserve the accepted baseline
+  workload shape exactly, including replay recording, assets, GPU/backend toggles, window state,
+  warmup/frame budget, and scripted-input flags.
+- `2cea6c9` - Added Agent-Planning-Harness escalation gates to the project planner, supervisor, and
+  main native GPU skill for long-running, multi-slice, repeated-failure, and review-heavy lanes.
+- `701bd17` - Split Nsight Graphics capture and replay incompatibility handling for Vulkan RT
+  profiling. Capture keeps the installed `--no-block-on-first-incompatibility` flag, while replay
+  now requires `--no-block-on-incompatibility` for captures with external-memory compatibility
+  warnings.
+- `c598c21` - Hardened Nsight Graphics capture guidance for Vulkan RT profiling: app arguments must
   be passed as one quoted `--args "<full app argument string>"`, external-memory compatibility
   warnings route through supported `--ignore-incompatible` capture proof instead of dialog hacks, and
   replay metadata/screenshot/function output is required before a capture path is accepted.
-- `latest` - Hardened Vulkan/realtime performance audits so agents classify present/vsync pacing,
+- `5aabe31` - Fixed the hosted ShellCheck failure in the bundled-skill package guard so the GitHub
+  `Validate` workflow accepts the unmanaged top-level skill package diagnostic.
+- `3f9f82b` - Hardened Vulkan/realtime performance audits so agents classify present/vsync pacing,
   startup/shutdown, CPU/API churn, GPU pass cost, resource churn, and instrumentation gaps before
   proposing shader, shadow, ray tracing, CUDA, or compute optimization. Empty Vulkan/NVTX marker
   reports and zero/stale app timing readbacks now have to be reported as observability gaps, not
   pass-level findings.
-- `latest` - Documented CppStudio's intentional bundled multi-skill layout and added validation that
-  rejects accidental unmanaged top-level `skills/*/SKILL.md` packages unless they are the main skill
-  or listed in `scripts/managed_skills.sh`, keeping routing explicit without collapsing distinct
-  CMake, CUDA, Vulkan, profiling, GUI, planning, supervisor, viewport, and harness concerns into one
-  overloaded router.
-- `latest` - Hardened supervisor closeout for user-reported UI/control-surface bugs. Worker proof
-  now has to match the user's visible report with before/after artifacts, cannot count hidden or
-  mode-gated widget mutations as default-panel proof, and must classify stale runtime capability
-  buttons such as DLSS/upscaler controls before closeout.
-- `latest` - Added `--launch-sidecar auto` to the enabled-code-map drift checker. Strict closeout can
-  now create a frozen tracked/untracked snapshot and start the guarded `agent-tmux
-  codex-code-map-sidecar` lane automatically when map maintenance is unresolved, instead of relying
-  on the worker to remember to launch a sidecar.
-- `latest` - Required visible UI proof to run through the exact user-facing launcher, or prove the
-  tested executable is the same fresh binary selected by that launcher. Closeout now has to name the
-  launch command, selected executable/build tree, and stale-binary rejection or freshness evidence so
-  an alternate build tree cannot hide old UI.
-- `latest` - Required live mutation proof for product-facing UI controls. Parameter-surface closeout
-  must now drive the real widget/control handler or equivalent app-owned UI action and compare
-  before/after visible control values, committed model/state, and runtime/readback deltas; screenshot,
-  inventory, model-only setter, and static signal-slot evidence are supporting evidence only.
-- `latest` - Added a donor-parameter inventory gate for shader/material/light UI closeout. A worker
+- `f7d58da` - Added a donor-parameter inventory gate for shader/material/light UI closeout. A worker
   now has to list donor-exposed artist/runtime parameters and classify each one against target
   UI/CLI/model/runtime exposure before widget-wiring proof can count as complete.
-- `latest` - Tightened parameter-surface closure so product UI exposure now requires visible
-  reachability proof, not only model or JSON inventory. Supervisors and GUI/HUD closeouts must show
-  actual panel/section labels, control labels, enabled/default state, and whether controls are
-  immediately visible, scroll-only, collapsed, clipped, mode-gated, or absent before claiming shader,
-  material, light, renderer, or other runtime parameters are exposed to users.
-- `latest` - Added a parameter-surface closure gate so new shader, material, light, renderer,
+- `45012ee` - Hardened supervisor closeout for user-reported UI/control-surface bugs. Worker proof
+  now has to match the user's visible report with before/after artifacts, cannot count hidden or
+  mode-gated widget mutations as default-panel proof, and must classify stale runtime capability
+  buttons.
+- `3f342c0` - Added `--launch-sidecar auto` to the enabled-code-map drift checker. Strict closeout can
+  now create a frozen tracked/untracked snapshot and start the guarded `agent-tmux
+  codex-code-map-sidecar` lane automatically when map maintenance is unresolved.
+- `b613ea6` - Required live mutation proof for product-facing UI controls. Parameter-surface closeout
+  must now drive the real widget/control handler or equivalent app-owned UI action and compare
+  before/after visible control values, committed model/state, and runtime/readback deltas.
+- `357dfb1` - Required visible UI proof to run through the exact user-facing launcher, or prove the
+  tested executable is the same fresh binary selected by that launcher.
+- `93ea957` - Tightened parameter-surface closure so product UI exposure now requires visible
+  reachability proof, not only model or JSON inventory.
+- `61ea33a` - Added a parameter-surface closure gate so new shader, material, light, renderer,
   simulation, brush, import/export, cache, performance, and runtime settings must be planned and
-  closed across backend/runtime ownership, defaults, persistence/state, CLI/config/API, product UI
-  controls, harness/readback, and validation instead of stopping at backend or JSON exposure. The
-  gate is now present in the main CppStudio, project-planning, supervisor, and native GUI/HUD routes.
-- `latest` - Added a focused host coverage lane to generated CppStudio projects beside ASan/UBSan,
-  including `coverage` and `coverage-quick` presets, compact test/fuzz/harness guidance, and
-  full-validation coverage for fresh scaffolds.
-- `latest` - Made `cppstudio-supervisor` report the explicit review-cadence ordinal in every
-  supervised worker status, nudge summary, and closeout, such as `1st slice since last adversarial
-  review`; unknown cadence now has to be called out as review-due before more implementation.
-- `latest` - Made `cppstudio-supervisor` launch substantive Codex worker lanes at
-  `model_reasoning_effort="xhigh"` by default, while keeping fast/priority service opt-in only when
-  the user asks for it, and requiring footer/process verification after relaunch.
-- `latest` - Fixed `important-instruction-ledger` append hygiene so slice watchlists end with one
-  final newline instead of a `git diff --check` trailing-blank-line failure, and added regression
-  coverage to the default validation lane.
-- `latest` - Hardened `cppstudio-supervisor` review cadence from a reminder into a mechanical
-  pre-nudge and closeout gate: supervisors must record last reviewed slice, slice count since review,
-  and next-review debt in the worker watchlist/status; unknown cadence state blocks the next
-  implementation nudge.
+  closed across backend/runtime ownership, defaults, persistence/state, CLI/config/API, product UI,
+  harness/readback, and validation.
+- `19dd5eb` - Made `cppstudio-supervisor` report the explicit review-cadence ordinal in every
+  supervised worker status, nudge summary, and closeout.
+- `58a834e` - Added a focused host coverage lane to generated CppStudio projects beside ASan/UBSan,
+  including `coverage` and `coverage-quick` presets.
+- `19923bc` - Made `cppstudio-supervisor` launch substantive Codex worker lanes at
+  `model_reasoning_effort="xhigh"` by default.
+- `e6a6ce5` - Hardened `cppstudio-supervisor` review cadence from a reminder into a mechanical
+  pre-nudge and closeout gate.
 - `0c04410` - Fixed hosted ShellCheck validation for the shared bundled-skill inventory and recorded
   the CI repair in both the changelog and this front-page highlight list.
 - `a4be459` - Added the bundled `cppstudio-supervisor` skill for supervision-only worker routing,
@@ -181,8 +147,8 @@ intentionally short: newest public-facing changes first, older highlights collap
 - `9978dd0` - Hardened interactive tool planning around primary visible loops and shared substrates,
   blocking secondary feature breadth until the first core user action is proven.
 - `df60c3a` - Added exact GPU feature regression protocol so agents prove the requested feature lane
-  on the target device before hiding, disabling, downgrading, or rewriting around capability failures.
-
+  on the target device before hiding, disabling, downgrading, or rewriting around capability
+  failures.
 - `d4d7976` - Made enabled-code-map maintenance a strict worker-owned closeout gate before staging
   source/build/docs slices.
 - `a34a08b` - Routed code-map drift and no-map-touch semantic review output toward the guarded
@@ -198,6 +164,11 @@ intentionally short: newest public-facing changes first, older highlights collap
 - `d0ea9a2` - Hardened sidecar isolation rules: sidecars work from fixed snapshots, return map-only
   patches, and leave reconciliation plus validation to the original worker.
 - `b939b38` - Integrated the bounded code-map sidecar lane for enabled maps.
+- `5aabe31` - Documented CppStudio's intentional bundled multi-skill layout and added validation that
+  rejects accidental unmanaged top-level `skills/*/SKILL.md` packages unless they are the main skill
+  or listed in `scripts/managed_skills.sh`, keeping routing explicit without collapsing distinct
+  CMake, CUDA, Vulkan, profiling, GUI, planning, supervisor, viewport, and harness concerns into one
+  overloaded router.
 
 </details>
 
