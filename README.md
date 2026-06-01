@@ -39,7 +39,7 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 intentionally short: newest public-facing changes first, older highlights collapsed below. Entries
 use commit identifiers so the ordering stays clear; only the changelog itself is authoritative.
 
-- `761638d` - Required chat-visible phase timing for telemetry-heavy supervised lanes. Workers now
+- `2cd056b` - Required chat-visible phase timing for telemetry-heavy supervised lanes. Workers now
   have to include a compact `Phase time:` line in every substantive reply after telemetry starts,
   backed by canonical `CPPSTUDIO_PHASE event=start/end` markers and a parseable closeout report.
 - `a5455d1` - Hardened production-lane command freshness. CppStudio now documents exact job-id OSTM
