@@ -380,6 +380,11 @@ generated-project workflow instructions.
   set, runtime payload, and viewport region before closeout. Contradictory artifacts, such as a proof
   run that claims a light-on scenario while final readback says that light is disabled, are failed
   proof paths rather than support for the fix.
+- For mode-specific UI/control proof, the final top-level user-facing artifact is the deciding
+  readback. Nested mutation records, extracted summaries, or reviewer paraphrases are supporting
+  evidence only. Closeout must print the exact top-level fields that prove the final visible mode,
+  active control set, runtime payload, and behavior/output invariant; if those fields are missing or
+  contradict the summary, the harness path is failed.
 - Visible UI proof must be tied to the exact user-facing launcher and selected executable. When
   several build trees or binaries exist, closeout must record launcher path, selected executable,
   build tree/config, stdout/stderr or semantic state proving the selection, and freshness against the

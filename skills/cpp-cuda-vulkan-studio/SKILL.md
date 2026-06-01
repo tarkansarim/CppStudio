@@ -616,6 +616,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   luminance/energy, and any shadow-map/deep-opacity payload that changes the result. Explicitly
   classify the named component as absent, hidden, deferred, or blocked only when it truly cannot be
   implemented or validated in the current slice.
+- For mode-specific UI/control bugs, final top-level user-facing state is the deciding artifact.
+  A nested mutation record, extracted acceptance summary, or reviewer paraphrase cannot override a
+  final `ui_state` or equivalent readback that says the target mode/control is disabled, hidden, in a
+  different mode, or pointing at the wrong target. Closeout must print the exact top-level fields that
+  prove the final visible mode, active control set, runtime payload, and behavior/output invariant for
+  the same scenario the user exercises. If those fields contradict the claimed metric, rerun the exact
+  path or fix the harness before committing.
 - For sculpting, brush, paint, groom, stroke, or high-poly mesh editing work, donor realignment has
   an extra gate. Before changing brush behavior, viewport hit tests, palette selection, stroke
   sampling, falloff, pressure, mask, high-poly storage, or dirty upload code, open the sculpt or
@@ -1167,4 +1174,5 @@ ${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py ${HOME}/.c
 - 2026-05-31T22:15:28Z [codex] CppStudio reusable UI/control-surface hardening must be verified with a fresh implementing-worker path probe, not only installed text checks or reviewer rejection; the probe must show the worker requires live visible-control mutation, committed-state/runtime readback, stale-control classification, and launcher freshness before closeout. (source: self-improvement:user_correction:390d625d42840a93)
 - 2026-06-01T05:20:00Z [codex] CppStudio control-surface closeout for transform-owned lights, cameras, renderers, shaders, and materials must prove user-facing behavior/output invariants such as aim, pivot stability, distance, enabled light set, shader/shadow payload, and receiver/hair luminance; state-vector equality alone cannot close user-reported lighting or viewport behavior bugs. (source: self-improvement:user_correction:ecd187f2ce9aa635)
 - 2026-06-01T06:30:25Z [codex] CppStudio supervisor closeout must treat a fresh user live report that the same UI/render/control surface still fails as proof invalidation. Reopen the slice and reconcile the exact user path; contradictory artifacts such as a light-on proof whose final readback has that light disabled are failed proof paths, not supporting evidence. (source: self-improvement:user_correction:0eb8ae93fa837dec)
+- 2026-06-01T07:01:07Z [codex] Mode-specific UI/control closeout must treat final top-level user-facing artifact fields as the deciding proof; nested mutation summaries or reviewer paraphrases cannot override a final readback showing the target control disabled, hidden, in another mode, or failing its behavior invariant. (source: self-improvement:user_correction:9d24c3df42094489)
 <!-- agent-self-improvement-doctrine:end -->

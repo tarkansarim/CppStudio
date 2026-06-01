@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened mode-specific UI/control closeout after a production rectangle-light lane produced nested
+  mutation metrics while the final top-level UI state still had the rectangle light disabled. Workers
+  now have to report exact final top-level fields for visible mode, active control set, runtime
+  payload, and behavior/output invariants; nested summaries cannot override contradictory final
+  artifacts.
 - Hardened supervisor closeout invalidation. If a fresh user live report says the same UI/render
   surface still fails, or if an artifact contradicts the claimed scenario such as a light-on proof
   ending with that light disabled, the slice must reopen and rerun the exact user path before

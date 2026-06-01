@@ -143,7 +143,12 @@ validation skills instead.
    region. Contradictory semantic artifacts are also hard blockers: for example, a run that claims to
    prove rectangle-light orbit behavior while its final readback says the rectangle light is disabled
    does not prove the rectangle-light-on scenario and must be rerun or the harness fixed before
-   closeout.
+   closeout. For mode-specific UI/control bugs, the deciding artifact is the final top-level
+   user-facing state for the same scenario, not a nested mutation record, extracted summary, or
+   reviewer paraphrase. The worker must report the exact top-level fields that prove the final visible
+   mode, active control set, runtime payload, and output invariant. If those top-level fields are
+   missing, stale, disabled, hidden, in another mode, or contradict the summary metrics, the proof is
+   failed even when a nested control mutation briefly looked correct.
    The visible proof must be through the exact user-facing launcher/command handed to the user, or
    must prove that the tested executable is the same fresh executable selected by that launcher.
    Require the worker to report launcher path, selected executable/build tree, stdout/stderr or state
