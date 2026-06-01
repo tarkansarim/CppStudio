@@ -39,6 +39,9 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 intentionally short: newest public-facing changes first, older highlights collapsed below. Entries
 use commit identifiers so the ordering stays clear; only the changelog itself is authoritative.
 
+- `761638d` - Required chat-visible phase timing for telemetry-heavy supervised lanes. Workers now
+  have to include a compact `Phase time:` line in every substantive reply after telemetry starts,
+  backed by canonical `CPPSTUDIO_PHASE event=start/end` markers and a parseable closeout report.
 - `a5455d1` - Hardened production-lane command freshness. CppStudio now documents exact job-id OSTM
   evidence flow as `submit`/`status` plus optional queue-wide `drain`, rejects stale wait aliases,
   clarifies that code-map drift helpers take the repo root as a positional argument, and requires
@@ -63,13 +66,13 @@ use commit identifiers so the ordering stays clear; only the changelog itself is
   for readback.
 - `de714e1` - Split optional companion skill handling so supervisor references fail soft when
   optional verification skills are not installed instead of assuming absent skill names exist.
-- `ca36504` - Hardened supervisor closeout for late worker corrections and portability leaks. Busy
-  `agent-contact` refusals now remain explicit closeout blockers until the transcript, diff, and
-  commit are audited.
 
 <details>
 <summary>Show older commit highlights</summary>
 
+- `ca36504` - Hardened supervisor closeout for late worker corrections and portability leaks. Busy
+  `agent-contact` refusals now remain explicit closeout blockers until the transcript, diff, and
+  commit are audited.
 - `840896c` - Hardened profiling artifact readback so agents prefer project-owned report helpers,
   inspect the current OSTM/profiling schema before writing one-off parsers, and fix stale key or
   parser failures as evidence-readback failures before comparing metrics.
@@ -323,6 +326,13 @@ then the bundled `skills/cppstudio-supervisor/scripts/slice_phase_report.py` hel
 duration, OSTM job ids, artifacts, and whether verification was required, supporting, redundant,
 stale/rejected, or failed tooling. This makes it easier to see when validation is earning its cost
 and when a lane is thrashing.
+
+For lanes where telemetry is required, timing is expected in the worker chat as the work happens,
+not only in a file at the end. Substantive worker replies should include a compact `Phase time:`
+line, such as `research 4m done; edit 8m active; OSTM 0m; blockers none`, backed by canonical
+`CPPSTUDIO_PHASE event=start/end phase=... ts=...` markers. If the supervisor has to keep asking
+how long each part took, that is treated as a harness-rule gap to correct, not as a normal worker
+style preference.
 
 The supervisor also applies a diminishing-returns gate to that report. If the smallest real
 user-facing proof already establishes acceptance, extra checks are redundant unless they target a

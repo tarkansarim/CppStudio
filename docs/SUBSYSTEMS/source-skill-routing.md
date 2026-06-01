@@ -101,7 +101,10 @@ generated-project workflow instructions.
   code-map maintenance, and commit; verification phases are classified as required acceptance,
   supporting, redundant, stale/rejected, failed tooling, or not applicable. Supervisors use the
   bundled `slice_phase_report.py` helper to identify where time went and which checks can be
-  shortened or rejected earlier.
+  shortened or rejected earlier. In telemetry-required lanes, workers must also include a compact
+  `Phase time:` line in every substantive chat reply after telemetry starts, backed by canonical
+  `CPPSTUDIO_PHASE event=start/end phase=... ts=...` markers, so timing is visible without a
+  separate request.
 - The same telemetry now feeds a verification-budget gate. Once the smallest real user-facing proof
   establishes acceptance, extra checks are redundant unless they address a different risk; two
   same-route tool failures stop fallback stacking; stale/wrong-workload runs must be rejected before

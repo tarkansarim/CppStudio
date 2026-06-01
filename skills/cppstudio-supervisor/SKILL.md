@@ -155,6 +155,29 @@ CPPSTUDIO_PHASE event=end phase=research ts=2026-05-30T01:04:30Z status=ok
 CPPSTUDIO_PHASE event=end phase=ostm_ui ts=2026-05-30T01:09:00Z classification=required_acceptance ostm_job=7578 artifact=/tmp/ui-proof
 ```
 
+For telemetry-required lanes, phase status is part of the worker's chat protocol, not an optional
+closeout add-on. Every substantive worker reply after telemetry starts must include a compact
+human-readable timing line in the chat, backed by the marker log, for example:
+
+```text
+Phase time: research 4m30s done; edit 8m10s active; build/test 0m; OSTM 0m; blockers none.
+```
+
+This line should name the currently active phase, completed phase durations when known, and any
+failed-tooling/stale-rejected time that is already visible. It can be approximate during an active
+phase, but closeout must be generated from canonical markers. Do not accept a worker lane where the
+supervisor repeatedly has to ask "how long did that take?" after telemetry was required. If the
+worker omits the chat timing line in a telemetry-required lane, correct it before the next nudge and
+treat the omission as a CppStudio-rule compliance issue, not as a harmless missing nicety.
+
+Markers must use the canonical key/value shape above: `event=start|end`, `phase=<name>`,
+`ts=<UTC ISO timestamp>`, plus optional `classification`, `status`, `ostm_job`, `artifact`, and
+`note`. Ad hoc marker names such as `validation_start`, `ostm_start`, or
+`CPPSTUDIO_PHASE validation <timestamp>` are acceptable only as legacy breadcrumbs in an already
+moving lane; they do not satisfy new closeout. For new telemetry-required work, require paired
+start/end markers for every phase. If a phase is abandoned, close it with `event=end status=blocked`
+or `event=end status=abandoned` and a short reason.
+
 Recommended phase names are `research`, `donor_route`, `plan`, `edit`, `build_test`, `ostm_ui`,
 `ostm_profile`, `viewport_session`, `profile`, `review`, `code_map`, `commit`, and `closeout`.
 Verification phases should include one of these classifications:
@@ -189,8 +212,9 @@ judging app behavior.
 
 When no marker log exists for an already-moving lane, estimate from the transcript only as a
 one-time diagnostic and label it approximate. For new verification-heavy lanes, require real markers
-before the next implementation nudge so the next closeout can say which phases consumed time, which
-validation was decisive, and which checks should be shortened, merged, or rejected earlier.
+and a chat-visible `Phase time:` line before the next implementation nudge so the next closeout can
+say which phases consumed time, which validation was decisive, and which checks should be shortened,
+merged, or rejected earlier.
 
 ## Verification Budget And Diminishing Returns
 
@@ -329,8 +353,12 @@ A supervised worker closeout must include:
 
 - commit hash or explicit no-code-change status;
 - dirty-tree status for source files and sensitive instruction files;
-- phase telemetry report path or explicit reason it was not captured when the lane was
-  long-running, verification-heavy, performance/UI-heavy, or repeated-failure-prone;
+- phase telemetry report path when the lane was long-running, verification-heavy,
+  performance/UI-heavy, OSTM/profiling-heavy, or repeated-failure-prone. For new
+  telemetry-required lanes, an explicit reason for missing telemetry is not enough unless the
+  supervisor identified the gap before work continued and either corrected it or stopped on a real
+  tooling blocker. The report must parse canonical `CPPSTUDIO_PHASE` markers, and the transcript
+  must show the worker included compact `Phase time:` timing lines in its substantive replies;
 - exact validation commands and artifact IDs, including OSTM/viewport/session evidence when visible
   behavior is involved;
 - for GUI, viewport, OSTM, or per-frame profiling closeout, row-level full-size timing proof:

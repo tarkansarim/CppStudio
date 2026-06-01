@@ -4,6 +4,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened supervised-slice phase telemetry so long-running worker lanes must expose a compact
+  `Phase time:` line in each substantive chat reply, backed by canonical start/end
+  `CPPSTUDIO_PHASE` markers, rather than leaving timing buried in artifacts or only reporting it at
+  closeout.
 - Replaced repeated README Recent Commit Highlights `latest` badges with stable commit identifiers
   and updated the public-docs policy so the front-page changelog no longer uses moving aggregate
   labels.

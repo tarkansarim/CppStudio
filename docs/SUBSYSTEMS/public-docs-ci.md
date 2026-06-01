@@ -62,7 +62,9 @@ workflow, and repo banner/sample assets.
   review moments instead of leaving sidecar routing to prose, memory, or a user prompt.
 - Public supervisor docs describe slice phase telemetry for expensive supervised lanes so agents can
   measure research, donor routing, editing, build/test, OSTM, profiling, review, code-map, and commit
-  time instead of guessing where verification is slowing the process down.
+  time instead of guessing where verification is slowing the process down. Telemetry-required worker
+  replies are expected to show a compact `Phase time:` line in chat, backed by canonical phase
+  markers, instead of requiring the user to ask for timing after the fact.
 - Public supervisor docs also describe the diminishing-returns policy attached to telemetry:
   repeated non-decisive checks, same-route tool failures, stale/wrong-workload evidence, or already
   proven acceptance should stop escalation and produce a verification-cost note.
