@@ -39,7 +39,7 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 intentionally short: newest public-facing changes first, older highlights collapsed below. Entries
 use commit identifiers so the ordering stays clear; only the changelog itself is authoritative.
 
-- `pending` - Hardened mode-specific UI/control closeout. Final top-level user-facing artifact fields
+- `cea8e41` - Hardened mode-specific UI/control closeout. Final top-level user-facing artifact fields
   for visible mode, active controls, runtime payload, and behavior/output now decide acceptance;
   nested mutation summaries cannot override contradictory final UI state.
 - `61b7590` - Hardened supervisor closeout invalidation. A fresh user report that the same UI/render
