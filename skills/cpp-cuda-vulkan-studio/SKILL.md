@@ -271,6 +271,20 @@ When this skill is active, work like a native C++ GPU systems engineer:
   widget or only the backend must be fixed or explicitly classified before handoff. Screenshots and
   captures are secondary evidence for layout, occlusion, product fit, and appearance; they do not
   replace the control contract for wiring, freshness, or stale-control detection.
+- User-reported light, camera, renderer, shader, material, or viewport control bugs must prove the
+  user-facing behavior/output invariant, not just the mutated state vector. For lights this means
+  validating, as applicable, pivot position, light position, distance-to-pivot, forward/aim basis,
+  aim-to-target dot product, cone/frustum or area-light basis, enabled light set, runtime shader
+  payload, shadow payload, and before/after radiance or luminance samples from the affected receiver
+  and hair/material region. A pass that proves `state = pivot + direction * distance` is not enough
+  if the report is that the light moves away, points wrong, darkens the subject, produces asymmetric
+  front/back response, or leaves shadows/illumination visually wrong.
+- If a user reports that the same UI/rendering/control bug is still visible after a worker's proof,
+  treat that report as a proof invalidation, not as a post-closeout enhancement. Reproduce the exact
+  user path again and reconcile every contradictory artifact before continuing. A semantic readback
+  that contradicts the claimed scenario, such as a rectangle-light proof whose final runtime state has
+  rectangle lighting disabled, is a failed proof path until the harness or app state is corrected and
+  rerun.
 - When changing CppStudio's reusable UI/control-surface rules, validation must prove the worker path,
   not only installed text or reviewer rejection. A functional probe has to put a fresh implementing
   agent in the position of fixing or closing out a realistic UI/control bug and verify it requires the
@@ -596,8 +610,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
   those controls are present or expected. Rotation/aim/orientation is a distinct critical surface:
   position, size, or intensity mutation does not prove it. A fix for a reported rotate/aim/move/scale
   failure must show before/after mutation through the real UI/control handler into committed state
-  and runtime/readback payload for the named transform component, or explicitly classify that
-  component as absent, hidden, deferred, or blocked.
+  and runtime/readback payload for the named transform component, plus a behavior/output invariant
+  that proves the object still does what that component is for. For lights, aim/orbit proof must
+  include target/pivot stability, distance stability, light basis or direction, affected-surface
+  luminance/energy, and any shadow-map/deep-opacity payload that changes the result. Explicitly
+  classify the named component as absent, hidden, deferred, or blocked only when it truly cannot be
+  implemented or validated in the current slice.
 - For sculpting, brush, paint, groom, stroke, or high-poly mesh editing work, donor realignment has
   an extra gate. Before changing brush behavior, viewport hit tests, palette selection, stroke
   sampling, falloff, pressure, mask, high-poly storage, or dirty upload code, open the sculpt or
@@ -1147,4 +1165,6 @@ ${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py ${HOME}/.c
 - 2026-05-24T05:40:34Z [codex] CppStudio supervised UI parameter-surface closeout must require visible GUI screenshot or viewport evidence that exposed controls are actually reachable and visible in the product UI, not only JSON/model inventory. (source: self-improvement:user_correction:7650ade4518cb112)
 - 2026-05-31T21:52:02Z [codex] CppStudio UI/control-surface closeout must use a machine-readable control contract as primary proof for GUI-heavy panels: ids, labels, modes, visibility/enabled reasons, handlers, model/runtime readbacks, mutation results, and stale-control failures; screenshots are secondary appearance/layout evidence. (source: self-improvement:user_correction:1a0ff4f657d3a43a)
 - 2026-05-31T22:15:28Z [codex] CppStudio reusable UI/control-surface hardening must be verified with a fresh implementing-worker path probe, not only installed text checks or reviewer rejection; the probe must show the worker requires live visible-control mutation, committed-state/runtime readback, stale-control classification, and launcher freshness before closeout. (source: self-improvement:user_correction:390d625d42840a93)
+- 2026-06-01T05:20:00Z [codex] CppStudio control-surface closeout for transform-owned lights, cameras, renderers, shaders, and materials must prove user-facing behavior/output invariants such as aim, pivot stability, distance, enabled light set, shader/shadow payload, and receiver/hair luminance; state-vector equality alone cannot close user-reported lighting or viewport behavior bugs. (source: self-improvement:user_correction:ecd187f2ce9aa635)
+- 2026-06-01T06:30:25Z [codex] CppStudio supervisor closeout must treat a fresh user live report that the same UI/render/control surface still fails as proof invalidation. Reopen the slice and reconcile the exact user path; contradictory artifacts such as a light-on proof whose final readback has that light disabled are failed proof paths, not supporting evidence. (source: self-improvement:user_correction:0eb8ae93fa837dec)
 <!-- agent-self-improvement-doctrine:end -->

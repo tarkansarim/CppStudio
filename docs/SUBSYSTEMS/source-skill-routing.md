@@ -369,6 +369,17 @@ generated-project workflow instructions.
   before/after proof for that named transform component through the real UI/control handler into
   committed state and runtime/readback payload, or an explicit absent/hidden/deferred/blocked
   classification.
+- User-reported light, shader, material, renderer, camera, and viewport control bugs need
+  behavior/output proof in addition to state mutation. Light orbit/aim fixes must validate the pivot
+  or target, distance-to-pivot, aim vector/basis, enabled light set, runtime light/shader payload,
+  shadow or opacity payload when relevant, and before/after luminance or energy samples from the
+  affected receiver and hair/material region. If those invariants still show darkening, wrong aim, or
+  front/back response asymmetry, the slice remains failed even when state-vector equality passes.
+- A post-proof user live report that the same surface still fails reopens the slice. Supervisors and
+  workers must reconcile it against the exact user launcher, mode, visible control path, enabled-light
+  set, runtime payload, and viewport region before closeout. Contradictory artifacts, such as a proof
+  run that claims a light-on scenario while final readback says that light is disabled, are failed
+  proof paths rather than support for the fix.
 - Visible UI proof must be tied to the exact user-facing launcher and selected executable. When
   several build trees or binaries exist, closeout must record launcher path, selected executable,
   build tree/config, stdout/stderr or semantic state proving the selection, and freshness against the

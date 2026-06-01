@@ -128,6 +128,22 @@ validation skills instead.
    as absent, hidden, deferred, or blocked. If the user asks "how do I rotate/move/aim/scale this",
    the affected transform component requires direct before/after proof before the slice can be
    accepted.
+   For light, camera, renderer, shader, material, or viewport controls, state mutation is still not
+   enough when the user reports a behavior/output failure. Require a named invariant for what the
+   control is supposed to do and numeric readback for that invariant. Light orbit/aim fixes must
+   prove target or pivot stability, distance-to-pivot, forward/aim basis, aim-to-target dot product,
+   enabled light set, runtime shader/light payload, shadow or opacity payload when relevant, and
+   before/after luminance or energy samples on the affected receiver and hair/material region. A
+   state-vector equality check that still lets the subject darken, the light point away, or front/back
+   lighting respond asymmetrically is a failed acceptance, not a supporting proof.
+   A fresh user live report after a worker's proof invalidates that proof until reconciled against the
+   exact user path. Do not keep closing from an older harness run when the user reports the same
+   surface still failing. Reopen the slice, name the contradiction, and require a new repro that
+   matches the user's launcher, mode, enabled-light set, visible control path, and affected viewport
+   region. Contradictory semantic artifacts are also hard blockers: for example, a run that claims to
+   prove rectangle-light orbit behavior while its final readback says the rectangle light is disabled
+   does not prove the rectangle-light-on scenario and must be rerun or the harness fixed before
+   closeout.
    The visible proof must be through the exact user-facing launcher/command handed to the user, or
    must prove that the tested executable is the same fresh executable selected by that launcher.
    Require the worker to report launcher path, selected executable/build tree, stdout/stderr or state

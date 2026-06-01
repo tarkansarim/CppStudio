@@ -4,6 +4,14 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened supervisor closeout invalidation. If a fresh user live report says the same UI/render
+  surface still fails, or if an artifact contradicts the claimed scenario such as a light-on proof
+  ending with that light disabled, the slice must reopen and rerun the exact user path before
+  closeout.
+- Hardened light/viewport control-surface acceptance so transform-owned lighting fixes must prove
+  behavior/output invariants such as pivot stability, aim basis, distance-to-pivot, enabled light
+  set, shader/shadow payload, and receiver/hair luminance. State-vector equality alone no longer
+  closes user-reported light orbit, darkening, or front/back response bugs.
 - Hardened supervised-slice phase telemetry so long-running worker lanes must expose a compact
   `Phase time:` line in each substantive chat reply, backed by canonical start/end
   `CPPSTUDIO_PHASE` markers, rather than leaving timing buried in artifacts or only reporting it at
