@@ -42,7 +42,7 @@ use commit identifiers so the ordering stays clear; only the changelog itself is
 - `cea8e41` - Hardened mode-specific UI/control closeout. Final top-level user-facing artifact fields
   for visible mode, active controls, runtime payload, and behavior/output now decide acceptance;
   nested mutation summaries cannot override contradictory final UI state.
-- `pending` - Hardened renderer/performance supervision. Donor-derived renderer fixes now need
+- `4943046` - Hardened renderer/performance supervision. Donor-derived renderer fixes now need
   donor-semantics guardrails before implementation, nonzero OSTM lanes cannot be accepted from
   partial screenshots/state/per-frame artifacts, repeated same-shape failed smoke tests must stop
   instead of being shortened, and inactive capability telemetry such as DLSS-in-Raster must not be
