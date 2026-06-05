@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened renderer/performance supervision after a Raster Vulkan lane produced useful partial
+  timing artifacts from failed OSTM jobs. Workers now must run donor-semantics guardrails before
+  donor-derived renderer fixes, reject nonzero OSTM lanes as acceptance even when screenshots/state
+  exist, stop shortening repeated same-shape failed smoke tests, and distinguish current inactive
+  capability telemetry such as DLSS-in-Raster from deliberate product policy.
 - Hardened mode-specific UI/control closeout after a production rectangle-light lane produced nested
   mutation metrics while the final top-level UI state still had the rectangle light disabled. Workers
   now have to report exact final top-level fields for visible mode, active control set, runtime

@@ -160,6 +160,29 @@ validation skills instead.
    close out a plausible control bug, then verify it refuses to claim fixed without the control
    contract, real visible-control mutation, committed-state readback, runtime readback, stale-control
    classification, and user-facing launcher freshness required by this section.
+11. For supervised renderer, viewport, shader, material, or performance fixes, require an explicit
+   donor-semantics gate before implementation when a donor-derived mode, shader, lighting model,
+   material model, or artist-visible behavior is involved. The worker must name which donor files,
+   symbols, render states, or behavior expectations are being used as guardrails, and must separate
+   donor-backed invariants from local engine architecture work. Donor guardrails do not authorize
+   copying unsafe source, swapping shader models, or treating a local engine workaround as donor
+   alignment. If the performance fix changes render target scale, pass ordering, command-list
+   lifetime, synchronization, resource retirement, resolve/composite path, alpha/depth/blend state,
+   or LOD/segment budget, closeout must prove that donor-visible semantics such as lighting mode,
+   visibility/shadow source, blend/depth behavior, material response, and capability UI policy did
+   not drift or must explicitly classify any drift as rejected/deferred.
+   A nonzero OSTM/app validation lane is failed acceptance even when it writes screenshots, state
+   JSON, or partial per-frame rows. Partial artifacts are diagnostic evidence only. Repeated
+   closeout failures with the same shape, such as runs ending a fixed number of rows short, must be
+   classified as runtime/harness closeout instability before any metric claim is accepted; do not
+   keep shortening the same smoke test to manufacture an exit-0 proof. After repeated same-route
+   failures, require rollback or a failed-probe ledger entry unless the worker fixes the closeout
+   failure and reruns the original acceptance lane successfully.
+   Do not convert temporary capability telemetry into product policy. For features such as DLSS,
+   denoisers, upscalers, reconstruction, shadows, RT/Raster modes, or vendor extensions, distinguish
+   "currently inactive/unsupported in this path" from "intentionally disabled by design". A
+   performance fix must not hide, disable, or relabel capability controls as the solution unless the
+   user approved that product decision and the donor/current SDK evidence supports it.
 
 ## Slice Phase Telemetry
 

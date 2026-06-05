@@ -147,6 +147,13 @@ generated-project workflow instructions.
   supporting evidence only; source skills and supervisors require accepted dimensions, accepted row
   counts, rejected startup/resize rows, and the artifact/helper path used for readback before
   accepting size-sensitive frame-time comparisons.
+- Renderer/performance supervision now requires a donor-semantics gate before implementation when a
+  donor-derived mode, material, shader, or artist-visible behavior is involved. Donor sources are
+  guardrails for invariants such as lighting mode, shadow/visibility source, alpha/depth/blend
+  behavior, and capability UI policy; they do not authorize shader-model swaps or unsafe code
+  copying. Nonzero OSTM lanes remain failed acceptance even when screenshots, state, or partial
+  per-frame rows exist, and repeated same-shape closeout failures must be rolled back or ledgered
+  unless the original acceptance lane is fixed and rerun successfully.
 - UI/control-surface proof is now numeric-first. Product-facing panels need a machine-readable
   control contract that enumerates ids, labels, widget types, sections, mode predicates,
   visibility/enabled reasons, ranges/options, UI handlers, committed model fields, runtime/readback
