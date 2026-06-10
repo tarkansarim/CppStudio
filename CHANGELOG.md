@@ -4,6 +4,18 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added the producer-first numeric-parity rule to `viewport-session-testing` and
+  `gpu-profiling-workstation`: when a reference/oracle renderer and an approximation lane disagree
+  on shading or shadow response, diagnose with a numeric instrument and verify the approximation's
+  intermediate DATA PRODUCER (shadow/occupancy volume, count buffer, probe) against what the
+  oracle's path actually experiences before tuning any consumer constant. Names the two standing
+  traps: mass-conserving accumulation keeps area averages plausible while per-cell counts run an
+  order of magnitude low (per-cell semantics must equal what one ray experiences — crossings per
+  cell), and constants tuned downstream of an unverified producer become compensation values that
+  break when the producer is fixed. End-to-end convergence is proven with paired identical-config
+  lanes comparing value distributions (percentiles, not means); human visual judgment comes only
+  after the numbers converge. Captured from supervised production work where a per-strand shadow
+  defect survived several consumer-side fixes because broad-area receiver tests stayed plausible.
 - Hardened telemetry-semantics doctrine after the same failure class ("telemetry silently changes
   meaning while looking valid") was independently rediscovered twice in supervised production work.
   `gpu-profiling-workstation` now requires: (a) telemetry validity fields encode lane state — a

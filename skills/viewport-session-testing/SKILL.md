@@ -80,6 +80,23 @@ change can leave the presented image byte-identical while silently re-defining w
 measures (pass reordering against shared depth/stencil state is the classic case); image-identical
 plus oracle-magnitude-shifted is a semantic alarm to investigate and re-pin, never noise to accept.
 
+When a reference renderer (ray-traced, offline, or donor "oracle" mode) and an approximation lane
+(raster, baked, volume-based) disagree on shading or shadow response, diagnose with a numeric
+instrument before tuning any consumer constant, and verify the approximation's DATA PRODUCER
+against the oracle's equivalent first. Locate or add a readback/report surface for the intermediate
+data structure (shadow volume, count buffer, LUT, probe) and compare its content magnitudes against
+what the oracle's path actually experiences (e.g. traced per-ray counts) — then verify end-to-end
+with paired identical-config lanes comparing luma/feature distributions, not single-point means.
+Two traps make eyeball or broad-average verification actively misleading here: (a) mass-conserving
+producers (splatting a fraction of a contribution into a subset of crossed cells) keep AREA averages
+correct while per-cell values are an order of magnitude low, so wide-receiver tests pass while
+per-element response is dead; per-cell semantics must equal what one ray/sample experiences
+(crossings per cell), not redistributed mass. (b) Tuning transfer functions, biases, or lift
+constants downstream of an unverified producer converges on compensation constants that break when
+the producer is fixed. Hand a parity fix to a human for visual judgment only after the numeric
+curves or distributions converge; a human report that "the response is missing" after a green-lane
+handoff means the instrument was measuring the wrong stage, not that more constants need tuning.
+
 Backend HTTP/curl commands alone do not satisfy this lane for visible UI bugs. They are useful
 supporting evidence, but they do not prove widget focus, visible control clicks, DPI mapping, mouse
 or stylus routing, viewport hit tests, or screenshot freshness.

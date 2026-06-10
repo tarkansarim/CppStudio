@@ -102,6 +102,15 @@ Current `nsys` resolves through the CUDA Toolkit launcher to Nsight Systems 2025
   integrates (expected magnitude signature, e.g. per-pixel fragment counts vs front-most survivors)
   before trusting its values for calibration or regression comparison; record the expected
   signature next to the pass so the next reorder is caught.
+- Oracle-vs-approximation shading parity is a producer-first measurement problem. Before tuning any
+  shader constant to close a reference-vs-approximation gap, read back the approximation's
+  intermediate data structure (shadow/occupancy volume, count buffer, probe) and compare its
+  per-cell magnitudes against the oracle path's equivalent (e.g. traced per-ray hit counts).
+  Mass-conserving accumulation (fractional splats into a subset of crossed cells) is the standing
+  trap: area-averaged consumers stay plausible while per-cell counts run an order of magnitude low,
+  so per-cell semantics must equal what one ray experiences (crossings per cell). Verify
+  convergence with paired identical-config lanes comparing value distributions (percentiles, not
+  means alone), and only then request human visual judgment.
 - For pass-level Vulkan claims, require GPU timestamp ranges, Vulkan debug labels/markers, Nsight
   Graphics GPU Trace, or equivalent project-owned pass timers. If Nsight marker reports return no
   data, report a pass-attribution gap; API summaries alone can identify CPU/API/present behavior but
