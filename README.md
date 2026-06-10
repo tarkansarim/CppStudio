@@ -39,7 +39,7 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 intentionally short: newest public-facing changes first, older highlights collapsed below. Entries
 use commit identifiers so the ordering stays clear; only the changelog itself is authoritative.
 
-- `e0e0e81` - Captured the producer-first numeric-parity rule: oracle-vs-approximation shading
+- `c42b272` - Captured the producer-first numeric-parity rule: oracle-vs-approximation shading
   gaps are diagnosed by measuring the approximation's intermediate data producer against the
   oracle's path (per-cell counts = what one ray experiences), with paired identical-config
   distribution comparison before any constant tuning or human visual judgment.
