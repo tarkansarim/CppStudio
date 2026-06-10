@@ -41,9 +41,10 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 intentionally short: newest public-facing changes first, older highlights collapsed below. Entries
 use commit identifiers so the ordering stays clear; only the changelog itself is authoritative.
 
-- `b734b99` - README now describes both providers in all install-facing sections: Claude Code lane
-  (`rollout_to_claude.sh` into `~/.claude/skills`, `SYNC_CLAUDE_HOME`, `validate_claude_install.sh`)
-  alongside Codex, with the no-shared-deployed-content rule and run-both-rollouts guidance.
+- `917b4c6` - README front page now names both providers everywhere the product is described
+  (intro, Quick Start, Requirements, Install, What Gets Installed, Use It, install table, repo
+  layout): Codex and Claude Code, separate skill homes, no shared deployed content, run both
+  rollouts when using both.
 - `c42b272` - Captured the producer-first numeric-parity rule: oracle-vs-approximation shading
   gaps are diagnosed by measuring the approximation's intermediate data producer against the
   oracle's path (per-cell counts = what one ray experiences), with paired identical-config
