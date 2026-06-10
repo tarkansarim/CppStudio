@@ -70,6 +70,16 @@ matches the product target. If the screenshots still look wrong, flat, debug-lik
 or too crude for the requested tool, report that as an unresolved product-quality issue instead of
 moving to the next feature slice.
 
+Capture artifacts must distinguish "lane disabled" from "measured zero". A session or per-frame
+artifact may legitimately run with diagnostic readbacks gated off, but then its validity/measurement
+fields for that lane must be omitted or explicitly marked disabled — a readbacks-off artifact that
+still carries valid-looking zero/false oracle fields hides regressions behind plausible data. When a
+before/after proof relies on oracle sums or accumulation metrics, pin the oracle's semantics first:
+state what population it integrates and what magnitude signature is expected. A rendering-pipeline
+change can leave the presented image byte-identical while silently re-defining what the oracle
+measures (pass reordering against shared depth/stencil state is the classic case); image-identical
+plus oracle-magnitude-shifted is a semantic alarm to investigate and re-pin, never noise to accept.
+
 Backend HTTP/curl commands alone do not satisfy this lane for visible UI bugs. They are useful
 supporting evidence, but they do not prove widget focus, visible control clicks, DPI mapping, mouse
 or stylus routing, viewport hit tests, or screenshot freshness.

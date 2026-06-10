@@ -88,6 +88,20 @@ Current `nsys` resolves through the CUDA Toolkit launcher to Nsight Systems 2025
 - Validate app-owned timing readbacks before trusting them. If a project state JSON reports zero,
   missing, or stale timing fields while another lane or profiler reports real timing, classify that
   as an instrumentation gap and use the reliable lane for findings.
+- Telemetry validity fields must encode lane state, not default values. When a diagnostic readback
+  or oracle lane is gated off (perf mode, interactive mode, automation flag), the emitting artifact
+  must either omit that lane's fields entirely or carry an explicit lane-enabled flag set false —
+  never emit valid-looking zero/false fields whose producing readback did not run. When reviewing or
+  designing such gates, check every consumer lane: a gate narrowed for perf honesty can silently
+  starve an oracle lane that still emits its fields.
+- Shared-GPU-state oracle passes have order-dependent semantics. If a diagnostic or oracle pass
+  shares mutable GPU state (depth/stencil attachment, counter buffer, segment/vertex buffer) with
+  product passes, then any pass reorder, any new write to the shared resource, or any depth/blend
+  state change in an earlier pass is a semantic change to the oracle's output — even when the
+  presented image is byte-identical. After such a change, re-validate what population the oracle
+  integrates (expected magnitude signature, e.g. per-pixel fragment counts vs front-most survivors)
+  before trusting its values for calibration or regression comparison; record the expected
+  signature next to the pass so the next reorder is caught.
 - For pass-level Vulkan claims, require GPU timestamp ranges, Vulkan debug labels/markers, Nsight
   Graphics GPU Trace, or equivalent project-owned pass timers. If Nsight marker reports return no
   data, report a pass-attribution gap; API summaries alone can identify CPU/API/present behavior but

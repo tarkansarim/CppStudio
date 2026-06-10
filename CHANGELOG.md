@@ -4,6 +4,22 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened telemetry-semantics doctrine after a production raster-lane adversarial review twice hit
+  the same failure class ("telemetry silently changes meaning while looking valid").
+  `gpu-profiling-workstation` now requires: (a) telemetry validity fields encode lane state — a
+  gated-off diagnostic/oracle lane must omit its fields or carry an explicit lane-enabled=false flag,
+  never valid-looking zero/false defaults, and gate changes must be checked against every consumer
+  lane; (b) shared-GPU-state oracle passes have order-dependent semantics — any pass reorder or new
+  write to a shared resource (depth/stencil/counter/segment state) is a semantic change to the
+  oracle's output even when the presented image is byte-identical, requiring re-validation of the
+  integrated population and a recorded magnitude signature next to the pass.
+  `viewport-session-testing` now requires capture artifacts to distinguish "lane disabled" from
+  "measured zero", and before/after proofs built on oracle sums to pin the oracle's semantics first;
+  image-identical-but-oracle-shifted is a semantic alarm to investigate, never noise. Evidence: the
+  invariant was independently rediscovered by two different reviewer model lineages and tool-verified
+  both times (one finding fixed via an explicit lane-enabled flag + omitted fields; one via pass
+  reordering proven by a ~68x oracle-sum delta with a byte-identical presented image). Recorded gap:
+  no pressure-lab lane yet exercises these prose rules; a rule-occlusion lane is future work.
 - Added `scripts/validate_claude_install.sh` (slice 5): standalone audit of the installed Claude
   lane — per-skill snapshot/symlink discipline, metadata + package-manifest SHA validation,
   Claude-provider-specific `--check`, installed donor library, and no backup/staging debris inside
