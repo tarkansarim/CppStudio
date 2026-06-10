@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "description": "CppStudio Claude-lane install transform. Applied by apply_claude_transform.py when sync_to_claude.sh stages a skill, so the COPY installed into ~/.claude/skills is Claude-provider-specific rather than a byte-mirror of the Codex-flavored source. Codex installs the source verbatim; Claude installs source -> this transform. Single source of truth (skills/), provider-specific deployment.",
+  "rationale": {
+    "flip": "Host-provider skill-home self-references. A Claude agent loads its sibling skills/scripts/donor-library from ~/.claude, never ~/.codex. On a Claude-only machine ~/.codex/skills/... does not exist, so these paths are broken until flipped; after install the same script DOES exist under ~/.claude/skills/...",
+    "keep": "Supervised-worker lore and Codex-based external tools. A Claude host legitimately DRIVES a Codex worker / Codex CLI; these are not host self-references. agent-tmux only implements 'codex-code-map-sidecar' (requires a real, bwrap-isolated Codex executable) and has no 'claude-' variant, so flipping these would point at nonexistent commands."
+  },
+  "ordered_replacements": [
+    {
+      "id": "bootstrap-skill-root-search",
+      "find": "    codex_home = os.environ.get(\"CODEX_HOME\")\n    if codex_home:\n        roots.append(Path(codex_home).expanduser() / \"skills\" / \"cpp-cuda-vulkan-studio\")\n    roots.append(Path.home() / \".codex\" / \"skills\" / \"cpp-cuda-vulkan-studio\")",
+      "replace": "    claude_home = os.environ.get(\"CLAUDE_CONFIG_DIR\")\n    if claude_home:\n        roots.append(Path(claude_home).expanduser() / \"skills\" / \"cpp-cuda-vulkan-studio\")\n    roots.append(Path.home() / \".claude\" / \"skills\" / \"cpp-cuda-vulkan-studio\")",
+      "reason": "bootstrap_code_map.py is the generated-project shim that locates the installed CppStudio skill to run code-map scripts. On a Claude box it must search the Claude skill home (CLAUDE_CONFIG_DIR / ~/.claude/skills), not ~/.codex. CPPSTUDIO_SKILL_ROOT remains the provider-agnostic explicit override."
+    },
+    {
+      "id": "bootstrap-skill-root-error-text",
+      "find": "into CODEX_HOME/skills",
+      "replace": "into CLAUDE_CONFIG_DIR/skills",
+      "reason": "Error message in the same bootstrap shim, pointing the user at the Claude skill home env var."
+    },
+    {
+      "id": "skill-self-validate-no-claude-equivalent",
+      "find": "${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py ${HOME}/.codex/skills/cpp-cuda-vulkan-studio",
+      "replace": "python3 scripts/quick_validate_skill.py skills/cpp-cuda-vulkan-studio  # run from the CppStudio source repo; never edit the installed copy",
+      "reason": "Codex's .system/skill-creator has no ~/.claude equivalent. The Claude-correct way to verify this skill is the source-repo validator (doctrine: edit source, re-roll out; do not patch the installed copy). MUST precede the generic ${HOME}/.codex/skills flip so the whole line is rewritten, not partially mangled."
+    },
+    {
+      "id": "host-skillhome-codexhome-var",
+      "find": "${CODEX_HOME:-$HOME/.codex}/skills",
+      "replace": "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills",
+      "reason": "Installed-skill script/donor self-reference resolved from the host provider's skill home."
+    },
+    {
+      "id": "host-skillhome-home-var",
+      "find": "${HOME}/.codex/skills",
+      "replace": "${HOME}/.claude/skills",
+      "reason": "Same host self-reference, ${HOME} form."
+    },
+    {
+      "id": "host-skillhome-tilde",
+      "find": "~/.codex/skills",
+      "replace": "~/.claude/skills",
+      "reason": "Same host self-reference, tilde form (installed donor-library location, etc.)."
+    },
+    {
+      "id": "host-skillhome-bare",
+      "find": ".codex/skills/",
+      "replace": ".claude/skills/",
+      "reason": "Bare repo-local agent-policy path reference. Runs last so it does not partially rewrite the longer rules above (whose outputs already contain .claude/skills)."
+    }
+  ],
+  "must_not_survive": ["CODEX_HOME", ".codex/skills", "~/.codex"],
+  "intentionally_kept": [
+    {"token": "codex-code-map-sidecar", "reason": "Real agent-tmux subcommand; requires a bwrap-isolated real Codex executable. No claude- variant exists."},
+    {"token": "Codex worker", "reason": "Codex-worker sandbox lore (read-only .git mountpoint, etc.); valid when a Claude host supervises a Codex worker."},
+    {"token": "Codex Worker", "reason": "Section heading for the above."},
+    {"token": "codex exec", "reason": "Cross-provider read-only stuck-probe CLI a Claude host can call."},
+    {"token": "codex -m gpt", "reason": "Codex worker launch option; a worker-launch choice, not a host self-reference."}
+  ]
+}

@@ -7,6 +7,7 @@ generated-project workflow instructions.
 ## Canonical Docs
 
 - `AGENTS.md`
+- `CLAUDE.md`
 - `skills/cpp-cuda-vulkan-studio/SKILL.md`
 - `skills/native-cpp-gui-hud/SKILL.md`
 - `skills/cppstudio-project-planner/SKILL.md`
@@ -14,6 +15,8 @@ generated-project workflow instructions.
 - `skills/cppstudio-project-planner/references/choice-matrix.md`
 - `skills/agentic-control-harness/SKILL.md`
 - `skills/agentic-control-harness/references/control-harness.md`
+- `skills/agentic-control-harness/references/*.md`
+- `skills/native-cpp-gui-hud/references/*.md`
 - `skills/viewport-session-testing/SKILL.md`
 - `skills/viewport-session-testing/references/viewport-session-testing.md`
 - `skills/important-instruction-ledger/SKILL.md`
@@ -42,6 +45,8 @@ generated-project workflow instructions.
 - `skills/cppstudio-project-planner/references/choice-matrix.md`
 - `skills/agentic-control-harness/SKILL.md`
 - `skills/agentic-control-harness/references/control-harness.md`
+- `skills/agentic-control-harness/references/*.md`
+- `skills/native-cpp-gui-hud/references/*.md`
 - `skills/viewport-session-testing/SKILL.md`
 - `skills/viewport-session-testing/references/viewport-session-testing.md`
 - `skills/important-instruction-ledger/SKILL.md`

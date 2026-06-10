@@ -384,6 +384,14 @@ if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         ".codex/skills/""rt-"
         "unreal-hair-""reference"
         "unity-hair-""reference"
+        # Private local repo/tooling names: CppStudio is public and must not name or hard-rely on
+        # the maintainer's private repos. The camel-case forms below match only those repo names,
+        # not the public skill names (e.g. the agentic-control-harness skill).
+        "My""Tools/"
+        "Agent""-Doctrine"
+        "Native""Gui""Hud"
+        "Agentic""Control""Harness"
+        "PLANE""-2"
     )
     public_sample_labels=(
         "CUDA Groom Tool"

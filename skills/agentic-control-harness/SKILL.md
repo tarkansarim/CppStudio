@@ -73,7 +73,12 @@ The main planning question is not whether a harness should exist. The useful que
 ## What To Load
 
 Read `references/control-harness.md` when the task involves designing, adding, or reviewing the
-control harness itself.
+control harness itself. Read `references/control-contract.md` for the discovery-before-protocol
+contract and semantic command-surface requirements. Read `references/native-apps.md` for desktop
+apps, native GUI tools, renderers, games, and realtime simulations; `references/web-apps.md` for
+browser-based apps and services. Read `references/visual-readback.md` whenever the app has a GUI,
+viewport, canvas, renderer, or other visible state agents must observe (readback + freshness
+requirements).
 
 ## Non-Negotiables
 

@@ -303,7 +303,11 @@ the evidence before wiring or closing.
 15. For current best-choice or version-sensitive questions, web-check official project docs/repos before
    ranking options.
 
-## Bundled Reference
+## Bundled References
 
 Read [references/gui-options.md](references/gui-options.md) for the option matrix and inspection
-links.
+links. Read [references/editor-ui-conventions.md](references/editor-ui-conventions.md) before
+product-shape UI work on artist tools, DCC-like applications, game tools, realtime simulation
+editors, or viewport-heavy utilities (per-surface convention table and verification points). Read
+[references/visual-verification.md](references/visual-verification.md) before claiming GUI polish,
+product-fit, or command-surface completion (minimum visual evidence requirements).

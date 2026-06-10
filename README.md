@@ -39,6 +39,16 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 intentionally short: newest public-facing changes first, older highlights collapsed below. Entries
 use commit identifiers so the ordering stays clear; only the changelog itself is authoritative.
 
+- `PENDING_LANE_COMMIT` - Added a full Claude install lane: all 11 CppStudio skills now install
+  into `~/.claude/skills` via a separate `rollout_to_claude.sh` / `sync_to_claude.sh` /
+  `validate_claude_install.sh` lane kept fully distinct from Codex (own inventory, audit log,
+  staging/backup, transactional rollback; never touches `~/.codex`). No shared skill content between
+  providers: the single Codex-flavored source installs verbatim into `~/.codex`, while the Claude
+  lane applies an auditable install-time provider transform (`apply_claude_transform.py` +
+  `claude_install_transform.json`) — host-provider skill-home paths flip to
+  `~/.claude`/`CLAUDE_CONFIG_DIR`, supervised-worker/Codex-tool references are intentionally kept,
+  and sync regenerates package manifests post-transform with a fail-closed survivor check. All 11
+  skills are installed, load-proven, and trigger-lane verified.
 - `cea8e41` - Hardened mode-specific UI/control closeout. Final top-level user-facing artifact fields
   for visible mode, active controls, runtime payload, and behavior/output now decide acceptance;
   nested mutation summaries cannot override contradictory final UI state.

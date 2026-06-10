@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 23562,
-      "sha256": "f0ce9bcb237537123c6dd9c142ce832aa86d2a2621f810e61b192587fd71fba2"
+      "size": 24034,
+      "sha256": "8c374880da47a06c2e7706876ee825ebf16b08ac55e8577bd51f9e0a8cc4c0d6"
     },
     {
       "path": "agents/openai.yaml",
@@ -18,11 +18,39 @@
       "sha256": "31f6387c651a640ccd712d7afd9f21c47b2433569fc12ed8ab36bbd772604439"
     },
     {
+      "path": "references/control-contract.md",
+      "role": "reference",
+      "disclosure_group": "reference",
+      "size": 4395,
+      "sha256": "937f0d15926732f14551b2ff5df10c6618c4129420c4237c305defa40ef9b46a"
+    },
+    {
       "path": "references/control-harness.md",
       "role": "reference",
       "disclosure_group": "reference",
       "size": 24793,
       "sha256": "00eb91c04368bd1682a7edce6f7626c0f27edcdeb3b5cbb73dac224e4f54f7ac"
+    },
+    {
+      "path": "references/native-apps.md",
+      "role": "reference",
+      "disclosure_group": "reference",
+      "size": 3664,
+      "sha256": "3efa67f345f3168dd4f315ff34d0f499a5df780ed15d9715fa4502cbe203e630"
+    },
+    {
+      "path": "references/visual-readback.md",
+      "role": "reference",
+      "disclosure_group": "reference",
+      "size": 3125,
+      "sha256": "efd3e2cff4f8ed3c8783a8c43599d87edde79d56ab10b151ca5473c97eb4a26f"
+    },
+    {
+      "path": "references/web-apps.md",
+      "role": "reference",
+      "disclosure_group": "reference",
+      "size": 1507,
+      "sha256": "1f33d2308b9ed939e355912957bb10f7bfe33a7975be7747a7f92e83bba034b7"
     }
   ]
 }

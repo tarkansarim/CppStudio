@@ -4,6 +4,59 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added `scripts/validate_claude_install.sh` (slice 5): standalone audit of the installed Claude
+  lane — per-skill snapshot/symlink discipline, metadata + package-manifest SHA validation,
+  Claude-provider-specific `--check`, installed donor library, and no backup/staging debris inside
+  the scanned skills root. Documented the Claude lane in the maintainer guide ("Publish To
+  Claude"). The `~/.claude/CLAUDE.md` relay remains owned by the user's local doctrine tooling and
+  is coordinated there (slice 4), never written by this repo.
+- Hardened the public-repo provenance guard: CppStudio is public and must not name or hard-rely on
+  the maintainer's private local repos; the validate.sh private-provenance blocklist now also
+  rejects private repo/tooling names and local ticket identifiers in tracked text, and the lane
+  docs/scripts/planning notes were genericized accordingly.
+- Completed Claude-lane skill reconciliation (slice 3): all 11 CppStudio skills now install into
+  `~/.claude/skills`. User decision: CppStudio is the source of truth for `native-cpp-gui-hud` and
+  `agentic-control-harness` — the previously installed Claude variants were stale rule-packet forks
+  from private local single-skill repos (frozen 2026-05-18, missing
+  CppStudio's 05-24/05-31 hardening rules); their unique reference content was imported into
+  CppStudio source first (`editor-ui-conventions.md`, `visual-verification.md` into
+  native-cpp-gui-hud; `control-contract.md`, `native-apps.md`, `visual-readback.md`, `web-apps.md`
+  into agentic-control-harness — all wired into the SKILL.md load pointers), and both repos now
+  carry a `SUPERSEDED.md` so their installers are not run against `~/.claude/skills` again.
+  `cppstudio-project-planner` and `gpu-profiling-workstation` install under their own names
+  alongside the overlapping `cpp-cuda-research-to-plan` / `cuda-profiling-and-debugging` (distinct
+  trigger surfaces). Verified: all 4 newly installed skills load-proven in a fresh Claude session;
+  trigger-lane probes route GUI-stack, control-harness, planning, workstation-profiling, and
+  CUDA-doctrine prompts to the expected skills; both lanes re-rolled-out green.
+- Made the Claude install lane provider-specific (slice 2). The single CppStudio skill source under
+  `skills/` stays Codex-flavored and the Codex lane installs it verbatim; the Claude lane now applies
+  an install-time transform (`scripts/apply_claude_transform.py` + the auditable rewrite table
+  `scripts/claude_install_transform.json`) so `~/.claude/skills` gets a Claude-specific copy — no
+  shared/neutralized content, each provider owns its own folder. The transform flips host-provider
+  skill-home self-references (`${CODEX_HOME:-$HOME/.codex}/skills/...`, `~/.codex/skills`, the
+  generated-project `bootstrap_code_map.py` search roots, the skill self-validate example) to their
+  `~/.claude` / `CLAUDE_CONFIG_DIR` equivalents — which matters most for Claude-only machines where
+  `~/.codex/...` does not exist — while intentionally KEEPING supervised-worker lore and Codex-based
+  tools (`codex-code-map-sidecar`, which `agent-tmux` only implements for a real bwrap-isolated Codex
+  executable; `Codex worker`; `codex exec`; `codex -m gpt-5.5`) because a Claude host legitimately
+  drives those and flipping them would point at nonexistent commands. `sync_to_claude.sh` regenerates
+  the package manifest after transforming (file SHAs change) and fails closed via a `--check` guard
+  (no Codex host-path survives + transform is idempotent); `rollout_to_claude.sh` replaces its old
+  source/install byte-parity check with that guard, since the Claude install is `source → transform`,
+  not a byte mirror. Verified: Codex install unchanged (13 Codex refs, 0 `CLAUDE_CONFIG_DIR`), Claude
+  install 0 Codex host-paths, repo source unchanged.
+- Added a Claude install lane (slice 1) so Claude can load CppStudio skills natively instead of
+  re-discovering them (previously Codex-only). New `scripts/rollout_to_claude.sh`,
+  `scripts/sync_to_claude.sh`, and `scripts/managed_claude_skills.sh` install into `~/.claude/skills`
+  as a SEPARATE lane from Codex per the provider-lane-separation doctrine: own audit log
+  (`~/.claude/cppstudio-claude-install-audit.jsonl`), own staging/backup roots, symlink-reject +
+  transactional rollback mirrored from the Codex lane, and it never touches `~/.codex`. Slice 1
+  installs the 7 name-unique skills (cpp-cuda-vulkan-studio, cppstudio-supervisor,
+  viewport-session-testing, important-instruction-ledger, vulkan-compute-sync, modern-cpp-cmake,
+  cuda-kernel-authoring) — validated, parity-checked, and load-proven in a fresh `claude -p` session.
+  The `~/.claude/CLAUDE.md` relay and the colliding/overlapping skills (native-cpp-gui-hud,
+  agentic-control-harness, cppstudio-project-planner, gpu-profiling-workstation) are deferred to later
+  coordination slices with the locally managed `~/.claude` ecosystem. Plan: `docs/planning/CLAUDE_INSTALL_PLAN.md` (+ research brief).
 - Hardened renderer/performance supervision after a Raster Vulkan lane produced useful partial
   timing artifacts from failed OSTM jobs. Workers now must run donor-semantics guardrails before
   donor-derived renderer fixes, reject nonzero OSTM lanes as acceptance even when screenshots/state

@@ -1,7 +1,8 @@
 # Validation Sync And Rollout
 
 Owns CppStudio repo validation, CI-safe validation, syncing to user-level Codex, rollout to companion
-skills, and watch-mode publishing behavior.
+skills, watch-mode publishing behavior, and the separate Claude install lane (sync/rollout into
+`~/.claude/skills` with the install-time provider transform).
 
 ## Canonical Docs
 
@@ -15,6 +16,12 @@ skills, and watch-mode publishing behavior.
 - `scripts/sync_to_codex.sh`
 - `scripts/rollout_to_codex.sh`
 - `scripts/watch_to_codex.sh`
+- `scripts/sync_to_claude.sh`
+- `scripts/rollout_to_claude.sh`
+- `scripts/managed_claude_skills.sh`
+- `scripts/apply_claude_transform.py`
+- `scripts/claude_install_transform.json`
+- `scripts/validate_claude_install.sh`
 - `scripts/quick_validate_skill.py`
 - `scripts/validate_skill_package.py`
 - `scripts/validate_skill_load_hygiene.py`
@@ -168,3 +175,26 @@ skills, and watch-mode publishing behavior.
 - The bundled code-map bootstrap audit text tells agents to present actual findings and cleanup cost
   before asking restructure/preserve/decline questions, so existing-project opt-in cannot become a
   pre-audit choice prompt.
+
+## Current Claude Install Lane Posture
+
+- The Claude lane (`rollout_to_claude.sh` → `sync_to_claude.sh`, inventory in
+  `managed_claude_skills.sh`) installs into `~/.claude/skills` and is kept fully separate from the
+  Codex lane: own audit log (`~/.claude/cppstudio-claude-install-audit.jsonl`), own staging/backup
+  roots, never touches `~/.codex`.
+- The single skill source under `skills/` is Codex-flavored; the Codex lane installs it verbatim.
+  The Claude lane applies the install-time provider transform (`scripts/apply_claude_transform.py`
+  with the auditable rewrite table `scripts/claude_install_transform.json`) on the staged copy, so
+  each provider gets its own provider-specific installed skills from one source of truth.
+- The transform flips only host-provider skill-home self-references
+  (`${CODEX_HOME:-$HOME/.codex}/skills/...`, `~/.codex/skills`, the generated-project
+  `bootstrap_code_map.py` search roots, the skill self-validate example) to `~/.claude` /
+  `CLAUDE_CONFIG_DIR` equivalents. Supervised-worker lore and Codex-based external tools
+  (`codex-code-map-sidecar`, `Codex worker`, `codex exec`, `codex -m gpt-5.5`) are intentionally
+  kept: a Claude host legitimately drives those, and `agent-tmux` has no `claude-` sidecar variant.
+- Because the transform changes file contents, `sync_to_claude.sh` regenerates the staged copy's
+  `package-manifest.json` (`validate_skill_package.py --write-manifest`) before validating, and both
+  sync and rollout enforce `apply_claude_transform.py --check` (no Codex host-path survivors,
+  idempotent transform) instead of the Codex lane's source/install byte-parity diff. Claude-installed
+  copies are NOT byte-identical to source by design; tampering is still caught by the regenerated
+  manifest SHA validation.

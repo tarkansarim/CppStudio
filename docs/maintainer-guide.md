@@ -119,6 +119,44 @@ generated projects, validation, donor-library behavior, public docs, install, re
 behavior. The final response should mention the pushed commit(s), but the changelog remains the
 durable history.
 
+## Publish To Claude
+
+The Claude lane is fully separate from the Codex lane (provider-lane separation: own inventory,
+audit log, staging/backup roots; it never touches `~/.codex`). The user's standing rule: when
+installing CppStudio changes, run BOTH provider rollouts — most users run only one provider, so
+each script must work standalone.
+
+```bash
+./scripts/rollout_to_claude.sh      # validate source, install all managed skills into ~/.claude/skills
+./scripts/validate_claude_install.sh  # standalone audit of the installed Claude lane (no changes)
+```
+
+Key difference from the Codex lane: the single skill source under `skills/` is Codex-flavored and
+installs into `~/.codex` verbatim, while the Claude lane applies an install-time provider transform
+(`scripts/apply_claude_transform.py` driven by the auditable rewrite table
+`scripts/claude_install_transform.json`). Host-provider skill-home self-references
+(`${CODEX_HOME:-$HOME/.codex}/skills/...`, `~/.codex/skills`, the generated-project
+`bootstrap_code_map.py` search roots) flip to `${CLAUDE_CONFIG_DIR:-$HOME/.claude}` forms;
+supervised-worker and Codex-tool references (`codex-code-map-sidecar`, `Codex worker`, `codex exec`,
+`codex -m gpt-5.5`) are intentionally kept because a Claude host drives those external tools.
+
+Consequences to keep in mind when maintaining the lane:
+
+- Claude-installed copies are NOT byte-identical to source by design. Parity is enforced as
+  `apply_claude_transform.py --check` (no Codex host-path survives + the transform is idempotent),
+  not as a `diff -qr` against source.
+- `sync_to_claude.sh` regenerates each staged copy's `package-manifest.json` after transforming
+  (file SHAs change), so installed-manifest validation still detects post-install tampering.
+- New Codex-only host-path forms added to skills must be covered by a rule in
+  `claude_install_transform.json`; the `--check` guard fails the rollout if an uncovered form
+  reaches the staged copy, which is the signal to extend the table.
+- The skill inventory for the Claude lane lives in `scripts/managed_claude_skills.sh` (all 11
+  skills since slice 3). The `~/.claude/CLAUDE.md` relay is owned by the user's local doctrine tooling and is installed
+  through that tooling (tracked as a local coordination ticket), never by this repo's scripts.
+- Claude variants of `native-cpp-gui-hud` / `agentic-control-harness` formerly installed from
+  private local single-skill repos are superseded (those repos carry a `SUPERSEDED.md` marker);
+  CppStudio owns those install targets now.
+
 ## Watch Mode
 
 Continuously validate and publish source-skill edits:
