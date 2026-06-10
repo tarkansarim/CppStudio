@@ -4,8 +4,8 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
-- Hardened telemetry-semantics doctrine after a production raster-lane adversarial review twice hit
-  the same failure class ("telemetry silently changes meaning while looking valid").
+- Hardened telemetry-semantics doctrine after the same failure class ("telemetry silently changes
+  meaning while looking valid") was independently rediscovered twice in supervised production work.
   `gpu-profiling-workstation` now requires: (a) telemetry validity fields encode lane state — a
   gated-off diagnostic/oracle lane must omit its fields or carry an explicit lane-enabled=false flag,
   never valid-looking zero/false defaults, and gate changes must be checked against every consumer
@@ -15,11 +15,10 @@ All notable CppStudio changes should be recorded here before pushing to remote.
   integrated population and a recorded magnitude signature next to the pass.
   `viewport-session-testing` now requires capture artifacts to distinguish "lane disabled" from
   "measured zero", and before/after proofs built on oracle sums to pin the oracle's semantics first;
-  image-identical-but-oracle-shifted is a semantic alarm to investigate, never noise. Evidence: the
-  invariant was independently rediscovered by two different reviewer model lineages and tool-verified
-  both times (one finding fixed via an explicit lane-enabled flag + omitted fields; one via pass
-  reordering proven by a ~68x oracle-sum delta with a byte-identical presented image). Recorded gap:
-  no pressure-lab lane yet exercises these prose rules; a rule-occlusion lane is future work.
+  image-identical-but-oracle-shifted is a semantic alarm to investigate, never noise. Both
+  occurrences were found by independent reviewer model lineages and tool-verified before these rules
+  were written. Recorded gap: no pressure lane yet exercises these prose rules; a rule-occlusion
+  lane is future work.
 - Added `scripts/validate_claude_install.sh` (slice 5): standalone audit of the installed Claude
   lane — per-skill snapshot/symlink discipline, metadata + package-manifest SHA validation,
   Claude-provider-specific `--check`, installed donor library, and no backup/staging debris inside

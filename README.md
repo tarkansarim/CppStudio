@@ -44,7 +44,7 @@ use commit identifiers so the ordering stays clear; only the changelog itself is
   — never valid-looking zero defaults), and shared-GPU-state oracle passes are order-dependent: a
   pass reorder or new shared-resource write re-defines the oracle's meaning even when the presented
   image is byte-identical. Derived from two independent reviewer lineages rediscovering the same
-  invariant in a production raster lane, tool-verified both times.
+  invariant in supervised production work, tool-verified both times.
 - `d4d6b23` - Added a full Claude install lane: all 11 CppStudio skills now install
   into `~/.claude/skills` via a separate `rollout_to_claude.sh` / `sync_to_claude.sh` /
   `validate_claude_install.sh` lane kept fully distinct from Codex (own inventory, audit log,
