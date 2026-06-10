@@ -4,8 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
-- README now states both supported providers up front: the intro, Quick Start, Requirements,
-  Install, and What Gets Installed sections describe the Claude Code lane
+- README front page now names both providers everywhere the product scope is described: intro,
+  Quick Start lead, Requirements, Install, What Gets Installed (Codex-lane labels + Claude mirror),
+  Use It, the GPU-tools install table, and Repository Layout / deployment-target wording all state
+  Codex and Claude Code with separate skill homes. Previously several front-page sections framed
+  CppStudio as Codex-only. The sections describe the Claude Code lane
   (`rollout_to_claude.sh` into `~/.claude/skills`, `SYNC_CLAUDE_HOME`,
   `validate_claude_install.sh`) alongside the existing Codex lane, including the
   no-shared-deployed-content rule and the "install changes = run both rollouts" guidance.

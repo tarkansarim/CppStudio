@@ -246,7 +246,9 @@ performance evidence connected as the implementation evolves.
 
 ## Quick Start
 
-Open this repo in ChatGPT Codex and ask:
+CppStudio installs the same way for both supported providers: open this repo in your agent and ask
+it to install with the repo scripts (`rollout_to_codex.sh` for ChatGPT Codex,
+`rollout_to_claude.sh` for Claude Code). For example, in ChatGPT Codex ask:
 
 ```text
 Install this CppStudio repo into my ChatGPT Codex home. Use the repo scripts, preserve my existing
@@ -500,9 +502,9 @@ an agent to "install CppStudio changes", run both rollout scripts.
 
 ## What Gets Installed
 
-- Main skill:
+- Main skill (Codex lane):
   `${HOME}/.codex/skills/cpp-cuda-vulkan-studio`
-- Bundled auxiliary skills:
+- Bundled auxiliary skills (Codex lane):
   `${HOME}/.codex/skills/cppstudio-project-planner`,
   `${HOME}/.codex/skills/native-cpp-gui-hud`,
   `${HOME}/.codex/skills/agentic-control-harness`,
@@ -542,9 +544,10 @@ lazy-loaded until the task needs them.
 
 ## Use It
 
-After installation and a Codex restart, you usually do not need to name the skill. Ask Codex for
-native C++ GPU, Vulkan, CUDA, renderer, realtime 3D, simulation, or donor-reference work, and Codex
-should load `cpp-cuda-vulkan-studio` automatically.
+After installation and an agent restart (Codex or Claude Code), you usually do not need to name
+the skill. Ask your agent for native C++ GPU, Vulkan, CUDA, renderer, realtime 3D, simulation, or
+donor-reference work, and it should load `cpp-cuda-vulkan-studio` automatically from its own skill
+home.
 
 ```text
 Create a Vulkan-first C++ application called RayLab.
@@ -820,7 +823,7 @@ Install extra host tools only for lanes you want to build or validate on the cur
 
 | Need | Install |
 |------|---------|
-| Use CppStudio as a Codex skill | Nothing beyond the install command above |
+| Use CppStudio as a Codex or Claude Code skill | Nothing beyond the install commands above |
 | Validate generated C++ projects locally | CMake, Ninja or another build tool, and a C++ compiler |
 | Work on Vulkan projects locally | Vulkan SDK tools such as `glslc`, `spirv-val`, `vulkaninfo`, and validation layers |
 | Work on CUDA projects locally | NVIDIA driver, CUDA Toolkit, `nvcc`, and Compute Sanitizer |
@@ -830,7 +833,8 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
 
 ## Repository Layout
 
-- `skills/cpp-cuda-vulkan-studio/`: source of truth for the user-level Codex skill
+- `skills/cpp-cuda-vulkan-studio/`: source of truth for the user-level skill (installed into both
+  the Codex and Claude Code skill homes by the provider rollout scripts)
 - `skills/cppstudio-project-planner/`: bundled planning skill for project intake, option gathering,
   GUI links, agentic controls, donor routes, web checks, and implementation handoff
 - `skills/native-cpp-gui-hud/`: bundled GUI/HUD skill for native C++ tool UI choices and visual
@@ -858,8 +862,10 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
 - `.codex/skills/cppstudio-repo-onboarding/`: project-level onboarding skill for agents editing this
   repo
 
-The installed copy at `${HOME}/.codex/skills/cpp-cuda-vulkan-studio` is a deployment target, not the
-source of truth. Edit this repo, then have an agent publish with the repo scripts.
+The installed copies at `${HOME}/.codex/skills/cpp-cuda-vulkan-studio` and
+`${HOME}/.claude/skills/cpp-cuda-vulkan-studio` are deployment targets, not the source of truth.
+Edit this repo, then have an agent publish with the provider rollout scripts (run both when you use
+both providers).
 
 ## More Docs
 
