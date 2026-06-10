@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- README now states both supported providers up front: the intro, Quick Start, Requirements,
+  Install, and What Gets Installed sections describe the Claude Code lane
+  (`rollout_to_claude.sh` into `~/.claude/skills`, `SYNC_CLAUDE_HOME`,
+  `validate_claude_install.sh`) alongside the existing Codex lane, including the
+  no-shared-deployed-content rule and the "install changes = run both rollouts" guidance.
 - Added the producer-first numeric-parity rule to `viewport-session-testing` and
   `gpu-profiling-workstation`: when a reference/oracle renderer and an approximation lane disagree
   on shading or shadow response, diagnose with a numeric instrument and verify the approximation's

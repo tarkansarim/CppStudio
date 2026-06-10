@@ -5,7 +5,9 @@
 [![Validate](https://github.com/tarkansarim/CppStudio/actions/workflows/validate.yml/badge.svg)](https://github.com/tarkansarim/CppStudio/actions/workflows/validate.yml)
 
 CppStudio is an agentic native C++ GPU development harness for AI coding agents, delivered as a
-reusable skill package. It gives agents a Vulkan-first C++/CUDA project backbone, lane discipline,
+reusable skill package for both ChatGPT Codex and Claude Code — each provider gets its own install
+lane into its own skill home (`~/.codex/skills` and `~/.claude/skills`), with no shared deployed
+content between them. It gives agents a Vulkan-first C++/CUDA project backbone, lane discipline,
 validation hooks, rollout scripts, optional code maps, and a curated donor-reference library for 3D,
 rendering, simulation, AI runtimes, CUDA, and Vulkan work.
 
@@ -258,6 +260,11 @@ Expected result: Codex loads `cpp-cuda-vulkan-studio`, keeps the project Vulkan-
 explicitly needed, scaffolds or upgrades the native C++ project, and opens only the donor references
 that match the task.
 
+For Claude Code the flow is the same with the Claude lane: open this repo in Claude Code, ask it to
+install via `./scripts/rollout_to_claude.sh`, restart Claude Code, then request the same native C++
+GPU work. Claude loads the same 11 skills from `~/.claude/skills` (installed through the auditable
+Claude install transform, never shared with the Codex copies).
+
 ## Project Planning And Control Skills
 
 CppStudio installs companion planning and control skills for substantial new apps or major
@@ -407,9 +414,10 @@ CppStudio rule, donor route, code-map rule, or skill needs a follow-up hardening
 
 ## Requirements
 
-For installing CppStudio as a Codex skill:
+For installing CppStudio as a Codex or Claude Code skill package:
 
-- ChatGPT Codex with local skill support.
+- ChatGPT Codex with local skill support, and/or Claude Code (the Claude lane installs into
+  `~/.claude/skills` and is independent of any Codex install).
 - Shell access for the installing agent.
 - Git, Python 3.10 or newer, and `rsync` for the normal Linux/macOS/WSL rollout scripts.
 - Windows users without Bash/`rsync` can use the manual PowerShell install reference.
@@ -463,6 +471,30 @@ They also append best-effort install audit records under the target Codex home.
 You do not need CUDA, Vulkan, CMake, or a compiler just to install CppStudio into Codex. Install GPU
 toolchains only when you want this machine to build or validate generated C++ GPU projects.
 
+### Claude Code install lane
+
+Claude Code has its own fully separate install lane with the same guarantees (staging, validation,
+transactional rollback, manifest checks, install audit records under the target Claude home):
+
+```bash
+cd /path/to/CppStudio
+./scripts/rollout_to_claude.sh
+```
+
+That installs all 11 skills into `${HOME}/.claude/skills` after applying the auditable install-time
+provider transform (host-provider skill-home paths flip to the Claude home; supervised-worker tool
+references are intentionally preserved). The Claude lane never touches `~/.codex`, and the two
+installs share no deployed content. For a non-default Claude home, pass `SYNC_CLAUDE_HOME`:
+
+```bash
+cd /path/to/CppStudio
+SYNC_CLAUDE_HOME=/path/to/.claude ./scripts/rollout_to_claude.sh
+```
+
+`./scripts/validate_claude_install.sh` audits an installed Claude lane at any time. Restart Claude
+Code after installation so changed skill metadata is discovered. If you use both providers and ask
+an agent to "install CppStudio changes", run both rollout scripts.
+
 ## What Gets Installed
 
 - Main skill:
@@ -478,7 +510,10 @@ toolchains only when you want this machine to build or validate generated C++ GP
   `${HOME}/.codex/skills/modern-cpp-cmake`,
   `${HOME}/.codex/skills/cuda-kernel-authoring`, and
   `${HOME}/.codex/skills/gpu-profiling-workstation`
-- Tiny user-level `AGENTS.md` relay that tells agents to load `cpp-cuda-vulkan-studio` for
+- Claude lane: the same 11 skills under `${HOME}/.claude/skills/...` (provider-transformed
+  copies installed by `rollout_to_claude.sh`; the user-level `CLAUDE.md` relay is managed by
+  separate doctrine tooling, not by the rollout script)
+- Tiny user-level `AGENTS.md` relay (Codex lane) that tells agents to load `cpp-cuda-vulkan-studio` for
   native C++ GPU, realtime rendering/visualization, C++ GPU code-map, Vulkan, CUDA, or mixed
   CUDA/Vulkan work. Set `SKIP_USER_AGENTS_RELAY=1` during rollout only if you explicitly do not want
   this relay installed or updated.
