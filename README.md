@@ -39,7 +39,7 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 intentionally short: newest public-facing changes first, older highlights collapsed below. Entries
 use commit identifiers so the ordering stays clear; only the changelog itself is authoritative.
 
-- `PENDING_LANE_COMMIT` - Added a full Claude install lane: all 11 CppStudio skills now install
+- `d4d6b23` - Added a full Claude install lane: all 11 CppStudio skills now install
   into `~/.claude/skills` via a separate `rollout_to_claude.sh` / `sync_to_claude.sh` /
   `validate_claude_install.sh` lane kept fully distinct from Codex (own inventory, audit log,
   staging/backup, transactional rollback; never touches `~/.codex`). No shared skill content between
