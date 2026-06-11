@@ -64,6 +64,9 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 intentionally short: newest public-facing changes first, older highlights collapsed below. Entries
 use commit identifiers so the ordering stays clear; only the changelog itself is authoritative.
 
+- `984d3b7` - Added the front-page "Engineered Top-Down, Hardened In Production" section: day-one vs
+  now comparison and the thesis that CppStudio's rules are captured production failures.
+
 - `917b4c6` - README front page now names both providers everywhere the product is described
   (intro, Quick Start, Requirements, Install, What Gets Installed, Use It, install table, repo
   layout): Codex and Claude Code, separate skill homes, no shared deployed content, run both
