@@ -7,8 +7,8 @@
       "path": ".skill-source",
       "role": "metadata",
       "disclosure_group": "source",
-      "size": 44,
-      "sha256": "13967d3f1e783d2e6d72dc018022629b6036bf24764b2431afa340cd3d068103"
+      "size": 41,
+      "sha256": "5c180261f74e9f2c5a01040f7a7cf4bc03fe7be5875445ec98e0cdeabff6081f"
     },
     {
       "path": "SKILL.md",

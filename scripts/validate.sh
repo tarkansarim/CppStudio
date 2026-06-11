@@ -362,9 +362,10 @@ if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         fi
     done
     maintainer_path_pattern="/home/tar""kan"
+    # Scan ALL tracked text files (-I skips binaries): an extension allowlist
+    # let an extensionless metadata file ship a maintainer-local absolute path.
     maintainer_path_hits="$(
-        git -C "${ROOT_DIR}" grep -n "${maintainer_path_pattern}" -- \
-            "*.md" "*.py" "*.sh" "*.json" "*.yml" "*.yaml" "*.txt" || true
+        git -C "${ROOT_DIR}" grep -nI "${maintainer_path_pattern}" || true
     )"
     if [[ -n "${maintainer_path_hits}" ]]; then
         printf "%s\n" "${maintainer_path_hits}" >&2
@@ -407,8 +408,7 @@ if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     done
     for private_pattern in "${private_provenance_patterns[@]}"; do
         pattern_hits="$(
-            git -C "${ROOT_DIR}" grep -ni -- "${private_pattern}" -- \
-                "*.md" "*.py" "*.sh" "*.json" "*.yml" "*.yaml" "*.txt" || true
+            git -C "${ROOT_DIR}" grep -niI -- "${private_pattern}" || true
         )"
         if [[ -n "${pattern_hits}" ]]; then
             private_provenance_hits+="${pattern_hits}"$'\n'

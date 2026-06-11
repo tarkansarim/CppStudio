@@ -4,6 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Fixed a public-repo provenance leak and the guard gap that allowed it: three committed
+  `.skill-source` metadata files carried a maintainer-local absolute path. They now carry the
+  canonical public repo URL (machine-independent source identity), and both validate.sh
+  provenance guards scan ALL tracked text files (`git grep -I`) instead of an extension
+  allowlist that skipped extensionless files.
+
 - Added the donor-checkout fetch lane: `scripts/fetch_donor_checkouts.sh` materializes donor
   reference repositories locally (gitignored `donor-checkouts/`, `$CPPSTUDIO_DONOR_CHECKOUTS`
   override) from a manifest generated out of each profile's `Source:` line
