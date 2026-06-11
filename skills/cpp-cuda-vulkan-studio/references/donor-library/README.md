@@ -146,3 +146,23 @@ target-lane restrictions.
   explicitly chooses that runtime. Use them for behavior, algorithms, tests, UX, and architecture.
 - Backend mismatch is not a rejection reason by itself. Keep the selected implementation lane fixed
   and translate backend-specific details through the active Vulkan, CUDA, or explicit interop lane.
+
+## Materializing Donor Checkouts Locally
+
+Profiles describe upstream references; to actually read them on disk, clone
+them with the repo script (checkouts land in the gitignored
+`donor-checkouts/` at the repo root, or `$CPPSTUDIO_DONOR_CHECKOUTS`):
+
+```bash
+scripts/fetch_donor_checkouts.sh --list          # see every fetchable donor
+scripts/fetch_donor_checkouts.sh tressfx nvrhi   # fetch what the task needs
+```
+
+`donor-checkouts.manifest` is generated from each profile's `Source:` line
+(`scripts/generate_donor_checkout_manifest.py`; validation fails if it
+drifts). `donor-checkouts.extra` lists curated donors awaiting profiles, and
+`donor-checkouts.pins` records exact known-good revisions - pinned donors are
+cloned with history and verified fail-closed, unpinned ones clone shallow at
+upstream's default branch. Every fetch logs the resolved HEAD to
+`donor-checkouts/CHECKOUT_LOG.tsv`. Checkouts are reference-only: respect
+each upstream license before promoting reference code to a dependency.

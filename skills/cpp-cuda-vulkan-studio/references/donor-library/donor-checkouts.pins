@@ -1,0 +1,19 @@
+# Optional exact pins for donor checkouts (name<TAB>commit-or-tag:<tag>).
+# Pinned donors are cloned with full history and verified fail-closed.
+# These pins record known-good revisions used by downstream production work;
+# unpinned donors clone shallow at the upstream default branch.
+nrd	d384f3bbaab3fa9c7610e91ec4292aa148c4201a
+nrd-sample	27c863347cb349936181f85ed2e8ad42694a1007
+nri	26e9402ed2fc2e4cfcb7d3c621307940b3e10f0d
+nvrhi	54100464714de88a5a5059d25808f5ccb914ad7d
+rtxcr	2bd10cff0824cbd18195339d4dc6987c0fe5a5bc
+rtxcr-geometry-library	d6886b9fe37d51dd6529a8a921aa115eab177e06
+rtxcr-material-library	75fab0e13f75ce2f06075a08db3fe45ef8e3c21f
+rtxpt	62b7d5c3d13f46b6f12b922212fc0120bcf27cfc
+nvidia-streamline	a9ed1f58436864891f68b0458300464dc53d9a69
+nvidia-streamline-sample	4aa6f8f8f1e31d8f738966fba70487a7f1d14b83
+tressfx	ba0bdacdfb964e38522fda812bf23169bc5fa603
+nvpro-vk-denoise-dlssrr	5eac2a13623ab2a2f42578121678201fa46c02f7
+nvpro-vk-gltf-renderer	68ce067ab6aa745e4cf0db7f8bebd29bcc57a82a
+nvpro-vk-raytracing-tutorial-khr	304c4d8543aa38fef2a96c249c5c78b9f53b4d1a
+nvidia-dlss-sdk	tag:v310.5.3

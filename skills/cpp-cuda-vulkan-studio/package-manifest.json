@@ -343,8 +343,8 @@
       "path": "references/donor-library/README.md",
       "role": "reference",
       "disclosure_group": "donor-router",
-      "size": 9532,
-      "sha256": "850cdcdd605bf813dac2db377093636b6e17822cee9ddc755119ab2b39405b52"
+      "size": 10538,
+      "sha256": "849bc34a2287e81aac594fb1ecdadcb66fad80efbaac60917d93ea1e5119e01a"
     },
     {
       "path": "references/donor-library/agent-lookup.md",
@@ -394,6 +394,27 @@
       "disclosure_group": "donor-category",
       "size": 3403,
       "sha256": "9bf6530aa486e0ebb996176235ff2960e642aad7b550b39ace5da60e3a37cc00"
+    },
+    {
+      "path": "references/donor-library/donor-checkouts.extra",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 184,
+      "sha256": "edaf7d352cf6db0d1d21238eaa338f3a26843252cf60a3d58075b1504d486aaa"
+    },
+    {
+      "path": "references/donor-library/donor-checkouts.manifest",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 4742,
+      "sha256": "c1e988331c076d6cc80780b94c150d415775d7ad4feffd71dc5000e771a16309"
+    },
+    {
+      "path": "references/donor-library/donor-checkouts.pins",
+      "role": "reference",
+      "disclosure_group": "donor-category",
+      "size": 1103,
+      "sha256": "af434571d33aacac418681896124937f99b94e40b57253d153e71d916e0a786e"
     },
     {
       "path": "references/donor-library/geometry-simulation.md",

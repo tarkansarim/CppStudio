@@ -4,6 +4,16 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added the donor-checkout fetch lane: `scripts/fetch_donor_checkouts.sh` materializes donor
+  reference repositories locally (gitignored `donor-checkouts/`, `$CPPSTUDIO_DONOR_CHECKOUTS`
+  override) from a manifest generated out of each profile's `Source:` line
+  (`scripts/generate_donor_checkout_manifest.py`, drift-checked by `validate.sh`). Supports
+  per-name and `--all` fetches, shallow clones by default, curated extras without profiles yet
+  (`donor-checkouts.extra`), exact-revision pins with fail-closed verification
+  (`donor-checkouts.pins`, seeded with known-good rendering/RT/upscaler donor revisions), and a
+  resolved-HEAD provenance log. Previously the donor library named upstream references but gave
+  users no way to materialize them.
+
 - Added the README "Engineered Top-Down, Hardened In Production" section: the day-one vs now
   comparison (1 skill/107 files/68-line SKILL.md/zero testing vs 11 dual-provider skills/~110k
   lines/25 scripts) and the operating thesis that the package's rules are captured production

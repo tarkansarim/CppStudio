@@ -1012,6 +1012,8 @@ path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 PY
 expect_failure "code map manifest rejects escaping globs" "path must not contain '..'" \
     python3 "${ROOT_DIR}/scripts/validate_code_map.py" "${code_map_stale_tmp}" --require-enabled
+python3 "${ROOT_DIR}/scripts/generate_donor_checkout_manifest.py" "${ROOT_DIR}" --check
+
 python3 "${ROOT_DIR}/scripts/validate_donor_library.py" \
     "${SKILL_DIR}/references/donor-library" \
     --reference-root "${SKILL_DIR}/references"
