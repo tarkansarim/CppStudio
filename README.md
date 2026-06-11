@@ -64,6 +64,11 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 intentionally short: newest public-facing changes first, older highlights collapsed below. Entries
 use commit identifiers so the ordering stays clear; only the changelog itself is authoritative.
 
+- `19c85b9` - Donor checkouts are now fetchable: `scripts/fetch_donor_checkouts.sh` clones donor
+  references locally from a profile-generated, drift-checked manifest, with curated extras,
+  exact-revision pins (fail-closed), and provenance logging. Previously profiles named upstreams
+  but users had no way to materialize them.
+
 - `984d3b7` - Added the front-page "Engineered Top-Down, Hardened In Production" section: day-one vs
   now comparison and the thesis that CppStudio's rules are captured production failures.
 
