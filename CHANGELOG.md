@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added the README "Engineered Top-Down, Hardened In Production" section: the day-one vs now
+  comparison (1 skill/107 files/68-line SKILL.md/zero testing vs 11 dual-provider skills/~110k
+  lines/25 scripts) and the operating thesis that the package's rules are captured production
+  failures, not upfront design.
+
 - README front page now names both providers everywhere the product scope is described: intro,
   Quick Start lead, Requirements, Install, What Gets Installed (Codex-lane labels + Claude mirror),
   Use It, the GPU-tools install table, and Repository Layout / deployment-target wording all state

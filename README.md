@@ -35,6 +35,29 @@ As a harness, CppStudio focuses on:
 - Validation, profiling, package integrity checks, rollout safety, and optional project-memory
   workflows that keep agent output auditable.
 
+## Engineered Top-Down, Hardened In Production
+
+CppStudio did not start with this discipline — it grew it. The first commit (April 2026) was a
+classic top-down design: one skill, 107 files, a 68-line `SKILL.md`, four shell scripts, and zero
+testing. The original agent doctrine even shipped hardcoded machine paths and private project names
+— exactly the two things today's validation guard hard-blocks from ever being committed. The repo
+learned its rules from its own early mistakes.
+
+Six weeks and ~250 commits later the package is 11 dual-provider skills, ~110k lines, a
+147-file donor library with license tiers and lazy routing, and 25 scripts covering transactional
+rollouts, tamper-detecting package manifests, code-map drift checks, trigger-routing validation,
+and provider-separated install lanes. Nearly half of all commits reworked the main skill text, and
+roughly a third carry harden/fix/guard/drift in their subject. The only files untouched since day
+one are read-only research notes.
+
+That churn is the point. Almost every rule in these skills is scar tissue from a real failure in
+supervised production work — a worker that silently skipped validation, telemetry that changed
+meaning while looking valid, a shading approximation whose broad-area averages masked a
+per-element defect, an installer that nearly clobbered user content. Each incident became a
+captured rule, a validation guard, or a pressure lane, so the next agent inherits the lesson
+instead of rediscovering the failure. Top-down design gave the package its skeleton; production
+hardening is where the value lives.
+
 ## Recent Commit Highlights
 
 The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-page list is kept
