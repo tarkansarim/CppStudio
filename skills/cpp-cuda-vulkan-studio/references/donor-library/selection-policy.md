@@ -71,6 +71,26 @@ reference while still being the wrong source for direct native C++ reuse.
 - If a profile says "reference-only for native C++", route implementation through the active C++,
   CUDA, or Vulkan skill and write an independent port with tests.
 
+## Standard-Format Contract Boundary
+
+Standardized file formats, interchange formats, protocols, SDK schemas, and conformance suites are
+not ordinary "inspiration" donors. Their official specifications, headers, source, examples, and
+tests define the semantic contract for how data is imported, exported, traversed, scoped, indexed,
+transformed, versioned, and rejected.
+
+- Treat official standard-format sources as contract anchors even when their implementation is
+  reference-only for licensing, language, or runtime reasons.
+- Do not invent target-specific interpretations of face counts, indices, samples, transform
+  inheritance, geometry scopes, material bindings, units, versioning, topology variance, or other
+  format-owned semantics.
+- Copy or adapt standardized parser/traversal/sample/scope handling patterns when needed only after
+  checking license compatibility, attribution/notice requirements, exact dependency policy, and
+  copied scope.
+- If code cannot be copied, implement independently but prove behavior against the official API,
+  spec, examples, conformance tests, or locally generated fixtures that exercise the same semantics.
+- When a project uses an existing approved dependency for the standard, prefer that dependency path
+  over vendoring a random donor tree or adding an alternate runtime.
+
 ## Safe-Donor Checklist
 
 Before adapting code or adding a dependency:

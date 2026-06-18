@@ -36,6 +36,8 @@ selection policy, and trigger-regression metadata.
 - donor validation/freshness parser fixtures, plural or wrapped `Sources:` handling, route/profile
   source matching, or `Last checked` metadata policy changes
 - donor-grounding or web-ceiling-check expectations for broad native GPU design prompts change
+- standard-format, interchange-format, protocol, SDK-schema, or conformance-suite donor semantics
+  change, including when reference-only donors still define contract-level import/export behavior
 - native C++ GUI/HUD/editor UI donor categories or visual inspection link rules change
 - platform/window/input donor categories change, including SDL3, GLFW, Qt tablet events, native
   tablet APIs, or other artist-input routes for pressure-sensitive tools

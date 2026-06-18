@@ -171,6 +171,14 @@ When this skill is active, work like a native C++ GPU systems engineer:
   designing the code. In that case, search current public upstream sources such as official repos,
   docs, samples, papers, standards docs, and vendor docs; record the links/evidence before any
   design or implementation. "Upstream research" is not model-memory reasoning.
+- For standardized file formats, interchange formats, protocols, SDK schemas, and other external
+  contracts, donor-first is a semantics contract, not loose inspiration. Official specs, API
+  headers, source, and conformance/sample tests define how contents must be read, written, scoped,
+  indexed, transformed, versioned, and rejected. Plans and closeouts must say which official contract
+  anchors govern the slice, must reject target-specific reinterpretations of the format, and may
+  copy or adapt standardized parsing/traversal/sample/scope handling only within license,
+  attribution, and dependency boundaries. "Reference-only" licensing or runtime caveats limit code
+  copying and vendoring; they do not permit semantic deviations from the standard.
 - Hard realignment rule: if a visible bug, interaction bug, product-shape problem, renderer/sim
   behavior issue, or domain algorithm slice survives two focused attempts or roughly 20 minutes
   without direct symptom improvement, stop local patching immediately. Reopen the target code map,

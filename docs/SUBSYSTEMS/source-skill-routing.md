@@ -175,6 +175,11 @@ generated-project workflow instructions.
   `submit`/`status`/optional `drain` rather than stale wait aliases.
 - Keep donor-profile path guidance version-aware. External upstream package paths can move; prefer
   current upstream search terms and symbol/file anchors over brittle stale local paths.
+- Standardized file formats, interchange formats, protocols, and SDK schemas now have a contract
+  boundary in the source skill: official specs, API headers, source, examples, and conformance tests
+  define semantic behavior for import/export and integration slices. Reference-only caveats still
+  restrict code copying or vendoring, but they do not allow target-specific reinterpretation of the
+  standard.
 
 ## Current Code-Map Bootstrap Posture
 

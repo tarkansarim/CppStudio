@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Tightened donor-first routing for standardized file formats, interchange formats, protocols, SDK
+  schemas, and conformance suites. Official specs/API/source/examples/tests now define the semantic
+  contract for import/export/integration behavior even when code reuse is constrained by
+  reference-only, language/runtime, license, or dependency boundaries.
+
 - Fixed a public-repo provenance leak and the guard gap that allowed it: three committed
   `.skill-source` metadata files carried a maintainer-local absolute path. They now carry the
   canonical public repo URL (machine-independent source identity), and both validate.sh
