@@ -68,7 +68,7 @@ use commit identifiers so the ordering stays clear; only the changelog itself is
   references locally from a profile-generated, drift-checked manifest, with curated extras,
   exact-revision pins (fail-closed), and provenance logging. Previously profiles named upstreams
   but users had no way to materialize them.
-- `pending` - Tightened donor-first routing for standardized formats and protocols: official
+- `d77113a` - Tightened donor-first routing for standardized formats and protocols: official
   specs/API/source/examples/tests are now contract anchors for import/export semantics even when
   implementation code remains reference-only or dependency-bounded.
 
