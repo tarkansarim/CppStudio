@@ -86,6 +86,12 @@ skills, watch-mode publishing behavior, and the separate Claude install lane (sy
 - `validate.sh` compiles and exercises the `cppstudio-supervisor` slice phase telemetry helper so
   `CPPSTUDIO_PHASE` markers, verification classifications, OSTM job/artifact fields, and measured
   phase durations remain parseable before rollout.
+- GitHub validation is broader than rollout validation. Before pushing changes that touch validation,
+  CI, shell/Python scripts, generated templates, CMake/toolchain behavior, package manifests, donor
+  validation, trigger validation, or a previously red push, run the workflow-equivalent local gate:
+  shell syntax, ShellCheck, Python compile, donor-library validation, trigger-matrix validation, then
+  `VALIDATOR=$PWD/scripts/quick_validate_skill.py CPPSTUDIO_FULL_CUDA_ARCHITECTURES=75 CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS=1 ./scripts/validate.sh --full`.
+  `rollout_to_codex.sh` remains the installed-skill parity proof, not a substitute for the CI gate.
 - Non-dry-run sync stages and validates the skill before replacing the installed target, then restores
   the previous target if final validation fails. Staging and backups live outside the scanned
   `${SYNC_CODEX_HOME:-$HOME/.codex}/skills` root so interrupted syncs cannot expose duplicate or

@@ -67,7 +67,8 @@ if [ -f "${PINS}" ]; then
 fi
 
 if [ "${LIST_ONLY}" -eq 1 ]; then
-  for name in $(printf '%s\n' "${!DONOR_URLS[@]}" | sort); do
+  mapfile -t sorted_donor_names < <(printf '%s\n' "${!DONOR_URLS[@]}" | sort)
+  for name in "${sorted_donor_names[@]}"; do
     pin="${DONOR_PINS[${name}]:-}"
     printf '%-40s %s%s\n' "${name}" "${DONOR_URLS[${name}]}" "${pin:+  [pin ${pin}]}"
   done
@@ -78,7 +79,7 @@ if [ "${FETCH_ALL}" -eq 1 ]; then
   echo "About to fetch ${#DONOR_URLS[@]} donor repositories (multiple GB)."
   read -r -p "Continue? [y/N] " answer
   [ "${answer}" = "y" ] || [ "${answer}" = "Y" ] || exit 1
-  REQUESTED=($(printf '%s\n' "${!DONOR_URLS[@]}" | sort))
+  mapfile -t REQUESTED < <(printf '%s\n' "${!DONOR_URLS[@]}" | sort)
 fi
 
 if [ "${#REQUESTED[@]}" -eq 0 ]; then

@@ -64,14 +64,16 @@ The durable change history lives in [CHANGELOG.md](CHANGELOG.md). This front-pag
 intentionally short: newest public-facing changes first, older highlights collapsed below. Entries
 use commit identifiers so the ordering stays clear; only the changelog itself is authoritative.
 
-- `19c85b9` - Donor checkouts are now fetchable: `scripts/fetch_donor_checkouts.sh` clones donor
-  references locally from a profile-generated, drift-checked manifest, with curated extras,
-  exact-revision pins (fail-closed), and provenance logging. Previously profiles named upstreams
-  but users had no way to materialize them.
+- `unreleased` - Fixed the donor-checkout fetch script's sorted donor-name handling so the GitHub
+  validation workflow's ShellCheck step stays green.
 - `unreleased` - Standardized import/export bugs now require a reference-consumer matrix before
   local target probes or patches. If established DCCs/engines/viewers consume the same asset
   correctly, workers must compare official contracts and available consumers such as Blender,
   Unreal, Maya, Houdini, Unity, or vendor tools; element counts and nonblank renders are not enough.
+- `19c85b9` - Donor checkouts are now fetchable: `scripts/fetch_donor_checkouts.sh` clones donor
+  references locally from a profile-generated, drift-checked manifest, with curated extras,
+  exact-revision pins (fail-closed), and provenance logging. Previously profiles named upstreams
+  but users had no way to materialize them.
 - `d77113a` - Tightened donor-first routing for standardized formats and protocols: official
   specs/API/source/examples/tests are now contract anchors for import/export semantics even when
   implementation code remains reference-only or dependency-bounded.

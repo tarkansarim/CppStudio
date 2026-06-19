@@ -99,6 +99,13 @@ C++/CUDA/Vulkan development.
   - scaffolding or apply scripts
   - CMake presets/modules
   - generated-project validation behavior
+- Before pushing validation-affecting changes, run the GitHub workflow-equivalent local gate, not
+  only `validate.sh` or rollout:
+  `bash -n scripts/*.sh skills/cpp-cuda-vulkan-studio/scripts/*.sh && shellcheck scripts/*.sh skills/cpp-cuda-vulkan-studio/scripts/*.sh && PYTHONPYCACHEPREFIX=/tmp/cppstudio-pycache python3 -m py_compile scripts/*.py skills/cpp-cuda-vulkan-studio/scripts/*.py && python3 scripts/validate_donor_library.py skills/cpp-cuda-vulkan-studio/references/donor-library --reference-root skills/cpp-cuda-vulkan-studio/references && python3 scripts/validate_trigger_matrix.py research/donor-library/trigger-matrix.json --repo-root . && VALIDATOR=$PWD/scripts/quick_validate_skill.py CPPSTUDIO_FULL_CUDA_ARCHITECTURES=75 CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS=1 ./scripts/validate.sh --full`.
+  This gate is required after edits to shell scripts, Python validators, CI/workflow files,
+  generated templates, CMake/toolchain behavior, package manifests, donor validation, trigger
+  validation, or any previous push that failed GitHub validation. Rollout validation is an install
+  proof; it is not a substitute for this CI gate.
 - After adding or changing skills, skill descriptions, donor categories, donor profiles, donor routing,
   or README donor inventories, run a sub-agent trigger lane before close-out. Use multiple realistic
   prompts that should trigger the changed skill/routing, verify the agents select the expected skill and
@@ -162,6 +169,8 @@ When finishing work here, report:
 
 - files changed at the repo level
 - whether `./scripts/validate.sh` or `./scripts/validate.sh --full` passed
+- whether the GitHub workflow-equivalent gate passed before push when the change touched validation,
+  CI, scripts, generated templates, package manifests, donor validation, or trigger validation
 - whether `./scripts/rollout_to_codex.sh` was run for normal bundled installs, or which explicit
   single-skill `./scripts/sync_to_codex.sh` run was used and why
 - whether the sub-agent trigger lane was run when skill/donor routing changed

@@ -4,6 +4,9 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Fixed the donor-checkout script's sorted donor-name handling so the GitHub validation workflow's
+  ShellCheck step passes instead of failing on unsafe command-substitution array splitting.
+
 - Hardened standardized import/export supervision after a groom Alembic lane accepted full raster
   counts while the visible import still disagreed with established DCC behavior. Workers must now
   build a reference-consumer matrix from official contracts and at least two available consumers

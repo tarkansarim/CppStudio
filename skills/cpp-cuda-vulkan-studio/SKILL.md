@@ -1186,6 +1186,20 @@ For this skill itself, verify:
 ${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py ${HOME}/.codex/skills/cpp-cuda-vulkan-studio
 ```
 
+For CppStudio source-repo changes that affect validation, CI, shell/Python scripts, generated
+templates, CMake/toolchain behavior, package manifests, donor validation, trigger validation, or a
+previously red push, run the GitHub workflow-equivalent gate before pushing. `validate.sh` and
+`rollout_to_codex.sh` alone are not enough for that class of change:
+
+```bash
+bash -n scripts/*.sh skills/cpp-cuda-vulkan-studio/scripts/*.sh
+shellcheck scripts/*.sh skills/cpp-cuda-vulkan-studio/scripts/*.sh
+PYTHONPYCACHEPREFIX=/tmp/cppstudio-pycache python3 -m py_compile scripts/*.py skills/cpp-cuda-vulkan-studio/scripts/*.py
+python3 scripts/validate_donor_library.py skills/cpp-cuda-vulkan-studio/references/donor-library --reference-root skills/cpp-cuda-vulkan-studio/references
+python3 scripts/validate_trigger_matrix.py research/donor-library/trigger-matrix.json --repo-root .
+VALIDATOR=$PWD/scripts/quick_validate_skill.py CPPSTUDIO_FULL_CUDA_ARCHITECTURES=75 CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS=1 ./scripts/validate.sh --full
+```
+
 <!-- agent-self-improvement-doctrine:begin -->
 ## Accepted Self-Improvement Doctrine
 
@@ -1196,4 +1210,5 @@ ${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py ${HOME}/.c
 - 2026-06-01T06:30:25Z [codex] CppStudio supervisor closeout must treat a fresh user live report that the same UI/render/control surface still fails as proof invalidation. Reopen the slice and reconcile the exact user path; contradictory artifacts such as a light-on proof whose final readback has that light disabled are failed proof paths, not supporting evidence. (source: self-improvement:user_correction:0eb8ae93fa837dec)
 - 2026-06-01T07:01:07Z [codex] Mode-specific UI/control closeout must treat final top-level user-facing artifact fields as the deciding proof; nested mutation summaries or reviewer paraphrases cannot override a final readback showing the target control disabled, hidden, in another mode, or failing its behavior invariant. (source: self-improvement:user_correction:9d24c3df42094489)
 - 2026-06-19T11:18:22Z [codex] CppStudio standardized import/export supervision must require a reference-consumer matrix before local probes or target patches when established DCCs or engines consume the same asset correctly; visible parity with those consumers is required, and element counts or nonblank renders are only supporting evidence. (source: self-improvement:user_correction:4e6e0f15dac9de64)
+- 2026-06-19T11:39:17Z [codex] CppStudio validation-affecting pushes must run the actual GitHub workflow-equivalent gate, including shell syntax, ShellCheck, Python compile, donor/trigger validators, and CI-env `validate.sh --full`; rollout validation proves install parity, not GitHub validation health. (source: self-improvement:user_correction:a6f8d1c7312673c2)
 <!-- agent-self-improvement-doctrine:end -->
