@@ -179,6 +179,18 @@ When this skill is active, work like a native C++ GPU systems engineer:
   copy or adapt standardized parsing/traversal/sample/scope handling only within license,
   attribution, and dependency boundaries. "Reference-only" licensing or runtime caveats limit code
   copying and vendoring; they do not permit semantic deviations from the standard.
+  If the user reports that established tools or DCCs consume the same file correctly, or names local
+  reference applications such as Maya, Houdini, Blender, Unreal, Unity, or vendor sample tools, that
+  report becomes a hard pre-patch reference-consumer gate. Before adding local probes, diagnostics,
+  format-normalization code, coordinate fixes, importer rewrites, or validation-policy changes, the
+  agent must inspect at least two independent reference consumers when available, plus the official
+  contract/profile for the format. The comparison must name exact source files, symbols, commands, or
+  observed import behavior for hierarchy transforms, coordinate handedness/up-axis/unit scale,
+  schema/object grouping, element ordering, per-element counts, optional attributes, widths/normals,
+  and rejection rules relevant to the symptom. Local target-code probes are allowed only after this
+  matrix exists, and their job is to test the named mismatch. A render/count/readback proof that the
+  target consumed all elements is not acceptance for a format-semantics bug when the visible import
+  still disagrees with the reference consumers.
 - Hard realignment rule: if a visible bug, interaction bug, product-shape problem, renderer/sim
   behavior issue, or domain algorithm slice survives two focused attempts or roughly 20 minutes
   without direct symptom improvement, stop local patching immediately. Reopen the target code map,
@@ -1183,4 +1195,5 @@ ${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py ${HOME}/.c
 - 2026-06-01T05:20:00Z [codex] CppStudio control-surface closeout for transform-owned lights, cameras, renderers, shaders, and materials must prove user-facing behavior/output invariants such as aim, pivot stability, distance, enabled light set, shader/shadow payload, and receiver/hair luminance; state-vector equality alone cannot close user-reported lighting or viewport behavior bugs. (source: self-improvement:user_correction:ecd187f2ce9aa635)
 - 2026-06-01T06:30:25Z [codex] CppStudio supervisor closeout must treat a fresh user live report that the same UI/render/control surface still fails as proof invalidation. Reopen the slice and reconcile the exact user path; contradictory artifacts such as a light-on proof whose final readback has that light disabled are failed proof paths, not supporting evidence. (source: self-improvement:user_correction:0eb8ae93fa837dec)
 - 2026-06-01T07:01:07Z [codex] Mode-specific UI/control closeout must treat final top-level user-facing artifact fields as the deciding proof; nested mutation summaries or reviewer paraphrases cannot override a final readback showing the target control disabled, hidden, in another mode, or failing its behavior invariant. (source: self-improvement:user_correction:9d24c3df42094489)
+- 2026-06-19T11:18:22Z [codex] CppStudio standardized import/export supervision must require a reference-consumer matrix before local probes or target patches when established DCCs or engines consume the same asset correctly; visible parity with those consumers is required, and element counts or nonblank renders are only supporting evidence. (source: self-improvement:user_correction:4e6e0f15dac9de64)
 <!-- agent-self-improvement-doctrine:end -->

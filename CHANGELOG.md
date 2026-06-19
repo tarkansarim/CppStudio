@@ -4,6 +4,13 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened standardized import/export supervision after a groom Alembic lane accepted full raster
+  counts while the visible import still disagreed with established DCC behavior. Workers must now
+  build a reference-consumer matrix from official contracts and at least two available consumers
+  such as Blender, Unreal, Maya, Houdini, Unity, or vendor viewers before adding local probes or
+  target patches. Counts, nonblank screenshots, and render readbacks are supporting evidence only
+  when the bug is format semantics.
+
 - Tightened donor-first routing for standardized file formats, interchange formats, protocols, SDK
   schemas, and conformance suites. Official specs/API/source/examples/tests now define the semantic
   contract for import/export/integration behavior even when code reuse is constrained by

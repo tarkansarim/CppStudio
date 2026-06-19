@@ -68,6 +68,10 @@ use commit identifiers so the ordering stays clear; only the changelog itself is
   references locally from a profile-generated, drift-checked manifest, with curated extras,
   exact-revision pins (fail-closed), and provenance logging. Previously profiles named upstreams
   but users had no way to materialize them.
+- `unreleased` - Standardized import/export bugs now require a reference-consumer matrix before
+  local target probes or patches. If established DCCs/engines/viewers consume the same asset
+  correctly, workers must compare official contracts and available consumers such as Blender,
+  Unreal, Maya, Houdini, Unity, or vendor tools; element counts and nonblank renders are not enough.
 - `d77113a` - Tightened donor-first routing for standardized formats and protocols: official
   specs/API/source/examples/tests are now contract anchors for import/export semantics even when
   implementation code remains reference-only or dependency-bounded.

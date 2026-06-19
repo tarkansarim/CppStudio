@@ -30,6 +30,13 @@ HDF5/Python/DCC plugin dependencies, and sample data at the exact revision used.
   separate layers.
 - Preserve topology-varying versus constant-topology assumptions in tests.
 - Do not make proprietary DCC SDKs or renderer plugins implicit dependencies of a reusable converter.
+- For groom or curve import bugs where Maya, Houdini, Blender, Unreal, or another established DCC
+  consumes the same Alembic correctly, build a reference-consumer matrix before target patches. At
+  minimum compare Alembic's own schema/IXform contract with two available consumers such as Blender's
+  Alembic curve importer and Unreal HairStrands/Alembic groom importer. Record how each handles
+  object hierarchy transforms, coordinate handedness/up-axis/unit scale, multiple curve objects,
+  per-curve vertex counts, point order, widths, normals, basis/periodicity, and unsupported schema
+  rejection. Target-local full-count import or render proof does not prove Alembic semantic parity.
 
 ## Validation Ideas
 
@@ -38,6 +45,9 @@ HDF5/Python/DCC plugin dependencies, and sample data at the exact revision used.
 - Test missing optional properties, multiple time samplings, topology changes, and large-frame caches.
 - Validate coordinate system, units, shutter/time-sample interpretation, and path naming conventions.
 - Run converter tests without DCC plugin dependencies unless the target explicitly supports those plugins.
+- For real production grooms, add a reference-consumer parity fixture: compare raw Alembic counts and
+  bounds, transformed root/tip bounds, sample strand roots/tips, and a viewport screenshot against at
+  least one established DCC that the user says imports the file correctly.
 
 ## Caveats
 

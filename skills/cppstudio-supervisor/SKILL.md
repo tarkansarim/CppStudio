@@ -183,6 +183,19 @@ validation skills instead.
    "currently inactive/unsupported in this path" from "intentionally disabled by design". A
    performance fix must not hide, disable, or relabel capability controls as the solution unless the
    user approved that product decision and the donor/current SDK evidence supports it.
+12. For supervised standardized file-format, interchange-format, protocol, SDK-schema, import/export,
+   or asset-ingestion bugs, enforce a reference-consumer gate before the worker edits target importer
+   behavior or adds local diagnostic code. If the user says other established tools import the same
+   asset correctly, or names local reference tools such as Maya, Houdini, Blender, Unreal, Unity, or
+   vendor viewers, treat that as proof that target-local counts and readbacks are insufficient. The
+   worker must first produce a reference matrix with official/spec/API anchors and at least two
+   independent consumers when available, naming the exact source files, symbols, commands, or observed
+   import behavior that define transforms, coordinate systems, grouping, ordering, per-element counts,
+   optional attributes, and rejection rules. If the worker starts local probes or patches before that
+   matrix, stop the lane, preserve the diff as suspect, and relaunch or rewind with a donor-first
+   brief. Closeout must include a before/after user-visible comparison against the reference-consumer
+   behavior; full element counts, nonblank screenshots, or successful render paths are supporting
+   evidence only.
 
 ## Slice Phase Telemetry
 

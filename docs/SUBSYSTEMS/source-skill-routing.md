@@ -180,6 +180,12 @@ generated-project workflow instructions.
   define semantic behavior for import/export and integration slices. Reference-only caveats still
   restrict code copying or vendoring, but they do not allow target-specific reinterpretation of the
   standard.
+- Standardized import/export bug supervision now has a reference-consumer stop gate. If the user says
+  established tools consume the same asset correctly, or names local reference tools such as Maya,
+  Houdini, Blender, Unreal, Unity, or vendor viewers, the worker must compare official contracts and
+  at least two available reference consumers before local probes or target patches. Supervisors stop
+  the lane when workers start local diagnostics first; target render counts or nonblank screenshots
+  are not acceptance when visible semantics still differ from those consumers.
 
 ## Current Code-Map Bootstrap Posture
 

@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 112466,
-      "sha256": "a721aab0c82985d782ad8c4dfdaf8ad3b429a026af4c28bbc71905784ae12d1f"
+      "size": 114019,
+      "sha256": "78f91a3104ca25d1c95aed3f4b280ef05dc261e69050bd16cdfb9f08a04020ba"
     },
     {
       "path": "agents/openai.yaml",
@@ -525,8 +525,8 @@
       "path": "references/donor-library/profiles/alembic.md",
       "role": "reference",
       "disclosure_group": "donor-profile",
-      "size": 2403,
-      "sha256": "8cfebbecee62800d4f1a47de540d827fc6adaba23ee03064830a9fe1225f75f5"
+      "size": 3373,
+      "sha256": "adfc16f1e65cd598d18081117cd6a00ee3c52243204015e7d46e4bf108235b0f"
     },
     {
       "path": "references/donor-library/profiles/animation-retargeting-crowds.md",
