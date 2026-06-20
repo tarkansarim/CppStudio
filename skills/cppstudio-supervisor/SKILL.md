@@ -179,6 +179,17 @@ validation skills instead.
    and the acceptance gate explicitly allows it. If the reported symptom occurs while input is held,
    the deciding proof must include held/in-flight interaction evidence plus the released/final state,
    and must explicitly rule out "fake live preview, real work on release" as the explanation.
+   Before accepting a validation plan or closeout for user-reported live interaction, renderer,
+   viewport, brush, import/export, lighting, or performance bugs, require a proof-contract table. The
+   table must list the reported symptom, exact launch/input path, backend/state layer expected to
+   change, GPU/resource layer expected to change when applicable, presentation/export layer expected
+   to change, primary artifact, forbidden substitute evidence, known-good oracle, and invalidation
+   conditions. Reject closeout immediately when the artifact proves a neighboring layer instead of the
+   symptom: examples include dispatch counters without resident/resource refresh, state JSON without
+   the visible panel, final screenshots for held-input bugs, nonblank renders for format semantics,
+   full element counts with wrong placement, generic FPS for action-specific lag, or captured windows
+   that are stale, wrong-sized, wrong-asset, wrong-launcher, or failed screenshots. Do not let the
+   worker compare metrics until this contract is satisfied against primary artifacts.
    A nonzero OSTM/app validation lane is failed acceptance even when it writes screenshots, state
    JSON, or partial per-frame rows. Partial artifacts are diagnostic evidence only. Repeated
    closeout failures with the same shape, such as runs ending a fixed number of rows short, must be

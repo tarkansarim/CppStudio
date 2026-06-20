@@ -66,6 +66,10 @@ use commit identifiers so the ordering stays clear; only the changelog itself is
 
 - `unreleased` - Fixed the donor-checkout fetch script's sorted donor-name handling so the GitHub
   validation workflow's ShellCheck step stays green.
+- `unreleased` - User-reported live interaction, renderer, viewport, brush, import/export, lighting,
+  and performance bugs now require a proof-contract table before validation is accepted, blocking
+  closeout from neighboring signals such as dispatch counters, state JSON, nonblank renders, full
+  counts, final-only screenshots, or generic FPS.
 - `unreleased` - Native GPU interaction proof now has a full-frame invariant gate: before/held/after
   captures must prove untouched canvas/background/viewport/UI regions stay stable outside the edit,
   so changed-pixel counts, route counters, FPS, or final-state checks cannot hide black clears or

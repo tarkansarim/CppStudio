@@ -327,6 +327,19 @@ When this skill is active, work like a native C++ GPU systems engineer:
   that contradicts the claimed scenario, such as a rectangle-light proof whose final runtime state has
   rectangle lighting disabled, is a failed proof path until the harness or app state is corrected and
   rerun.
+- For user-reported live interaction, renderer, viewport, brush, import, export, lighting, and
+  performance bugs, write a proof-contract table before validation is accepted. The table must name:
+  user-visible symptom, exact launch/input path, state layer that should change, presentation layer
+  that should change, primary proof artifact, forbidden substitute evidence, known-good oracle when
+  available, and invalidation conditions. Every proof row must cover the whole causal chain from user
+  input or asset contract through backend mutation, GPU/resource update when relevant, and presented
+  frame or exported artifact. A run that proves only one intermediate layer, such as "dispatch
+  happened", "state JSON changed", "counts are full", "pixels differ", "screenshot exists", or
+  "final state is correct", is diagnostic only unless the proof contract explicitly says that layer
+  is the product behavior. If an artifact shows the wrong asset, wrong launcher, wrong window,
+  invalid screenshot capture, missing held/in-flight frame, stale binary, zero resource refresh, or
+  any layer contradicted by the user-visible symptom, reject the proof before comparing metrics or
+  claiming progress. (source: self-improvement:user_correction:b1ef7e77c9b73708; CppStudio/Groom live interaction proof must use exact user-path recording or OSTM real-input held mouse behavior; synthetic helpers are diagnostics only unless they are the user path.)
 - When changing CppStudio's reusable UI/control-surface rules, validation must prove the worker path,
   not only installed text or reviewer rejection. A functional probe has to put a fresh implementing
   agent in the position of fixing or closing out a realistic UI/control bug and verify it requires the

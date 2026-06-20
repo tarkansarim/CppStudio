@@ -162,6 +162,12 @@ generated-project workflow instructions.
   release-only, final-only, state-only, counter-only, generic-FPS, and provenance-only evidence as
   primary proof unless that behavior is the explicit product requirement. Plans must name the exact
   user-visible invariant and forbidden substitute evidence before implementation.
+- User-reported live interaction, renderer, viewport, brush, import/export, lighting, and performance
+  bugs now require a proof-contract table before validation can be accepted. The contract maps symptom
+  to exact launch/input path, expected state/resource/presentation layers, primary artifact, forbidden
+  substitute evidence, known-good oracle, and invalidation conditions so agents cannot close from a
+  neighboring signal such as dispatch counters, state JSON, final-only screenshots, nonblank renders,
+  full counts, or generic FPS.
 - Visual renderer claims that fail a user-visible check once now require measurement before another
   patch. Supervisors must demand same-launch profiler/frame-capture/app-timer evidence or a
   symptom-specific numeric metric; hair/fur primitive and width claims must separate camera-facing

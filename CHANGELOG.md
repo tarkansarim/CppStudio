@@ -4,6 +4,13 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a proof-contract gate for user-reported live interaction, renderer, viewport, brush,
+  import/export, lighting, and performance bugs. Workers must map the symptom to the exact
+  launch/input path, expected state/resource/presentation layers, primary artifact, forbidden
+  substitutes, known-good oracle, and invalidation conditions before validation is accepted, so
+  neighboring signals such as dispatch counters, state JSON, nonblank renders, full counts, final-only
+  screenshots, or generic FPS cannot be mistaken for the user-visible fix.
+
 - Added a full-frame visual invariant gate for native GPU interaction fixes. Before/held/after or
   before/after captures must now prove untouched background, canvas, viewport, layer, and UI regions
   remain stable outside the acted-on area; route counters, changed-pixel counts, nonblank images,
