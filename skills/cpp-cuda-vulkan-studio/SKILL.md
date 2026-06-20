@@ -600,7 +600,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   the sidecar snapshot, the original must either update the map itself or launch a fresh sidecar from
   a new fixed snapshot before committing.
 - For realtime rendering, viewport, simulation, XR, or GPU-performance work, measure frame time/FPS
-  or profiler timings while implementing and verify the actual visual output.
+  or profiler timings while implementing and verify the actual visual output. For user-reported live
+  viewport/canvas interaction lag, name the affected action and make its interaction metric the
+  primary acceptance proof: panning needs FPS/frame-time samples while panning, zooming needs
+  FPS/frame-time samples while zooming, brush/gizmo/stylus drags need continuous-drag frame-time or
+  input-to-visible-update samples. Internal counters, upload/readback counts, screenshots, and
+  backend state are diagnostics for why the metric changed; they cannot replace before/after
+  interaction FPS/frame-time artifacts for the reported action.
 - When a target app has an agentic control harness, use it as the first route for routine launch,
   feature driving, state/log readback, screenshots, and visual/UI troubleshooting before asking the
   user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
@@ -1049,11 +1055,15 @@ When this skill is active, work like a native C++ GPU systems engineer:
     `vulkan_api_sum,osrt_sum,nvtx_sum` or `cuda_api_gpu_sum,cuda_gpu_kern_sum,osrt_sum,nvtx_sum`,
     include `--force-export=true`, and do not use legacy `--report summary` or unsupported
     `--format text` assumptions.
-    For GUI, viewport, OSTM, or per-frame JSONL profiling, final UI state is not enough. Before
-    comparing first/last/median/growth frame metrics, filter or classify timing rows by the recorded
-    render or resource dimensions, such as `resources.output_width` and `resources.output_height`,
-    viewport size, or swapchain image size. Compute accepted metrics only from rows that match the
-    accepted full-size/maximized viewport or explicitly label smaller startup/resize rows as rejected.
+    For GUI, viewport, OSTM, or per-frame JSONL profiling, final UI state is not enough. When the
+    complaint is a concrete live action such as pan, zoom, orbit, brush/stylus drag, gizmo drag, or
+    timeline scrub, accept only rows captured during that action for the primary FPS/frame-time
+    claim; do not substitute idle frames, startup frames, final-state reads, or unrelated scenario
+    counters. Before comparing first/last/median/growth frame metrics, filter or classify timing
+    rows by the recorded render or resource dimensions, such as `resources.output_width` and
+    `resources.output_height`, viewport size, or swapchain image size. Compute accepted metrics only
+    from rows that match the accepted full-size/maximized viewport or explicitly label smaller
+    startup/resize rows as rejected.
     Closeout must report the accepted dimensions, accepted row count, rejected startup/resize row
     count, and the exact artifact/helper that proved those fields. If the artifact has no per-row
     dimension signal, treat that as a profiling evidence gap before making size-sensitive performance

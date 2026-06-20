@@ -65,13 +65,16 @@ Current `nsys` resolves through the CUDA Toolkit launcher to Nsight Systems 2025
   drawing conclusions; do not keep retrying fragile ad hoc summaries or compare metrics from partial
   output.
 - For GUI, viewport, OSTM, or per-frame JSONL profiling, do not accept final UI-state maximized
-  fields alone as proof that the timing rows are representative. Inspect row-level render/resource
-  dimensions such as `resources.output_width`, `resources.output_height`, viewport size, swapchain
-  size, or the project-owned equivalent. Filter first/last/median/growth comparisons to rows that
-  match the accepted final full-size viewport/window, or segregate startup/resize rows and report
-  them separately. Closeout needs accepted dimensions, accepted row count, rejected row count, and
-  the helper/artifact path used for the readback. Missing row dimensions are an evidence gap for
-  size-sensitive frame-time claims.
+  fields alone as proof that the timing rows are representative. If the reported symptom is live
+  interaction lag, the primary accepted rows must be captured during the reported action: pan rows
+  for panning, zoom rows for zooming, drag/stroke/scrub rows for continuous edits. Inspect row-level
+  render/resource dimensions such as `resources.output_width`, `resources.output_height`, viewport
+  size, swapchain size, or the project-owned equivalent. Filter first/last/median/growth comparisons
+  to rows that match the accepted full-size viewport/window and action label, or segregate startup,
+  idle, resize, and unrelated-action rows as rejected. Closeout needs accepted action, accepted
+  dimensions, accepted row count, rejected row count, FPS/frame-time summary, and the helper/artifact
+  path used for the readback. Missing row dimensions or missing action labels are evidence gaps for
+  interaction performance claims.
 - Prefer temporary config homes for reproducible profiling runs:
   - `HOME=/tmp/... XDG_CONFIG_HOME=/tmp/...`
 - If frame times cluster around display cadence, check vsync/present pacing and app internal GPU

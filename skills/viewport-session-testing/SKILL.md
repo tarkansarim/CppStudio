@@ -154,6 +154,13 @@ before the release event, read back a changed document/render revision, dirty re
 or fresh capture. A final after-release before/after proves only batched application and must not be
 accepted as proof of live interaction feedback.
 
+For user-reported live viewport/canvas lag, the replay must measure the action the user complained
+about while it is happening. Panning complaints need FPS/frame-time samples during repeated panning;
+zooming complaints need FPS/frame-time samples during repeated zooming; continuous brush, stylus,
+gizmo, or scrub complaints need continuous-action frame-time or input-to-visible-update samples.
+Idle FPS, one final screenshot, backend counters, or a successful command response are diagnostics
+only and cannot close the visible performance bug.
+
 ## User-Reported Visible Bugs
 
 For visible bugs, use before/after evidence shaped like the report.

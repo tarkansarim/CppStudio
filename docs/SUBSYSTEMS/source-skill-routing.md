@@ -644,6 +644,9 @@ generated-project workflow instructions.
 - GUI interaction scenario rules change, including when agents must test visible control clicks,
   event-to-state latency, viewport/canvas pointer mapping, stylus strokes, or real user input paths
   instead of backend commands alone
+- viewport/canvas performance acceptance rules change, including when agents must prove FPS/frame
+  time during the exact reported live action such as panning, zooming, brush/stylus drag, gizmo drag,
+  or timeline scrub instead of substituting idle frames, internal counters, or backend readbacks
 - user-reported bug verification rules change, including reproduction-first requirements,
   before/after evidence, Sonar/OSTM/Rewind routing, identical-evidence rejection, or stuck-status
   wording after repeated failed attempts

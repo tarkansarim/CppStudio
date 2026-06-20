@@ -66,6 +66,9 @@ use commit identifiers so the ordering stays clear; only the changelog itself is
 
 - `unreleased` - Fixed the donor-checkout fetch script's sorted donor-name handling so the GitHub
   validation workflow's ShellCheck step stays green.
+- `unreleased` - Live viewport/canvas performance fixes now require FPS/frame-time samples captured
+  during the exact reported action. Panning needs pan samples, zooming needs zoom samples, and
+  internal counters or backend readbacks are diagnostics only.
 - `unreleased` - Standardized import/export bugs now require a reference-consumer matrix before
   local target probes or patches. If established DCCs/engines/viewers consume the same asset
   correctly, workers must compare official contracts and available consumers such as Blender,

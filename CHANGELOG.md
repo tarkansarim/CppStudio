@@ -4,6 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Promoted live viewport/canvas interaction performance verification into CppStudio's reusable
+  rules. User-reported panning and zooming lag now requires app-owned FPS/frame-time samples during
+  repeated pan and zoom actions as primary closeout proof; internal counters, upload/readback
+  counts, backend state, screenshots, and idle frames are diagnostics only and cannot replace
+  action-specific before/after performance artifacts.
+
 - Fixed the donor-checkout script's sorted donor-name handling so the GitHub validation workflow's
   ShellCheck step passes instead of failing on unsafe command-substitution array splitting.
 
