@@ -104,6 +104,16 @@ mouse/stylus release. Assert a changed document or render revision, dirty region
 trace, or fresh app-owned capture at that moment. If the only deformation appears after release, the
 report should say the tool is batched/release-only rather than live.
 
+Visible proof must also prove the negative space. For each visible interaction scenario, define the
+acted-on region and an expanded tolerance margin, then compare the rest of the relevant frame against
+the expected before state or product background. Reports should include machine-readable metrics for
+untouched-region color delta, black-pixel ratio, alpha/composite stability, and mismatch count when
+the symptom could involve clears, compositing, layers, masks, or render-target replacement. A capture
+where the target stroke or edit appears but the untouched canvas/background/viewport becomes black,
+transparent, debug-colored, depth-like, or placeholder-grade is failing evidence, not a partial pass.
+Generic changed-pixel counts, checksums, dispatch counters, FPS results, or held-to-release equality
+must not override visible full-frame corruption.
+
 ## Replay Rules
 
 - Replay events in timestamp order through the real app path.

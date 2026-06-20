@@ -154,6 +154,15 @@ before the release event, read back a changed document/render revision, dirty re
 or fresh capture. A final after-release before/after proves only batched application and must not be
 accepted as proof of live interaction feedback.
 
+For visible interaction fixes, compare more than the positive edit region. The report must define the
+expected untouched region, such as background, canvas outside the brush footprint, viewport outside a
+gizmo drag, or unchanged UI panels, and assert that this region stays visually stable across before,
+mid-gesture, and after captures. Include a machine-readable metric such as outside-region color delta,
+black-pixel ratio, alpha/composite stability, or unchanged-region mismatch count. A proof that shows
+the intended stroke, selection, drag, or render change but also turns unrelated canvas or viewport
+areas black, transparent, depth-like, debug-colored, or otherwise corrupted is a failed visual proof
+even when all counters, revisions, dispatch counts, FPS metrics, or final-state checks pass.
+
 For user-reported live viewport/canvas lag, the replay must measure the action the user complained
 about while it is happening. Panning complaints need FPS/frame-time samples during repeated panning;
 zooming complaints need FPS/frame-time samples during repeated zooming; continuous brush, stylus,

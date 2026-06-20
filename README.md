@@ -66,6 +66,10 @@ use commit identifiers so the ordering stays clear; only the changelog itself is
 
 - `unreleased` - Fixed the donor-checkout fetch script's sorted donor-name handling so the GitHub
   validation workflow's ShellCheck step stays green.
+- `unreleased` - Native GPU interaction proof now has a full-frame invariant gate: before/held/after
+  captures must prove untouched canvas/background/viewport/UI regions stay stable outside the edit,
+  so changed-pixel counts, route counters, FPS, or final-state checks cannot hide black clears or
+  compositing corruption.
 - `unreleased` - User-reported visual/runtime/import regressions now require the "did this ever
   work before?" gate. If a known-good asset, mode, backend, commit, recording, reference app, donor
   path, or release exists, workers must compare it against the failing path before patching.

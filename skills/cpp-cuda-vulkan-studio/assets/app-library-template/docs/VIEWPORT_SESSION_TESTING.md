@@ -107,3 +107,11 @@ If the tool should update while the user is still holding contact, prove that sp
 paint, groom, terrain, drawing, and live transform tools need a mid-gesture checkpoint after a move
 sample and before release where document/render revision, dirty region, semantic trace, or a fresh
 capture has already changed. A final after-release capture proves only batched application.
+
+For visible interaction fixes, prove that the rest of the frame stayed correct. Define the acted-on
+region and an expanded tolerance margin, then compare untouched canvas, background, viewport, layer,
+and UI regions across before, mid-gesture, and after captures. The report should include
+machine-readable outside-region metrics such as color delta, black-pixel ratio, alpha/composite
+stability, and mismatch count. A scenario that shows the intended edit but also corrupts unrelated
+regions is failed proof, even when revisions, checksums, dispatch counters, FPS, or final-state
+assertions pass.

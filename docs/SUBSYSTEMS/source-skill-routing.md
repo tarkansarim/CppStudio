@@ -289,6 +289,12 @@ generated-project workflow instructions.
   or peer-tool lanes that conflict with the required reference target must be filtered out as rejected
   or diagnostic-only before options are shown to the user. A fresh scoped Codex adversarial review is
   required before further patching if the next attempt still leaves the artifact red.
+- Visible interaction proof now has a full-frame invariant gate. For native GPU tools, before,
+  held/in-flight, and after captures must prove untouched background, canvas, viewport, layer, and UI
+  regions remain visually stable outside the acted-on region. Changed-pixel counts, nonblank images,
+  route/dispatch counters, FPS metrics, and held-to-release equality are supporting evidence only;
+  if the same proof image shows unrelated black clears, alpha/composite corruption, debug colors, or
+  placeholder surfaces, the lane is red.
 - Substantial greenfield and architecture-setting research must be durable. Agents should write a
   target-project `docs/planning/RESEARCH_BRIEF.md` before implementation, combining local donor
   routes and curated web/upstream sources with short descriptions, project benefits, freshness or

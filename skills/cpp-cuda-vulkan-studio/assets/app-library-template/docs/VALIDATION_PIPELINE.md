@@ -328,6 +328,15 @@ If the visible capture shows a flat, depth-pass-like, placeholder, or debug-look
 state that the product-visual concern is still unresolved even if the backend and semantic assertions
 pass.
 
+For visible interaction fixes, verify the full relevant frame, not only the edited pixels. Define the
+acted-on region and an expanded tolerance margin, then assert that untouched canvas, background,
+viewport, layer, and UI regions preserve expected color, alpha, and composite state across before,
+held/in-flight, and after captures. Record machine-readable metrics such as outside-region color
+delta, black-pixel ratio, alpha/composite mismatch, and unchanged-region mismatch count. Changed-pixel
+counts, nonblank screenshots, route counters, dispatch counts, FPS numbers, and held-to-release
+stability are diagnostics only if the same captures show unrelated black clears, lost background,
+transparent/alpha mistakes, debug colors, or placeholder surfaces.
+
 Interactive artist, game, VFX, DCC, simulation-editor, and technical-art tools also need primary
 visible-loop proof before feature breadth. The loop is project-specific and should come from the
 planning donor/peer-tool research: user action, state changed, visible result, and proof route. The

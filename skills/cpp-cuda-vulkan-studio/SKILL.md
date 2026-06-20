@@ -51,6 +51,13 @@ Minimum pre-plan research pass:
   gate explicitly says so. If the symptom is live behavior while input is held, proof must include
   held/in-flight interaction evidence and a negative assertion that the final/released state is not
   hiding delayed real work.
+- For visible native GPU interaction fixes, the invariant must cover the whole relevant frame, not
+  only the acted-on pixels. Before/held/released or before/after captures must assert that untouched
+  background, canvas, viewport, layer, and UI regions preserve their expected color/alpha/composite
+  state within tolerance. Route counters, changed-pixel counts, nonblank screenshots, performance
+  numbers, or held-to-release stability are failed closeout proof when the same captures show
+  unrelated full-frame corruption such as black clears, lost background, alpha/composite mistakes, or
+  debug/placeholder surfaces. (source: self-improvement:user_correction:e98c856c6b0de402)
 - For simulation, renderer, SDK, hardware, or "best/current/ceiling" claims, web-check official
   upstream repos, standards docs, vendor docs, papers, or primary project docs.
 - If one researched source cannot be opened through the normal web tool path, do not treat that as

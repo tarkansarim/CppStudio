@@ -4,6 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a full-frame visual invariant gate for native GPU interaction fixes. Before/held/after or
+  before/after captures must now prove untouched background, canvas, viewport, layer, and UI regions
+  remain stable outside the acted-on area; route counters, changed-pixel counts, nonblank images,
+  performance numbers, or held-to-release stability cannot close a visible fix when the capture shows
+  unrelated black clears, alpha/composite corruption, debug colors, or placeholder surfaces.
+
 - Added a known-good oracle gate for user-reported visual, runtime, performance, import/export,
   renderer, and interaction bugs. Before patching from first principles, workers now have to ask
   whether the behavior ever worked before or still works in another asset, mode, backend, branch,
