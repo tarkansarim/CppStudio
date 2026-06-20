@@ -43,6 +43,14 @@ Minimum pre-plan research pass:
 - For interactive viewport, GUI, brush, sculpt, paint, grooming, timeline, node, gizmo, camera, or
   canvas work, open `viewport-session-testing` and plan an app-owned record/replay lane so agents
   can reproduce and compare real user interactions instead of relying on backend-only controls.
+- For live, realtime, interactive, viewport, brush, tool, renderer, or performance fixes, define the
+  exact user-visible invariant before implementation and name evidence that is forbidden as primary
+  proof. Proxy behavior, preview-only behavior, deferred finalization, release-only mutation,
+  final-only screenshots, non-empty image diffs, state JSON, counters, generic FPS, or provenance
+  cannot close the slice unless the product intentionally specifies that behavior and the acceptance
+  gate explicitly says so. If the symptom is live behavior while input is held, proof must include
+  held/in-flight interaction evidence and a negative assertion that the final/released state is not
+  hiding delayed real work.
 - For simulation, renderer, SDK, hardware, or "best/current/ceiling" claims, web-check official
   upstream repos, standards docs, vendor docs, papers, or primary project docs.
 - If one researched source cannot be opened through the normal web tool path, do not treat that as
@@ -549,6 +557,18 @@ When this skill is active, work like a native C++ GPU systems engineer:
   probe; if no pre-change checkpoint exists, say exact replay was missed. After repeated focused
   attempts or the repo's hard-reset threshold, start the status with "I am stuck on this bug:" and
   name the missing proof, failed hypotheses, and next diagnostic path.
+- For user-reported visual, runtime, performance, import/export, interaction, renderer, or hardware
+  capability bugs, ask the regression question before treating the issue as a new implementation
+  problem: did this exact behavior ever work before, or does it still work in another sample asset,
+  mode, backend, branch, commit, recording, reference app, donor path, or previous release? If a
+  known-good path exists or is strongly suspected, make it the first oracle. Compare the known-good
+  path against the failing path before patching, and name the oracle source, failing source, invariant
+  expected to match, concrete mismatch, and first proof artifact. Examples include known-good sample
+  asset versus failing asset, previous good commit versus current commit, working backend/mode versus
+  failing backend/mode, or established DCC/engine/reference consumer versus the target importer. Do
+  not keep debugging from first principles when a local known-good path exists. If no oracle can be
+  found after a focused search, say "no known-good oracle found" and proceed through the donor,
+  upstream, spec, or profiling route instead.
 - Treat code-map completion claims as routing claims, not just schema claims. After enabling or
   materially changing a maintained code map, run the validator and a read-only subagent or
   fresh-session routing smoke before saying future agents can use it or that setup is done, whenever
@@ -621,9 +641,12 @@ When this skill is active, work like a native C++ GPU systems engineer:
   as "ribbon", "strip", "curve", "RT", or "raster" are not acceptance proof for visual semantics. For
   hair/fur primitive or width bugs, separate camera-facing orientation from width semantics: prove
   imported/authored width distribution, shader width conversion, projected near/far pixel width, and
-  comparable before/after screenshots or replay captures at two camera distances. If an anti-alias
-  or minimum-pixel floor dominates the measured width, report that as the active behavior instead of
-  claiming world-space or authored-width behavior.
+  comparable before/after screenshots or replay captures at two camera distances. If another local
+  scene, asset, commit, or mode renders the same primitive or shader behavior correctly, use that
+  known-good renderer oracle first and compare import/runtime buffers, pipeline state, shader
+  payloads, projection metrics, and visible captures against the failing path before changing shared
+  renderer code. If an anti-alias or minimum-pixel floor dominates the measured width, report that as
+  the active behavior instead of claiming world-space or authored-width behavior.
 - When a target app has an agentic control harness, use it as the first route for routine launch,
   feature driving, state/log readback, screenshots, and visual/UI troubleshooting before asking the
   user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
@@ -1247,4 +1270,5 @@ VALIDATOR=$PWD/scripts/quick_validate_skill.py CPPSTUDIO_FULL_CUDA_ARCHITECTURES
 - 2026-06-19T11:39:17Z [codex] CppStudio validation-affecting pushes must run the actual GitHub workflow-equivalent gate, including shell syntax, ShellCheck, Python compile, donor/trigger validators, and CI-env `validate.sh --full`; rollout validation proves install parity, not GitHub validation health. (source: self-improvement:user_correction:a6f8d1c7312673c2)
 - 2026-06-20T14:08:38Z [codex] CppStudio visual renderer supervision must stop source-only patching after one failed user-visible renderer claim and require same-launch profiler/frame-capture/app-timer evidence or a symptom-specific numeric metric before the next patch. (source: self-improvement:user_correction:80eed6e143baf667)
 - 2026-06-20T14:08:38Z [codex] CppStudio Groom visual renderer supervision must separate hair billboard/ribbon orientation from width semantics and require user-visible near/far width behavior plus projected-width telemetry before claiming hair primitive correctness. (source: self-improvement:user_correction:da13fb6efeacc11c)
+- 2026-06-20T16:37:24Z [codex] CppStudio visual/runtime/import debugging must ask whether the behavior ever worked before and compare a known-good asset, mode, commit, recording, reference app, or donor path against the failing path before new patches. (source: self-improvement:user_correction:330d7cce2c273ff5)
 <!-- agent-self-improvement-doctrine:end -->

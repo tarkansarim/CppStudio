@@ -171,6 +171,14 @@ validation skills instead.
    or LOD/segment budget, closeout must prove that donor-visible semantics such as lighting mode,
    visibility/shadow source, blend/depth behavior, material response, and capability UI policy did
    not drift or must explicitly classify any drift as rejected/deferred.
+   For live, realtime, interactive, viewport, brush, tool, renderer, or performance claims, require
+   the worker to name the exact user-visible invariant and forbidden substitute evidence before
+   accepting closeout. Proxy behavior, preview-only behavior, deferred finalization, release-only
+   mutation, final-only screenshots, non-empty image diffs, state JSON, counters, generic FPS, or
+   provenance are supporting evidence only unless the product intentionally specifies that behavior
+   and the acceptance gate explicitly allows it. If the reported symptom occurs while input is held,
+   the deciding proof must include held/in-flight interaction evidence plus the released/final state,
+   and must explicitly rule out "fake live preview, real work on release" as the explanation.
    A nonzero OSTM/app validation lane is failed acceptance even when it writes screenshots, state
    JSON, or partial per-frame rows. Partial artifacts are diagnostic evidence only. Repeated
    closeout failures with the same shape, such as runs ending a fixed number of rows short, must be
@@ -191,6 +199,13 @@ validation skills instead.
    distribution, shader width conversion, projected pixel width, and any minimum-pixel/AA floor that
    dominates the result. A claim that the path uses ribbons, strips, curves, RT, or raster is only a
    route label; it does not prove the user's width, shadow, opacity, or shading complaint is fixed.
+   Before approving another renderer/viewport/performance patch, require the worker to answer the
+   known-good question: did this behavior previously work, or does it work in another asset, sample
+   scene, mode, backend, branch, commit, recording, donor path, or reference application? If yes or
+   likely, the worker must compare that known-good oracle against the failing path before patching
+   and report oracle source, failing source, expected invariant, concrete mismatch, and first proof
+   artifact. A local known-good scene or previous commit is higher-value evidence than continued
+   source-label reasoning.
 12. For supervised standardized file-format, interchange-format, protocol, SDK-schema, import/export,
    or asset-ingestion bugs, enforce a reference-consumer gate before the worker edits target importer
    behavior or adds local diagnostic code. If the user says other established tools import the same
@@ -204,6 +219,12 @@ validation skills instead.
    brief. Closeout must include a before/after user-visible comparison against the reference-consumer
    behavior; full element counts, nonblank screenshots, or successful render paths are supporting
    evidence only.
+   If the same importer, renderer, or asset path has a known-good local asset, previous commit,
+   previous release, exported sample, or recording, require that as an additional oracle before local
+   patching. The worker must compare hierarchy, transforms, grouping/schema traversal,
+   element-count arrays, optional attributes such as widths/normals/UVs, runtime buffers, and the
+   visible result between the known-good and failing assets. Do not accept "the failing asset loads
+   all elements" as completion when a known-good asset proves different semantics.
 
 ## Slice Phase Telemetry
 

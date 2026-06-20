@@ -66,6 +66,13 @@ use commit identifiers so the ordering stays clear; only the changelog itself is
 
 - `unreleased` - Fixed the donor-checkout fetch script's sorted donor-name handling so the GitHub
   validation workflow's ShellCheck step stays green.
+- `unreleased` - User-reported visual/runtime/import regressions now require the "did this ever
+  work before?" gate. If a known-good asset, mode, backend, commit, recording, reference app, donor
+  path, or release exists, workers must compare it against the failing path before patching.
+- `unreleased` - Live interaction closeout now rejects proxy/preview-only/deferred/release-only
+  proof for realtime viewport, brush, tool, renderer, and performance fixes unless that behavior is
+  explicitly intended. Held/in-flight evidence must prove the reported live invariant instead of
+  hiding real work behind final/released state.
 - `unreleased` - Visual renderer fixes now escalate after the first failed live check: the next
   attempt needs same-launch profiler/frame-capture/app-timer or symptom-specific numeric evidence.
   Hair/fur primitive claims must prove near/far projected width behavior instead of relying on route

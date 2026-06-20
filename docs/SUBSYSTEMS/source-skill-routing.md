@@ -163,6 +163,11 @@ generated-project workflow instructions.
   symptom-specific numeric metric; hair/fur primitive and width claims must separate camera-facing
   orientation from width semantics and prove imported width distribution, shader conversion,
   projected near/far pixel width, visible before/after captures, and any minimum-pixel/AA floor.
+- User-reported visual/runtime/performance/import regressions now have a known-good oracle gate.
+  Before workers patch from first principles, they must ask whether the behavior worked before or
+  works in another asset, mode, backend, branch, commit, recording, reference app, donor path, or
+  release. When such an oracle exists, plans and closeouts must name the known-good source, failing
+  source, expected invariant, concrete mismatch, and first proof artifact before local patches.
 - Renderer/performance supervision now requires a donor-semantics gate before implementation when a
   donor-derived mode, material, shader, or artist-visible behavior is involved. Donor sources are
   guardrails for invariants such as lighting mode, shadow/visibility source, alpha/depth/blend

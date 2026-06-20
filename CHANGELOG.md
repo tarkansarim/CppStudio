@@ -4,6 +4,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Added a known-good oracle gate for user-reported visual, runtime, performance, import/export,
+  renderer, and interaction bugs. Before patching from first principles, workers now have to ask
+  whether the behavior ever worked before or still works in another asset, mode, backend, branch,
+  commit, recording, reference app, donor path, or previous release, then compare that oracle against
+  the failing path before changing code.
+
 - Hardened visual renderer supervision after a full-fur raster lane kept repeating source-only
   fixes for a user-visible hair-width failure. Once a renderer/viewport/shader/material/hair claim
   fails a live visual check, the next attempt must start from same-launch profiler/frame-capture,
