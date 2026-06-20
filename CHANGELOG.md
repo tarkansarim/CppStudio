@@ -10,6 +10,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
   commit, recording, reference app, donor path, or previous release, then compare that oracle against
   the failing path before changing code.
 
+- Tightened live interaction acceptance for realtime viewport, brush, tool, renderer, and
+  performance fixes. Closeout must name the exact user-visible invariant and forbidden substitute
+  evidence; proxy, preview-only, deferred, release-only, final-only, state-only, counter-only,
+  generic-FPS, or provenance-only proof cannot close a live behavior bug unless that behavior is the
+  explicit product requirement.
+
 - Hardened visual renderer supervision after a full-fur raster lane kept repeating source-only
   fixes for a user-visible hair-width failure. Once a renderer/viewport/shader/material/hair claim
   fails a live visual check, the next attempt must start from same-launch profiler/frame-capture,

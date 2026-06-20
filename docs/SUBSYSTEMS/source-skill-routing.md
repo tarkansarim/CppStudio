@@ -158,6 +158,10 @@ generated-project workflow instructions.
   supporting evidence only; source skills and supervisors require accepted dimensions, accepted row
   counts, rejected startup/resize rows, and the artifact/helper path used for readback before
   accepting size-sensitive frame-time comparisons.
+- Live interaction and realtime renderer closeout now reject proxy, preview-only, deferred,
+  release-only, final-only, state-only, counter-only, generic-FPS, and provenance-only evidence as
+  primary proof unless that behavior is the explicit product requirement. Plans must name the exact
+  user-visible invariant and forbidden substitute evidence before implementation.
 - Visual renderer claims that fail a user-visible check once now require measurement before another
   patch. Supervisors must demand same-launch profiler/frame-capture/app-timer evidence or a
   symptom-specific numeric metric; hair/fur primitive and width claims must separate camera-facing
