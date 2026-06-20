@@ -153,6 +153,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
   attempts, long-lane acceptance gates, compaction-sensitive constraint stacks, or midstream changes
   to architecture/product/validation/slice order. Validate the packet before the next implementation
   slice; a chat TODO list is not enough after this trigger.
+- For native C++/CUDA/Vulkan projects that use Agent-Planning-Harness, CppStudio supplies the
+  engineering evidence that feeds the packet: donor/current-source research, code-map state,
+  architecture/backbone choices, GPU lane, control harness, validation, profiling, and visible-proof
+  expectations. Planning Harness owns the durable roadmap, milestones, work packages, work items,
+  approval, guard, continuation, and completion-claim gates; those packet gates do not replace or
+  weaken CppStudio donor, code-map, performance, synchronization, architecture, or visual-proof
+  requirements.
 - In checkpoint, rewind, detached-worktree, or other replay/probe lanes, treat the replayed source
   tree and the user's replay prompt as the authority for current state. Engineering memory,
   post-branch commits, current-head docs, external runtime copies, and accepted later outcomes are
@@ -607,6 +614,16 @@ When this skill is active, work like a native C++ GPU systems engineer:
   input-to-visible-update samples. Internal counters, upload/readback counts, screenshots, and
   backend state are diagnostics for why the metric changed; they cannot replace before/after
   interaction FPS/frame-time artifacts for the reported action.
+- For visual renderer claims that fail a user-visible check once, do not continue with source-label
+  reasoning or another local patch before adding measurement. The next attempt must start from a
+  profiler, frame capture, app-owned timestamp/pass-timing report, or a symptom-specific numeric
+  projection metric tied to the same user-facing scene and launch command. Renderer-path labels such
+  as "ribbon", "strip", "curve", "RT", or "raster" are not acceptance proof for visual semantics. For
+  hair/fur primitive or width bugs, separate camera-facing orientation from width semantics: prove
+  imported/authored width distribution, shader width conversion, projected near/far pixel width, and
+  comparable before/after screenshots or replay captures at two camera distances. If an anti-alias
+  or minimum-pixel floor dominates the measured width, report that as the active behavior instead of
+  claiming world-space or authored-width behavior.
 - When a target app has an agentic control harness, use it as the first route for routine launch,
   feature driving, state/log readback, screenshots, and visual/UI troubleshooting before asking the
   user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
@@ -1068,6 +1085,13 @@ When this skill is active, work like a native C++ GPU systems engineer:
     count, and the exact artifact/helper that proved those fields. If the artifact has no per-row
     dimension signal, treat that as a profiling evidence gap before making size-sensitive performance
     claims.
+    For user-visible renderer correctness failures, profiling and frame debugging are not optional
+    after the first failed visual fix. Require a same-launch capture or timing report plus a
+    symptom-specific metric before another patch: examples include projected hair width across zoom,
+    pass-level timing for the active render path, draw/dispatch counts for the claimed primitive
+    path, or frame debugger evidence for the active shader/pipeline state. Diagnostic screenshot
+    paths that enable extra accumulation, debug, or readback passes must be classified separately
+    from the live presented path before their timings or visuals are used.
     For Vulkan/realtime performance audits, classify the bottleneck before proposing edits:
     present/vsync pacing, CPU submit/API churn, GPU pass/shader cost, startup/pipeline creation,
     upload/resource churn, or instrumentation gap. If `vkQueuePresentKHR`, swapchain acquire, FIFO
@@ -1221,4 +1245,6 @@ VALIDATOR=$PWD/scripts/quick_validate_skill.py CPPSTUDIO_FULL_CUDA_ARCHITECTURES
 - 2026-06-01T07:01:07Z [codex] Mode-specific UI/control closeout must treat final top-level user-facing artifact fields as the deciding proof; nested mutation summaries or reviewer paraphrases cannot override a final readback showing the target control disabled, hidden, in another mode, or failing its behavior invariant. (source: self-improvement:user_correction:9d24c3df42094489)
 - 2026-06-19T11:18:22Z [codex] CppStudio standardized import/export supervision must require a reference-consumer matrix before local probes or target patches when established DCCs or engines consume the same asset correctly; visible parity with those consumers is required, and element counts or nonblank renders are only supporting evidence. (source: self-improvement:user_correction:4e6e0f15dac9de64)
 - 2026-06-19T11:39:17Z [codex] CppStudio validation-affecting pushes must run the actual GitHub workflow-equivalent gate, including shell syntax, ShellCheck, Python compile, donor/trigger validators, and CI-env `validate.sh --full`; rollout validation proves install parity, not GitHub validation health. (source: self-improvement:user_correction:a6f8d1c7312673c2)
+- 2026-06-20T14:08:38Z [codex] CppStudio visual renderer supervision must stop source-only patching after one failed user-visible renderer claim and require same-launch profiler/frame-capture/app-timer evidence or a symptom-specific numeric metric before the next patch. (source: self-improvement:user_correction:80eed6e143baf667)
+- 2026-06-20T14:08:38Z [codex] CppStudio Groom visual renderer supervision must separate hair billboard/ribbon orientation from width semantics and require user-visible near/far width behavior plus projected-width telemetry before claiming hair primitive correctness. (source: self-improvement:user_correction:da13fb6efeacc11c)
 <!-- agent-self-improvement-doctrine:end -->

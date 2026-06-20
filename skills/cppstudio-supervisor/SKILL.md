@@ -183,6 +183,14 @@ validation skills instead.
    "currently inactive/unsupported in this path" from "intentionally disabled by design". A
    performance fix must not hide, disable, or relabel capability controls as the solution unless the
    user approved that product decision and the donor/current SDK evidence supports it.
+   If a renderer, viewport, shader, material, hair/fur primitive, or performance claim fails a
+   user-visible check once, the supervisor must stop source-only iteration and require measurement
+   before the next patch. The worker must provide a same-launch profiler/frame-capture/app-timer
+   artifact or a symptom-specific numeric metric tied to the visual failure. For hair/fur primitive
+   and width claims, require near/far user-facing screenshots or replay captures plus imported width
+   distribution, shader width conversion, projected pixel width, and any minimum-pixel/AA floor that
+   dominates the result. A claim that the path uses ribbons, strips, curves, RT, or raster is only a
+   route label; it does not prove the user's width, shadow, opacity, or shading complaint is fixed.
 12. For supervised standardized file-format, interchange-format, protocol, SDK-schema, import/export,
    or asset-ingestion bugs, enforce a reference-consumer gate before the worker edits target importer
    behavior or adds local diagnostic code. If the user says other established tools import the same

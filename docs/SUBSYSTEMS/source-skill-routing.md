@@ -138,6 +138,12 @@ generated-project workflow instructions.
   fresh adversarial review reports four or more actionable findings, when findings cross multiple
   subsystems, when two focused attempts fail, when a long-lane acceptance gate fires, or when a
   midstream request changes architecture, product shape, validation strategy, or slice order.
+- CppStudio and Agent-Planning-Harness have separate authority in native C++/CUDA/Vulkan work:
+  CppStudio supplies donor/current-source evidence, code-map state, architecture/backbone choices,
+  GPU lane, control harness, validation, profiling, synchronization, and visible-proof gates that
+  feed the packet, while Planning Harness owns the durable roadmap, milestones, work packages, work
+  items, approval, guard, continuation, and completion-claim gates. Packet state never waives
+  CppStudio engineering requirements.
 - Profiling guidance now treats Vulkan/realtime performance audits as classification work before
   optimization. Source skills require agents to separate present/vsync pacing, startup/shutdown,
   CPU/API churn, GPU pass cost, upload/resource churn, and instrumentation gaps before proposing
@@ -152,6 +158,11 @@ generated-project workflow instructions.
   supporting evidence only; source skills and supervisors require accepted dimensions, accepted row
   counts, rejected startup/resize rows, and the artifact/helper path used for readback before
   accepting size-sensitive frame-time comparisons.
+- Visual renderer claims that fail a user-visible check once now require measurement before another
+  patch. Supervisors must demand same-launch profiler/frame-capture/app-timer evidence or a
+  symptom-specific numeric metric; hair/fur primitive and width claims must separate camera-facing
+  orientation from width semantics and prove imported width distribution, shader conversion,
+  projected near/far pixel width, visible before/after captures, and any minimum-pixel/AA floor.
 - Renderer/performance supervision now requires a donor-semantics gate before implementation when a
   donor-derived mode, material, shader, or artist-visible behavior is involved. Donor sources are
   guardrails for invariants such as lighting mode, shadow/visibility source, alpha/depth/blend

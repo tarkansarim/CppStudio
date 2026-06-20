@@ -4,6 +4,13 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Hardened visual renderer supervision after a full-fur raster lane kept repeating source-only
+  fixes for a user-visible hair-width failure. Once a renderer/viewport/shader/material/hair claim
+  fails a live visual check, the next attempt must start from same-launch profiler/frame-capture,
+  app-timer, or symptom-specific numeric evidence. Hair/fur primitive claims now have to separate
+  camera-facing orientation from width semantics and prove imported widths, shader conversion,
+  projected near/far pixel widths, visible captures, and any minimum-pixel/AA floor before closeout.
+
 - Promoted live viewport/canvas interaction performance verification into CppStudio's reusable
   rules. User-reported panning and zooming lag now requires app-owned FPS/frame-time samples during
   repeated pan and zoom actions as primary closeout proof; internal counters, upload/readback
