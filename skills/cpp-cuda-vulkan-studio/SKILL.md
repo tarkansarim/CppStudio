@@ -665,7 +665,11 @@ When this skill is active, work like a native C++ GPU systems engineer:
   phase is a full-fidelity stress baseline: keep the entire target asset loaded/rendered as-is at
   full density and full quality, deliberately avoid reduced-work tricks, and squeeze the baseline
   renderer architecture for maximum leverage before layering LOD, chunking, streaming, or preview
-  modes on top. When the user names high-FPS peers,
+  modes on top. Use profile-guided bottleneck isolation inside that phase: first profile the full
+  workload and rank the bottlenecks, then temporarily disable unrelated expensive systems only to
+  isolate the current top bottleneck, optimize that bottleneck sharply, re-enable the full workload,
+  re-profile, and repeat for the next bottleneck. Do not keep the diagnostic-disabled state as the
+  fix. When the user names high-FPS peers,
   "cutting edge", Unreal, Unity, TressFX, or equivalent current engines, run current-source/peer-tool
   research before implementation and identify the architecture-level pattern being tested, such as
   culling, clustering, visibility-first shading, tile/bin/compact passes, indirect draws, pass
@@ -1167,7 +1171,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
     idle/final-only, chunking/streaming, or shadow/lighting/scattering-disabled runs may isolate cost
     or become a later user-approved scalability layer, but first profile and optimize the complete
     full-fidelity stress baseline: the full-density/full-quality workload with the entire target asset
-    loaded and rendered as-is. Before
+    loaded and rendered as-is. The isolation order is profile full workload, identify and rank
+    bottlenecks, turn off unrelated cost sources only as temporary diagnostic controls, optimize the
+    leading bottleneck, restore full workload, then re-profile before moving to the next bottleneck.
+    Before
     planning source changes for a slow full-quality path, compare against current high-end peer/donor
     architectures for the same workload and name the architecture change under test. Closeout must
     compare the original full-groom full-quality workload against the treated full-groom full-quality

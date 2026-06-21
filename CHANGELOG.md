@@ -10,9 +10,12 @@ All notable CppStudio changes should be recorded here before pushing to remote.
   reduced-work tricks; LOD, chunking, streaming, decimation, lower samples/resolution, disabled
   shadows/lighting/scattering, cheaper primitive paths, proxy/cache/impostor rendering, and
   idle/final-only updates are now diagnostic or later explicit scalability choices, not the first
-  optimization fix. Cutting-edge peer/donor architecture research is required before source changes
-  when the user invokes Unreal, Unity, TressFX, or similar high-FPS expectations, and closeout must
-  prove same-quality visuals plus timing/profiler improvement on the full-groom target.
+  optimization fix. Added a profile-guided bottleneck isolation loop: profile the whole workload,
+  rank bottlenecks, temporarily disable unrelated expensive systems to isolate the current top
+  bottleneck, optimize it, restore the full workload, and re-profile before moving to the next
+  bottleneck. Cutting-edge peer/donor architecture research is required before source changes when
+  the user invokes Unreal, Unity, TressFX, or similar high-FPS expectations, and closeout must prove
+  same-quality visuals plus timing/profiler improvement on the full-groom target.
 
 - Added a proof-contract gate for user-reported live interaction, renderer, viewport, brush,
   import/export, lighting, and performance bugs. Workers must map the symptom to the exact

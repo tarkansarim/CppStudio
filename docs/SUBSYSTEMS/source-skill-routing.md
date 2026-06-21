@@ -156,7 +156,10 @@ generated-project workflow instructions.
   optimization phase is a full-fidelity stress baseline: optimize the complete full-density/
   full-quality workload with the entire target asset loaded and rendered as-is, deliberately avoid
   reduced-work tricks, then add LOD, chunking, streaming, or preview modes later as separate
-  scalability layers. Reduced-work runs are diagnostics; accepted
+  scalability layers. Profile-guided bottleneck isolation is the diagnostic loop inside that phase:
+  profile the whole workload, rank bottlenecks, temporarily disable unrelated expensive systems to
+  isolate the current top bottleneck, optimize it, restore the full workload, and re-profile before
+  moving to the next bottleneck. Reduced-work runs are diagnostics; accepted
   fixes require same-quality visual proof and profiler/timing improvement on the full-groom target.
   When the user names Unreal, Unity, TressFX, high-FPS peers, or "cutting edge" expectations, workers
   must use current-source/peer-tool research to identify an architecture-level optimization pattern

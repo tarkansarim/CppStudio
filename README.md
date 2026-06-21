@@ -69,8 +69,8 @@ use commit identifiers so the ordering stays clear; only the changelog itself is
 - `unreleased` - Renderer, viewport, grooming/fur, simulation, and XR performance work now has a
   full-fidelity stress baseline quality gate: optimize the entire target asset loaded/rendered as-is
   at full density and quality before adding LOD/chunking/streaming/preview scalability layers, and
-  require cutting-edge peer/donor architecture research before implementation for high-FPS renderer
-  expectations.
+  use profile-guided bottleneck isolation to optimize one ranked bottleneck at a time before
+  requiring cutting-edge peer/donor architecture research for high-FPS renderer expectations.
 - `unreleased` - User-reported live interaction, renderer, viewport, brush, import/export, lighting,
   and performance bugs now require a proof-contract table before validation is accepted, blocking
   closeout from neighboring signals such as dispatch counters, state JSON, nonblank renders, full

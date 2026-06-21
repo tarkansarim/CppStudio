@@ -63,9 +63,12 @@ Current `nsys` resolves through the CUDA Toolkit launcher to Nsight Systems 2025
   tradeoff. LOD, decimation, lower sample count, lower resolution, disabled shadows/lighting/
   scattering, cheaper primitive types, proxy/cache/impostor paths, chunking/streaming, and final-only
   or idle-only updates are diagnostic or later scalability/preview layers, not the first optimization
-  fix. Use them to isolate the cost owner only after recording the full-fidelity stress baseline, then
-  return to the original full-density/full-quality workload with the entire target asset loaded and
-  compare against the treated full-groom full-quality path. When the user invokes high-FPS peer tools or
+  fix. Use them to isolate the cost owner only after recording the full-fidelity stress baseline and
+  ranking bottlenecks. The allowed loop is: profile the complete workload, isolate the top bottleneck
+  by temporarily disabling unrelated expensive systems, optimize that bottleneck, restore the complete
+  workload, then re-profile before moving to the next bottleneck. Return to the original
+  full-density/full-quality workload with the entire target asset loaded and compare against the
+  treated full-groom full-quality path. When the user invokes high-FPS peer tools or
   "cutting edge" expectations, gather current peer/donor architecture evidence before recommending
   source changes. (source: self-improvement:user_correction:f99b833b96bd0280)
 - When reading profiling or OSTM artifacts, prefer the project-owned report/readback helper when one
