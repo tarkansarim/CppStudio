@@ -660,13 +660,18 @@ When this skill is active, work like a native C++ GPU systems engineer:
   shader/material model, lighting/shadow/scattering features, render resolution, live interaction
   path, and accepted visual artifacts. LOD, decimation, lower sample count, lower resolution,
   disabled shadows/lighting/scattering, cheaper primitive types, proxy/cache/impostor paths,
-  final-only or idle-only updates, and other reduced-work substitutions are diagnostics or explicit
-  scalability modes, not optimization fixes. When the user names high-FPS peers, "cutting edge",
-  Unreal, Unity, TressFX, or equivalent current engines, run current-source/peer-tool research before
-  implementation and identify the architecture-level pattern being tested, such as culling,
-  clustering, visibility-first shading, tile/bin/compact passes, indirect draws, pass scheduling, or
-  resource-lifetime changes. Closeout needs same-quality visual proof plus timing/profiler evidence;
-  a reduced-quality speedup cannot close the root performance bug. (source: self-improvement:user_correction:f99b833b96bd0280)
+  final-only or idle-only updates, chunking/streaming, and other reduced-work substitutions are
+  diagnostics or later explicit scalability modes, not the first optimization fix. The required first
+  phase is a full-fidelity stress baseline: keep the entire target asset loaded/rendered as-is at
+  full density and full quality, deliberately avoid reduced-work tricks, and squeeze the baseline
+  renderer architecture for maximum leverage before layering LOD, chunking, streaming, or preview
+  modes on top. When the user names high-FPS peers,
+  "cutting edge", Unreal, Unity, TressFX, or equivalent current engines, run current-source/peer-tool
+  research before implementation and identify the architecture-level pattern being tested, such as
+  culling, clustering, visibility-first shading, tile/bin/compact passes, indirect draws, pass
+  scheduling, or resource-lifetime changes. Closeout needs same-quality visual proof plus
+  timing/profiler evidence on the full-groom target; a reduced-quality or partial-groom speedup cannot
+  close the root performance bug. (source: self-improvement:user_correction:f99b833b96bd0280)
 - For visual renderer claims that fail a user-visible check once, do not continue with source-label
   reasoning or another local patch before adding measurement. The next attempt must start from a
   profiler, frame capture, app-owned timestamp/pass-timing report, or a symptom-specific numeric
@@ -1157,15 +1162,17 @@ When this skill is active, work like a native C++ GPU systems engineer:
     creation and shutdown from steady-state frames. If app timing readbacks are zero/missing/stale or
     Nsight Vulkan/NVTX marker reports have no data, call out the instrumentation/pass-attribution gap
     instead of making pass-level claims from API summaries alone.
-    For full-quality renderer or viewport performance work, cheaper output is not the optimization.
-    Feature-off, LOD, decimation, lower-resolution, lower-sample, proxy, idle/final-only, or
-    shadow/lighting/scattering-disabled runs may isolate cost, but they must be labeled diagnostic or
-    user-approved scalability. They cannot be kept as the accepted fix unless the user explicitly
-    chose that quality tradeoff. Before planning source changes for a slow full-quality path, compare
-    against current high-end peer/donor architectures for the same workload and name the architecture
-    change under test. Closeout must compare the original full-quality workload against the treated
-    full-quality workload with visual proof that density, material/shader behavior, primitive
-    semantics, lighting/shadows, and interaction behavior were preserved. (source: self-improvement:user_correction:f99b833b96bd0280)
+    For full-quality renderer or viewport performance work, cheaper output is not the first
+    optimization target. Feature-off, LOD, decimation, lower-resolution, lower-sample, proxy,
+    idle/final-only, chunking/streaming, or shadow/lighting/scattering-disabled runs may isolate cost
+    or become a later user-approved scalability layer, but first profile and optimize the complete
+    full-fidelity stress baseline: the full-density/full-quality workload with the entire target asset
+    loaded and rendered as-is. Before
+    planning source changes for a slow full-quality path, compare against current high-end peer/donor
+    architectures for the same workload and name the architecture change under test. Closeout must
+    compare the original full-groom full-quality workload against the treated full-groom full-quality
+    workload with visual proof that density, material/shader behavior, primitive semantics,
+    lighting/shadows, interaction behavior, and whole-asset coverage were preserved. (source: self-improvement:user_correction:f99b833b96bd0280)
 19. Before greenfield scaffolding, major backbone edits, or native GPU architecture brainstorming,
     read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library,
     CUDA+Vulkan combined/interop app, native GUI/HUD/editor UI, AI runtime, neural 3D viewer,

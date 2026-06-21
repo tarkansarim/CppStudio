@@ -151,12 +151,16 @@ generated-project workflow instructions.
 - Full-quality renderer/viewport/grooming performance fixes now have a quality-preservation gate.
   Workers must name the protected quality invariant before source edits and cannot close a root
   performance bug by keeping LOD, decimation, lower samples/resolution, disabled shadows/lighting/
-  scattering, proxy/cache/impostor paths, cheaper primitive types, or idle/final-only updates unless
-  the user explicitly asked for that scalability tradeoff. Those reduced-work runs are diagnostics
-  only; accepted fixes require same-quality visual proof and profiler/timing improvement. When the
-  user names Unreal, Unity, TressFX, high-FPS peers, or "cutting edge" expectations, workers must use
-  current-source/peer-tool research to identify an architecture-level optimization pattern before
-  implementation. Source item: `self-improvement:user_correction:f99b833b96bd0280`.
+  scattering, proxy/cache/impostor paths, cheaper primitive types, chunking/streaming, or
+  idle/final-only updates unless the user explicitly asked for that scalability tradeoff. The first
+  optimization phase is a full-fidelity stress baseline: optimize the complete full-density/
+  full-quality workload with the entire target asset loaded and rendered as-is, deliberately avoid
+  reduced-work tricks, then add LOD, chunking, streaming, or preview modes later as separate
+  scalability layers. Reduced-work runs are diagnostics; accepted
+  fixes require same-quality visual proof and profiler/timing improvement on the full-groom target.
+  When the user names Unreal, Unity, TressFX, high-FPS peers, or "cutting edge" expectations, workers
+  must use current-source/peer-tool research to identify an architecture-level optimization pattern
+  before implementation. Source item: `self-improvement:user_correction:f99b833b96bd0280`.
 - Before/after profiling guidance now requires cloning the accepted baseline launch shape for
   representative comparisons: replay recordings, scene/assets, GPU/no-NGX/backend settings,
   window/maximized state, profile/debug view, warmup, and scripted-input flags must match except for

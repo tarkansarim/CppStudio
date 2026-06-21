@@ -4,13 +4,15 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
-- Added a quality-preserving performance gate for renderer, viewport, grooming/fur, simulation, and
-  XR work. LOD, decimation, lower samples/resolution, disabled shadows/lighting/scattering, cheaper
-  primitive paths, proxy/cache/impostor rendering, and idle/final-only updates are now diagnostic or
-  explicit scalability choices, not accepted optimization fixes. Cutting-edge peer/donor architecture
-  research is required before source changes when the user invokes Unreal, Unity, TressFX, or similar
-  high-FPS expectations, and closeout must prove same-quality visuals plus timing/profiler
-  improvement.
+- Added a quality-preserving, full-fidelity stress baseline performance gate for renderer, viewport,
+  grooming/fur, simulation, and XR work. The first optimization phase must keep the entire target
+  asset loaded and rendered as-is at full density and full quality while deliberately avoiding
+  reduced-work tricks; LOD, chunking, streaming, decimation, lower samples/resolution, disabled
+  shadows/lighting/scattering, cheaper primitive paths, proxy/cache/impostor rendering, and
+  idle/final-only updates are now diagnostic or later explicit scalability choices, not the first
+  optimization fix. Cutting-edge peer/donor architecture research is required before source changes
+  when the user invokes Unreal, Unity, TressFX, or similar high-FPS expectations, and closeout must
+  prove same-quality visuals plus timing/profiler improvement on the full-groom target.
 
 - Added a proof-contract gate for user-reported live interaction, renderer, viewport, brush,
   import/export, lighting, and performance bugs. Workers must map the symptom to the exact
