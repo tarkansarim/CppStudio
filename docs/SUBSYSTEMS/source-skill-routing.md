@@ -148,6 +148,15 @@ generated-project workflow instructions.
   optimization. Source skills require agents to separate present/vsync pacing, startup/shutdown,
   CPU/API churn, GPU pass cost, upload/resource churn, and instrumentation gaps before proposing
   shader, shadow, ray tracing, CUDA, or compute edits.
+- Full-quality renderer/viewport/grooming performance fixes now have a quality-preservation gate.
+  Workers must name the protected quality invariant before source edits and cannot close a root
+  performance bug by keeping LOD, decimation, lower samples/resolution, disabled shadows/lighting/
+  scattering, proxy/cache/impostor paths, cheaper primitive types, or idle/final-only updates unless
+  the user explicitly asked for that scalability tradeoff. Those reduced-work runs are diagnostics
+  only; accepted fixes require same-quality visual proof and profiler/timing improvement. When the
+  user names Unreal, Unity, TressFX, high-FPS peers, or "cutting edge" expectations, workers must use
+  current-source/peer-tool research to identify an architecture-level optimization pattern before
+  implementation. Source item: `self-improvement:user_correction:f99b833b96bd0280`.
 - Before/after profiling guidance now requires cloning the accepted baseline launch shape for
   representative comparisons: replay recordings, scene/assets, GPU/no-NGX/backend settings,
   window/maximized state, profile/debug view, warmup, and scripted-input flags must match except for
