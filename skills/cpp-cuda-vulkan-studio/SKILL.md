@@ -667,9 +667,10 @@ When this skill is active, work like a native C++ GPU systems engineer:
   renderer architecture for maximum leverage before layering LOD, chunking, streaming, or preview
   modes on top. Use profile-guided bottleneck isolation inside that phase: first profile the full
   workload and rank the bottlenecks, then temporarily disable unrelated expensive systems only to
-  isolate the current top bottleneck, optimize that bottleneck sharply, re-enable the full workload,
-  re-profile, and repeat for the next bottleneck. Do not keep the diagnostic-disabled state as the
-  fix. When the user names high-FPS peers,
+  isolate the current top bottleneck, optimize that bottleneck until before/after profiling shows it
+  is no longer the dominant measured cost or the remaining tradeoff is explicitly documented,
+  re-enable the full workload, re-profile, and repeat for the next bottleneck. Do not keep the
+  diagnostic-disabled state as the fix. When the user names high-FPS peers,
   "cutting edge", Unreal, Unity, TressFX, or equivalent current engines, run current-source/peer-tool
   research before implementation and identify the architecture-level pattern being tested, such as
   culling, clustering, visibility-first shading, tile/bin/compact passes, indirect draws, pass
