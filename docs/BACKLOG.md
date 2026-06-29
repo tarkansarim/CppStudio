@@ -39,6 +39,27 @@ Source inspiration: CppStudio sample projects and the current donor library.
 - Validation idea: trigger-lane prompts for character modeling, material painting, VFX authoring,
   grooming, paint/fluid simulation, and viewport tools.
 
+### Shared Artist-Tool Substrate Rule
+
+Source inspiration: Sigma Painter mask rebuild discussion on 2026-06-29.
+
+- Promote the shared-substrate expectation for brush, picker, swatch, color-wheel, and stroke tool
+  families into an explicit CppStudio implementation rule.
+- Require agents to identify common state and interaction paths before adding mode-specific code:
+  pointer sampling, brush settings, pressure/stylus handling, color selection, picker geometry,
+  swatches, GPU stroke command construction, resource update flow, serialization, and validation
+  harness behavior.
+- Keep tool-specific code only for genuinely different semantics, such as paint target, resource
+  format, compositing rule, value interpretation, or backend synchronization needs.
+- Reject duplicate brush, picker, swatch, or stroke paths when a shared abstraction can express the
+  behavior cleanly.
+- Candidate landing surface: the CppStudio source skill guidance for native GPU artist tools, plus
+  any nested recipe/reference document that owns brush or tool-family patterns.
+- Validation idea: pressure/replay prompts for paint, mask, sculpt, groom, and viewport-tool slices
+  that fail if workers introduce parallel brush or picker paths without a stated semantic reason.
+- Pressure Lab follow-up: start with `progressive_occlusion_artifact_slot_assembly` or an equivalent
+  route-graph lane before promoting the rule beyond CppStudio source guidance.
+
 ### Engine And DCC Bridge Guidance
 
 Source inspiration: Unreal/Unity agent assistants, DCC pipelines, USD/glTF donors.
