@@ -3,6 +3,7 @@ name: cpp-cuda-vulkan-studio
 description: "Route native C++ GPU, Vulkan, CUDA, CMake, GUI, profiling, code-map, donor, planning, supervision, and viewport work to the smallest CppStudio module."
 ---
 
+<!-- thin-relay:v1 -->
 # CppStudio Router
 
 Read only the module needed for the current task:
