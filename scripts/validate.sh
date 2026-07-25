@@ -110,6 +110,13 @@ required_repo_files=(
     "research/donor-library/trigger-results-2026-05-10-installed.json"
     "companion-skill-snippets/user-agents/cppstudio-relay.md"
     "skills/cpp-cuda-vulkan-studio/package-manifest.json"
+    "skills/cpp-cuda-vulkan-studio/modules/technical-overlays.md"
+    "skills/cpp-cuda-vulkan-studio/modules/process/standard.md"
+    "skills/cpp-cuda-vulkan-studio/modules/process/investigative.md"
+    "skills/cpp-cuda-vulkan-studio/modules/process/governed.md"
+    "skills/cpp-cuda-vulkan-studio/modules/process/recovery.md"
+    "skills/cpp-cuda-vulkan-studio/modules/process/strict-doctrine-index.md"
+    "skills/cpp-cuda-vulkan-studio/modules/process/strict-doctrine-reference.md"
     "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md"
     "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/agents/openai.yaml"
     "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/references/gui-options.md"
@@ -117,6 +124,7 @@ required_repo_files=(
     "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/agents/openai.yaml"
     "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
     "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md"
+    "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/strict-project-planner.md"
     "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md"
     "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/agents/openai.yaml"
     "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/references/control-harness.md"
@@ -128,6 +136,7 @@ required_repo_files=(
     "skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/scripts/important_instruction_ledger.py"
     "skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
     "skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/agents/openai.yaml"
+    "skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/references/strict-supervisor.md"
     "skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/scripts/slice_phase_report.py"
     "skills/cpp-cuda-vulkan-studio/modules/vulkan-compute-sync/GUIDE.md"
     "skills/cpp-cuda-vulkan-studio/modules/vulkan-compute-sync/agents/openai.yaml"
@@ -159,82 +168,90 @@ for rel_path in "${required_repo_files[@]}"; do
 done
 grep -q "scripts/bootstrap_code_map.py --enable --force" \
     "${SKILL_DIR}/assets/app-library-template/README.md"
-grep -q "do a pre-plan research pass before asking the user to switch to" \
+grep -q "base invariants + one process state + relevant technical overlays" \
     "${CORE_MODULE}"
-grep -q "Open \`cppstudio-project-planner\` immediately when available" \
+grep -q "Task size and consequence are separate" \
     "${CORE_MODULE}"
-grep -q "Separate current leading approaches from" \
+grep -q "A focused attempt is:" \
     "${CORE_MODULE}"
-grep -q "extensive state-of-the-art web ceiling check" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
-grep -q "Project Dos And Don'ts" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
-grep -q "Primary visible loop before breadth" \
+grep -q "Planning Harness is the sole owner" \
     "${CORE_MODULE}"
-grep -q "Shared tool substrate before tool proliferation" \
+grep -q "Do not run reviews on a fixed slice cadence" \
     "${CORE_MODULE}"
+grep -q "Recovery is an incident state" \
+    "${CORE_MODULE}"
+grep -q "temporarily replaces the active process" \
+    "${CORE_MODULE}"
+grep -q "One failed Standard hypothesis moves to Investigative, not Recovery" \
+    "${CORE_MODULE}"
+grep -q "Standard, Investigative, and Governed must not read it" \
+    "${CORE_MODULE}"
+grep -q "Standard does not require:" \
+    "${SKILL_DIR}/modules/process/standard.md"
+grep -q "one canonical proof route" \
+    "${SKILL_DIR}/modules/process/investigative.md"
+grep -q "Planning Harness is the only durable planning authority" \
+    "${SKILL_DIR}/modules/process/governed.md"
+grep -q "No fixed two-slice or three-slice review cadence" \
+    "${SKILL_DIR}/modules/process/governed.md"
+grep -q "Freeze new speculative implementation" \
+    "${SKILL_DIR}/modules/process/recovery.md"
+grep -q "Do not enter full Recovery merely because one test failed" \
+    "${SKILL_DIR}/modules/process/recovery.md"
+grep -q "Governed process controls stay inactive while Recovery is active" \
+    "${SKILL_DIR}/modules/process/recovery.md"
+grep -q "Technical overlays are independent of process state" \
+    "${SKILL_DIR}/modules/technical-overlays.md"
+grep -q "Standardized contracts require official semantics" \
+    "${SKILL_DIR}/modules/technical-overlays.md"
+grep -q "Planning Harness is the sole durable planning authority" \
+    "${SKILL_DIR}/modules/cppstudio-project-planner/GUIDE.md"
+grep -q "Research is decision-driven" \
+    "${SKILL_DIR}/modules/cppstudio-project-planner/GUIDE.md"
+grep -q "Do not use a fixed review cadence" \
+    "${SKILL_DIR}/modules/cppstudio-supervisor/GUIDE.md"
+grep -q "Phase telemetry is optional in ordinary supervision" \
+    "${SKILL_DIR}/modules/cppstudio-supervisor/GUIDE.md"
+grep -q "Hard realignment rule" \
+    "${SKILL_DIR}/modules/process/strict-doctrine-reference.md"
 grep -q "Planning depth before source" \
-    "${CORE_MODULE}"
-grep -q "Active slice watchlist before source" \
-    "${CORE_MODULE}"
-grep -q "per-slice detailed planning gate" \
-    "${CORE_MODULE}"
-grep -q "important-instruction-ledger" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
-grep -q "Agent Planning Harness Escalation" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
-grep -q "four or more actionable findings" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
-grep -q "Agent-Planning-Harness escalation" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
+    "${SKILL_DIR}/modules/process/strict-doctrine-reference.md"
 grep -q "Slice Phase Telemetry" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
-grep -q "classification=required_acceptance" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
-grep -q "slice_phase_report.py" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
-grep -q "Verification Budget And Diminishing Returns" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
-grep -q "Two attempts at the same tool route fail" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
-grep -q "verification cost" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
-grep -q "four or more actionable issues" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
-grep -q "Agent-Planning-Harness escalation state" \
-    "${CORE_MODULE}"
-grep -q "docs/agent-context/SLICE_WATCHLIST.md" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/GUIDE.md"
-grep -q "Send a fix packet to the owning repo worker immediately" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
-grep -q "fresh-context review" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
-grep -q "primary planning artifact" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
-grep -q "Rewind readiness" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
-grep -q "Donor Feature Disposition Matrix" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
-grep -q "skim donor code" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
-grep -q "important elements before creating the plan" \
-    "${CORE_MODULE}"
-grep -q "Parallel planning is an ownership map" \
-    "${CORE_MODULE}"
+    "${SKILL_DIR}/modules/cppstudio-supervisor/references/strict-supervisor.md"
+grep -q "Level 4 - Slice Readiness" \
+    "${SKILL_DIR}/modules/cppstudio-project-planner/references/strict-project-planner.md"
+grep -q "Strict Doctrine Index" \
+    "${SKILL_DIR}/modules/process/strict-doctrine-index.md"
+
+for lean_module in \
+    "${CORE_MODULE}" \
+    "${SKILL_DIR}/modules/technical-overlays.md" \
+    "${SKILL_DIR}/modules/process/standard.md" \
+    "${SKILL_DIR}/modules/process/investigative.md" \
+    "${SKILL_DIR}/modules/process/governed.md" \
+    "${SKILL_DIR}/modules/process/recovery.md" \
+    "${SKILL_DIR}/modules/cppstudio-project-planner/GUIDE.md" \
+    "${SKILL_DIR}/modules/cppstudio-supervisor/GUIDE.md"; do
+    if (( $(wc -l <"${lean_module}") > 180 )); then
+        echo "Progressive-enforcement module is too large: ${lean_module}" >&2
+        exit 1
+    fi
+done
+
 grep -q "Planning depth contract:" \
     "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "primary user-visible loop" \
     "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "shared tool substrate" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/strict-project-planner.md"
 grep -q "Level 2 whole-product scaffold" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/strict-project-planner.md"
 grep -q "just-in-time slice readiness packet" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/strict-project-planner.md"
 grep -q "parallelization map" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/strict-project-planner.md"
 grep -q "Do not hide the" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/strict-project-planner.md"
 grep -q "Primary visible loop:" \
     "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "First solid tool:" \
@@ -268,13 +285,13 @@ grep -q "primary visible interaction loop" \
 grep -q "GUI/product-surface" \
     "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "authoring model/source of truth" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/strict-project-planner.md"
 grep -q "comparable current tools" \
     "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "Authoring Model Choices" \
     "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "agentic control harness in the initial plan by default" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/strict-project-planner.md"
 grep -q "primary control and observation layer" \
     "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md"
 grep -q "what the user is seeing" \
@@ -282,21 +299,21 @@ grep -q "what the user is seeing" \
 grep -q "visible link table has been shown" \
     "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md"
 grep -q "I am UI-blind on this" \
-    "${CORE_MODULE}"
+    "${SKILL_DIR}/modules/process/strict-doctrine-reference.md"
 grep -q "harness-only or JSON-only" \
-    "${CORE_MODULE}"
+    "${SKILL_DIR}/modules/process/strict-doctrine-reference.md"
 grep -q "not progress on the reported visible bug" \
     "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md"
 grep -q "JSON state change" \
     "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md"
 grep -q "Hard realignment rule" \
-    "${CORE_MODULE}"
+    "${SKILL_DIR}/modules/process/strict-doctrine-reference.md"
 grep -q "realignment note" \
-    "${CORE_MODULE}"
+    "${SKILL_DIR}/modules/process/strict-doctrine-reference.md"
 grep -q "Direct foreground app launches are" \
-    "${CORE_MODULE}"
+    "${SKILL_DIR}/modules/process/strict-doctrine-reference.md"
 grep -q "sculpting-brushes.md" \
-    "${CORE_MODULE}"
+    "${SKILL_DIR}/modules/process/strict-doctrine-reference.md"
 grep -q "If GUI or interaction work stalls" \
     "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md"
 grep -q "through \`ostm\` when the offscreen-test-manager" \
@@ -308,7 +325,7 @@ grep -q "viewport-session-testing" \
 grep -q "record/replay real widget" \
     "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md"
 grep -q "User-facing verification is the acceptance surface" \
-    "${CORE_MODULE}"
+    "${SKILL_DIR}/modules/process/strict-doctrine-reference.md"
 grep -q "visible record/stop/replay" \
     "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/GUIDE.md"
 grep -q "held-button or stylus-contact move samples" \
@@ -320,7 +337,7 @@ grep -q "primary_button_down" \
 grep -q "visible record/stop/replay" \
     "${SKILL_DIR}/assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md"
 grep -q "app-owned viewport-session testing lane" \
-    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/strict-project-planner.md"
 grep -q "Viewport Session Testing" \
     "${SKILL_DIR}/assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md"
 grep -q "run_viewport_session_smoke.py" \

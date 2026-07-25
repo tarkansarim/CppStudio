@@ -15,9 +15,9 @@ C++/CUDA/Vulkan development.
 ## Source Of Truth
 
 - Edit `skills/cpp-cuda-vulkan-studio/` in this repo.
-- For important user rules, prerequisites, corrections, and supervision constraints that must
-  survive compaction, use the bundled `important-instruction-ledger` source skill and keep
-  `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md` current before continuing related work.
+- Use Planning Harness for durable planned-work state. The legacy
+  `important-instruction-ledger` remains available only as a selective Recovery
+  diagnostic; do not require it for ordinary CppStudio source edits.
 - Use `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` as the
   maintained code map for this repo.
 - Before changing repo files, use the maintained code map to choose the matching subsystem doc and
@@ -29,18 +29,14 @@ C++/CUDA/Vulkan development.
 - Do not move private app, local workstation, or other project-specific skills back into user-level
   Codex from this repo.
 
-## Donor-First Code Rule
+## Evidence Routing
 
-- For CppStudio skill, planning, GUI/HUD, project-template, or donor-routing work, training data is
-  never enough before touching code. First read the relevant repo skill, maintained code map route,
-  and the smallest matching donor-library route/category/profile. Then state which sources are
-  grounding the change.
-- If no matching donor route exists, record that gap and do focused research before designing or
-  implementing the missing behavior. Do not fill the gap from memory and proceed as if it were
-  donor-backed.
-- Product-shape decisions for native GPU tools, especially viewport type, timeline/transport
-  placement, editor layout, authoring model, solver architecture, and GUI stack, require donor or
-  peer-tool evidence before implementation.
+- Use repository facts first. Load donor or peer-tool evidence when a change
+  depends on an unfamiliar design, product-shape choice, or external behavior.
+- Use official specifications, headers, examples, and tests for standardized
+  formats, protocols, SDK schemas, and conformance work.
+- Do not require donor research for a bounded change whose owner and contract
+  are already clear.
 
 ## Supervised Worker Interrogation
 
@@ -106,10 +102,9 @@ C++/CUDA/Vulkan development.
   generated templates, CMake/toolchain behavior, package manifests, donor validation, trigger
   validation, or any previous push that failed GitHub validation. Rollout validation is an install
   proof; it is not a substitute for this CI gate.
-- After adding or changing skills, skill descriptions, donor categories, donor profiles, donor routing,
-  or README donor inventories, run a sub-agent trigger lane before close-out. Use multiple realistic
-  prompts that should trigger the changed skill/routing, verify the agents select the expected skill and
-  donor profiles, then fix any ambiguity they find before committing.
+- Run a fresh-agent trigger lane when discoverability, routing, or state
+  selection changes. Pure wording, reference, or implementation changes use
+  focused source validation unless their claim requires behavioral proof.
 - The rollout script validates the router package, removes known former top-level CppStudio skills,
   and updates the user-level relay. The sync script validates only the router package.
 - If validation fails because of a real script/template issue, fix the repo copy first, then rerun
@@ -174,16 +169,3 @@ When finishing work here, report:
   qualifying push to remote
 - the exact reason if either change-history surface was not updated
 - any installed-tool gaps, such as missing `clang-format` or `clang-tidy`
-
-<!-- agent-self-improvement-doctrine:begin -->
-## Accepted Self-Improvement Doctrine
-
-- 2026-05-25T03:49:05Z [global] For donor-derived shader, material, or light parameter surfaces, CppStudio supervisor closeout must require a donor parameter inventory with source anchors and classify every artist-facing or runtime-significant donor parameter across UI, CLI/config, model/state, runtime payload, and validation readback; visible widget wiring proof alone is not parameter-surface closure. (source: self-improvement:user_correction:acad59bb360d5e49)
-- 2026-05-31T20:42:44Z [global] CppStudio supervised parameter-surface closeout must treat transform/orientation controls as separate critical surfaces for lights, cameras, gizmos, emitters, colliders, probes, volumes, brush cursors, and other transform-owned UI; position, size, or intensity mutation does not prove rotation, aim, basis-vector, or orientation wiring, and reported rotate/aim/move/scale failures require direct before/after proof through the real UI/control handler into committed state and runtime/readback payload or explicit absent/hidden/deferred/blocked classification. (source: self-improvement:user_correction:00999cdab0138518)
-- 2026-06-01T05:20:02Z [global] CppStudio control-surface closeout for transform-owned lights, cameras, renderers, shaders, and materials must prove user-facing behavior/output invariants such as aim, pivot stability, distance, enabled light set, shader/shadow payload, and receiver/hair luminance; state-vector equality alone cannot close user-reported lighting or viewport behavior bugs. (source: self-improvement:user_correction:ecd187f2ce9aa635)
-- 2026-06-01T06:30:25Z [global] CppStudio supervisor closeout must treat a fresh user live report that the same UI/render/control surface still fails as proof invalidation. Reopen the slice and reconcile the exact user path; contradictory artifacts such as a light-on proof whose final readback has that light disabled are failed proof paths, not supporting evidence. (source: self-improvement:user_correction:0eb8ae93fa837dec)
-- 2026-06-18T08:57:54Z [global] For CppStudio donor routing, standardized file formats, interchange formats, protocols, SDK schemas, and conformance suites are contract-level donor surfaces: official specs, API headers, source, examples, and tests define semantics even when code reuse is reference-only or dependency-bounded; Groom-discovered reusable gaps must be patched in CppStudio source and rolled out before resuming target implementation. (source: self-improvement:user_correction:4d5a7be8f0e9bf04)
-- 2026-06-20T17:43:32Z [global] For CppStudio visual interaction proof on native GPU tools, before/held/in-flight/after evidence must prove untouched background, canvas, viewport, layer, and UI regions remain stable outside the acted-on region; route counters, changed-pixel counts, nonblank screenshots, FPS, or final-state stability cannot close a visible fix when captures show unrelated corruption such as black clears or alpha/composite failure. (source: self-improvement:user_correction:e98c856c6b0de402)
-- 2026-06-20T21:16:54Z [global] CppStudio/Groom live interaction proof must use exact user-path recording or OSTM real-input held mouse behavior; synthetic helpers are diagnostics only unless they are the user path. (source: self-improvement:user_correction:b1ef7e77c9b73708)
-- 2026-06-21T00:29:02Z [global] CppStudio native GPU renderer/viewport/grooming performance fixes must preserve the full-quality target by default: the first optimization phase is a full-fidelity stress baseline, with the entire target asset loaded/rendered as-is at full density and full quality while deliberately avoiding reduced-work tricks; LOD, decimation, lower samples/resolution, disabled lighting/shadows/scattering, cheaper primitives, proxy/cache/impostor paths, chunking/streaming, and idle/final-only updates are diagnostics or later explicit scalability choices, not the first optimization fix; diagnostic isolation must profile the full workload first, rank bottlenecks, temporarily disable unrelated expensive systems only to optimize the current top bottleneck, restore the full workload, and re-profile before moving to the next bottleneck; when high-FPS peers or cutting-edge expectations are named, require current peer/donor architecture research before source changes and close only with same-quality visual proof plus timing/profiler improvement on the full-groom target. (source: self-improvement:user_correction:f99b833b96bd0280)
-<!-- agent-self-improvement-doctrine:end -->

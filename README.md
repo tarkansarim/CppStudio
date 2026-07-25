@@ -413,37 +413,32 @@ What the supervisor is responsible for:
 - Verify the target repo, provider, tmux session, and chat identity before sending work.
 - Route implementation to the repo's owner worker instead of patching another repo directly.
 - Read the worker's actual plan artifact before approving or rejecting it.
-- Maintain a mechanical adversarial-review cadence in the worker watchlist or status before every
-  implementation nudge and after every verified slice. If the last reviewed slice or
-  `slices_since_review` state is missing, stale, or unknown, the review is due before the next slice.
+- Run a fresh review only when the protected contract or material risk boundary
+  changes, evidence stays contradictory, integration ownership is uncertain, or
+  the user asks.
 - Poll until the worker has stopped, hit a blocker, or produced closeout evidence.
 - Interrogate unclear worker decisions before guessing why they happened.
 - Send actionable adversarial-review or `codex exec` findings back to the owning worker.
-- Check Rewind, code-map, OSTM/viewport-session, and validation evidence before calling a lane done.
+- Check only the process and technical overlays active for the claim before
+  calling a lane done.
 - Follow user-level cross-repo routing doctrine when the fix belongs to another repo or reusable
   agent tool.
-- For long-running, verification-heavy, OSTM/profiling-heavy, or repeated-failure lanes, collect
-  `CPPSTUDIO_PHASE` markers and generate a phase report so slowdowns are visible by phase instead of
-  inferred from chat history.
+- During Recovery, collect `CPPSTUDIO_PHASE` markers only when timing or cycle
+  location can decide what to stop or change.
 
 Codex worker model defaults are explicit. For substantive supervised CppStudio-backed native GPU
 work, launch or resume Codex workers with `model_reasoning_effort="xhigh"` and verify the footer or
 process args. Do not enable fast/priority service by default; use `service_tier="priority"` only when
 the user specifically asks for fast or priority execution.
 
-Slice phase telemetry is deliberately small. Workers can mark phases such as `research`,
+Optional Recovery telemetry is deliberately small. Workers can mark phases such as `research`,
 `donor_route`, `edit`, `build_test`, `ostm_ui`, `ostm_profile`, `review`, `code_map`, and `commit`,
 then the bundled `skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/scripts/slice_phase_report.py` helper summarizes
 duration, OSTM job ids, artifacts, and whether verification was required, supporting, redundant,
 stale/rejected, or failed tooling. This makes it easier to see when validation is earning its cost
 and when a lane is thrashing.
 
-For lanes where telemetry is required, timing is expected in the worker chat as the work happens,
-not only in a file at the end. Substantive worker replies should include a compact `Phase time:`
-line, such as `research 4m done; edit 8m active; OSTM 0m; blockers none`, backed by canonical
-`CPPSTUDIO_PHASE event=start/end phase=... ts=...` markers. If the supervisor has to keep asking
-how long each part took, that is treated as a harness-rule gap to correct, not as a normal worker
-style preference.
+Telemetry is not required in ordinary worker replies or closeout.
 
 The supervisor also applies a diminishing-returns gate to that report. If the smallest real
 user-facing proof already establishes acceptance, extra checks are redundant unless they target a
@@ -704,14 +699,13 @@ checkpoints and temporary anchors are not public verified-slice commits.
 
 ## Skills And Donors Included
 
-### Bundled Skills
+### Bundled Modules
 
-- `cpp-cuda-vulkan-studio`: installed user-level skill for Vulkan-first C++ GPU, CUDA, combined
-  CUDA/Vulkan builds, explicit interop work, project scaffolding, validation lanes, and donor routing.
-- `cppstudio-project-planner`: installed user-level skill for upfront project intake before
-  scaffolding or major architecture work. It chooses the CppStudio archetype/template, GPU lane,
-  GUI/HUD options, agentic control harness, donor routes, web checks, artist-input requirements such
-  as Wacom/stylus pressure, code-map policy, and validation plan with the user.
+- `cpp-cuda-vulkan-studio`: the one installed discoverable skill. It selects a
+  Standard, Investigative, or Governed process state, adds Recovery only for an
+  active incident, and loads technical modules on demand.
+- `cppstudio-project-planner`: nested engineering intake for Planning Harness;
+  it does not own a parallel plan hierarchy.
 - `native-cpp-gui-hud`: installed user-level skill for choosing native C++ GUI, HUD, editor UI,
   viewport overlay, gizmo, plotting, desktop UI, runtime/game UI, and embedded-web UI stacks. When it
   presents options, it includes links where users can inspect how each GUI looks.
@@ -721,12 +715,10 @@ checkpoints and temporary anchors are not public verified-slice commits.
 - `viewport-session-testing`: installed user-level skill for app-owned UI/viewport session
   recording and replay, including mouse, keyboard, stylus, camera, tool, timeline, node, gizmo,
   screenshot/capture, semantic trace, and before/after report workflows.
-- `important-instruction-ledger`: installed user-level skill that now acts as an active per-slice
-  watchlist. It records what supervising or direct agents must watch, verify, block, or reject
-  during planning, worker nudges, source edits, commits, and closeout; user hard rules are one input
-  to that watchlist, not the whole mechanism.
-- `cppstudio-supervisor`: installed user-level skill for supervision-only tmux/subagent worker
-  orchestration, adversarial-review fix routing, polling, interrogation, and closeout evidence.
+- `important-instruction-ledger`: legacy nested Recovery diagnostic; it is not
+  an ordinary per-slice requirement.
+- `cppstudio-supervisor`: nested supervision guide for worker orchestration,
+  evidence checks, and incident recovery.
 - `vulkan-compute-sync`: installed user-level skill for Vulkan compute/render setup, descriptors,
   barriers, synchronization, image layouts, frame lifetime, validation-layer triage, RenderDoc, and
   Nsight Graphics-oriented debugging.
@@ -889,6 +881,11 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
 
 - `skills/cpp-cuda-vulkan-studio/`: source of truth for the user-level skill (installed into both
   the Codex and Claude Code skill homes by the provider rollout scripts)
+- `skills/cpp-cuda-vulkan-studio/modules/process/`: progressive Standard,
+  Investigative, Governed, and Recovery process state guides plus preserved
+  strict references
+- `skills/cpp-cuda-vulkan-studio/modules/technical-overlays.md`: contract-based
+  routing to the smallest engineering guide
 - `skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/`: internal planning guide for project intake, option gathering,
   GUI links, agentic controls, donor routes, web checks, and implementation handoff
 - `skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/`: internal GUI/HUD guide for native C++ tool UI choices and visual
@@ -897,8 +894,8 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
   control, observation, visual/UI evidence, and troubleshooting
 - `skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/`: internal viewport-session guide for real UI/viewport
   recording, replay, reports, and before/after proof
-- `skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/`: internal active slice-watchlist guide for compaction-safe
-  supervision and direct-work gates
+- `skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/`: legacy
+  selective Recovery diagnostic
 - `skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/`: internal supervision guide for worker orchestration, review
   routing, polling, and closeout evidence
 - `skills/cpp-cuda-vulkan-studio/modules/vulkan-compute-sync/`: internal Vulkan synchronization guide for compute/render barriers,

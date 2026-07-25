@@ -4,6 +4,16 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Replaced the default-loaded strict CppStudio process with progressive
+  enforcement. Bounded work uses Standard, concrete uncertainty uses
+  Investigative, connected work uses Planning Harness-owned Governed, and
+  Recovery is a temporary incident state. Technical CMake, CUDA, Vulkan, GUI,
+  profiling, control, and viewport requirements now load independently by
+  touched contract. The former detailed planner, supervisor, and core doctrine
+  remain available as strict Recovery references. Fixed review cadence,
+  universal watchlists, ordinary phase telemetry, and the parallel Level 0-5
+  planning hierarchy are no longer default gates.
+
 - Added a quality-preserving, full-fidelity stress baseline performance gate for renderer, viewport,
   grooming/fur, simulation, and XR work. The first optimization phase must keep the entire target
   asset loaded and rendered as-is at full density and full quality while deliberately avoiding

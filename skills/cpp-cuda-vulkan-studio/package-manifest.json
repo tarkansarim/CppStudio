@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 1509,
-      "sha256": "19aca366b013b10292d2992da9f828c8fe3db90a8254228e499f116a2c45e548"
+      "size": 1834,
+      "sha256": "6f05b4c5ffc1ef714c77e6dd44c916633c304f3a43215f7754392661b3e2d4f5"
     },
     {
       "path": "agents/openai.yaml",
@@ -392,8 +392,8 @@
       "path": "modules/cppstudio-project-planner/GUIDE.md",
       "role": "module",
       "disclosure_group": "routed-module",
-      "size": 45960,
-      "sha256": "771d62ac6a0214be5b9ebcfe55381b6b02f6b26e3499bab95775daf3817c77de"
+      "size": 2727,
+      "sha256": "105cd4179fd8d529c7131762522f5316e932f0532dbcfd793c05a43cd55297ba"
     },
     {
       "path": "modules/cppstudio-project-planner/agents/openai.yaml",
@@ -417,11 +417,18 @@
       "sha256": "2bcee43a0965cfc7c780ad92d9200b797b8157cfbe95c4df2d25b43bb887ddca"
     },
     {
+      "path": "modules/cppstudio-project-planner/references/strict-project-planner.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 45977,
+      "sha256": "00c1d470799987be6219701fa219b8a424b71f436c4620c98a6b1bb0efcd06d8"
+    },
+    {
       "path": "modules/cppstudio-supervisor/GUIDE.md",
       "role": "module",
       "disclosure_group": "routed-module",
-      "size": 36265,
-      "sha256": "3dbbb8bd744f24df87b5434c70cffc746615e301841872b79eb25ab978a450a4"
+      "size": 2852,
+      "sha256": "957c03f4639b210f0a2228903031602a5e3cff39af6da4cbbb1ff74a782a630f"
     },
     {
       "path": "modules/cppstudio-supervisor/agents/openai.yaml",
@@ -429,6 +436,13 @@
       "disclosure_group": "routed-module",
       "size": 343,
       "sha256": "32de041b65a90ed3ebe3386e92da7233e88ed8ddeb0ce05316058e6591727631"
+    },
+    {
+      "path": "modules/cppstudio-supervisor/references/strict-supervisor.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 36282,
+      "sha256": "4e15408f3d21f45b9326582969b0c388719c7391554386d41153ad24b8ca6d87"
     },
     {
       "path": "modules/cppstudio-supervisor/scripts/slice_phase_report.py",
@@ -536,11 +550,60 @@
       "sha256": "c282fc1e6ad5cdfa974029e0a86f3281fc899ff6f1e63c1bca54032c94c87c66"
     },
     {
+      "path": "modules/process/governed.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 1804,
+      "sha256": "263e6fe956fe0e131481f22d7c5349595232b4365cae10b924a4c0756ab3ba8e"
+    },
+    {
+      "path": "modules/process/investigative.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 1531,
+      "sha256": "c0e39a3878509f3ecad4ee5c0de983ffbaa5285e4111706666d0744bdded72b5"
+    },
+    {
+      "path": "modules/process/recovery.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 2421,
+      "sha256": "1bb6613e6838924b632d56525da287ba9b057d75edf20ef65e94604b6e68098a"
+    },
+    {
+      "path": "modules/process/standard.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 1165,
+      "sha256": "82308872de190a5a93285d8dea5bf173499905540ca0633b0c7442b2be8fdcf3"
+    },
+    {
+      "path": "modules/process/strict-doctrine-index.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 1765,
+      "sha256": "eff97403e2f172022f00ec1655e643a7394e8f8ccbc0b3e598651a262b1df619"
+    },
+    {
+      "path": "modules/process/strict-doctrine-reference.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 127165,
+      "sha256": "50d512e7a347c016054d62379229c6f719e442d7845815343cac83fcb7e9e61a"
+    },
+    {
       "path": "modules/studio-core.md",
       "role": "module",
       "disclosure_group": "routed-module",
-      "size": 127152,
-      "sha256": "674588639301e71bee52de7dea6407643beda59797d2d93a4f2d1876f7cefb86"
+      "size": 5804,
+      "sha256": "57faf6ffb841118d641a624a7c1ff95ec57c5ca60193489d6d57a7c9ff25645a"
+    },
+    {
+      "path": "modules/technical-overlays.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 2506,
+      "sha256": "9bc4702378d2645e070b9fd159733c7c20fd7dbf3a62b5178762478974c5ea78"
     },
     {
       "path": "modules/viewport-session-testing/GUIDE.md",

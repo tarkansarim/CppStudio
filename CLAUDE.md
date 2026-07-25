@@ -30,10 +30,8 @@ You typically act in two connected modes, often in the same session:
    read it as a file — it is not Claude-loadable via the Skill tool). Reach the worker through
    `agent-tmux`/`agent-contact` relays.
 
-The two modes form a loop: when supervision exposes a gap — the worker does something the skills
-don't cover, or a current rule/skill fails — capture it and engineer the fix back into `skills/` and
-the doctrine here (the `self-improving` discipline). A worker mistake that points to a reusable
-CppStudio gap is a skill/rule bug to harden, not a one-off worker error.
+When supervision exposes a reusable CppStudio gap, fix the owning source or
+route it there. Do not turn one worker mistake into a new universal gate.
 
 ## Source of truth and deployment
 
@@ -96,26 +94,27 @@ rather than skipping silently.
 
 ### Skill package
 
-`cpp-cuda-vulkan-studio` is the **main coordinator** — load it first for any native C++/GPU/Vulkan/
-CUDA work. It owns project scaffolding, the code-map protocol, donor routing, and validation lanes,
-and it routes to internal specialist guides:
+`cpp-cuda-vulkan-studio` is the **main coordinator** for native
+C++/GPU/Vulkan/CUDA work. It first loads a small core, selects one process state
+(`Standard`, `Investigative`, or `Governed`), and adds only technical overlays
+whose contracts are touched. `Recovery` is a temporary incident state.
 
-- `cppstudio-project-planner` — gates substantial greenfield work; research → Plan-mode decision →
-  implementation handoff before any coding.
-- `cppstudio-supervisor` — multi-slice supervision in *other* repos: review cadence, phase
-  telemetry, evidence gates, parameter-surface closure, closeout.
+- `cppstudio-project-planner` — supplies C++ GPU engineering facts to Planning
+  Harness, which remains the sole durable planning authority.
+- `cppstudio-supervisor` — supervises workers without fixed review cadence or
+  ordinary per-reply telemetry.
 - `native-cpp-gui-hud` — GUI/HUD/editor UI stack choice (ImGui/Qt/etc.).
 - `agentic-control-harness` — local agent control surfaces (localhost HTTP/curl/CLI/MCP) so agents
   drive interactive apps; default from milestone 1 for interactive tools.
 - `viewport-session-testing` — record/replay real UI/viewport sessions for before/after proof.
-- `important-instruction-ledger` — active per-slice watchlist that survives compaction.
+- `important-instruction-ledger` — legacy selective Recovery diagnostic, not an
+  ordinary per-slice requirement.
 - `modern-cpp-cmake`, `cuda-kernel-authoring`, `vulkan-compute-sync`, `gpu-profiling-workstation` —
   domain-specific implementation/profiling lanes.
 
-Skills are intentionally kept as separate packages (not one mega-router); validation rejects
-unmanaged top-level `skills/*/SKILL.md` not in `managed_skills.sh`. Each skill carries a
-`package-manifest.json` (per-file SHA-256, size, role, disclosure_group) used by sync/rollout to
-detect tampering and unmanifested files — keep it current (`validate_skill_package.py --write-manifest`).
+The installed package exposes one thin relay; specialist guides are nested and
+loaded on demand. Its `package-manifest.json` records per-file SHA-256, size,
+role, and disclosure group for rollout integrity.
 
 ### Code map (this repo's navigation layer)
 

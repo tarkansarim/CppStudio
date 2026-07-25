@@ -6,11 +6,18 @@ description: "Route native C++ GPU, Vulkan, CUDA, CMake, GUI, profiling, code-ma
 <!-- thin-relay:v1 -->
 # CppStudio Router
 
-Read only the module needed for the current task:
+Read `modules/studio-core.md` first. It selects one process state and the
+smallest technical overlay set needed for the current work item.
 
-- General CppStudio infrastructure, code maps, scaffolding, donor routing, or
-  mixed GPU project work: `modules/studio-core.md`
-- New-project or substantial architecture planning:
+- Default bounded work: `modules/process/standard.md`
+- Unclear ownership, diagnosis, architecture, or evidence:
+  `modules/process/investigative.md`
+- Connected work items or nontrivial coordination:
+  `modules/process/governed.md`
+- Active false-proof, patch-stacking, or repeated-failure incident:
+  `modules/process/recovery.md`
+- Technical overlay selection: `modules/technical-overlays.md`
+- Governed C++ GPU engineering intake for Planning Harness:
   `modules/cppstudio-project-planner/GUIDE.md`
 - Supervised C++ GPU worker lanes:
   `modules/cppstudio-supervisor/GUIDE.md`
@@ -28,8 +35,7 @@ Read only the module needed for the current task:
   `modules/vulkan-compute-sync/GUIDE.md`
 - Nsight, RenderDoc, perf, sanitizers, or hardware profiling:
   `modules/gpu-profiling-workstation/GUIDE.md`
-- A durable watchlist for active implementation constraints:
-  `modules/important-instruction-ledger/GUIDE.md`
 
-Do not read every module by default. Combine modules only when the task actually
-crosses their responsibilities.
+Do not read every module by default. Use exactly one process state. Add only
+technical overlays that match the current work. Recovery is an incident state,
+not a permanent higher tier.

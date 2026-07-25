@@ -1,0 +1,1326 @@
+# CppStudio Strict Doctrine Reference
+
+Use this skill when a native C++ GPU, C++/Vulkan, C++/CUDA, or mixed CUDA/Vulkan repo needs a repeatable professional development backbone or maintained code map, not a one-off local build. There is no separate CppStudio code-map skill; the code-map protocol lives here. This skill coordinates the more specific global skills instead of replacing them.
+
+## Discovery Details
+
+Load this skill for C++ GPU/CUDA/Vulkan repos, initial project planning, code-map requests,
+build/test/profiling standardization, CUDA/Vulkan work, native C++ GUI/HUD/editor UI choices, local
+HTTP/curl/MCP controls, viewport/UI session replay proof, or donor selection for renderers, assets,
+WebGPU/OpenXR, path tracing, AI runtimes, neural 3D, sculpting/brush tools, grooming/fur, DCC,
+volumes, animation, materials, CAD, simulation, CUDA, Vulkan, or cross-backend GPU code.
+
+This skill owns reusable C++ GPU project infrastructure and maintained code maps for Vulkan-first,
+CUDA, or explicit CUDA/Vulkan interop lanes: app+library layout, CMake presets, CTest labels,
+Vulkan/shader tooling, sanitizer/profile lanes, GPU optimization loops, GPU CI, validation scripts,
+agentic control harnesses, viewport-session testing, and donor routing. For big initial planning or
+stack choices, use `cppstudio-project-planner` first.
+
+## Initial Planning Gate
+
+For a substantial new project, brainstorm, or first big application plan with unresolved template,
+GUI/HUD, agentic control harness, input-device, Vulkan/CUDA lane, donor, web-check, code-map,
+dependency, or validation choices, do a pre-plan research pass before asking the user to switch to
+Plan mode or asking decision questions. After the research pass, stop in normal chat with the
+Plan-mode handoff; do not ask or answer the actual choice questions inline unless the user
+explicitly waives Plan mode or the current turn is already in Plan mode.
+
+Minimum pre-plan research pass:
+
+- Open `cppstudio-project-planner` immediately when available; do not rely on this top-level skill
+  body alone for substantial project intake. Also open `references/project-archetypes.md` and the
+  smallest matching donor-router/category files.
+- For GUI/HUD/editor choices, open `native-cpp-gui-hud` and its GUI option matrix, then verify
+  current upstream official docs/repos or visual pages before ranking options.
+- For interactive apps/tools/viewers/simulators, open `agentic-control-harness` and plan a local
+  control surface so agents can launch, drive, inspect, screenshot, and troubleshoot the app before
+  asking the user for routine manual testing.
+- For interactive viewport, GUI, brush, sculpt, paint, grooming, timeline, node, gizmo, camera, or
+  canvas work, open `viewport-session-testing` and plan an app-owned record/replay lane so agents
+  can reproduce and compare real user interactions instead of relying on backend-only controls.
+- For live, realtime, interactive, viewport, brush, tool, renderer, or performance fixes, define the
+  exact user-visible invariant before implementation and name evidence that is forbidden as primary
+  proof. Proxy behavior, preview-only behavior, deferred finalization, release-only mutation,
+  final-only screenshots, non-empty image diffs, state JSON, counters, generic FPS, or provenance
+  cannot close the slice unless the product intentionally specifies that behavior and the acceptance
+  gate explicitly says so. If the symptom is live behavior while input is held, proof must include
+  held/in-flight interaction evidence and a negative assertion that the final/released state is not
+  hiding delayed real work.
+- For visible native GPU interaction fixes, the invariant must cover the whole relevant frame, not
+  only the acted-on pixels. Before/held/released or before/after captures must assert that untouched
+  background, canvas, viewport, layer, and UI regions preserve their expected color/alpha/composite
+  state within tolerance. Route counters, changed-pixel counts, nonblank screenshots, performance
+  numbers, or held-to-release stability are failed closeout proof when the same captures show
+  unrelated full-frame corruption such as black clears, lost background, alpha/composite mistakes, or
+  debug/placeholder surfaces. (source: self-improvement:user_correction:e98c856c6b0de402)
+- For simulation, renderer, SDK, hardware, or "best/current/ceiling" claims, web-check official
+  upstream repos, standards docs, vendor docs, papers, or primary project docs.
+- If one researched source cannot be opened through the normal web tool path, do not treat that as
+  permission to lower the research bar or silently use alternate fetch tooling. Record the URL, source
+  type, error, affected decision, and any substitute evidence. Continue only when equivalent or
+  stronger primary/upstream sources, local donor profiles, or current peer-tool docs still cover the
+  decision. If a critical architecture, GUI/product, solver, dependency, input, or validation choice
+  would depend on the missing source, stop and report the blocker instead of producing a weaker plan.
+- For substantial greenfield or architecture-setting work, persist the research in the target repo
+  before implementation. Use `docs/planning/RESEARCH_BRIEF.md` for curated local-donor and web
+  sources, with a short description and project benefit for each kept link. Use
+  `docs/planning/DONOR_CANDIDATES.md` or a donor-candidates section when web research finds reusable
+  donor material that is not already in the CppStudio donor library. Promote candidates into the
+  CppStudio source donor library during explicit donor-library maintenance or when the user asks to
+  extend the reusable/global donor library; user-level installed skills are rollout targets, not
+  source files to edit by hand. If the CppStudio source repo is not the current repo and cannot be
+  located through `CPPSTUDIO_SOURCE_ROOT` or a user-provided path, keep the target-project candidate
+  and report that reusable promotion is pending. Do not treat the local candidate artifact as
+  optional because source promotion is possible; source promotion should consume the candidate as
+  its evidence trail.
+- In that research brief, include `Project Dos And Don'ts`: app/domain rules and GUI/product-surface
+  rules distilled from local donors, peer tools, and web/upstream sources. Each item needs evidence,
+  the subsystem or UI surface it applies to, and the first validation signal. GUI rules must be based
+  on peer-tool, UI-framework, or donor evidence for layout, control placement, icon/text affordance,
+  viewport/timeline/inspector conventions, debug-vs-product boundaries, and visual proof.
+
+The first visible response after that research should be a concise **Pre-Plan Research Brief**:
+
+- choices discovered
+- source/visual links for GUI options
+- agentic control harness default and any real opt-out reason
+- donor categories/profiles opened
+- web/current sources checked
+- durable research artifact path, when the project is substantial enough to require one
+- donor candidates discovered outside the current library, if any
+- project dos and don'ts artifact path and the most important app/domain and GUI/product-surface rules
+- planning depth contract: current Level 0-5 state, required depth before source, and why any lower
+  depth is acceptable only for tiny scoped work
+- for substantial software, the shallow whole-product scaffold: major sections, rough priority,
+  dependencies, donor routes, and sequential/parallel/blocker classification
+- for substantial software, the donor coverage matrix: high-salience donor and peer-tool
+  expectations mapped to included, deferred, rejected, or blocked capabilities with reasons and
+  validation signals
+- for interactive tools, the primary user-visible loop: user action, changed state, visible result,
+  first proof, and secondary feature breadth blocked until that loop is proven
+- for visible/domain slices, the concrete first proof object or state: the primitive, scene, asset,
+  graph, dataset, or interaction target that makes the loop real, with donor/peer justification
+- for tool families, the shared substrate that owns common state, input, validation, resource-update,
+  serialization, and harness behavior before sibling tools are added
+- the slice readiness rule: scaffolded future sections are not implementation-ready until a
+  just-in-time donor-backed packet names objective, donors, contracts, shared/unique behavior,
+  expected files, blocked scope, validation, and rollback/checkpoint state
+- clear recommended default and alternatives
+- Agent-Planning-Harness escalation state when the work is already long-running, multi-slice,
+  review-heavy, or has four or more actionable adversarial-review findings; once this gate fires,
+  create or update a planning packet before the next implementation slice instead of relying on chat
+  summaries alone
+
+Then ask the user to switch to Plan mode before implementation:
+
+```text
+Please switch to Plan mode before implementation so I can ask the project-shaping questions. I need
+to lock down the template, GUI/input stack, GPU lane, agentic control harness, donor routes, web
+checks, code-map choice, and validation plan before files are created.
+```
+
+This handoff is mandatory for substantial greenfield projects with unresolved choices. A supervisor,
+test, or replay prompt that asks the worker to write a plan, report a chosen stack, continue
+planning, or use recommended defaults does not waive the Plan-mode gate. The research brief may list
+recommended defaults and alternatives, but unresolved decisions must remain explicit until Plan mode
+is active or the user explicitly chooses to continue without it.
+
+For greenfield target repos, the code-map choice is a hard pre-source gate, not a footnote in the
+plan. Before the first implementation slice writes source, build, app, renderer, test, or docs
+scaffold files, the agent must establish one of these states: maintained code map accepted and
+bootstrapped, code map declined and recorded with the bootstrap script, or the user explicitly
+instructed the agent to defer the code-map decision for this project. Merely mentioning "code-map
+choice" in a plan is not acceptance. If the user gave an implementation command but the greenfield
+code-map state is still missing, pause after the research brief and ask the code-map question before
+coding.
+
+This rule applies even if `cppstudio-project-planner` is not listed in the current session. If the
+current turn explicitly says the session is already in Plan mode, still do the pre-plan research
+brief before calling any question UI. If Plan mode is unavailable or the user says to continue without
+it, ask no more than three blocking questions at a time and do not scaffold until the critical choices
+are clear.
+
+When asking the user to choose a GUI/HUD/tool UI stack, links must be visible at decision time. Before
+calling any interactive question UI such as `request_user_input`, show a compact GUI option table with
+source/docs and visual inspection links. Also put a compact URL in each option description when the
+question UI allows it.
+
+## Agent Mindset
+
+When this skill is active, work like a native C++ GPU systems engineer:
+
+- Use the lightest process tier that still protects correctness. Routine planned slice execution
+  should follow the accepted plan, target code map, relevant donor route, and already-chosen
+  validation lane without restarting broad research or re-planning. Escalate into thorough mode only
+  when the work sets architecture/product shape, chooses a stack or dependency, adds a new domain
+  subsystem, consumes a new donor/upstream source, crosses a user-facing interaction or visual
+  acceptance boundary, changes shared infrastructure, contradicts the plan, encounters stale or
+  missing evidence, or hits a stall/repeated-failure trigger. Do not use thoroughness as permission
+  to turn a narrow planned edit into an open-ended probe loop.
+- When escalation turns a task into a long-running, review-heavy, or multi-slice lane, use
+  `agent-planning-harness` as the durable control packet before continuing. Triggers include four or
+  more actionable adversarial-review findings, cross-subsystem review findings, repeated failed
+  attempts, long-lane acceptance gates, compaction-sensitive constraint stacks, or midstream changes
+  to architecture/product/validation/slice order. Validate the packet before the next implementation
+  slice; a chat TODO list is not enough after this trigger.
+- For native C++/CUDA/Vulkan projects that use Agent-Planning-Harness, CppStudio supplies the
+  engineering evidence that feeds the packet: donor/current-source research, code-map state,
+  architecture/backbone choices, GPU lane, control harness, validation, profiling, and visible-proof
+  expectations. Planning Harness owns the durable roadmap, milestones, work packages, work items,
+  approval, guard, continuation, and completion-claim gates; those packet gates do not replace or
+  weaken CppStudio donor, code-map, performance, synchronization, architecture, or visual-proof
+  requirements.
+- In checkpoint, rewind, detached-worktree, or other replay/probe lanes, treat the replayed source
+  tree and the user's replay prompt as the authority for current state. Engineering memory,
+  post-branch commits, current-head docs, external runtime copies, and accepted later outcomes are
+  context to classify or reject, not permission to change the replay baseline. If later memory
+  conflicts with the replay tree, stop and state the conflict or ask whether the replay is meant to
+  test the old branch state or the current accepted state. Do not silently reinterpret a replayed
+  narrow request from old branch values to current-head values.
+- Hard rule: before touching code, do not rely on training data or intuition as the source of truth.
+  First open the relevant local skills, the target repo's maintained code map when enabled, and the
+  smallest matching donor-library route/category/profile. Then run a compact before-implementation
+  gate: discover the actual project/toolkit APIs and command surfaces, map constraints such as state
+  ownership, enabled states, selected object, snapping/clamping, coordinate spaces, socket/type
+  compatibility, and validation affordances, and decide how the change will be verified before
+  wiring it into production paths. State the skill and donor sources used before implementation. If
+  no donor route fits, stop and do focused donor discovery with web/upstream research before
+  designing the code. In that case, search current public upstream sources such as official repos,
+  docs, samples, papers, standards docs, and vendor docs; record the links/evidence before any
+  design or implementation. "Upstream research" is not model-memory reasoning.
+- For standardized file formats, interchange formats, protocols, SDK schemas, and other external
+  contracts, donor-first is a semantics contract, not loose inspiration. Official specs, API
+  headers, source, and conformance/sample tests define how contents must be read, written, scoped,
+  indexed, transformed, versioned, and rejected. Plans and closeouts must say which official contract
+  anchors govern the slice, must reject target-specific reinterpretations of the format, and may
+  copy or adapt standardized parsing/traversal/sample/scope handling only within license,
+  attribution, and dependency boundaries. "Reference-only" licensing or runtime caveats limit code
+  copying and vendoring; they do not permit semantic deviations from the standard.
+  If the user reports that established tools or DCCs consume the same file correctly, or names local
+  reference applications such as Maya, Houdini, Blender, Unreal, Unity, or vendor sample tools, that
+  report becomes a hard pre-patch reference-consumer gate. Before adding local probes, diagnostics,
+  format-normalization code, coordinate fixes, importer rewrites, or validation-policy changes, the
+  agent must inspect at least two independent reference consumers when available, plus the official
+  contract/profile for the format. The comparison must name exact source files, symbols, commands, or
+  observed import behavior for hierarchy transforms, coordinate handedness/up-axis/unit scale,
+  schema/object grouping, element ordering, per-element counts, optional attributes, widths/normals,
+  and rejection rules relevant to the symptom. Local target-code probes are allowed only after this
+  matrix exists, and their job is to test the named mismatch. A render/count/readback proof that the
+  target consumed all elements is not acceptance for a format-semantics bug when the visible import
+  still disagrees with the reference consumers.
+- Hard realignment rule: if a visible bug, interaction bug, product-shape problem, renderer/sim
+  behavior issue, or domain algorithm slice survives two focused attempts or roughly 20 minutes
+  without direct symptom improvement, stop local patching immediately. Reopen the target code map,
+  the matching donor route/profile, and current upstream or peer-tool sources; write a compact donor
+  realignment note naming the donor facts, local mismatch, failed hypotheses, keep/revert decision
+  for speculative patches, and the next smallest proof. The current-source pass must be substantive
+  enough to answer the exact thing the worker is struggling with: use multiple current primary or
+  upstream sources when available, such as official docs, source repos, samples, issue threads,
+  release notes, standards/vendor docs, papers, or peer-tool references; record the links or queries,
+  the fact each source proves, stale/conflicting evidence, and how it changes the next attempt. A
+  token web search, local source inventory, or model-memory recap is not enough. Do not continue from
+  training-data guesses, backend-only green checks, or newly expanded harness scripts. If the donor
+  route was skipped, treat that as the root process bug before another code edit.
+- Portability boundary for reusable scripts/docs: validation commands may use local absolute paths as
+  explicit operator input or evidence, but committed setup, validation, profiling, dependency, or
+  rollout scripts and reusable docs must not hardcode personal checkout paths, machine-specific
+  mountpoints, or "this workstation" assumptions. Prefer environment variables, repo-relative paths,
+  existing config/cache discovery with candidate validation, or a clear setup error that tells the
+  user which variable/configuration is required. If a quick fix adds a local fallback to make
+  validation pass, treat that as a rejected workaround and replace it before commit.
+- Long-lane acceptance and cutover gate: for visual, reference-render, calibration, viewport,
+  import/export, or semantic-wrapper lanes, define the top-level acceptance artifact before repeated
+  probes. Examples include a valid final beauty/reference image, non-identical primary/secondary
+  renders when variation is expected, a fresh viewport capture, a consumer-readable export, or a
+  user-facing before/after report. If that final artifact stays red after three wrapper/OSTM/scenario
+  runs, two source probes, or roughly 45 minutes, stop source edits. Write an acceptance ledger with
+  `new this session`, `previously established`, `still red`, `debug-only evidence`, `failed
+  hypotheses`, `keep/revert decisions`, and `cutover options`. Diagnostic narrowing, internal debug
+  buffers, generated intermediates, route inventory, or successful wrapper execution do not count as
+  progress unless the final artifact improves or a named failure branch is eliminated with evidence.
+  Before another local patch, run a narrow read-only `codex exec` stuck probe for the exact blocking
+  question and run a current web/upstream research pass targeted at the failing layer. Local package
+  source and already-open donors remain necessary evidence, but after this gate they are not
+  sufficient by themselves. The research pass must be deeper than a quick search: gather enough
+  current primary/upstream evidence to explain the failing layer and choose the next proof, using
+  multiple sources when available. Check official docs, upstream repos, samples, issue trackers,
+  release notes, standards/vendor docs, papers, or peer-tool references; record the queries or links,
+  what each source proves, stale/conflicting evidence, and what the evidence changes about the next
+  attempt. If search or source access is unavailable for a critical stuck integration, say so as a
+  blocker instead of continuing from memory. Then choose one scoped outcome: continue the same
+  lane with one named proof, cut over to another donor/tool/lane that still satisfies the user's
+  objective, or stop as blocked. If the user named a required upstream, app, SDK, shader, renderer,
+  file format, or port target, a cutover must preserve that reference family and success contract;
+  unrelated peer tools may be diagnostic comparisons, not replacement targets. Filter cutover
+  options before presenting them: a stale-context or peer-tool lane that conflicts with the user's
+  required reference target must be recorded as `rejected` or `diagnostic-only` with the reason, not
+  offered as a user decision. If another focused attempt still leaves the final artifact red or the
+  root cause is uncertain, run a fresh scoped Codex adversarial review; the review must judge the
+  current lane and acceptance artifact, not turn into a whole-repo review unless explicitly
+  requested.
+- Bounded visual parameter tuning: when the requested change is a narrow numeric or look-development
+  tweak on a known route, do not let verification expand into an open-ended render/crop/probe lane.
+  First confirm the donor-backed parameter path and preserve one comparable before artifact. Make the
+  smallest parameter edit, run one representative visual lane, and report the exact value, before
+  artifact, after artifact, and semantic metadata that proves the parameter took effect. If the first
+  probe is technically correct but visually too subtle for the stated acceptance target, one
+  calibrated follow-up probe is allowed. After two total probes, stop and present the evidence plus a
+  clear continue/revert/user-approval decision; do not keep tuning, generating new crop variants, or
+  adding helper scripts. Optional proof-artifact tooling failures, such as an image utility name or
+  format mismatch, may be classified once and resolved with the installed equivalent once; repeated
+  helper-tool friction is a tooling issue or blocker, not permission for another visual-tuning loop.
+  When the visual lane depends on a mutable external runtime copy, editor project, cache, package
+  export, or generated reference folder outside the restored source tree, verify it matches the
+  source/replay state before taking the before artifact. If it does not match, stop and either sync it
+  deliberately before baseline capture or declare the replay/proof invalid; do not baseline against
+  stale external state and then call the before/after evidence clean.
+- Parameter surface closure is mandatory for new user-adjustable or donor-derived runtime knobs.
+  When a slice adds, ports, or changes shader, material, light, renderer, simulation, brush, import,
+  export, cache, performance, or runtime settings, the plan and closeout must inventory the full
+  parameter surface before source edits are called complete. For each parameter or grouped parameter
+  family, mark donor/source evidence, backend/runtime storage, defaults and clamping, persistence or
+  state JSON, CLI/config flags when applicable, GUI/inspector/control-surface exposure when the app
+  has a UI, harness/readback routes, and tests/oracles as included, deferred, rejected, blocked, or
+  not applicable. Backend structs, uniforms, CLI flags, config files, logs, or JSON state alone do
+  not satisfy this gate for product-facing tools. UI-state JSON or a model inventory is supporting
+  evidence only; closeout also needs actual visible-surface proof that the controls are reachable in
+  the product UI where the user would look, with section name, label, enabled state, default or
+  current value, and whether the control is visible immediately, requires scrolling, is collapsed, or
+  is hidden behind another mode. A screenshot that still shows only old controls invalidates a
+  parameter-surface claim even if hidden JSON contains new ids. If the parameter should not be
+  visible in the UI, the slice plan must say why, name the owner surface that controls it instead,
+  and add a validation signal proving that decision.
+- Product-facing UI controls also require live mutation proof before closeout. Drive the actual
+  widget/control path, or an app-owned UI action harness that invokes the same handler, and record
+  before/after values for the visible control, committed model/state, and runtime/readback field
+  affected by the control. Static signal-slot inspection, control counts, screenshots, UI JSON,
+  model-only setters, or a backend route that bypasses the visible control are not wiring proof. For
+  large repeated surfaces, inventory all controls, mutate every newly added or changed critical
+  control, sample each repeated control class, and classify unmutated controls explicitly.
+- Product-facing control surfaces need a machine-readable control contract as the primary proof.
+  For every relevant UI mode/state, emit or inspect a contract that enumerates visible, hidden,
+  disabled, and expected controls with stable id/object name, label, widget/control type, section or
+  dock path, mode predicate, visibility/enabled state and reason, value/options/range, source
+  handler/action, committed model/state field, runtime/readback field, and last mutation result when
+  applicable. Stale controls fail the gate: visible controls with no live binding, raw/internal
+  payload fields leaking into product UI, duplicate owners for one mode, hidden controls with no
+  reachable path, disabled controls without a reason, and controls whose mutation changes only the
+  widget or only the backend must be fixed or explicitly classified before handoff. Screenshots and
+  captures are secondary evidence for layout, occlusion, product fit, and appearance; they do not
+  replace the control contract for wiring, freshness, or stale-control detection.
+- User-reported light, camera, renderer, shader, material, or viewport control bugs must prove the
+  user-facing behavior/output invariant, not just the mutated state vector. For lights this means
+  validating, as applicable, pivot position, light position, distance-to-pivot, forward/aim basis,
+  aim-to-target dot product, cone/frustum or area-light basis, enabled light set, runtime shader
+  payload, shadow payload, and before/after radiance or luminance samples from the affected receiver
+  and hair/material region. A pass that proves `state = pivot + direction * distance` is not enough
+  if the report is that the light moves away, points wrong, darkens the subject, produces asymmetric
+  front/back response, or leaves shadows/illumination visually wrong.
+- If a user reports that the same UI/rendering/control bug is still visible after a worker's proof,
+  treat that report as a proof invalidation, not as a post-closeout enhancement. Reproduce the exact
+  user path again and reconcile every contradictory artifact before continuing. A semantic readback
+  that contradicts the claimed scenario, such as a rectangle-light proof whose final runtime state has
+  rectangle lighting disabled, is a failed proof path until the harness or app state is corrected and
+  rerun.
+- For user-reported live interaction, renderer, viewport, brush, import, export, lighting, and
+  performance bugs, write a proof-contract table before validation is accepted. The table must name:
+  user-visible symptom, exact launch/input path, state layer that should change, presentation layer
+  that should change, primary proof artifact, forbidden substitute evidence, known-good oracle when
+  available, and invalidation conditions. Every proof row must cover the whole causal chain from user
+  input or asset contract through backend mutation, GPU/resource update when relevant, and presented
+  frame or exported artifact. A run that proves only one intermediate layer, such as "dispatch
+  happened", "state JSON changed", "counts are full", "pixels differ", "screenshot exists", or
+  "final state is correct", is diagnostic only unless the proof contract explicitly says that layer
+  is the product behavior. If an artifact shows the wrong asset, wrong launcher, wrong window,
+  invalid screenshot capture, missing held/in-flight frame, stale binary, zero resource refresh, or
+  any layer contradicted by the user-visible symptom, reject the proof before comparing metrics or
+  claiming progress. (source: self-improvement:user_correction:b1ef7e77c9b73708; CppStudio/Groom live interaction proof must use exact user-path recording or OSTM real-input held mouse behavior; synthetic helpers are diagnostics only unless they are the user path.)
+- When changing CppStudio's reusable UI/control-surface rules, validation must prove the worker path,
+  not only installed text or reviewer rejection. A functional probe has to put a fresh implementing
+  agent in the position of fixing or closing out a realistic UI/control bug and verify it requires the
+  live mutation/control-contract/readback evidence before claiming fixed. A separate reviewer probe
+  that rejects a bad closeout is useful supporting evidence, but it is not enough to claim the rule is
+  serving future implementation work.
+- User-facing launch path is part of visible proof. When UI/control exposure is validated through a
+  screenshot, OSTM job, toolkit readback, or semantic UI state, the proof must use the exact
+  launcher/command that the user is told to run, or explicitly prove that the exercised binary is
+  the same fresh executable selected by that launcher. Record the launcher path, selected executable,
+  build tree/config, stdout/stderr line or state field identifying the selected executable, and a
+  freshness check against the edited source/control-surface files. Do not accept proof from a
+  convenient alternate build tree while a stale user-facing launcher or binary can still show old UI.
+- Primary visible loop before breadth: for interactive artist, game, VFX, DCC, simulation-editor,
+  technical-art, viewer/editor, brush, paint, grooming, terrain, material, rigging, animation,
+  layout, lighting, or effects tools, the first implementation milestone must prove the core
+  user-visible loop before secondary breadth. Derive the loop from the target domain's donors and
+  peer tools. A valid loop names the user action, the state it changes, the visible result, and the
+  proof route. Do not add extra tools, brushes, panels, modes, file-format breadth, polish controls,
+  or fixture-only variants as product progress before that loop has input-to-result evidence. If
+  the current plan lacks the loop or treats fixture-only scaffolding as product-visible progress,
+  stop and repair the plan before source edits continue.
+- User-facing verification is the acceptance surface: for interactive features, the proof that
+  matters is the real visible control, real user gesture shape, committed state, and visible result.
+  Backend routes, control-harness commands, OSTM execution, fake-host smokes, nonblank screenshots,
+  and JSON state changes are supporting evidence only until they are tied to the user-facing
+  workflow. If the user needs to record a session for the agent, the product needs a visible
+  record/stop/replay or equivalent capture affordance, status/readback, and artifact path; hidden
+  CLI-only recorders are not enough for an artist-facing tool unless the user explicitly accepts
+  that limitation. A click/dab proof does not prove a drag, stroke, scrub, lasso, gizmo move,
+  timeline drag, node connection, or stylus stroke. The slice plan and validation must name the
+  expected interaction shape and assert the semantic samples that make it real, such as held-button
+  move samples, pressure samples, hit points, affected controls, latency, and before/after visual
+  deltas.
+- Visible closeout must classify every user-named concern separately. Do not let a narrower
+  assertion such as path coverage, changed vertices, revision advancement, nonblank capture, or "no
+  debug overlay" close a broader complaint about visible stroke direction, cursor-hit feel, material
+  appearance, viewport shading, or product-surface quality. Each concern needs `resolved`,
+  `unresolved`, or `not-tested` status, evidence path, and next proof. If captures still look flat,
+  depth-pass-like, debug-like, or below the peer-tool target, the slice remains product-quality
+  incomplete even when the semantic replay passes.
+- Stroke-like UI proof must be a human-input session. For sculpt, paint, groom, terrain, drawing,
+  lasso, gizmo, drag, scrub, or similar visible bugs, the agent must create or replay a UI session
+  through the real viewport/canvas/widget path with press/contact, multiple held move samples, and
+  release/finalization. The report must compare the requested pointer path to committed hit/edit
+  path or affected element coverage, and must assert any reported material/overlay/product-surface
+  appearance issue directly. Revision/checksum changes, nonblank screenshots, product-surface
+  scorecards, backend endpoints, or one-point dab smokes are supporting evidence only and must be
+  rejected as closeout proof for these bugs. If no such session exists, add the smallest diagnostic
+  route first and run it as the before proof before patching product behavior.
+- UI proof mode labels must be exact. Do not call real OS pointer/stylus input offscreen,
+  background, or non-disruptive unless it is actually isolated from the user's desktop interaction.
+- Concrete proof object/state before visible work: when a visible/domain slice depends on an object,
+  scene, asset, graph, primitive, dataset, or authored state, the plan must name it specifically and
+  justify it from the same donor or peer-tool evidence. Do not accept vague "sample object",
+  "generated target", "test scene", "demo asset", "default graph", or "placeholder content"
+  language when the domain implies a better first proof. If there are multiple plausible objects,
+  record the options and ask before source files are created. Tiny deterministic fixtures can exist
+  for unit tests, but they do not replace the first user-visible proof object.
+- Shared tool substrate before tool proliferation: when a project has a family of related tools,
+  make the first tool solid through the real user path before adding siblings. Common behavior such
+  as selection, active-tool state, input sampling, coordinate mapping, pressure/falloff, masks,
+  undo/replay, cursor overlays, dirty-resource uploads, serialization, harness readback, and
+  validation scenarios belongs in shared infrastructure. Do not duplicate that behavior across tool
+  implementations. Only behavior that is genuinely unique to a tool should live in that tool's
+  code. If adding another tool would copy shared behavior or hide that the first tool is not yet
+  proven, stop and refactor or finish the shared substrate first.
+- Planning depth before source: for substantial native apps and tools, use the project planner's
+  six-level depth contract. Level 0 is intake/context, Level 1 is research/ceiling, Level 2 is
+  whole-product scaffold, Level 3 is donor coverage and quality contract, Level 4 is slice
+  readiness, and Level 5 is implementation/closeout proof. Serious native C++ GPU, artist, game,
+  VFX, DCC, simulation-editor, and technical-art tools default to Level 3 before source files are
+  created. A Level 2 scaffold prevents blind spots, but it is not permission to code each future
+  section. Level 3 must map high-salience donor and peer-tool expectations to included, deferred,
+  rejected, or blocked capabilities with reasons and validation signals. Donor citation alone is not
+  evidence: when a shader, brush, renderer, solver, UI pattern, importer, optimizer, or subsystem
+  donor is used, the agent must first break down the donor code or official behavior docs into its
+  important elements before creating the plan. For shaders, that means stages/passes, entry points,
+  inputs/outputs, descriptor and uniform contracts, coordinate spaces and units, variants/macros,
+  render states, sampling/filtering, lighting/material terms, quality features, edge cases, and
+  validation signals. For tools and subsystems, break down the equivalent state, data-flow, input,
+  ownership, lifecycle, performance, and UI contracts. The plan must then mark each important donor
+  feature as included, deferred, rejected, or blocked. Silent omissions are plan failures, even when
+  the resulting scaffold looks plausible. If a feature is deferred or rejected, name the reason, the
+  slice or milestone where it may return, and the validation signal that proves the current omission
+  is intentional rather than forgotten. Before touching code for any
+  scaffolded slice, write or update a Level 4 readiness packet with the current code-map state,
+  donors and peer links to open, source/API contracts to inspect, shared infrastructure reused,
+  concrete first proof object/state for visible or domain behavior, unique behavior owned, expected
+  files/subsystems, blocked scope, validation evidence, rollback/checkpoint state, and parallel
+  safety. If only a scaffold bullet exists, the slice is not implementation-ready.
+- Active slice watchlist before source: for substantial implementation slices, worker supervision,
+  direct source work, slice approval, commits, or closeout, use `important-instruction-ledger` as an
+  active slice watchlist before continuing. The watchlist is not passive note-taking and is not
+  limited to user quotes; user hard rules, prerequisites, donor facts, plan gates, code-map
+  requirements, prior misses, review findings, visible-loop expectations, and verification risks are
+  all valid watch items. Append or review the target repo or owning source repo watchlist before
+  planning, worker nudges, source edits, slice approval, commits, and status summaries. Compaction
+  risk is not an excuse to rely on transcript memory. If an active watch item affects the current
+  slice, the slice is blocked until the worker satisfies it, proves it is out of scope, or records
+  that it is superseded or explicitly deferred by the user.
+- per-slice detailed planning gate: for substantial software, every implementation slice needs a
+  Level 4 slice-readiness packet before source edits. A worker reading the old plan, passing the
+  planning guard, or summarizing intended work in chat is not enough. The supervisor must inspect the
+  actual packet path/section and reject the slice when no detailed packet exists for the slice being
+  implemented, even if build, OSTM, code-map, and tests pass.
+- Parallel planning is an ownership map, not automatic fan-out. Identify lanes that could run in
+  parallel only after shared contracts are frozen, file/subsystem ownership is disjoint, and
+  integration/validation handoffs are defined. Keep coupled C++/GPU/UI/resource-lifetime slices
+  sequential until the contracts are stable or the supervisor/user explicitly chooses a parallel
+  worker split.
+- Treat Vulkan as an explicit-lifetime API. Resource ownership, synchronization, image layouts, queue
+  ownership, descriptor lifetime, command-buffer reuse, and frames-in-flight must be designed
+  deliberately.
+- For realtime Vulkan viewports, distinguish Vulkan-loader availability from hardware-backed
+  viewport readiness. CPU or software Vulkan implementations such as llvmpipe/Lavapipe may be valid
+  diagnostics for CI or headless tool checks, but they are not a successful default realtime viewport
+  backend. Preflight and readiness tests must prefer discrete GPUs, then integrated GPUs, and treat
+  CPU/virtual devices as explicit opt-in diagnostic modes with visible readback of device name/type,
+  ICD/driver evidence, queue support, and missing hardware requirements.
+- Keep the active lane disciplined. Prefer Vulkan for unspecified reusable GPU/3D/realtime work, keep
+  CUDA separate unless the user chooses it or the requirements force it, and document any deliberate
+  CUDA/Vulkan interop boundary.
+- Do not silently downgrade the work to get a green run. If CMake, CUDA, Vulkan SDK tools, shader
+  compilation, validation layers, GPU selection, profilers, or tests fail, surface the failure and fix
+  the root cause when it is in scope.
+- Treat GPU feature capability failures as hypotheses until the exact requested lane is proven on the
+  target device. Before hiding, disabling, downgrading, redesigning, or rewriting around a Vulkan,
+  CUDA, ray-tracing, interop, upscaler, denoiser, shader-model, profiler, or hardware-extension
+  feature, run the exact forced-feature path on the target GPU/device when the project can expose
+  one. The proof must exercise the feature being changed: an RT fix needs the RT lane, an interop fix
+  needs interop, a profiler/readback fix needs the exact profiler/readback command, and a
+  vendor-extension fix needs that extension path. Nearby success is supporting evidence only, never
+  acceptance proof. Capability readback, engineering-memory notes, failed-probe ledgers, and old
+  comments are diagnostic evidence to challenge with current target-device repros; they are not
+  permission to remove the user-facing feature path. Prefer preserving explicit user selection plus a
+  clear diagnostic reason over silently removing the option. If the user says the feature used to
+  work, names a suspected commit/boundary, or asks for history comparison, test or inspect that
+  historical boundary before capability gates, UI policy, or tests are changed. When fresh evidence
+  contradicts durable project memory, update the memory or failed-probe ledger with the new boundary.
+- Inspect before editing. Read the build graph, presets, target ownership, shader or kernel paths,
+  dispatch/render loop, and direct callers before changing native GPU infrastructure.
+- When building or validating an existing repo, use the repo-declared commands first: CMake presets,
+  project scripts, maintained validation docs, or code-map build/preset routes. Do not invent build
+  directories such as `build_linux` or `build/Release` unless the repo explicitly declares them. If a
+  guessed command fails, treat that as a process miss, reopen the repo build docs/presets, and rerun
+  the documented command before continuing.
+- When auditing docs, validation logs, scripts, or markdown with shell search tools, quote patterns
+  so the shell cannot reinterpret documentation or regex syntax. Do not put markdown backticks,
+  embedded double quotes, `$`/`${...}`, command substitutions, or other shell metacharacters inside
+  double-quoted `rg`/`grep` patterns. Use single quotes, `rg -e`, fixed-string searches, or separate
+  pattern arguments so code spans such as `` `4320` `` and script fragments are matched as text. If
+  a search/audit command fails because shell syntax from documentation was executed or reinterpreted,
+  treat that as a process miss: acknowledge the failure, rerun the audit with safe quoting, and do
+  not continue the slice from the partial command output.
+- Before major C++/GPU edits, name the likely failure modes: synchronization or lifetime bugs, wrong
+  device/backend lane, missing validation/profiling evidence, portability breaks, and
+  dependency/license mistakes.
+- Before risky GPU refactors, broad CMake/build-system changes, backend rewrites, synchronization
+  changes, or target-project deployment/install script edits, create or confirm a recent git commit
+  so rollback is exact and cheap. If the target repo has no suitable recent commit, ask before
+  proceeding with high-risk edits.
+- Treat git commits as part of the normal production workflow, not only as end-of-project cleanup.
+  For a greenfield project that is expected to use git commits, establish usable source control
+  before the first source slice whenever the session can do so safely. If a Codex worker in a
+  brand-new directory sees `.git` as an empty read-only mountpoint or `git init` fails with a
+  read-only filesystem inside `.git`, treat that as a worker sandbox/mount-namespace blocker, not as
+  ordinary project state. Do not `chmod`, delete, unmount, or otherwise bypass that `.git` placeholder
+  from inside the worker. The preferred recovery is to initialize Git on the real target path from the
+  host/supervisor shell, then relaunch or retry the worker from a clean Rewind checkpoint. If the
+  supervising agent has that host access, do the host-side initialization directly instead of asking
+  the user to do it. Ask only when host-side initialization is unavailable or risky. If documenting
+  the blocker, say "inside this Codex worker" rather than recording it as a stable fact about the
+  project directory.
+  When supervising a greenfield tmux/Codex worker and commits are part of the test or workflow,
+  create the empty project directory and initialize Git from the host/supervisor shell before
+  launching the worker, unless the user explicitly wants to test non-git startup behavior.
+  Once Git is usable, continue with the normal verified-slice workflow.
+  After each coherent implementation slice or milestone is verified, commit the source, docs,
+  harness, test, and code-map updates before continuing into the next slice, unless the user or repo
+  policy explicitly says not to commit. Before committing, inspect `git status`, keep user-owned
+  unrelated changes out of the commit, exclude build outputs, profiler traces, screenshots, temp
+  artifacts, and generated junk unless the repo intentionally tracks them, and run a whitespace or
+  staged-diff hygiene check such as `git diff --check` or `git diff --cached --check`. If a
+  CppStudio code map is enabled, run the target repo's `scripts/check_code_map_drift.py
+  --require-enabled --strict-review` before committing when that script exists; otherwise run the
+  installed helper with the repo root as the positional argument, for example
+  `python3 ${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py
+  --require-enabled --strict-review /absolute/repo`. The drift checker does not accept a `--repo`
+  option; if a worker reaches for that shape, stop and reread `--help` instead of treating the
+  failure as project behavior. If neither helper route is available, manually compare the changed
+  source/header/shader/script/docs paths against `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` and the
+  matching `docs/SUBSYSTEMS/*.md` route. Do not commit a new or moved routable path that is not
+  covered by a subsystem route; update the manifest and subsystem doc in the same slice or explain
+  why the map update is intentionally deferred. If the repo has no git history, no git identity,
+  ambiguous dirty state, or approval is required for the git write, surface that clearly instead of
+  silently skipping the commit. Add exactly one `Commit-Origin` trailer that identifies why the
+  commit happened, using only these values: `Commit-Origin: agent-slice` for commits the agent
+  creates as part of the verified-slice workflow, and `Commit-Origin: user-requested` when the user
+  explicitly asked for that commit. Do not use provider names such as `codex`, `claude`, or model
+  names as commit-origin values; the trailer describes the reason for the commit, not which agent
+  wrote it.
+- Use evidence before claims. Builds, CTest labels, shader compilation, ASan/UBSan host sanitizer
+  runs, focused host coverage reports, Vulkan validation, Compute Sanitizer, RenderDoc/Nsight
+  captures, screenshots, image comparisons, and profiler output matter more than plausible
+  explanations.
+- For native GPU regressions, acceptance proof must match the changed feature contract. Do not make a
+  UI, model, or test change that converts an unproven backend failure into the new expected behavior.
+  If a capability probe says "unsupported" but the feature is requested, first prove whether the
+  actual feature path fails on the selected device, compare against a known-good commit when
+  available, and only then decide whether to adjust gates, expose a diagnostic, or document a real
+  unsupported state.
+- For user-reported bugs, fixes require a before/after proof gate. First reproduce the exact
+  reported behavior through the closest user-equivalent path available and record "before" evidence:
+  command, steps or scenario id, harness/readback fields, logs, screenshot/video/capture, metric, or
+  failing test that demonstrates the symptom. After the fix, run the same scenario or an explicitly
+  equivalent one and record the "after" evidence. Do not present the work as fixed unless the
+  before/after comparison shows a material change in the reported behavior. For visible GUI or
+  windowed bugs, include Sonar text/visual readback when available and run automated windowed
+  scenario, smoke, screenshot, and proof commands through `ostm` when the offscreen-test-manager
+  skill or CLI is available. If OSTM is unavailable, use the target repo's approved nonblocking
+  launch/smoke manager and say that OSTM evidence is unavailable. Direct foreground app launches are
+  only for explicit user/manual inspection or bounded launch-command proof, not for repeated
+  automated GUI debugging loops. Backend state alone is not user-visible proof. A visible GUI bug
+  also needs an actual visible-surface observation: screenshot, video,
+  Sonar visual readback, OSTM/window capture, or explicit user-provided visual evidence. If the
+  agent cannot currently see or drive that surface, start the status with "I am UI-blind on this
+  bug:" and name the missing observation route; do not keep presenting harness-only or JSON-only
+  work as progress on the visible fix. If a proof lane fails once because it cannot reach the real
+  window/event path, stop expanding proof infrastructure and switch to a bounded app-side fix
+  hypothesis, a visible/manual repro path, or a clear blocker report. If the before and after
+  evidence are identical, nearby, self-confirming, backend-only, or unrelated to the user's symptom,
+  keep debugging instead of handing it back. When Rewind is
+  available, use the pre-fix checkpoint as the rollback anchor before stacking another focused GUI
+  probe; if no pre-change checkpoint exists, say exact replay was missed. After repeated focused
+  attempts or the repo's hard-reset threshold, start the status with "I am stuck on this bug:" and
+  name the missing proof, failed hypotheses, and next diagnostic path.
+- For user-reported visual, runtime, performance, import/export, interaction, renderer, or hardware
+  capability bugs, ask the regression question before treating the issue as a new implementation
+  problem: did this exact behavior ever work before, or does it still work in another sample asset,
+  mode, backend, branch, commit, recording, reference app, donor path, or previous release? If a
+  known-good path exists or is strongly suspected, make it the first oracle. Compare the known-good
+  path against the failing path before patching, and name the oracle source, failing source, invariant
+  expected to match, concrete mismatch, and first proof artifact. Examples include known-good sample
+  asset versus failing asset, previous good commit versus current commit, working backend/mode versus
+  failing backend/mode, or established DCC/engine/reference consumer versus the target importer. Do
+  not keep debugging from first principles when a local known-good path exists. If no oracle can be
+  found after a focused search, say "no known-good oracle found" and proceed through the donor,
+  upstream, spec, or profiling route instead.
+- Treat code-map completion claims as routing claims, not just schema claims. After enabling or
+  materially changing a maintained code map, run the validator and a read-only subagent or
+  fresh-session routing smoke before saying future agents can use it or that setup is done, whenever
+  that testing route is available. This is part of code-map setup verification, not optional polish.
+  The smoke should be task-shaped, for example "find where <feature> should be changed, do not edit,"
+  and the expected evidence is that the fresh agent loads `cpp-cuda-vulkan-studio`, reads the
+  code-map state, architecture index, and manifest, selects the relevant subsystem doc, and then
+  traces exact files/tests. Keep this smoke bounded: once the first confident subsystem route plus
+  exact source/test paths are found, report and stop; do not turn it into a full source audit or
+  implementation analysis. Grade the smoke explicitly: pass only when the fresh agent names the
+  skill, reads the state/index/manifest, chooses a subsystem doc, reports exact source and
+  test/validation paths, and makes no edits. Treat it as failed or partial if the agent skips the
+  manifest, starts implementation, expands into broad unrelated source reading, fails to produce a
+  final routing report in the bounded probe, or leaves any file changes. If subagent or fresh-session
+  testing is not available, report that as pending evidence, not as a passed trigger lane.
+- Treat code-map maintenance as an ordinary source-edit closeout gate, not only a setup task. When
+  an enabled-map repo changes source ownership, data flow, backend boundaries, validation lanes,
+  public runtime behavior, or adds/moves files under routable source areas, update the matching
+  subsystem doc and manifest before commit. The drift checker catches unmapped paths; the agent still
+  must make the semantic call on whether an already-covered route needs clearer notes. Before commit,
+  run the drift checker in strict-review mode when the wrapper supports it:
+  `scripts/check_code_map_drift.py --require-enabled --strict-review`. If strict review reports
+  uncovered drift or a no-map-touch semantic review, the worker must resolve it itself before
+  staging: update the map directly, launch the guarded sidecar, or rerun with
+  `--reviewed-no-map-change` only after explicitly checking that no route changed. Do not ask the
+  user or supervising agent to prompt the map update. When drift output or the no-map-touch review
+  points to non-trivial map maintenance, prefer the guarded sidecar helper when available:
+  `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]`.
+- Use a bounded code-map sidecar lane when map maintenance would otherwise bloat or destabilize the
+  main worker context: a drift check reports work, a long-running implementation slice reaches a
+  planned map-maintenance interval, changed source ownership/data flow/backend boundaries affect
+  subsystem docs, new or moved routable files appear, or local evidence suggests subsystem docs are
+  stale. When the local `agent-tmux` wrapper is available, route this through
+  `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]` so the sidecar works from a guarded
+  artifact lane instead of the live source tree. The sidecar is code-map-only: it may inspect the
+  frozen source snapshot, architecture index, manifest, and subsystem docs, then return a patch/diff,
+  map-file replacements, and rationale; it must not implement product/source changes or assume live
+  access to the original worker's evolving tree.
+- Code-map sidecars need snapshot semantics. The original worker must name the fixed checkpoint,
+  Rewind checkpoint, temporary git anchor, commit, worktree copy, or archive snapshot that the
+  sidecar is reading. The original may continue implementation only if it plans a final reconcile
+  before staging or committing. A temporary anchor or Rewind checkpoint is not a public slice commit,
+  and CppStudio must not require noisy public commits for every sidecar. The final history boundary
+  remains the verified slice commit after build/test/map validation, with the normal
+  `Commit-Origin` trailer.
+- Code-map sidecars must not edit the original worker's live worktree while the original continues
+  source work. Use an isolated worktree, archive/snapshot copy, read-only snapshot plus patch output,
+  or a serialized same-worktree handoff where the original worker pauses and resumes only after
+  sidecar output is reviewed. If a sidecar returns a patch, the original applies it deliberately in
+  the live worktree during the final reconcile; unreviewed concurrent same-worktree map edits are not
+  a valid sidecar lane.
+- Before the original worker commits an enabled-map slice that used a sidecar, it must apply or merge
+  the sidecar map update, rerun the drift checker and code-map validator against the current tree,
+  and compare the sidecar's fixed snapshot with current changed routable areas. If the original
+  changed additional routable files, ownership, data flow, validation lanes, or public behavior after
+  the sidecar snapshot, the original must either update the map itself or launch a fresh sidecar from
+  a new fixed snapshot before committing.
+- For realtime rendering, viewport, simulation, XR, or GPU-performance work, measure frame time/FPS
+  or profiler timings while implementing and verify the actual visual output. For user-reported live
+  viewport/canvas interaction lag, name the affected action and make its interaction metric the
+  primary acceptance proof: panning needs FPS/frame-time samples while panning, zooming needs
+  FPS/frame-time samples while zooming, brush/gizmo/stylus drags need continuous-drag frame-time or
+  input-to-visible-update samples. Internal counters, upload/readback counts, screenshots, and
+  backend state are diagnostics for why the metric changed; they cannot replace before/after
+  interaction FPS/frame-time artifacts for the reported action.
+- For renderer, viewport, grooming/fur, simulation, XR, or native GPU performance fixes, preserve the
+  full-quality target unless the user explicitly asks for a scalability or preview tradeoff. Before
+  source edits, write the invariant being protected: asset density, primitive representation,
+  shader/material model, lighting/shadow/scattering features, render resolution, live interaction
+  path, and accepted visual artifacts. LOD, decimation, lower sample count, lower resolution,
+  disabled shadows/lighting/scattering, cheaper primitive types, proxy/cache/impostor paths,
+  final-only or idle-only updates, chunking/streaming, and other reduced-work substitutions are
+  diagnostics or later explicit scalability modes, not the first optimization fix. The required first
+  phase is a full-fidelity stress baseline: keep the entire target asset loaded/rendered as-is at
+  full density and full quality, deliberately avoid reduced-work tricks, and squeeze the baseline
+  renderer architecture for maximum leverage before layering LOD, chunking, streaming, or preview
+  modes on top. Use profile-guided bottleneck isolation inside that phase: first profile the full
+  workload and rank the bottlenecks, then temporarily disable unrelated expensive systems only to
+  isolate the current top bottleneck, optimize that bottleneck until before/after profiling shows it
+  is no longer the dominant measured cost or the remaining tradeoff is explicitly documented,
+  re-enable the full workload, re-profile, and repeat for the next bottleneck. Do not keep the
+  diagnostic-disabled state as the fix. When the user names high-FPS peers,
+  "cutting edge", Unreal, Unity, TressFX, or equivalent current engines, run current-source/peer-tool
+  research before implementation and identify the architecture-level pattern being tested, such as
+  culling, clustering, visibility-first shading, tile/bin/compact passes, indirect draws, pass
+  scheduling, or resource-lifetime changes. Closeout needs same-quality visual proof plus
+  timing/profiler evidence on the full-groom target; a reduced-quality or partial-groom speedup cannot
+  close the root performance bug. (source: self-improvement:user_correction:f99b833b96bd0280)
+- For visual renderer claims that fail a user-visible check once, do not continue with source-label
+  reasoning or another local patch before adding measurement. The next attempt must start from a
+  profiler, frame capture, app-owned timestamp/pass-timing report, or a symptom-specific numeric
+  projection metric tied to the same user-facing scene and launch command. Renderer-path labels such
+  as "ribbon", "strip", "curve", "RT", or "raster" are not acceptance proof for visual semantics. For
+  hair/fur primitive or width bugs, separate camera-facing orientation from width semantics: prove
+  imported/authored width distribution, shader width conversion, projected near/far pixel width, and
+  comparable before/after screenshots or replay captures at two camera distances. If another local
+  scene, asset, commit, or mode renders the same primitive or shader behavior correctly, use that
+  known-good renderer oracle first and compare import/runtime buffers, pipeline state, shader
+  payloads, projection metrics, and visible captures against the failing path before changing shared
+  renderer code. If an anti-alias or minimum-pixel floor dominates the measured width, report that as
+  the active behavior instead of claiming world-space or authored-width behavior.
+- When a target app has an agentic control harness, use it as the first route for routine launch,
+  feature driving, state/log readback, screenshots, and visual/UI troubleshooting before asking the
+  user to manually test. If the missing evidence is a harness gap and fixing it is in scope, repair
+  the harness instead of repeatedly handing small verification chores to the user.
+- For GUI interaction bugs or user-visible interaction slices, require a real GUI scenario or
+  equivalent toolkit-level probe for the affected path. Brush palette clicks, tool buttons, timeline
+  controls, menu/shortcut/context actions, viewport strokes, picks, gizmo drags, graph edits, and
+  canvas interactions must prove the same event path a user exercises when practical. The evidence
+  should include event-to-committed-state latency for selection/control changes and explicit pointer
+  mapping for viewport/canvas edits: widget geometry, local point, device-pixel ratio,
+  render-target point, ray/canvas transform, hit object or primitive, committed hit/edit point, and a
+  fresh visual marker/capture when practical. The scenario must exercise enough variants to cover the
+  user's complaint, such as every affected enabled tool or repeated selection changes when the bug is
+  "other tools cannot be selected." Do not call these fixed from backend command success, a generic
+  model revision, a one-item self-confirming scenario, or a nonblank screenshot alone. Harness,
+  scenario, or control-route construction is only a means to observe or drive the bug; it is not a
+  completed fix for the user-visible symptom unless it produces before/after visible evidence and the
+  app behavior actually changes. For continuous interactions, the scenario must include and assert
+  the continuous part of the gesture, not only a press/release pair at one point. If the feature is
+  a stroke, scrub, drag, lasso, gizmo move, camera orbit, timeline drag, node wire, or similar
+  sustained action, proof must include the expected move/sample count, path shape or distance,
+  committed state along the path, and fresh visible result.
+- For product-facing spatial parameters, do not treat one edited slider as proof for the whole
+  control family. Lights, cameras, gizmos, emitters, colliders, probes, volumes, brush cursors, and
+  other transform-owned surfaces must prove position, orientation/rotation, scale/size, axis/basis
+  vectors, enable/mode gates, strength/intensity, and quality/visibility controls separately when
+  those controls are present or expected. Rotation/aim/orientation is a distinct critical surface:
+  position, size, or intensity mutation does not prove it. A fix for a reported rotate/aim/move/scale
+  failure must show before/after mutation through the real UI/control handler into committed state
+  and runtime/readback payload for the named transform component, plus a behavior/output invariant
+  that proves the object still does what that component is for. For lights, aim/orbit proof must
+  include target/pivot stability, distance stability, light basis or direction, affected-surface
+  luminance/energy, and any shadow-map/deep-opacity payload that changes the result. Explicitly
+  classify the named component as absent, hidden, deferred, or blocked only when it truly cannot be
+  implemented or validated in the current slice.
+- For mode-specific UI/control bugs, final top-level user-facing state is the deciding artifact.
+  A nested mutation record, extracted acceptance summary, or reviewer paraphrase cannot override a
+  final `ui_state` or equivalent readback that says the target mode/control is disabled, hidden, in a
+  different mode, or pointing at the wrong target. Closeout must print the exact top-level fields that
+  prove the final visible mode, active control set, runtime payload, and behavior/output invariant for
+  the same scenario the user exercises. If those fields contradict the claimed metric, rerun the exact
+  path or fix the harness before committing.
+- For sculpting, brush, paint, groom, stroke, or high-poly mesh editing work, donor realignment has
+  an extra gate. Before changing brush behavior, viewport hit tests, palette selection, stroke
+  sampling, falloff, pressure, mask, high-poly storage, or dirty upload code, open the sculpt or
+  grooming donor route first. For mesh sculpting, read `sculpting-brushes.md` and the Blender Sculpt
+  Brushes study-only profile before generic geometry, renderer, or GUI donors. The slice plan must
+  include a donor mapping: upstream/source or manual concept, extracted behavior contract, local
+  architecture translation, exact files/tests to change, and before/after proof. A generic mesh
+  displacement test, nonblank screenshot, or mesh revision increment is never enough for brush-hit
+  or brush-selection bugs; the proof must compare requested pointer/control, committed hit or active
+  brush, latency, and visible result.
+- Keep harness roadmap/readiness readback current. If a target app exposes machine-readable fields
+  such as `next_required_slice`, `blockers`, `prerequisites`, readiness booleans, or backend/feature
+  eligibility, a verified slice that satisfies one prerequisite must update that readback before
+  commit. Do not leave a completed prerequisite listed as the next missing item unless the field is
+  intentionally naming a broader gate; in that case expose completed-versus-remaining prerequisites
+  and document why the broad gate name still applies.
+- Name harness readiness and success fields after the exact invariant they prove. Do not set a broad
+  field true from a weaker nearby condition, such as reporting a live composed capture as ready when
+  only a widget exists or a backend initialized. If weaker facts are useful, expose them as separate
+  readback fields and keep the broad gate false until its documented invariant is satisfied.
+- When worker, subagent, reviewer, or background validation work is gated by the current task, keep
+  supervision active until it reports done, idle, or blocked. Do not give final status while delegated
+  work is still running; report the active worker state and remaining blocker instead.
+- When supervising a worker, do not judge plan quality, implementation quality, or "is this done?"
+  from the worker's summary alone. Treat the summary as a pointer to primary evidence. Before saying
+  a worker plan or slice looks good, inspect the durable artifacts that should prove it: planning
+  packets, `docs/planning/*`, code-map state/index/manifest/subsystem docs, changed files or diff,
+  validation logs, OSTM/control-harness artifacts, screenshots or semantic readbacks for visible
+  work, user-level routing records, and the relevant transcript tail. If those artifacts have not been audited,
+  say that directly and audit them first. If the worker is still running, blocked in a queue, or has
+  outstanding validation jobs, report that state instead of closing the supervision loop.
+- Before approving a worker's next implementation slice, review
+  `docs/agent-context/SLICE_WATCHLIST.md` when present and verify the slice has a matching Level 4
+  readiness artifact. Passing validators around an implementation does not waive active watch items
+  or missing per-slice detailed planning.
+- Treat planning packets and research briefs as live artifacts after source work begins. If a target
+  repo now has source slices, verified commits, resolved blockers, or changed architecture choices,
+  do not leave a packet or handoff that still says "planning only", "no source exists", or that a
+  solved blocker is still the next gate. Before the next major slice, reconcile the packet/current
+  state docs with completed work, unresolved decisions, new blockers, validation evidence, and the
+  next bounded task. Stale planning artifacts are a process bug because later agents will route from
+  them.
+- When delegation is explicitly authorized and a bug, product-shape decision, or broad subsystem
+  audit resists one perspective, escalate to parallel lenses. Assign independent hypotheses such as
+  state flow, command/API routing, rendering/capture timing, build/toolchain contracts, or UI/product
+  convention fit, then synthesize the evidence before implementing or closing.
+- Treat bad product-shape decisions, skipped skill/donor routing, weak harness semantics, and
+  evidence-free success claims as blockers, not merely style issues. Stop the target slice, repair
+  the process miss, and update reusable project skills when the failure is generic.
+- After a bounded target-project slice has been named with its code-map route, donor/reference
+  grounding, expected files, and verification plan, stop broad orientation. The next step must be
+  the smallest coherent source/probe action, or a concrete blocker report explaining what evidence is
+  still missing. Do not spend several more minutes re-reading broadly after the route is already
+  sufficient; if the route still feels insufficient, say which missing source, donor, or API contract
+  blocks implementation.
+- Slice order must preserve the primary visible loop. If an interactive tool's core user action is
+  not yet visible and testable, the next source slice should either prove that loop or implement a
+  strictly necessary prerequisite named by the plan. A worker should not add secondary feature
+  breadth while the primary loop remains hidden, fixture-only, or unverified.
+- Tool-family slices must preserve shared substrate ownership. Before adding a second sibling tool,
+  the first tool's common state, input, validation, resource-update, serialization, and harness
+  paths should be shared and proven. Extra tool entries without a solid first tool and common
+  substrate are a process miss, even if each entry has a small fixture.
+- Treat the slice task list as a live alignment tool. If real evidence during implementation shows
+  that a planned task is stale, impossible, too broad, missing a prerequisite, or aimed at the wrong
+  subsystem, update the task list immediately: name the new fact, the invalidated assumption, the
+  revised bounded task, and the changed validation gate. Continue without asking when the change is
+  an internal correction that preserves the user's intent, chosen stack, and quality bar. Pause for
+  user alignment when the change affects product direction, selected GUI/backend/authoring model,
+  scope, dependency/license posture, or any explicit user constraint.
+- Treat midstream major feature requests as new planning evidence. A vague request such as "can we
+  also include realtime ray tracing" or "add a node editor" is not permission to code from memory or
+  to answer from chat-only research. Before implementation or a final recommendation, reopen the
+  bounded planning gate for that subsystem: read the target code map and current planning docs, open
+  local donor routes, check current upstream/primary sources and local capability facts, update the
+  research brief, implementation slice plan, donor-candidate notes when relevant, and the applicable
+  dos/don'ts or decision record. If the feature is blocked by architecture, toolkit, hardware,
+  dependency, license, or validation constraints, record the prerequisite slice and ask the user only
+  when choosing a different stack, backend, product scope, or explicit constraint is required.
+- If a target-project slice is interrupted, stopped, or rejected after partial unverified edits, do
+  not leave the repo in an ambiguous dirty state. Either revert only the incomplete edits for that
+  slice, or explicitly report the exact dirty files and ask whether to preserve them. Do not commit,
+  continue, or claim readiness from an interrupted partial edit.
+- In an enabled-code-map repo, the code-map closeout has two distinct gates before staging or
+  committing: run `scripts/check_code_map_drift.py --require-enabled --strict-review` to catch
+  changed routable paths that the map does not cover and unresolved no-map-touch semantic reviews,
+  and run `scripts/validate_code_map.py --require-enabled` to validate schema/state. If repo-local
+  wrappers are absent, use the installed CppStudio scripts. Resolve the command path before invoking
+  it: prove `scripts/check_code_map_drift.py` and `scripts/validate_code_map.py` exist and are the
+  intended wrappers, or directly use
+  `${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py` and
+  `${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py`. Do not
+  try guessed repo-local script names first and then classify the resulting file-not-found as normal
+  validation progress. Do not treat `validate_code_map.py` as a substitute for the drift check, and
+  do not commit first and drift-check
+  afterward unless the user explicitly asked for that emergency ordering.
+- Harness endpoints that touch UI, renderer, swapchain, toolkit action state, screenshot/grab APIs,
+  or visual-capture state must run on the app's safe GUI/render thread or an app-owned command queue.
+  Do not call `requestUpdate()`, `grab()`, widget/window APIs, or action mutations directly from an
+  HTTP/server worker thread.
+- Harness mutation endpoints must define success by the committed state they claim to change. A
+  move, drag, edit, connect, delete, timeline, scene, or viewport command must read back the affected
+  state and return `ok=true` only when the invariant is satisfied, or explicitly report a deliberate
+  no-op. If the command snaps, clamps, quantizes, or validates input, tests and docs assert the
+  post-validation committed values, not raw deltas.
+- When adding, removing, or renaming harness routes, reconcile the runtime route-registration table
+  against `docs/AGENTIC_CONTROL.md` and any machine-readable control inventory before commit. The top
+  discovery list, detailed endpoint docs, examples, and optional JSON must match registered public
+  routes. A registered route missing from docs, or a documented route absent from code, is harness
+  drift unless intentionally hidden as an internal-only route.
+- For GUI/editor command wiring, use verify-before-wiring for menus, shortcuts, context actions,
+  timelines, and viewports. Discover or introspect the real toolkit/API objects, enabled-state rules,
+  selected-object requirements, snapped or committed coordinates, and socket/type compatibility
+  before connecting production commands; metadata or planned wiring is not proof.
+- For pointer-driven GUI fixes, treat coordinate transforms as a first-class contract. Audit
+  widget/framebuffer bounds, dock/sidebar/menu/status offsets, scroll positions, device-pixel ratio,
+  viewport origin, camera matrices, ray construction, hit-test space, and snap/brush falloff space
+  before editing. Tests should assert the full screen-to-world or screen-to-document path, not only
+  that an edit occurred.
+- For viewport, canvas, render-target, or screenshot capture endpoints, do not assume "set state,
+  request update, grab immediately" proves the visible result. The harness should expose enough
+  frame/revision/sequence/fence evidence to show the requested UI or renderer state was rendered
+  before capture, and the capture response should include that evidence when practical. If the
+  capture cannot settle on the requested state, report a harness failure instead of accepting stale
+  pixels. Run visual-difference or screenshot checks only against settled frames.
+- Judge screenshots against donor or peer-tool product conventions, not just non-empty pixels. Reject
+  captures that prove a command fired but show crowded, clipped, debug-looking, dimensionally wrong,
+  or convention-breaking UI for the target product class.
+- For GUI/HUD/editor/timeline/viewport/tool-surface slices, use `native-cpp-gui-hud` to create a
+  compact UI convention table before code changes. Record the peer-tool or donor evidence, expected
+  surface placement, icon/text convention, tooltip/accessibility text, enabled-state rules, and proof
+  method for affected controls. Universal actions such as play, stop, step, save, undo, redo, select,
+  transform, visibility, lock, zoom, and delete should use recognizable icon affordances when the
+  toolkit supports them, with readable names in tooltip/menu/accessibility/harness metadata, unless
+  donor evidence or accessibility/localization constraints justify prominent text controls.
+- For native tool UI, visible labels must carry critical semantic scope themselves. Do not rely on
+  tooltips, hidden harness readback, or docs as the only distinction between states that affect user
+  trust, such as preview versus baked output, destructive versus non-destructive actions, local versus
+  published state, approximate versus final results, or diagnostic versus product surfaces. If the
+  visible text could mislead the user about what actually happened, revise the label and make the
+  harness/screenshot checks assert that wording.
+- For viewport, brush, paint, sculpt, grooming, timeline, node graph, gizmo, camera, and other
+  visible interaction bugs, use `viewport-session-testing` as the user-equivalent proof lane. Record
+  or replay the real interaction path, capture before/after state and fresh visual artifacts, and
+  compare the reported symptom directly. Backend command success, route inventory, generic mesh or
+  scene revision changes, and stale screenshots do not prove visible input behavior.
+- When visual freshness checks fail repeatedly, pause code edits and audit the capture API timing.
+  Some toolkit grabs render during the capture call, so the correct proof is a post-capture rendered
+  revision; others copy the last presented frame and need pre-capture scheduling. Classify the issue
+  as render scheduling, capture timing, or test-script order before applying the next fix.
+- If two focused visual-capture, render-scheduling, or harness-command fixes fail, stop
+  micro-patching. Write a short evidence ledger with the failing job/scenario ids, exact failed
+  assertion or response fields, frame/revision/fence progress, whether artifacts are current or stale
+  leftovers, validation-layer/profiler errors, and which recent patches are proven versus
+  speculative. Revert or quarantine unproven speculative patches before the next attempt unless the
+  evidence clearly shows they are still required. The next attempt needs either a smaller targeted
+  repro/probe or a source-level root cause in the app/toolkit/render flow.
+- When you give, change, or rely on a user-facing desktop launch command, verify that exact command
+  path in addition to offscreen smoke tests. For long-running GUI apps, acceptable evidence is that
+  the exact command starts the intended process, the control harness responds, and a desktop window
+  or captured screenshot is visible to the user. Do not treat an offscreen smoke run alone as proof
+  that the user's launch command works.
+- If several build trees or binaries exist, launch proof must name which executable the launcher
+  selected and reject stale alternatives. A stale binary means the executable is older than the
+  changed source, generated UI assets, shader/runtime surface, or launch wrapper that should affect
+  the visible result. If the preferred/canonical build tree cannot be rebuilt because local donor,
+  SDK, or runtime paths are missing, report that as an unresolved build-path issue and either repair
+  the build configuration or make the launcher fail/fall back explicitly; do not silently validate a
+  secondary binary and hand the user a command that still runs the stale one.
+- Desktop launch evidence must prove the intended app window, not a coincidental terminal or stale
+  previous window. Match by process id, exact executable/app id, `WM_CLASS` or toolkit class, and
+  title when available; reject matches that only come from a terminal title containing the repo name.
+  Record mapped/normal/iconic state, workspace/desktop id, geometry, focus/raise result, and whether
+  the window is on the user's current visible desktop. A window object on another workspace, an
+  iconic/hidden window, a device-lost surface, or an unresponsive control harness is not a completed
+  human-launch proof even if the process is still alive.
+- Verify long-running desktop launch commands without blocking the agent on a foreground GUI
+  process. Use a bounded non-blocking verification shape: start the exact launcher while capturing
+  stdout/stderr, keep that launch alive while polling the control harness, confirm process and
+  window/screenshot evidence, test duplicate-launch behavior when the launcher owns a fixed control
+  port, then stop the app through its harness. Avoid transient-shell artifacts where a backgrounded
+  GUI receives SIGHUP when the verification shell exits before probes finish.
+- In shell launch wrappers that probe localhost control ports under `set -e`, explicitly capture and
+  classify failed probe statuses. A normal connection-refused result for "no existing instance yet"
+  must not terminate the launcher before it reaches the app binary, while a healthy existing instance
+  should focus/reuse the window when that is the intended duplicate-launch contract.
+- For GUI/windowed verification through offscreen or background managers, prefer the target repo's
+  canonical smoke script or launch wrapper over ad hoc commands. Invoke manager-submitted scripts
+  with absolute paths, or an explicit working directory when the manager supports it, even when the
+  script is the canonical smoke; offscreen managers may not preserve the caller shell's current
+  directory. Classify "script not found" manager-context failures as invocation issues rather than
+  app failures.
+- Offscreen/background-manager jobs are not evidence until they reach a terminal state and their
+  artifacts are read. A queued job means "still pending", not pass or fail, and a manager-context
+  failure such as a relative script path must be rerun once with an absolute path or explicit working
+  directory before blaming the app. Distinguish external window screenshots, app-owned screenshots,
+  render-target captures, and structured semantic readback. A blank external capture can still leave
+  app-owned or semantic evidence useful, but it cannot prove the user-visible surface by itself; name
+  which surface each artifact proves before accepting it.
+- Use the current OSTM CLI surface, not stale wait aliases. Capture the exact job id from
+  `ostm submit ...`, read that job with `ostm status <job-id>`, and use `ostm drain` only when
+  waiting for the whole queue is acceptable; then read `ostm status <job-id>` again and inspect
+  same-job artifacts. Do not use legacy or guessed commands such as `ostm job wait`, `ostm wait`, or
+  `ostm drain --timeout`; if any OSTM command fails, inspect `ostm --help`/subcommand help and fix
+  the invocation before accepting or rejecting app behavior. Submitting a job is never evidence by
+  itself.
+- After broad GUI/editor event-handler rewrites, inspect the edited source for stale control-flow
+  fragments, duplicate helpers, mismatched braces/namespaces, and surviving obsolete paths, then
+  build before adding more harness routes or documentation. Do not stack docs on top of a malformed
+  interaction patch.
+- Stop verification once the agreed evidence threshold is met. Do not keep adding optional probes
+  after build/test/map/harness/screenshot evidence already answers the user-facing question, unless a
+  new failure or unresolved risk justifies the extra run.
+- Be donor-first. Use the donor library for architecture, edge cases, tests, algorithms, and
+  dependency choices before inventing a new subsystem. For a new component/subsystem, broad
+  product-shape decision, or major architecture choice, first open the local donor routes; when no
+  suitable donor exists or the available donors are too stale/generic for the decision, run
+  web/upstream donor research against current primary sources before designing the implementation.
+  Do not substitute training data for missing donors. When that research finds reusable donors that
+  should help future projects, record them as target-project donor candidates immediately before
+  promotion, including URL, tier, backend/language signal, license/freshness notes, reuse caveat, and
+  promotion rationale. Promote them into the CppStudio source donor library when the user requested
+  reusable/global promotion or the current task is CppStudio donor-library maintenance. Never patch
+  the installed
+  `~/.codex/skills/cpp-cuda-vulkan-studio/references/donor-library` copy directly; update source and
+  roll out.
+- For risky backend, renderer, GUI/editor, solver, harness, or authoring-model migration slices,
+  close out donor provenance as part of the slice, not as optional documentation. Update the target
+  repo's provenance/source notes when present, such as `docs/DONORS_AND_SOURCES.md`, or record the
+  slice-specific sources in the validation/status docs when no provenance file exists. Include the
+  local donor categories/profiles used, current upstream links checked, study-only or license caveats,
+  and which decisions came from inference rather than donor evidence.
+- Do not treat "MVP", "scaffold", or "prototype" as permission to skip donor grounding for product
+  shape. For native GPU tools, viewport type, editor layout, timeline/transport placement, graph or
+  scene source of truth, solver architecture, render path, and validation surface must be checked
+  against the relevant skills and donor/peer-tool references before code is written.
+- Treat native C++ GPU brainstorming and architecture proposals as donor-grounded work, not just
+  conceptual chat. Before making concrete solver, renderer, dependency, subsystem, or MVP-order
+  recommendations, open the smallest relevant donor categories/profiles and state which guidance is
+  donor-backed versus inference. If the prompt asks for current best choices, state-of-the-art,
+  "ceiling", or rapidly moving GPU/tooling options, run an extensive web ceiling check against
+  upstream or primary sources before ranking choices. Separate current leading approaches from
+  legacy, teaching, or low-effort approaches, and prefer the best available option unless the user
+  asks for a lighter route.
+- For ambitious realtime simulation/graphics brainstorms, including fluid, fire, smoke, water,
+  destruction, shatter, neural 3D, upscaling/reconstruction, XR, or renderer architecture that is
+  likely to depend on current engines, SDKs, papers, samples, or hardware capabilities, run a real
+  state-of-the-art web ceiling check even when the user only says "brainstorm." Use official upstream
+  repos, vendor docs, recent papers, project docs, active samples, release notes, and adoption signals;
+  then separate current-source evidence from local donor guidance and inference.
+- Never copy study-only, incompatible-license, non-C++ reference-only, or backend-mismatched donor
+  code into generated projects. Use those donors for concepts, then translate through the active
+  Vulkan, CUDA, or explicit interop lane.
+- Preserve user and project state. Managed markers may be replaced by this package, but project files,
+  local rules, custom skills, and content outside managed marker blocks are user-owned.
+- Produce usable infrastructure. Avoid stubs, toy-only scaffolds, disabled tests, placeholder kernels,
+  or sample-only shortcuts unless the user explicitly asks for a throwaway prototype.
+- Keep code maps lazy before activation and decisive after activation. Check
+  `.cppstudio/code-map-state.json` first when present. When it says `enabled`, or when target
+  repo instructions declare a maintained codebase map required, use the architecture index and
+  manifest as the first navigation step before code changes: choose the subsystem route, read the
+  matching subsystem doc, then inspect the files named by that route. Do not keep prompting when
+  state says `declined`.
+- Do not hand-author CppStudio code-map state or manifest schema in target repos. Use the bundled
+  `scripts/bootstrap_code_map.py` flow to enable, decline, or audit maps, then run
+  `scripts/validate_code_map.py --require-enabled .` when the map is expected to be active.
+- Treat generated tool-probe artifacts as cleanup debt, not just ignore-file entries. If CMake
+  probing or package discovery creates top-level `CMakeFiles/`, `CMakeCache.txt`,
+  `cmake_install.cmake`, or similar generated files outside the chosen build directory, remove them
+  before validation, review, or commit status. Build and artifact directories may be ignored, but
+  probe junk should not sit in the source root.
+- When working in a target repo other than CppStudio itself, treat that repo's `AGENTS.md`,
+  codebase map, manifest, and repo-local skills as the subsystem routing authority. CppStudio supplies
+  the native C++/GPU lane policy, backbone, validation, and donor routing around the target repo's map.
+- Treat target-repo instruction files as sensitive status items. `AGENTS.md`, `CLAUDE.md`,
+  `.codex/skills/`, repo-local skill metadata, and similar agent-policy files must be reported
+  separately from ordinary source dirt, whether or not they are part of the current commit. Do not
+  call them "unrelated dirty files" without naming them and explaining why they were left unstaged.
+  Do not create or modify `CLAUDE.md` from a Codex CppStudio code-map/backbone workflow unless the
+  user explicitly asks for Claude-facing instructions or the target repo already owns that surface
+  and the change is deliberately scoped.
+
+## Coordination
+
+- Use `cppstudio-project-planner` before scaffolding or major architecture work when the project has
+  unresolved template, authoring-model/source-of-truth, GUI/HUD, agentic control harness, GPU lane,
+  donor, input-device, code-map, dependency, or validation decisions. For substantial project intake,
+  do the pre-plan research pass first, show links and sources, then ask the user to switch to Plan
+  mode before implementation and hand implementation back to this skill after choices are clear.
+- Use `modern-cpp-cmake` for CMake target structure, source ownership, presets, CTest, and dependency wiring.
+- Use `cuda-kernel-authoring` when adding or reviewing custom CUDA kernels or launch wrappers.
+- Use `vulkan-compute-sync` when the project contains Vulkan compute, render, synchronization, descriptor, or frame-lifetime work.
+- Use `native-cpp-gui-hud` when choosing, comparing, or integrating native C++ GUI/HUD/editor UI,
+  viewport overlays, docking panels, transform gizmos, plotting, desktop app UI, runtime/game UI, or
+  embedded web UI. When presenting GUI options, include links where the user can inspect how each GUI
+  looks.
+- Use `agentic-control-harness` when planning or implementing local controls that let agents launch,
+  drive, inspect, screenshot, and troubleshoot native apps through HTTP/curl, CLI, or MCP-backed
+  surfaces. For interactive apps, make this default-on unless the user opts out or the target is a
+  headless library or security-sensitive product surface.
+- Use `viewport-session-testing` when planning, implementing, or verifying real UI/viewport
+  interaction recording and replay. For generated interactive apps, keep the runtime scaffold in the
+  project and replace the fake host with the real app adapter as soon as visible tools exist.
+- Use available profiling or frame-debugging skills and local profiler tools only when the active environment exposes them and the user needs performance or capture evidence.
+- Before claiming the generated or upgraded backbone is valid, apply the verification rules in this
+  skill and the active project doctrine. If a dedicated `verification-before-completion` skill is
+  installed, load it as an extra gate; do not require that absent skill name to exist.
+
+## Workflow
+
+1. Before touching code, open the relevant skills and donor routes. Training data is not authority
+   for CppStudio implementation decisions. Use `references/donor-library/agent-lookup.md` for broad
+   or overlapping prompts, production overlays for VFX/game/native-infrastructure vocabulary, and
+   category/profile files for the smallest concrete donor set. Record the sources used.
+2. Inspect the target repo: `AGENTS.md`, `CMakeLists.txt`, `CMakePresets.json`, package manifests, `.github/workflows`, `cmake/`, `tests/`, `scripts/`, docs, `docs/CODEBASE_ARCHITECTURE_INDEX.md`, `docs/CODEBASE_SUBSYSTEM_MANIFEST.json`, and `.cppstudio/code-map-state.json` when present.
+3. For a greenfield repo, run `scripts/scaffold_gpu_cpp_project.py` from this skill and then adapt only project names and required dependency switches.
+4. For an existing repo, run `scripts/apply_studio_backbone.py` against a temporary copy first unless the user explicitly wants direct modification.
+5. For a greenfield scaffold with no `.cppstudio/code-map-state.json`, treat the code-map decision as
+   a hard pre-source gate. Ask once whether to create a maintained codebase architecture map before
+   the first implementation slice writes source, build, app, renderer, test, or docs scaffold files.
+   State the benefits: faster cold starts, cleaner multi-agent routing, explicit subsystem ownership,
+   and less repeated code reading. If the user already explicitly asked for a code map, architecture
+   map, or future-agent map during project creation, treat that as acceptance and run
+   `scripts/bootstrap_code_map.py --enable --force` after scaffold/template material exists because
+   the template includes starter generated map files. If they decline, run
+   `scripts/bootstrap_code_map.py --decline` and do not prompt again unless asked. If the user
+   explicitly says to defer the code-map choice, record that as a deliberate pending decision in the
+   planning notes before coding and ask again only when the user reopens code-map setup. Do not
+   proceed with greenfield implementation while `.cppstudio/code-map-state.json` is missing and the
+   code-map choice is merely "pending." Do not create `.cppstudio/code-map-state.json`,
+   `docs/CODEBASE_ARCHITECTURE_INDEX.md`, or `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` by guessing the
+   schema; use the bootstrap script and validator.
+6. For an existing project with no `.cppstudio/code-map-state.json`, treat code-map enablement as a readiness protocol, not as an immediate choice prompt. If the user says they want to opt in to a code map, first say that you will run a non-destructive audit and that no restructure decision is needed yet. Then run `scripts/bootstrap_code_map.py --audit-existing` before asking any restructure/preserve/decline question. Summarize the actual stdout with concrete findings, evidence paths, nonstandard layout risks, estimated cleanup cost, and any specific restructuring that would be needed. If the audit did not run or you have not read its output, do not claim an audit happened and do not ask the user to choose a restructuring route. Do not write `docs/CODEMAP_BOOTSTRAP_AUDIT.md` unless the user wants a saved audit; then rerun with `--write-audit`. Only after presenting audit evidence ask whether the user wants to restructure first, preserve the current layout and document exceptions, or decline the map. Do not run `--enable` until the user chooses either restructure-complete or preserve-as-is. If generated map files already exist, use `--enable --force` only after the user accepts replacing those generated map files.
+7. When `.cppstudio/code-map-state.json` says `enabled`, or when repo-local instructions declare a maintained codebase map required, read the target repo's `docs/CODEBASE_ARCHITECTURE_INDEX.md` and `docs/CODEBASE_SUBSYSTEM_MANIFEST.json` before code changes. Use that map to select the subsystem doc and primary paths for the change, then keep the map updated when ownership, data flow, GPU backend boundaries, build/test lanes, validation, CI, public runtime behavior, or routable file ownership changes. Before every verified-slice commit in an enabled-map repo, run `scripts/check_code_map_drift.py --require-enabled --strict-review --launch-sidecar auto` when present plus `scripts/validate_code_map.py --require-enabled`; if repo-local wrappers are absent in an older existing-project map, run the installed skill scripts from `${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/` and pass the repo root as the positional argument, for example `python3 ${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/check_code_map_drift.py --require-enabled --strict-review --launch-sidecar auto /absolute/repo`. Do not invent `--repo`; the helper's repo argument is positional. Report wrapper gaps instead of treating them as target project failures. If the drift check reports an unmapped path or unresolved no-map-touch review, the `--launch-sidecar auto` closeout path creates a frozen snapshot and starts the guarded sidecar itself. Do not ask the user or supervisor to prompt routine code-map work. Update the manifest and matching subsystem doc directly only when the route change is small and clear, or rerun with `--reviewed-no-map-change` only after an explicit semantic review proves no ownership/data-flow/backend/validation/public-route note changed. Prefer adding the owning directory or glob route for related app-owned files, such as flat `src/*.h`, `src/*.cpp`, or `src/ui_panel_*.h`, instead of adding a one-off route for each controller/panel/helper file. If the user asks about a code map mid-project, explain it, run the existing-project readiness protocol, and wait for acceptance before running `scripts/bootstrap_code_map.py --enable`; if generated map files already exist, use `--force` only after the user accepts replacing them. For large existing repos, use parallel-lens subsystem audits only when delegation is explicitly authorized.
+8. For enabled-map repos, use a code-map sidecar when it is bounded and useful: drift output,
+   long-running slice interval, ownership/data-flow/backend-boundary changes, new or moved routable
+   files, or stale subsystem docs justify offloading map maintenance. When `agent-tmux` is available,
+   prefer the guarded helper shape
+   `agent-tmux codex-code-map-sidecar <repo> <anchor> [focus]`; the drift checker prints this command
+   as a required worker action for uncovered routable paths and for covered routable changes that did
+   not touch map files. The normal enabled-map closeout command uses `--launch-sidecar auto`, which
+   creates a frozen snapshot of tracked and untracked non-ignored files and launches the sidecar
+   automatically when maintenance is unresolved. Manual sidecar launch is only for cases where the
+   project lacks the new drift checker or a different fixed anchor is deliberately chosen. Document
+   the anchor in the sidecar prompt and response.
+   The sidecar may only produce map-file changes (`docs/CODEBASE_*`, `docs/SUBSYSTEMS/*`, and
+   project-local map notes) plus rationale, and it reports its snapshot assumptions. If the original
+   worker keeps implementing, the sidecar must work in an isolated worktree, archive/snapshot copy,
+   or read-only snapshot and return a patch/diff or map-file replacements; same-worktree map edits
+   are allowed only as a serialized handoff with the original paused. Before staging or committing,
+   the original must apply or merge the sidecar output, rerun drift and validation on the current
+   tree, and update or relaunch the sidecar if later source changes touched more routable
+   ownership/data-flow areas. Do not create public commits solely to feed sidecars; use Rewind
+   checkpoints or temporary anchors for that proof boundary, then keep the normal verified slice
+   commit as the public history unit.
+9. If the readiness audit leads to pre-map infrastructure work such as `CMakePresets.json`,
+   canonical `scripts/`, validation wrappers, CI files, or build-entrypoint cleanup, label that work
+   as an audit-backed infrastructure slice before map enablement. Get the user's route acceptance
+   first, verify and commit or clearly stage that slice separately where practical, and do not
+   present it as "just the code map." After map enablement or major map edits, run the fresh-agent
+   routing smoke described above before calling the setup complete. If it is skipped, say exactly why
+   and list it as remaining work.
+10. Preserve any existing package manager or project-specific dependency policy. Do not introduce vcpkg, Conan, containers, FetchContent, or submodules unless there is a concrete reason.
+11. Keep CUDA and Vulkan optional through CMake cache options. For unspecified new GPU/3D/realtime/XR/cross-platform C++ projects, recommend and scaffold Vulkan-first: the normal `dev` preset is Vulkan-only, CUDA stays off unless the user explicitly chooses the CUDA lane or the requirements force CUDA.
+12. Do not mix CUDA into a Vulkan-chosen or Vulkan-assumed project by default. Use CUDA only for explicit CUDA/Vulkan interop, CUDA-specific compute, NVIDIA-only libraries, CUDA graphs, or custom CUDA kernels. When the user explicitly chooses CUDA, Vulkan may be added for presentation, realtime visualization, XR, swapchain/display work, or interop if the boundary is documented.
+13. For new Vulkan template work, target Vulkan 1.3 with Vulkan-Hpp RAII, synchronization2, dynamic rendering, GLSL compiled by `glslc`, SPIR-V validation by `spirv-val`, and optional portability-enumeration support for MoltenVK-style platforms.
+14. For realtime Vulkan apps or generated viewport preflights, keep CPU/software Vulkan lanes
+    diagnostic-only unless the project explicitly opts into them. A default runtime/readiness test
+    that selects llvmpipe/Lavapipe, a virtual GPU, or any CPU physical device must report a hardware
+    backend blocker instead of producing a green realtime-viewport claim. Use capability dumps,
+    loader/ICD environment inspection, and project-owned readback to classify whether the failure is
+    SDK/tooling, loader, ICD visibility, physical-device selection, queue/swapchain support, or
+    surface/present support before changing renderer code.
+15. Register tests with CTest labels so quick, GPU, GUI, Vulkan, CUDA, shader, compute, render, validation, perf, and nightly lanes can be selected independently.
+16. Keep host memory-safety and coverage evidence explicit. Use the generated `asan-ubsan` preset
+    for C++ host memory and undefined-behavior checks, including parser/importer tests and fuzz
+    harnesses that can run without a GPU. On Clang/GCC this lane uses ASan+UBSan; on MSVC it is
+    ASan-only. Keep TSan as a separate host preset or maintainer lane when thread-race evidence is
+    needed, because TSan often conflicts with ASan/UBSan combinations, GPU runtimes, and platform
+    assumptions. Do not hide sanitizer failures behind non-instrumented fallback runs. Use the
+    generated `coverage` preset only for focused host-side harness maturity questions: LLVM/Clang
+    `-fprofile-instr-generate -fcoverage-mapping`, GCC `-ftest-coverage -fprofile-arcs`, corpus or
+    scenario replay, and a report that identifies reached and unreached code. Coverage is a routing
+    signal for missing tests, seed inputs, dictionaries, or harness branches; it is not correctness,
+    GPU, visual, or performance proof. Keep CUDA memory/race/init/sync issues in Compute Sanitizer
+    and Vulkan API issues in validation-layer lanes.
+17. For GPU performance work, use the generated optimization loop when available. Start from
+    the target project's `docs/GPU_OPTIMIZATION_LOOP.md`; when working in this source package before
+    that doc has been copied, use the bundled template copy at
+    `assets/app-library-template/docs/GPU_OPTIMIZATION_LOOP.md`. Create a representative target table
+    with explicit success criteria so agents do not chase isolated microbenchmarks, record a fixed
+    baseline, run hardware profiling such as Nsight Compute/NCU, Nsight Graphics GPU Trace, vendor
+    tools, timestamp-query summaries, or project counters before edits when counters are available,
+    record the tool gap when they are not, use roofline/SOL diagnosis when metrics are available, log
+    evidence-backed hypotheses before edits, optionally run breaking-point search for workload
+    limits, test one focused hypothesis at a time, run two or more validation passes before
+    benchmarking an attempt, keep only correct improvements, revert rejected or divergent attempts,
+    use `plan-round` for beam-style parallel worker slots when exploring multiple bottlenecks, use
+    `next` for move-on decisions, and generate a consolidation report before claiming speedups.
+18. Treat profiling as evidence only when the report is readable and the command matches the workload being claimed.
+    For Nsight Systems stats readback, prefer the bundled `scripts/run_nsys_smoke.sh` because it
+    probes the installed report and format surface. If writing a manual `nsys stats` command, inspect
+    `nsys stats --help-reports` and `nsys stats --help` first, use explicit reports such as
+    `vulkan_api_sum,osrt_sum,nvtx_sum` or `cuda_api_gpu_sum,cuda_gpu_kern_sum,osrt_sum,nvtx_sum`,
+    include `--force-export=true`, and do not use legacy `--report summary` or unsupported
+    `--format text` assumptions.
+    For GUI, viewport, OSTM, or per-frame JSONL profiling, final UI state is not enough. When the
+    complaint is a concrete live action such as pan, zoom, orbit, brush/stylus drag, gizmo drag, or
+    timeline scrub, accept only rows captured during that action for the primary FPS/frame-time
+    claim; do not substitute idle frames, startup frames, final-state reads, or unrelated scenario
+    counters. Before comparing first/last/median/growth frame metrics, filter or classify timing
+    rows by the recorded render or resource dimensions, such as `resources.output_width` and
+    `resources.output_height`, viewport size, or swapchain image size. Compute accepted metrics only
+    from rows that match the accepted full-size/maximized viewport or explicitly label smaller
+    startup/resize rows as rejected.
+    Closeout must report the accepted dimensions, accepted row count, rejected startup/resize row
+    count, and the exact artifact/helper that proved those fields. If the artifact has no per-row
+    dimension signal, treat that as a profiling evidence gap before making size-sensitive performance
+    claims.
+    For user-visible renderer correctness failures, profiling and frame debugging are not optional
+    after the first failed visual fix. Require a same-launch capture or timing report plus a
+    symptom-specific metric before another patch: examples include projected hair width across zoom,
+    pass-level timing for the active render path, draw/dispatch counts for the claimed primitive
+    path, or frame debugger evidence for the active shader/pipeline state. Diagnostic screenshot
+    paths that enable extra accumulation, debug, or readback passes must be classified separately
+    from the live presented path before their timings or visuals are used.
+    For Vulkan/realtime performance audits, classify the bottleneck before proposing edits:
+    present/vsync pacing, CPU submit/API churn, GPU pass/shader cost, startup/pipeline creation,
+    upload/resource churn, or instrumentation gap. If `vkQueuePresentKHR`, swapchain acquire, FIFO
+    present mode, or app present/acquire wait readbacks dominate, report the run as present-paced and
+    do not optimize shaders, lighting, shadows, CUDA, or compute kernels until a non-present-paced or
+    project-owned benchmark lane proves those passes are expensive. Separate startup/device/pipeline
+    creation and shutdown from steady-state frames. If app timing readbacks are zero/missing/stale or
+    Nsight Vulkan/NVTX marker reports have no data, call out the instrumentation/pass-attribution gap
+    instead of making pass-level claims from API summaries alone.
+    For full-quality renderer or viewport performance work, cheaper output is not the first
+    optimization target. Feature-off, LOD, decimation, lower-resolution, lower-sample, proxy,
+    idle/final-only, chunking/streaming, or shadow/lighting/scattering-disabled runs may isolate cost
+    or become a later user-approved scalability layer, but first profile and optimize the complete
+    full-fidelity stress baseline: the full-density/full-quality workload with the entire target asset
+    loaded and rendered as-is. The isolation order is profile full workload, identify and rank
+    bottlenecks, turn off unrelated cost sources only as temporary diagnostic controls, optimize the
+    leading bottleneck, restore full workload, then re-profile before moving to the next bottleneck.
+    Before
+    planning source changes for a slow full-quality path, compare against current high-end peer/donor
+    architectures for the same workload and name the architecture change under test. Closeout must
+    compare the original full-groom full-quality workload against the treated full-groom full-quality
+    workload with visual proof that density, material/shader behavior, primitive semantics,
+    lighting/shadows, interaction behavior, and whole-asset coverage were preserved. (source: self-improvement:user_correction:f99b833b96bd0280)
+19. Before greenfield scaffolding, major backbone edits, or native GPU architecture brainstorming,
+    read `references/project-archetypes.md` and pick the closest lane: Vulkan app, CUDA library,
+    CUDA+Vulkan combined/interop app, native GUI/HUD/editor UI, AI runtime, neural 3D viewer,
+    sculpting/brush tool, grooming/brush/fur tool, glTF/runtime asset viewer, renderer backbone/runtime mesh pipeline,
+    DCC scene pipeline,
+    volume/voxel renderer, animation runtime, material pipeline, CAD geometry tool,
+    3D/physics/GPU simulation tool, or XR app.
+20. When borrowing patterns, APIs, examples, or dependency ideas from external 3D/AI/GPU projects,
+    or when brainstorming native GPU architecture that will recommend solvers, rendering paths,
+    dependencies, subsystem boundaries, or MVP order, use the nested donor router before giving the
+    recommendation. Read `references/donor-library/README.md` for policy; when the prompt uses VFX
+    studio, game studio, or native engineering infrastructure vocabulary, use the production overlays
+    under `references/donor-library/production/`; use `references/donor-library/agent-lookup.md`
+    when the prompt is broad, overlapping, or exploratory; then open the smallest matching category
+    set, choosing one primary category first when possible, and only the donor profiles those
+    categories name. Treat donors as domain references first: a CUDA, Vulkan, OpenCL, DirectX, CPU,
+    or DCC donor can still guide another target backend. Keep the selected implementation lane fixed,
+    translate backend-specific details through the active lane skill, and keep permissive donor code,
+    dependency candidates, and study-only references separated. If the prompt asks for the best
+    current choices, state of the art, ceiling, or recently moving GPU/tooling options, web-check
+    upstream or primary sources before ranking options. For broad realtime simulation/graphics
+    brainstorms that mention fluid, fire, smoke, water, destruction, shatter, neural 3D,
+    upscaling/reconstruction, XR, or renderer architecture, do the web ceiling check even if the user
+    did not use "current" or "best."
+21. Do not route design-only, frontend-only, storyboarding, generic image/video, generic product-AI UI, plain text rendering, or ordinary data import requests through this skill unless the user explicitly asks for native C++ GPU implementation, C++/CUDA/Vulkan infrastructure, or donor-reference selection.
+
+For long-running target-project implementation, repeat this rhythm between slices:
+
+1. Ground the slice in skills, code map, donors, and any needed current-source research.
+2. Name the expected files and verification gates, then either make the smallest coherent
+   implementation/probe step or stop with a concrete blocker; do not reopen broad orientation after
+   the route is already sufficient.
+3. Implement the smallest coherent production slice.
+4. Verify with the target repo's build, tests, harness, screenshot, or profile evidence appropriate
+   to the change.
+5. Update code-map, control-harness registry, and donor/provenance docs when the slice changed their
+   routed behavior, route inventory, product-shape evidence, or risky backend/UI/solver decisions.
+   If a code-map sidecar supplied map changes, apply or merge its patch/output only after checking
+   the sidecar's fixed snapshot against the current tree.
+6. Clean generated probe junk from the source root, review `git status`, keep unrelated user changes
+   out, run both `scripts/check_code_map_drift.py --require-enabled --strict-review` and
+   `scripts/validate_code_map.py --require-enabled` before staging/committing when the map is
+   enabled. Before invoking those paths, resolve whether the target repo actually has repo-local
+   wrappers; when it does not, use the installed CppStudio scripts from
+   `${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/scripts/` instead of trying stale or
+   guessed repo-local script names. If strict review fails because source changed without map files,
+   resolve it before commit by updating the map, launching the sidecar yourself, or rerunning with
+   `--reviewed-no-map-change` only after an explicit semantic review. Relaunch the sidecar or update
+   the map yourself if current changes outgrew the sidecar snapshot, check diff hygiene, and commit the verified slice with exactly one allowed
+   `Commit-Origin` trailer: `agent-slice` or `user-requested`.
+7. Continue to the next slice only after the commit is in place, or after clearly reporting why a
+   commit was intentionally skipped.
+
+## Existing Project Code Map Readiness Protocol
+
+Before enabling a maintained code map for an existing repo, confirm the repo can support durable map maintenance:
+
+1. Treat an explicit user opt-in as permission to audit, not as permission to enable or restructure. First tell the user that the next step is a non-destructive audit and that choices come after evidence.
+2. Run `scripts/bootstrap_code_map.py --audit-existing` and review its stdout. Save it with `--write-audit` only if the user wants `docs/CODEMAP_BOOTSTRAP_AUDIT.md` recorded.
+3. Review build entrypoints, source/include ownership, tests, validation scripts, CI, docs, shader/CUDA/Vulkan ownership, generated build artifacts, and dependency/vendor boundaries.
+4. Present audit evidence before choices: list concrete findings, evidence paths, what restructuring would actually be needed, and the cleanup cost. If the audit has no concrete restructuring findings, say that clearly and do not manufacture a restructure recommendation.
+5. Classify cleanup cost as none, small, medium, or large. Tie the estimate to concrete findings, not general taste.
+6. Only after the evidence summary, present the user with three choices: restructure first, keep the current layout and document exceptions in the map, or decline the map for now.
+7. If the user chooses restructure first, create or confirm a recent git commit, propose a focused restructuring plan, validate the project after the restructure, and only then enable the map.
+8. If the user chooses an audit-backed small infrastructure slice first, keep it scoped, call it out
+   as pre-map infrastructure, verify it, and avoid burying it in the code-map completion claim.
+9. If the user chooses preserve-as-is, enable the map and record the nonstandard layout explicitly in the relevant subsystem docs. If generated map files already exist, rerun enablement with `--force` only after the user accepts replacing them.
+10. After enabling or materially changing the map, run a read-only subagent or fresh-agent routing smoke when possible. If the smoke is unavailable or not run, say the map is structurally valid but routing evidence is pending.
+11. If the user declines, run `scripts/bootstrap_code_map.py --decline` and do not prompt again unless asked.
+
+## Bundled Assets
+
+- `assets/app-library-template/`: full app+library C++/Vulkan-first/CUDA-optional starter layout with CMake presets, CTest, sample C++ library/app, Vulkan default targets, explicit CUDA and combined CUDA+Vulkan build lanes, docs, clang tooling, and GitHub self-hosted GPU CI. Real CUDA/Vulkan external-memory or semaphore interop requires project-specific additions beyond the combined build preset.
+
+## Bundled References
+
+- `references/donor-library/`: curated donor-source library for Vulkan foundation tooling, glTF/runtime assets, WebGPU/WebGL, native GUI/HUD/editor UI, renderer backbones, path tracing, engine architecture, runtime mesh pipelines, graphics, rendering, geometry, 3D/physics/GPU simulation, AI runtimes, ML compilers, CUDA kernels, neural 3D, sculpting/brush tools, grooming/fur, DCC scene pipelines, volumes, animation, materials, CAD, XR, and native engineering infrastructure. Donor backend signals describe the upstream implementation, not a restriction on target lanes. Start with `references/donor-library/README.md`; for VFX studio, games, or native infrastructure vocabulary use `references/donor-library/production/`; for broad or ambiguous donor requests use `references/donor-library/agent-lookup.md`, then load the smallest category set needed for the active task.
+- `references/project-archetypes.md`: lane-selection guide for CUDA-only, Vulkan-only, CUDA+Vulkan interop, native GUI/HUD/editor UI, AI runtime, neural 3D, grooming, glTF/runtime assets, renderer backbone/runtime mesh pipeline, DCC, volume, animation, material, CAD, 3D/physics/GPU simulation, and XR projects.
+
+## Bundled Scripts
+
+- `scripts/scaffold_gpu_cpp_project.py`: create a new project from the template.
+- `scripts/apply_studio_backbone.py`: copy backbone files into an existing repo without overwriting by default.
+- `scripts/validate_studio_backbone.py`: check that required backbone files are present and, with `--integration`, that CMake/CTest register expected labeled tests.
+- `scripts/check_dev_tools.sh`: verify compilers, CUDA, Vulkan, shader, and optional profiler tools.
+- `scripts/select_idle_gpu.sh`: choose an idle NVIDIA GPU, optionally constrained by `GPU_ALLOWED_INDICES`, using utilization and display-server subtraction.
+- `scripts/run_compute_sanitizer.sh`: run a command or GPU CTest preset under Compute Sanitizer.
+- `scripts/run_vulkan_validation.sh`: run a Vulkan command or validation CTest preset with Khronos validation enabled.
+- `scripts/dump_vulkan_capabilities.sh`: capture `vulkaninfo` summary and text reports for loader/ICD diagnostics.
+- `scripts/run_nsys_smoke.sh`: run an app/probe under Nsight Systems, discover supported stats
+  reports/formats from the installed `nsys`, and read back lane-appropriate explicit reports with
+  forced SQLite export.
+- `scripts/run_gpu_optimization_loop.py`: initialize, baseline, hardware profile, log hypotheses, search breaking points, plan beam-style rounds, attempt, keep/revert, orchestrate, and report evidence-gated GPU optimization sessions.
+- `scripts/format_check.sh`: run clang-format in check-only mode.
+- `scripts/tidy_check.sh`: run clang-tidy against a compile database in check-only mode.
+- `scripts/bootstrap_code_map.py`: audit existing repo readiness, enable, or decline the opt-in CppStudio codebase map for a target repo; on enable it also installs missing repo-local validator/drift wrapper scripts that forward to the installed CppStudio skill.
+- `scripts/validate_code_map.py`: validate enabled or declined CppStudio code-map state and manifest links.
+- `scripts/check_code_map_drift.py`: pre-commit helper that checks changed routable paths against an enabled code-map manifest.
+
+## Acceptance
+
+For a new scaffold, verify:
+
+```bash
+cmake --preset dev
+cmake --build --preset dev
+ctest --preset quick --output-on-failure
+```
+
+For an existing target repo, prefer the repo's own documented validation path and preset names over
+the scaffold defaults above. Check `CMakePresets.json`, validation docs, target scripts, and the
+maintained code-map build subsystem before choosing commands.
+
+For this skill itself, verify:
+
+```bash
+${HOME}/.codex/skills/.system/skill-creator/scripts/quick_validate.py ${HOME}/.codex/skills/cpp-cuda-vulkan-studio
+```
+
+For CppStudio source-repo changes that affect validation, CI, shell/Python scripts, generated
+templates, CMake/toolchain behavior, package manifests, donor validation, trigger validation, or a
+previously red push, run the GitHub workflow-equivalent gate before pushing. `validate.sh` and
+`rollout_to_codex.sh` alone are not enough for that class of change:
+
+```bash
+bash -n scripts/*.sh skills/cpp-cuda-vulkan-studio/scripts/*.sh
+shellcheck scripts/*.sh skills/cpp-cuda-vulkan-studio/scripts/*.sh
+PYTHONPYCACHEPREFIX=/tmp/cppstudio-pycache python3 -m py_compile scripts/*.py skills/cpp-cuda-vulkan-studio/scripts/*.py
+python3 scripts/validate_donor_library.py skills/cpp-cuda-vulkan-studio/references/donor-library --reference-root skills/cpp-cuda-vulkan-studio/references
+python3 scripts/validate_trigger_matrix.py research/donor-library/trigger-matrix.json --repo-root .
+VALIDATOR=$PWD/scripts/quick_validate_skill.py CPPSTUDIO_FULL_CUDA_ARCHITECTURES=75 CPPSTUDIO_SKIP_CUDA_RUNTIME_TESTS=1 ./scripts/validate.sh --full
+```
+
+<!-- agent-self-improvement-doctrine:begin -->
+## Accepted Self-Improvement Doctrine
+
+- 2026-05-24T05:40:34Z [codex] CppStudio supervised UI parameter-surface closeout must require visible GUI screenshot or viewport evidence that exposed controls are actually reachable and visible in the product UI, not only JSON/model inventory. (source: self-improvement:user_correction:7650ade4518cb112)
+- 2026-05-31T21:52:02Z [codex] CppStudio UI/control-surface closeout must use a machine-readable control contract as primary proof for GUI-heavy panels: ids, labels, modes, visibility/enabled reasons, handlers, model/runtime readbacks, mutation results, and stale-control failures; screenshots are secondary appearance/layout evidence. (source: self-improvement:user_correction:1a0ff4f657d3a43a)
+- 2026-05-31T22:15:28Z [codex] CppStudio reusable UI/control-surface hardening must be verified with a fresh implementing-worker path probe, not only installed text checks or reviewer rejection; the probe must show the worker requires live visible-control mutation, committed-state/runtime readback, stale-control classification, and launcher freshness before closeout. (source: self-improvement:user_correction:390d625d42840a93)
+- 2026-06-01T05:20:00Z [codex] CppStudio control-surface closeout for transform-owned lights, cameras, renderers, shaders, and materials must prove user-facing behavior/output invariants such as aim, pivot stability, distance, enabled light set, shader/shadow payload, and receiver/hair luminance; state-vector equality alone cannot close user-reported lighting or viewport behavior bugs. (source: self-improvement:user_correction:ecd187f2ce9aa635)
+- 2026-06-01T06:30:25Z [codex] CppStudio supervisor closeout must treat a fresh user live report that the same UI/render/control surface still fails as proof invalidation. Reopen the slice and reconcile the exact user path; contradictory artifacts such as a light-on proof whose final readback has that light disabled are failed proof paths, not supporting evidence. (source: self-improvement:user_correction:0eb8ae93fa837dec)
+- 2026-06-01T07:01:07Z [codex] Mode-specific UI/control closeout must treat final top-level user-facing artifact fields as the deciding proof; nested mutation summaries or reviewer paraphrases cannot override a final readback showing the target control disabled, hidden, in another mode, or failing its behavior invariant. (source: self-improvement:user_correction:9d24c3df42094489)
+- 2026-06-19T11:18:22Z [codex] CppStudio standardized import/export supervision must require a reference-consumer matrix before local probes or target patches when established DCCs or engines consume the same asset correctly; visible parity with those consumers is required, and element counts or nonblank renders are only supporting evidence. (source: self-improvement:user_correction:4e6e0f15dac9de64)
+- 2026-06-19T11:39:17Z [codex] CppStudio validation-affecting pushes must run the actual GitHub workflow-equivalent gate, including shell syntax, ShellCheck, Python compile, donor/trigger validators, and CI-env `validate.sh --full`; rollout validation proves install parity, not GitHub validation health. (source: self-improvement:user_correction:a6f8d1c7312673c2)
+- 2026-06-20T14:08:38Z [codex] CppStudio visual renderer supervision must stop source-only patching after one failed user-visible renderer claim and require same-launch profiler/frame-capture/app-timer evidence or a symptom-specific numeric metric before the next patch. (source: self-improvement:user_correction:80eed6e143baf667)
+- 2026-06-20T14:08:38Z [codex] CppStudio Groom visual renderer supervision must separate hair billboard/ribbon orientation from width semantics and require user-visible near/far width behavior plus projected-width telemetry before claiming hair primitive correctness. (source: self-improvement:user_correction:da13fb6efeacc11c)
+- 2026-06-20T16:37:24Z [codex] CppStudio visual/runtime/import debugging must ask whether the behavior ever worked before and compare a known-good asset, mode, commit, recording, reference app, or donor path against the failing path before new patches. (source: self-improvement:user_correction:330d7cce2c273ff5)
+<!-- agent-self-improvement-doctrine:end -->
