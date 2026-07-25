@@ -1,8 +1,3 @@
----
-name: important-instruction-ledger
-description: "Maintain an active slice watchlist for implementation or supervision work with hard constraints, verification gates, risks, or closeout rules."
----
-
 # Active Slice Watchlist
 
 Use this skill to maintain an active supervision watchlist for each implementation slice. It is not

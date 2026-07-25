@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL_DIR="${ROOT_DIR}/skills/cpp-cuda-vulkan-studio"
+CORE_MODULE="${SKILL_DIR}/modules/studio-core.md"
 # shellcheck source=scripts/managed_skills.sh
 source "${ROOT_DIR}/scripts/managed_skills.sh"
 AUXILIARY_SKILL_NAMES=("${CPPSTUDIO_AUXILIARY_SKILL_NAMES[@]}")
@@ -88,7 +89,6 @@ fi
 require_python310
 
 required_repo_files=(
-    "scripts/install_companion_donor_links.py"
     "scripts/install_user_agents_relay.py"
     "scripts/managed_skills.sh"
     "scripts/bootstrap_code_map.py"
@@ -110,46 +110,33 @@ required_repo_files=(
     "research/donor-library/trigger-results-2026-05-10-installed.json"
     "companion-skill-snippets/user-agents/cppstudio-relay.md"
     "skills/cpp-cuda-vulkan-studio/package-manifest.json"
-    "skills/native-cpp-gui-hud/SKILL.md"
-    "skills/native-cpp-gui-hud/agents/openai.yaml"
-    "skills/native-cpp-gui-hud/references/gui-options.md"
-    "skills/native-cpp-gui-hud/package-manifest.json"
-    "skills/cppstudio-project-planner/SKILL.md"
-    "skills/cppstudio-project-planner/agents/openai.yaml"
-    "skills/cppstudio-project-planner/references/project-intake.md"
-    "skills/cppstudio-project-planner/references/choice-matrix.md"
-    "skills/cppstudio-project-planner/package-manifest.json"
-    "skills/agentic-control-harness/SKILL.md"
-    "skills/agentic-control-harness/agents/openai.yaml"
-    "skills/agentic-control-harness/references/control-harness.md"
-    "skills/agentic-control-harness/package-manifest.json"
-    "skills/viewport-session-testing/SKILL.md"
-    "skills/viewport-session-testing/agents/openai.yaml"
-    "skills/viewport-session-testing/references/viewport-session-testing.md"
-    "skills/viewport-session-testing/package-manifest.json"
-    "skills/important-instruction-ledger/SKILL.md"
-    "skills/important-instruction-ledger/agents/openai.yaml"
-    "skills/important-instruction-ledger/scripts/important_instruction_ledger.py"
-    "skills/important-instruction-ledger/package-manifest.json"
-    "skills/cppstudio-supervisor/SKILL.md"
-    "skills/cppstudio-supervisor/agents/openai.yaml"
-    "skills/cppstudio-supervisor/scripts/slice_phase_report.py"
-    "skills/cppstudio-supervisor/package-manifest.json"
-    "skills/vulkan-compute-sync/SKILL.md"
-    "skills/vulkan-compute-sync/agents/openai.yaml"
-    "skills/vulkan-compute-sync/package-manifest.json"
-    "skills/modern-cpp-cmake/SKILL.md"
-    "skills/modern-cpp-cmake/agents/openai.yaml"
-    "skills/modern-cpp-cmake/.skill-source"
-    "skills/modern-cpp-cmake/package-manifest.json"
-    "skills/cuda-kernel-authoring/SKILL.md"
-    "skills/cuda-kernel-authoring/agents/openai.yaml"
-    "skills/cuda-kernel-authoring/.skill-source"
-    "skills/cuda-kernel-authoring/package-manifest.json"
-    "skills/gpu-profiling-workstation/SKILL.md"
-    "skills/gpu-profiling-workstation/references/TOOL_INVENTORY.md"
-    "skills/gpu-profiling-workstation/.skill-source"
-    "skills/gpu-profiling-workstation/package-manifest.json"
+    "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md"
+    "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/agents/openai.yaml"
+    "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/references/gui-options.md"
+    "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
+    "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/agents/openai.yaml"
+    "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
+    "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md"
+    "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md"
+    "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/agents/openai.yaml"
+    "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/references/control-harness.md"
+    "skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/GUIDE.md"
+    "skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/agents/openai.yaml"
+    "skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/references/viewport-session-testing.md"
+    "skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/GUIDE.md"
+    "skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/agents/openai.yaml"
+    "skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/scripts/important_instruction_ledger.py"
+    "skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
+    "skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/agents/openai.yaml"
+    "skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/scripts/slice_phase_report.py"
+    "skills/cpp-cuda-vulkan-studio/modules/vulkan-compute-sync/GUIDE.md"
+    "skills/cpp-cuda-vulkan-studio/modules/vulkan-compute-sync/agents/openai.yaml"
+    "skills/cpp-cuda-vulkan-studio/modules/modern-cpp-cmake/GUIDE.md"
+    "skills/cpp-cuda-vulkan-studio/modules/modern-cpp-cmake/agents/openai.yaml"
+    "skills/cpp-cuda-vulkan-studio/modules/cuda-kernel-authoring/GUIDE.md"
+    "skills/cpp-cuda-vulkan-studio/modules/cuda-kernel-authoring/agents/openai.yaml"
+    "skills/cpp-cuda-vulkan-studio/modules/gpu-profiling-workstation/GUIDE.md"
+    "skills/cpp-cuda-vulkan-studio/modules/gpu-profiling-workstation/references/TOOL_INVENTORY.md"
     "docs/agent-context/SLICE_WATCHLIST.md"
     "research/donor-library/trigger-regression-checklist.md"
     "skills/cpp-cuda-vulkan-studio/assets/app-library-template/.gitignore"
@@ -173,159 +160,159 @@ done
 grep -q "scripts/bootstrap_code_map.py --enable --force" \
     "${SKILL_DIR}/assets/app-library-template/README.md"
 grep -q "do a pre-plan research pass before asking the user to switch to" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "Open \`cppstudio-project-planner\` immediately when available" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "Separate current leading approaches from" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "extensive state-of-the-art web ceiling check" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "Project Dos And Don'ts" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "Primary visible loop before breadth" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "Shared tool substrate before tool proliferation" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "Planning depth before source" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "Active slice watchlist before source" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "per-slice detailed planning gate" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "important-instruction-ledger" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "Agent Planning Harness Escalation" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "four or more actionable findings" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "Agent-Planning-Harness escalation" \
-    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
 grep -q "Slice Phase Telemetry" \
-    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
 grep -q "classification=required_acceptance" \
-    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
 grep -q "slice_phase_report.py" \
-    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
 grep -q "Verification Budget And Diminishing Returns" \
-    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
 grep -q "Two attempts at the same tool route fail" \
-    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
 grep -q "verification cost" \
-    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
 grep -q "four or more actionable issues" \
-    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
 grep -q "Agent-Planning-Harness escalation state" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "docs/agent-context/SLICE_WATCHLIST.md" \
-    "${ROOT_DIR}/skills/important-instruction-ledger/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/GUIDE.md"
 grep -q "Send a fix packet to the owning repo worker immediately" \
-    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
 grep -q "fresh-context review" \
-    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
 grep -q "primary planning artifact" \
-    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
 grep -q "Rewind readiness" \
-    "${ROOT_DIR}/skills/cppstudio-supervisor/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
 grep -q "Donor Feature Disposition Matrix" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "skim donor code" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "important elements before creating the plan" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "Parallel planning is an ownership map" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "Planning depth contract:" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "primary user-visible loop" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "shared tool substrate" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "Level 2 whole-product scaffold" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "just-in-time slice readiness packet" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "parallelization map" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "Do not hide the" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "Primary visible loop:" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "First solid tool:" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "Whole-product scaffold:" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "Donor feature disposition matrix:" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "before plan creation" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "Slice readiness packet:" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "Parallelization map:" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "Use these headings explicitly" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "Product visible loop" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "Shared tool substrate" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "Capability priority ladder" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "Donor feature disposition matrix" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "For shader donors, this breakdown" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "Slice readiness packet" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "primary visible interaction loop" \
-    "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md"
 grep -q "GUI/product-surface" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "authoring model/source of truth" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "comparable current tools" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/project-intake.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md"
 grep -q "Authoring Model Choices" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/references/choice-matrix.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md"
 grep -q "agentic control harness in the initial plan by default" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "primary control and observation layer" \
-    "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md"
 grep -q "what the user is seeing" \
-    "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md"
 grep -q "visible link table has been shown" \
-    "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md"
 grep -q "I am UI-blind on this" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "harness-only or JSON-only" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "not progress on the reported visible bug" \
-    "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md"
 grep -q "JSON state change" \
-    "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md"
 grep -q "Hard realignment rule" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "realignment note" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "Direct foreground app launches are" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "sculpting-brushes.md" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "If GUI or interaction work stalls" \
-    "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md"
 grep -q "through \`ostm\` when the offscreen-test-manager" \
-    "${ROOT_DIR}/skills/native-cpp-gui-hud/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md"
 grep -q "After two focused attempts or roughly 20 minutes" \
-    "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md"
 grep -q "viewport-session-testing" \
     "${SKILL_DIR}/SKILL.md"
 grep -q "record/replay real widget" \
-    "${ROOT_DIR}/skills/agentic-control-harness/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md"
 grep -q "User-facing verification is the acceptance surface" \
-    "${SKILL_DIR}/SKILL.md"
+    "${CORE_MODULE}"
 grep -q "visible record/stop/replay" \
-    "${ROOT_DIR}/skills/viewport-session-testing/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/GUIDE.md"
 grep -q "held-button or stylus-contact move samples" \
-    "${ROOT_DIR}/skills/viewport-session-testing/references/viewport-session-testing.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/references/viewport-session-testing.md"
 grep -q "primary_button_down" \
     "${SKILL_DIR}/assets/app-library-template/include/{{PROJECT_NAME}}/viewport_session.hpp"
 grep -q "primary_button_down" \
@@ -333,7 +320,7 @@ grep -q "primary_button_down" \
 grep -q "visible record/stop/replay" \
     "${SKILL_DIR}/assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md"
 grep -q "app-owned viewport-session testing lane" \
-    "${ROOT_DIR}/skills/cppstudio-project-planner/SKILL.md"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md"
 grep -q "Viewport Session Testing" \
     "${SKILL_DIR}/assets/app-library-template/docs/VIEWPORT_SESSION_TESTING.md"
 grep -q "run_viewport_session_smoke.py" \
@@ -450,32 +437,6 @@ expect_failure() {
     fi
 }
 
-write_companion_fixtures() {
-    local codex_home="$1"
-    rm -rf \
-        "${codex_home}/skills/cuda-kernel-authoring" \
-    "${codex_home}/skills/modern-cpp-cmake"
-    mkdir -p \
-        "${codex_home}/skills/cuda-kernel-authoring" \
-        "${codex_home}/skills/modern-cpp-cmake"
-    cat >"${codex_home}/skills/cuda-kernel-authoring/SKILL.md" <<'EOF'
----
-name: cuda-kernel-authoring
-description: Test fixture.
----
-# CUDA Kernel Authoring
-## Design Rules
-EOF
-    cat >"${codex_home}/skills/modern-cpp-cmake/SKILL.md" <<'EOF'
----
-name: modern-cpp-cmake
-description: Test fixture.
----
-# Modern Cpp CMake
-## Renderer Bootstrap
-EOF
-}
-
 write_code_map_project_fixture() {
     local repo="$1"
     mkdir -p \
@@ -561,7 +522,7 @@ fi
 pycache_tmp="$(mktemp -d "${VALIDATE_TMP}/pycache.XXXXXX")"
 PYTHONPYCACHEPREFIX="${pycache_tmp}" python3 -m py_compile "${ROOT_DIR}"/scripts/*.py "${SKILL_DIR}"/scripts/*.py
 PYTHONPYCACHEPREFIX="${pycache_tmp}" python3 -m py_compile \
-    "${ROOT_DIR}/skills/cppstudio-supervisor/scripts/slice_phase_report.py"
+    "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/scripts/slice_phase_report.py"
 PYTHONDONTWRITEBYTECODE=1 python3 "${ROOT_DIR}/scripts/test_important_instruction_ledger.py"
 phase_report_tmp="$(mktemp -d "${VALIDATE_TMP}/phase_report.XXXXXX")"
 cat >"${phase_report_tmp}/phase.log" <<'EOF'
@@ -570,7 +531,7 @@ CPPSTUDIO_PHASE event=end phase=research ts=2026-05-30T01:04:30Z status=ok
 CPPSTUDIO_PHASE event=start phase=ostm_ui ts=2026-05-30T01:05:00Z
 CPPSTUDIO_PHASE event=end phase=ostm_ui ts=2026-05-30T01:09:00Z classification=required_acceptance ostm_job=7578 artifact=/tmp/ui-proof status=ok
 EOF
-python3 "${ROOT_DIR}/skills/cppstudio-supervisor/scripts/slice_phase_report.py" \
+python3 "${ROOT_DIR}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/scripts/slice_phase_report.py" \
     --input "${phase_report_tmp}/phase.log" \
     --output "${phase_report_tmp}/report.md" \
     --require-markers
@@ -1208,7 +1169,7 @@ python3 "${ROOT_DIR}/scripts/render_trigger_eval_prompt.py" \
     --case cppstudio-supervisor-worker-lane \
     --case solo-native-gpu-implementation-no-supervisor >"${supervisor_case_md}"
 grep -q "cppstudio-supervisor-worker-lane" "${supervisor_case_md}"
-grep -q "skills/cppstudio-supervisor/SKILL.md" "${supervisor_case_md}"
+grep -q "skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md" "${supervisor_case_md}"
 grep -q "fresh-context reviewers" "${supervisor_case_md}"
 grep -q "Rewind readiness" "${supervisor_case_md}"
 grep -q "solo-native-gpu-implementation-no-supervisor" "${supervisor_case_md}"
@@ -1477,7 +1438,7 @@ mkdir -p \
 touch "${rollout_aux_symlink_tmp}/external-aux-target/EXTERNAL_MARKER"
 ln -s "${rollout_aux_symlink_tmp}/external-aux-target" \
     "${rollout_aux_symlink_tmp}/codex/skills/native-cpp-gui-hud"
-expect_failure "rollout symlinked auxiliary skill target" "Refusing symlinked auxiliary skill target" \
+expect_failure "rollout symlinked legacy skill target" "Refusing symlinked legacy top-level skill target" \
     env SYNC_CODEX_HOME="${rollout_aux_symlink_tmp}/codex" \
     VALIDATOR="${VALIDATOR}" \
     "${ROOT_DIR}/scripts/rollout_to_codex.sh"
@@ -1610,7 +1571,10 @@ if [[ "${CPPSTUDIO_SKIP_ROLLOUT_VALIDATOR_REGRESSION:-0}" != "1" ]]; then
     rollout_validator_dir="${rollout_codex_home}/skills/.system/skill-creator/scripts"
     rollout_marker="${rollout_validator_tmp}/validator-used.txt"
     rollout_audit_log="${rollout_validator_tmp}/audit.jsonl"
-    mkdir -p "${rollout_validator_dir}"
+    mkdir -p \
+        "${rollout_validator_dir}" \
+        "${rollout_codex_home}/skills/native-cpp-gui-hud"
+    touch "${rollout_codex_home}/skills/native-cpp-gui-hud/LEGACY_MARKER"
     cat >"${rollout_validator_dir}/quick_validate.py" <<'PY'
 #!/usr/bin/env python3
 import os
@@ -1634,6 +1598,7 @@ PY
         "${ROOT_DIR}/scripts/rollout_to_codex.sh" >"${rollout_validator_tmp}/rollout.out"
     grep -q "used" "${rollout_marker}"
     grep -q "Rolled out" "${rollout_validator_tmp}/rollout.out"
+    test ! -e "${rollout_codex_home}/skills/native-cpp-gui-hud"
     python3 - "${rollout_audit_log}" "${rollout_codex_home}/skills/cpp-cuda-vulkan-studio" <<'PY'
 import json
 import sys
@@ -1650,53 +1615,6 @@ if not all(entry.get("package_manifest_sha256") for entry in entries):
 PY
     rm -rf "${rollout_validator_tmp}"
 
-    rollout_rollback_tmp="$(mktemp -d "${VALIDATE_TMP}/rollout_rollback.XXXXXX")"
-    rollout_rollback_home="${rollout_rollback_tmp}/codex"
-    rollout_rollback_target="${rollout_rollback_home}/skills/cpp-cuda-vulkan-studio"
-    rollout_rollback_companion="${rollout_rollback_home}/skills/modern-cpp-cmake"
-    mkdir -p "${rollout_rollback_target}" "${rollout_rollback_companion}" "${rollout_rollback_tmp}/validator"
-    cat >"${rollout_rollback_target}/SKILL.md" <<'EOF'
----
-name: cpp-cuda-vulkan-studio
-description: Existing installed skill.
----
-# Existing Installed Skill
-EOF
-    touch "${rollout_rollback_target}/OLD_MAIN_MARKER"
-    cat >"${rollout_rollback_companion}/SKILL.md" <<'EOF'
----
-name: modern-cpp-cmake
-description: Existing companion skill.
----
-# Existing Companion
-## Renderer Bootstrap
-OLD_COMPANION_MARKER
-EOF
-    printf "old agents\n" >"${rollout_rollback_home}/AGENTS.md"
-    cat >"${rollout_rollback_tmp}/validator/quick_validate.py" <<'PY'
-#!/usr/bin/env python3
-import os
-import subprocess
-import sys
-
-path = os.path.realpath(sys.argv[1]) if sys.argv[1:] else ""
-fail_path = os.path.realpath(os.environ.get("FAIL_COMPANION_PATH", ""))
-if path == fail_path:
-    print("intentional companion validation failure", file=sys.stderr)
-    raise SystemExit(43)
-raise SystemExit(subprocess.call([sys.executable, os.environ["REPO_VALIDATOR_PATH"], *sys.argv[1:]]))
-PY
-    chmod +x "${rollout_rollback_tmp}/validator/quick_validate.py"
-    expect_failure "rollout restores prior install after post-sync failure" "intentional companion validation failure" \
-        env SYNC_CODEX_HOME="${rollout_rollback_home}" \
-        FAIL_COMPANION_PATH="${rollout_rollback_companion}" \
-        REPO_VALIDATOR_PATH="${ROOT_DIR}/scripts/quick_validate_skill.py" \
-        VALIDATOR="${rollout_rollback_tmp}/validator/quick_validate.py" \
-        "${ROOT_DIR}/scripts/rollout_to_codex.sh"
-    test -f "${rollout_rollback_target}/OLD_MAIN_MARKER"
-    grep -q "OLD_COMPANION_MARKER" "${rollout_rollback_companion}/SKILL.md"
-    grep -q "^old agents$" "${rollout_rollback_home}/AGENTS.md"
-    rm -rf "${rollout_rollback_tmp}"
 fi
 relay_reversed_tmp="$(mktemp -d "${VALIDATE_TMP}/agents_relay_reversed.XXXXXX")"
 {
@@ -1765,271 +1683,6 @@ if not data.endswith(suffix):
     raise SystemExit("relay replacement did not preserve suffix outside markers")
 PY
 rm -rf "${relay_preserve_tmp}"
-
-companion_tmp="$(mktemp -d "${VALIDATE_TMP}/companion_install.XXXXXX")"
-write_companion_fixtures "${companion_tmp}"
-python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --preflight \
-    --codex-home "${companion_tmp}" \
-    --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets"
-mkdir -p "${companion_tmp}/skills/cpp-cuda-vulkan-studio"
-cp -a "${SKILL_DIR}/references" "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references"
-cat >>"${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md" <<EOF
-
-## Donor References
-
-When selecting external kernel, runtime, or compiler donors, read:
-
-- \`${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md\`
-- \`${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library/ai-runtimes-kernels.md\`
-
-Use the donor library to compare CUTLASS, Triton, FlashAttention, tiny-cuda-nn, llama.cpp/ggml,
-ONNX Runtime, TensorRT-LLM, vLLM, MLC-LLM, TVM, and PyTorch before writing or recommending custom
-GPU code. Keep non-commercial or study-only donors out of reusable implementation code.
-EOF
-python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --install \
-    --codex-home "${companion_tmp}" \
-    --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets"
-grep -q "Use the donor library to compare CUTLASS" "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
-write_companion_fixtures "${companion_tmp}"
-python3 - "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md" <<'PY'
-from pathlib import Path
-import sys
-
-Path(sys.argv[1]).write_bytes(
-    b"---\r\n"
-    b"name: cuda-kernel-authoring\r\n"
-    b"description: Test fixture.\r\n"
-    b"---\r\n"
-    b"# CUDA Kernel Authoring\r\n"
-    b"\r\n"
-    b"  before donor block  \r\n"
-    b"<!-- cppstudio-donor-library:begin -->\r\n"
-    b"old donor body\r\n"
-    b"<!-- cppstudio-donor-library:end -->"
-    b"\r\n\r\n\r\n"
-    b"  after donor block\r\n"
-    b"## Design Rules\r\n"
-)
-PY
-python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --install \
-    --codex-home "${companion_tmp}" \
-    --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets"
-python3 - "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md" <<'PY'
-from pathlib import Path
-import sys
-
-data = Path(sys.argv[1]).read_bytes()
-prefix = (
-    b"---\r\n"
-    b"name: cuda-kernel-authoring\r\n"
-    b"description: Test fixture.\r\n"
-    b"---\r\n"
-    b"# CUDA Kernel Authoring\r\n"
-    b"\r\n"
-    b"  before donor block  \r\n"
-)
-suffix = b"\r\n\r\n\r\n  after donor block\r\n## Design Rules\r\n"
-if not data.startswith(prefix):
-    raise SystemExit("companion donor replacement did not preserve prefix outside markers")
-if not data.endswith(suffix):
-    raise SystemExit("companion donor replacement did not preserve suffix outside markers")
-PY
-write_companion_fixtures "${companion_tmp}"
-missing_companion_tmp="$(mktemp -d "${VALIDATE_TMP}/companion_missing.XXXXXX")"
-write_companion_fixtures "${missing_companion_tmp}"
-rm -rf \
-    "${missing_companion_tmp}/skills/modern-cpp-cmake"
-missing_companion_out="$(mktemp "${VALIDATE_TMP}/companion_missing.XXXXXX.out")"
-python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --preflight \
-    --codex-home "${missing_companion_tmp}" \
-    --donor-root "${missing_companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets" >"${missing_companion_out}"
-grep -q "preflight skipped: ${missing_companion_tmp}/skills/modern-cpp-cmake/SKILL.md" \
-    "${missing_companion_out}"
-expect_failure "strict companion skill missing" "missing installed companion skill" \
-    python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --preflight \
-    --codex-home "${missing_companion_tmp}" \
-    --donor-root "${missing_companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets" \
-    --strict
-rm -rf "${missing_companion_tmp}"
-{
-    sed \
-        -e "s#{{DONOR_ROOT}}#${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library#g" \
-        -e "s#{{REFERENCE_ROOT}}#${companion_tmp}/skills/cpp-cuda-vulkan-studio/references#g" \
-        "${ROOT_DIR}/companion-skill-snippets/cuda-kernel-authoring/donor-library.md"
-    printf "\n"
-} >"${companion_tmp}/rendered_cuda_block.md"
-bad_companion_skill_tmp="$(mktemp "${VALIDATE_TMP}/bad_companion_skill.XXXXXX.md")"
-{
-    cat "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
-    printf "\n<!-- cppstudio-donor-library:begin -->\n"
-    cat "${companion_tmp}/rendered_cuda_block.md"
-    printf "<!-- cppstudio-donor-library:end -->\n\n<!-- cppstudio-donor-library:begin -->\n"
-    cat "${companion_tmp}/rendered_cuda_block.md"
-    printf "<!-- cppstudio-donor-library:end -->\n"
-} >"${bad_companion_skill_tmp}"
-mv "${bad_companion_skill_tmp}" "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
-expect_failure "duplicate companion donor marker blocks" "multiple marker blocks found" \
-    python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --preflight \
-    --codex-home "${companion_tmp}" \
-    --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets"
-write_companion_fixtures "${companion_tmp}"
-bad_companion_skill_tmp="$(mktemp "${VALIDATE_TMP}/bad_companion_skill.XXXXXX.md")"
-{
-    cat "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
-    printf "\n<!-- cppstudio-donor-library:end -->\n"
-    cat "${companion_tmp}/rendered_cuda_block.md"
-    printf "<!-- cppstudio-donor-library:begin -->\n"
-} >"${bad_companion_skill_tmp}"
-mv "${bad_companion_skill_tmp}" "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
-expect_failure "reversed companion donor markers" "end marker precedes begin marker" \
-    python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --preflight \
-    --codex-home "${companion_tmp}" \
-    --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets"
-write_companion_fixtures "${companion_tmp}"
-bad_companion_skill_tmp="$(mktemp "${VALIDATE_TMP}/bad_companion_skill.XXXXXX.md")"
-{
-    cat "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
-    printf "\n<!-- cppstudio-donor-library:begin -->\n"
-    cat "${companion_tmp}/rendered_cuda_block.md"
-} >"${bad_companion_skill_tmp}"
-mv "${bad_companion_skill_tmp}" "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
-expect_failure "single begin companion donor marker" "begin/end markers do not match" \
-    python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --preflight \
-    --codex-home "${companion_tmp}" \
-    --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets"
-write_companion_fixtures "${companion_tmp}"
-bad_companion_skill_tmp="$(mktemp "${VALIDATE_TMP}/bad_companion_skill.XXXXXX.md")"
-{
-    cat "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
-    printf "\n<!-- cppstudio-donor-library:end -->\n"
-    cat "${companion_tmp}/rendered_cuda_block.md"
-} >"${bad_companion_skill_tmp}"
-mv "${bad_companion_skill_tmp}" "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
-expect_failure "single end companion donor marker" "begin/end markers do not match" \
-    python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --preflight \
-    --codex-home "${companion_tmp}" \
-    --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets"
-write_companion_fixtures "${companion_tmp}"
-mv "${companion_tmp}/skills/cuda-kernel-authoring" "${companion_tmp}/real-cuda-kernel-authoring"
-ln -s "${companion_tmp}/real-cuda-kernel-authoring" "${companion_tmp}/skills/cuda-kernel-authoring"
-expect_failure "symlinked companion skill directory" "installed companion skill directory must not be a symlink" \
-    python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --preflight \
-    --codex-home "${companion_tmp}" \
-    --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets"
-write_companion_fixtures "${companion_tmp}"
-mv "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md" \
-    "${companion_tmp}/skills/cuda-kernel-authoring/REAL_SKILL.md"
-ln -s "${companion_tmp}/skills/cuda-kernel-authoring/REAL_SKILL.md" \
-    "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md"
-expect_failure "symlinked companion SKILL.md" "installed companion SKILL.md must not be a symlink" \
-    python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --preflight \
-    --codex-home "${companion_tmp}" \
-    --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets"
-skills_root_symlink_tmp="$(mktemp -d "${VALIDATE_TMP}/companion_skills_symlink.XXXXXX")"
-mkdir -p "${skills_root_symlink_tmp}/codex" "${skills_root_symlink_tmp}/real-skills"
-ln -s "${skills_root_symlink_tmp}/real-skills" "${skills_root_symlink_tmp}/codex/skills"
-expect_failure "symlinked Codex skills root" "Codex skills root must not be a symlink" \
-    python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --preflight \
-    --codex-home "${skills_root_symlink_tmp}/codex" \
-    --donor-root "${skills_root_symlink_tmp}/codex/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets"
-rm -rf "${skills_root_symlink_tmp}"
-write_companion_fixtures "${companion_tmp}"
-python3 - "${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md" <<'PY'
-import sys
-from pathlib import Path
-
-path = Path(sys.argv[1])
-text = path.read_text(encoding="utf-8")
-text = text.replace("name: cuda-kernel-authoring\n", "name: wrong-skill\n", 1)
-text = "\n".join(line for line in text.splitlines() if "cppstudio-donor-library" not in line) + "\n"
-path.write_text(text, encoding="utf-8")
-PY
-expect_failure "companion skill frontmatter name mismatch" "name mismatch" \
-    python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --preflight \
-    --codex-home "${companion_tmp}" \
-    --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets"
-cat >"${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md" <<'EOF'
----
-name: cuda-kernel-authoring
-name: cuda-kernel-authoring
-description: Test fixture.
----
-# CUDA Kernel Authoring
-## Design Rules
-EOF
-expect_failure "companion skill duplicate frontmatter name" "expected exactly one frontmatter name" \
-    python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --preflight \
-    --codex-home "${companion_tmp}" \
-    --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${ROOT_DIR}/companion-skill-snippets"
-snippet_tmp="${companion_tmp}/snippets"
-mkdir -p \
-    "${snippet_tmp}/cuda-kernel-authoring" \
-    "${snippet_tmp}/modern-cpp-cmake"
-cp "${ROOT_DIR}/companion-skill-snippets/modern-cpp-cmake/donor-library.md" \
-    "${snippet_tmp}/modern-cpp-cmake/donor-library.md"
-{
-    printf "<!-- cppstudio-donor-library:begin -->\n"
-    cat "${ROOT_DIR}/companion-skill-snippets/cuda-kernel-authoring/donor-library.md"
-    printf "\n<!-- cppstudio-donor-library:end -->\n"
-} >"${snippet_tmp}/cuda-kernel-authoring/donor-library.md"
-cat >"${companion_tmp}/skills/cuda-kernel-authoring/SKILL.md" <<'EOF'
----
-name: cuda-kernel-authoring
-description: Test fixture.
----
-# CUDA Kernel Authoring
-## Design Rules
-EOF
-expect_failure "companion snippet with managed markers" "must not contain managed donor markers" \
-    python3 "${ROOT_DIR}/scripts/install_companion_donor_links.py" \
-    --preflight \
-    --codex-home "${companion_tmp}" \
-    --donor-root "${companion_tmp}/skills/cpp-cuda-vulkan-studio/references/donor-library" \
-    --source-skill-dir "${SKILL_DIR}" \
-    --snippet-root "${snippet_tmp}"
-rm -rf "${companion_tmp}"
 
 donor_tmp="$(mktemp -d "${VALIDATE_TMP}/donor_validate.XXXXXX")"
 cp -a "${SKILL_DIR}/references/donor-library" "${donor_tmp}/donor-library"

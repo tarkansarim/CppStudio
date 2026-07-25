@@ -28,8 +28,8 @@ Focused reruns used installed paths under `${CODEX_HOME:-${HOME}/.codex}`:
 
 | Case | Expected Installed Paths | Observed Result |
 | --- | --- | --- |
-| CUDA focused | `${CODEX_HOME:-${HOME}/.codex}/skills/cuda-kernel-authoring/SKILL.md`, installed donor policy, `ai-runtimes-kernels.md` | Passed. Agent read installed skill files and selected FlashAttention, CUTLASS, tiny-cuda-nn, Triton. |
-| Vulkan focused | `${CODEX_HOME:-${HOME}/.codex}/skills/vulkan-compute-sync/SKILL.md`, installed donor policy, `graphics-rendering.md` | Passed. Agent read installed skill files and selected Khronos Vulkan-Samples first, NVIDIA vk_mini_samples second. |
+| CUDA focused | `${CODEX_HOME:-${HOME}/.codex}/skills/cpp-cuda-vulkan-studio/modules/cuda-kernel-authoring/GUIDE.md`, installed donor policy, `ai-runtimes-kernels.md` | Passed. Agent read installed skill files and selected FlashAttention, CUTLASS, tiny-cuda-nn, Triton. |
+| Vulkan focused | `${CODEX_HOME:-${HOME}/.codex}/skills/cpp-cuda-vulkan-studio/modules/vulkan-compute-sync/GUIDE.md`, installed donor policy, `graphics-rendering.md` | Passed. Agent read installed skill files and selected Khronos Vulkan-Samples first, NVIDIA vk_mini_samples second. |
 
 ## Findings
 

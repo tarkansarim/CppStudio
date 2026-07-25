@@ -27,6 +27,7 @@ ALLOWED_TOP_LEVEL = {
     "SKILL.md",
     "agents",
     "assets",
+    "modules",
     "package-manifest.json",
     "references",
     "scripts",
@@ -138,6 +139,8 @@ def classify_file(rel_path: str) -> tuple[str, str]:
         return "asset", "generated-project-template"
     if rel_path.startswith("assets/"):
         return "asset", "asset"
+    if rel_path.startswith("modules/"):
+        return "module", "routed-module"
     if rel_path == "references/project-archetypes.md":
         return "reference", "entrypoint"
     if rel_path.startswith("references/donor-library/profiles/"):

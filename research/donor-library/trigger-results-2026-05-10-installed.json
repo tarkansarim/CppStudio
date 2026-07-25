@@ -20,7 +20,7 @@
       "prompt_shape": "A target-project agent researching a native C++ GPU feature discovers that the best current donor is missing from the installed CppStudio donor library, and the user asks to add it to the reusable library for future agents.",
       "expected_behavior": "Record the vetted donor in the target project first as required evidence and never skip that candidate artifact because source promotion is possible. Then promote into the CppStudio source repo donor library when the source root is available or provided. Do not patch ~/.codex/skills installed donor files directly. If the source repo path is unknown, report the project-local candidate and ask for CPPSTUDIO_SOURCE_ROOT or the source repo path.",
       "expected_paths": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/cppstudio-project-planner/SKILL.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md",
         "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/SKILL.md",
         "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/README.md",
         "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md",
@@ -37,7 +37,7 @@
         ],
         "opened_files": [
           "${CPPSTUDIO_SOURCE_ROOT:-<CppStudio source>}/.codex/skills/cppstudio-repo-onboarding/SKILL.md",
-          "${CODEX_HOME:-$HOME/.codex}/skills/cppstudio-project-planner/SKILL.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md",
           "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/SKILL.md",
           "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/README.md",
           "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md",
@@ -62,9 +62,9 @@
       "prompt_shape": "User plans or builds an interactive native C++ realtime app, viewer, renderer, simulator, artist tool, or game tool that an agent should be able to test, inspect, troubleshoot, or control.",
       "expected_behavior": "Trigger agentic-control-harness with cppstudio-project-planner or cpp-cuda-vulkan-studio; treat the harness as default-on for interactive apps unless the user opts out or the target is headless/security-sensitive; plan local-only HTTP/curl or CLI controls with optional MCP facade over the same API; include state readback, recent logs/warnings, visual/UI or viewport evidence, launch/control registry docs, feature-control maintenance, exact readiness invariants, route registry/docs reconciliation, UI action/affordance inventory, and stress lanes so agents test routine changes before asking the user for manual verification.",
       "expected_paths": [
-        "${CODEX_HOME:-$HOME/.codex}/skills/agentic-control-harness/SKILL.md",
-        "${CODEX_HOME:-$HOME/.codex}/skills/agentic-control-harness/references/control-harness.md",
-        "${CODEX_HOME:-$HOME/.codex}/skills/cppstudio-project-planner/SKILL.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/references/control-harness.md",
+        "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md",
         "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/SKILL.md"
       ],
       "forbidden_paths": [],
@@ -78,12 +78,12 @@
           "sonar-design"
         ],
         "opened_files": [
-          "${CODEX_HOME:-$HOME/.codex}/skills/agentic-control-harness/SKILL.md",
-          "${CODEX_HOME:-$HOME/.codex}/skills/agentic-control-harness/references/control-harness.md",
-          "${CODEX_HOME:-$HOME/.codex}/skills/cppstudio-project-planner/SKILL.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/references/control-harness.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md",
           "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/SKILL.md",
-          "${CODEX_HOME:-$HOME/.codex}/skills/native-cpp-gui-hud/SKILL.md",
-          "${CODEX_HOME:-$HOME/.codex}/skills/native-cpp-gui-hud/references/gui-options.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md",
+          "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/references/gui-options.md",
           "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
           "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/vulkan-foundation-tooling.md",
           "${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",

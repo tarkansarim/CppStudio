@@ -243,49 +243,12 @@ python .\scripts\install_user_agents_relay.py `
   --snippet ".\companion-skill-snippets\user-agents\cppstudio-relay.md"
 ```
 
-## Legacy Companion Donor Links
-
-Normal CppStudio installs no longer need this step because the C++ companion skills are bundled
-source snapshots. Use it only to repair an older external companion install that still carries the
-managed donor marker block.
-
-Linux or macOS:
-
-```bash
-codex_home="${CODEX_HOME:-${HOME}/.codex}"
-skill_target="${codex_home}/skills/cpp-cuda-vulkan-studio"
-donor_root="${skill_target}/references/donor-library"
-
-python3 scripts/install_companion_donor_links.py \
-  --install \
-  --codex-home "${codex_home}" \
-  --donor-root "${donor_root}" \
-  --source-skill-dir skills/cpp-cuda-vulkan-studio \
-  --snippet-root companion-skill-snippets
-```
-
-Windows PowerShell:
-
-```powershell
-$CppStudioSkillTarget = Join-Path $SkillsRoot "cpp-cuda-vulkan-studio"
-$DonorRoot = Join-Path $CppStudioSkillTarget "references\donor-library"
-python .\scripts\install_companion_donor_links.py `
-  --install `
-  --codex-home $CodexHome `
-  --donor-root $DonorRoot `
-  --source-skill-dir ".\skills\cpp-cuda-vulkan-studio" `
-  --snippet-root ".\companion-skill-snippets"
-```
-
 ## Managed Blocks
 
 The managed marker blocks are the only script-owned regions:
 
 - `<!-- cppstudio-user-agents-relay:begin -->` through
   `<!-- cppstudio-user-agents-relay:end -->`
-- `<!-- cppstudio-donor-library:begin -->` through
-  `<!-- cppstudio-donor-library:end -->`
-
 Content inside those markers may be replaced by reinstall. Content outside those markers is
 user-owned and must be preserved. Duplicate or mismatched markers should be treated as a cleanup
 problem before reinstalling.

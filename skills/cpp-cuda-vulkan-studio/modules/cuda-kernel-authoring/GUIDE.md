@@ -1,8 +1,3 @@
----
-name: cuda-kernel-authoring
-description: "CUDA kernel design, launch wrappers, correctness tests, sanitizer plans, numerical stability, reductions, shared memory, warp primitives, and profiling."
----
-
 # CUDA Kernel Authoring
 
 Use this skill when custom CUDA code is being designed, changed, reviewed, or debugged. It complements `cuda-debug` and `gpu-profiling-workstation`: this skill owns kernel design and test discipline; those skills own local tool choice and machine-specific profiling commands.

@@ -1,8 +1,3 @@
----
-name: cppstudio-project-planner
-description: "Plan substantial native C++ GPU/realtime projects before scaffolding, stack choices, architecture decisions, donor research, GUI/input, and validation."
----
-
 # CppStudio Project Planner
 
 Use this skill as the front door for major native C++ GPU project planning. It does not replace

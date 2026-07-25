@@ -19,11 +19,9 @@ Usage: $0 [--rollout]
 Watch and publish CppStudio skill edits.
 
   default    Watch only ${SOURCE_DIR} and run sync_to_codex.sh.
-  --rollout  Watch ${SOURCE_DIR}, auxiliary bundled skills, and relay/legacy snippets, then run
-             rollout_to_codex.sh.
+    --rollout  Watch ${SOURCE_DIR} and the user relay, then run rollout_to_codex.sh.
 
-Use --rollout when editing bundled auxiliary skills or user-level relay snippets; normal sync updates
-only the selected skill.
+Use --rollout when the user-level relay or legacy top-level cleanup must also run.
 EOF
 }
 
@@ -70,11 +68,11 @@ if (( rollout )); then
         fi
         watch_dirs+=("${auxiliary_source_dir}")
     done
-    echo "Rollout watch mode: bundled auxiliary skills and the user-level relay will be installed."
+    echo "Rollout watch mode: the router package and user-level relay will be installed."
 else
     run_script="${SYNC_SCRIPT}"
     watch_dirs=("${SOURCE_DIR}")
-    echo "Skill-only watch mode: auxiliary skills and relay snippets are not rolled out."
+    echo "Router-only watch mode: the user-level relay is not updated."
 fi
 
 "${run_script}"

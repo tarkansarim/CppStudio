@@ -1,8 +1,3 @@
----
-name: agentic-control-harness
-description: "Design local agent control surfaces for native C++ realtime apps: launch, HTTP/curl/CLI/MCP controls, readback, and troubleshooting."
----
-
 # Agentic Control Harness
 
 Use this skill when a native C++ GPU app should be controllable by an AI agent during development,

@@ -335,12 +335,12 @@ that match the task.
 
 For Claude Code the flow is the same with the Claude lane: open this repo in Claude Code, ask it to
 install via `./scripts/rollout_to_claude.sh`, restart Claude Code, then request the same native C++
-GPU work. Claude loads the same 11 skills from `~/.claude/skills` (installed through the auditable
-Claude install transform, never shared with the Codex copies).
+GPU work. Claude loads the same single router package from `~/.claude/skills` (installed through the
+auditable Claude install transform, never shared with the Codex copy).
 
 ## Project Planning And Control Skills
 
-CppStudio installs companion planning and control skills for substantial new apps or major
+CppStudio routes to internal planning and control guides for substantial new apps or major
 architecture decisions. When a request has unresolved choices such as template, authoring
 model/source of truth, GUI/HUD, tablet or stylus input, agentic control harness, Vulkan/CUDA lane,
 donor routes, dependencies, or validation strategy, `cppstudio-project-planner` should research
@@ -433,7 +433,7 @@ the user specifically asks for fast or priority execution.
 
 Slice phase telemetry is deliberately small. Workers can mark phases such as `research`,
 `donor_route`, `edit`, `build_test`, `ostm_ui`, `ostm_profile`, `review`, `code_map`, and `commit`,
-then the bundled `skills/cppstudio-supervisor/scripts/slice_phase_report.py` helper summarizes
+then the bundled `skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/scripts/slice_phase_report.py` helper summarizes
 duration, OSTM job ids, artifacts, and whether verification was required, supporting, redundant,
 stale/rejected, or failed tooling. This makes it easier to see when validation is earning its cost
 and when a lane is thrashing.
@@ -534,7 +534,7 @@ The rollout and sync scripts use `SYNC_CODEX_HOME`, not `CODEX_HOME`, so nested 
 accidentally install into an isolated session home.
 
 The install path is rollback-aware: the main skill is staged and validated before replacement, and
-rollout restores the previous main skill, companion edits, and optional `AGENTS.md` relay target if a
+rollout restores the previous router package, removed legacy packages, and optional `AGENTS.md` relay target if a
 later validation or install step fails.
 
 The installed skill is also checked against a deterministic package manifest. Sync and rollout
@@ -554,7 +554,7 @@ cd /path/to/CppStudio
 ./scripts/rollout_to_claude.sh
 ```
 
-That installs all 11 skills into `${HOME}/.claude/skills` after applying the auditable install-time
+That installs one router package into `${HOME}/.claude/skills` after applying the auditable install-time
 provider transform (host-provider skill-home paths flip to the Claude home; supervised-worker tool
 references are intentionally preserved). The Claude lane never touches `~/.codex`, and the two
 installs share no deployed content. For a non-default Claude home, pass `SYNC_CLAUDE_HOME`:
@@ -570,21 +570,10 @@ an agent to "install CppStudio changes", run both rollout scripts.
 
 ## What Gets Installed
 
-- Main skill (Codex lane):
+- Router package with internal specialist guides (Codex lane):
   `${HOME}/.codex/skills/cpp-cuda-vulkan-studio`
-- Bundled auxiliary skills (Codex lane):
-  `${HOME}/.codex/skills/cppstudio-project-planner`,
-  `${HOME}/.codex/skills/native-cpp-gui-hud`,
-  `${HOME}/.codex/skills/agentic-control-harness`,
-  `${HOME}/.codex/skills/viewport-session-testing`, and
-  `${HOME}/.codex/skills/important-instruction-ledger`,
-  `${HOME}/.codex/skills/cppstudio-supervisor`,
-  `${HOME}/.codex/skills/vulkan-compute-sync`,
-  `${HOME}/.codex/skills/modern-cpp-cmake`,
-  `${HOME}/.codex/skills/cuda-kernel-authoring`, and
-  `${HOME}/.codex/skills/gpu-profiling-workstation`
-- Claude lane: the same 11 skills under `${HOME}/.claude/skills/...` (provider-transformed
-  copies installed by `rollout_to_claude.sh`; the user-level `CLAUDE.md` relay is managed by
+- Claude lane: the same router package under `${HOME}/.claude/skills/...` (provider-transformed
+  copy installed by `rollout_to_claude.sh`; the user-level `CLAUDE.md` relay is managed by
   separate doctrine tooling, not by the rollout script)
 - Tiny user-level `AGENTS.md` relay (Codex lane) that tells agents to load `cpp-cuda-vulkan-studio` for
   native C++ GPU, realtime rendering/visualization, C++ GPU code-map, Vulkan, CUDA, or mixed
@@ -596,12 +585,9 @@ blocks:
 
 - `<!-- cppstudio-user-agents-relay:begin -->` through
   `<!-- cppstudio-user-agents-relay:end -->`
-- `<!-- cppstudio-donor-library:begin -->` through
-  `<!-- cppstudio-donor-library:end -->`
-
 ## Package Integrity
 
-Each managed CppStudio skill includes `package-manifest.json`, a deterministic inventory of the
+The CppStudio router package includes `package-manifest.json`, a deterministic inventory of the
 shipped skill files. It records each file's role, progressive disclosure group, byte size, and
 SHA-256 hash so agents can validate source, staged, and installed copies without fetching a remote
 registry.
@@ -903,28 +889,28 @@ Detailed setup commands live in [docs/host-toolchain-setup.md](docs/host-toolcha
 
 - `skills/cpp-cuda-vulkan-studio/`: source of truth for the user-level skill (installed into both
   the Codex and Claude Code skill homes by the provider rollout scripts)
-- `skills/cppstudio-project-planner/`: bundled planning skill for project intake, option gathering,
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/`: internal planning guide for project intake, option gathering,
   GUI links, agentic controls, donor routes, web checks, and implementation handoff
-- `skills/native-cpp-gui-hud/`: bundled GUI/HUD skill for native C++ tool UI choices and visual
+- `skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/`: internal GUI/HUD guide for native C++ tool UI choices and visual
   inspection links
-- `skills/agentic-control-harness/`: bundled control-harness skill for autonomous app launch,
+- `skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/`: internal control-harness guide for autonomous app launch,
   control, observation, visual/UI evidence, and troubleshooting
-- `skills/viewport-session-testing/`: bundled viewport-session skill for real UI/viewport
+- `skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/`: internal viewport-session guide for real UI/viewport
   recording, replay, reports, and before/after proof
-- `skills/important-instruction-ledger/`: bundled active slice-watchlist skill for compaction-safe
+- `skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/`: internal active slice-watchlist guide for compaction-safe
   supervision and direct-work gates
-- `skills/cppstudio-supervisor/`: bundled supervision-only skill for worker orchestration, review
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/`: internal supervision guide for worker orchestration, review
   routing, polling, and closeout evidence
-- `skills/vulkan-compute-sync/`: bundled Vulkan synchronization skill for compute/render barriers,
+- `skills/cpp-cuda-vulkan-studio/modules/vulkan-compute-sync/`: internal Vulkan synchronization guide for compute/render barriers,
   descriptors, image layouts, frame lifetime, and validation/debug capture triage
-- `skills/modern-cpp-cmake/`: bundled C++/CUDA CMake layout and build hygiene skill
-- `skills/cuda-kernel-authoring/`: bundled CUDA kernel authoring and verification skill
-- `skills/gpu-profiling-workstation/`: bundled local workstation profiling and frame-debugging skill
+- `skills/cpp-cuda-vulkan-studio/modules/modern-cpp-cmake/`: internal C++/CUDA CMake layout and build hygiene guide
+- `skills/cpp-cuda-vulkan-studio/modules/cuda-kernel-authoring/`: internal CUDA kernel authoring and verification guide
+- `skills/cpp-cuda-vulkan-studio/modules/gpu-profiling-workstation/`: internal workstation profiling and frame-debugging guide
 - `skills/cpp-cuda-vulkan-studio/assets/app-library-template/`: generated-project template
 - `skills/cpp-cuda-vulkan-studio/references/`: project archetypes and donor-reference guidance
-- `skills/*/package-manifest.json`: deterministic skill package inventories and integrity metadata
+- `skills/cpp-cuda-vulkan-studio/package-manifest.json`: deterministic package inventory and integrity metadata
 - `.cppstudio/` and `docs/CODEBASE_*`: maintained code map for this CppStudio repo
-- `companion-skill-snippets/`: user-level relay snippet and legacy companion donor-link snippets
+- `companion-skill-snippets/`: user-level relay snippet
 - `research/`: source research and trigger-test notes
 - `scripts/`: validation, sync, rollout, and watch helpers
 - `.codex/skills/cppstudio-repo-onboarding/`: project-level onboarding skill for agents editing this

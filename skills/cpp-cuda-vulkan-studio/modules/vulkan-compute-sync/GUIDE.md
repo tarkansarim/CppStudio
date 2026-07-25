@@ -1,8 +1,3 @@
----
-name: vulkan-compute-sync
-description: "Use for Vulkan compute/render synchronization in C++: barriers, image layouts, descriptors, dispatch, frames in flight, validation, and capture debugging."
----
-
 # Vulkan Compute Sync
 
 Use this skill for Vulkan compute or render synchronization work. Prefer the repository's existing Vulkan wrapper and naming first. Apply these rules when the code lacks a clear local convention or when validation, frame capture, or synchronization bugs are being investigated.

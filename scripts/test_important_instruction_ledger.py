@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-LEDGER_SCRIPT = ROOT / "skills/important-instruction-ledger/scripts/important_instruction_ledger.py"
+LEDGER_SCRIPT = ROOT / "skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/scripts/important_instruction_ledger.py"
 
 
 def load_ledger_module():

@@ -176,8 +176,8 @@
       "prompt_shape": "Native C++ Vulkan/CUDA/realtime tool asks what GUI, HUD, editor panel, docking, inspector, gizmo, plotting, runtime UI, or desktop UI options are available.",
       "expected_behavior": "Trigger native-cpp-gui-hud and cpp-cuda-vulkan-studio, route to native-gui-hud, present Dear ImGui/ImGuizmo/ImPlot, Qt, wxWidgets, RmlUi, NoesisGUI, Nuklear, FLTK, libui-ng, and CEF with source/docs and visual inspection links so the user can inspect how each GUI looks. If an interactive question UI asks the user to choose, a visible link table must appear immediately before the question and compact URLs should appear in option descriptions when possible. For implementation or UI review prompts, require a UI convention table before layout/control changes, icon/text affordance checks for common tool commands, and a screenshot product-fit scorecard against donor or peer-tool conventions. For user-reported visible GUI bugs, require actual visible-surface before/after evidence, state UI-blind status when no tool can observe the surface, and reject harness-only or JSON-only work as progress on the visible symptom.",
       "expected_paths": [
-        "skills/native-cpp-gui-hud/SKILL.md",
-        "skills/native-cpp-gui-hud/references/gui-options.md",
+        "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/references/gui-options.md",
         "skills/cpp-cuda-vulkan-studio/SKILL.md",
         "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
@@ -202,17 +202,17 @@
       "prompt_shape": "User wants to plan or brainstorm a substantial new native C++ Vulkan/CUDA/realtime app with unresolved template, GUI, donor, web research, input-device, code-map, and validation choices.",
       "expected_behavior": "Trigger cppstudio-project-planner before implementation; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; open project intake, choice matrix, CppStudio project archetypes, GUI/HUD option links, agentic-control-harness, donor routing, and run an extensive state-of-the-art upstream web ceiling check before recommending architecture. Persist Project Dos And Don'ts for substantial projects, including app/domain rules and GUI/product-surface best practices with source evidence, affected subsystem or UI surface, and validation signal. After the research brief, stop with the explicit Plan-mode handoff and do not ask unresolved template, GUI/input, code-map, authoring-model, GPU-lane, dependency, donor, or validation decisions inline in normal chat unless the user explicitly waives Plan mode or the session is already in Plan mode. Include comparable current tools and their common authoring practices so the plan chooses and asks about the project source of truth, such as graph, stack, timeline, scene tree, scripting, direct parameter workflow, or hybrid. For interactive apps, include a default local agentic control harness so agents can launch, drive, inspect, screenshot, and troubleshoot the app before asking the user for routine manual testing. Separate current leading approaches from legacy or low-effort options and prefer the best available option unless the user asks for a lighter route.",
       "expected_paths": [
-        "skills/cppstudio-project-planner/SKILL.md",
-        "skills/cppstudio-project-planner/references/project-intake.md",
-        "skills/cppstudio-project-planner/references/choice-matrix.md",
-        "skills/agentic-control-harness/SKILL.md",
-        "skills/agentic-control-harness/references/control-harness.md",
+        "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md",
+        "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md",
+        "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/references/control-harness.md",
         "skills/cpp-cuda-vulkan-studio/SKILL.md",
         "skills/cpp-cuda-vulkan-studio/references/project-archetypes.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/README.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/agent-lookup.md",
-        "skills/native-cpp-gui-hud/SKILL.md",
-        "skills/native-cpp-gui-hud/references/gui-options.md"
+        "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/references/gui-options.md"
       ]
     },
     {
@@ -226,8 +226,8 @@
       "prompt_shape": "User asks a Codex worker to create a substantial new native C++/Vulkan/CUDA/realtime project in an empty or greenfield repo.",
       "expected_behavior": "Trigger cppstudio-project-planner and cpp-cuda-vulkan-studio, research and plan first, then treat the greenfield code-map choice as a hard pre-source gate. Before the first source/build/app/test/docs implementation slice, the agent must get an accepted, declined, or explicitly deferred code-map decision. If accepted, bootstrap through bootstrap_code_map.py and validate; if declined, record the decline through bootstrap_code_map.py; if deferred, record the explicit deferment in planning notes. Do not treat a plan bullet named code-map choice as acceptance and do not proceed while the code-map state is merely pending.",
       "expected_paths": [
-        "skills/cppstudio-project-planner/SKILL.md",
-        "skills/cppstudio-project-planner/references/project-intake.md",
+        "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md",
         "skills/cpp-cuda-vulkan-studio/SKILL.md",
         "skills/cpp-cuda-vulkan-studio/scripts/bootstrap_code_map.py",
         "skills/cpp-cuda-vulkan-studio/scripts/validate_code_map.py"
@@ -318,13 +318,13 @@
       "prompt_shape": "User wants to plan a native C++ realtime artist or game technical-art tool with Wacom/stylus pressure, brush input, viewport HUD, gizmos, and donor-backed architecture choices.",
       "expected_behavior": "Trigger cppstudio-project-planner, native-cpp-gui-hud, and agentic-control-harness; gather a pre-plan research brief before asking the user to switch to Plan mode or presenting choice questions; persist Project Dos And Don'ts with app/domain and GUI/product-surface rules, source evidence, affected subsystem or UI surface, and validation signal; research comparable current tools and ask about the authoring model/source of truth when it affects architecture; treat tablet/stylus pressure, tilt, hover, stroke sampling, undo/redo, viewport picking, and input capture as first-class planning decisions; present GUI choices with source and visual links before any GUI choice question, then stop with the explicit Plan-mode handoff instead of asking GUI/input decisions inline in normal chat unless the user explicitly waives Plan mode or the session is already in Plan mode; default the control harness for the artist tool so agents can inspect UI/viewport output and test brush/tool behavior through local controls before asking the user for routine manual checks; plan UI convention table, icon/text affordance checks, screenshot product-fit scorecard, action/affordance inventory coverage, and UI-blind failure reporting for UI-heavy implementation slices; run an extensive state-of-the-art web ceiling check, separate current leading approaches from legacy or low-effort options, and route through games/native GUI/rendering donor categories before implementation.",
       "expected_paths": [
-        "skills/cppstudio-project-planner/SKILL.md",
-        "skills/cppstudio-project-planner/references/project-intake.md",
-        "skills/cppstudio-project-planner/references/choice-matrix.md",
-        "skills/agentic-control-harness/SKILL.md",
-        "skills/agentic-control-harness/references/control-harness.md",
-        "skills/native-cpp-gui-hud/SKILL.md",
-        "skills/native-cpp-gui-hud/references/gui-options.md",
+        "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md",
+        "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md",
+        "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/references/control-harness.md",
+        "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/references/gui-options.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/production/games.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/graphics-rendering.md",
@@ -342,7 +342,7 @@
       "prompt_shape": "A target-project agent researching a native C++ GPU feature discovers that the best current donor is missing from the installed CppStudio donor library, and the user asks to add it to the reusable library for future agents.",
       "expected_behavior": "Record the vetted donor in the target project first as required evidence and never skip that candidate artifact because source promotion is possible. Then promote into the CppStudio source repo donor library when the source root is available or provided. Do not patch ~/.codex/skills installed donor files directly. If the source repo path is unknown, report the project-local candidate and ask for CPPSTUDIO_SOURCE_ROOT or the source repo path.",
       "expected_paths": [
-        "skills/cppstudio-project-planner/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md",
         "skills/cpp-cuda-vulkan-studio/SKILL.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/README.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/selection-policy.md",
@@ -362,9 +362,9 @@
       "prompt_shape": "User plans or builds an interactive native C++ realtime app, viewer, renderer, simulator, artist tool, or game tool that an agent should be able to test, inspect, troubleshoot, or control.",
       "expected_behavior": "Trigger agentic-control-harness with cppstudio-project-planner or cpp-cuda-vulkan-studio; treat the harness as default-on for interactive apps unless the user opts out or the target is headless/security-sensitive; plan local-only HTTP/curl or CLI controls with optional MCP facade over the same API; include state readback, recent logs/warnings, visual/UI or viewport evidence, launch/control registry docs, feature-control maintenance, exact readiness invariants, route registry/docs reconciliation, UI action/affordance inventory, and stress lanes so agents test routine changes before asking the user for manual verification.",
       "expected_paths": [
-        "skills/agentic-control-harness/SKILL.md",
-        "skills/agentic-control-harness/references/control-harness.md",
-        "skills/cppstudio-project-planner/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/references/control-harness.md",
+        "skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md",
         "skills/cpp-cuda-vulkan-studio/SKILL.md"
       ]
     },
@@ -379,10 +379,10 @@
       "prompt_shape": "User reports a visible viewport, brush, stylus, tool-button, timeline, node, gizmo, camera, or pointer-hit bug and wants the agent to prove it is fixed.",
       "expected_behavior": "Trigger viewport-session-testing with agentic-control-harness and CppStudio routing; require a recorded or replayed user-equivalent session, before/after report, fresh screenshot or render capture, semantic trace or probe, and direct comparison of the reported symptom. Backend-only commands, generic scene revision changes, stale screenshots, or harness-only JSON must not be accepted as visible bug proof.",
       "expected_paths": [
-        "skills/viewport-session-testing/SKILL.md",
-        "skills/viewport-session-testing/references/viewport-session-testing.md",
-        "skills/agentic-control-harness/SKILL.md",
-        "skills/agentic-control-harness/references/control-harness.md",
+        "skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/references/viewport-session-testing.md",
+        "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/references/control-harness.md",
         "skills/cpp-cuda-vulkan-studio/SKILL.md"
       ]
     },
@@ -396,8 +396,8 @@
       "prompt_shape": "Supervisor agent is asked to monitor, nudge, review, or poll a tmux/subagent/repo worker for a CppStudio-backed native C++ GPU project, including adversarial-review fix routing or closeout verification.",
       "expected_behavior": "Trigger cppstudio-supervisor only for the supervision lane; verify worker identity before contact, read primary plan artifacts before approval, use fresh-context reviewers, route actionable review findings to the owning worker, verify Rewind readiness before accepting causal replay claims, poll until the worker stops, and classify closeout evidence before reporting completion.",
       "expected_paths": [
-        "skills/cppstudio-supervisor/SKILL.md",
-        "skills/important-instruction-ledger/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/GUIDE.md",
         "skills/cpp-cuda-vulkan-studio/SKILL.md"
       ]
     },
@@ -412,7 +412,7 @@
       "expected_behavior": "Do not load cppstudio-supervisor for ordinary solo implementation. Use the normal CppStudio, planning, donor, GUI, control-harness, code-map, or validation skills as applicable.",
       "expected_paths": [],
       "must_not_trigger_paths": [
-        "skills/cppstudio-supervisor/SKILL.md"
+        "skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md"
       ]
     },
     {
@@ -426,7 +426,7 @@
       "prompt_shape": "Game technical art tool request asks for native C++ artist panels, viewport controls, debug HUDs, inspectors, gizmos, performance graphs, or editor UI around a realtime renderer.",
       "expected_behavior": "Open the games production overlay and route tools/technical art through native GUI/HUD plus native infrastructure and rendering donors; include visual inspection links when presenting GUI options; for implementation or UI review prompts, require a UI convention table, icon/text affordance checks for common tool commands, screenshot product-fit scorecard, and action/affordance inventory coverage when practical.",
       "expected_paths": [
-        "skills/native-cpp-gui-hud/SKILL.md",
+        "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/production/games.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/native-engineering-infrastructure.md",
@@ -1314,9 +1314,9 @@
       "expected_behavior": "Treat the stalled visible brush bug as a process blocker, not as permission for another local guess. Reopen cpp-cuda-vulkan-studio, native GUI/HUD, agentic-control-harness, offscreen-test-manager, sculpting-brushes, and the Blender Sculpt Brushes profile; require OSTM or an approved nonblocking launcher for automated GUI proof; write a donor mapping for active-brush selection and pointer-to-stroke hit testing before another code edit.",
       "expected_paths": [
         "skills/cpp-cuda-vulkan-studio/SKILL.md",
-        "skills/native-cpp-gui-hud/SKILL.md",
-        "skills/agentic-control-harness/SKILL.md",
-        "skills/agentic-control-harness/references/control-harness.md",
+        "skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md",
+        "skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/references/control-harness.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/sculpting-brushes.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/profiles/blender-sculpt-brushes-study-only.md",
         "skills/cpp-cuda-vulkan-studio/references/donor-library/native-gui-hud.md"

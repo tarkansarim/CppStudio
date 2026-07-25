@@ -6,20 +6,10 @@ distribution work.
 
 ## Package Manifest
 
-Each shipped skill directory contains its own manifest. Current packaged skills include:
+CppStudio ships one skill package and one manifest:
 
 ```text
 skills/cpp-cuda-vulkan-studio/package-manifest.json
-skills/native-cpp-gui-hud/package-manifest.json
-skills/cppstudio-project-planner/package-manifest.json
-skills/agentic-control-harness/package-manifest.json
-skills/viewport-session-testing/package-manifest.json
-skills/important-instruction-ledger/package-manifest.json
-skills/cppstudio-supervisor/package-manifest.json
-skills/vulkan-compute-sync/package-manifest.json
-skills/modern-cpp-cmake/package-manifest.json
-skills/cuda-kernel-authoring/package-manifest.json
-skills/gpu-profiling-workstation/package-manifest.json
 ```
 
 This manifest records every shipped skill file except the manifest itself. Each entry includes:
@@ -35,32 +25,12 @@ change:
 
 ```bash
 python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio --write-manifest
-python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud --write-manifest
-python3 scripts/validate_skill_package.py skills/cppstudio-project-planner --write-manifest
-python3 scripts/validate_skill_package.py skills/agentic-control-harness --write-manifest
-python3 scripts/validate_skill_package.py skills/viewport-session-testing --write-manifest
-python3 scripts/validate_skill_package.py skills/important-instruction-ledger --write-manifest
-python3 scripts/validate_skill_package.py skills/cppstudio-supervisor --write-manifest
-python3 scripts/validate_skill_package.py skills/vulkan-compute-sync --write-manifest
-python3 scripts/validate_skill_package.py skills/modern-cpp-cmake --write-manifest
-python3 scripts/validate_skill_package.py skills/cuda-kernel-authoring --write-manifest
-python3 scripts/validate_skill_package.py skills/gpu-profiling-workstation --write-manifest
 ```
 
 Validate it without rewriting:
 
 ```bash
 python3 scripts/validate_skill_package.py skills/cpp-cuda-vulkan-studio
-python3 scripts/validate_skill_package.py skills/native-cpp-gui-hud
-python3 scripts/validate_skill_package.py skills/cppstudio-project-planner
-python3 scripts/validate_skill_package.py skills/agentic-control-harness
-python3 scripts/validate_skill_package.py skills/viewport-session-testing
-python3 scripts/validate_skill_package.py skills/important-instruction-ledger
-python3 scripts/validate_skill_package.py skills/cppstudio-supervisor
-python3 scripts/validate_skill_package.py skills/vulkan-compute-sync
-python3 scripts/validate_skill_package.py skills/modern-cpp-cmake
-python3 scripts/validate_skill_package.py skills/cuda-kernel-authoring
-python3 scripts/validate_skill_package.py skills/gpu-profiling-workstation
 ```
 
 ## Progressive Disclosure Groups
@@ -68,6 +38,8 @@ python3 scripts/validate_skill_package.py skills/gpu-profiling-workstation
 The manifest is also a lightweight map of what should be loaded first and what should stay lazy:
 
 - `entrypoint`: `SKILL.md`, agent metadata, and project archetype routing.
+- `routed-module`: specialist guides and their supporting files, read only after the router selects
+  them.
 - `donor-router`: donor policy and broad lookup files.
 - `production-overlay`: VFX, games, and native engineering vocabulary routers.
 - `donor-category`: compact category files for one domain.
@@ -81,9 +53,9 @@ metadata, not a replacement for the routing text.
 ## Validation And Sync
 
 `./scripts/validate.sh` checks packaged skill manifests as part of normal validation.
-`sync_to_codex.sh` validates the selected source skill, the staged copy, and the final installed copy
-before reporting success. `rollout_to_codex.sh` validates the installed main skill and bundled
-auxiliary skills after sync before reporting completion.
+`sync_to_codex.sh` validates the source package, staged copy, and final installed copy before
+reporting success. `rollout_to_codex.sh` also removes known former top-level CppStudio packages so
+only the router remains discoverable.
 
 The validator rejects:
 

@@ -14,6 +14,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 source "${ROOT_DIR}/scripts/managed_claude_skills.sh"
 SKILL_NAME="${SKILL_NAME:-${CPPSTUDIO_CLAUDE_MAIN_SKILL}}"
 AUXILIARY_SKILL_NAMES=("${CPPSTUDIO_CLAUDE_AUXILIARY_SKILL_NAMES[@]}")
+LEGACY_TOP_LEVEL_SKILL_NAMES=("${CPPSTUDIO_CLAUDE_LEGACY_TOP_LEVEL_SKILL_NAMES[@]}")
 CLAUDE_HOME_DIR="${SYNC_CLAUDE_HOME:-${HOME}/.claude}"
 SOURCE_DIR="${ROOT_DIR}/skills/${SKILL_NAME}"
 TARGET_DIR="${TARGET_DIR:-${CLAUDE_HOME_DIR}/skills/${SKILL_NAME}}"
@@ -152,7 +153,7 @@ usage() {
     cat <<EOF
 Usage: $0
 
-Validate and roll out the CppStudio skill + slice-1 Claude auxiliary skills to user-level Claude
+Validate and roll out the single CppStudio router package to user-level Claude
 (~/.claude/skills). Separate lane from Codex; does not touch ~/.codex. The ~/.claude/CLAUDE.md relay
 is handled separately via the user's local doctrine tooling and is NOT installed by this script.
 
@@ -207,6 +208,9 @@ fi
 for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     reject_symlink_rollout_path "${target_skills_dir}/${auxiliary_skill_name}" "auxiliary skill target"
 done
+for legacy_skill_name in "${LEGACY_TOP_LEVEL_SKILL_NAMES[@]}"; do
+    reject_symlink_rollout_path "${target_skills_dir}/${legacy_skill_name}" "legacy top-level skill target"
+done
 
 for required in "${VALIDATOR}" "${PACKAGE_VALIDATOR}" "${DONOR_VALIDATOR}"; do
     if [[ ! -f "${required}" && ! -x "${required}" ]]; then
@@ -223,10 +227,16 @@ backup_rollout_path "${target_resolved}"
 for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     backup_rollout_path "${target_skills_dir}/${auxiliary_skill_name}"
 done
+for legacy_skill_name in "${LEGACY_TOP_LEVEL_SKILL_NAMES[@]}"; do
+    backup_rollout_path "${target_skills_dir}/${legacy_skill_name}"
+done
 trap restore_rollout_backups ERR INT TERM
 
 SYNC_CLAUDE_HOME="${CLAUDE_HOME_DIR}" TARGET_DIR="${TARGET_DIR}" VALIDATOR="${VALIDATOR}" \
     "${ROOT_DIR}/scripts/sync_to_claude.sh"
+for legacy_skill_name in "${LEGACY_TOP_LEVEL_SKILL_NAMES[@]}"; do
+    rm -rf "${target_skills_dir:?}/${legacy_skill_name}"
+done
 for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     SYNC_CLAUDE_HOME="${CLAUDE_HOME_DIR}" \
         SKILL_NAME="${auxiliary_skill_name}" \
@@ -263,6 +273,9 @@ write_cppstudio_audit "rollout" "true" "${TARGET_DIR}" "rolled out (claude lane,
 rollout_audit_logged=1
 
 echo "Rolled out (Claude lane) ${SOURCE_DIR} -> ${TARGET_DIR}"
+for legacy_skill_name in "${LEGACY_TOP_LEVEL_SKILL_NAMES[@]}"; do
+    echo "Removed legacy top-level CppStudio skill: ${target_skills_dir}/${legacy_skill_name}"
+done
 for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     echo "Rolled out (Claude lane) ${ROOT_DIR}/skills/${auxiliary_skill_name} -> ${target_skills_dir}/${auxiliary_skill_name}"
 done

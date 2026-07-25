@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
 # shellcheck disable=SC2034 # Sourced by rollout/watch/validate scripts.
-CPPSTUDIO_AUXILIARY_SKILL_NAMES=(
+CPPSTUDIO_AUXILIARY_SKILL_NAMES=()
+
+# Removed from the top-level catalog by the router-only package migration.
+# Rollout deletes only these known former CppStudio install targets.
+CPPSTUDIO_LEGACY_TOP_LEVEL_SKILL_NAMES=(
     "native-cpp-gui-hud"
     "cppstudio-project-planner"
     "agentic-control-harness"

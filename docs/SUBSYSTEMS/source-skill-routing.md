@@ -9,28 +9,28 @@ generated-project workflow instructions.
 - `AGENTS.md`
 - `CLAUDE.md`
 - `skills/cpp-cuda-vulkan-studio/SKILL.md`
-- `skills/native-cpp-gui-hud/SKILL.md`
-- `skills/cppstudio-project-planner/SKILL.md`
-- `skills/cppstudio-project-planner/references/project-intake.md`
-- `skills/cppstudio-project-planner/references/choice-matrix.md`
-- `skills/agentic-control-harness/SKILL.md`
-- `skills/agentic-control-harness/references/control-harness.md`
-- `skills/agentic-control-harness/references/*.md`
-- `skills/native-cpp-gui-hud/references/*.md`
-- `skills/viewport-session-testing/SKILL.md`
-- `skills/viewport-session-testing/references/viewport-session-testing.md`
-- `skills/important-instruction-ledger/SKILL.md`
-- `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
-- `skills/cppstudio-supervisor/SKILL.md`
-- `skills/cppstudio-supervisor/agents/openai.yaml`
-- `skills/cppstudio-supervisor/scripts/slice_phase_report.py`
-- `skills/vulkan-compute-sync/SKILL.md`
-- `skills/modern-cpp-cmake/SKILL.md`
-- `skills/modern-cpp-cmake/agents/openai.yaml`
-- `skills/cuda-kernel-authoring/SKILL.md`
-- `skills/cuda-kernel-authoring/agents/openai.yaml`
-- `skills/gpu-profiling-workstation/SKILL.md`
-- `skills/gpu-profiling-workstation/references/TOOL_INVENTORY.md`
+- `skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md`
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md`
+- `skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/references/control-harness.md`
+- `skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/references/*.md`
+- `skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/references/*.md`
+- `skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/references/viewport-session-testing.md`
+- `skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/scripts/important_instruction_ledger.py`
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/agents/openai.yaml`
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/scripts/slice_phase_report.py`
+- `skills/cpp-cuda-vulkan-studio/modules/vulkan-compute-sync/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/modern-cpp-cmake/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/modern-cpp-cmake/agents/openai.yaml`
+- `skills/cpp-cuda-vulkan-studio/modules/cuda-kernel-authoring/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/cuda-kernel-authoring/agents/openai.yaml`
+- `skills/cpp-cuda-vulkan-studio/modules/gpu-profiling-workstation/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/gpu-profiling-workstation/references/TOOL_INVENTORY.md`
 - `docs/agent-context/SLICE_WATCHLIST.md`
 - `docs/agent-context/slice-watchlist.jsonl`
 - `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md`
@@ -39,28 +39,28 @@ generated-project workflow instructions.
 ## Primary Paths
 
 - `skills/cpp-cuda-vulkan-studio/SKILL.md`
-- `skills/native-cpp-gui-hud/SKILL.md`
-- `skills/cppstudio-project-planner/SKILL.md`
-- `skills/cppstudio-project-planner/references/project-intake.md`
-- `skills/cppstudio-project-planner/references/choice-matrix.md`
-- `skills/agentic-control-harness/SKILL.md`
-- `skills/agentic-control-harness/references/control-harness.md`
-- `skills/agentic-control-harness/references/*.md`
-- `skills/native-cpp-gui-hud/references/*.md`
-- `skills/viewport-session-testing/SKILL.md`
-- `skills/viewport-session-testing/references/viewport-session-testing.md`
-- `skills/important-instruction-ledger/SKILL.md`
-- `skills/important-instruction-ledger/scripts/important_instruction_ledger.py`
-- `skills/cppstudio-supervisor/SKILL.md`
-- `skills/cppstudio-supervisor/agents/openai.yaml`
-- `skills/cppstudio-supervisor/scripts/slice_phase_report.py`
-- `skills/vulkan-compute-sync/SKILL.md`
-- `skills/modern-cpp-cmake/SKILL.md`
-- `skills/modern-cpp-cmake/agents/openai.yaml`
-- `skills/cuda-kernel-authoring/SKILL.md`
-- `skills/cuda-kernel-authoring/agents/openai.yaml`
-- `skills/gpu-profiling-workstation/SKILL.md`
-- `skills/gpu-profiling-workstation/references/TOOL_INVENTORY.md`
+- `skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/project-intake.md`
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-project-planner/references/choice-matrix.md`
+- `skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/references/control-harness.md`
+- `skills/cpp-cuda-vulkan-studio/modules/agentic-control-harness/references/*.md`
+- `skills/cpp-cuda-vulkan-studio/modules/native-cpp-gui-hud/references/*.md`
+- `skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/viewport-session-testing/references/viewport-session-testing.md`
+- `skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/important-instruction-ledger/scripts/important_instruction_ledger.py`
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/agents/openai.yaml`
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/scripts/slice_phase_report.py`
+- `skills/cpp-cuda-vulkan-studio/modules/vulkan-compute-sync/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/modern-cpp-cmake/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/modern-cpp-cmake/agents/openai.yaml`
+- `skills/cpp-cuda-vulkan-studio/modules/cuda-kernel-authoring/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/cuda-kernel-authoring/agents/openai.yaml`
+- `skills/cpp-cuda-vulkan-studio/modules/gpu-profiling-workstation/GUIDE.md`
+- `skills/cpp-cuda-vulkan-studio/modules/gpu-profiling-workstation/references/TOOL_INVENTORY.md`
 - `docs/agent-context/SLICE_WATCHLIST.md`
 - `docs/agent-context/slice-watchlist.jsonl`
 - `docs/agent-context/IMPORTANT_USER_INSTRUCTIONS.md`
@@ -75,21 +75,13 @@ generated-project workflow instructions.
 
 ## Current Skill Discovery Posture
 
-- Bundled CppStudio skill frontmatter descriptions are compact discovery triggers only. Detailed
-  routing rules, trigger phrase lists, examples, matrices, lifecycle rules, and operational policy
-  belong in the skill body or lazily read references so startup skill discovery stays within budget.
-- CppStudio intentionally ships several discoverable bundled skills rather than one monolithic
-  router skill. This is owner-approved only because the skills cover distinct trigger surfaces:
-  project intake, supervision, GUI/HUD design, viewport replay, control harnesses, CMake, CUDA
-  kernels, Vulkan synchronization, profiling, and active watchlists. Do not collapse them into a
-  single router solely because a package-count heuristic flags multiple `SKILL.md` files. Collapse
-  only variants of one task where exactly one variant is useful per turn, or when real trigger
-  evidence shows agents routinely need a parent router before choosing among near-duplicate modules.
-  For CppStudio bundled skills, the source inventory must stay explicit in `scripts/managed_skills.sh`
-  and validation must reject accidental unmanaged top-level skills.
-- When shortening frontmatter, preserve the moved discovery details in source skill bodies or
-  references, then validate both description lengths and representative trigger/detail probes before
-  rollout.
+- CppStudio exposes one discoverable skill, `cpp-cuda-vulkan-studio`. Its short frontmatter
+  description selects the owner; its router body then opens only the specialist guide needed for the
+  current task. Detailed policy stays in `modules/` or references and does not appear in the startup
+  skill catalog.
+- Source and installed packages must contain exactly one `SKILL.md`. Project intake, supervision,
+  GUI/HUD design, viewport replay, control harnesses, CMake, CUDA kernels, Vulkan synchronization,
+  profiling, and watchlists are internal guides, not separately discoverable skills.
 - Supervision-only worker orchestration belongs in `cppstudio-supervisor`, not in always-loaded
   `AGENTS.md` relay text or ordinary project-planning rules. Load it only when supervising other
   tmux/subagent/repo workers, routing review findings, polling closeout, or interrogating worker

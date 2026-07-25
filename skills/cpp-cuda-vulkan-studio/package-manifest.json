@@ -7,8 +7,8 @@
       "path": "SKILL.md",
       "role": "main",
       "disclosure_group": "entrypoint",
-      "size": 127347,
-      "sha256": "882ebf39790990f1fd523ebc7d89d1956870ddcecce11586f4232479aa29e8c8"
+      "size": 1486,
+      "sha256": "4df676eaeb7815483b6dbe4cad2a427a61c8fe02398d460f1fc518dcf6209bad"
     },
     {
       "path": "agents/openai.yaml",
@@ -338,6 +338,244 @@
       "disclosure_group": "generated-project-template",
       "size": 307,
       "sha256": "3740c9523f810d7123ba01c9924691c43b4cd57f169e15a16e77e5c6fba40110"
+    },
+    {
+      "path": "modules/agentic-control-harness/GUIDE.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 23847,
+      "sha256": "d32fa1fd574c17fc69ca24856a3b65a757132a13475885e01477a7a3d7151ceb"
+    },
+    {
+      "path": "modules/agentic-control-harness/agents/openai.yaml",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 247,
+      "sha256": "31f6387c651a640ccd712d7afd9f21c47b2433569fc12ed8ab36bbd772604439"
+    },
+    {
+      "path": "modules/agentic-control-harness/references/control-contract.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 4395,
+      "sha256": "937f0d15926732f14551b2ff5df10c6618c4129420c4237c305defa40ef9b46a"
+    },
+    {
+      "path": "modules/agentic-control-harness/references/control-harness.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 24793,
+      "sha256": "00eb91c04368bd1682a7edce6f7626c0f27edcdeb3b5cbb73dac224e4f54f7ac"
+    },
+    {
+      "path": "modules/agentic-control-harness/references/native-apps.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 3664,
+      "sha256": "3efa67f345f3168dd4f315ff34d0f499a5df780ed15d9715fa4502cbe203e630"
+    },
+    {
+      "path": "modules/agentic-control-harness/references/visual-readback.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 3125,
+      "sha256": "efd3e2cff4f8ed3c8783a8c43599d87edde79d56ab10b151ca5473c97eb4a26f"
+    },
+    {
+      "path": "modules/agentic-control-harness/references/web-apps.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 1507,
+      "sha256": "1f33d2308b9ed939e355912957bb10f7bfe33a7975be7747a7f92e83bba034b7"
+    },
+    {
+      "path": "modules/cppstudio-project-planner/GUIDE.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 45960,
+      "sha256": "771d62ac6a0214be5b9ebcfe55381b6b02f6b26e3499bab95775daf3817c77de"
+    },
+    {
+      "path": "modules/cppstudio-project-planner/agents/openai.yaml",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 300,
+      "sha256": "672d868f6b35f4553bfc0d872771570064c60ecbdddb7ec168e51f07990d0299"
+    },
+    {
+      "path": "modules/cppstudio-project-planner/references/choice-matrix.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 22730,
+      "sha256": "517d187eee5d93448b108113613353b249abeb10978836e98aa54ebccb920f7f"
+    },
+    {
+      "path": "modules/cppstudio-project-planner/references/project-intake.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 26698,
+      "sha256": "2bcee43a0965cfc7c780ad92d9200b797b8157cfbe95c4df2d25b43bb887ddca"
+    },
+    {
+      "path": "modules/cppstudio-supervisor/GUIDE.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 36265,
+      "sha256": "3dbbb8bd744f24df87b5434c70cffc746615e301841872b79eb25ab978a450a4"
+    },
+    {
+      "path": "modules/cppstudio-supervisor/agents/openai.yaml",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 343,
+      "sha256": "32de041b65a90ed3ebe3386e92da7233e88ed8ddeb0ce05316058e6591727631"
+    },
+    {
+      "path": "modules/cppstudio-supervisor/scripts/slice_phase_report.py",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 11790,
+      "sha256": "29ef0b9d38533c9a5d3c6620f98cc361b5cabff63faf77a9021cd1a389333aa9"
+    },
+    {
+      "path": "modules/cuda-kernel-authoring/GUIDE.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 9864,
+      "sha256": "520bd5f9af2e6a21c63dff9c21126e0d6179f6e69b7f9feca0ef14493048d5ee"
+    },
+    {
+      "path": "modules/cuda-kernel-authoring/agents/openai.yaml",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 287,
+      "sha256": "7fa7260cf7028624887644a25967d25cf975f4b0c3766e0ae504b39b032aaadd"
+    },
+    {
+      "path": "modules/gpu-profiling-workstation/GUIDE.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 19435,
+      "sha256": "f7a8bec56127c0ba927caaee201d0288cc482c8734df1aee48948adbdfb8c2b9"
+    },
+    {
+      "path": "modules/gpu-profiling-workstation/references/TOOL_INVENTORY.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 1886,
+      "sha256": "fcc2e5d143f67a6bca67cfe1cdbecbeb17a2624f400933c155c9e8269c1ddcf4"
+    },
+    {
+      "path": "modules/important-instruction-ledger/GUIDE.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 4498,
+      "sha256": "36ad8e9a3c8c29585914b3ece361fe1e06cf6d17f923ef37213ef70c91f57c4f"
+    },
+    {
+      "path": "modules/important-instruction-ledger/agents/openai.yaml",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 310,
+      "sha256": "0c3597a3e11f7d783a6cb4327284a6f5dfb6fcb45758772f1a2d5048d1ae21bf"
+    },
+    {
+      "path": "modules/important-instruction-ledger/scripts/important_instruction_ledger.py",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 7682,
+      "sha256": "e80366665c4bb962191f33590d3db56b030c3a8532001361469832ceb4915e9d"
+    },
+    {
+      "path": "modules/modern-cpp-cmake/GUIDE.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 9871,
+      "sha256": "6826f3d2d7022566149ca9559d25498bc8148699f67831ab216c68f40a4a8bbf"
+    },
+    {
+      "path": "modules/modern-cpp-cmake/agents/openai.yaml",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 251,
+      "sha256": "d9b25e20f01e750eae4141ab6da7cfcd6fc6060ccc6eed70836ca46f1f42cb92"
+    },
+    {
+      "path": "modules/native-cpp-gui-hud/GUIDE.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 23789,
+      "sha256": "7f45e4be832720149d0e51b3417d868d904df6d3e00e7f7ea00a3f4438a70d01"
+    },
+    {
+      "path": "modules/native-cpp-gui-hud/agents/openai.yaml",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 235,
+      "sha256": "17ab8916cde7e1e43b49c8780486e776e8db7ce862b4a1cf8881236faad5ed9b"
+    },
+    {
+      "path": "modules/native-cpp-gui-hud/references/editor-ui-conventions.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 3646,
+      "sha256": "f759187ec584cfa2b77bdcd51711a59e7e877e4deede9b1f08142f23f19383dd"
+    },
+    {
+      "path": "modules/native-cpp-gui-hud/references/gui-options.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 3899,
+      "sha256": "858222fba96fd7cf2070f30fcb11bafa1baadd9486298224b7ac16cee881ee72"
+    },
+    {
+      "path": "modules/native-cpp-gui-hud/references/visual-verification.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 2975,
+      "sha256": "c282fc1e6ad5cdfa974029e0a86f3281fc899ff6f1e63c1bca54032c94c87c66"
+    },
+    {
+      "path": "modules/studio-core.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 127152,
+      "sha256": "674588639301e71bee52de7dea6407643beda59797d2d93a4f2d1876f7cefb86"
+    },
+    {
+      "path": "modules/viewport-session-testing/GUIDE.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 13473,
+      "sha256": "8441ed862097e7efeabc676fb660d3ab55f03bd69536cc357eb3c3d3a33e0ef6"
+    },
+    {
+      "path": "modules/viewport-session-testing/agents/openai.yaml",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 261,
+      "sha256": "918f6245d530aa5e93bd3f351fecc773e6254ab4c86d7e846c283ecd88040d7f"
+    },
+    {
+      "path": "modules/viewport-session-testing/references/viewport-session-testing.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 10056,
+      "sha256": "1c7200a291a3a78ff5d7474c0373015b16cb0086cba4c54f57b290cd1d337d56"
+    },
+    {
+      "path": "modules/vulkan-compute-sync/GUIDE.md",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 8629,
+      "sha256": "bdc41329f8c458adb5ef04d90377985aa11d2b6d80528073231797bb8e175f65"
+    },
+    {
+      "path": "modules/vulkan-compute-sync/agents/openai.yaml",
+      "role": "module",
+      "disclosure_group": "routed-module",
+      "size": 279,
+      "sha256": "831358c3a4f96ae9463dd035937433034434db67559beb4443531d6a5acd18b7"
     },
     {
       "path": "references/donor-library/README.md",

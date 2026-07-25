@@ -1,7 +1,7 @@
 # Validation Sync And Rollout
 
-Owns CppStudio repo validation, CI-safe validation, syncing to user-level Codex, rollout to companion
-skills, watch-mode publishing behavior, and the separate Claude install lane (sync/rollout into
+Owns CppStudio repo validation, CI-safe validation, syncing to user-level Codex, router-only rollout,
+watch-mode publishing behavior, and the separate Claude install lane (sync/rollout into
 `~/.claude/skills` with the install-time provider transform).
 
 ## Canonical Docs
@@ -32,17 +32,7 @@ skills, watch-mode publishing behavior, and the separate Claude install lane (sy
 - `scripts/validate_code_map.py`
 - `scripts/check_code_map_drift.py`
 - `skills/cpp-cuda-vulkan-studio/package-manifest.json`
-- `skills/native-cpp-gui-hud/package-manifest.json`
-- `skills/cppstudio-project-planner/package-manifest.json`
-- `skills/agentic-control-harness/package-manifest.json`
-- `skills/viewport-session-testing/package-manifest.json`
-- `skills/important-instruction-ledger/package-manifest.json`
-- `skills/cppstudio-supervisor/package-manifest.json`
-- `skills/cppstudio-supervisor/scripts/slice_phase_report.py`
-- `skills/vulkan-compute-sync/package-manifest.json`
-- `skills/modern-cpp-cmake/package-manifest.json`
-- `skills/cuda-kernel-authoring/package-manifest.json`
-- `skills/gpu-profiling-workstation/package-manifest.json`
+- `skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/scripts/slice_phase_report.py`
 - `skills/cpp-cuda-vulkan-studio/scripts/run_gpu_optimization_loop.py`
 
 ## Update When
@@ -50,12 +40,12 @@ skills, watch-mode publishing behavior, and the separate Claude install lane (sy
 - validation coverage, required package files, CI-safe validator behavior, trigger-result evidence
   validation, or full validation changes
 - skill package manifest, package integrity validation, or sync/rollout audit metadata changes
-- auxiliary user-level skill installation or validation behavior changes
+- router package or legacy top-level cleanup behavior changes
 - CppStudio code-map validation or bootstrap wrapper behavior changes
 - CppStudio code-map drift wrapper behavior changes
 - sync or rollout target safety rules change
 - project-level agent instructions for normal rollout versus single-skill sync change
-- installed skill parity, auxiliary bundled skill rollout, or companion validation behavior changes
+- installed package parity or legacy top-level cleanup behavior changes
 - public install/manual install commands change
 
 ## Current Rollout Posture
@@ -63,13 +53,12 @@ skills, watch-mode publishing behavior, and the separate Claude install lane (sy
 - Validation, sync, and rollout prefer an explicit `VALIDATOR`, then the target Codex system
   validator, then the repo-local `scripts/quick_validate_skill.py` fallback. The fallback validates
   frontmatter, `agents/openai.yaml`, and bundled local references.
-- Package validation uses `scripts/validate_skill_package.py` plus the main and auxiliary skill
-  `package-manifest.json` files to verify shipped file hashes, sizes,
+- Package validation uses `scripts/validate_skill_package.py` plus the single router package
+  `package-manifest.json` to verify shipped file hashes, sizes,
   disclosure groups, package layout, and package hygiene. Manifest writes reject unsupported
   top-level files plus VCS, editor, cache, env, secret-like, archive, log, swap, and temp artifacts.
-- `scripts/managed_skills.sh` is the single source for bundled auxiliary skill names used by
-  validation, rollout, and rollout watch mode. Do not reintroduce local auxiliary arrays in those
-  scripts.
+- `scripts/managed_skills.sh` is the source of the known former top-level CppStudio package names
+  removed by rollout. Do not install those names as separate packages again.
 - Skill-load hygiene validation uses `scripts/validate_skill_load_hygiene.py` to scan the repo
   skill root as a hard gate, reject backup-looking files/directories that can bloat discovery, catch
   duplicate loaded skill names, and keep description metadata inside a compact startup budget. Keep
@@ -78,11 +67,8 @@ skills, watch-mode publishing behavior, and the separate Claude install lane (sy
   skill root is audited visibly but non-blocking by default because it may contain unrelated skills
   from other repos; set `CPPSTUDIO_STRICT_USER_SKILL_LOAD=1` to make that installed root a fatal
   maintainer gate.
-- Source validation also treats the managed skill inventory as authoritative. Every top-level
-  `skills/*/SKILL.md` package must be either the main `cpp-cuda-vulkan-studio` skill or listed in
-  `scripts/managed_skills.sh`; otherwise `validate.sh` fails and asks the maintainer to add owner
-  rationale or move the package out of `skills/`. This keeps the deliberate multi-skill layout
-  explicit without collapsing distinct CppStudio concerns into one monolithic router.
+- Source validation requires exactly one top-level package, `cpp-cuda-vulkan-studio`, and rejects
+  nested `SKILL.md` files. Specialist content lives under `modules/` as routed guides.
 - `validate.sh` compiles and exercises the `cppstudio-supervisor` slice phase telemetry helper so
   `CPPSTUDIO_PHASE` markers, verification classifications, OSTM job/artifact fields, and measured
   phase durations remain parseable before rollout.
@@ -96,9 +82,8 @@ skills, watch-mode publishing behavior, and the separate Claude install lane (sy
   the previous target if final validation fails. Staging and backups live outside the scanned
   `${SYNC_CODEX_HOME:-$HOME/.codex}/skills` root so interrupted syncs cannot expose duplicate or
   stale skill packages to a concurrent Codex startup scan.
-- Sync validates the selected source skill, staged skill, and final installed skill against that
-  package manifest. Rollout validates the installed main skill and auxiliary bundled skills before
-  completion.
+- Sync validates the source package, staged package, and final installed package against that
+  manifest.
 - Normal installed updates for bundled CppStudio skill changes use `rollout_to_codex.sh`, not a
   default `sync_to_codex.sh` run. `sync_to_codex.sh` publishes one selected skill only and is
   appropriate for dry runs, diagnostics, or an explicitly scoped single-skill sync.
@@ -111,19 +96,16 @@ skills, watch-mode publishing behavior, and the separate Claude install lane (sy
   a failed backup move leaves the existing installed skill in place.
 - Sync and rollout resolve safety-check paths through Python `Path.resolve(strict=False)` so the
   documented Linux, macOS, and WSL install path does not require GNU `realpath -m`.
-- Rollout snapshots the main skill, auxiliary bundled skills, and the optional user-level
+- Rollout snapshots the router package, known former top-level packages, and the optional user-level
   `AGENTS.md` relay target before mutation, then restores them if a later step fails.
-- Rollout rejects symlinked auxiliary skill targets and user
+- Rollout rejects symlinked legacy skill targets and user
   `AGENTS.md` relay targets before rollback snapshots are created, so rollback never records a
   symlink-resolved path outside the intended install surface.
-- Manual install fallback snippets stage and validate all bundled skills before mutating the target
-  Codex home, then restore the full managed-skill set if any later copy or validation step fails.
-- `rollout_to_codex.sh` installs bundled auxiliary skills such as `native-cpp-gui-hud`,
-  `cppstudio-project-planner`, `agentic-control-harness`, `viewport-session-testing`,
-  `important-instruction-ledger`, `cppstudio-supervisor`, `vulkan-compute-sync`, `modern-cpp-cmake`,
-  `cuda-kernel-authoring`, and `gpu-profiling-workstation`,
-  installs the minimal user-level `AGENTS.md` relay by default, and preserves user-owned content
-  outside the marked CppStudio relay block.
+- Manual install fallback snippets stage and validate the router package before mutating the target
+  provider home, then restore the previous install if a later copy or validation step fails.
+- `rollout_to_codex.sh` installs the router package, removes the ten known former top-level
+  specialist packages, installs the minimal user-level `AGENTS.md` relay by default, and preserves
+  user-owned content outside the marked CppStudio relay block.
 - Set `SKIP_USER_AGENTS_RELAY=1` only for deliberate relay opt-out installs.
 - `validate.sh` includes a synthetic GPU optimization fixture that exercises success-criteria
   enforcement, target numeric validation, baseline recording, hardware profile/SOL parsing,

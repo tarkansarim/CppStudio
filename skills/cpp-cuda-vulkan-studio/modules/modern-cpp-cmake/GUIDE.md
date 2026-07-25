@@ -1,8 +1,3 @@
----
-name: modern-cpp-cmake
-description: "Modern C++/CUDA project structure with CMake targets, source ownership, presets, CTest, imported GPU targets, clang tools, and build hygiene."
----
-
 # Modern C++ CMake
 
 Use this skill to shape C++ or C++/CUDA projects so the build graph, source layout, and verification path stay clear. Prefer the repository's existing conventions first; apply these rules when the repo has no stronger local pattern.

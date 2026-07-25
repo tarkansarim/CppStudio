@@ -1,8 +1,3 @@
----
-name: native-cpp-gui-hud
-description: "Choose or integrate native C++ GUI/HUD/editor UI for C++ GPU tools, including docking, gizmos, plotting, runtime UI, and visual conventions."
----
-
 # Native C++ GUI And HUD
 
 Use this skill when a native C++ project needs GUI/HUD/tool UI selection or integration. It is

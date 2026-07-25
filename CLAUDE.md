@@ -26,7 +26,7 @@ You typically act in two connected modes, often in the same session:
 2. **Supervise a worker (in another repo).** Act as supervisor for a worker agent (typically a
    tmux-managed Codex worker) that builds app features in a *separate* target repo: poll, guide,
    interrogate, review, and unblock it. Do **not** patch the target repo directly — route fixes to
-   its owner worker. The full doctrine is `skills/cppstudio-supervisor/SKILL.md` (a Codex skill;
+   its owner worker. The full doctrine is `skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/GUIDE.md` (a Codex skill;
    read it as a file — it is not Claude-loadable via the Skill tool). Reach the worker through
    `agent-tmux`/`agent-contact` relays.
 
@@ -38,11 +38,11 @@ CppStudio gap is a skill/rule bug to harden, not a one-off worker error.
 ## Source of truth and deployment
 
 - **Edit `skills/` in this repo.** The installed copy at `~/.codex/skills/cpp-cuda-vulkan-studio`
-  (plus the 10 auxiliary skills) is a *deployment target*, not the source. Never hand-edit the
-  installed copy as a durable change.
-- Publish with `./scripts/rollout_to_codex.sh` (validates, syncs the main skill + all auxiliary
-  skills, installs the marked user-level `AGENTS.md` relay block, re-validates installed copies,
-  verifies parity, logs to `~/.codex/cppstudio-install-audit.jsonl`).
+  is a *deployment target*, not the source. Never hand-edit the installed copy as a durable change.
+- Publish with `./scripts/rollout_to_codex.sh` (validates and syncs the router package, removes known
+  former top-level CppStudio skills, installs the marked user-level `AGENTS.md` relay block,
+  re-validates the install, verifies parity, and logs to
+  `~/.codex/cppstudio-install-audit.jsonl`).
 - `./scripts/sync_to_codex.sh [--dry-run]` is for diagnostics or a scoped single-skill sync only.
   It uses `rsync --delete` by default. `./scripts/watch_to_codex.sh` revalidates+syncs on change.
 
@@ -94,12 +94,11 @@ rather than skipping silently.
 
 ## Architecture
 
-### Skill package (11 skills under `skills/`)
+### Skill package
 
 `cpp-cuda-vulkan-studio` is the **main coordinator** — load it first for any native C++/GPU/Vulkan/
 CUDA work. It owns project scaffolding, the code-map protocol, donor routing, and validation lanes,
-and it routes to the 10 auxiliary skills (the authoritative inventory is
-`scripts/managed_skills.sh`):
+and it routes to internal specialist guides:
 
 - `cppstudio-project-planner` — gates substantial greenfield work; research → Plan-mode decision →
   implementation handoff before any coding.
@@ -158,10 +157,9 @@ isolation. Generated projects get their own code-map bootstrap and pre-commit dr
 - **Keep reusable policy generic:** no machine-specific paths, private app names, or app-only rules
   in `skills/`. Validation blocks private provenance (codenames, `/home/...` paths, private markers)
   from shipping.
-- **Marked relay blocks:** when installing user-level files, only the marked CppStudio blocks (e.g.
-  `cppstudio-donor-library`, the user-agents relay) are managed and may be replaced on reinstall;
-  content outside markers is user-owned and must be preserved. Relay targets must be real
-  `AGENTS.md` files, not symlinks.
+- **Marked relay block:** when installing user-level files, only the marked CppStudio user-agents
+  relay is managed and may be replaced on reinstall; content outside it is user-owned and must be
+  preserved. Relay targets must be real `AGENTS.md` files, not symlinks.
 - **Template placeholders:** preserve `{{PROJECT_NAME}}`, `{{CPP_NAMESPACE}}`, etc. Never commit
   generated temp projects, build dirs, profiler traces, or `__pycache__`.
 - **Trigger lane:** after changing skills, descriptions, donor categories/profiles/routing, or

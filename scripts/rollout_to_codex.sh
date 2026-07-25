@@ -6,6 +6,7 @@ SKILL_NAME="${SKILL_NAME:-cpp-cuda-vulkan-studio}"
 # shellcheck source=scripts/managed_skills.sh
 source "${ROOT_DIR}/scripts/managed_skills.sh"
 AUXILIARY_SKILL_NAMES=("${CPPSTUDIO_AUXILIARY_SKILL_NAMES[@]}")
+LEGACY_TOP_LEVEL_SKILL_NAMES=("${CPPSTUDIO_LEGACY_TOP_LEVEL_SKILL_NAMES[@]}")
 CODEX_HOME_DIR="${SYNC_CODEX_HOME:-${HOME}/.codex}"
 SOURCE_DIR="${ROOT_DIR}/skills/${SKILL_NAME}"
 TARGET_DIR="${TARGET_DIR:-${CODEX_HOME_DIR}/skills/${SKILL_NAME}}"
@@ -172,7 +173,7 @@ usage() {
     cat <<EOF
 Usage: $0
 
-Validate and roll out the CppStudio skill and bundled companion skills to user-level Codex.
+Validate and roll out the single CppStudio router package to user-level Codex.
 
 Environment:
   SYNC_CODEX_HOME  Defaults to ${HOME}/.codex
@@ -183,8 +184,8 @@ Environment:
                   Optional JSONL audit log path. Defaults to
                   ${CODEX_HOME_DIR}/cppstudio-install-audit.jsonl.
   ALLOW_ROLLOUT_TARGET_OVERRIDE=1
-                  Allow TARGET_DIR outside ${EXPECTED_TARGET_DIR}. Bundled companion skills must
-                  still resolve inside the same Codex home, so use this only for deliberate staging.
+                  Allow TARGET_DIR outside ${EXPECTED_TARGET_DIR}. Use this only for deliberate
+                  staging.
   INSTALL_USER_AGENTS_RELAY
                   Defaults to 1. Merge the minimal CppStudio relay into USER_AGENTS_RELAY_TARGET.
   SKIP_USER_AGENTS_RELAY=1
@@ -245,7 +246,7 @@ if [[ "${target_resolved}" != "${expected_resolved}" && "${ALLOW_ROLLOUT_TARGET_
     echo "Refusing rollout with TARGET_DIR outside the installed skill path:" >&2
     echo "  TARGET_DIR=${TARGET_DIR}" >&2
     echo "  expected=${EXPECTED_TARGET_DIR}" >&2
-    echo "Set ALLOW_ROLLOUT_TARGET_OVERRIDE=1 only if companion links should point at that target." >&2
+    echo "Set ALLOW_ROLLOUT_TARGET_OVERRIDE=1 only for deliberate staging." >&2
     exit 1
 fi
 
@@ -259,6 +260,11 @@ for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     reject_symlink_rollout_path \
         "${target_skills_dir}/${auxiliary_skill_name}" \
         "auxiliary skill target"
+done
+for legacy_skill_name in "${LEGACY_TOP_LEVEL_SKILL_NAMES[@]}"; do
+    reject_symlink_rollout_path \
+        "${target_skills_dir}/${legacy_skill_name}" \
+        "legacy top-level skill target"
 done
 if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
     reject_symlink_rollout_path "${USER_AGENTS_RELAY_TARGET}" "user AGENTS relay target"
@@ -314,6 +320,9 @@ backup_rollout_path "${target_resolved}"
 for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     backup_rollout_path "${target_skills_dir}/${auxiliary_skill_name}"
 done
+for legacy_skill_name in "${LEGACY_TOP_LEVEL_SKILL_NAMES[@]}"; do
+    backup_rollout_path "${target_skills_dir}/${legacy_skill_name}"
+done
 if [[ "${INSTALL_USER_AGENTS_RELAY:-0}" == "1" ]]; then
     backup_rollout_path "${USER_AGENTS_RELAY_TARGET}"
 fi
@@ -326,6 +335,9 @@ else
     SYNC_CODEX_HOME="${CODEX_HOME_DIR}" TARGET_DIR="${TARGET_DIR}" VALIDATOR="${VALIDATOR}" \
         "${ROOT_DIR}/scripts/sync_to_codex.sh"
 fi
+for legacy_skill_name in "${LEGACY_TOP_LEVEL_SKILL_NAMES[@]}"; do
+    rm -rf "${target_skills_dir:?}/${legacy_skill_name}"
+done
 for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     SYNC_CODEX_HOME="${CODEX_HOME_DIR}" \
         SKILL_NAME="${auxiliary_skill_name}" \
@@ -370,8 +382,11 @@ write_cppstudio_audit "rollout" "true" "${TARGET_DIR}" "rolled out"
 rollout_audit_logged=1
 
 echo "Rolled out ${SOURCE_DIR} -> ${TARGET_DIR}"
+for legacy_skill_name in "${LEGACY_TOP_LEVEL_SKILL_NAMES[@]}"; do
+    echo "Removed legacy top-level CppStudio skill: ${target_skills_dir}/${legacy_skill_name}"
+done
 for auxiliary_skill_name in "${AUXILIARY_SKILL_NAMES[@]}"; do
     echo "Rolled out ${ROOT_DIR}/skills/${auxiliary_skill_name} -> ${target_skills_dir}/${auxiliary_skill_name}"
 done
 echo "Verified donor library at ${DONOR_ROOT}"
-echo "Verified bundled companion skills in ${CODEX_HOME_DIR}/skills"
+echo "Verified router-only CppStudio install in ${CODEX_HOME_DIR}/skills"

@@ -110,8 +110,8 @@ C++/CUDA/Vulkan development.
   or README donor inventories, run a sub-agent trigger lane before close-out. Use multiple realistic
   prompts that should trigger the changed skill/routing, verify the agents select the expected skill and
   donor profiles, then fix any ambiguity they find before committing.
-- The rollout script validates the repo copy, bundled installed skills, and the user-level relay. The
-  sync script validates only the selected single-skill sync path.
+- The rollout script validates the router package, removes known former top-level CppStudio skills,
+  and updates the user-level relay. The sync script validates only the router package.
 - If validation fails because of a real script/template issue, fix the repo copy first, then rerun
   rollout or the explicitly selected sync.
 
@@ -122,10 +122,8 @@ C++/CUDA/Vulkan development.
 - Pass `--dry-run` to preview changes.
 - Pass `--no-delete` only for diagnostics; normal publishing should keep delete enabled.
 - `./scripts/watch_to_codex.sh` continuously validates and syncs after file changes.
-- `./scripts/rollout_to_codex.sh` validates, syncs the canonical skill and bundled auxiliary skills,
-  validates affected installed skills, and verifies source/target parity.
-- Legacy companion-skill donor link snippets live in `companion-skill-snippets/`; update those
-  snippets, not inline installed skill text or hardcoded markdown inside rollout scripts.
+- `./scripts/rollout_to_codex.sh` validates and syncs the one canonical router package, removes known
+  former top-level CppStudio skills, and verifies source/target parity.
 
 ## Safe Editing Rules
 
@@ -141,9 +139,6 @@ C++/CUDA/Vulkan development.
   marked relay block is managed by this repo and may be replaced on reinstall; content outside the
   markers is user-owned and must be preserved. Relay targets must be named `AGENTS.md` and must not
   be symlinks.
-- Companion-skill donor rollout may replace only the marked `cppstudio-donor-library` block. Content
-  outside those markers is user-owned and must be preserved, even if it looks like an older donor
-  note.
 - Preserve intentional template placeholders such as `{{PROJECT_NAME}}` and `{{CPP_NAMESPACE}}`.
 - Do not commit generated temp projects, build directories, profiler traces, or Python
   `__pycache__` files.

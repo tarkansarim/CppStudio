@@ -1,8 +1,3 @@
----
-name: cppstudio-supervisor
-description: Use when supervising tmux/subagent/repo workers for CppStudio-backed native C++ GPU work, reviews, polling, fix routing, or closeout.
----
-
 # CppStudio Supervisor
 
 Use this skill only when acting as a supervisor for other agents or workers. Do not load it for
@@ -293,7 +288,7 @@ Use `scripts/slice_phase_report.py` from this skill to turn the transcript or ph
 report:
 
 ```bash
-python3 ${CODEX_HOME:-$HOME/.codex}/skills/cppstudio-supervisor/scripts/slice_phase_report.py \
+python3 ${CODEX_HOME:-$HOME/.codex}/skills/cpp-cuda-vulkan-studio/modules/cppstudio-supervisor/scripts/slice_phase_report.py \
   --input /path/to/worker-phase.log \
   --output /path/to/slice-phase-report.md \
   --require-markers

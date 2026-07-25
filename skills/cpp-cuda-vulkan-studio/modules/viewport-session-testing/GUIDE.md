@@ -1,8 +1,3 @@
----
-name: viewport-session-testing
-description: "Design or use app-owned viewport/UI session replay for native C++ tools: real gestures, screenshots, traces, and visible bug proof."
----
-
 # Viewport Session Testing
 
 Use this skill when a native C++ GPU app, artist tool, viewer, simulator, editor, or realtime GUI

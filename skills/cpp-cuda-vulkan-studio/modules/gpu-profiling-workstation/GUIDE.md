@@ -1,8 +1,3 @@
----
-name: gpu-profiling-workstation
-description: "Profile and frame-debug CUDA, Vulkan/OpenGL, and CPU workloads on Tarkan's Ubuntu workstation with Nsight, RenderDoc, perf, and Compute Sanitizer."
----
-
 # GPU Profiling Workstation
 
 Use the installed-tool order below. Choose the tool by question type first: frame-debugging/correctness vs performance.
