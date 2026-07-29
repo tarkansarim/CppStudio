@@ -4,6 +4,11 @@ All notable CppStudio changes should be recorded here before pushing to remote.
 
 ## Unreleased
 
+- Reduced the default-loaded skill instructions to a thin relay so detailed
+  procedure loads only on demand. This lowers prompt pressure and avoids heavy
+  process thrashing observed with newer models such as GPT 5.6 Sol and Claude
+  Opus 5.
+
 - Replaced the default-loaded strict CppStudio process with progressive
   enforcement. Bounded work uses Standard, concrete uncertainty uses
   Investigative, connected work uses Planning Harness-owned Governed, and
